@@ -2,6 +2,20 @@
 
 All notable changes to this skill library are documented here.
 
+## [0.3.0] - 2026-08-20
+
+### Added
+- Cross-platform project bootstrap through `setup-project.sh`, `setup-project.ps1`, and `scripts/bootstrap-project.mjs`.
+- Project-local `AGENTS.md` template for Codex repository instructions.
+- Automatic installation of reusable skills into `~/.agents/skills/`.
+- Package-manager detection for npm, pnpm, Yarn, and Bun when installing Prettier tooling.
+- Non-destructive bootstrap behavior with explicit `--force`, `--skip-deps`, and `--skip-skills` controls.
+- Node test coverage for Tailwind stylesheet detection and safe file generation.
+
+### Changed
+- Package version bumped to `0.3.0`.
+- README now documents the VS Code + Codex project setup workflow.
+
 ## [0.2.0] - 2026-08-20
 
 ### Added

@@ -28,6 +28,21 @@ Existing repository decisions always win. For a genuinely new application, defau
 
 Do not install optional libraries speculatively. Add them when a concrete feature needs them.
 
+## Automated project preparation
+When this skills repository is available locally, prefer its project bootstrap for consistent Codex setup instead of recreating repository instructions and formatter configuration manually:
+
+```bash
+./setup-project.sh /path/to/project
+```
+
+On Windows PowerShell:
+
+```powershell
+./setup-project.ps1 C:\Dev\project
+```
+
+The bootstrap is intentionally non-destructive: existing `AGENTS.md` and `prettier.config.mjs` files are preserved unless `--force` is explicitly supplied. Existing project conventions still win over personal defaults.
+
 ## Initialization
 Prefer the repository or environment package manager. When there is no prior convention, npm is an acceptable portable default.
 
