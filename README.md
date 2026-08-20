@@ -61,6 +61,45 @@ bash install.sh
 
 Both scripts copy only the skill directories into the personal skills directory.
 
+## Bootstrap a project for Codex
+
+After cloning this repository, you can prepare an existing or newly scaffolded web project with one command. The bootstrap installs this repository's skills into `~/.agents/skills/`, creates a project-local `AGENTS.md`, configures Prettier + Tailwind class sorting, and adds `format` / `format:check` scripts when a `package.json` exists.
+
+### WSL / Linux / macOS
+
+```bash
+./setup-project.sh /path/to/project
+```
+
+### Windows PowerShell
+
+```powershell
+./setup-project.ps1 C:\Dev\my-project
+```
+
+Run the command from this repository and point it at the project you want Codex to work on. Existing `AGENTS.md` and `prettier.config.mjs` files are preserved by default. Use `--force` only when you intentionally want the generated defaults to replace them.
+
+Useful options:
+
+```text
+--force        replace generated files if they already exist
+--skip-deps    do not install prettier/prettier-plugin-tailwindcss
+--skip-skills  do not copy global skills to ~/.agents/skills
+```
+
+The dependency installer respects the project's lockfile (`pnpm`, Yarn, Bun, or npm) and falls back to npm when no package-manager convention exists.
+
+### Typical VS Code + Codex workflow
+
+```bash
+git clone https://github.com/jhonatan-oliveiradev/agent-skills.git
+cd agent-skills
+./setup-project.sh ../my-next-app
+code ../my-next-app
+```
+
+Inside Codex, you can then work normally. The project-local `AGENTS.md` provides repository rules, while the reusable skills provide specialized workflows such as UI fidelity, motion, visual QA, and delivery. You can let Codex select a matching skill or explicitly name one in the prompt.
+
 ## Validate
 
 ```bash
