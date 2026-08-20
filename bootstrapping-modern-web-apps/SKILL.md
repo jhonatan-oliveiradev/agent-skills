@@ -1,12 +1,14 @@
 ---
 name: bootstrapping-modern-web-apps
-description: Use when starting a new web application, choosing its baseline frontend stack, initializing a Next.js project, or standardizing tooling before feature implementation begins.
+description: Use when the user explicitly opts into this opinionated web-app baseline, asks to use the personal starter, or wants this repository's preferred Next.js project conventions.
 ---
 
 # Bootstrapping Modern Web Apps
 
 ## Core principle
-Start with the smallest production-grade stack that supports the product. Establish conventions once at project creation so later feature work does not repeatedly solve formatting, structure, UI primitives, or motion foundations.
+This is an **opt-in opinionated profile**, not a universal web-development policy. Use it only when the user explicitly chooses this repository's preferred project baseline. Otherwise preserve the user's requested stack, the target repository's conventions, or a neutral project setup.
+
+When opted in, start with the smallest production-grade stack that supports the product. Establish conventions once at project creation so later feature work does not repeatedly solve formatting, structure, UI primitives, or motion foundations.
 
 ## Stack defaults
 Existing repository decisions always win. For a genuinely new application, default to:

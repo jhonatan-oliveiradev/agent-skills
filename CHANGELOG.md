@@ -2,6 +2,18 @@
 
 All notable changes to this skill library are documented here.
 
+## [0.4.0] - 2026-08-20
+
+### Added
+- Optional `create-web-app` starter for explicitly opting into the repository owner's preferred Next.js baseline.
+- Cross-platform `create-web-app.sh` and `create-web-app.ps1` wrappers.
+- Package-manager aware Next.js scaffolding and optional feature packs for shadcn/ui, Motion, GSAP, forms, and TanStack Query.
+- Dry-run support for inspecting the starter plan without creating a project.
+- Test coverage for scaffold command construction and optional dependency packs.
+
+### Changed
+- `bootstrapping-modern-web-apps` now has an explicit opt-in trigger so installing the reusable skills does not impose the personal stack on other users.
+
 ## [0.3.0] - 2026-08-20
 
 ### Added
