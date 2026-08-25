@@ -2,6 +2,17 @@
 
 All notable changes to this skill library are documented here.
 
+## [0.5.0] - 2026-08-25
+
+### Added
+- `craft-premium-motion` as the motion-direction and technology-routing layer.
+- `engineering-gsap-animations` with GSAP core, timeline, ScrollTrigger, plugin, React/Next.js, performance, cleanup, and accessibility references.
+- `reconstructing-images-as-threejs` as an optional evidence-limited procedural Three.js reconstruction workflow.
+
+### Changed
+- Motion responsibilities are now layered to prevent generic motion, GSAP implementation, and performance auditing from competing for the same task.
+- Upstream mapping now records GreenSock, LottieFiles, and img2threejs research and licensing.
+
 ## [0.4.0] - 2026-08-20
 
 ### Added

@@ -24,6 +24,8 @@ A curated Agent Skills library for production frontend, product design, motion, 
 - `auditing-pixel-perfect-frontend`
 
 ### Motion & performance
+- `craft-premium-motion`
+- `engineering-gsap-animations`
 - `orchestrating-cinematic-web-motion`
 - `optimizing-frontend-motion-performance`
 
@@ -33,9 +35,16 @@ A curated Agent Skills library for production frontend, product design, motion, 
 
 ### Game development
 - `building-hybrid-game-assets`
+- `reconstructing-images-as-threejs`
 - `creating-character-sprite-pipelines`
 - `designing-action-combat`
 - `testing-playable-games`
+
+## Layered motion and procedural 3D
+
+The motion stack is intentionally layered: `craft-premium-motion` owns direction and technology selection; `engineering-gsap-animations` owns GSAP implementation in React/Next.js; and `optimizing-frontend-motion-performance` owns runtime profiling. This avoids making GSAP the default for effects that CSS or Motion can handle.
+
+`reconstructing-images-as-threejs` is an optional, evidence-limited workflow for code-only procedural reconstruction. It does not replace authored GLB/Blender pipelines and must not claim exact hidden geometry or animation readiness without the required gates.
 
 ## New web-app default
 
@@ -124,4 +133,4 @@ See `CHANGELOG.md` for release notes.
 
 ## Attribution
 
-Initial research included the MIT-licensed `MengTo/Skills` repository. `MAPPING.md` documents which upstream concepts informed this curated library. The local skill text is maintained independently rather than mirrored wholesale.
+Research sources include the MIT-licensed `MengTo/Skills`, GreenSock's MIT-licensed official GSAP skills, LottieFiles' MIT-licensed motion-design skill, and Apache-2.0 `img2threejs`. `MAPPING.md` records whether each source was adapted, merged, referenced, or deliberately kept separate. Local skill text is maintained independently rather than mirrored wholesale.

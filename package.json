@@ -1,6 +1,6 @@
 {
   "name": "jhonatan-agent-skills",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "private": true,
   "description": "Curated Agent Skills for frontend, product design, motion, delivery, and game-development workflows.",
   "scripts": {

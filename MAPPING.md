@@ -96,3 +96,23 @@ Consolidates branch, PR, verification, environment, Preview/Production, and depl
 ## Why the 81 web-design skills were not installed individually
 
 The upstream collection contains many excellent micro-techniques and art-direction presets. Keeping all of them globally installed would create poor skill discovery: several skills could trigger on the same frontend request and push the agent toward visual effects before understanding product intent. The curated pack keeps broad operating procedures global and leaves effect-specific skills as on-demand upstream references.
+
+## External skill research — 2026-08-25
+
+| Source | Decision | Local destination |
+|---|---|---|
+| `greensock/gsap-skills` | Adapted | `engineering-gsap-animations` |
+| `lottiefiles/motion-design-skill` | Referenced, not installed separately | `craft-premium-motion` already covers the tested direction, personality, timing, choreography, layered motion, and reduced-motion behavior |
+| `img2threejs/img2threejs` | Adapted as an optional, narrower workflow | `reconstructing-images-as-threejs` |
+
+### `craft-premium-motion`
+
+Added to the versioned library as the direction and technology-routing layer for premium motion systems. It remains library-agnostic and delegates GSAP-specific implementation to `engineering-gsap-animations`.
+
+### `engineering-gsap-animations`
+
+Uses the official GreenSock skills as the technical source for GSAP core, timelines, ScrollTrigger, plugins, React lifecycle, cleanup, performance, and accessibility. The local trigger is intentionally narrower: GSAP must already be selected or clearly required.
+
+### `reconstructing-images-as-threejs`
+
+Adapts the evidence, staged reconstruction, confidence, procedural factory, and review-gate concepts from `img2threejs` without bundling or claiming execution of its Forge toolkit. It is optional and does not replace authored 3D pipelines.
