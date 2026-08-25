@@ -1,6 +1,6 @@
 ---
 name: craft-premium-motion
-description: "Design, implement, refine, and audit premium web motion systems: microinteractions, hover/tap/focus feedback, page and route transitions, scroll choreography, reveals, parallax, kinetic typography, smooth scrolling, SVG/canvas/WebGL/3D scenes, loaders, ambient effects, and animation performance. Use for React, Next.js, Vue, Svelte, or vanilla web projects whenever the user asks to animate an interface, make a site feel more premium/cinematic/award-worthy, add GSAP, Motion (formerly Framer Motion), Lenis, Three.js or React Three Fiber, reproduce the motion intent of a reference, establish motion tokens or guidelines, fix janky/excessive/inaccessible animation, or review an existing project's interactions. Also use proactively during a frontend build or redesign when motion and microinteractions are a material part of the requested visual quality."
+description: "Use when designing, implementing, refining, or auditing premium web motion: microinteractions, transitions, scroll choreography, reveals, kinetic typography, smooth scrolling, SVG, canvas, WebGL, 3D, loaders, ambient effects, or animation performance. Applies to React, Next.js, Vue, Svelte, and vanilla projects that need a coherent motion system, reference-inspired movement, motion tokens, or fixes for janky, excessive, or inaccessible animation."
 ---
 
 # Craft Premium Motion
