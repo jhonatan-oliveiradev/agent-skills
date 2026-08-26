@@ -1,23 +1,9 @@
-import { readdir, readFile, stat } from "node:fs/promises";
+import { readFile } from "node:fs/promises";
 import path from "node:path";
-import process from "node:process";
+import { fileURLToPath } from "node:url";
 
-const root = path.resolve(path.dirname(new URL(import.meta.url).pathname), "..");
-const entries = await readdir(root);
-const skillDirs = [];
+import { listSkills } from "./lib/skills.mjs";
 
-for (const entry of entries) {
-  const full = path.join(root, entry);
-  if ((await stat(full)).isDirectory()) {
-    try {
-      await stat(path.join(full, "SKILL.md"));
-      skillDirs.push(entry);
-    } catch {}
-  }
-}
-
-const errors = [];
-const names = new Set();
 const forbiddenPrivatePatterns = [
   /-----BEGIN (?:RSA |EC |OPENSSH )?PRIVATE KEY-----/,
   /\b(?:sk|sk-proj)-[A-Za-z0-9_-]{20,}\b/,
@@ -26,38 +12,47 @@ const forbiddenPrivatePatterns = [
   /https?:\/\/(?:[^\s/]+\.)?internal(?:[./:]|\b)/i,
 ];
 
-for (const dir of skillDirs.sort()) {
-  const file = path.join(root, dir, "SKILL.md");
-  const text = await readFile(file, "utf8");
-  const frontmatter = text.match(/^---\n([\s\S]*?)\n---/);
-  if (!frontmatter) {
-    errors.push(`${dir}: missing YAML frontmatter`);
-    continue;
+export async function validateSkills(root) {
+  const skills = await listSkills(root);
+  const errors = [];
+  const names = new Set();
+
+  for (const { name: directoryName, skillFile } of skills) {
+    const text = await readFile(skillFile, "utf8");
+    const frontmatter = text.match(/^---\n([\s\S]*?)\n---/);
+    if (!frontmatter) {
+      errors.push(`${directoryName}: missing YAML frontmatter`);
+      continue;
+    }
+
+    const name = frontmatter[1].match(/^name:\s*(.+)$/m)?.[1]?.trim();
+    const description = frontmatter[1].match(/^description:\s*(.+)$/m)?.[1]?.trim();
+    if (!name) errors.push(`${directoryName}: missing name`);
+    if (name && name !== directoryName) errors.push(`${directoryName}: name must match directory (${name})`);
+    if (name && !/^[a-z0-9-]+$/.test(name)) errors.push(`${directoryName}: invalid skill name`);
+    if (name && names.has(name)) errors.push(`${directoryName}: duplicate skill name ${name}`);
+    if (name) names.add(name);
+    if (!description) errors.push(`${directoryName}: missing description`);
+    if (description && !description.startsWith("Use when")) errors.push(`${directoryName}: description should start with 'Use when'`);
+    if (description && description.length > 500) errors.push(`${directoryName}: description exceeds 500 characters`);
+    for (const pattern of forbiddenPrivatePatterns) {
+      if (pattern.test(text)) errors.push(`${directoryName}: contains a forbidden private-data pattern`);
+    }
   }
 
-  const name = frontmatter[1].match(/^name:\s*(.+)$/m)?.[1]?.trim();
-  const description = frontmatter[1].match(/^description:\s*(.+)$/m)?.[1]?.trim();
+  if (skills.length === 0) errors.push("No skill directories found");
+  return { errors, skillCount: skills.length };
+}
 
-  if (!name) errors.push(`${dir}: missing name`);
-  if (name && name !== dir) errors.push(`${dir}: name must match directory (${name})`);
-  if (name && !/^[a-z0-9-]+$/.test(name)) errors.push(`${dir}: invalid skill name`);
-  if (name && names.has(name)) errors.push(`${dir}: duplicate skill name ${name}`);
-  if (name) names.add(name);
-  if (!description) errors.push(`${dir}: missing description`);
-  if (description && !description.startsWith("Use when")) errors.push(`${dir}: description should start with 'Use when'`);
-  if (description && description.length > 500) errors.push(`${dir}: description exceeds 500 characters`);
-
-  for (const pattern of forbiddenPrivatePatterns) {
-    if (pattern.test(text)) errors.push(`${dir}: contains a forbidden private-data pattern`);
+const scriptFile = fileURLToPath(import.meta.url);
+if (process.argv[1] && path.resolve(process.argv[1]) === scriptFile) {
+  const repoRoot = path.resolve(path.dirname(scriptFile), "..");
+  const { errors, skillCount } = await validateSkills(repoRoot);
+  if (errors.length) {
+    console.error(`Skill validation failed with ${errors.length} issue(s):`);
+    for (const error of errors) console.error(`- ${error}`);
+    process.exitCode = 1;
+  } else {
+    console.log(`Validated ${skillCount} skills successfully.`);
   }
 }
-
-if (skillDirs.length === 0) errors.push("No skill directories found");
-
-if (errors.length) {
-  console.error(`Skill validation failed with ${errors.length} issue(s):`);
-  for (const error of errors) console.error(`- ${error}`);
-  process.exit(1);
-}
-
-console.log(`Validated ${skillDirs.length} skills successfully.`);
