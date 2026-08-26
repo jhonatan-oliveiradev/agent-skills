@@ -7,7 +7,11 @@ on:
 
 jobs:
   validate:
-    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -15,3 +19,17 @@ jobs:
           node-version: 22
       - run: npm test
       - run: npm run validate
+      - name: Smoke test Bash installer
+        if: runner.os == 'Linux'
+        shell: bash
+        run: |
+          target="$(mktemp -d)"
+          ./install.sh --destination "$target"
+          test -f "$target/craft-premium-motion/SKILL.md"
+      - name: Smoke test PowerShell installer
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: |
+          $target = Join-Path $env:RUNNER_TEMP "agent-skills-install"
+          ./install.ps1 --destination $target
+          if (-not (Test-Path (Join-Path $target "craft-premium-motion/SKILL.md"))) { exit 1 }
