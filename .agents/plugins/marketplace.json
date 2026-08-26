@@ -1,0 +1,12 @@
+{
+  "name": "agent-skills-studio",
+  "interface": { "displayName": "Agent Skills Studio" },
+  "plugins": [
+    {
+      "name": "agent-skills-studio",
+      "source": { "source": "local", "path": "./" },
+      "policy": { "installation": "AVAILABLE", "authentication": "NOT_REQUIRED" },
+      "category": "Developer Tools"
+    }
+  ]
+}

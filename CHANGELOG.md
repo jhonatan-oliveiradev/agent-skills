@@ -2,6 +2,14 @@
 
 All notable changes to this skill library are documented here.
 
+## [1.0.0-beta.1] - Unreleased
+
+### Added
+- Canonical skill migration to `skills/`, with no root-level compatibility copies.
+- Shared Node installer used by the Bash and PowerShell entry points, including complete-collection and named-skill installation.
+- The `agent-skills-studio` skills-only plugin and local marketplace manifest.
+- Linux and Windows GitHub Actions validation, including installer smoke tests on both platforms.
+
 ## [0.5.0] - 2026-08-25
 
 ### Added

@@ -14,20 +14,20 @@ Legend:
 
 | Upstream | Decision | Local destination |
 |---|---|---|
-| article-prompts-to-skills | Merged | turning-techniques-into-skills |
-| audit-reference-originality | Merged | implementing-reference-faithful-ui + auditing-pixel-perfect-frontend |
-| audit-verify-explain-grade-5 | Merged | auditing-pixel-perfect-frontend |
+| article-prompts-to-skills | Merged | skills/turning-techniques-into-skills |
+| audit-reference-originality | Merged | skills/implementing-reference-faithful-ui + skills/auditing-pixel-perfect-frontend |
+| audit-verify-explain-grade-5 | Merged | skills/auditing-pixel-perfect-frontend |
 | browser-video-recording | Deferred | Load upstream when browser demo video export is needed |
 | build-daily-inspiration-sites | Deferred | Reference-research workflow, not needed on every project |
 | daily-ui-inspiration-capture | Deferred | Best as a scheduled research workflow |
 | elevenlabs-tts | Skipped | Vendor-specific media workflow |
-| generate-reference-inspired-brand-worlds | Merged | building-premium-nextjs-interfaces |
-| html-to-interaction-prompts | Merged | orchestrating-cinematic-web-motion |
-| optimize-web-animations | Adapted | optimizing-frontend-motion-performance |
+| generate-reference-inspired-brand-worlds | Merged | skills/building-premium-nextjs-interfaces |
+| html-to-interaction-prompts | Merged | skills/orchestrating-cinematic-web-motion |
+| optimize-web-animations | Adapted | skills/optimizing-frontend-motion-performance |
 | performance-profiling | Skipped | Apple-platform-specific |
-| stitched-full-page-capture | Merged | auditing-pixel-perfect-frontend |
+| stitched-full-page-capture | Merged | skills/auditing-pixel-perfect-frontend |
 | video-to-superprompt | Deferred | Useful when video references are supplied |
-| web-technique-to-skill | Adapted | turning-techniques-into-skills |
+| web-technique-to-skill | Adapted | skills/turning-techniques-into-skills |
 | write-like-meng-on-x | Skipped | Author-specific voice skill |
 | x-bookmark-quote-posts | Skipped | X-specific content workflow |
 
@@ -35,25 +35,25 @@ Legend:
 
 | Upstream | Decision | Local destination |
 |---|---|---|
-| design-first-ui-prompting | Adapted | building-premium-nextjs-interfaces + designing-ui-systems |
+| design-first-ui-prompting | Adapted | skills/building-premium-nextjs-interfaces + skills/designing-ui-systems |
 
 ## Web design families
 
 | Upstream family / examples | Decision | Local destination |
 |---|---|---|
-| build-awwwards-quality-sites | Adapted | building-premium-nextjs-interfaces |
-| landing-page, pricing-page, product-proof-saas | Merged | building-conversion-product-pages |
-| tailwindcss, layout systems | Merged | designing-ui-systems + building-premium-nextjs-interfaces |
-| gsap, animation-systems, animation-on-scroll | Merged | orchestrating-cinematic-web-motion |
-| cinematic-gsap-lenis-motion-system | Adapted | orchestrating-cinematic-web-motion |
-| gsap-scrolltrigger-storytelling, cinematic-scroll-storytelling | Merged | orchestrating-cinematic-web-motion |
+| build-awwwards-quality-sites | Adapted | skills/building-premium-nextjs-interfaces |
+| landing-page, pricing-page, product-proof-saas | Merged | skills/building-conversion-product-pages |
+| tailwindcss, layout systems | Merged | skills/designing-ui-systems + skills/building-premium-nextjs-interfaces |
+| gsap, animation-systems, animation-on-scroll | Merged | skills/orchestrating-cinematic-web-motion |
+| cinematic-gsap-lenis-motion-system | Adapted | skills/orchestrating-cinematic-web-motion |
+| gsap-scrolltrigger-storytelling, cinematic-scroll-storytelling | Merged | skills/orchestrating-cinematic-web-motion |
 | marquee-loop, masked-reveal, staggered-word-reveal | Deferred | Narrow techniques; load only when the effect is required |
 | scroll-scrubbed-* / scroll-world-storytelling | Deferred | Narrow storytelling patterns |
 | threejs, WebGL, shaders, cobejs, globe-gl, Vanta, Unicorn | Deferred | Load upstream per effect; avoid making WebGL a default |
 | add-shader-cursor-trail, pointer-trail-emitter, cursor ripples | Deferred | Specialized interaction effects |
 | CSS treatments: border gradients, blur, masking, shadows | Deferred | Small techniques should not all be global triggers |
 | visual-style skills (dark glass, paper, tech green, etc.) | Deferred | Treat as optional art-direction references, not default taste |
-| agency/editorial/framed/image-first layout styles | Merged | building-premium-nextjs-interfaces |
+| agency/editorial/framed/image-first layout styles | Merged | skills/building-premium-nextjs-interfaces |
 
 ## Game development
 
@@ -67,17 +67,17 @@ Upstream keeps game skills deliberately separate from web design; this pack foll
 | build-threejs-enemy-systems | Deferred | Use for 3D enemy architecture |
 | build-game-monster-system | Deferred | Use for rig/socket/collider conformance |
 | tune-enemy-ai | Deferred | Use when AI behavior is implemented |
-| design-action-combat | Adapted | designing-action-combat |
+| design-action-combat | Adapted | skills/designing-action-combat |
 | design-game-encounters | Deferred | Use when encounter composition starts |
 | build-game-inventory | Deferred | Use when inventory/persistence starts |
-| build-hybrid-game-assets | Adapted | building-hybrid-game-assets |
+| build-hybrid-game-assets | Adapted | skills/building-hybrid-game-assets |
 | build-vesperfall-review-assets | Skipped | Upstream-specific review workflow |
 | create-game-vfx | Deferred | Use when VFX implementation starts |
 | build-game-audio-feedback | Deferred | Use when audio feedback starts |
 | build-mobile-threejs-games | Deferred | Use if mobile browser target becomes primary |
-| optimize-threejs-games | Merged conceptually | testing-playable-games + project-specific profiling |
-| test-playable-web-games | Adapted | testing-playable-games |
-| ship-web-games | Merged | shipping-github-vercel-changes |
+| optimize-threejs-games | Merged conceptually | skills/testing-playable-games + project-specific profiling |
+| test-playable-web-games | Adapted | skills/testing-playable-games |
+| ship-web-games | Merged | skills/shipping-github-vercel-changes |
 
 ## New skills added for this workflow
 
@@ -101,9 +101,9 @@ The upstream collection contains many excellent micro-techniques and art-directi
 
 | Source | Decision | Local destination |
 |---|---|---|
-| `greensock/gsap-skills` | Adapted | `engineering-gsap-animations` |
-| `lottiefiles/motion-design-skill` | Referenced, not installed separately | `craft-premium-motion` already covers the tested direction, personality, timing, choreography, layered motion, and reduced-motion behavior |
-| `img2threejs/img2threejs` | Adapted as an optional, narrower workflow | `reconstructing-images-as-threejs` |
+| `greensock/gsap-skills` | Adapted | `skills/engineering-gsap-animations` |
+| `lottiefiles/motion-design-skill` | Referenced, not installed separately | `skills/craft-premium-motion` already covers the tested direction, personality, timing, choreography, layered motion, and reduced-motion behavior |
+| `img2threejs/img2threejs` | Adapted as an optional, narrower workflow | `skills/reconstructing-images-as-threejs` |
 
 ### `craft-premium-motion`
 

@@ -1,4 +1,4 @@
-# Jhonatan Agent Skills
+# Agent Skills Studio
 
 A curated Agent Skills library for production frontend, product design, motion, visual QA, delivery workflows, and game-development tasks. It is inspired by useful patterns from the broader agent-skills ecosystem, but the skills in this repository are intentionally rewritten, consolidated, and kept project-agnostic.
 
@@ -11,6 +11,12 @@ A curated Agent Skills library for production frontend, product design, motion, 
 - Add optional libraries only when a concrete requirement justifies them.
 
 ## Skills
+
+`skills/` is the canonical source tree. Each skill lives at
+`skills/<skill-name>/SKILL.md` — for example,
+`skills/craft-premium-motion/SKILL.md`. Installers, validation, and the
+plugin all consume that same tree; repository-root compatibility copies are not
+kept.
 
 ### Project foundation
 - `bootstrapping-modern-web-apps`
@@ -56,6 +62,8 @@ The skill also requires Tailwind-aware Prettier configuration, including the Tai
 
 Codex and other Agent Skills-compatible runtimes can discover personal skills under `~/.agents/skills/`.
 
+### Install the complete collection
+
 ### WSL / Linux / macOS
 
 ```bash
@@ -69,6 +77,38 @@ bash install.sh
 ```
 
 Both scripts copy only the skill directories into the personal skills directory.
+
+### Install one skill
+
+Pass `--skill <name>` to install only a named canonical skill. The option can be
+repeated when you need more than one skill.
+
+```bash
+./install.sh --skill craft-premium-motion
+```
+
+```powershell
+./install.ps1 --skill craft-premium-motion
+```
+
+## Plugin and local marketplace
+
+The skills-only plugin identifier is `agent-skills-studio`. Its
+`.codex-plugin/plugin.json` manifest points at `./skills/`, so plugin and
+filesystem installations use the same canonical source.
+
+For local marketplace testing, clone this repository and use
+`@plugin-creator` to wire the checked-out repository into a local marketplace
+from `.agents/plugins/marketplace.json`; then install `agent-skills-studio` in
+the supported ChatGPT or Codex surface. Confirm the local package before
+testing it with:
+
+```bash
+node scripts/validate-plugin.mjs
+```
+
+Local and repository marketplace availability varies by surface. The filesystem
+installers above remain the portable option for compatible local environments.
 
 ## Bootstrap a project for Codex
 
@@ -122,6 +162,12 @@ The validator checks folder/name consistency, required frontmatter, trigger desc
 Use `AGENTS.example.md` as a starting point for project-level agent instructions. Keep project-specific architecture or business rules in each project's own `AGENTS.md`; do not push confidential project context back into this reusable library.
 
 ## Versioning
+
+This foundation is the unreleased v1 beta on
+[`feat/agent-skills-studio-v1`](https://github.com/jhonatan-oliveiradev/agent-skills/tree/feat/agent-skills-studio-v1),
+versioned `1.0.0-beta.1`. Its implementation follows the
+[approved design spec](docs/superpowers/specs/2026-08-25-agent-skills-studio-design.md)
+and the [foundation plan](docs/superpowers/plans/2026-08-25-agent-skills-studio-foundation.md).
 
 This repository follows semantic versioning:
 
