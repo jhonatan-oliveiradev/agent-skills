@@ -17,7 +17,13 @@ export function getSkillsRoot(repoRoot) {
 
 export async function listSkills(repoRoot) {
   const root = getSkillsRoot(repoRoot);
-  const entries = await readdir(root, { withFileTypes: true });
+  let entries;
+  try {
+    entries = await readdir(root, { withFileTypes: true });
+  } catch (error) {
+    if (error?.code === "ENOENT") return [];
+    throw error;
+  }
   const skills = [];
   for (const entry of entries) {
     if (!entry.isDirectory()) continue;

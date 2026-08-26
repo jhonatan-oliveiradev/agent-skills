@@ -1,15 +1,21 @@
-import { access, readFile } from "node:fs/promises";
-import { constants } from "node:fs";
+import { readFile, realpath, stat } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
-async function exists(filePath) {
+import { getSkillsRoot } from "./lib/skills.mjs";
+
+async function readText(filePath, errors) {
   try {
-    await access(filePath, constants.F_OK);
-    return true;
+    return await readFile(filePath, "utf8");
   } catch {
-    return false;
+    errors.push(`${filePath}: unreadable`);
+    return "";
   }
+}
+
+function isWithin(parent, candidate) {
+  const relative = path.relative(parent, candidate);
+  return relative === "" || (!relative.startsWith(`..${path.sep}`) && relative !== ".." && !path.isAbsolute(relative));
 }
 
 async function readJson(filePath, errors) {
@@ -27,7 +33,7 @@ export async function validatePlugin(repoRoot) {
   const plugin = await readJson(path.join(resolvedRoot, ".codex-plugin", "plugin.json"), errors);
   const marketplace = await readJson(path.join(resolvedRoot, ".agents", "plugins", "marketplace.json"), errors);
   const packageJson = await readJson(path.join(resolvedRoot, "package.json"), errors);
-  const versionText = await readFile(path.join(resolvedRoot, "VERSION"), "utf8");
+  const versionText = await readText(path.join(resolvedRoot, "VERSION"), errors);
 
   const expectedName = "agent-skills-studio";
   if (plugin.name !== expectedName) errors.push(`plugin name must be ${expectedName}`);
@@ -35,14 +41,36 @@ export async function validatePlugin(repoRoot) {
   if (plugin.version !== packageJson.version || plugin.version !== versionText.trim()) {
     errors.push("plugin, package, and VERSION values must match");
   }
+  const expectedSkills = getSkillsRoot(resolvedRoot);
+  const resolvedSkills = path.resolve(resolvedRoot, plugin.skills ?? "");
   if (typeof plugin.skills !== "string" || !plugin.skills.startsWith("./")) {
     errors.push("plugin skills path must start with ./");
   }
-
-  const resolvedSkills = path.resolve(resolvedRoot, plugin.skills ?? "");
-  const insideRoot = resolvedSkills === resolvedRoot || resolvedSkills.startsWith(`${resolvedRoot}${path.sep}`);
-  if (!insideRoot) errors.push("skills must resolve inside the plugin root");
-  if (insideRoot && !(await exists(resolvedSkills))) errors.push("plugin skills directory does not exist");
+  if (!isWithin(resolvedRoot, resolvedSkills)) {
+    errors.push("skills must resolve inside the plugin root");
+  }
+  if (plugin.skills !== "./skills/" || resolvedSkills !== expectedSkills) {
+    errors.push("plugin skills path must be exactly ./skills/");
+  } else {
+    try {
+      const [canonicalRoot, canonicalSkills, skillsStats] = await Promise.all([
+        realpath(resolvedRoot),
+        realpath(expectedSkills),
+        stat(expectedSkills),
+      ]);
+      if (!isWithin(canonicalRoot, canonicalSkills)) {
+        errors.push("skills must resolve inside the plugin root");
+      } else if (!skillsStats.isDirectory()) {
+        errors.push("plugin skills directory does not exist");
+      }
+    } catch (error) {
+      if (error?.code === "ENOENT" || error?.code === "ENOTDIR") {
+        errors.push("plugin skills directory does not exist");
+      } else {
+        errors.push("plugin skills directory is unreadable");
+      }
+    }
+  }
 
   const entries = Array.isArray(marketplace.plugins) ? marketplace.plugins : [];
   const matching = entries.filter((entry) => entry?.name === expectedName);

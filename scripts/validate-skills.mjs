@@ -1,4 +1,4 @@
-import { readFile } from "node:fs/promises";
+import { readdir, readFile } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -12,12 +12,44 @@ const forbiddenPrivatePatterns = [
   /https?:\/\/(?:[^\s/]+\.)?internal(?:[./:]|\b)/i,
 ];
 
+async function collectRegularFiles(directory, skillRoot, skillName, errors) {
+  const files = [];
+  const entries = await readdir(directory, { withFileTypes: true });
+  entries.sort((left, right) => left.name.localeCompare(right.name));
+
+  for (const entry of entries) {
+    const entryPath = path.join(directory, entry.name);
+    if (entry.isSymbolicLink()) {
+      const relative = path.relative(skillRoot, entryPath).split(path.sep).join("/");
+      errors.push(`${skillName}/${relative}: symbolic links are not allowed`);
+    } else if (entry.isDirectory()) {
+      files.push(...await collectRegularFiles(entryPath, skillRoot, skillName, errors));
+    } else if (entry.isFile()) {
+      files.push(entryPath);
+    }
+  }
+
+  return files;
+}
+
 export async function validateSkills(root) {
   const skills = await listSkills(root);
   const errors = [];
   const names = new Set();
 
-  for (const { name: directoryName, skillFile } of skills) {
+  for (const { name: directoryName, directory, skillFile } of skills) {
+    const regularFiles = await collectRegularFiles(directory, directory, directoryName, errors);
+    for (const file of regularFiles) {
+      const fileText = await readFile(file, "utf8");
+      for (const pattern of forbiddenPrivatePatterns) {
+        if (pattern.test(fileText)) {
+          const relative = path.relative(directory, file).split(path.sep).join("/");
+          errors.push(`${directoryName}/${relative}: contains a forbidden private-data pattern`);
+        }
+      }
+    }
+
+    if (!regularFiles.includes(skillFile)) continue;
     const text = await readFile(skillFile, "utf8");
     const frontmatter = text.match(/^---\n([\s\S]*?)\n---/);
     if (!frontmatter) {
@@ -35,9 +67,6 @@ export async function validateSkills(root) {
     if (!description) errors.push(`${directoryName}: missing description`);
     if (description && !description.startsWith("Use when")) errors.push(`${directoryName}: description should start with 'Use when'`);
     if (description && description.length > 500) errors.push(`${directoryName}: description exceeds 500 characters`);
-    for (const pattern of forbiddenPrivatePatterns) {
-      if (pattern.test(text)) errors.push(`${directoryName}: contains a forbidden private-data pattern`);
-    }
   }
 
   if (skills.length === 0) errors.push("No skill directories found");

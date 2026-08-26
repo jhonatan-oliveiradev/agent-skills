@@ -18,3 +18,16 @@ test("discovers only canonical skill directories in stable order", async () => {
   assert.equal(getSkillsRoot(root), path.join(root, "skills"));
   assert.deepEqual((await listSkills(root)).map(({ name }) => name), ["alpha", "zeta"]);
 });
+
+test("returns no skills when the canonical skills directory is absent", async () => {
+  const root = await mkdtemp(path.join(tmpdir(), "agent-skills-discovery-empty-"));
+
+  assert.deepEqual(await listSkills(root), []);
+});
+
+test("rethrows unexpected errors while reading the canonical skills directory", async () => {
+  const root = await mkdtemp(path.join(tmpdir(), "agent-skills-discovery-invalid-"));
+  await writeFile(path.join(root, "skills"), "not a directory");
+
+  await assert.rejects(listSkills(root), { code: "ENOTDIR" });
+});
