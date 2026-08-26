@@ -138,3 +138,65 @@ test("preserves an installed skill when staged source validation fails", async (
   assert.equal(await readFile(installedSkill, "utf8"), "existing installation");
   assert.deepEqual(await readdir(destination), ["alpha"]);
 });
+
+test("prevalidates every derived target before mutating any selected installation", async () => {
+  const repoRoot = await mkdtemp(path.join(tmpdir(), "agent-skills-install-target-collision-"));
+  for (const name of ["alpha", "skills"]) {
+    const directory = path.join(repoRoot, "skills", name);
+    await mkdir(directory, { recursive: true });
+    await writeFile(path.join(directory, "SKILL.md"), `---\nname: ${name}\ndescription: Use when ${name} applies.\n---\n`);
+  }
+  const sourceSentinel = path.join(repoRoot, "skills", "source-sentinel.txt");
+  await writeFile(sourceSentinel, "preserve source tree");
+  await mkdir(path.join(repoRoot, "alpha"));
+  const installedSentinel = path.join(repoRoot, "alpha", "installed-sentinel.txt");
+  await writeFile(installedSentinel, "preserve installed alpha");
+
+  await assert.rejects(
+    installSkills({ repoRoot, destination: repoRoot }),
+    /target overlaps the source skills directory/i,
+  );
+  assert.equal(await readFile(sourceSentinel, "utf8"), "preserve source tree");
+  assert.equal(await readFile(installedSentinel, "utf8"), "preserve installed alpha");
+  assert.match(await readFile(path.join(repoRoot, "skills", "skills", "SKILL.md"), "utf8"), /name: skills/);
+});
+
+test("rejects symlink-resolved derived targets equal to or containing the source tree", async (t) => {
+  const repoRoot = await repositoryFixture();
+  const equalDestination = await mkdtemp(path.join(tmpdir(), "agent-skills-install-linked-derived-target-"));
+  const sourceSentinel = path.join(repoRoot, "skills", "source-sentinel.txt");
+  await writeFile(sourceSentinel, "preserve source tree");
+  try {
+    await symlink(path.join(repoRoot, "skills"), path.join(equalDestination, "alpha"), "dir");
+  } catch (error) {
+    if (["EACCES", "ENOSYS", "EPERM"].includes(error.code)) {
+      t.skip(`symbolic links are unavailable: ${error.code}`);
+      return;
+    }
+    throw error;
+  }
+
+  await assert.rejects(
+    installSkills({ repoRoot, destination: equalDestination, names: ["alpha"] }),
+    /target overlaps the source skills directory/i,
+  );
+  assert.equal(await readFile(sourceSentinel, "utf8"), "preserve source tree");
+
+  const containingDestination = await mkdtemp(path.join(tmpdir(), "agent-skills-install-linked-derived-parent-"));
+  await symlink(repoRoot, path.join(containingDestination, "beta"), "dir");
+  await assert.rejects(
+    installSkills({ repoRoot, destination: containingDestination, names: ["beta"] }),
+    /target overlaps the source skills directory/i,
+  );
+  assert.equal(await readFile(sourceSentinel, "utf8"), "preserve source tree");
+});
+
+test("reports an absent source collection without leaking a realpath error", async () => {
+  const repoRoot = await mkdtemp(path.join(tmpdir(), "agent-skills-install-empty-source-"));
+  const destination = path.join(repoRoot, "target");
+
+  await assert.rejects(
+    installSkills({ repoRoot, destination }),
+    /No skill directories found/,
+  );
+});

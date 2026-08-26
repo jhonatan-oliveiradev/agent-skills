@@ -2,7 +2,7 @@ import { readdir, readFile } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
-import { listSkills } from "./lib/skills.mjs";
+import { inspectSkillsRoot } from "./lib/skills.mjs";
 
 const forbiddenPrivatePatterns = [
   /-----BEGIN (?:RSA |EC |OPENSSH )?PRIVATE KEY-----/,
@@ -33,8 +33,8 @@ async function collectRegularFiles(directory, skillRoot, skillName, errors) {
 }
 
 export async function validateSkills(root) {
-  const skills = await listSkills(root);
-  const errors = [];
+  const { skills, symbolicLinks } = await inspectSkillsRoot(root);
+  const errors = symbolicLinks.map((name) => `${name}: symbolic links are not allowed`);
   const names = new Set();
 
   for (const { name: directoryName, directory, skillFile } of skills) {

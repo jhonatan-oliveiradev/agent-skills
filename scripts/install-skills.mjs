@@ -96,6 +96,7 @@ export async function installSkills({ repoRoot, destination, names }) {
   for (const name of selected) {
     if (!byName.has(name)) throw new Error(`Unknown skill: ${name}`);
   }
+  if (available.length === 0) throw new Error("No skill directories found");
 
   const targetRoot = path.resolve(destination);
   if (targetRoot === path.parse(targetRoot).root) {
@@ -111,10 +112,19 @@ export async function installSkills({ repoRoot, destination, names }) {
     throw new Error("Destination overlaps the source skills directory.");
   }
 
-  await mkdir(targetRoot, { recursive: true });
+  const plannedTargets = [];
   for (const name of selected) {
     const target = path.join(targetRoot, name);
-    await replaceSkill(byName.get(name).directory, target);
+    const canonicalTarget = await resolveCanonicalPath(target);
+    if (isWithin(sourceRoot, canonicalTarget) || isWithin(canonicalTarget, sourceRoot)) {
+      throw new Error(`Target overlaps the source skills directory: ${name}`);
+    }
+    plannedTargets.push({ source: byName.get(name).directory, target });
+  }
+
+  await mkdir(targetRoot, { recursive: true });
+  for (const { source, target } of plannedTargets) {
+    await replaceSkill(source, target);
   }
 
   return selected;

@@ -63,6 +63,28 @@ test("rejects symbolic links inside skill directories", async (t) => {
   assert.equal(errors.some((error) => error.includes("linked.txt") && error.includes("symbolic links are not allowed")), true);
 });
 
+test("rejects a token-bearing skill symlink directly under the canonical skills directory", async (t) => {
+  const root = await fixture({ alpha: "---\nname: alpha\ndescription: Use when alpha applies.\n---\n" });
+  const outside = await mkdtemp(path.join(tmpdir(), "agent-skills-validation-linked-skill-"));
+  await writeFile(
+    path.join(outside, "SKILL.md"),
+    "---\nname: linked\ndescription: Use when linked applies.\n---\nghp_abcdefghijklmnopqrstuvwxyz",
+  );
+  try {
+    await symlink(outside, path.join(root, "skills", "linked"), "dir");
+  } catch (error) {
+    if (["EACCES", "ENOSYS", "EPERM"].includes(error.code)) {
+      t.skip(`symbolic links are unavailable: ${error.code}`);
+      return;
+    }
+    throw error;
+  }
+
+  const { errors, skillCount } = await validateSkills(root);
+  assert.equal(skillCount, 1);
+  assert.equal(errors.some((error) => error.includes("linked") && error.includes("symbolic links are not allowed")), true);
+});
+
 test("reports an absent canonical skills directory as an empty structured result", async () => {
   const root = await mkdtemp(path.join(tmpdir(), "agent-skills-validation-empty-"));
 
