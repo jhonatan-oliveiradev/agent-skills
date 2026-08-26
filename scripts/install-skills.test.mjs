@@ -27,9 +27,25 @@ test("installs all skills and removes stale contents", async () => {
   assert.match(await readFile(path.join(destination, "alpha", "SKILL.md"), "utf8"), /name: alpha/);
 });
 
-test("installs a selection and rejects unknown skills before copying", async () => {
+test("rejects an unknown skill before copying selected skills", async () => {
   const repoRoot = await repositoryFixture();
   const destination = await mkdtemp(path.join(tmpdir(), "agent-skills-install-selection-"));
-  assert.deepEqual(await installSkills({ repoRoot, destination, names: ["beta"] }), ["beta"]);
-  await assert.rejects(installSkills({ repoRoot, destination, names: ["missing"] }), /Unknown skill: missing/);
+  await writeFile(path.join(destination, "preserve.txt"), "keep me");
+
+  await assert.rejects(
+    installSkills({ repoRoot, destination, names: ["beta", "missing"] }),
+    /Unknown skill: missing/,
+  );
+  assert.equal(await readFile(path.join(destination, "preserve.txt"), "utf8"), "keep me");
+  await assert.rejects(readFile(path.join(destination, "beta", "SKILL.md")), { code: "ENOENT" });
+});
+
+test("deduplicates and sorts explicit skill names", async () => {
+  const repoRoot = await repositoryFixture();
+  const destination = await mkdtemp(path.join(tmpdir(), "agent-skills-install-sorted-"));
+
+  assert.deepEqual(
+    await installSkills({ repoRoot, destination, names: ["beta", "alpha", "beta"] }),
+    ["alpha", "beta"],
+  );
 });
