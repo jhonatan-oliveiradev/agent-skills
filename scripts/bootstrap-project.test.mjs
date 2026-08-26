@@ -62,3 +62,20 @@ test('bootstraps AGENTS, Prettier config, and package scripts without overwritin
   assert.equal(await readFile(path.join(root, 'AGENTS.md'), 'utf8'), 'keep me\n');
   assert.equal(await readFile(path.join(root, 'prettier.config.mjs'), 'utf8'), 'keep prettier\n');
 });
+
+test('installs all personal skills into the supplied destination', async () => {
+  const root = await tempProject();
+  const skillsDestination = await mkdtemp(path.join(tmpdir(), 'agent-skills-bootstrap-skills-'));
+
+  const result = await bootstrapProject(root, {
+    agentsTemplate: '# Project Agent Instructions\n',
+    installDependencies: false,
+    skillsDestination,
+  });
+
+  assert.equal(result.skillsInstalled, 18);
+  assert.match(
+    await readFile(path.join(skillsDestination, 'craft-premium-motion', 'SKILL.md'), 'utf8'),
+    /name: craft-premium-motion/,
+  );
+});

@@ -1,11 +1,13 @@
 #!/usr/bin/env node
 
-import { access, cp, mkdir, readFile, readdir, stat, writeFile } from 'node:fs/promises';
+import { access, mkdir, readFile, stat, writeFile } from 'node:fs/promises';
 import { constants } from 'node:fs';
 import { homedir } from 'node:os';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { spawnSync } from 'node:child_process';
+
+import { installSkills } from './install-skills.mjs';
 
 const scriptDir = path.dirname(fileURLToPath(import.meta.url));
 const repoRoot = path.resolve(scriptDir, '..');
@@ -80,21 +82,6 @@ function installPrettier(projectRoot, manager) {
   if (run.status !== 0) throw new Error(`Failed to install Prettier dependencies with ${manager}.`);
 }
 
-async function installPersonalSkills(destination = path.join(homedir(), '.agents', 'skills')) {
-  await mkdir(destination, { recursive: true });
-  const entries = await readdir(repoRoot, { withFileTypes: true });
-  const installed = [];
-  for (const entry of entries) {
-    if (!entry.isDirectory()) continue;
-    const sourceSkill = path.join(repoRoot, entry.name, 'SKILL.md');
-    if (!(await exists(sourceSkill))) continue;
-    const targetDir = path.join(destination, entry.name);
-    await cp(path.join(repoRoot, entry.name), targetDir, { recursive: true, force: true });
-    installed.push(entry.name);
-  }
-  return installed;
-}
-
 export async function bootstrapProject(projectRoot, options = {}) {
   const root = path.resolve(projectRoot);
   const rootStat = await stat(root).catch(() => null);
@@ -119,7 +106,10 @@ export async function bootstrapProject(projectRoot, options = {}) {
   }
 
   if (options.installSkills !== false) {
-    const installed = await installPersonalSkills(options.skillsDestination);
+    const installed = await installSkills({
+      repoRoot,
+      destination: options.skillsDestination ?? path.join(homedir(), '.agents', 'skills'),
+    });
     result.skillsInstalled = installed.length;
   }
 
