@@ -80,6 +80,19 @@ test("rejects version drift, private data, and catalog symlinks", async (context
   assert.equal(errors.some((error) => error.includes("forbidden private-data pattern")), true);
 });
 
+test("rejects private data in nested non-JSON catalog files", async () => {
+  const root = await catalogFixture();
+  const notesDirectory = path.join(root, "catalog", "packs", "debug");
+  await mkdir(notesDirectory, { recursive: true });
+  await writeFile(path.join(notesDirectory, "notes.md"), "ghp_abcdefghijklmnopqrstuvwxyz");
+
+  const { errors } = await validateCatalog(root);
+  assert.equal(
+    errors.includes("catalog/packs/debug/notes.md: forbidden private-data pattern"),
+    true,
+  );
+});
+
 test("reports missing metadata with a repository-relative source filename", async () => {
   const root = await catalogFixture({ omitSkillRecord: "beta" });
   const { errors } = await validateCatalog(root);

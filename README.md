@@ -137,12 +137,14 @@ before the destination is changed.
 
 When adding a skill, add its `catalog/skills/<slug>.json` metadata in both `en`
 and `pt-BR`, update every affected pack in both locales, then regenerate and
-validate the catalog:
+validate the catalog. Run both `npm test` and `npm run validate`; together they
+form the complete project gate:
 
 ```bash
 npm run catalog:generate
 npm run catalog:check
 npm run validate:catalog
+npm test
 npm run validate
 ```
 
@@ -197,12 +199,14 @@ qualquer alteração no destino.
 
 Ao adicionar uma skill, inclua os metadados em
 `catalog/skills/<slug>.json` nos dois idiomas, `en` e `pt-BR`, atualize cada
-pacote afetado nos dois idiomas e depois gere e valide o catálogo:
+pacote afetado nos dois idiomas e depois gere e valide o catálogo. Execute
+`npm test` e `npm run validate`; juntos, eles formam o gate completo do projeto:
 
 ```bash
 npm run catalog:generate
 npm run catalog:check
 npm run validate:catalog
+npm test
 npm run validate
 ```
 
@@ -276,10 +280,11 @@ npm test
 npm run validate
 ```
 
-The aggregate gate runs every test, validates skills and bilingual catalog
-metadata, confirms the generated catalog is byte-current, and validates the
-plugin. Skill validation checks folder/name consistency, required frontmatter,
-trigger descriptions, duplicate names, and privacy guardrails.
+Together, these commands form the complete gate: `npm test` runs every test,
+while `npm run validate` validates skills and bilingual catalog metadata,
+confirms the generated catalog is byte-current, and validates the plugin. Skill
+validation checks folder/name consistency, required frontmatter, trigger
+descriptions, duplicate names, and privacy guardrails.
 
 ## Recommended repository instructions
 

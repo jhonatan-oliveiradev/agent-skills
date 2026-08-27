@@ -65,6 +65,7 @@ function relativeReadError(repoRoot, file, error) {
 
 async function inspectCatalogTree(directory, repoRoot) {
   const jsonFiles = [];
+  const regularFiles = [];
   const symbolicLinks = [];
 
   async function visit(candidate) {
@@ -80,6 +81,7 @@ async function inspectCatalogTree(directory, repoRoot) {
       return;
     }
     if (stats.isFile()) {
+      regularFiles.push(candidate);
       if (candidate.endsWith(".json")) jsonFiles.push(candidate);
       return;
     }
@@ -94,6 +96,7 @@ async function inspectCatalogTree(directory, repoRoot) {
   await visit(directory);
   return {
     jsonFiles: jsonFiles.sort((left, right) => compareStrings(relativeFile(repoRoot, left), relativeFile(repoRoot, right))),
+    regularFiles: regularFiles.sort((left, right) => compareStrings(relativeFile(repoRoot, left), relativeFile(repoRoot, right))),
     symbolicLinks: symbolicLinks.sort((left, right) => compareStrings(relativeFile(repoRoot, left), relativeFile(repoRoot, right))),
   };
 }
@@ -168,6 +171,7 @@ export async function loadCatalog(repoRoot, options = {}) {
       skills: skillSources.files,
       packs: packSources.files,
       jsonSources: jsonSources.map((file) => ({ file, relative: relativeFile(root, file) })),
+      privacySources: tree.regularFiles.map((file) => ({ file, relative: relativeFile(root, file) })),
     },
     errors: [...new Set(errors)].sort(compareStrings),
   };
@@ -631,7 +635,7 @@ async function inspectCatalogSources(repoRoot, options = {}) {
   const packIndex = indexRecords(loaded.packs, loaded.files.packs, "pack", errors);
   validateCoverage(root, canonical.skills, skillIndex, errors);
   validateRelations(skillIndex, packIndex, errors);
-  await validatePrivacy(loaded.files.jsonSources, errors);
+  await validatePrivacy(loaded.files.privacySources, errors);
 
   const synchronized = [
     loaded.manifest?.version,

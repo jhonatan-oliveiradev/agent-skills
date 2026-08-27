@@ -17,7 +17,7 @@
       "name": "Arquitetura e Engenharia",
       "summary": "Orientações planejadas para decisões duráveis de arquitetura e engenharia de software.",
       "description": "Este pack planejado abordará fluxos de arquitetura e engenharia; as skills entrarão por meio de propostas públicas e validação independente.",
-      "outcomes": ["Avaliar limites de sistemas e compromissos arquiteturais", "Estabelecer práticas de engenharia sustentáveis entre serviços e aplicações"]
+      "outcomes": ["Avaliar limites de sistemas e trade-offs arquiteturais", "Estabelecer práticas de engenharia fáceis de manter entre serviços e aplicações"]
     }
   }
 }

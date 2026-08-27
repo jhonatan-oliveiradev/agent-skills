@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import { execFile } from "node:child_process";
-import { mkdtemp, mkdir, readFile, readdir, rename, symlink, writeFile } from "node:fs/promises";
+import { access, mkdtemp, mkdir, readFile, readdir, rename, symlink, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import path from "node:path";
 import test from "node:test";
@@ -156,6 +156,25 @@ test("rejects unknown and planned packs before destination mutation", async () =
   assert.deepEqual(await readdir(destination), ["sentinel.txt"]);
 });
 
+test("rejects unknown and planned packs without creating nonexistent destinations", async () => {
+  const repoRoot = await repositoryFixture();
+  const parent = await mkdtemp(path.join(tmpdir(), "agent-skills-pack-absent-"));
+  const unknownDestination = path.join(parent, "unknown-target");
+  const plannedDestination = path.join(parent, "planned-target");
+
+  await assert.rejects(
+    installSkills({ repoRoot, destination: unknownDestination, packs: ["missing"] }),
+    /Unknown pack: missing/,
+  );
+  await assert.rejects(access(unknownDestination), { code: "ENOENT" });
+
+  await assert.rejects(
+    installSkills({ repoRoot, destination: plannedDestination, packs: ["backend-data"] }),
+    /Pack is not installable: backend-data/,
+  );
+  await assert.rejects(access(plannedDestination), { code: "ENOENT" });
+});
+
 test("rejects invalid pack catalog sources before destination mutation", async () => {
   const repoRoot = await repositoryFixture();
   const destination = await mkdtemp(path.join(tmpdir(), "agent-skills-pack-invalid-catalog-"));
@@ -170,7 +189,33 @@ test("rejects invalid pack catalog sources before destination mutation", async (
   assert.deepEqual(await readdir(destination), ["sentinel.txt"]);
 });
 
-test("Bash wrapper installs a repeated pack selection without unrelated skills", async () => {
+test("Node CLI installs a repeated pack selection without unrelated skills", async () => {
+  const destination = await mkdtemp(path.join(tmpdir(), "agent-skills-pack-node-cli-"));
+
+  await execFileAsync(process.execPath, [
+    path.join(repositoryRoot, "scripts", "install-skills.mjs"),
+    "--destination",
+    destination,
+    "--pack",
+    "motion",
+    "--pack",
+    "motion",
+  ]);
+
+  assert.match(
+    await readFile(path.join(destination, "craft-premium-motion", "SKILL.md"), "utf8"),
+    /name: craft-premium-motion/,
+  );
+  assert.match(
+    await readFile(path.join(destination, "reconstructing-images-as-threejs", "SKILL.md"), "utf8"),
+    /name: reconstructing-images-as-threejs/,
+  );
+  await assert.rejects(readFile(path.join(destination, "designing-action-combat", "SKILL.md")), { code: "ENOENT" });
+});
+
+test("Bash wrapper installs a repeated pack selection without unrelated skills", {
+  skip: process.platform === "win32" ? "Windows cannot directly execute the Bash wrapper" : false,
+}, async () => {
   const destination = await mkdtemp(path.join(tmpdir(), "agent-skills-pack-wrapper-"));
 
   await execFileAsync(path.join(repositoryRoot, "install.sh"), [

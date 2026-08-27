@@ -35,7 +35,7 @@ function localizedValue(skill, locales, field) {
 }
 
 function expandPack(pack, skillIndex, locales) {
-  const { skills: skillSlugs, ...properties } = pack;
+  const { $schema: _sourceSchema, skills: skillSlugs, ...properties } = pack;
   return {
     ...properties,
     skillSlugs: [...skillSlugs],

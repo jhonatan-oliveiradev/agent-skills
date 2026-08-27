@@ -6,7 +6,7 @@
     "en",
     "pt-BR"
   ],
-  "sourceDigest": "69f870e0052210f8c6eae17a290a54a1366c4fc7731a60e8d58699adef99afe5",
+  "sourceDigest": "9af07da3a8c53683ee3d84cb24b2cef3afd0434aad776f154ff52e90449910b3",
   "filters": {
     "categories": [
       "delivery",
@@ -1410,7 +1410,6 @@
   ],
   "packs": [
     {
-      "$schema": "../schemas/pack.schema.json",
       "slug": "frontend-product",
       "status": "active",
       "featured": true,
@@ -1554,7 +1553,6 @@
       ]
     },
     {
-      "$schema": "../schemas/pack.schema.json",
       "slug": "game-development",
       "status": "active",
       "featured": true,
@@ -1656,7 +1654,6 @@
       ]
     },
     {
-      "$schema": "../schemas/pack.schema.json",
       "slug": "motion",
       "status": "active",
       "featured": true,
@@ -1758,7 +1755,6 @@
       ]
     },
     {
-      "$schema": "../schemas/pack.schema.json",
       "slug": "architecture-engineering",
       "status": "planned",
       "featured": false,
@@ -1779,8 +1775,8 @@
           "summary": "Orientações planejadas para decisões duráveis de arquitetura e engenharia de software.",
           "description": "Este pack planejado abordará fluxos de arquitetura e engenharia; as skills entrarão por meio de propostas públicas e validação independente.",
           "outcomes": [
-            "Avaliar limites de sistemas e compromissos arquiteturais",
-            "Estabelecer práticas de engenharia sustentáveis entre serviços e aplicações"
+            "Avaliar limites de sistemas e trade-offs arquiteturais",
+            "Estabelecer práticas de engenharia fáceis de manter entre serviços e aplicações"
           ]
         }
       },
@@ -1788,7 +1784,6 @@
       "skills": []
     },
     {
-      "$schema": "../schemas/pack.schema.json",
       "slug": "backend-data",
       "status": "planned",
       "featured": false,
@@ -1818,7 +1813,6 @@
       "skills": []
     },
     {
-      "$schema": "../schemas/pack.schema.json",
       "slug": "quality-testing",
       "status": "planned",
       "featured": false,

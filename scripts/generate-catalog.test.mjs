@@ -70,6 +70,13 @@ test("includes filters, counts, resolved packs, and a stable source digest", asy
   assert.equal(Object.hasOwn(generated, "generatedAt"), false);
 });
 
+test("omits source schema pointers from expanded pack records", async () => {
+  const root = await catalogFixture();
+  const generated = await generateCatalog(root);
+
+  assert.equal(generated.packs.every((pack) => !Object.hasOwn(pack, "$schema")), true);
+});
+
 test("changes the source digest when canonical source data changes", async () => {
   const unchanged = await catalogFixture();
   const changed = await catalogFixture({
