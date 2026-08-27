@@ -91,6 +91,126 @@ repeated when you need more than one skill.
 ./install.ps1 --skill craft-premium-motion
 ```
 
+## Catalog and thematic packs
+
+`skills/<slug>/SKILL.md` remains the canonical agent instruction. Reader-facing
+and discovery metadata lives in `catalog/skills/`, while `catalog/packs/`
+defines ordered pack membership. `catalog/catalog.json` owns the collection
+version and locale contract, and `catalog/generated/catalog.json` is the
+committed deterministic projection for read-only consumers; never edit the
+generated file by hand.
+
+The active, installable packs are:
+
+- `frontend-product` — Frontend & Product (8 skills);
+- `motion` — Motion (5 skills);
+- `game-development` — Game Development (5 skills).
+
+The catalog also publishes three roadmap packs that are not yet installable:
+`architecture-engineering` (Architecture & Engineering), `backend-data`
+(Backend & Data), and `quality-testing` (Quality & Testing).
+
+Install an active pack on Bash or PowerShell:
+
+```bash
+./install.sh --pack motion
+```
+
+```powershell
+./install.ps1 --pack motion
+```
+
+Pack and individual selections can be mixed. Pack members retain manifest
+order, explicit skills follow in lexical order, and duplicates are installed
+only once:
+
+```bash
+./install.sh --pack motion --skill turning-techniques-into-skills
+```
+
+```powershell
+./install.ps1 --pack motion --skill turning-techniques-into-skills
+```
+
+Selecting an unknown pack or a planned pack such as `backend-data` is rejected
+before the destination is changed.
+
+When adding a skill, add its `catalog/skills/<slug>.json` metadata in both `en`
+and `pt-BR`, update every affected pack in both locales, then regenerate and
+validate the catalog:
+
+```bash
+npm run catalog:generate
+npm run catalog:check
+npm run validate:catalog
+npm run validate
+```
+
+Catalog and pack architecture is documented in the
+[approved catalog and packs design](docs/superpowers/specs/2026-08-26-agent-skills-studio-catalog-packs-design.md)
+and the
+[catalog and packs implementation plan](docs/superpowers/plans/2026-08-26-agent-skills-studio-catalog-packs.md).
+
+## Catálogo e pacotes temáticos (Português)
+
+`skills/<slug>/SKILL.md` continua sendo a instrução canônica do agente. Os
+metadados de leitura e descoberta ficam em `catalog/skills/`, enquanto
+`catalog/packs/` define a ordem e os membros de cada pacote.
+`catalog/catalog.json` mantém a versão e o contrato de idiomas da coleção, e
+`catalog/generated/catalog.json` é a projeção determinística versionada para
+consumidores somente leitura; não edite o arquivo gerado manualmente.
+
+Os pacotes ativos e instaláveis são:
+
+- `frontend-product` — Frontend e Produto (8 skills);
+- `motion` — Motion (5 skills);
+- `game-development` — Desenvolvimento de Jogos (5 skills).
+
+O catálogo também publica três pacotes planejados, ainda não instaláveis:
+`architecture-engineering` (Arquitetura e Engenharia), `backend-data` (Backend
+e Dados) e `quality-testing` (Qualidade e Testes).
+
+Instale um pacote ativo com Bash ou PowerShell:
+
+```bash
+./install.sh --pack motion
+```
+
+```powershell
+./install.ps1 --pack motion
+```
+
+É possível combinar seleções de pacote e skill. Os membros dos pacotes mantêm
+a ordem do manifesto, as skills explícitas vêm depois em ordem lexical e
+duplicatas são instaladas apenas uma vez:
+
+```bash
+./install.sh --pack motion --skill turning-techniques-into-skills
+```
+
+```powershell
+./install.ps1 --pack motion --skill turning-techniques-into-skills
+```
+
+Um pacote desconhecido ou planejado, como `backend-data`, é rejeitado antes de
+qualquer alteração no destino.
+
+Ao adicionar uma skill, inclua os metadados em
+`catalog/skills/<slug>.json` nos dois idiomas, `en` e `pt-BR`, atualize cada
+pacote afetado nos dois idiomas e depois gere e valide o catálogo:
+
+```bash
+npm run catalog:generate
+npm run catalog:check
+npm run validate:catalog
+npm run validate
+```
+
+Consulte o
+[design aprovado do catálogo e dos pacotes](docs/superpowers/specs/2026-08-26-agent-skills-studio-catalog-packs-design.md)
+e o
+[plano de implementação do catálogo e dos pacotes](docs/superpowers/plans/2026-08-26-agent-skills-studio-catalog-packs.md).
+
 ## Plugin and local marketplace
 
 The skills-only plugin identifier is `agent-skills-studio`. Its
@@ -152,10 +272,14 @@ Inside Codex, you can then work normally. The project-local `AGENTS.md` provides
 ## Validate
 
 ```bash
-node scripts/validate-skills.mjs
+npm test
+npm run validate
 ```
 
-The validator checks folder/name consistency, required frontmatter, trigger descriptions, duplicate names, and basic privacy guardrails.
+The aggregate gate runs every test, validates skills and bilingual catalog
+metadata, confirms the generated catalog is byte-current, and validates the
+plugin. Skill validation checks folder/name consistency, required frontmatter,
+trigger descriptions, duplicate names, and privacy guardrails.
 
 ## Recommended repository instructions
 

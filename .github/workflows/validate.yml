@@ -24,8 +24,12 @@ jobs:
         shell: bash
         run: |
           target="$(mktemp -d)"
+          pack_target="$(mktemp -d)"
           ./install.sh --destination "$target"
+          ./install.sh --destination "$pack_target" --pack motion
           test -f "$target/craft-premium-motion/SKILL.md"
+          test -f "$pack_target/craft-premium-motion/SKILL.md"
+          test ! -e "$pack_target/designing-action-combat/SKILL.md"
       - name: Smoke test PowerShell installer
         if: runner.os == 'Windows'
         shell: pwsh
@@ -33,3 +37,7 @@ jobs:
           $target = Join-Path $env:RUNNER_TEMP "agent-skills-install"
           ./install.ps1 --destination $target
           if (-not (Test-Path (Join-Path $target "craft-premium-motion/SKILL.md"))) { exit 1 }
+          $packTarget = Join-Path $env:RUNNER_TEMP "agent-skills-motion-pack"
+          ./install.ps1 --destination $packTarget --pack motion
+          if (-not (Test-Path (Join-Path $packTarget "craft-premium-motion/SKILL.md"))) { exit 1 }
+          if (Test-Path (Join-Path $packTarget "designing-action-combat/SKILL.md")) { exit 1 }

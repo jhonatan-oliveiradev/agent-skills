@@ -4,10 +4,13 @@
   "private": true,
   "description": "Curated Agent Skills for frontend, product design, motion, delivery, and game-development workflows.",
   "scripts": {
-    "validate": "node scripts/validate-skills.mjs && node scripts/validate-plugin.mjs",
+    "validate": "node scripts/validate-skills.mjs && node scripts/validate-catalog.mjs && node scripts/generate-catalog.mjs --check && node scripts/validate-plugin.mjs",
     "validate:skills": "node scripts/validate-skills.mjs",
+    "validate:catalog": "node scripts/validate-catalog.mjs",
     "validate:plugin": "node scripts/validate-plugin.mjs",
-    "test": "node --test scripts/*.test.mjs",
+    "catalog:generate": "node scripts/generate-catalog.mjs",
+    "catalog:check": "node scripts/generate-catalog.mjs --check",
+    "test": "node --test scripts/*.test.mjs scripts/lib/*.test.mjs",
     "setup:project": "node scripts/bootstrap-project.mjs",
     "create:web-app": "node scripts/create-web-app.mjs"
   },
