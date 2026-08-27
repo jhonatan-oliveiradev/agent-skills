@@ -3,10 +3,12 @@ import { mkdir, mkdtemp, rename, symlink, writeFile } from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
 import test from "node:test";
+import { fileURLToPath } from "node:url";
 
 import { validateCatalog } from "./validate-catalog.mjs";
 
 const version = "1.0.0-beta.1";
+const repositoryRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 
 function localizedSkill(name) {
   return {
@@ -269,4 +271,13 @@ test("rejects duplicate dependency names", async () => {
   });
   const { errors } = await validateCatalog(root);
   assert.equal(errors.some((error) => error.includes("duplicate dependency: shared-tool")), true);
+});
+
+test("validates all real catalog records and packs", async () => {
+  assert.deepEqual(await validateCatalog(repositoryRoot), {
+    errors: [],
+    skillCount: 18,
+    packCount: 6,
+    activePackCount: 3,
+  });
 });

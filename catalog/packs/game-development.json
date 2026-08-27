@@ -1,0 +1,29 @@
+{
+  "$schema": "../schemas/pack.schema.json",
+  "slug": "game-development",
+  "status": "active",
+  "featured": true,
+  "color": "amber",
+  "version": "1.0.0-beta.1",
+  "skills": [
+    "designing-action-combat",
+    "building-hybrid-game-assets",
+    "creating-character-sprite-pipelines",
+    "reconstructing-images-as-threejs",
+    "testing-playable-games"
+  ],
+  "locales": {
+    "en": {
+      "name": "Game Development",
+      "summary": "Combat design, asset production, character animation, procedural 3D, and playable-build verification.",
+      "description": "An end-to-end workflow for defining readable action combat, producing coherent runtime assets and character animation, evaluating procedural 3D, and testing features through real gameplay sequences.",
+      "outcomes": ["Create readable combat supported by consistent, runtime-ready assets", "Verify gameplay, animation, progression, and performance before release"]
+    },
+    "pt-BR": {
+      "name": "Desenvolvimento de Jogos",
+      "summary": "Design de combate, produção de assets, animação de personagens, 3D procedural e verificação de builds jogáveis.",
+      "description": "Um fluxo completo para definir combate de ação legível, produzir assets de runtime e animações de personagens coerentes, avaliar 3D procedural e testar funcionalidades em sequências reais de gameplay.",
+      "outcomes": ["Criar combate legível apoiado por assets consistentes e prontos para runtime", "Verificar gameplay, animação, progressão e performance antes da entrega"]
+    }
+  }
+}

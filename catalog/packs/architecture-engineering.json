@@ -1,0 +1,23 @@
+{
+  "$schema": "../schemas/pack.schema.json",
+  "slug": "architecture-engineering",
+  "status": "planned",
+  "featured": false,
+  "color": "cyan",
+  "version": "1.0.0-beta.1",
+  "skills": [],
+  "locales": {
+    "en": {
+      "name": "Architecture & Engineering",
+      "summary": "Planned guidance for durable software architecture and engineering decisions.",
+      "description": "This planned pack will cover architecture and engineering workflows; skills will enter through public proposals and independent validation.",
+      "outcomes": ["Evaluate system boundaries and architectural tradeoffs", "Establish maintainable engineering practices across services and applications"]
+    },
+    "pt-BR": {
+      "name": "Arquitetura e Engenharia",
+      "summary": "Orientações planejadas para decisões duráveis de arquitetura e engenharia de software.",
+      "description": "Este pack planejado abordará fluxos de arquitetura e engenharia; as skills entrarão por meio de propostas públicas e validação independente.",
+      "outcomes": ["Avaliar limites de sistemas e compromissos arquiteturais", "Estabelecer práticas de engenharia sustentáveis entre serviços e aplicações"]
+    }
+  }
+}

@@ -1,0 +1,39 @@
+{
+  "$schema": "../schemas/skill.schema.json",
+  "slug": "designing-ui-systems",
+  "category": "product-design",
+  "packs": ["frontend-product"],
+  "maturity": "stable",
+  "difficulty": "intermediate",
+  "featured": true,
+  "compatibility": {
+    "surfaces": ["chatgpt", "codex"],
+    "operatingSystems": ["linux", "macos", "windows"],
+    "installModes": ["plugin", "filesystem"]
+  },
+  "tags": ["design-systems", "design-tokens", "component-apis", "responsive-design", "accessibility"],
+  "dependencies": [],
+  "relatedSkills": ["building-premium-nextjs-interfaces"],
+  "version": "1.0.0-beta.1",
+  "updatedAt": "2026-08-26",
+  "locales": {
+    "en": {
+      "displayName": "Designing UI Systems",
+      "summary": "Turns repeated interface decisions into semantic foundations, reusable component contracts, explicit states, and responsive rules.",
+      "primaryBenefit": "Keeps experiences consistent and reusable across screens without over-abstracting one-off design.",
+      "whenToUse": "Use when a project needs reusable UI tokens, component conventions, variants, responsive rules, or a coherent design system across multiple screens or features.",
+      "whenNotToUse": "Do not use to tokenize an isolated one-off design or create variants and abstractions that no real screen requires.",
+      "useCases": ["Define semantic tokens and foundations for a multi-screen product", "Standardize accessible component variants and responsive behavior"],
+      "examplePrompts": ["Use designing-ui-systems to turn these repeated interface patterns into a coherent token and component system."]
+    },
+    "pt-BR": {
+      "displayName": "Design de Sistemas de UI",
+      "summary": "Transforma decisões recorrentes de interface em fundamentos semânticos, contratos de componentes reutilizáveis, estados explícitos e regras responsivas.",
+      "primaryBenefit": "Mantém experiências consistentes e reutilizáveis entre telas sem abstrair em excesso elementos pontuais.",
+      "whenToUse": "Use quando um projeto precisar de tokens de UI reutilizáveis, convenções de componentes, variantes, regras responsivas ou um design system coerente entre várias telas ou funcionalidades.",
+      "whenNotToUse": "Não use para tokenizar um design pontual e isolado nem para criar variantes e abstrações que nenhuma tela real exige.",
+      "useCases": ["Definir tokens semânticos e fundamentos para um produto com várias telas", "Padronizar variantes acessíveis de componentes e comportamento responsivo"],
+      "examplePrompts": ["Use designing-ui-systems para transformar estes padrões recorrentes de interface em um sistema coerente de tokens e componentes."]
+    }
+  }
+}

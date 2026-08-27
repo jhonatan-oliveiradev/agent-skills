@@ -1,0 +1,23 @@
+{
+  "$schema": "../schemas/pack.schema.json",
+  "slug": "backend-data",
+  "status": "planned",
+  "featured": false,
+  "color": "green",
+  "version": "1.0.0-beta.1",
+  "skills": [],
+  "locales": {
+    "en": {
+      "name": "Backend & Data",
+      "summary": "Planned guidance for backend services, data models, storage, and operational reliability.",
+      "description": "This planned pack will cover backend and data workflows; skills will enter through public proposals and independent validation.",
+      "outcomes": ["Design dependable backend and data flows", "Operate storage and service boundaries with clear reliability criteria"]
+    },
+    "pt-BR": {
+      "name": "Backend e Dados",
+      "summary": "Orientações planejadas para serviços de backend, modelos de dados, armazenamento e confiabilidade operacional.",
+      "description": "Este pack planejado abordará fluxos de backend e dados; as skills entrarão por meio de propostas públicas e validação independente.",
+      "outcomes": ["Projetar fluxos confiáveis de backend e dados", "Operar limites de armazenamento e serviços com critérios claros de confiabilidade"]
+    }
+  }
+}

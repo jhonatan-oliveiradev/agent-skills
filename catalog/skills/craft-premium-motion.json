@@ -1,0 +1,39 @@
+{
+  "$schema": "../schemas/skill.schema.json",
+  "slug": "craft-premium-motion",
+  "category": "motion",
+  "packs": ["motion"],
+  "maturity": "stable",
+  "difficulty": "advanced",
+  "featured": true,
+  "compatibility": {
+    "surfaces": ["chatgpt", "codex"],
+    "operatingSystems": ["linux", "macos", "windows"],
+    "installModes": ["plugin", "filesystem"]
+  },
+  "tags": ["web-motion", "motion-design", "animation-performance", "accessibility", "interaction-design"],
+  "dependencies": [],
+  "relatedSkills": ["engineering-gsap-animations"],
+  "version": "1.0.0-beta.1",
+  "updatedAt": "2026-08-26",
+  "locales": {
+    "en": {
+      "displayName": "Craft Premium Motion",
+      "summary": "Directs and engineers a coherent motion system from product intent through technology routing, implementation, and experiential verification.",
+      "primaryBenefit": "Creates purposeful, distinctive motion that remains responsive, inclusive, performant, and maintainable.",
+      "whenToUse": "Use when designing, implementing, refining, or auditing premium web motion systems, including microinteractions, transitions, scroll choreography, reveals, kinetic typography, smooth scrolling, SVG, canvas, WebGL, 3D, loaders, ambient effects, and animation performance. Applies to React, Next.js, Vue, Svelte, and vanilla projects needing coherent motion, reference-inspired movement, motion tokens, or fixes for janky, excessive, or inaccessible animation.",
+      "whenNotToUse": "Do not use for a single isolated transition with no wider motion decisions, or for motion that blocks content, navigation, or task completion.",
+      "useCases": ["Define a coherent motion language for a product", "Refine an existing interface with accessible, performant animation"],
+      "examplePrompts": ["Use craft-premium-motion to define and implement the motion direction for this web experience."]
+    },
+    "pt-BR": {
+      "displayName": "Criação de Motion Premium",
+      "summary": "Orienta e implementa um sistema de motion coerente, da intenção do produto ao direcionamento tecnológico, à execução e à verificação da experiência.",
+      "primaryBenefit": "Cria movimentos intencionais e distintos que permanecem responsivos, inclusivos, performáticos e fáceis de manter.",
+      "whenToUse": "Use ao projetar, implementar, refinar ou auditar sistemas premium de motion para web, incluindo microinterações, transições, coreografia de scroll, revelações, tipografia cinética, rolagem suave, SVG, canvas, WebGL, 3D, loaders, efeitos ambientes e performance de animação. Aplica-se a projetos em React, Next.js, Vue, Svelte e JavaScript puro que precisem de motion coerente, movimento inspirado em referências, tokens de motion ou correções para animações travadas, excessivas ou inacessíveis.",
+      "whenNotToUse": "Não use para uma única transição isolada sem decisões mais amplas de motion, nem para movimentos que bloqueiem conteúdo, navegação ou a conclusão de tarefas.",
+      "useCases": ["Definir uma linguagem de motion coerente para um produto", "Refinar uma interface existente com animações acessíveis e performáticas"],
+      "examplePrompts": ["Use craft-premium-motion para definir e implementar a direção de motion desta experiência web."]
+    }
+  }
+}
