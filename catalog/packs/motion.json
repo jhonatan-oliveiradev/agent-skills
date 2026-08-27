@@ -1,0 +1,29 @@
+{
+  "$schema": "../schemas/pack.schema.json",
+  "slug": "motion",
+  "status": "active",
+  "featured": true,
+  "color": "violet",
+  "version": "1.0.0-beta.1",
+  "skills": [
+    "craft-premium-motion",
+    "engineering-gsap-animations",
+    "orchestrating-cinematic-web-motion",
+    "optimizing-frontend-motion-performance",
+    "reconstructing-images-as-threejs"
+  ],
+  "locales": {
+    "en": {
+      "name": "Motion",
+      "summary": "Direction, engineering, and performance for purposeful interface motion.",
+      "description": "A coordinated workflow for planning, building, and auditing expressive web motion, from interaction systems and cinematic sequences to procedural 3D and runtime performance.",
+      "outcomes": ["Define a coherent and accessible motion language", "Ship expressive animation and procedural 3D with reliable runtime behavior"]
+    },
+    "pt-BR": {
+      "name": "Motion",
+      "summary": "Direção, engenharia e performance para movimentos de interface com propósito.",
+      "description": "Um fluxo coordenado para planejar, construir e auditar motion expressivo para web, de sistemas de interação e sequências cinematográficas a 3D procedural e performance em runtime.",
+      "outcomes": ["Definir uma linguagem de motion coerente e acessível", "Entregar animações expressivas e 3D procedural com comportamento confiável em runtime"]
+    }
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://skills.jhonatanoliveira.com/schemas/catalog.schema.json",
+  "title": "Agent Skills Studio catalog manifest",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["$schema", "schemaVersion", "version", "defaultLocale", "locales"],
+  "properties": {
+    "$schema": { "const": "./schemas/catalog.schema.json" },
+    "schemaVersion": { "const": 1 },
+    "version": {
+      "type": "string",
+      "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+(?:-[0-9A-Za-z]+(?:[.-][0-9A-Za-z]+)*)?$"
+    },
+    "defaultLocale": { "const": "en" },
+    "locales": {
+      "type": "array",
+      "prefixItems": [{ "const": "en" }, { "const": "pt-BR" }],
+      "items": false,
+      "minItems": 2,
+      "maxItems": 2,
+      "uniqueItems": true
+    }
+  }
+}

@@ -45,6 +45,15 @@ test("scans regular files recursively for private-data patterns", async () => {
   assert.equal(errors.some((error) => error.includes("scripts/private.txt") && error.includes("forbidden private-data pattern")), true);
 });
 
+test("uses the shared privacy policy for supporting files", async () => {
+  const root = await fixture({ alpha: "---\nname: alpha\ndescription: Use when alpha applies.\n---\n" });
+  const references = path.join(root, "skills", "alpha", "references");
+  await mkdir(references, { recursive: true });
+  await writeFile(path.join(references, "secret.md"), "sk-proj-abcdefghijklmnopqrstuvwxyz");
+
+  assert.equal((await validateSkills(root)).errors.some((error) => error.includes("forbidden private-data pattern")), true);
+});
+
 test("rejects symbolic links inside skill directories", async (t) => {
   const root = await fixture({ alpha: "---\nname: alpha\ndescription: Use when alpha applies.\n---\n" });
   const outside = path.join(root, "outside.txt");

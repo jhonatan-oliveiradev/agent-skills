@@ -1,0 +1,64 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://skills.jhonatanoliveira.com/schemas/pack.schema.json",
+  "title": "Agent Skills Studio pack manifest",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["$schema", "slug", "status", "featured", "color", "version", "skills", "locales"],
+  "properties": {
+    "$schema": { "const": "../schemas/pack.schema.json" },
+    "slug": { "$ref": "#/$defs/slug" },
+    "status": { "enum": ["active", "planned"] },
+    "featured": { "type": "boolean" },
+    "color": { "$ref": "#/$defs/nonemptyString" },
+    "version": { "$ref": "#/$defs/version" },
+    "skills": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/slug" },
+      "uniqueItems": true
+    },
+    "locales": { "$ref": "#/$defs/locales" }
+  },
+  "allOf": [
+    {
+      "if": { "required": ["status"], "properties": { "status": { "const": "active" } } },
+      "then": { "properties": { "skills": { "minItems": 1 } } }
+    },
+    {
+      "if": { "required": ["status"], "properties": { "status": { "const": "planned" } } },
+      "then": { "properties": { "skills": { "maxItems": 0 } } }
+    }
+  ],
+  "$defs": {
+    "nonemptyString": { "type": "string", "minLength": 1, "pattern": "\\S" },
+    "slug": { "type": "string", "pattern": "^[a-z0-9-]+$" },
+    "version": {
+      "type": "string",
+      "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+(?:-[0-9A-Za-z]+(?:[.-][0-9A-Za-z]+)*)?$"
+    },
+    "localizedPack": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "summary", "description", "outcomes"],
+      "properties": {
+        "name": { "$ref": "#/$defs/nonemptyString" },
+        "summary": { "$ref": "#/$defs/nonemptyString" },
+        "description": { "$ref": "#/$defs/nonemptyString" },
+        "outcomes": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/nonemptyString" },
+          "minItems": 1
+        }
+      }
+    },
+    "locales": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["en", "pt-BR"],
+      "properties": {
+        "en": { "$ref": "#/$defs/localizedPack" },
+        "pt-BR": { "$ref": "#/$defs/localizedPack" }
+      }
+    }
+  }
+}

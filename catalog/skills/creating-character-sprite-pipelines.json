@@ -1,0 +1,39 @@
+{
+  "$schema": "../schemas/skill.schema.json",
+  "slug": "creating-character-sprite-pipelines",
+  "category": "game-development",
+  "packs": ["game-development"],
+  "maturity": "stable",
+  "difficulty": "advanced",
+  "featured": false,
+  "compatibility": {
+    "surfaces": ["chatgpt", "codex"],
+    "operatingSystems": ["linux", "macos", "windows"],
+    "installModes": ["plugin", "filesystem"]
+  },
+  "tags": ["sprite-animation", "character-art", "game-assets", "animation-pipeline"],
+  "dependencies": [],
+  "relatedSkills": ["building-hybrid-game-assets"],
+  "version": "1.0.0-beta.1",
+  "updatedAt": "2026-08-26",
+  "locales": {
+    "en": {
+      "displayName": "Creating Character Sprite Pipelines",
+      "summary": "Builds a model-sheet-led workflow for consistent character poses, cycles, transitions, equipment, and follow-through animation.",
+      "primaryBenefit": "Produces readable sprite sets that preserve anatomy, silhouette, equipment, and motion continuity across gameplay states.",
+      "whenToUse": "Use when defining, generating, reviewing, or expanding a 2D character sprite set that must remain anatomically consistent across idle, movement, combat, directional, and transition animations.",
+      "whenNotToUse": "Do not use for a one-off static character asset or before the character model sheet and required gameplay states are defined.",
+      "useCases": ["Plan a complete locomotion and combat sprite set", "Review animation cycles for anatomical and equipment continuity"],
+      "examplePrompts": ["Use creating-character-sprite-pipelines to define a consistent sprite workflow for this playable character."]
+    },
+    "pt-BR": {
+      "displayName": "Criação de Pipelines de Sprites de Personagens",
+      "summary": "Constrói um fluxo guiado por model sheet para poses, ciclos, transições, equipamentos e camadas de acompanhamento (follow-through) consistentes.",
+      "primaryBenefit": "Produz conjuntos de sprites legíveis que preservam anatomia, silhueta, equipamentos e continuidade de movimento entre estados de gameplay.",
+      "whenToUse": "Use ao definir, gerar, revisar ou expandir um conjunto de sprites 2D de personagem que precise manter consistência anatômica entre animações de repouso, movimento, combate, direção e transição.",
+      "whenNotToUse": "Não use para um asset estático e isolado de personagem nem antes de definir o model sheet e os estados de gameplay necessários.",
+      "useCases": ["Planejar um conjunto completo de sprites de locomoção e combate", "Revisar ciclos de animação quanto à continuidade anatômica, dos equipamentos e das camadas de acompanhamento (follow-through)"],
+      "examplePrompts": ["Use creating-character-sprite-pipelines para definir um fluxo de sprites consistente para este personagem jogável."]
+    }
+  }
+}

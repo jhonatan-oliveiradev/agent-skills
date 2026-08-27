@@ -10,6 +10,25 @@ Legend:
 - **Deferred** — useful, but should stay upstream until a project needs the exact technique.
 - **Skipped** — too voice-specific, vendor-specific, or unrelated to the current workflow.
 
+## Catalog distribution mapping
+
+This distribution layer does not change any attribution decision recorded
+below. Active packs group existing local skills for installation; planned packs
+publish roadmap categories without claiming members.
+
+| Pack | Status | Distribution mapping |
+|---|---|---|
+| Frontend & Product (`frontend-product`) | Active | 8 frontend, product-design, and delivery skills |
+| Motion (`motion`) | Active | 5 motion and procedural-3D skills |
+| Game Development (`game-development`) | Active | 5 game-development and procedural-3D skills |
+| Architecture & Engineering (`architecture-engineering`) | Planned | No members until the category is implemented |
+| Backend & Data (`backend-data`) | Planned | No members until the category is implemented |
+| Quality & Testing (`quality-testing`) | Planned | No members until the category is implemented |
+
+`reconstructing-images-as-threejs` intentionally appears in both Motion and
+Game Development. This cross-pack placement clarifies distribution only; its
+upstream attribution remains unchanged.
+
 ## Codex workflows
 
 | Upstream | Decision | Local destination |

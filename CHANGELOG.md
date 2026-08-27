@@ -4,6 +4,12 @@ All notable changes to this skill library are documented here.
 
 ## [1.0.0-beta.1] - Unreleased
 
+### Catalog & Packs
+
+- Added one bilingual metadata record for each of the 18 canonical skills, with complete English and Brazilian Portuguese reader guidance.
+- Added active Frontend & Product, Motion, and Game Development packs plus planned Architecture & Engineering, Backend & Data, and Quality & Testing packs.
+- Added deterministic catalog generation and validation, pack-aware Bash and PowerShell installation, and shared local/CI package gates.
+
 ### Added
 - Canonical skill migration to `skills/`, with no root-level compatibility copies.
 - Shared Node installer used by the Bash and PowerShell entry points, including complete-collection and named-skill installation.

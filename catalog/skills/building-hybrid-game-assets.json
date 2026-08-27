@@ -1,0 +1,39 @@
+{
+  "$schema": "../schemas/skill.schema.json",
+  "slug": "building-hybrid-game-assets",
+  "category": "game-development",
+  "packs": ["game-development"],
+  "maturity": "stable",
+  "difficulty": "advanced",
+  "featured": false,
+  "compatibility": {
+    "surfaces": ["chatgpt", "codex"],
+    "operatingSystems": ["linux", "macos", "windows"],
+    "installModes": ["plugin", "filesystem"]
+  },
+  "tags": ["game-assets", "asset-pipeline", "runtime-performance", "visual-consistency"],
+  "dependencies": [],
+  "relatedSkills": ["reconstructing-images-as-threejs"],
+  "version": "1.0.0-beta.1",
+  "updatedAt": "2026-08-26",
+  "locales": {
+    "en": {
+      "displayName": "Building Hybrid Game Assets",
+      "summary": "Plans a coherent production pipeline across sprites, meshes, procedural geometry, textures, effects, and purchased assets.",
+      "primaryBenefit": "Keeps game assets visually consistent, runtime-aware, and economical to iterate.",
+      "whenToUse": "Use when a game needs a practical pipeline combining generated, hand-authored, 2D, 3D, procedural, or purchased assets while keeping visual consistency, runtime constraints, and iteration speed under control.",
+      "whenNotToUse": "Do not use when a single established asset format already satisfies the game's visual, runtime, and iteration requirements.",
+      "useCases": ["Choose the right representation for each gameplay asset class", "Validate a gold-standard asset in-engine before batch production"],
+      "examplePrompts": ["Use building-hybrid-game-assets to define a consistent, runtime-ready asset pipeline for this game."]
+    },
+    "pt-BR": {
+      "displayName": "Produção Híbrida de Assets para Jogos",
+      "summary": "Planeja um fluxo de produção coerente entre assets gerados, criados manualmente, procedurais e adquiridos, incluindo sprites, meshes, texturas e efeitos.",
+      "primaryBenefit": "Mantém os assets do jogo visualmente consistentes, adequados ao runtime e econômicos para iterar.",
+      "whenToUse": "Use quando um jogo precisar de um fluxo prático que combine assets gerados, criados manualmente, 2D, 3D, procedurais ou adquiridos, mantendo sob controle a consistência visual, as restrições de runtime e a velocidade de iteração.",
+      "whenNotToUse": "Não use quando um único formato de asset já estabelecido atender aos requisitos visuais, de runtime e de iteração do jogo.",
+      "useCases": ["Escolher a representação adequada para cada classe de asset de gameplay", "Validar no motor um asset de referência antes da produção em lote"],
+      "examplePrompts": ["Use building-hybrid-game-assets para definir um fluxo de assets consistente e pronto para o runtime deste jogo."]
+    }
+  }
+}

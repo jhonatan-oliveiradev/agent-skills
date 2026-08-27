@@ -1,0 +1,146 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://skills.jhonatanoliveira.com/schemas/skill.schema.json",
+  "title": "Agent Skills Studio skill metadata",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "$schema",
+    "slug",
+    "category",
+    "packs",
+    "maturity",
+    "difficulty",
+    "featured",
+    "compatibility",
+    "tags",
+    "dependencies",
+    "relatedSkills",
+    "version",
+    "updatedAt",
+    "locales"
+  ],
+  "properties": {
+    "$schema": { "const": "../schemas/skill.schema.json" },
+    "slug": { "$ref": "#/$defs/slug" },
+    "category": {
+      "enum": ["frontend", "product-design", "motion", "game-development", "delivery", "meta"]
+    },
+    "packs": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/slug" },
+      "uniqueItems": true
+    },
+    "maturity": {
+      "enum": ["proposed", "research", "experimental", "beta", "stable", "deprecated"]
+    },
+    "difficulty": { "enum": ["beginner", "intermediate", "advanced"] },
+    "featured": { "type": "boolean" },
+    "compatibility": { "$ref": "#/$defs/compatibility" },
+    "tags": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/nonemptyString" },
+      "uniqueItems": true
+    },
+    "dependencies": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/dependency" },
+      "uniqueItems": true
+    },
+    "relatedSkills": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/slug" },
+      "uniqueItems": true
+    },
+    "version": { "$ref": "#/$defs/version" },
+    "updatedAt": { "$ref": "#/$defs/date" },
+    "locales": { "$ref": "#/$defs/locales" }
+  },
+  "$defs": {
+    "nonemptyString": { "type": "string", "minLength": 1, "pattern": "\\S" },
+    "slug": { "type": "string", "pattern": "^[a-z0-9-]+$" },
+    "version": {
+      "type": "string",
+      "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+(?:-[0-9A-Za-z]+(?:[.-][0-9A-Za-z]+)*)?$"
+    },
+    "date": {
+      "type": "string",
+      "pattern": "^[0-9]{4}-(?:0[1-9]|1[0-2])-(?:0[1-9]|[12][0-9]|3[01])$"
+    },
+    "compatibility": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["surfaces", "operatingSystems", "installModes"],
+      "properties": {
+        "surfaces": {
+          "type": "array",
+          "items": { "enum": ["chatgpt", "codex"] },
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "operatingSystems": {
+          "type": "array",
+          "items": { "enum": ["linux", "macos", "windows"] },
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "installModes": {
+          "type": "array",
+          "items": { "enum": ["plugin", "filesystem"] },
+          "minItems": 1,
+          "uniqueItems": true
+        }
+      }
+    },
+    "dependency": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "type", "required"],
+      "properties": {
+        "name": { "$ref": "#/$defs/nonemptyString" },
+        "type": { "enum": ["library", "tool", "service", "skill"] },
+        "required": { "type": "boolean" },
+        "url": { "type": "string", "format": "uri", "pattern": "^https://" }
+      }
+    },
+    "localizedSkill": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "displayName",
+        "summary",
+        "primaryBenefit",
+        "whenToUse",
+        "whenNotToUse",
+        "useCases",
+        "examplePrompts"
+      ],
+      "properties": {
+        "displayName": { "$ref": "#/$defs/nonemptyString" },
+        "summary": { "$ref": "#/$defs/nonemptyString" },
+        "primaryBenefit": { "$ref": "#/$defs/nonemptyString" },
+        "whenToUse": { "$ref": "#/$defs/nonemptyString" },
+        "whenNotToUse": { "$ref": "#/$defs/nonemptyString" },
+        "useCases": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/nonemptyString" },
+          "minItems": 2
+        },
+        "examplePrompts": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/nonemptyString" },
+          "minItems": 1
+        }
+      }
+    },
+    "locales": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["en", "pt-BR"],
+      "properties": {
+        "en": { "$ref": "#/$defs/localizedSkill" },
+        "pt-BR": { "$ref": "#/$defs/localizedSkill" }
+      }
+    }
+  }
+}

@@ -3,14 +3,7 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 
 import { inspectSkillsRoot } from "./lib/skills.mjs";
-
-const forbiddenPrivatePatterns = [
-  /-----BEGIN (?:RSA |EC |OPENSSH )?PRIVATE KEY-----/,
-  /\b(?:sk|sk-proj)-[A-Za-z0-9_-]{20,}\b/,
-  /\bgh[pousr]_[A-Za-z0-9]{20,}\b/,
-  /\b(?:AKIA|ASIA)[A-Z0-9]{16}\b/,
-  /https?:\/\/(?:[^\s/]+\.)?internal(?:[./:]|\b)/i,
-];
+import { containsForbiddenPrivateData } from "./lib/privacy.mjs";
 
 async function collectRegularFiles(directory, skillRoot, skillName, errors) {
   const files = [];
@@ -41,11 +34,9 @@ export async function validateSkills(root) {
     const regularFiles = await collectRegularFiles(directory, directory, directoryName, errors);
     for (const file of regularFiles) {
       const fileText = await readFile(file, "utf8");
-      for (const pattern of forbiddenPrivatePatterns) {
-        if (pattern.test(fileText)) {
-          const relative = path.relative(directory, file).split(path.sep).join("/");
-          errors.push(`${directoryName}/${relative}: contains a forbidden private-data pattern`);
-        }
+      if (containsForbiddenPrivateData(fileText)) {
+        const relative = path.relative(directory, file).split(path.sep).join("/");
+        errors.push(`${directoryName}/${relative}: contains a forbidden private-data pattern`);
       }
     }
 

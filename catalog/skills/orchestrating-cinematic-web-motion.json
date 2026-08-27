@@ -1,0 +1,39 @@
+{
+  "$schema": "../schemas/skill.schema.json",
+  "slug": "orchestrating-cinematic-web-motion",
+  "category": "motion",
+  "packs": ["motion"],
+  "maturity": "stable",
+  "difficulty": "advanced",
+  "featured": true,
+  "compatibility": {
+    "surfaces": ["chatgpt", "codex"],
+    "operatingSystems": ["linux", "macos", "windows"],
+    "installModes": ["plugin", "filesystem"]
+  },
+  "tags": ["web-motion", "scroll-animation", "gsap", "motion-design", "accessibility"],
+  "dependencies": [],
+  "relatedSkills": ["craft-premium-motion"],
+  "version": "1.0.0-beta.1",
+  "updatedAt": "2026-08-26",
+  "locales": {
+    "en": {
+      "displayName": "Orchestrating Cinematic Web Motion",
+      "summary": "Assigns motion roles and technology ownership across reveals, scroll narratives, direct manipulation, ambient detail, and interaction states.",
+      "primaryBenefit": "Gives React and Next.js experiences a coherent sense of hierarchy, depth, and cinematic pacing without sacrificing usability.",
+      "whenToUse": "Use when a React or Next.js interface needs a coherent premium motion language involving scroll choreography, reveals, parallax, pinned scenes, hover motion, or cinematic transitions.",
+      "whenNotToUse": "Do not use before the static layout works well or for a simple isolated hover, focus, or tap transition that CSS can own.",
+      "useCases": ["Plan a scroll-driven narrative with clear motion roles", "Coordinate reveals, hover motion, and reduced-motion fallbacks"],
+      "examplePrompts": ["Use orchestrating-cinematic-web-motion to choreograph this Next.js page with restrained scroll scenes and complete reduced-motion states."]
+    },
+    "pt-BR": {
+      "displayName": "Orquestração de Motion Cinematográfico para Web",
+      "summary": "Distribui papéis e responsabilidades tecnológicas de motion entre revelações, narrativas de scroll, manipulação direta, detalhes ambientes e estados de interação.",
+      "primaryBenefit": "Dá a experiências em React e Next.js hierarquia, profundidade e ritmo cinematográfico coerentes sem comprometer a usabilidade.",
+      "whenToUse": "Use quando uma interface em React ou Next.js precisar de uma linguagem premium e coerente de motion que envolva coreografia de scroll, revelações, parallax, cenas fixadas, movimentos de hover ou transições cinematográficas.",
+      "whenNotToUse": "Não use antes de o layout estático funcionar bem nem para uma transição simples e isolada de hover, foco ou toque que possa ser controlada por CSS.",
+      "useCases": ["Planejar uma narrativa guiada por scroll com papéis claros de motion", "Coordenar revelações, movimentos de hover e alternativas para redução de movimento"],
+      "examplePrompts": ["Use orchestrating-cinematic-web-motion para coreografar esta página em Next.js com cenas de scroll contidas e estados completos de redução de movimento."]
+    }
+  }
+}
