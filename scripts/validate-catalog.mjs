@@ -20,6 +20,35 @@ const localizedSkillFields = ["displayName", "summary", "primaryBenefit", "whenT
 const slugPattern = /^[a-z0-9-]+$/;
 const versionPattern = /^[0-9]+\.[0-9]+\.[0-9]+(?:-[0-9A-Za-z]+(?:[.-][0-9A-Za-z]+)*)?$/;
 const datePattern = /^([0-9]{4})-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/;
+const reservedDnsSuffixes = ["alt", "arpa", "example", "invalid", "internal", "local", "localhost", "onion", "test"];
+const reservedDnsNames = ["example.com", "example.net", "example.org"];
+const specialUseIpv4Cidrs = [
+  ["0.0.0.0", 8],
+  ["10.0.0.0", 8],
+  ["100.64.0.0", 10],
+  ["127.0.0.0", 8],
+  ["169.254.0.0", 16],
+  ["172.16.0.0", 12],
+  ["192.0.0.0", 24],
+  ["192.0.2.0", 24],
+  ["192.31.196.0", 24],
+  ["192.52.193.0", 24],
+  ["192.88.99.0", 24],
+  ["192.168.0.0", 16],
+  ["192.175.48.0", 24],
+  ["198.18.0.0", 15],
+  ["198.51.100.0", 24],
+  ["203.0.113.0", 24],
+  ["224.0.0.0", 4],
+  ["240.0.0.0", 4],
+];
+const specialUseIpv6Cidrs = [
+  ["2001::", 23],
+  ["2001:db8::", 32],
+  ["2002::", 16],
+  ["2620:4f:8000::", 48],
+  ["3fff::", 20],
+];
 
 function compareStrings(left, right) {
   return left < right ? -1 : left > right ? 1 : 0;
@@ -97,6 +126,13 @@ async function loadRecordDirectory(directory, repoRoot, blockedPaths, errors) {
   return { records, files };
 }
 
+async function collectJsonSyntaxErrors(files, repoRoot, errors) {
+  for (const file of files) {
+    const loaded = await readJson(file);
+    if (loaded.error) errors.push(relativeReadError(repoRoot, file, loaded.error));
+  }
+}
+
 export async function loadCatalog(repoRoot) {
   const root = path.resolve(repoRoot);
   const paths = getCatalogPaths(root);
@@ -106,6 +142,7 @@ export async function loadCatalog(repoRoot) {
   for (const file of tree.symbolicLinks) {
     errors.push(`${relativeFile(root, file)}: symbolic links are not allowed`);
   }
+  await collectJsonSyntaxErrors(tree.jsonFiles, root, errors);
 
   let manifest = null;
   if (!isBlockedPath(paths.manifestFile, blockedPaths)) {
@@ -129,7 +166,7 @@ export async function loadCatalog(repoRoot) {
       packs: packSources.files,
       jsonSources: tree.jsonFiles.map((file) => ({ file, relative: relativeFile(root, file) })),
     },
-    errors: errors.sort(compareStrings),
+    errors: [...new Set(errors)].sort(compareStrings),
   };
 }
 
@@ -221,6 +258,80 @@ function validateDate(value, field, report) {
   }
 }
 
+function parseIpv4(value) {
+  const octets = value.split(".");
+  if (octets.length !== 4) return null;
+  let address = 0;
+  for (const octet of octets) {
+    const number = Number(octet);
+    if (!Number.isInteger(number) || number < 0 || number > 255) return null;
+    address = (address * 256) + number;
+  }
+  return address;
+}
+
+function parseIpv6(value) {
+  const compressed = value.split("::");
+  if (compressed.length > 2) return null;
+
+  function parsePart(part) {
+    if (part === "") return [];
+    const groups = [];
+    for (const group of part.split(":")) {
+      if (group.includes(".")) {
+        const ipv4 = parseIpv4(group);
+        if (ipv4 === null) return null;
+        groups.push(ipv4 >>> 16, ipv4 & 0xffff);
+      } else if (!/^[0-9a-f]{1,4}$/i.test(group)) {
+        return null;
+      } else {
+        groups.push(Number.parseInt(group, 16));
+      }
+    }
+    return groups;
+  }
+
+  const head = parsePart(compressed[0]);
+  const tail = parsePart(compressed[1] ?? "");
+  if (!head || !tail) return null;
+  const omitted = 8 - head.length - tail.length;
+  if ((compressed.length === 1 && omitted !== 0) || (compressed.length === 2 && omitted < 1)) return null;
+  const groups = [...head, ...Array.from({ length: omitted }, () => 0), ...tail];
+  return groups.reduce((address, group) => (address << 16n) | BigInt(group), 0n);
+}
+
+function ipv4MatchesCidr(address, network, prefixLength) {
+  const shift = 32 - prefixLength;
+  return Math.floor(address / (2 ** shift)) === Math.floor(network / (2 ** shift));
+}
+
+function ipv6MatchesCidr(address, network, prefixLength) {
+  const shift = 128n - BigInt(prefixLength);
+  return (address >> shift) === (network >> shift);
+}
+
+function isGlobalUnicastIp(hostname, ipVersion) {
+  if (ipVersion === 4) {
+    const address = parseIpv4(hostname);
+    return address !== null && !specialUseIpv4Cidrs.some(([network, prefixLength]) => (
+      ipv4MatchesCidr(address, parseIpv4(network), prefixLength)
+    ));
+  }
+
+  const address = parseIpv6(hostname);
+  const globalUnicastNetwork = parseIpv6("2000::");
+  if (address === null || !ipv6MatchesCidr(address, globalUnicastNetwork, 3)) return false;
+  return !specialUseIpv6Cidrs.some(([network, prefixLength]) => (
+    ipv6MatchesCidr(address, parseIpv6(network), prefixLength)
+  ));
+}
+
+function hasReservedDnsSuffix(hostname) {
+  return [...reservedDnsSuffixes, ...reservedDnsNames].some((suffix) => (
+    hostname === suffix || hostname.endsWith(`.${suffix}`)
+  ));
+}
+
 function isPublicHttpsUrl(value) {
   let url;
   try {
@@ -229,29 +340,10 @@ function isPublicHttpsUrl(value) {
     return false;
   }
   if (url.protocol !== "https:" || url.username || url.password || !url.hostname) return false;
-  const hostname = url.hostname.replace(/^\[|\]$/g, "").toLowerCase();
-  if (hostname === "localhost" || hostname.endsWith(".localhost") || hostname.endsWith(".local") || hostname.endsWith(".internal")) {
-    return false;
-  }
+  const hostname = url.hostname.replace(/^\[|\]$/g, "").replace(/\.$/, "").toLowerCase();
   const ipVersion = isIP(hostname);
-  if (ipVersion === 0 && !hostname.includes(".")) return false;
-  if (ipVersion === 4) {
-    const [first, second] = hostname.split(".").map(Number);
-    if (
-      first === 0 ||
-      first === 10 ||
-      first === 127 ||
-      (first === 100 && second >= 64 && second <= 127) ||
-      (first === 169 && second === 254) ||
-      (first === 172 && second >= 16 && second <= 31) ||
-      (first === 192 && second === 168) ||
-      first >= 224
-    ) return false;
-  }
-  if (ipVersion === 6 && (hostname === "::" || hostname === "::1" || /^f[cd]/.test(hostname) || /^fe[89ab]/.test(hostname))) {
-    return false;
-  }
-  return true;
+  if (ipVersion !== 0) return isGlobalUnicastIp(hostname, ipVersion);
+  return hostname.includes(".") && !hasReservedDnsSuffix(hostname);
 }
 
 function validateLocalizedSkill(locales, report) {

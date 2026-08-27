@@ -212,6 +212,52 @@ test("rejects non-public dependency URLs", async () => {
   assert.equal(errors.some((error) => error.includes("dependencies[0].url must be a public HTTPS URL")), true);
 });
 
+test("rejects IPv4-mapped loopback dependency URLs", async () => {
+  const root = await catalogFixture({
+    mutateAlpha(record) {
+      record.dependencies = [
+        { name: "loopback-service", type: "service", required: false, url: "https://[::ffff:127.0.0.1]" },
+      ];
+    },
+  });
+  const { errors } = await validateCatalog(root);
+  assert.equal(errors.some((error) => error.includes("dependencies[0].url must be a public HTTPS URL")), true);
+});
+
+test("rejects documentation-range IPv4 dependency URLs", async () => {
+  const root = await catalogFixture({
+    mutateAlpha(record) {
+      record.dependencies = [
+        { name: "example-service", type: "service", required: false, url: "https://192.0.2.1" },
+      ];
+    },
+  });
+  const { errors } = await validateCatalog(root);
+  assert.equal(errors.some((error) => error.includes("dependencies[0].url must be a public HTTPS URL")), true);
+});
+
+test("rejects reserved DNS suffix dependency URLs", async () => {
+  const root = await catalogFixture({
+    mutateAlpha(record) {
+      record.dependencies = [
+        { name: "invalid-service", type: "service", required: false, url: "https://service.invalid" },
+      ];
+    },
+  });
+  const { errors } = await validateCatalog(root);
+  assert.equal(errors.some((error) => error.includes("dependencies[0].url must be a public HTTPS URL")), true);
+});
+
+test("reports malformed JSON in catalog schema sources", async () => {
+  const root = await catalogFixture();
+  const schemas = path.join(root, "catalog", "schemas");
+  await mkdir(schemas, { recursive: true });
+  await writeFile(path.join(schemas, "skill.schema.json"), "{not-json\n");
+
+  const { errors } = await validateCatalog(root);
+  assert.equal(errors.includes("catalog/schemas/skill.schema.json: invalid JSON"), true);
+});
+
 test("rejects duplicate dependency names", async () => {
   const root = await catalogFixture({
     mutateAlpha(record) {
