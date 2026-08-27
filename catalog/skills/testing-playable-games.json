@@ -27,7 +27,7 @@
       "examplePrompts": ["Use testing-playable-games to verify this build across controls, combat, transitions, and long-session performance."]
     },
     "pt-BR": {
-      "displayName": "Testes de Jogos Jogáveis",
+      "displayName": "Validação de Builds Jogáveis",
       "summary": "Exercita um build jogável em camadas que cobrem recuperação, controles, movimento, câmera, combate, animação, progressão e performance.",
       "primaryBenefit": "Fornece evidências reproduzíveis de que as funcionalidades do jogo resistem a sequências, transições e riscos de regressão realistas.",
       "whenToUse": "Use ao verificar um build de jogo para navegador ou desktop quanto à correção do gameplay, controles, sensação do combate, comportamento da câmera, animação, performance, progressão e risco de regressão antes de considerar uma funcionalidade concluída.",

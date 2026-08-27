@@ -28,12 +28,12 @@
     },
     "pt-BR": {
       "displayName": "Design de Combate de Ação",
-      "summary": "Define contratos de ações do jogador e dos inimigos e ajusta timing, controle, antecipações, registro de golpes, feedback e casos extremos em torno de um duelo mínimo.",
+      "summary": "Define contratos de ações do jogador e dos inimigos e ajusta timing, controle, sinalizações dos ataques inimigos, registro de golpes, feedback e casos extremos em torno de um duelo mínimo.",
       "primaryBenefit": "Cria um combate legível, responsivo, intencional e recompensador a cada momento.",
-      "whenToUse": "Use ao criar ou ajustar combate em tempo real com ataques, reações a golpes, esquiva ou defesa, antecipações dos inimigos, combos, timing de animação ou legibilidade momento a momento.",
+      "whenToUse": "Use ao criar ou ajustar combate em tempo real com ataques, reações a golpes, esquiva ou defesa, sinalizações dos ataques inimigos, combos, timing de animação ou legibilidade momento a momento.",
       "whenNotToUse": "Não use para sistemas que não sejam em tempo real ou funcionalidades que não dependam do timing, das reações e da legibilidade do combate.",
-      "useCases": ["Especificar timing e regras de cancelamento para ataques do jogador", "Ajustar antecipações dos inimigos e janelas de punição em um duelo jogável"],
-      "examplePrompts": ["Use designing-action-combat para ajustar este duelo em tempo real com antecipações mais claras e controles mais responsivos."]
+      "useCases": ["Especificar timing e regras de cancelamento para ataques do jogador", "Ajustar sinalizações dos ataques inimigos e janelas de punição em um duelo jogável"],
+      "examplePrompts": ["Use designing-action-combat para ajustar este duelo em tempo real com sinalizações mais claras dos ataques inimigos e controles mais responsivos."]
     }
   }
 }

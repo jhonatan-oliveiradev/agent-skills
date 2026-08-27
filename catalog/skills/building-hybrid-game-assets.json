@@ -28,9 +28,9 @@
     },
     "pt-BR": {
       "displayName": "Produção Híbrida de Assets para Jogos",
-      "summary": "Planeja um fluxo de produção coerente entre sprites, meshes, geometria procedural, texturas, efeitos e assets adquiridos.",
+      "summary": "Planeja um fluxo de produção coerente entre assets gerados, criados manualmente, procedurais e adquiridos, incluindo sprites, meshes, texturas e efeitos.",
       "primaryBenefit": "Mantém os assets do jogo visualmente consistentes, adequados ao runtime e econômicos para iterar.",
-      "whenToUse": "Use quando um jogo precisar de um fluxo prático que combine assets gerados, autorais, 2D, 3D, procedurais ou adquiridos, mantendo sob controle a consistência visual, as restrições de runtime e a velocidade de iteração.",
+      "whenToUse": "Use quando um jogo precisar de um fluxo prático que combine assets gerados, criados manualmente, 2D, 3D, procedurais ou adquiridos, mantendo sob controle a consistência visual, as restrições de runtime e a velocidade de iteração.",
       "whenNotToUse": "Não use quando um único formato de asset já estabelecido atender aos requisitos visuais, de runtime e de iteração do jogo.",
       "useCases": ["Escolher a representação adequada para cada classe de asset de gameplay", "Validar no motor um asset de referência antes da produção em lote"],
       "examplePrompts": ["Use building-hybrid-game-assets para definir um fluxo de assets consistente e pronto para o runtime deste jogo."]

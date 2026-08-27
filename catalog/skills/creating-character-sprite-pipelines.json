@@ -28,11 +28,11 @@
     },
     "pt-BR": {
       "displayName": "Criação de Pipelines de Sprites de Personagens",
-      "summary": "Constrói um fluxo guiado por model sheet para poses, ciclos, transições, equipamentos e animações secundárias consistentes.",
+      "summary": "Constrói um fluxo guiado por model sheet para poses, ciclos, transições, equipamentos e camadas de acompanhamento (follow-through) consistentes.",
       "primaryBenefit": "Produz conjuntos de sprites legíveis que preservam anatomia, silhueta, equipamentos e continuidade de movimento entre estados de gameplay.",
       "whenToUse": "Use ao definir, gerar, revisar ou expandir um conjunto de sprites 2D de personagem que precise manter consistência anatômica entre animações de repouso, movimento, combate, direção e transição.",
       "whenNotToUse": "Não use para um asset estático e isolado de personagem nem antes de definir o model sheet e os estados de gameplay necessários.",
-      "useCases": ["Planejar um conjunto completo de sprites de locomoção e combate", "Revisar ciclos de animação quanto à continuidade anatômica e dos equipamentos"],
+      "useCases": ["Planejar um conjunto completo de sprites de locomoção e combate", "Revisar ciclos de animação quanto à continuidade anatômica, dos equipamentos e das camadas de acompanhamento (follow-through)"],
       "examplePrompts": ["Use creating-character-sprite-pipelines para definir um fluxo de sprites consistente para este personagem jogável."]
     }
   }
