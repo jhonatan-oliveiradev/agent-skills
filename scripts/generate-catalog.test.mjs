@@ -110,3 +110,28 @@ test("detects stale generated catalog bytes", async () => {
   assert.deepEqual(await checkGeneratedCatalog(root), []);
   assert.equal((await readFile(target, "utf8")).endsWith("\n"), true);
 });
+
+test("detects invalid UTF-8 bytes that decode to an expected replacement character", async () => {
+  const root = await catalogFixture({
+    mutateAlpha(record) {
+      record.locales.en.summary = "Contains \uFFFD replacement";
+    },
+  });
+  const target = path.join(root, "catalog", "generated", "catalog.json");
+  const expected = Buffer.from(serializeCatalog(await generateCatalog(root)), "utf8");
+  const replacementCharacter = Buffer.from("\uFFFD", "utf8");
+  const replacementIndex = expected.indexOf(replacementCharacter);
+  assert.notEqual(replacementIndex, -1);
+  const invalidUtf8 = Buffer.concat([
+    expected.subarray(0, replacementIndex),
+    Buffer.from([0xff]),
+    expected.subarray(replacementIndex + replacementCharacter.length),
+  ]);
+
+  await mkdir(path.dirname(target), { recursive: true });
+  await writeFile(target, invalidUtf8);
+
+  assert.deepEqual(await checkGeneratedCatalog(root), [
+    "catalog/generated/catalog.json is stale; run npm run catalog:generate",
+  ]);
+});

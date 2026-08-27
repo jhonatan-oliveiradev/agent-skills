@@ -101,11 +101,12 @@ export function assembleCatalog({ manifest, skills: sourceSkills, packs: sourceP
 export async function checkCatalogBytes(repoRoot, catalog) {
   let actual = null;
   try {
-    actual = await readFile(getCatalogPaths(repoRoot).generatedFile, "utf8");
+    actual = await readFile(getCatalogPaths(repoRoot).generatedFile);
   } catch (error) {
     if (error?.code !== "ENOENT") throw error;
   }
-  return actual === serializeCatalog(catalog) ? [] : [staleGeneratedCatalogError];
+  const expected = Buffer.from(serializeCatalog(catalog), "utf8");
+  return actual?.equals(expected) ? [] : [staleGeneratedCatalogError];
 }
 
 export function getCatalogPaths(repoRoot) {
