@@ -1,0 +1,32 @@
+{
+  "$schema": "../schemas/pack.schema.json",
+  "slug": "frontend-product",
+  "status": "active",
+  "featured": true,
+  "color": "electric-blue",
+  "version": "1.0.0-beta.1",
+  "skills": [
+    "bootstrapping-modern-web-apps",
+    "designing-ui-systems",
+    "building-premium-nextjs-interfaces",
+    "building-conversion-product-pages",
+    "translating-figma-to-nextjs",
+    "implementing-reference-faithful-ui",
+    "auditing-pixel-perfect-frontend",
+    "shipping-github-vercel-changes"
+  ],
+  "locales": {
+    "en": {
+      "name": "Frontend & Product",
+      "summary": "Product strategy, interface systems, implementation fidelity, and delivery for production web experiences.",
+      "description": "A complete workflow for establishing a web application baseline, shaping product and interface direction, translating references into responsive code, auditing fidelity, and preparing verified changes for release.",
+      "outcomes": ["Build coherent, accessible, and conversion-aware product interfaces", "Move reference-backed frontend work from setup through verified delivery"]
+    },
+    "pt-BR": {
+      "name": "Frontend e Produto",
+      "summary": "Estratégia de produto, sistemas de interface, fidelidade de implementação e entrega para experiências web de produção.",
+      "description": "Um fluxo completo para estabelecer a base de uma aplicação web, definir a direção de produto e interface, traduzir referências em código responsivo, auditar fidelidade e preparar mudanças verificadas para entrega.",
+      "outcomes": ["Construir interfaces de produto coerentes, acessíveis e orientadas à conversão", "Levar trabalhos de frontend baseados em referências da preparação à entrega verificada"]
+    }
+  }
+}

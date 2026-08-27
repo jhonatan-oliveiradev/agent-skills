@@ -1,0 +1,39 @@
+{
+  "$schema": "../schemas/skill.schema.json",
+  "slug": "optimizing-frontend-motion-performance",
+  "category": "motion",
+  "packs": ["motion"],
+  "maturity": "stable",
+  "difficulty": "advanced",
+  "featured": false,
+  "compatibility": {
+    "surfaces": ["chatgpt", "codex"],
+    "operatingSystems": ["linux", "macos", "windows"],
+    "installModes": ["plugin", "filesystem"]
+  },
+  "tags": ["motion-performance", "webgl", "gsap", "memory-leaks", "profiling"],
+  "dependencies": [],
+  "relatedSkills": ["craft-premium-motion"],
+  "version": "1.0.0-beta.1",
+  "updatedAt": "2026-08-26",
+  "locales": {
+    "en": {
+      "displayName": "Optimizing Frontend Motion Performance",
+      "summary": "Profiles animation work and removes waste from offscreen loops, lifecycle leaks, expensive effects, and unconstrained WebGL rendering.",
+      "primaryBenefit": "Restores smooth, stable motion while preserving the intended visual experience.",
+      "whenToUse": "Use when a frontend has janky scrolling, excessive CPU or GPU use, long-session slowdown, offscreen animation work, WebGL or RAF loops, animation-related memory leaks, or costly GSAP effects.",
+      "whenNotToUse": "Do not use without a measured motion-related performance symptom, and do not treat build success as runtime evidence.",
+      "useCases": ["Stop offscreen animation and WebGL work", "Find and remove motion-related lifecycle leaks during route cycles"],
+      "examplePrompts": ["Use optimizing-frontend-motion-performance to profile this long-session slowdown and preserve the visible motion while removing wasted work."]
+    },
+    "pt-BR": {
+      "displayName": "Otimização da Performance de Motion no Frontend",
+      "summary": "Analisa o trabalho de animação e elimina desperdícios em loops fora da tela, vazamentos de ciclo de vida, efeitos custosos e renderização WebGL sem limites.",
+      "primaryBenefit": "Restaura movimentos fluidos e estáveis sem perder a experiência visual pretendida.",
+      "whenToUse": "Use quando um frontend apresentar rolagem travada, uso excessivo de CPU ou GPU, lentidão em sessões longas, animações executadas fora da tela, loops de WebGL ou RAF, vazamentos de memória relacionados a animações ou efeitos GSAP custosos.",
+      "whenNotToUse": "Não use sem um sintoma mensurado de performance relacionado a motion e não trate o sucesso do build como evidência de runtime.",
+      "useCases": ["Interromper animações e trabalho WebGL fora da tela", "Encontrar e remover vazamentos de ciclo de vida ligados a motion durante ciclos de rota"],
+      "examplePrompts": ["Use optimizing-frontend-motion-performance para analisar esta lentidão em sessões longas e preservar o motion visível enquanto remove trabalho desperdiçado."]
+    }
+  }
+}

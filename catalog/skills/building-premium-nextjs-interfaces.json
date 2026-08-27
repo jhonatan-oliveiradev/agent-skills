@@ -1,0 +1,39 @@
+{
+  "$schema": "../schemas/skill.schema.json",
+  "slug": "building-premium-nextjs-interfaces",
+  "category": "frontend",
+  "packs": ["frontend-product"],
+  "maturity": "stable",
+  "difficulty": "advanced",
+  "featured": true,
+  "compatibility": {
+    "surfaces": ["chatgpt", "codex"],
+    "operatingSystems": ["linux", "macos", "windows"],
+    "installModes": ["plugin", "filesystem"]
+  },
+  "tags": ["nextjs", "react", "interface-design", "accessibility", "responsive-design"],
+  "dependencies": [],
+  "relatedSkills": ["designing-ui-systems"],
+  "version": "1.0.0-beta.1",
+  "updatedAt": "2026-08-26",
+  "locales": {
+    "en": {
+      "displayName": "Building Premium Next.js Interfaces",
+      "summary": "Shapes art direction, hierarchy, responsive composition, component states, and verification into a coherent production interface.",
+      "primaryBenefit": "Delivers distinctive, accessible interfaces that remain clear and dependable across devices.",
+      "whenToUse": "Use when creating or redesigning a polished Next.js or React interface where visual distinction, strong hierarchy, responsive behavior, accessibility, and production readiness matter.",
+      "whenNotToUse": "Do not use this skill for narrow bug fixes, backend-only changes, or exact visual reproduction tasks where implementing-reference-faithful-ui is the better primary skill.",
+      "useCases": ["Redesign a Next.js product interface with a coherent visual system", "Polish responsive states and accessibility before production"],
+      "examplePrompts": ["Use building-premium-nextjs-interfaces to redesign this Next.js experience with stronger hierarchy and production-ready responsive states."]
+    },
+    "pt-BR": {
+      "displayName": "Criação de Interfaces Premium em Next.js",
+      "summary": "Integra direção de arte, hierarquia, composição responsiva, estados de componentes e verificação em uma interface de produção coerente.",
+      "primaryBenefit": "Entrega interfaces distintas e acessíveis que permanecem claras e confiáveis em diferentes dispositivos.",
+      "whenToUse": "Use ao criar ou redesenhar uma interface refinada em Next.js ou React quando distinção visual, hierarquia forte, comportamento responsivo, acessibilidade e prontidão para produção forem importantes.",
+      "whenNotToUse": "Não use esta skill para correções pontuais, mudanças apenas de backend ou tarefas de reprodução visual exata em que implementing-reference-faithful-ui seja a opção principal mais adequada.",
+      "useCases": ["Redesenhar uma interface de produto em Next.js com um sistema visual coerente", "Refinar estados responsivos e acessibilidade antes da produção"],
+      "examplePrompts": ["Use building-premium-nextjs-interfaces para redesenhar esta experiência em Next.js com hierarquia mais forte e estados responsivos prontos para produção."]
+    }
+  }
+}

@@ -1,0 +1,52 @@
+{
+  "$schema": "../schemas/skill.schema.json",
+  "slug": "shipping-github-vercel-changes",
+  "category": "delivery",
+  "packs": ["frontend-product"],
+  "maturity": "stable",
+  "difficulty": "intermediate",
+  "featured": false,
+  "compatibility": {
+    "surfaces": ["chatgpt", "codex"],
+    "operatingSystems": ["linux", "macos", "windows"],
+    "installModes": ["plugin", "filesystem"]
+  },
+  "tags": ["git", "github", "vercel", "release-workflow"],
+  "dependencies": [
+    {
+      "name": "GitHub",
+      "type": "service",
+      "required": false,
+      "url": "https://github.com"
+    },
+    {
+      "name": "Vercel",
+      "type": "service",
+      "required": false,
+      "url": "https://vercel.com"
+    }
+  ],
+  "relatedSkills": ["bootstrapping-modern-web-apps"],
+  "version": "1.0.0-beta.1",
+  "updatedAt": "2026-08-26",
+  "locales": {
+    "en": {
+      "displayName": "Shipping GitHub and Vercel Changes",
+      "summary": "Coordinates focused commits, verification, pull-request handling, branch promotion, and deployment checks within the repository's actual policy.",
+      "primaryBenefit": "Moves repository changes toward review and release without mixing unrelated work, duplicating pull requests, or overstating deployment readiness.",
+      "whenToUse": "Use when completing repository work that should be committed, pushed, reviewed through a pull request, or promoted through development and production branches with Vercel deployment in mind.",
+      "whenNotToUse": "Do not use when the task does not include committing, pushing, pull-request review, branch promotion, or Vercel-aware release delivery.",
+      "useCases": ["Prepare a focused feature branch and pull request", "Promote a verified release and check its Vercel deployment"],
+      "examplePrompts": ["Use shipping-github-vercel-changes to prepare this repository change for review under the current branch policy."]
+    },
+    "pt-BR": {
+      "displayName": "Entrega de Mudanças com GitHub e Vercel",
+      "summary": "Coordena commits focados, verificação, gestão de pull requests, promoção entre branches e checagens de deploy conforme a política real do repositório.",
+      "primaryBenefit": "Conduz mudanças do repositório à revisão e à entrega sem misturar trabalhos alheios, duplicar pull requests ou exagerar a prontidão do deploy.",
+      "whenToUse": "Use ao concluir um trabalho de repositório que deva receber commit, push, revisão por pull request ou promoção entre branches de desenvolvimento e produção, considerando o deploy na Vercel.",
+      "whenNotToUse": "Não use quando a tarefa não envolver commit, push, revisão por pull request, promoção entre branches ou entrega com atenção à Vercel.",
+      "useCases": ["Preparar uma branch de funcionalidade focada e seu pull request", "Promover uma versão verificada e conferir seu deploy na Vercel"],
+      "examplePrompts": ["Use shipping-github-vercel-changes para preparar esta mudança do repositório para revisão conforme a política atual de branches."]
+    }
+  }
+}

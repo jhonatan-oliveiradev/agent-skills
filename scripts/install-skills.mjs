@@ -7,6 +7,7 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 
 import { getSkillsRoot, listSkills } from "./lib/skills.mjs";
+import { loadValidatedCatalog } from "./validate-catalog.mjs";
 
 function isWithin(parent, candidate) {
   const relative = path.relative(parent, candidate);
@@ -88,14 +89,43 @@ async function replaceSkill(source, target) {
   }
 }
 
-export async function installSkills({ repoRoot, destination, names }) {
+export function resolveInstallSelection({ availableSkills, packs, names, packNames }) {
+  const availableNames = availableSkills.map((skill) => typeof skill === "string" ? skill : skill.name);
+  const availableNameSet = new Set(availableNames);
+  const explicitNames = [...new Set(names ?? [])].sort();
+  const selectedPackNames = [...new Set(packNames ?? [])];
+
+  if (explicitNames.length === 0 && selectedPackNames.length === 0) return availableNames;
+
+  for (const name of explicitNames) {
+    if (!availableNameSet.has(name)) throw new Error(`Unknown skill: ${name}`);
+  }
+
+  const packsBySlug = new Map(packs.map((pack) => [pack.slug, pack]));
+  const selectedPacks = selectedPackNames.map((slug) => {
+    const pack = packsBySlug.get(slug);
+    if (!pack) throw new Error(`Unknown pack: ${slug}`);
+    if (pack.status !== "active") throw new Error(`Pack is not installable: ${slug}`);
+    return pack;
+  });
+
+  for (const pack of selectedPacks) {
+    for (const name of pack.skills) {
+      if (!availableNameSet.has(name)) throw new Error(`Unknown skill: ${name}`);
+    }
+  }
+
+  return [...new Set([
+    ...selectedPacks.flatMap((pack) => pack.skills),
+    ...explicitNames,
+  ])];
+}
+
+export async function installSkills({ repoRoot, destination, names, packs }) {
   const available = await listSkills(repoRoot);
   const byName = new Map(available.map((skill) => [skill.name, skill]));
-  const selected = names?.length ? [...new Set(names)].sort() : available.map((skill) => skill.name);
-
-  for (const name of selected) {
-    if (!byName.has(name)) throw new Error(`Unknown skill: ${name}`);
-  }
+  const catalogPacks = packs?.length ? (await loadValidatedCatalog(repoRoot)).packs : [];
+  const selected = resolveInstallSelection({ availableSkills: available, packs: catalogPacks, names, packNames: packs });
   if (available.length === 0) throw new Error("No skill directories found");
 
   const targetRoot = path.resolve(destination);
@@ -131,12 +161,13 @@ export async function installSkills({ repoRoot, destination, names }) {
 }
 
 function parseArgs(argv) {
-  const args = { destination: path.join(homedir(), ".agents", "skills"), names: [] };
+  const args = { destination: path.join(homedir(), ".agents", "skills"), names: [], packs: [] };
 
   for (let index = 0; index < argv.length; index += 1) {
     const argument = argv[index];
     if (argument === "--destination" && argv[index + 1]) args.destination = argv[++index];
     else if (argument === "--skill" && argv[index + 1]) args.names.push(argv[++index]);
+    else if (argument === "--pack" && argv[index + 1]) args.packs.push(argv[++index]);
     else throw new Error(`Unknown option: ${argument}`);
   }
 

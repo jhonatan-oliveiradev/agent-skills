@@ -1,0 +1,23 @@
+{
+  "$schema": "../schemas/pack.schema.json",
+  "slug": "quality-testing",
+  "status": "planned",
+  "featured": false,
+  "color": "coral",
+  "version": "1.0.0-beta.1",
+  "skills": [],
+  "locales": {
+    "en": {
+      "name": "Quality & Testing",
+      "summary": "Planned guidance for verification strategy, regression control, and evidence-based quality gates.",
+      "description": "This planned pack will cover quality and testing workflows; skills will enter through public proposals and independent validation.",
+      "outcomes": ["Build verification strategies around observable product behavior", "Reduce regression risk with repeatable evidence and quality gates"]
+    },
+    "pt-BR": {
+      "name": "Qualidade e Testes",
+      "summary": "Orientações planejadas para estratégia de verificação, controle de regressões e critérios de qualidade baseados em evidências.",
+      "description": "Este pack planejado abordará fluxos de qualidade e testes; as skills entrarão por meio de propostas públicas e validação independente.",
+      "outcomes": ["Construir estratégias de verificação em torno do comportamento observável do produto", "Reduzir o risco de regressão com evidências repetíveis e critérios de qualidade"]
+    }
+  }
+}
