@@ -6,120 +6,9 @@ import test from "node:test";
 import { fileURLToPath } from "node:url";
 
 import { validateCatalog } from "./validate-catalog.mjs";
+import { catalogFixture } from "./test-support/catalog-fixture.mjs";
 
-const version = "1.0.0-beta.1";
 const repositoryRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
-
-function localizedSkill(name) {
-  return {
-    displayName: name,
-    summary: `${name} summary`,
-    primaryBenefit: `${name} primary benefit`,
-    whenToUse: `Use ${name} for an appropriate workflow.`,
-    whenNotToUse: `Do not use ${name} for an unrelated workflow.`,
-    useCases: [`Plan with ${name}`, `Deliver with ${name}`],
-    examplePrompts: [`Use ${name} for this task.`],
-  };
-}
-
-function skillRecord(slug, packs = []) {
-  return {
-    $schema: "../schemas/skill.schema.json",
-    slug,
-    category: "meta",
-    packs,
-    maturity: "stable",
-    difficulty: "beginner",
-    featured: false,
-    compatibility: {
-      surfaces: ["chatgpt", "codex"],
-      operatingSystems: ["linux", "macos", "windows"],
-      installModes: ["plugin", "filesystem"],
-    },
-    tags: [slug],
-    dependencies: [],
-    relatedSkills: [],
-    version,
-    updatedAt: "2026-08-26",
-    locales: {
-      en: localizedSkill(`${slug} English`),
-      "pt-BR": localizedSkill(`${slug} Português`),
-    },
-  };
-}
-
-function localizedPack(name) {
-  return {
-    name,
-    summary: `${name} summary`,
-    description: `${name} description`,
-    outcomes: [`Complete the ${name} workflow`],
-  };
-}
-
-function packRecord(slug, status, skills) {
-  return {
-    $schema: "../schemas/pack.schema.json",
-    slug,
-    status,
-    featured: false,
-    color: "violet",
-    version,
-    skills,
-    locales: {
-      en: localizedPack(`${slug} English`),
-      "pt-BR": localizedPack(`${slug} Português`),
-    },
-  };
-}
-
-async function writeJson(file, value) {
-  await writeFile(file, `${JSON.stringify(value, null, 2)}\n`);
-}
-
-async function catalogFixture(options = {}) {
-  const root = await mkdtemp(path.join(os.tmpdir(), "catalog-validation-"));
-  await Promise.all([
-    mkdir(path.join(root, ".codex-plugin"), { recursive: true }),
-    mkdir(path.join(root, "catalog", "skills"), { recursive: true }),
-    mkdir(path.join(root, "catalog", "packs"), { recursive: true }),
-    mkdir(path.join(root, "skills", "alpha"), { recursive: true }),
-    mkdir(path.join(root, "skills", "beta"), { recursive: true }),
-  ]);
-
-  const alpha = skillRecord("alpha", ["starter"]);
-  const beta = skillRecord("beta");
-  const activePack = packRecord("starter", "active", ["alpha"]);
-  const plannedPack = packRecord("future", "planned", []);
-  options.mutateAlpha?.(alpha);
-  options.mutateActivePack?.(activePack);
-  options.mutatePlannedPack?.(plannedPack);
-
-  await Promise.all([
-    writeJson(path.join(root, "catalog", "catalog.json"), {
-      $schema: "./schemas/catalog.schema.json",
-      schemaVersion: 1,
-      version: options.manifestVersion ?? version,
-      defaultLocale: "en",
-      locales: ["en", "pt-BR"],
-    }),
-    writeJson(path.join(root, ".codex-plugin", "plugin.json"), { version }),
-    writeJson(path.join(root, "package.json"), { version }),
-    writeFile(path.join(root, "VERSION"), `${version}\n`),
-    writeFile(path.join(root, "skills", "alpha", "SKILL.md"), "# Alpha\n"),
-    writeFile(path.join(root, "skills", "beta", "SKILL.md"), "# Beta\n"),
-    writeJson(path.join(root, "catalog", "packs", "starter.json"), activePack),
-    writeJson(path.join(root, "catalog", "packs", "future.json"), plannedPack),
-    ...(options.omitSkillRecord === "alpha"
-      ? []
-      : [writeJson(path.join(root, "catalog", "skills", "alpha.json"), alpha)]),
-    ...(options.omitSkillRecord === "beta"
-      ? []
-      : [writeJson(path.join(root, "catalog", "skills", "beta.json"), beta)]),
-  ]);
-
-  return root;
-}
 
 test("accepts complete bilingual catalog fixtures", async () => {
   const root = await catalogFixture();
@@ -129,6 +18,20 @@ test("accepts complete bilingual catalog fixtures", async () => {
     packCount: 2,
     activePackCount: 1,
   });
+});
+
+test("checks generated drift only when explicitly requested", async () => {
+  const root = await catalogFixture();
+  assert.deepEqual((await validateCatalog(root)).errors, []);
+
+  const generatedFile = path.join(root, "catalog", "generated", "catalog.json");
+  await mkdir(path.dirname(generatedFile), { recursive: true });
+  await writeFile(generatedFile, "{not-json\n");
+
+  assert.deepEqual((await validateCatalog(root)).errors, ["catalog/generated/catalog.json: invalid JSON"]);
+  assert.deepEqual((await validateCatalog(root, { checkGenerated: true })).errors, [
+    "catalog/generated/catalog.json is stale; run npm run catalog:generate",
+  ]);
 });
 
 test("reports missing metadata, incomplete locales, and orphan relations", async () => {

@@ -1,0 +1,1851 @@
+{
+  "schemaVersion": 1,
+  "version": "1.0.0-beta.1",
+  "defaultLocale": "en",
+  "locales": [
+    "en",
+    "pt-BR"
+  ],
+  "sourceDigest": "69f870e0052210f8c6eae17a290a54a1366c4fc7731a60e8d58699adef99afe5",
+  "filters": {
+    "categories": [
+      "delivery",
+      "frontend",
+      "game-development",
+      "meta",
+      "motion",
+      "product-design"
+    ],
+    "packs": [
+      "architecture-engineering",
+      "backend-data",
+      "frontend-product",
+      "game-development",
+      "motion",
+      "quality-testing"
+    ],
+    "tags": [
+      "accessibility",
+      "action-combat",
+      "agent-skills",
+      "animation-lifecycle",
+      "animation-performance",
+      "animation-pipeline",
+      "asset-pipeline",
+      "character-art",
+      "combat-animation",
+      "component-apis",
+      "conversion",
+      "design-systems",
+      "design-tokens",
+      "developer-tooling",
+      "documentation",
+      "figma",
+      "frontend-fidelity",
+      "game-assets",
+      "game-design",
+      "game-testing",
+      "gameplay",
+      "git",
+      "github",
+      "gsap",
+      "image-reconstruction",
+      "interaction-design",
+      "interface-design",
+      "landing-pages",
+      "memory-leaks",
+      "motion-design",
+      "motion-performance",
+      "nextjs",
+      "performance",
+      "playtesting",
+      "pricing-pages",
+      "procedural-3d",
+      "product-marketing",
+      "profiling",
+      "project-scaffolding",
+      "react",
+      "regression-review",
+      "regression-testing",
+      "release-workflow",
+      "responsive-design",
+      "reusable-processes",
+      "runtime-performance",
+      "runtime-validation",
+      "scroll-animation",
+      "scrolltrigger",
+      "sprite-animation",
+      "tailwind-css",
+      "threejs",
+      "typescript",
+      "ui-implementation",
+      "vercel",
+      "visual-audit",
+      "visual-consistency",
+      "visual-fidelity",
+      "web-motion",
+      "webgl",
+      "workflow-design"
+    ],
+    "maturity": [
+      "stable"
+    ],
+    "difficulty": [
+      "advanced",
+      "intermediate"
+    ],
+    "surfaces": [
+      "chatgpt",
+      "codex"
+    ],
+    "operatingSystems": [
+      "linux",
+      "macos",
+      "windows"
+    ],
+    "installModes": [
+      "filesystem",
+      "plugin"
+    ],
+    "dependencies": [
+      "Figma",
+      "GSAP",
+      "GitHub",
+      "Three.js",
+      "Vercel"
+    ]
+  },
+  "counts": {
+    "skills": 18,
+    "packs": {
+      "total": 6,
+      "active": 3,
+      "planned": 3
+    },
+    "categories": {
+      "delivery": 1,
+      "frontend": 5,
+      "game-development": 5,
+      "meta": 1,
+      "motion": 4,
+      "product-design": 2
+    },
+    "maturity": {
+      "stable": 18
+    },
+    "difficulty": {
+      "advanced": 12,
+      "intermediate": 6
+    },
+    "activePackMembership": {
+      "frontend-product": 8,
+      "game-development": 5,
+      "motion": 5
+    }
+  },
+  "skills": [
+    {
+      "$schema": "../schemas/skill.schema.json",
+      "slug": "auditing-pixel-perfect-frontend",
+      "category": "frontend",
+      "packs": [
+        "frontend-product"
+      ],
+      "maturity": "stable",
+      "difficulty": "advanced",
+      "featured": false,
+      "compatibility": {
+        "surfaces": [
+          "chatgpt",
+          "codex"
+        ],
+        "operatingSystems": [
+          "linux",
+          "macos",
+          "windows"
+        ],
+        "installModes": [
+          "plugin",
+          "filesystem"
+        ]
+      },
+      "tags": [
+        "visual-audit",
+        "frontend-fidelity",
+        "responsive-design",
+        "regression-review"
+      ],
+      "dependencies": [],
+      "relatedSkills": [
+        "implementing-reference-faithful-ui"
+      ],
+      "version": "1.0.0-beta.1",
+      "updatedAt": "2026-08-26",
+      "locales": {
+        "en": {
+          "displayName": "Auditing Pixel-Perfect Frontend",
+          "summary": "Compares implemented interfaces with visual references through a viewport-matched, severity-based review.",
+          "primaryBenefit": "Produces actionable findings that direct teams to the most consequential visual regressions first.",
+          "whenToUse": "Use when reviewing an implemented frontend against Figma, screenshots, a live reference, or explicit visual acceptance criteria and concrete visual regressions must be identified and prioritized.",
+          "whenNotToUse": "Do not use to chase subpixel differences before structural mismatches are resolved or when fidelity is not an acceptance criterion.",
+          "useCases": [
+            "Prioritize visual regressions against a Figma reference",
+            "Audit desktop and mobile layouts independently"
+          ],
+          "examplePrompts": [
+            "Use auditing-pixel-perfect-frontend to review this implementation against the supplied reference and rank every mismatch by severity."
+          ]
+        },
+        "pt-BR": {
+          "displayName": "Auditoria de Frontend Pixel-Perfect",
+          "summary": "Compara interfaces implementadas com referências visuais por meio de uma revisão no mesmo viewport e orientada por severidade.",
+          "primaryBenefit": "Produz achados acionáveis que direcionam a equipe primeiro às regressões visuais mais relevantes.",
+          "whenToUse": "Use ao revisar um frontend implementado em relação ao Figma, a capturas de tela, a uma referência publicada ou a critérios explícitos de aceite visual, quando for necessário identificar e priorizar regressões visuais concretas.",
+          "whenNotToUse": "Não use para perseguir diferenças subpixel antes de resolver incompatibilidades estruturais ou quando fidelidade não for um critério de aceite.",
+          "useCases": [
+            "Priorizar regressões visuais em relação a uma referência do Figma",
+            "Auditar layouts desktop e mobile de forma independente"
+          ],
+          "examplePrompts": [
+            "Use auditing-pixel-perfect-frontend para revisar esta implementação em relação à referência fornecida e classificar cada diferença por severidade."
+          ]
+        }
+      }
+    },
+    {
+      "$schema": "../schemas/skill.schema.json",
+      "slug": "bootstrapping-modern-web-apps",
+      "category": "frontend",
+      "packs": [
+        "frontend-product"
+      ],
+      "maturity": "stable",
+      "difficulty": "intermediate",
+      "featured": true,
+      "compatibility": {
+        "surfaces": [
+          "chatgpt",
+          "codex"
+        ],
+        "operatingSystems": [
+          "linux",
+          "macos",
+          "windows"
+        ],
+        "installModes": [
+          "plugin",
+          "filesystem"
+        ]
+      },
+      "tags": [
+        "nextjs",
+        "project-scaffolding",
+        "typescript",
+        "tailwind-css",
+        "developer-tooling"
+      ],
+      "dependencies": [],
+      "relatedSkills": [
+        "designing-ui-systems"
+      ],
+      "version": "1.0.0-beta.1",
+      "updatedAt": "2026-08-26",
+      "locales": {
+        "en": {
+          "displayName": "Bootstrapping Modern Web Apps",
+          "summary": "Establishes this repository's opt-in conventions for a lean, production-grade Next.js application baseline.",
+          "primaryBenefit": "Delivers a consistent scaffold that is ready for feature work without speculative architecture or dependencies.",
+          "whenToUse": "Use when the user explicitly opts into this opinionated web-app baseline, asks to use the personal starter, or wants this repository's preferred Next.js project conventions.",
+          "whenNotToUse": "Do not use without explicit opt-in or when an existing repository, requested stack, or neutral setup defines different conventions.",
+          "useCases": [
+            "Prepare a new Next.js application with shared quality gates",
+            "Apply the repository's preferred formatter and project conventions"
+          ],
+          "examplePrompts": [
+            "Use bootstrapping-modern-web-apps to create an opt-in Next.js baseline for this new application."
+          ]
+        },
+        "pt-BR": {
+          "displayName": "Estruturação de Aplicações Web Modernas",
+          "summary": "Estabelece as convenções optativas deste repositório para uma base Next.js enxuta e pronta para produção.",
+          "primaryBenefit": "Entrega uma estrutura consistente e pronta para evoluir com funcionalidades, sem arquitetura ou dependências especulativas.",
+          "whenToUse": "Use quando a pessoa optar explicitamente por esta base opinativa para aplicações web, pedir o starter pessoal ou quiser as convenções Next.js preferidas deste repositório.",
+          "whenNotToUse": "Não use sem adesão explícita ou quando um repositório existente, a stack solicitada ou uma configuração neutra definir convenções diferentes.",
+          "useCases": [
+            "Preparar uma nova aplicação Next.js com critérios de qualidade compartilhados",
+            "Aplicar as convenções preferidas de formatação e estrutura do repositório"
+          ],
+          "examplePrompts": [
+            "Use bootstrapping-modern-web-apps para criar uma base Next.js optativa para esta nova aplicação."
+          ]
+        }
+      }
+    },
+    {
+      "$schema": "../schemas/skill.schema.json",
+      "slug": "building-conversion-product-pages",
+      "category": "product-design",
+      "packs": [
+        "frontend-product"
+      ],
+      "maturity": "stable",
+      "difficulty": "intermediate",
+      "featured": true,
+      "compatibility": {
+        "surfaces": [
+          "chatgpt",
+          "codex"
+        ],
+        "operatingSystems": [
+          "linux",
+          "macos",
+          "windows"
+        ],
+        "installModes": [
+          "plugin",
+          "filesystem"
+        ]
+      },
+      "tags": [
+        "conversion",
+        "landing-pages",
+        "product-marketing",
+        "pricing-pages"
+      ],
+      "dependencies": [],
+      "relatedSkills": [
+        "building-premium-nextjs-interfaces"
+      ],
+      "version": "1.0.0-beta.1",
+      "updatedAt": "2026-08-26",
+      "locales": {
+        "en": {
+          "displayName": "Building Conversion Product Pages",
+          "summary": "Structures product and marketing flows around clear value, credible proof, resolved objections, and a consistent primary action.",
+          "primaryBenefit": "Helps visitors understand the offer and make a decision with less friction.",
+          "whenToUse": "Use when designing or improving a landing page, product page, digital-product storefront, pricing page, or marketing flow where visitor comprehension and conversion are primary goals.",
+          "whenNotToUse": "Do not use for general interface work where visitor comprehension and conversion are not primary goals.",
+          "useCases": [
+            "Clarify a landing page's offer and primary action",
+            "Simplify pricing choices and answer purchase objections"
+          ],
+          "examplePrompts": [
+            "Use building-conversion-product-pages to restructure this product page around clarity, trust, and one primary action."
+          ]
+        },
+        "pt-BR": {
+          "displayName": "Criação de Páginas de Produto para Conversão",
+          "summary": "Estrutura fluxos de produto e marketing em torno de valor claro, provas confiáveis, objeções resolvidas e uma ação principal consistente.",
+          "primaryBenefit": "Ajuda visitantes a compreender a oferta e tomar uma decisão com menos atrito.",
+          "whenToUse": "Use ao criar ou melhorar uma landing page, página de produto, vitrine de produto digital, página de preços ou fluxo de marketing em que a compreensão de visitantes e a conversão sejam objetivos principais.",
+          "whenNotToUse": "Não use para trabalhos gerais de interface em que a compreensão de visitantes e a conversão não sejam objetivos principais.",
+          "useCases": [
+            "Esclarecer a oferta e a ação principal de uma landing page",
+            "Simplificar escolhas de preço e responder objeções de compra"
+          ],
+          "examplePrompts": [
+            "Use building-conversion-product-pages para reorganizar esta página de produto em torno de clareza, confiança e uma única ação principal."
+          ]
+        }
+      }
+    },
+    {
+      "$schema": "../schemas/skill.schema.json",
+      "slug": "building-hybrid-game-assets",
+      "category": "game-development",
+      "packs": [
+        "game-development"
+      ],
+      "maturity": "stable",
+      "difficulty": "advanced",
+      "featured": false,
+      "compatibility": {
+        "surfaces": [
+          "chatgpt",
+          "codex"
+        ],
+        "operatingSystems": [
+          "linux",
+          "macos",
+          "windows"
+        ],
+        "installModes": [
+          "plugin",
+          "filesystem"
+        ]
+      },
+      "tags": [
+        "game-assets",
+        "asset-pipeline",
+        "runtime-performance",
+        "visual-consistency"
+      ],
+      "dependencies": [],
+      "relatedSkills": [
+        "reconstructing-images-as-threejs"
+      ],
+      "version": "1.0.0-beta.1",
+      "updatedAt": "2026-08-26",
+      "locales": {
+        "en": {
+          "displayName": "Building Hybrid Game Assets",
+          "summary": "Plans a coherent production pipeline across sprites, meshes, procedural geometry, textures, effects, and purchased assets.",
+          "primaryBenefit": "Keeps game assets visually consistent, runtime-aware, and economical to iterate.",
+          "whenToUse": "Use when a game needs a practical pipeline combining generated, hand-authored, 2D, 3D, procedural, or purchased assets while keeping visual consistency, runtime constraints, and iteration speed under control.",
+          "whenNotToUse": "Do not use when a single established asset format already satisfies the game's visual, runtime, and iteration requirements.",
+          "useCases": [
+            "Choose the right representation for each gameplay asset class",
+            "Validate a gold-standard asset in-engine before batch production"
+          ],
+          "examplePrompts": [
+            "Use building-hybrid-game-assets to define a consistent, runtime-ready asset pipeline for this game."
+          ]
+        },
+        "pt-BR": {
+          "displayName": "Produção Híbrida de Assets para Jogos",
+          "summary": "Planeja um fluxo de produção coerente entre assets gerados, criados manualmente, procedurais e adquiridos, incluindo sprites, meshes, texturas e efeitos.",
+          "primaryBenefit": "Mantém os assets do jogo visualmente consistentes, adequados ao runtime e econômicos para iterar.",
+          "whenToUse": "Use quando um jogo precisar de um fluxo prático que combine assets gerados, criados manualmente, 2D, 3D, procedurais ou adquiridos, mantendo sob controle a consistência visual, as restrições de runtime e a velocidade de iteração.",
+          "whenNotToUse": "Não use quando um único formato de asset já estabelecido atender aos requisitos visuais, de runtime e de iteração do jogo.",
+          "useCases": [
+            "Escolher a representação adequada para cada classe de asset de gameplay",
+            "Validar no motor um asset de referência antes da produção em lote"
+          ],
+          "examplePrompts": [
+            "Use building-hybrid-game-assets para definir um fluxo de assets consistente e pronto para o runtime deste jogo."
+          ]
+        }
+      }
+    },
+    {
+      "$schema": "../schemas/skill.schema.json",
+      "slug": "building-premium-nextjs-interfaces",
+      "category": "frontend",
+      "packs": [
+        "frontend-product"
+      ],
+      "maturity": "stable",
+      "difficulty": "advanced",
+      "featured": true,
+      "compatibility": {
+        "surfaces": [
+          "chatgpt",
+          "codex"
+        ],
+        "operatingSystems": [
+          "linux",
+          "macos",
+          "windows"
+        ],
+        "installModes": [
+          "plugin",
+          "filesystem"
+        ]
+      },
+      "tags": [
+        "nextjs",
+        "react",
+        "interface-design",
+        "accessibility",
+        "responsive-design"
+      ],
+      "dependencies": [],
+      "relatedSkills": [
+        "designing-ui-systems"
+      ],
+      "version": "1.0.0-beta.1",
+      "updatedAt": "2026-08-26",
+      "locales": {
+        "en": {
+          "displayName": "Building Premium Next.js Interfaces",
+          "summary": "Shapes art direction, hierarchy, responsive composition, component states, and verification into a coherent production interface.",
+          "primaryBenefit": "Delivers distinctive, accessible interfaces that remain clear and dependable across devices.",
+          "whenToUse": "Use when creating or redesigning a polished Next.js or React interface where visual distinction, strong hierarchy, responsive behavior, accessibility, and production readiness matter.",
+          "whenNotToUse": "Do not use this skill for narrow bug fixes, backend-only changes, or exact visual reproduction tasks where implementing-reference-faithful-ui is the better primary skill.",
+          "useCases": [
+            "Redesign a Next.js product interface with a coherent visual system",
+            "Polish responsive states and accessibility before production"
+          ],
+          "examplePrompts": [
+            "Use building-premium-nextjs-interfaces to redesign this Next.js experience with stronger hierarchy and production-ready responsive states."
+          ]
+        },
+        "pt-BR": {
+          "displayName": "Criação de Interfaces Premium em Next.js",
+          "summary": "Integra direção de arte, hierarquia, composição responsiva, estados de componentes e verificação em uma interface de produção coerente.",
+          "primaryBenefit": "Entrega interfaces distintas e acessíveis que permanecem claras e confiáveis em diferentes dispositivos.",
+          "whenToUse": "Use ao criar ou redesenhar uma interface refinada em Next.js ou React quando distinção visual, hierarquia forte, comportamento responsivo, acessibilidade e prontidão para produção forem importantes.",
+          "whenNotToUse": "Não use esta skill para correções pontuais, mudanças apenas de backend ou tarefas de reprodução visual exata em que implementing-reference-faithful-ui seja a opção principal mais adequada.",
+          "useCases": [
+            "Redesenhar uma interface de produto em Next.js com um sistema visual coerente",
+            "Refinar estados responsivos e acessibilidade antes da produção"
+          ],
+          "examplePrompts": [
+            "Use building-premium-nextjs-interfaces para redesenhar esta experiência em Next.js com hierarquia mais forte e estados responsivos prontos para produção."
+          ]
+        }
+      }
+    },
+    {
+      "$schema": "../schemas/skill.schema.json",
+      "slug": "craft-premium-motion",
+      "category": "motion",
+      "packs": [
+        "motion"
+      ],
+      "maturity": "stable",
+      "difficulty": "advanced",
+      "featured": true,
+      "compatibility": {
+        "surfaces": [
+          "chatgpt",
+          "codex"
+        ],
+        "operatingSystems": [
+          "linux",
+          "macos",
+          "windows"
+        ],
+        "installModes": [
+          "plugin",
+          "filesystem"
+        ]
+      },
+      "tags": [
+        "web-motion",
+        "motion-design",
+        "animation-performance",
+        "accessibility",
+        "interaction-design"
+      ],
+      "dependencies": [],
+      "relatedSkills": [
+        "engineering-gsap-animations"
+      ],
+      "version": "1.0.0-beta.1",
+      "updatedAt": "2026-08-26",
+      "locales": {
+        "en": {
+          "displayName": "Craft Premium Motion",
+          "summary": "Directs and engineers a coherent motion system from product intent through technology routing, implementation, and experiential verification.",
+          "primaryBenefit": "Creates purposeful, distinctive motion that remains responsive, inclusive, performant, and maintainable.",
+          "whenToUse": "Use when designing, implementing, refining, or auditing premium web motion systems, including microinteractions, transitions, scroll choreography, reveals, kinetic typography, smooth scrolling, SVG, canvas, WebGL, 3D, loaders, ambient effects, and animation performance. Applies to React, Next.js, Vue, Svelte, and vanilla projects needing coherent motion, reference-inspired movement, motion tokens, or fixes for janky, excessive, or inaccessible animation.",
+          "whenNotToUse": "Do not use for a single isolated transition with no wider motion decisions, or for motion that blocks content, navigation, or task completion.",
+          "useCases": [
+            "Define a coherent motion language for a product",
+            "Refine an existing interface with accessible, performant animation"
+          ],
+          "examplePrompts": [
+            "Use craft-premium-motion to define and implement the motion direction for this web experience."
+          ]
+        },
+        "pt-BR": {
+          "displayName": "Criação de Motion Premium",
+          "summary": "Orienta e implementa um sistema de motion coerente, da intenção do produto ao direcionamento tecnológico, à execução e à verificação da experiência.",
+          "primaryBenefit": "Cria movimentos intencionais e distintos que permanecem responsivos, inclusivos, performáticos e fáceis de manter.",
+          "whenToUse": "Use ao projetar, implementar, refinar ou auditar sistemas premium de motion para web, incluindo microinterações, transições, coreografia de scroll, revelações, tipografia cinética, rolagem suave, SVG, canvas, WebGL, 3D, loaders, efeitos ambientes e performance de animação. Aplica-se a projetos em React, Next.js, Vue, Svelte e JavaScript puro que precisem de motion coerente, movimento inspirado em referências, tokens de motion ou correções para animações travadas, excessivas ou inacessíveis.",
+          "whenNotToUse": "Não use para uma única transição isolada sem decisões mais amplas de motion, nem para movimentos que bloqueiem conteúdo, navegação ou a conclusão de tarefas.",
+          "useCases": [
+            "Definir uma linguagem de motion coerente para um produto",
+            "Refinar uma interface existente com animações acessíveis e performáticas"
+          ],
+          "examplePrompts": [
+            "Use craft-premium-motion para definir e implementar a direção de motion desta experiência web."
+          ]
+        }
+      }
+    },
+    {
+      "$schema": "../schemas/skill.schema.json",
+      "slug": "creating-character-sprite-pipelines",
+      "category": "game-development",
+      "packs": [
+        "game-development"
+      ],
+      "maturity": "stable",
+      "difficulty": "advanced",
+      "featured": false,
+      "compatibility": {
+        "surfaces": [
+          "chatgpt",
+          "codex"
+        ],
+        "operatingSystems": [
+          "linux",
+          "macos",
+          "windows"
+        ],
+        "installModes": [
+          "plugin",
+          "filesystem"
+        ]
+      },
+      "tags": [
+        "sprite-animation",
+        "character-art",
+        "game-assets",
+        "animation-pipeline"
+      ],
+      "dependencies": [],
+      "relatedSkills": [
+        "building-hybrid-game-assets"
+      ],
+      "version": "1.0.0-beta.1",
+      "updatedAt": "2026-08-26",
+      "locales": {
+        "en": {
+          "displayName": "Creating Character Sprite Pipelines",
+          "summary": "Builds a model-sheet-led workflow for consistent character poses, cycles, transitions, equipment, and follow-through animation.",
+          "primaryBenefit": "Produces readable sprite sets that preserve anatomy, silhouette, equipment, and motion continuity across gameplay states.",
+          "whenToUse": "Use when defining, generating, reviewing, or expanding a 2D character sprite set that must remain anatomically consistent across idle, movement, combat, directional, and transition animations.",
+          "whenNotToUse": "Do not use for a one-off static character asset or before the character model sheet and required gameplay states are defined.",
+          "useCases": [
+            "Plan a complete locomotion and combat sprite set",
+            "Review animation cycles for anatomical and equipment continuity"
+          ],
+          "examplePrompts": [
+            "Use creating-character-sprite-pipelines to define a consistent sprite workflow for this playable character."
+          ]
+        },
+        "pt-BR": {
+          "displayName": "Criação de Pipelines de Sprites de Personagens",
+          "summary": "Constrói um fluxo guiado por model sheet para poses, ciclos, transições, equipamentos e camadas de acompanhamento (follow-through) consistentes.",
+          "primaryBenefit": "Produz conjuntos de sprites legíveis que preservam anatomia, silhueta, equipamentos e continuidade de movimento entre estados de gameplay.",
+          "whenToUse": "Use ao definir, gerar, revisar ou expandir um conjunto de sprites 2D de personagem que precise manter consistência anatômica entre animações de repouso, movimento, combate, direção e transição.",
+          "whenNotToUse": "Não use para um asset estático e isolado de personagem nem antes de definir o model sheet e os estados de gameplay necessários.",
+          "useCases": [
+            "Planejar um conjunto completo de sprites de locomoção e combate",
+            "Revisar ciclos de animação quanto à continuidade anatômica, dos equipamentos e das camadas de acompanhamento (follow-through)"
+          ],
+          "examplePrompts": [
+            "Use creating-character-sprite-pipelines para definir um fluxo de sprites consistente para este personagem jogável."
+          ]
+        }
+      }
+    },
+    {
+      "$schema": "../schemas/skill.schema.json",
+      "slug": "designing-action-combat",
+      "category": "game-development",
+      "packs": [
+        "game-development"
+      ],
+      "maturity": "stable",
+      "difficulty": "advanced",
+      "featured": true,
+      "compatibility": {
+        "surfaces": [
+          "chatgpt",
+          "codex"
+        ],
+        "operatingSystems": [
+          "linux",
+          "macos",
+          "windows"
+        ],
+        "installModes": [
+          "plugin",
+          "filesystem"
+        ]
+      },
+      "tags": [
+        "action-combat",
+        "game-design",
+        "combat-animation",
+        "playtesting"
+      ],
+      "dependencies": [],
+      "relatedSkills": [
+        "testing-playable-games"
+      ],
+      "version": "1.0.0-beta.1",
+      "updatedAt": "2026-08-26",
+      "locales": {
+        "en": {
+          "displayName": "Designing Action Combat",
+          "summary": "Defines player and enemy action contracts, then tunes timing, control, telegraphs, hit registration, feedback, and edge cases around a minimal duel.",
+          "primaryBenefit": "Creates combat that feels readable, responsive, deliberate, and rewarding moment to moment.",
+          "whenToUse": "Use when creating or tuning real-time game combat involving attacks, hit reactions, dodge or guard behavior, enemy telegraphs, combos, animation timing, or moment-to-moment combat readability.",
+          "whenNotToUse": "Do not use for non-real-time systems or game features that do not depend on combat timing, reactions, and readability.",
+          "useCases": [
+            "Specify timing and cancel rules for player attacks",
+            "Tune enemy telegraphs and punish windows for a playable duel"
+          ],
+          "examplePrompts": [
+            "Use designing-action-combat to tune this real-time duel for clearer telegraphs and more responsive controls."
+          ]
+        },
+        "pt-BR": {
+          "displayName": "Design de Combate de Ação",
+          "summary": "Define contratos de ações do jogador e dos inimigos e ajusta timing, controle, sinalizações dos ataques inimigos, registro de golpes, feedback e casos extremos em torno de um duelo mínimo.",
+          "primaryBenefit": "Cria um combate legível, responsivo, intencional e recompensador a cada momento.",
+          "whenToUse": "Use ao criar ou ajustar combate em tempo real com ataques, reações a golpes, esquiva ou defesa, sinalizações dos ataques inimigos, combos, timing de animação ou legibilidade momento a momento.",
+          "whenNotToUse": "Não use para sistemas que não sejam em tempo real ou funcionalidades que não dependam do timing, das reações e da legibilidade do combate.",
+          "useCases": [
+            "Especificar timing e regras de cancelamento para ataques do jogador",
+            "Ajustar sinalizações dos ataques inimigos e janelas de punição em um duelo jogável"
+          ],
+          "examplePrompts": [
+            "Use designing-action-combat para ajustar este duelo em tempo real com sinalizações mais claras dos ataques inimigos e controles mais responsivos."
+          ]
+        }
+      }
+    },
+    {
+      "$schema": "../schemas/skill.schema.json",
+      "slug": "designing-ui-systems",
+      "category": "product-design",
+      "packs": [
+        "frontend-product"
+      ],
+      "maturity": "stable",
+      "difficulty": "intermediate",
+      "featured": true,
+      "compatibility": {
+        "surfaces": [
+          "chatgpt",
+          "codex"
+        ],
+        "operatingSystems": [
+          "linux",
+          "macos",
+          "windows"
+        ],
+        "installModes": [
+          "plugin",
+          "filesystem"
+        ]
+      },
+      "tags": [
+        "design-systems",
+        "design-tokens",
+        "component-apis",
+        "responsive-design",
+        "accessibility"
+      ],
+      "dependencies": [],
+      "relatedSkills": [
+        "building-premium-nextjs-interfaces"
+      ],
+      "version": "1.0.0-beta.1",
+      "updatedAt": "2026-08-26",
+      "locales": {
+        "en": {
+          "displayName": "Designing UI Systems",
+          "summary": "Turns repeated interface decisions into semantic foundations, reusable component contracts, explicit states, and responsive rules.",
+          "primaryBenefit": "Keeps experiences consistent and reusable across screens without over-abstracting one-off design.",
+          "whenToUse": "Use when a project needs reusable UI tokens, component conventions, variants, responsive rules, or a coherent design system across multiple screens or features.",
+          "whenNotToUse": "Do not use to tokenize an isolated one-off design or create variants and abstractions that no real screen requires.",
+          "useCases": [
+            "Define semantic tokens and foundations for a multi-screen product",
+            "Standardize accessible component variants and responsive behavior"
+          ],
+          "examplePrompts": [
+            "Use designing-ui-systems to turn these repeated interface patterns into a coherent token and component system."
+          ]
+        },
+        "pt-BR": {
+          "displayName": "Design de Sistemas de UI",
+          "summary": "Transforma decisões recorrentes de interface em fundamentos semânticos, contratos de componentes reutilizáveis, estados explícitos e regras responsivas.",
+          "primaryBenefit": "Mantém experiências consistentes e reutilizáveis entre telas sem abstrair em excesso elementos pontuais.",
+          "whenToUse": "Use quando um projeto precisar de tokens de UI reutilizáveis, convenções de componentes, variantes, regras responsivas ou um design system coerente entre várias telas ou funcionalidades.",
+          "whenNotToUse": "Não use para tokenizar um design pontual e isolado nem para criar variantes e abstrações que nenhuma tela real exige.",
+          "useCases": [
+            "Definir tokens semânticos e fundamentos para um produto com várias telas",
+            "Padronizar variantes acessíveis de componentes e comportamento responsivo"
+          ],
+          "examplePrompts": [
+            "Use designing-ui-systems para transformar estes padrões recorrentes de interface em um sistema coerente de tokens e componentes."
+          ]
+        }
+      }
+    },
+    {
+      "$schema": "../schemas/skill.schema.json",
+      "slug": "engineering-gsap-animations",
+      "category": "motion",
+      "packs": [
+        "motion"
+      ],
+      "maturity": "stable",
+      "difficulty": "advanced",
+      "featured": false,
+      "compatibility": {
+        "surfaces": [
+          "chatgpt",
+          "codex"
+        ],
+        "operatingSystems": [
+          "linux",
+          "macos",
+          "windows"
+        ],
+        "installModes": [
+          "plugin",
+          "filesystem"
+        ]
+      },
+      "tags": [
+        "gsap",
+        "react",
+        "nextjs",
+        "scrolltrigger",
+        "animation-lifecycle"
+      ],
+      "dependencies": [
+        {
+          "name": "GSAP",
+          "type": "library",
+          "required": true,
+          "url": "https://gsap.com"
+        }
+      ],
+      "relatedSkills": [
+        "craft-premium-motion"
+      ],
+      "version": "1.0.0-beta.1",
+      "updatedAt": "2026-08-26",
+      "locales": {
+        "en": {
+          "displayName": "Engineering GSAP Animations",
+          "summary": "Implements selected GSAP effects as scoped, lifecycle-safe, responsive, and verifiable React or Next.js subsystems.",
+          "primaryBenefit": "Delivers reliable GSAP animation that survives resizing, route changes, repeated mounting, and accessibility preferences.",
+          "whenToUse": "Use when GSAP has been selected for React or Next.js animation, especially timelines, ScrollTrigger, pinning, scrub, SplitText, Flip, SVG, responsive animation, plugin lifecycle, cleanup, or animation-related integration bugs.",
+          "whenNotToUse": "Do not use when the animation technology or motion direction is still undecided, or when runtime profiling is the main problem.",
+          "useCases": [
+            "Build a scoped React timeline with correct cleanup",
+            "Repair responsive ScrollTrigger pinning and lifecycle behavior"
+          ],
+          "examplePrompts": [
+            "Use engineering-gsap-animations to implement this selected GSAP timeline with correct React lifecycle and reduced-motion behavior."
+          ]
+        },
+        "pt-BR": {
+          "displayName": "Engenharia de Animações com GSAP",
+          "summary": "Implementa efeitos escolhidos em GSAP como subsistemas de React ou Next.js isolados, seguros no ciclo de vida, responsivos e verificáveis.",
+          "primaryBenefit": "Entrega animações GSAP confiáveis durante redimensionamentos, mudanças de rota, remontagens e preferências de acessibilidade.",
+          "whenToUse": "Use quando GSAP tiver sido escolhido para animações em React ou Next.js, especialmente para timelines, ScrollTrigger, pinning, scrub, SplitText, Flip, SVG, animação responsiva, ciclo de vida de plugins, limpeza ou bugs de integração relacionados a animações.",
+          "whenNotToUse": "Não use quando a tecnologia de animação ou a direção de motion ainda estiver indefinida, nem quando o problema principal for o profiling em runtime.",
+          "useCases": [
+            "Construir uma timeline isolada em React com limpeza correta",
+            "Corrigir pinning responsivo e ciclo de vida do ScrollTrigger"
+          ],
+          "examplePrompts": [
+            "Use engineering-gsap-animations para implementar esta timeline escolhida em GSAP com ciclo de vida correto no React e comportamento para redução de movimento."
+          ]
+        }
+      }
+    },
+    {
+      "$schema": "../schemas/skill.schema.json",
+      "slug": "implementing-reference-faithful-ui",
+      "category": "frontend",
+      "packs": [
+        "frontend-product"
+      ],
+      "maturity": "stable",
+      "difficulty": "intermediate",
+      "featured": false,
+      "compatibility": {
+        "surfaces": [
+          "chatgpt",
+          "codex"
+        ],
+        "operatingSystems": [
+          "linux",
+          "macos",
+          "windows"
+        ],
+        "installModes": [
+          "plugin",
+          "filesystem"
+        ]
+      },
+      "tags": [
+        "ui-implementation",
+        "visual-fidelity",
+        "responsive-design",
+        "figma"
+      ],
+      "dependencies": [],
+      "relatedSkills": [
+        "auditing-pixel-perfect-frontend"
+      ],
+      "version": "1.0.0-beta.1",
+      "updatedAt": "2026-08-26",
+      "locales": {
+        "en": {
+          "displayName": "Implementing Reference-Faithful UI",
+          "summary": "Translates visual evidence into responsive interface geometry, typography, surfaces, assets, and states through render-and-compare iteration.",
+          "primaryBenefit": "Produces an implementation that preserves measurable reference fidelity across desktop and mobile.",
+          "whenToUse": "Use when implementing a UI from Figma, screenshots, mockups, or an existing visual reference and fidelity to layout, spacing, typography, crops, and states is a primary acceptance criterion.",
+          "whenNotToUse": "Do not use for open-ended visual invention or when no reference-backed fidelity criterion exists.",
+          "useCases": [
+            "Recreate a supplied desktop and mobile design",
+            "Correct layout, typography, and crop differences through visual comparison"
+          ],
+          "examplePrompts": [
+            "Use implementing-reference-faithful-ui to build this interface from the supplied reference and verify the largest visual deltas first."
+          ]
+        },
+        "pt-BR": {
+          "displayName": "Implementação de UI Fiel à Referência",
+          "summary": "Traduz evidências visuais em geometria responsiva, tipografia, superfícies, assets e estados por meio de ciclos de renderização e comparação.",
+          "primaryBenefit": "Produz uma implementação que preserva a fidelidade mensurável à referência em desktop e mobile.",
+          "whenToUse": "Use ao implementar uma UI a partir de Figma, capturas de tela, mockups ou uma referência visual existente, quando a fidelidade de layout, espaçamento, tipografia, recortes e estados for um critério principal de aceite.",
+          "whenNotToUse": "Não use para criação visual em aberto ou quando não houver um critério de fidelidade respaldado por uma referência.",
+          "useCases": [
+            "Recriar um design fornecido para desktop e mobile",
+            "Corrigir diferenças de layout, tipografia e recorte por comparação visual"
+          ],
+          "examplePrompts": [
+            "Use implementing-reference-faithful-ui para construir esta interface a partir da referência fornecida e verificar primeiro as maiores diferenças visuais."
+          ]
+        }
+      }
+    },
+    {
+      "$schema": "../schemas/skill.schema.json",
+      "slug": "optimizing-frontend-motion-performance",
+      "category": "motion",
+      "packs": [
+        "motion"
+      ],
+      "maturity": "stable",
+      "difficulty": "advanced",
+      "featured": false,
+      "compatibility": {
+        "surfaces": [
+          "chatgpt",
+          "codex"
+        ],
+        "operatingSystems": [
+          "linux",
+          "macos",
+          "windows"
+        ],
+        "installModes": [
+          "plugin",
+          "filesystem"
+        ]
+      },
+      "tags": [
+        "motion-performance",
+        "webgl",
+        "gsap",
+        "memory-leaks",
+        "profiling"
+      ],
+      "dependencies": [],
+      "relatedSkills": [
+        "craft-premium-motion"
+      ],
+      "version": "1.0.0-beta.1",
+      "updatedAt": "2026-08-26",
+      "locales": {
+        "en": {
+          "displayName": "Optimizing Frontend Motion Performance",
+          "summary": "Profiles animation work and removes waste from offscreen loops, lifecycle leaks, expensive effects, and unconstrained WebGL rendering.",
+          "primaryBenefit": "Restores smooth, stable motion while preserving the intended visual experience.",
+          "whenToUse": "Use when a frontend has janky scrolling, excessive CPU or GPU use, long-session slowdown, offscreen animation work, WebGL or RAF loops, animation-related memory leaks, or costly GSAP effects.",
+          "whenNotToUse": "Do not use without a measured motion-related performance symptom, and do not treat build success as runtime evidence.",
+          "useCases": [
+            "Stop offscreen animation and WebGL work",
+            "Find and remove motion-related lifecycle leaks during route cycles"
+          ],
+          "examplePrompts": [
+            "Use optimizing-frontend-motion-performance to profile this long-session slowdown and preserve the visible motion while removing wasted work."
+          ]
+        },
+        "pt-BR": {
+          "displayName": "Otimização da Performance de Motion no Frontend",
+          "summary": "Analisa o trabalho de animação e elimina desperdícios em loops fora da tela, vazamentos de ciclo de vida, efeitos custosos e renderização WebGL sem limites.",
+          "primaryBenefit": "Restaura movimentos fluidos e estáveis sem perder a experiência visual pretendida.",
+          "whenToUse": "Use quando um frontend apresentar rolagem travada, uso excessivo de CPU ou GPU, lentidão em sessões longas, animações executadas fora da tela, loops de WebGL ou RAF, vazamentos de memória relacionados a animações ou efeitos GSAP custosos.",
+          "whenNotToUse": "Não use sem um sintoma mensurado de performance relacionado a motion e não trate o sucesso do build como evidência de runtime.",
+          "useCases": [
+            "Interromper animações e trabalho WebGL fora da tela",
+            "Encontrar e remover vazamentos de ciclo de vida ligados a motion durante ciclos de rota"
+          ],
+          "examplePrompts": [
+            "Use optimizing-frontend-motion-performance para analisar esta lentidão em sessões longas e preservar o motion visível enquanto remove trabalho desperdiçado."
+          ]
+        }
+      }
+    },
+    {
+      "$schema": "../schemas/skill.schema.json",
+      "slug": "orchestrating-cinematic-web-motion",
+      "category": "motion",
+      "packs": [
+        "motion"
+      ],
+      "maturity": "stable",
+      "difficulty": "advanced",
+      "featured": true,
+      "compatibility": {
+        "surfaces": [
+          "chatgpt",
+          "codex"
+        ],
+        "operatingSystems": [
+          "linux",
+          "macos",
+          "windows"
+        ],
+        "installModes": [
+          "plugin",
+          "filesystem"
+        ]
+      },
+      "tags": [
+        "web-motion",
+        "scroll-animation",
+        "gsap",
+        "motion-design",
+        "accessibility"
+      ],
+      "dependencies": [],
+      "relatedSkills": [
+        "craft-premium-motion"
+      ],
+      "version": "1.0.0-beta.1",
+      "updatedAt": "2026-08-26",
+      "locales": {
+        "en": {
+          "displayName": "Orchestrating Cinematic Web Motion",
+          "summary": "Assigns motion roles and technology ownership across reveals, scroll narratives, direct manipulation, ambient detail, and interaction states.",
+          "primaryBenefit": "Gives React and Next.js experiences a coherent sense of hierarchy, depth, and cinematic pacing without sacrificing usability.",
+          "whenToUse": "Use when a React or Next.js interface needs a coherent premium motion language involving scroll choreography, reveals, parallax, pinned scenes, hover motion, or cinematic transitions.",
+          "whenNotToUse": "Do not use before the static layout works well or for a simple isolated hover, focus, or tap transition that CSS can own.",
+          "useCases": [
+            "Plan a scroll-driven narrative with clear motion roles",
+            "Coordinate reveals, hover motion, and reduced-motion fallbacks"
+          ],
+          "examplePrompts": [
+            "Use orchestrating-cinematic-web-motion to choreograph this Next.js page with restrained scroll scenes and complete reduced-motion states."
+          ]
+        },
+        "pt-BR": {
+          "displayName": "Orquestração de Motion Cinematográfico para Web",
+          "summary": "Distribui papéis e responsabilidades tecnológicas de motion entre revelações, narrativas de scroll, manipulação direta, detalhes ambientes e estados de interação.",
+          "primaryBenefit": "Dá a experiências em React e Next.js hierarquia, profundidade e ritmo cinematográfico coerentes sem comprometer a usabilidade.",
+          "whenToUse": "Use quando uma interface em React ou Next.js precisar de uma linguagem premium e coerente de motion que envolva coreografia de scroll, revelações, parallax, cenas fixadas, movimentos de hover ou transições cinematográficas.",
+          "whenNotToUse": "Não use antes de o layout estático funcionar bem nem para uma transição simples e isolada de hover, foco ou toque que possa ser controlada por CSS.",
+          "useCases": [
+            "Planejar uma narrativa guiada por scroll com papéis claros de motion",
+            "Coordenar revelações, movimentos de hover e alternativas para redução de movimento"
+          ],
+          "examplePrompts": [
+            "Use orchestrating-cinematic-web-motion para coreografar esta página em Next.js com cenas de scroll contidas e estados completos de redução de movimento."
+          ]
+        }
+      }
+    },
+    {
+      "$schema": "../schemas/skill.schema.json",
+      "slug": "reconstructing-images-as-threejs",
+      "category": "game-development",
+      "packs": [
+        "motion",
+        "game-development"
+      ],
+      "maturity": "stable",
+      "difficulty": "advanced",
+      "featured": true,
+      "compatibility": {
+        "surfaces": [
+          "chatgpt",
+          "codex"
+        ],
+        "operatingSystems": [
+          "linux",
+          "macos",
+          "windows"
+        ],
+        "installModes": [
+          "plugin",
+          "filesystem"
+        ]
+      },
+      "tags": [
+        "threejs",
+        "procedural-3d",
+        "image-reconstruction",
+        "runtime-validation"
+      ],
+      "dependencies": [
+        {
+          "name": "Three.js",
+          "type": "library",
+          "required": true,
+          "url": "https://threejs.org"
+        }
+      ],
+      "relatedSkills": [
+        "building-hybrid-game-assets"
+      ],
+      "version": "1.0.0-beta.1",
+      "updatedAt": "2026-08-26",
+      "locales": {
+        "en": {
+          "displayName": "Reconstructing Images as Three.js",
+          "summary": "Treats reference images as limited evidence for a staged, deterministic, code-only procedural Three.js reconstruction with explicit review gates.",
+          "primaryBenefit": "Produces an evidence-backed 3D result whose fidelity, inferred geometry, hierarchy, and runtime readiness are honestly demonstrated.",
+          "whenToUse": "Use when a supplied image should become a code-only procedural Three.js object or stylized character, especially when fidelity, hidden geometry, animation readiness, runtime hierarchy, review gates, or single-view limitations must be evaluated.",
+          "whenNotToUse": "Do not use before procedural Three.js is justified over other asset formats, or when missing hidden geometry or unsupported runtime requirements materially determine success.",
+          "useCases": [
+            "Evaluate whether an image supports procedural 3D reconstruction",
+            "Build and validate a deterministic Three.js object factory"
+          ],
+          "examplePrompts": [
+            "Use reconstructing-images-as-threejs to assess this reference and build only the procedural geometry its evidence can support."
+          ]
+        },
+        "pt-BR": {
+          "displayName": "Reconstrução de Imagens em Three.js",
+          "summary": "Trata imagens de referência como evidência limitada para uma reconstrução procedural em Three.js, somente por código, determinística, feita em etapas e com critérios explícitos de revisão.",
+          "primaryBenefit": "Produz um resultado 3D respaldado por evidências, demonstrando com honestidade fidelidade, geometria inferida, hierarquia e prontidão para runtime.",
+          "whenToUse": "Use quando uma imagem fornecida precisar se tornar um objeto procedural ou personagem estilizado em Three.js feito somente por código, especialmente quando for necessário avaliar fidelidade, geometria oculta, prontidão para animação, hierarquia de runtime, critérios de revisão ou limitações de uma única vista.",
+          "whenNotToUse": "Não use antes de justificar Three.js procedural em relação a outros formatos de asset, nem quando geometria oculta ausente ou requisitos de runtime sem suporte forem determinantes para o sucesso.",
+          "useCases": [
+            "Avaliar se uma imagem sustenta uma reconstrução 3D procedural",
+            "Construir e validar uma factory determinística de objetos Three.js"
+          ],
+          "examplePrompts": [
+            "Use reconstructing-images-as-threejs para avaliar esta referência e construir apenas a geometria procedural sustentada pelas evidências."
+          ]
+        }
+      }
+    },
+    {
+      "$schema": "../schemas/skill.schema.json",
+      "slug": "shipping-github-vercel-changes",
+      "category": "delivery",
+      "packs": [
+        "frontend-product"
+      ],
+      "maturity": "stable",
+      "difficulty": "intermediate",
+      "featured": false,
+      "compatibility": {
+        "surfaces": [
+          "chatgpt",
+          "codex"
+        ],
+        "operatingSystems": [
+          "linux",
+          "macos",
+          "windows"
+        ],
+        "installModes": [
+          "plugin",
+          "filesystem"
+        ]
+      },
+      "tags": [
+        "git",
+        "github",
+        "vercel",
+        "release-workflow"
+      ],
+      "dependencies": [
+        {
+          "name": "GitHub",
+          "type": "service",
+          "required": false,
+          "url": "https://github.com"
+        },
+        {
+          "name": "Vercel",
+          "type": "service",
+          "required": false,
+          "url": "https://vercel.com"
+        }
+      ],
+      "relatedSkills": [
+        "bootstrapping-modern-web-apps"
+      ],
+      "version": "1.0.0-beta.1",
+      "updatedAt": "2026-08-26",
+      "locales": {
+        "en": {
+          "displayName": "Shipping GitHub and Vercel Changes",
+          "summary": "Coordinates focused commits, verification, pull-request handling, branch promotion, and deployment checks within the repository's actual policy.",
+          "primaryBenefit": "Moves repository changes toward review and release without mixing unrelated work, duplicating pull requests, or overstating deployment readiness.",
+          "whenToUse": "Use when completing repository work that should be committed, pushed, reviewed through a pull request, or promoted through development and production branches with Vercel deployment in mind.",
+          "whenNotToUse": "Do not use when the task does not include committing, pushing, pull-request review, branch promotion, or Vercel-aware release delivery.",
+          "useCases": [
+            "Prepare a focused feature branch and pull request",
+            "Promote a verified release and check its Vercel deployment"
+          ],
+          "examplePrompts": [
+            "Use shipping-github-vercel-changes to prepare this repository change for review under the current branch policy."
+          ]
+        },
+        "pt-BR": {
+          "displayName": "Entrega de Mudanças com GitHub e Vercel",
+          "summary": "Coordena commits focados, verificação, gestão de pull requests, promoção entre branches e checagens de deploy conforme a política real do repositório.",
+          "primaryBenefit": "Conduz mudanças do repositório à revisão e à entrega sem misturar trabalhos alheios, duplicar pull requests ou exagerar a prontidão do deploy.",
+          "whenToUse": "Use ao concluir um trabalho de repositório que deva receber commit, push, revisão por pull request ou promoção entre branches de desenvolvimento e produção, considerando o deploy na Vercel.",
+          "whenNotToUse": "Não use quando a tarefa não envolver commit, push, revisão por pull request, promoção entre branches ou entrega com atenção à Vercel.",
+          "useCases": [
+            "Preparar uma branch de funcionalidade focada e seu pull request",
+            "Promover uma versão verificada e conferir seu deploy na Vercel"
+          ],
+          "examplePrompts": [
+            "Use shipping-github-vercel-changes para preparar esta mudança do repositório para revisão conforme a política atual de branches."
+          ]
+        }
+      }
+    },
+    {
+      "$schema": "../schemas/skill.schema.json",
+      "slug": "testing-playable-games",
+      "category": "game-development",
+      "packs": [
+        "game-development"
+      ],
+      "maturity": "stable",
+      "difficulty": "advanced",
+      "featured": false,
+      "compatibility": {
+        "surfaces": [
+          "chatgpt",
+          "codex"
+        ],
+        "operatingSystems": [
+          "linux",
+          "macos",
+          "windows"
+        ],
+        "installModes": [
+          "plugin",
+          "filesystem"
+        ]
+      },
+      "tags": [
+        "game-testing",
+        "regression-testing",
+        "gameplay",
+        "performance"
+      ],
+      "dependencies": [],
+      "relatedSkills": [
+        "designing-action-combat"
+      ],
+      "version": "1.0.0-beta.1",
+      "updatedAt": "2026-08-26",
+      "locales": {
+        "en": {
+          "displayName": "Testing Playable Games",
+          "summary": "Exercises a playable build in layers across recovery, controls, movement, camera, combat, animation, progression, and performance.",
+          "primaryBenefit": "Provides reproducible evidence that game features survive realistic sequences, transitions, and regression risks.",
+          "whenToUse": "Use when verifying a browser or desktop game build for gameplay correctness, controls, combat feel, camera behavior, animation, performance, progression, and regression risk before calling a feature complete.",
+          "whenNotToUse": "Do not use as a substitute for focused code-level tests when no playable build or gameplay sequence is available to exercise.",
+          "useCases": [
+            "Verify combat and movement through normal gameplay sequences",
+            "Reproduce camera, progression, or long-session performance failures"
+          ],
+          "examplePrompts": [
+            "Use testing-playable-games to verify this build across controls, combat, transitions, and long-session performance."
+          ]
+        },
+        "pt-BR": {
+          "displayName": "Validação de Builds Jogáveis",
+          "summary": "Exercita um build jogável em camadas que cobrem recuperação, controles, movimento, câmera, combate, animação, progressão e performance.",
+          "primaryBenefit": "Fornece evidências reproduzíveis de que as funcionalidades do jogo resistem a sequências, transições e riscos de regressão realistas.",
+          "whenToUse": "Use ao verificar um build de jogo para navegador ou desktop quanto à correção do gameplay, controles, sensação do combate, comportamento da câmera, animação, performance, progressão e risco de regressão antes de considerar uma funcionalidade concluída.",
+          "whenNotToUse": "Não use como substituto de testes focados no código quando não houver um build jogável ou uma sequência de gameplay disponível para exercitar.",
+          "useCases": [
+            "Verificar combate e movimento em sequências normais de gameplay",
+            "Reproduzir falhas de câmera, progressão ou performance em sessões longas"
+          ],
+          "examplePrompts": [
+            "Use testing-playable-games para verificar este build em controles, combate, transições e performance durante sessões longas."
+          ]
+        }
+      }
+    },
+    {
+      "$schema": "../schemas/skill.schema.json",
+      "slug": "translating-figma-to-nextjs",
+      "category": "frontend",
+      "packs": [
+        "frontend-product"
+      ],
+      "maturity": "stable",
+      "difficulty": "advanced",
+      "featured": false,
+      "compatibility": {
+        "surfaces": [
+          "chatgpt",
+          "codex"
+        ],
+        "operatingSystems": [
+          "linux",
+          "macos",
+          "windows"
+        ],
+        "installModes": [
+          "plugin",
+          "filesystem"
+        ]
+      },
+      "tags": [
+        "figma",
+        "nextjs",
+        "react",
+        "design-systems",
+        "responsive-design"
+      ],
+      "dependencies": [
+        {
+          "name": "Figma",
+          "type": "service",
+          "required": true,
+          "url": "https://www.figma.com"
+        }
+      ],
+      "relatedSkills": [
+        "implementing-reference-faithful-ui"
+      ],
+      "version": "1.0.0-beta.1",
+      "updatedAt": "2026-08-26",
+      "locales": {
+        "en": {
+          "displayName": "Translating Figma to Next.js",
+          "summary": "Maps Figma hierarchy, variables, constraints, and component families onto existing Next.js and React primitives before implementing and comparing the result.",
+          "primaryBenefit": "Turns designs into faithful, responsive, reusable code that respects the application's architecture.",
+          "whenToUse": "Use when converting Figma designs or design-system components into production Next.js and React code while preserving fidelity, reuse, responsiveness, and maintainable component boundaries.",
+          "whenNotToUse": "Do not use without a Figma design or component source, and do not export raw Figma structure or CSS as production architecture.",
+          "useCases": [
+            "Implement a responsive Figma frame in an existing Next.js application",
+            "Map Figma component variants to reusable React boundaries"
+          ],
+          "examplePrompts": [
+            "Use translating-figma-to-nextjs to implement these Figma components as responsive, reusable React code in the existing architecture."
+          ]
+        },
+        "pt-BR": {
+          "displayName": "Tradução de Figma para Next.js",
+          "summary": "Mapeia hierarquia, variáveis, restrições e famílias de componentes do Figma para primitivas existentes de Next.js e React antes de implementar e comparar o resultado.",
+          "primaryBenefit": "Transforma designs em código fiel, responsivo e reutilizável que respeita a arquitetura da aplicação.",
+          "whenToUse": "Use ao converter designs ou componentes de design system do Figma em código de produção para Next.js e React, preservando fidelidade, reutilização, responsividade e limites de componentes fáceis de manter.",
+          "whenNotToUse": "Não use sem um design ou componente de origem no Figma e não exporte a estrutura ou o CSS bruto do Figma como arquitetura de produção.",
+          "useCases": [
+            "Implementar um frame responsivo do Figma em uma aplicação Next.js existente",
+            "Mapear variantes de componentes do Figma para limites reutilizáveis em React"
+          ],
+          "examplePrompts": [
+            "Use translating-figma-to-nextjs para implementar estes componentes do Figma como código React responsivo e reutilizável na arquitetura existente."
+          ]
+        }
+      }
+    },
+    {
+      "$schema": "../schemas/skill.schema.json",
+      "slug": "turning-techniques-into-skills",
+      "category": "meta",
+      "packs": [],
+      "maturity": "stable",
+      "difficulty": "intermediate",
+      "featured": false,
+      "compatibility": {
+        "surfaces": [
+          "chatgpt",
+          "codex"
+        ],
+        "operatingSystems": [
+          "linux",
+          "macos",
+          "windows"
+        ],
+        "installModes": [
+          "plugin",
+          "filesystem"
+        ]
+      },
+      "tags": [
+        "agent-skills",
+        "workflow-design",
+        "documentation",
+        "reusable-processes"
+      ],
+      "dependencies": [],
+      "relatedSkills": [],
+      "version": "1.0.0-beta.1",
+      "updatedAt": "2026-08-26",
+      "locales": {
+        "en": {
+          "displayName": "Turning Techniques into Skills",
+          "summary": "Distills a recurring judgment or workflow into concise trigger conditions, operating steps, acceptance checks, and pressure-tested guidance.",
+          "primaryBenefit": "Makes proven decision paths reusable and consistent across future projects.",
+          "whenToUse": "Use when a useful workflow, implementation pattern, debugging method, design technique, or repeated prompt should become a reusable Agent Skill for future projects.",
+          "whenNotToUse": "Do not use for one-off project conventions, trivial documented facts, purely mechanical rules, or a story about a single bug fix.",
+          "useCases": [
+            "Convert a recurring implementation workflow into an Agent Skill",
+            "Refine a vague trigger until it produces consistent decisions"
+          ],
+          "examplePrompts": [
+            "Use turning-techniques-into-skills to turn this recurring workflow into a concise, reusable Agent Skill."
+          ]
+        },
+        "pt-BR": {
+          "displayName": "Transformação de Técnicas em Skills",
+          "summary": "Destila um julgamento ou fluxo recorrente em condições de acionamento concisas, etapas operacionais, critérios de aceite e orientações testadas sob pressão.",
+          "primaryBenefit": "Torna caminhos de decisão comprovados reutilizáveis e consistentes em projetos futuros.",
+          "whenToUse": "Use quando um fluxo útil, padrão de implementação, método de depuração, técnica de design ou prompt recorrente precisar se tornar uma Agent Skill reutilizável em projetos futuros.",
+          "whenNotToUse": "Não use para convenções pontuais de projeto, fatos triviais já documentados, regras puramente mecânicas ou relatos sobre a correção de um único bug.",
+          "useCases": [
+            "Converter um fluxo recorrente de implementação em uma Agent Skill",
+            "Refinar um acionamento vago até que produza decisões consistentes"
+          ],
+          "examplePrompts": [
+            "Use turning-techniques-into-skills para transformar este fluxo recorrente em uma Agent Skill concisa e reutilizável."
+          ]
+        }
+      }
+    }
+  ],
+  "packs": [
+    {
+      "$schema": "../schemas/pack.schema.json",
+      "slug": "frontend-product",
+      "status": "active",
+      "featured": true,
+      "color": "electric-blue",
+      "version": "1.0.0-beta.1",
+      "locales": {
+        "en": {
+          "name": "Frontend & Product",
+          "summary": "Product strategy, interface systems, implementation fidelity, and delivery for production web experiences.",
+          "description": "A complete workflow for establishing a web application baseline, shaping product and interface direction, translating references into responsive code, auditing fidelity, and preparing verified changes for release.",
+          "outcomes": [
+            "Build coherent, accessible, and conversion-aware product interfaces",
+            "Move reference-backed frontend work from setup through verified delivery"
+          ]
+        },
+        "pt-BR": {
+          "name": "Frontend e Produto",
+          "summary": "Estratégia de produto, sistemas de interface, fidelidade de implementação e entrega para experiências web de produção.",
+          "description": "Um fluxo completo para estabelecer a base de uma aplicação web, definir a direção de produto e interface, traduzir referências em código responsivo, auditar fidelidade e preparar mudanças verificadas para entrega.",
+          "outcomes": [
+            "Construir interfaces de produto coerentes, acessíveis e orientadas à conversão",
+            "Levar trabalhos de frontend baseados em referências da preparação à entrega verificada"
+          ]
+        }
+      },
+      "skillSlugs": [
+        "bootstrapping-modern-web-apps",
+        "designing-ui-systems",
+        "building-premium-nextjs-interfaces",
+        "building-conversion-product-pages",
+        "translating-figma-to-nextjs",
+        "implementing-reference-faithful-ui",
+        "auditing-pixel-perfect-frontend",
+        "shipping-github-vercel-changes"
+      ],
+      "skills": [
+        {
+          "slug": "bootstrapping-modern-web-apps",
+          "displayName": {
+            "en": "Bootstrapping Modern Web Apps",
+            "pt-BR": "Estruturação de Aplicações Web Modernas"
+          },
+          "summary": {
+            "en": "Establishes this repository's opt-in conventions for a lean, production-grade Next.js application baseline.",
+            "pt-BR": "Estabelece as convenções optativas deste repositório para uma base Next.js enxuta e pronta para produção."
+          },
+          "difficulty": "intermediate",
+          "maturity": "stable"
+        },
+        {
+          "slug": "designing-ui-systems",
+          "displayName": {
+            "en": "Designing UI Systems",
+            "pt-BR": "Design de Sistemas de UI"
+          },
+          "summary": {
+            "en": "Turns repeated interface decisions into semantic foundations, reusable component contracts, explicit states, and responsive rules.",
+            "pt-BR": "Transforma decisões recorrentes de interface em fundamentos semânticos, contratos de componentes reutilizáveis, estados explícitos e regras responsivas."
+          },
+          "difficulty": "intermediate",
+          "maturity": "stable"
+        },
+        {
+          "slug": "building-premium-nextjs-interfaces",
+          "displayName": {
+            "en": "Building Premium Next.js Interfaces",
+            "pt-BR": "Criação de Interfaces Premium em Next.js"
+          },
+          "summary": {
+            "en": "Shapes art direction, hierarchy, responsive composition, component states, and verification into a coherent production interface.",
+            "pt-BR": "Integra direção de arte, hierarquia, composição responsiva, estados de componentes e verificação em uma interface de produção coerente."
+          },
+          "difficulty": "advanced",
+          "maturity": "stable"
+        },
+        {
+          "slug": "building-conversion-product-pages",
+          "displayName": {
+            "en": "Building Conversion Product Pages",
+            "pt-BR": "Criação de Páginas de Produto para Conversão"
+          },
+          "summary": {
+            "en": "Structures product and marketing flows around clear value, credible proof, resolved objections, and a consistent primary action.",
+            "pt-BR": "Estrutura fluxos de produto e marketing em torno de valor claro, provas confiáveis, objeções resolvidas e uma ação principal consistente."
+          },
+          "difficulty": "intermediate",
+          "maturity": "stable"
+        },
+        {
+          "slug": "translating-figma-to-nextjs",
+          "displayName": {
+            "en": "Translating Figma to Next.js",
+            "pt-BR": "Tradução de Figma para Next.js"
+          },
+          "summary": {
+            "en": "Maps Figma hierarchy, variables, constraints, and component families onto existing Next.js and React primitives before implementing and comparing the result.",
+            "pt-BR": "Mapeia hierarquia, variáveis, restrições e famílias de componentes do Figma para primitivas existentes de Next.js e React antes de implementar e comparar o resultado."
+          },
+          "difficulty": "advanced",
+          "maturity": "stable"
+        },
+        {
+          "slug": "implementing-reference-faithful-ui",
+          "displayName": {
+            "en": "Implementing Reference-Faithful UI",
+            "pt-BR": "Implementação de UI Fiel à Referência"
+          },
+          "summary": {
+            "en": "Translates visual evidence into responsive interface geometry, typography, surfaces, assets, and states through render-and-compare iteration.",
+            "pt-BR": "Traduz evidências visuais em geometria responsiva, tipografia, superfícies, assets e estados por meio de ciclos de renderização e comparação."
+          },
+          "difficulty": "intermediate",
+          "maturity": "stable"
+        },
+        {
+          "slug": "auditing-pixel-perfect-frontend",
+          "displayName": {
+            "en": "Auditing Pixel-Perfect Frontend",
+            "pt-BR": "Auditoria de Frontend Pixel-Perfect"
+          },
+          "summary": {
+            "en": "Compares implemented interfaces with visual references through a viewport-matched, severity-based review.",
+            "pt-BR": "Compara interfaces implementadas com referências visuais por meio de uma revisão no mesmo viewport e orientada por severidade."
+          },
+          "difficulty": "advanced",
+          "maturity": "stable"
+        },
+        {
+          "slug": "shipping-github-vercel-changes",
+          "displayName": {
+            "en": "Shipping GitHub and Vercel Changes",
+            "pt-BR": "Entrega de Mudanças com GitHub e Vercel"
+          },
+          "summary": {
+            "en": "Coordinates focused commits, verification, pull-request handling, branch promotion, and deployment checks within the repository's actual policy.",
+            "pt-BR": "Coordena commits focados, verificação, gestão de pull requests, promoção entre branches e checagens de deploy conforme a política real do repositório."
+          },
+          "difficulty": "intermediate",
+          "maturity": "stable"
+        }
+      ]
+    },
+    {
+      "$schema": "../schemas/pack.schema.json",
+      "slug": "game-development",
+      "status": "active",
+      "featured": true,
+      "color": "amber",
+      "version": "1.0.0-beta.1",
+      "locales": {
+        "en": {
+          "name": "Game Development",
+          "summary": "Combat design, asset production, character animation, procedural 3D, and playable-build verification.",
+          "description": "An end-to-end workflow for defining readable action combat, producing coherent runtime assets and character animation, evaluating procedural 3D, and testing features through real gameplay sequences.",
+          "outcomes": [
+            "Create readable combat supported by consistent, runtime-ready assets",
+            "Verify gameplay, animation, progression, and performance before release"
+          ]
+        },
+        "pt-BR": {
+          "name": "Desenvolvimento de Jogos",
+          "summary": "Design de combate, produção de assets, animação de personagens, 3D procedural e verificação de builds jogáveis.",
+          "description": "Um fluxo completo para definir combate de ação legível, produzir assets de runtime e animações de personagens coerentes, avaliar 3D procedural e testar funcionalidades em sequências reais de gameplay.",
+          "outcomes": [
+            "Criar combate legível apoiado por assets consistentes e prontos para runtime",
+            "Verificar gameplay, animação, progressão e performance antes da entrega"
+          ]
+        }
+      },
+      "skillSlugs": [
+        "designing-action-combat",
+        "building-hybrid-game-assets",
+        "creating-character-sprite-pipelines",
+        "reconstructing-images-as-threejs",
+        "testing-playable-games"
+      ],
+      "skills": [
+        {
+          "slug": "designing-action-combat",
+          "displayName": {
+            "en": "Designing Action Combat",
+            "pt-BR": "Design de Combate de Ação"
+          },
+          "summary": {
+            "en": "Defines player and enemy action contracts, then tunes timing, control, telegraphs, hit registration, feedback, and edge cases around a minimal duel.",
+            "pt-BR": "Define contratos de ações do jogador e dos inimigos e ajusta timing, controle, sinalizações dos ataques inimigos, registro de golpes, feedback e casos extremos em torno de um duelo mínimo."
+          },
+          "difficulty": "advanced",
+          "maturity": "stable"
+        },
+        {
+          "slug": "building-hybrid-game-assets",
+          "displayName": {
+            "en": "Building Hybrid Game Assets",
+            "pt-BR": "Produção Híbrida de Assets para Jogos"
+          },
+          "summary": {
+            "en": "Plans a coherent production pipeline across sprites, meshes, procedural geometry, textures, effects, and purchased assets.",
+            "pt-BR": "Planeja um fluxo de produção coerente entre assets gerados, criados manualmente, procedurais e adquiridos, incluindo sprites, meshes, texturas e efeitos."
+          },
+          "difficulty": "advanced",
+          "maturity": "stable"
+        },
+        {
+          "slug": "creating-character-sprite-pipelines",
+          "displayName": {
+            "en": "Creating Character Sprite Pipelines",
+            "pt-BR": "Criação de Pipelines de Sprites de Personagens"
+          },
+          "summary": {
+            "en": "Builds a model-sheet-led workflow for consistent character poses, cycles, transitions, equipment, and follow-through animation.",
+            "pt-BR": "Constrói um fluxo guiado por model sheet para poses, ciclos, transições, equipamentos e camadas de acompanhamento (follow-through) consistentes."
+          },
+          "difficulty": "advanced",
+          "maturity": "stable"
+        },
+        {
+          "slug": "reconstructing-images-as-threejs",
+          "displayName": {
+            "en": "Reconstructing Images as Three.js",
+            "pt-BR": "Reconstrução de Imagens em Three.js"
+          },
+          "summary": {
+            "en": "Treats reference images as limited evidence for a staged, deterministic, code-only procedural Three.js reconstruction with explicit review gates.",
+            "pt-BR": "Trata imagens de referência como evidência limitada para uma reconstrução procedural em Three.js, somente por código, determinística, feita em etapas e com critérios explícitos de revisão."
+          },
+          "difficulty": "advanced",
+          "maturity": "stable"
+        },
+        {
+          "slug": "testing-playable-games",
+          "displayName": {
+            "en": "Testing Playable Games",
+            "pt-BR": "Validação de Builds Jogáveis"
+          },
+          "summary": {
+            "en": "Exercises a playable build in layers across recovery, controls, movement, camera, combat, animation, progression, and performance.",
+            "pt-BR": "Exercita um build jogável em camadas que cobrem recuperação, controles, movimento, câmera, combate, animação, progressão e performance."
+          },
+          "difficulty": "advanced",
+          "maturity": "stable"
+        }
+      ]
+    },
+    {
+      "$schema": "../schemas/pack.schema.json",
+      "slug": "motion",
+      "status": "active",
+      "featured": true,
+      "color": "violet",
+      "version": "1.0.0-beta.1",
+      "locales": {
+        "en": {
+          "name": "Motion",
+          "summary": "Direction, engineering, and performance for purposeful interface motion.",
+          "description": "A coordinated workflow for planning, building, and auditing expressive web motion, from interaction systems and cinematic sequences to procedural 3D and runtime performance.",
+          "outcomes": [
+            "Define a coherent and accessible motion language",
+            "Ship expressive animation and procedural 3D with reliable runtime behavior"
+          ]
+        },
+        "pt-BR": {
+          "name": "Motion",
+          "summary": "Direção, engenharia e performance para movimentos de interface com propósito.",
+          "description": "Um fluxo coordenado para planejar, construir e auditar motion expressivo para web, de sistemas de interação e sequências cinematográficas a 3D procedural e performance em runtime.",
+          "outcomes": [
+            "Definir uma linguagem de motion coerente e acessível",
+            "Entregar animações expressivas e 3D procedural com comportamento confiável em runtime"
+          ]
+        }
+      },
+      "skillSlugs": [
+        "craft-premium-motion",
+        "engineering-gsap-animations",
+        "orchestrating-cinematic-web-motion",
+        "optimizing-frontend-motion-performance",
+        "reconstructing-images-as-threejs"
+      ],
+      "skills": [
+        {
+          "slug": "craft-premium-motion",
+          "displayName": {
+            "en": "Craft Premium Motion",
+            "pt-BR": "Criação de Motion Premium"
+          },
+          "summary": {
+            "en": "Directs and engineers a coherent motion system from product intent through technology routing, implementation, and experiential verification.",
+            "pt-BR": "Orienta e implementa um sistema de motion coerente, da intenção do produto ao direcionamento tecnológico, à execução e à verificação da experiência."
+          },
+          "difficulty": "advanced",
+          "maturity": "stable"
+        },
+        {
+          "slug": "engineering-gsap-animations",
+          "displayName": {
+            "en": "Engineering GSAP Animations",
+            "pt-BR": "Engenharia de Animações com GSAP"
+          },
+          "summary": {
+            "en": "Implements selected GSAP effects as scoped, lifecycle-safe, responsive, and verifiable React or Next.js subsystems.",
+            "pt-BR": "Implementa efeitos escolhidos em GSAP como subsistemas de React ou Next.js isolados, seguros no ciclo de vida, responsivos e verificáveis."
+          },
+          "difficulty": "advanced",
+          "maturity": "stable"
+        },
+        {
+          "slug": "orchestrating-cinematic-web-motion",
+          "displayName": {
+            "en": "Orchestrating Cinematic Web Motion",
+            "pt-BR": "Orquestração de Motion Cinematográfico para Web"
+          },
+          "summary": {
+            "en": "Assigns motion roles and technology ownership across reveals, scroll narratives, direct manipulation, ambient detail, and interaction states.",
+            "pt-BR": "Distribui papéis e responsabilidades tecnológicas de motion entre revelações, narrativas de scroll, manipulação direta, detalhes ambientes e estados de interação."
+          },
+          "difficulty": "advanced",
+          "maturity": "stable"
+        },
+        {
+          "slug": "optimizing-frontend-motion-performance",
+          "displayName": {
+            "en": "Optimizing Frontend Motion Performance",
+            "pt-BR": "Otimização da Performance de Motion no Frontend"
+          },
+          "summary": {
+            "en": "Profiles animation work and removes waste from offscreen loops, lifecycle leaks, expensive effects, and unconstrained WebGL rendering.",
+            "pt-BR": "Analisa o trabalho de animação e elimina desperdícios em loops fora da tela, vazamentos de ciclo de vida, efeitos custosos e renderização WebGL sem limites."
+          },
+          "difficulty": "advanced",
+          "maturity": "stable"
+        },
+        {
+          "slug": "reconstructing-images-as-threejs",
+          "displayName": {
+            "en": "Reconstructing Images as Three.js",
+            "pt-BR": "Reconstrução de Imagens em Three.js"
+          },
+          "summary": {
+            "en": "Treats reference images as limited evidence for a staged, deterministic, code-only procedural Three.js reconstruction with explicit review gates.",
+            "pt-BR": "Trata imagens de referência como evidência limitada para uma reconstrução procedural em Three.js, somente por código, determinística, feita em etapas e com critérios explícitos de revisão."
+          },
+          "difficulty": "advanced",
+          "maturity": "stable"
+        }
+      ]
+    },
+    {
+      "$schema": "../schemas/pack.schema.json",
+      "slug": "architecture-engineering",
+      "status": "planned",
+      "featured": false,
+      "color": "cyan",
+      "version": "1.0.0-beta.1",
+      "locales": {
+        "en": {
+          "name": "Architecture & Engineering",
+          "summary": "Planned guidance for durable software architecture and engineering decisions.",
+          "description": "This planned pack will cover architecture and engineering workflows; skills will enter through public proposals and independent validation.",
+          "outcomes": [
+            "Evaluate system boundaries and architectural tradeoffs",
+            "Establish maintainable engineering practices across services and applications"
+          ]
+        },
+        "pt-BR": {
+          "name": "Arquitetura e Engenharia",
+          "summary": "Orientações planejadas para decisões duráveis de arquitetura e engenharia de software.",
+          "description": "Este pack planejado abordará fluxos de arquitetura e engenharia; as skills entrarão por meio de propostas públicas e validação independente.",
+          "outcomes": [
+            "Avaliar limites de sistemas e compromissos arquiteturais",
+            "Estabelecer práticas de engenharia sustentáveis entre serviços e aplicações"
+          ]
+        }
+      },
+      "skillSlugs": [],
+      "skills": []
+    },
+    {
+      "$schema": "../schemas/pack.schema.json",
+      "slug": "backend-data",
+      "status": "planned",
+      "featured": false,
+      "color": "green",
+      "version": "1.0.0-beta.1",
+      "locales": {
+        "en": {
+          "name": "Backend & Data",
+          "summary": "Planned guidance for backend services, data models, storage, and operational reliability.",
+          "description": "This planned pack will cover backend and data workflows; skills will enter through public proposals and independent validation.",
+          "outcomes": [
+            "Design dependable backend and data flows",
+            "Operate storage and service boundaries with clear reliability criteria"
+          ]
+        },
+        "pt-BR": {
+          "name": "Backend e Dados",
+          "summary": "Orientações planejadas para serviços de backend, modelos de dados, armazenamento e confiabilidade operacional.",
+          "description": "Este pack planejado abordará fluxos de backend e dados; as skills entrarão por meio de propostas públicas e validação independente.",
+          "outcomes": [
+            "Projetar fluxos confiáveis de backend e dados",
+            "Operar limites de armazenamento e serviços com critérios claros de confiabilidade"
+          ]
+        }
+      },
+      "skillSlugs": [],
+      "skills": []
+    },
+    {
+      "$schema": "../schemas/pack.schema.json",
+      "slug": "quality-testing",
+      "status": "planned",
+      "featured": false,
+      "color": "coral",
+      "version": "1.0.0-beta.1",
+      "locales": {
+        "en": {
+          "name": "Quality & Testing",
+          "summary": "Planned guidance for verification strategy, regression control, and evidence-based quality gates.",
+          "description": "This planned pack will cover quality and testing workflows; skills will enter through public proposals and independent validation.",
+          "outcomes": [
+            "Build verification strategies around observable product behavior",
+            "Reduce regression risk with repeatable evidence and quality gates"
+          ]
+        },
+        "pt-BR": {
+          "name": "Qualidade e Testes",
+          "summary": "Orientações planejadas para estratégia de verificação, controle de regressões e critérios de qualidade baseados em evidências.",
+          "description": "Este pack planejado abordará fluxos de qualidade e testes; as skills entrarão por meio de propostas públicas e validação independente.",
+          "outcomes": [
+            "Construir estratégias de verificação em torno do comportamento observável do produto",
+            "Reduzir o risco de regressão com evidências repetíveis e critérios de qualidade"
+          ]
+        }
+      },
+      "skillSlugs": [],
+      "skills": []
+    }
+  ]
+}

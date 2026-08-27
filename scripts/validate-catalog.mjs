@@ -3,7 +3,7 @@ import { lstat, readFile, readdir } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
-import { getCatalogPaths, inspectJsonDirectory, readJson } from "./lib/catalog.mjs";
+import { assembleCatalog, checkCatalogBytes, getCatalogPaths, inspectJsonDirectory, readJson } from "./lib/catalog.mjs";
 import { containsForbiddenPrivateData } from "./lib/privacy.mjs";
 import { inspectSkillsRoot } from "./lib/skills.mjs";
 
@@ -133,16 +133,19 @@ async function collectJsonSyntaxErrors(files, repoRoot, errors) {
   }
 }
 
-export async function loadCatalog(repoRoot) {
+export async function loadCatalog(repoRoot, options = {}) {
   const root = path.resolve(repoRoot);
   const paths = getCatalogPaths(root);
   const errors = [];
   const tree = await inspectCatalogTree(paths.root, root);
+  const jsonSources = options.ignoreGenerated === true
+    ? tree.jsonFiles.filter((file) => path.resolve(file) !== paths.generatedFile)
+    : tree.jsonFiles;
   const blockedPaths = new Set(tree.symbolicLinks);
   for (const file of tree.symbolicLinks) {
     errors.push(`${relativeFile(root, file)}: symbolic links are not allowed`);
   }
-  await collectJsonSyntaxErrors(tree.jsonFiles, root, errors);
+  await collectJsonSyntaxErrors(jsonSources, root, errors);
 
   let manifest = null;
   if (!isBlockedPath(paths.manifestFile, blockedPaths)) {
@@ -164,7 +167,7 @@ export async function loadCatalog(repoRoot) {
       manifest: { file: paths.manifestFile, relative: relativeFile(root, paths.manifestFile) },
       skills: skillSources.files,
       packs: packSources.files,
-      jsonSources: tree.jsonFiles.map((file) => ({ file, relative: relativeFile(root, file) })),
+      jsonSources: jsonSources.map((file) => ({ file, relative: relativeFile(root, file) })),
     },
     errors: [...new Set(errors)].sort(compareStrings),
   };
@@ -609,9 +612,9 @@ async function readVersionSources(repoRoot, errors) {
   };
 }
 
-export async function validateCatalog(repoRoot, options = {}) {
+async function inspectCatalogSources(repoRoot, options = {}) {
   const root = path.resolve(repoRoot);
-  const loaded = await loadCatalog(root);
+  const loaded = await loadCatalog(root, options);
   const errors = [...loaded.errors];
   validateManifest(loaded.manifest, loaded.files.manifest.relative, errors);
 
@@ -656,13 +659,36 @@ export async function validateCatalog(repoRoot, options = {}) {
     }
   }
 
-  void options.checkGenerated;
   return {
-    errors: [...new Set(errors)].sort(compareStrings),
-    skillCount: loaded.skills.length,
-    packCount: loaded.packs.length,
-    activePackCount: loaded.packs.filter((pack) => isRecord(pack) && pack.status === "active").length,
+    loaded,
+    result: {
+      errors: [...new Set(errors)].sort(compareStrings),
+      skillCount: loaded.skills.length,
+      packCount: loaded.packs.length,
+      activePackCount: loaded.packs.filter((pack) => isRecord(pack) && pack.status === "active").length,
+    },
   };
+}
+
+export async function loadValidatedCatalog(repoRoot) {
+  const { loaded, result } = await inspectCatalogSources(repoRoot, { ignoreGenerated: true });
+  if (result.errors.length > 0) {
+    throw new AggregateError(
+      result.errors.map((message) => new Error(message)),
+      `Catalog source validation failed with ${result.errors.length} issue(s)`,
+    );
+  }
+  return loaded;
+}
+
+export async function validateCatalog(repoRoot, options = {}) {
+  const root = path.resolve(repoRoot);
+  const sourceOptions = options.checkGenerated === true ? { ignoreGenerated: true } : {};
+  const { loaded, result } = await inspectCatalogSources(root, sourceOptions);
+  if (options.checkGenerated === true && result.errors.length === 0) {
+    result.errors.push(...await checkCatalogBytes(root, assembleCatalog(loaded)));
+  }
+  return result;
 }
 
 const scriptFile = fileURLToPath(import.meta.url);
