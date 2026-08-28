@@ -52,7 +52,24 @@ export interface Messages {
     readonly active: string;
     readonly planned: string;
     readonly skills: string;
+    readonly compositionPending: string;
     readonly view: string;
+  };
+  readonly gettingStarted: {
+    readonly eyebrow: string;
+    readonly title: string;
+    readonly summary: string;
+    readonly bash: string;
+    readonly powershell: string;
+    readonly copy: string;
+    readonly copied: string;
+    readonly requirements: { readonly title: string; readonly items: readonly string[] };
+    readonly install: { readonly title: string; readonly summary: string; readonly complete: string; readonly skill: string; readonly pack: string };
+    readonly verify: { readonly title: string; readonly summary: string };
+    readonly maintenanceLabel: string;
+    readonly update: { readonly title: string; readonly summary: string };
+    readonly remove: { readonly title: string; readonly summary: string };
+    readonly next: { readonly eyebrow: string; readonly title: string; readonly summary: string; readonly skills: string; readonly packs: string };
   };
   readonly packDetail: {
     readonly back: string;
@@ -222,7 +239,48 @@ export const messages = {
       active: "Active",
       planned: "Planned",
       skills: "{count} skills",
+      compositionPending: "Composition in progress",
       view: "View pack",
+    },
+    gettingStarted: {
+      eyebrow: "Installation guide",
+      title: "Getting started",
+      summary: "Choose the scope you need, install it from the repository, and confirm that your agent can discover the workflows.",
+      bash: "Bash · Linux, macOS, or WSL",
+      powershell: "PowerShell · Windows",
+      copy: "Copy",
+      copied: "Copied",
+      requirements: {
+        title: "Before you begin",
+        items: ["Node.js 20 or newer.", "Git and a local clone of the Agent Skills Studio repository.", "Codex or another runtime that discovers skills in ~/.agents/skills/."],
+      },
+      install: {
+        title: "Install the complete collection",
+        summary: "Run commands from the repository root. Choose the complete collection, a single skill, or an active pack.",
+        complete: "Complete collection",
+        skill: "One skill",
+        pack: "One active pack",
+      },
+      verify: {
+        title: "Verify the installation",
+        summary: "List the destination and confirm that the selected skill directories contain their canonical SKILL.md files.",
+      },
+      maintenanceLabel: "Maintenance",
+      update: {
+        title: "Update safely",
+        summary: "Pull the latest repository changes, then run the same installer command again. Each selected skill is staged and replaced atomically.",
+      },
+      remove: {
+        title: "Remove deliberately",
+        summary: "Delete only the named skill directory from ~/.agents/skills/. Removing a pack means removing each skill that the pack installed; shared skills may still be used by another pack.",
+      },
+      next: {
+        eyebrow: "Choose your workflow",
+        title: "Start from the outcome you need.",
+        summary: "Explore individual skills for precise control or install a curated pack for a connected workflow.",
+        skills: "Explore skills",
+        packs: "View packs",
+      },
     },
     packDetail: {
       back: "Back to packs",
@@ -391,7 +449,48 @@ export const messages = {
       active: "Ativo",
       planned: "Planejado",
       skills: "{count} skills",
+      compositionPending: "Composição em definição",
       view: "Ver pacote",
+    },
+    gettingStarted: {
+      eyebrow: "Guia de instalação",
+      title: "Primeiros passos",
+      summary: "Escolha o escopo necessário, instale a partir do repositório e confirme que seu agente consegue descobrir os fluxos.",
+      bash: "Bash · Linux, macOS ou WSL",
+      powershell: "PowerShell · Windows",
+      copy: "Copiar",
+      copied: "Copiado",
+      requirements: {
+        title: "Antes de começar",
+        items: ["Node.js 20 ou mais recente.", "Git e um clone local do repositório Agent Skills Studio.", "Codex ou outro ambiente que descubra skills em ~/.agents/skills/."],
+      },
+      install: {
+        title: "Instale a coleção completa",
+        summary: "Execute os comandos na raiz do repositório. Escolha a coleção completa, uma skill ou um pacote ativo.",
+        complete: "Coleção completa",
+        skill: "Uma skill",
+        pack: "Um pacote ativo",
+      },
+      verify: {
+        title: "Verifique a instalação",
+        summary: "Liste o destino e confirme que as pastas selecionadas contêm seus arquivos SKILL.md canônicos.",
+      },
+      maintenanceLabel: "Manutenção",
+      update: {
+        title: "Atualize com segurança",
+        summary: "Baixe as mudanças mais recentes do repositório e execute novamente o mesmo instalador. Cada skill selecionada é preparada e substituída de forma atômica.",
+      },
+      remove: {
+        title: "Remova de forma intencional",
+        summary: "Exclua apenas a pasta da skill desejada em ~/.agents/skills/. Remover um pacote significa remover cada skill instalada por ele; skills compartilhadas ainda podem pertencer a outro pacote.",
+      },
+      next: {
+        eyebrow: "Escolha seu fluxo",
+        title: "Comece pelo resultado necessário.",
+        summary: "Explore skills individuais para ter controle preciso ou instale um pacote selecionado para um fluxo conectado.",
+        skills: "Explorar skills",
+        packs: "Ver pacotes",
+      },
     },
     packDetail: {
       back: "Voltar para pacotes",
