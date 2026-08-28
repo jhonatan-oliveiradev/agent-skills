@@ -89,6 +89,25 @@ export interface Messages {
     readonly resultsTitle: string;
     readonly evidence: string;
   };
+  readonly roadmap: {
+    readonly eyebrow: string;
+    readonly principleLabel: string;
+    readonly principle: string;
+    readonly stages: readonly {
+      readonly id: "proposal" | "research" | "development" | "experimental" | "beta" | "stable" | "deprecated";
+      readonly title: string;
+      readonly description: string;
+      readonly empty: string;
+    }[];
+    readonly betaItems: readonly { readonly id: string; readonly title: string; readonly summary: string }[];
+    readonly stableItem: { readonly title: string; readonly summary: string };
+    readonly itemMeta: { readonly plannedPack: string; readonly stableSkills: string };
+    readonly viewItem: string;
+    readonly contributeLabel: string;
+    readonly contributeTitle: string;
+    readonly contributeSummary: string;
+    readonly contributeAction: string;
+  };
   readonly packDetail: {
     readonly back: string;
     readonly active: string;
@@ -318,6 +337,33 @@ export const messages = {
       resultsTitle: "What shipped",
       evidence: "View evidence record",
     },
+    roadmap: {
+      eyebrow: "Public roadmap",
+      principleLabel: "How to read it",
+      principle: "Status reflects evidence, not aspiration. Initiatives move forward only after their purpose, implementation, and verification are clear enough for the next stage.",
+      stages: [
+        { id: "proposal", title: "Proposal", description: "A public direction open to concrete use cases and community input.", empty: "No initiatives in this stage." },
+        { id: "research", title: "Research", description: "The problem, references, constraints, and viable approaches are being investigated.", empty: "No initiatives in this stage." },
+        { id: "development", title: "In development", description: "The approved scope is being implemented and verified in focused slices.", empty: "No initiatives in this stage." },
+        { id: "experimental", title: "Experimental", description: "The capability works, but its contract or fit may still change through real use.", empty: "No initiatives in this stage." },
+        { id: "beta", title: "Beta", description: "The capability is available and versioned while release readiness is completed.", empty: "No initiatives in this stage." },
+        { id: "stable", title: "Stable", description: "The contract is validated, documented, installable, and protected by project gates.", empty: "No initiatives in this stage." },
+        { id: "deprecated", title: "Deprecated", description: "The capability is being retired with a documented replacement or migration path.", empty: "No initiatives in this stage." },
+      ],
+      betaItems: [
+        { id: "plugin", title: "Agent Skills Studio plugin", summary: "Skills-only plugin and marketplace manifest with synchronized versioning and validation." },
+        { id: "catalog", title: "Catalog and packs", summary: "Bilingual metadata, deterministic generation, active collections, and transparent planned packs." },
+        { id: "installers", title: "Cross-platform installers", summary: "Atomic Bash and PowerShell installation for the collection, individual skills, and active packs." },
+        { id: "microsite", title: "Bilingual microsite", summary: "A production site for discovery, installation guidance, case studies, and public project context." },
+      ],
+      stableItem: { title: "Stable skill collection", summary: "Every canonical skill currently published in the catalog is marked stable and available through supported installation paths." },
+      itemMeta: { plannedPack: "Planned pack", stableSkills: "{count} stable skills" },
+      viewItem: "View details",
+      contributeLabel: "Community path",
+      contributeTitle: "Help move a proposal forward.",
+      contributeSummary: "Share a real use case, validation scenario, or implementation constraint in GitHub Issues. Evidence is what advances the roadmap.",
+      contributeAction: "Open GitHub Issues",
+    },
     packDetail: {
       back: "Back to packs",
       active: "Active",
@@ -545,6 +591,33 @@ export const messages = {
       results: "Resultado verificável",
       resultsTitle: "O que foi entregue",
       evidence: "Ver registro de evidência",
+    },
+    roadmap: {
+      eyebrow: "Roteiro público",
+      principleLabel: "Como interpretar",
+      principle: "O status reflete evidência, não intenção. Uma iniciativa só avança quando propósito, implementação e verificação estão claros o suficiente para a próxima etapa.",
+      stages: [
+        { id: "proposal", title: "Proposta", description: "Uma direção pública aberta a casos de uso concretos e contribuições da comunidade.", empty: "Nenhuma iniciativa nesta etapa." },
+        { id: "research", title: "Pesquisa", description: "O problema, referências, restrições e caminhos viáveis estão sendo investigados.", empty: "Nenhuma iniciativa nesta etapa." },
+        { id: "development", title: "Em desenvolvimento", description: "O escopo aprovado está sendo implementado e verificado em entregas focadas.", empty: "Nenhuma iniciativa nesta etapa." },
+        { id: "experimental", title: "Experimental", description: "A capacidade funciona, mas seu contrato ou encaixe ainda pode mudar com o uso real.", empty: "Nenhuma iniciativa nesta etapa." },
+        { id: "beta", title: "Beta", description: "A capacidade está disponível e versionada enquanto concluímos os critérios de lançamento.", empty: "Nenhuma iniciativa nesta etapa." },
+        { id: "stable", title: "Estável", description: "O contrato foi validado, documentado, é instalável e está protegido pelos gates do projeto.", empty: "Nenhuma iniciativa nesta etapa." },
+        { id: "deprecated", title: "Descontinuado", description: "A capacidade está sendo retirada com substituição ou caminho de migração documentado.", empty: "Nenhuma iniciativa nesta etapa." },
+      ],
+      betaItems: [
+        { id: "plugin", title: "Plugin Agent Skills Studio", summary: "Plugin exclusivo de skills e manifesto de marketplace com versão sincronizada e validação." },
+        { id: "catalog", title: "Catálogo e pacotes", summary: "Metadados bilíngues, geração determinística, coleções ativas e pacotes planejados transparentes." },
+        { id: "installers", title: "Instaladores multiplataforma", summary: "Instalação atômica em Bash e PowerShell para coleção, skills individuais e pacotes ativos." },
+        { id: "microsite", title: "Microsite bilíngue", summary: "Site de produção para descoberta, instalação, estudos de caso e contexto público do projeto." },
+      ],
+      stableItem: { title: "Coleção estável de skills", summary: "Todas as skills canônicas publicadas no catálogo estão marcadas como estáveis e disponíveis pelos caminhos de instalação suportados." },
+      itemMeta: { plannedPack: "Pacote planejado", stableSkills: "{count} skills estáveis" },
+      viewItem: "Ver detalhes",
+      contributeLabel: "Caminho comunitário",
+      contributeTitle: "Ajude uma proposta a avançar.",
+      contributeSummary: "Compartilhe um caso real, cenário de validação ou restrição de implementação nas Issues do GitHub. É a evidência que faz o roadmap avançar.",
+      contributeAction: "Abrir Issues no GitHub",
     },
     packDetail: {
       back: "Voltar para pacotes",

@@ -195,7 +195,6 @@ describe("foundation navigation targets", () => {
   });
 
   it.each([
-    ["roadmap", RoadmapPage, "Roadmap", "Roteiro"],
     ["about", AboutPage, "About", "Sobre"],
   ] as const)("renders a localized static shell for /%s", async (_section, Page, enHeading, ptHeading) => {
     const { unmount } = render(await Page({ params: Promise.resolve({ locale: "en" }) }));
@@ -206,6 +205,19 @@ describe("foundation navigation targets", () => {
     render(await Page({ params: Promise.resolve({ locale: "pt-BR" }) }));
     expect(screen.getByRole("heading", { level: 1, name: ptHeading })).toBeInTheDocument();
     expect(screen.getByText("Base desta rota", { selector: "p" })).toBeInTheDocument();
+  });
+
+  it.each([
+    ["en", "Roadmap", "Proposal", "Stable", "No initiatives in this stage."],
+    ["pt-BR", "Roteiro", "Proposta", "Estável", "Nenhuma iniciativa nesta etapa."],
+  ] as const)("renders the evidence-backed roadmap for %s", async (locale, heading, proposal, stable, empty) => {
+    const { container } = render(await RoadmapPage({ params: Promise.resolve({ locale }) }));
+
+    expect(screen.getByRole("heading", { level: 1, name: heading })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: proposal })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: stable })).toBeInTheDocument();
+    expect(screen.getAllByText(empty)).toHaveLength(4);
+    expect(container.querySelectorAll(".roadmap-item")).toHaveLength(8);
   });
 
   it.each([
