@@ -11,6 +11,10 @@
     "catalog:generate": "node scripts/generate-catalog.mjs",
     "catalog:check": "node scripts/generate-catalog.mjs --check",
     "test": "node --test scripts/*.test.mjs scripts/lib/*.test.mjs",
+    "web:test": "npm --prefix apps/web test",
+    "web:typecheck": "npm --prefix apps/web run typecheck",
+    "web:lint": "npm --prefix apps/web run lint",
+    "web:build": "npm --prefix apps/web run build",
     "setup:project": "node scripts/bootstrap-project.mjs",
     "create:web-app": "node scripts/create-web-app.mjs"
   },

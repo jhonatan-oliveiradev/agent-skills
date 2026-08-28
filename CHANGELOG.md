@@ -4,6 +4,14 @@ All notable changes to this skill library are documented here.
 
 ## [1.0.0-beta.1] - Unreleased
 
+### Microsite foundation
+
+- Added the isolated bilingual Next.js foundation, its catalog synchronization,
+  root web gates, and Linux/Windows CI validation.
+- Documented the Vercel Root Directory, Preview/production branch policy, and
+  deployment URLs. The complete catalog browsing experience remains a future
+  microsite slice.
+
 ### Catalog & Packs
 
 - Added one bilingual metadata record for each of the 18 canonical skills, with complete English and Brazilian Portuguese reader guidance.
