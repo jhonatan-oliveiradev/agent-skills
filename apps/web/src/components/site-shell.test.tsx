@@ -1,6 +1,7 @@
 import { fireEvent, render, screen, within } from "@testing-library/react";
 import { renderToStaticMarkup } from "react-dom/server";
 import { beforeEach, describe, expect, it, vi } from "vitest";
+import { NuqsTestingAdapter } from "nuqs/adapters/testing";
 
 const navigation = vi.hoisted(() => ({ pathname: "/en/skills/example" }));
 
@@ -136,7 +137,7 @@ describe("foundation home", () => {
       "href",
       `/${locale}/skills`,
     );
-    expect(screen.getByText(locale === "en" ? /foundation release/i : /entrega de fundação/i)).toBeInTheDocument();
+    expect(screen.getByText(locale === "en" ? /searchable catalog/i : /catálogo com busca/i)).toBeInTheDocument();
   });
 
   it.each([
@@ -160,7 +161,6 @@ describe("foundation home", () => {
 
 describe("foundation navigation targets", () => {
   it.each([
-    ["skills", SkillsPage, "Skills", "Habilidades"],
     ["packs", PacksPage, "Packs", "Pacotes"],
     ["roadmap", RoadmapPage, "Roadmap", "Roteiro"],
     ["about", AboutPage, "About", "Sobre"],
@@ -173,5 +173,20 @@ describe("foundation navigation targets", () => {
     render(await Page({ params: Promise.resolve({ locale: "pt-BR" }) }));
     expect(screen.getByRole("heading", { level: 1, name: ptHeading })).toBeInTheDocument();
     expect(screen.getByText("Base desta rota", { selector: "p" })).toBeInTheDocument();
+  });
+
+  it.each([
+    ["en", "Skills", "18 skills found"],
+    ["pt-BR", "Habilidades", "18 skills encontradas"],
+  ] as const)("renders the localized skills catalog for %s", async (locale, heading, count) => {
+    const { container } = render(
+      <NuqsTestingAdapter>
+        {await SkillsPage({ params: Promise.resolve({ locale }) })}
+      </NuqsTestingAdapter>,
+    );
+
+    expect(screen.getByRole("heading", { level: 1, name: heading })).toBeInTheDocument();
+    expect(screen.getByText(count)).toBeInTheDocument();
+    expect(container.querySelectorAll(".skill-card")).toHaveLength(18);
   });
 });

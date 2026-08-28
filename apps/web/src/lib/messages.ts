@@ -27,6 +27,51 @@ export interface Messages {
     readonly packsCount: string;
     readonly localesCount: string;
   };
+  readonly skillsCatalog: {
+    readonly searchLabel: string;
+    readonly searchPlaceholder: string;
+    readonly category: string;
+    readonly pack: string;
+    readonly difficulty: string;
+    readonly maturity: string;
+    readonly all: string;
+    readonly results: string;
+    readonly noResultsTitle: string;
+    readonly noResultsSummary: string;
+    readonly clear: string;
+    readonly benefit: string;
+    readonly tags: string;
+    readonly loading: string;
+    readonly values: Readonly<Record<"advanced" | "intermediate" | "stable", string>>;
+    readonly categories: Readonly<Record<string, string>>;
+  };
+  readonly skillDetail: {
+    readonly back: string;
+    readonly benefit: string;
+    readonly whenToUse: string;
+    readonly whenNotToUse: string;
+    readonly useCases: string;
+    readonly examplePrompts: string;
+    readonly compatibility: string;
+    readonly surfaces: string;
+    readonly operatingSystems: string;
+    readonly installModes: string;
+    readonly dependencies: string;
+    readonly noDependencies: string;
+    readonly relatedSkills: string;
+    readonly packs: string;
+    readonly installation: string;
+    readonly installationSummary: string;
+    readonly bash: string;
+    readonly powershell: string;
+    readonly copy: string;
+    readonly copied: string;
+    readonly source: string;
+    readonly version: string;
+    readonly updated: string;
+    readonly notFoundTitle: string;
+    readonly notFoundSummary: string;
+  };
   readonly process: {
     readonly title: string;
     readonly summary: string;
@@ -110,12 +155,64 @@ export const messages = {
       primaryAction: "Explore skills",
       secondaryAction: "View packs",
       foundationNote:
-        "This foundation release establishes the bilingual experience. Search and skill detail pages arrive in later releases.",
+        "Explore the searchable catalog now. Skill detail pages arrive in a later release.",
     },
     catalog: {
       skillsCount: "skills",
       packsCount: "packs",
       localesCount: "locales",
+    },
+    skillsCatalog: {
+      searchLabel: "Search skills",
+      searchPlaceholder: "Search by name, outcome, or tag",
+      category: "Category",
+      pack: "Pack",
+      difficulty: "Difficulty",
+      maturity: "Maturity",
+      all: "All",
+      results: "{count} skills found",
+      noResultsTitle: "No skills found",
+      noResultsSummary: "Try a broader search or remove one of the active filters.",
+      clear: "Clear filters",
+      benefit: "Primary benefit",
+      tags: "Tags",
+      loading: "Loading catalog…",
+      values: { advanced: "Advanced", intermediate: "Intermediate", stable: "Stable" },
+      categories: {
+        delivery: "Delivery",
+        frontend: "Frontend",
+        "game-development": "Game development",
+        meta: "Meta",
+        motion: "Motion",
+        "product-design": "Product design",
+      },
+    },
+    skillDetail: {
+      back: "Back to skills",
+      benefit: "Primary benefit",
+      whenToUse: "When to use",
+      whenNotToUse: "When not to use",
+      useCases: "Use cases",
+      examplePrompts: "Example prompts",
+      compatibility: "Compatibility",
+      surfaces: "Surfaces",
+      operatingSystems: "Operating systems",
+      installModes: "Install modes",
+      dependencies: "Dependencies",
+      noDependencies: "No external dependencies",
+      relatedSkills: "Related skills",
+      packs: "Included in packs",
+      installation: "Install this skill",
+      installationSummary: "Choose the command for your operating system and run it from the repository root.",
+      bash: "Bash",
+      powershell: "PowerShell",
+      copy: "Copy",
+      copied: "Copied",
+      source: "View canonical source on GitHub",
+      version: "Version",
+      updated: "Updated",
+      notFoundTitle: "Skill not found",
+      notFoundSummary: "This skill does not exist in the current catalog or is no longer available.",
     },
     process: {
       title: "Choose → install → invoke",
@@ -199,12 +296,64 @@ export const messages = {
       primaryAction: "Explorar skills",
       secondaryAction: "Ver pacotes",
       foundationNote:
-        "Esta entrega de fundação estabelece a experiência bilíngue. Busca e detalhes das skills chegam em entregas futuras.",
+        "Explore agora o catálogo com busca. As páginas de detalhes das skills chegam em uma entrega futura.",
     },
     catalog: {
       skillsCount: "skills",
       packsCount: "pacotes",
       localesCount: "idiomas",
+    },
+    skillsCatalog: {
+      searchLabel: "Buscar skills",
+      searchPlaceholder: "Busque por nome, resultado ou tag",
+      category: "Categoria",
+      pack: "Pacote",
+      difficulty: "Dificuldade",
+      maturity: "Maturidade",
+      all: "Todos",
+      results: "{count} skills encontradas",
+      noResultsTitle: "Nenhuma skill encontrada",
+      noResultsSummary: "Tente uma busca mais ampla ou remova um dos filtros ativos.",
+      clear: "Limpar filtros",
+      benefit: "Principal benefício",
+      tags: "Tags",
+      loading: "Carregando catálogo…",
+      values: { advanced: "Avançada", intermediate: "Intermediária", stable: "Estável" },
+      categories: {
+        delivery: "Entrega",
+        frontend: "Frontend",
+        "game-development": "Desenvolvimento de jogos",
+        meta: "Meta",
+        motion: "Motion",
+        "product-design": "Design de produto",
+      },
+    },
+    skillDetail: {
+      back: "Voltar para skills",
+      benefit: "Principal benefício",
+      whenToUse: "Quando usar",
+      whenNotToUse: "Quando não usar",
+      useCases: "Casos de uso",
+      examplePrompts: "Prompts de exemplo",
+      compatibility: "Compatibilidade",
+      surfaces: "Ambientes",
+      operatingSystems: "Sistemas operacionais",
+      installModes: "Modos de instalação",
+      dependencies: "Dependências",
+      noDependencies: "Sem dependências externas",
+      relatedSkills: "Skills relacionadas",
+      packs: "Incluída nos pacotes",
+      installation: "Instale esta skill",
+      installationSummary: "Escolha o comando do seu sistema operacional e execute na raiz do repositório.",
+      bash: "Bash",
+      powershell: "PowerShell",
+      copy: "Copiar",
+      copied: "Copiado",
+      source: "Ver fonte canônica no GitHub",
+      version: "Versão",
+      updated: "Atualizada em",
+      notFoundTitle: "Skill não encontrada",
+      notFoundSummary: "Esta skill não existe no catálogo atual ou não está mais disponível.",
     },
     process: {
       title: "Escolha → instale → invoque",
