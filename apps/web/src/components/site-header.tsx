@@ -11,6 +11,7 @@ export function SiteHeader({ locale }: Readonly<{ locale: Locale }>) {
   const links = [
     ["/skills", copy.navigation.skills],
     ["/packs", copy.navigation.packs],
+    ["/getting-started", copy.navigation.gettingStarted],
     ["/roadmap", copy.navigation.roadmap],
     ["/about", copy.navigation.about],
   ] as const;

@@ -14,6 +14,7 @@ vi.mock("next/navigation", () => ({
 }));
 
 import AboutPage from "@/app/[locale]/about/page";
+import GettingStartedPage from "@/app/[locale]/getting-started/page";
 import LocaleLayout from "@/app/[locale]/layout";
 import HomePage, { generateMetadata } from "@/app/[locale]/page";
 import PacksPage from "@/app/[locale]/packs/page";
@@ -184,6 +185,26 @@ describe("foundation navigation targets", () => {
     expect(container.querySelectorAll(".pack-card")).toHaveLength(6);
     expect(screen.getAllByText(active)).toHaveLength(3);
     expect(screen.getAllByText(planned)).toHaveLength(3);
+    expect(
+      screen.getAllByText(
+        locale === "en" ? "Composition in progress" : "Composição em definição",
+      ),
+    ).toHaveLength(3);
+  });
+
+  it.each([
+    ["en", "Getting started", "Install the complete collection", "Verify the installation"],
+    ["pt-BR", "Primeiros passos", "Instale a coleção completa", "Verifique a instalação"],
+  ] as const)("renders the localized installation guide for %s", async (locale, heading, fullInstall, verify) => {
+    render(await GettingStartedPage({ params: Promise.resolve({ locale }) }));
+
+    expect(screen.getByRole("heading", { level: 1, name: heading })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: fullInstall })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: verify })).toBeInTheDocument();
+    expect(screen.getByText("bash install.sh")).toBeInTheDocument();
+    expect(screen.getByText("./install.ps1")).toBeInTheDocument();
+    expect(screen.getByText("./install.sh --skill craft-premium-motion")).toBeInTheDocument();
+    expect(screen.getByText("./install.sh --pack motion")).toBeInTheDocument();
   });
 
   it.each([

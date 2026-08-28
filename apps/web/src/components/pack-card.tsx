@@ -9,7 +9,7 @@ export function PackCard({
 }: Readonly<{
   pack: LocalizedPack;
   href: string;
-  labels: Readonly<{ active: string; planned: string; skills: string; view: string }>;
+  labels: Readonly<{ active: string; planned: string; skills: string; compositionPending: string; view: string }>;
 }>) {
   const status = pack.status === "active" ? labels.active : labels.planned;
 
@@ -18,7 +18,7 @@ export function PackCard({
       <Link className="pack-card__link" href={href as Route}>
         <div className="pack-card__meta">
           <span>{status}</span>
-          <span>{labels.skills.replace("{count}", String(pack.skills.length))}</span>
+          <span>{pack.status === "planned" ? labels.compositionPending : labels.skills.replace("{count}", String(pack.skills.length))}</span>
         </div>
         <h2>{pack.name}</h2>
         <p>{pack.summary}</p>
