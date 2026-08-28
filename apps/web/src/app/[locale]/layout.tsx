@@ -2,8 +2,11 @@ import type { ReactNode } from "react";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import "../globals.css";
+import { SiteFooter } from "@/components/site-footer";
+import { SiteHeader } from "@/components/site-header";
 import { ThemeProvider } from "@/components/theme-provider";
 import { isLocale } from "@/lib/i18n";
+import { messages } from "@/lib/messages";
 
 export const metadata: Metadata = {
   metadataBase: new URL(
@@ -43,7 +46,12 @@ export default async function LocaleLayout({
           disableTransitionOnChange
           enableSystem
         >
-          {children}
+          <a className="skip-link" href="#main-content">
+            {messages[locale].skipLink}
+          </a>
+          <SiteHeader locale={locale} />
+          <main id="main-content">{children}</main>
+          <SiteFooter locale={locale} />
         </ThemeProvider>
       </body>
     </html>
