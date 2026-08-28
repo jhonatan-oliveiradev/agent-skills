@@ -16,10 +16,16 @@ function getRule(css: string, selector: string): string {
   return match[1];
 }
 
-function getCustomProperty(rule: string, property: string): string {
-  const match = rule.match(new RegExp(`${property}:\\s*(#[0-9a-fA-F]{6})`));
-  if (!match) throw new Error(`Missing hexadecimal custom property: ${property}`);
-  return match[1];
+function getCustomProperty(rules: string[], property: string): string {
+  const expression = new RegExp(
+    `${property}:\\s*(#[0-9a-fA-F]{6}|var\\((--[^)]+)\\))`,
+  );
+  const match = [...rules]
+    .reverse()
+    .map((rule) => rule.match(expression))
+    .find((value) => value !== null);
+  if (!match) throw new Error(`Missing color custom property: ${property}`);
+  return match[2] ? getCustomProperty(rules, match[2]) : match[1];
 }
 
 function relativeLuminance(hex: string): number {
@@ -71,7 +77,7 @@ describe("web package contract", () => {
     const lightTheme = getRule(css, ":root");
     const darkTheme = getRule(css, ".dark");
 
-    for (const theme of [lightTheme, darkTheme]) {
+    for (const theme of [[lightTheme], [lightTheme, darkTheme]]) {
       expect(
         contrastRatio(
           getCustomProperty(theme, "--control-border"),
