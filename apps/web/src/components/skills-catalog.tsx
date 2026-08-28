@@ -1,12 +1,9 @@
 "use client";
 
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import type { Route } from "next";
+import { parseAsString, useQueryStates } from "nuqs";
 import { useMemo } from "react";
 import {
   filterSkills,
-  parseSkillFilters,
-  serializeSkillFilters,
   type SkillCatalogItem,
   type SkillFilters,
 } from "@/lib/skill-filters";
@@ -39,24 +36,36 @@ export function SkillsCatalog({
   skills,
   options,
   copy,
+  locale,
 }: Readonly<{
   skills: readonly SkillCatalogItem[];
   options: Readonly<Record<"categories" | "packs" | "difficulties" | "maturities", readonly FilterOption[]>>;
   copy: SkillsCatalogCopy;
+  locale: string;
 }>) {
-  const router = useRouter();
-  const pathname = usePathname();
-  const searchParams = useSearchParams();
-  const filters = useMemo(() => parseSkillFilters(searchParams), [searchParams]);
+  const [queryState, setQueryState] = useQueryStates(
+    {
+      q: parseAsString.withDefault(""),
+      category: parseAsString.withDefault(""),
+      pack: parseAsString.withDefault(""),
+      difficulty: parseAsString.withDefault(""),
+      maturity: parseAsString.withDefault(""),
+    },
+    { history: "replace", shallow: true, clearOnDefault: true },
+  );
+  const filters = useMemo<Required<SkillFilters>>(
+    () => ({ query: queryState.q, ...queryState }),
+    [queryState],
+  );
   const results = useMemo(() => filterSkills(skills, filters), [skills, filters]);
 
-  function replaceUrl(url: string) {
-    router.replace(url as Route, { scroll: false });
+  function updateFilter(key: keyof SkillFilters, value: string) {
+    const queryKey = key === "query" ? "q" : key;
+    void setQueryState({ [queryKey]: value || null });
   }
 
-  function updateFilter(key: keyof SkillFilters, value: string) {
-    const query = serializeSkillFilters({ ...filters, [key]: value });
-    replaceUrl(query ? `${pathname}?${query}` : pathname);
+  function clearFilters() {
+    void setQueryState({ q: null, category: null, pack: null, difficulty: null, maturity: null });
   }
 
   function selectFilter(
@@ -99,8 +108,8 @@ export function SkillsCatalog({
         </div>
         <div className="catalog-toolbar__summary" aria-live="polite">
           <strong>{copy.results.replace("{count}", String(results.length))}</strong>
-          {serializeSkillFilters(filters) ? (
-            <button type="button" onClick={() => replaceUrl(pathname)}>
+          {Object.values(filters).some(Boolean) ? (
+            <button type="button" onClick={clearFilters}>
               {copy.clear}
             </button>
           ) : null}
@@ -113,6 +122,7 @@ export function SkillsCatalog({
             <SkillCard
               key={skill.slug}
               skill={skill}
+              href={`/${locale}/skills/${skill.slug}`}
               labels={{
                 benefit: copy.benefit,
                 category: copy.category,
@@ -127,7 +137,7 @@ export function SkillsCatalog({
         <section className="catalog-empty">
           <h2>{copy.noResultsTitle}</h2>
           <p>{copy.noResultsSummary}</p>
-          <button type="button" className="button button--secondary" onClick={() => replaceUrl(pathname)}>
+          <button type="button" className="button button--secondary" onClick={clearFilters}>
             {copy.clear}
           </button>
         </section>

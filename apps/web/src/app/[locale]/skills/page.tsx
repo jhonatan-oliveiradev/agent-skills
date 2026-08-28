@@ -34,6 +34,7 @@ export default async function SkillsPage({ params }: PageProps) {
       <Suspense fallback={<div className="catalog-loading">{skillCopy.loading}</div>}>
         <SkillsCatalog
           skills={localizedSkills}
+          locale={locale}
           copy={skillCopy}
           options={{
             categories: catalog.filters.categories.map((value) => ({

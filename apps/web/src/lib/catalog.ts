@@ -7,6 +7,23 @@ interface CatalogSkillLocale {
   readonly displayName: string;
   readonly summary: string;
   readonly primaryBenefit: string;
+  readonly whenToUse: string;
+  readonly whenNotToUse: string;
+  readonly useCases: readonly string[];
+  readonly examplePrompts: readonly string[];
+}
+
+interface CatalogDependency {
+  readonly name: string;
+  readonly type: string;
+  readonly required: boolean;
+  readonly url?: string;
+}
+
+interface CatalogCompatibility {
+  readonly surfaces: readonly string[];
+  readonly operatingSystems: readonly string[];
+  readonly installModes: readonly string[];
 }
 
 interface CatalogSkill {
@@ -16,6 +33,11 @@ interface CatalogSkill {
   readonly maturity: string;
   readonly difficulty: string;
   readonly tags: readonly string[];
+  readonly compatibility: CatalogCompatibility;
+  readonly dependencies: readonly CatalogDependency[];
+  readonly relatedSkills: readonly string[];
+  readonly version: string;
+  readonly updatedAt: string;
   readonly locales: Readonly<Record<Locale, CatalogSkillLocale>>;
 }
 
@@ -39,6 +61,14 @@ export interface Catalog {
   readonly counts: Readonly<Record<string, unknown>>;
   readonly skills: readonly CatalogSkill[];
   readonly packs: readonly CatalogPack[];
+}
+
+export interface LocalizedSkillDetail extends SkillCatalogItem, CatalogSkillLocale {
+  readonly compatibility: CatalogCompatibility;
+  readonly dependencies: readonly CatalogDependency[];
+  readonly relatedSkills: readonly { readonly slug: string; readonly displayName: string }[];
+  readonly version: string;
+  readonly updatedAt: string;
 }
 
 const catalog = Object.freeze(generatedCatalog) as unknown as Catalog;
@@ -71,4 +101,32 @@ export function getLocalizedSkills(locale: Locale): readonly SkillCatalogItem[] 
 
 export function getLocalizedPackNames(locale: Locale): Readonly<Record<string, string>> {
   return Object.fromEntries(catalog.packs.map((pack) => [pack.slug, pack.locales[locale].name]));
+}
+
+export function getLocalizedSkillBySlug(
+  locale: Locale,
+  slug: string,
+): LocalizedSkillDetail | undefined {
+  const skill = catalog.skills.find((candidate) => candidate.slug === slug);
+  if (!skill) return undefined;
+
+  return {
+    ...getLocalizedSkills(locale).find((candidate) => candidate.slug === slug)!,
+    ...skill.locales[locale],
+    compatibility: skill.compatibility,
+    dependencies: skill.dependencies,
+    relatedSkills: skill.relatedSkills.map((relatedSlug) => {
+      const related = catalog.skills.find((candidate) => candidate.slug === relatedSlug)!;
+      return { slug: relatedSlug, displayName: related.locales[locale].displayName };
+    }),
+    version: skill.version,
+    updatedAt: skill.updatedAt,
+  };
+}
+
+export function getSkillInstallCommands(slug: string) {
+  return {
+    bash: `./install.sh --skill ${slug}`,
+    powershell: `./install.ps1 --skill ${slug}`,
+  } as const;
 }

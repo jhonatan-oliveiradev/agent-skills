@@ -18,8 +18,6 @@ export interface SkillFilters {
   readonly maturity?: string;
 }
 
-const filterKeys = ["category", "pack", "difficulty", "maturity"] as const;
-
 function normalize(value: string): string {
   return value.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLocaleLowerCase().trim();
 }
@@ -47,27 +45,4 @@ export function filterSkills<T extends SkillCatalogItem>(
       ].join(" "),
     ).includes(query);
   });
-}
-
-export function parseSkillFilters(params: URLSearchParams): Required<SkillFilters> {
-  return {
-    query: params.get("q")?.trim() ?? "",
-    category: params.get("category") ?? "",
-    pack: params.get("pack") ?? "",
-    difficulty: params.get("difficulty") ?? "",
-    maturity: params.get("maturity") ?? "",
-  };
-}
-
-export function serializeSkillFilters(filters: SkillFilters): string {
-  const params = new URLSearchParams();
-  const query = filters.query?.trim();
-  if (query) params.set("q", query);
-
-  for (const key of filterKeys) {
-    const value = filters[key];
-    if (value) params.set(key, value);
-  }
-
-  return params.toString();
 }

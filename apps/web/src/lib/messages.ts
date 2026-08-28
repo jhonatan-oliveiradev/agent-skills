@@ -45,6 +45,33 @@ export interface Messages {
     readonly values: Readonly<Record<"advanced" | "intermediate" | "stable", string>>;
     readonly categories: Readonly<Record<string, string>>;
   };
+  readonly skillDetail: {
+    readonly back: string;
+    readonly benefit: string;
+    readonly whenToUse: string;
+    readonly whenNotToUse: string;
+    readonly useCases: string;
+    readonly examplePrompts: string;
+    readonly compatibility: string;
+    readonly surfaces: string;
+    readonly operatingSystems: string;
+    readonly installModes: string;
+    readonly dependencies: string;
+    readonly noDependencies: string;
+    readonly relatedSkills: string;
+    readonly packs: string;
+    readonly installation: string;
+    readonly installationSummary: string;
+    readonly bash: string;
+    readonly powershell: string;
+    readonly copy: string;
+    readonly copied: string;
+    readonly source: string;
+    readonly version: string;
+    readonly updated: string;
+    readonly notFoundTitle: string;
+    readonly notFoundSummary: string;
+  };
   readonly process: {
     readonly title: string;
     readonly summary: string;
@@ -160,6 +187,33 @@ export const messages = {
         "product-design": "Product design",
       },
     },
+    skillDetail: {
+      back: "Back to skills",
+      benefit: "Primary benefit",
+      whenToUse: "When to use",
+      whenNotToUse: "When not to use",
+      useCases: "Use cases",
+      examplePrompts: "Example prompts",
+      compatibility: "Compatibility",
+      surfaces: "Surfaces",
+      operatingSystems: "Operating systems",
+      installModes: "Install modes",
+      dependencies: "Dependencies",
+      noDependencies: "No external dependencies",
+      relatedSkills: "Related skills",
+      packs: "Included in packs",
+      installation: "Install this skill",
+      installationSummary: "Choose the command for your operating system and run it from the repository root.",
+      bash: "Bash",
+      powershell: "PowerShell",
+      copy: "Copy",
+      copied: "Copied",
+      source: "View canonical source on GitHub",
+      version: "Version",
+      updated: "Updated",
+      notFoundTitle: "Skill not found",
+      notFoundSummary: "This skill does not exist in the current catalog or is no longer available.",
+    },
     process: {
       title: "Choose → install → invoke",
       summary: "A short path from the right workflow to a more capable agent.",
@@ -273,6 +327,33 @@ export const messages = {
         motion: "Motion",
         "product-design": "Design de produto",
       },
+    },
+    skillDetail: {
+      back: "Voltar para skills",
+      benefit: "Principal benefício",
+      whenToUse: "Quando usar",
+      whenNotToUse: "Quando não usar",
+      useCases: "Casos de uso",
+      examplePrompts: "Prompts de exemplo",
+      compatibility: "Compatibilidade",
+      surfaces: "Ambientes",
+      operatingSystems: "Sistemas operacionais",
+      installModes: "Modos de instalação",
+      dependencies: "Dependências",
+      noDependencies: "Sem dependências externas",
+      relatedSkills: "Skills relacionadas",
+      packs: "Incluída nos pacotes",
+      installation: "Instale esta skill",
+      installationSummary: "Escolha o comando do seu sistema operacional e execute na raiz do repositório.",
+      bash: "Bash",
+      powershell: "PowerShell",
+      copy: "Copiar",
+      copied: "Copiado",
+      source: "Ver fonte canônica no GitHub",
+      version: "Versão",
+      updated: "Atualizada em",
+      notFoundTitle: "Skill não encontrada",
+      notFoundSummary: "Esta skill não existe no catálogo atual ou não está mais disponível.",
     },
     process: {
       title: "Escolha → instale → invoque",
