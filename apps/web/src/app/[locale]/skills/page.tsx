@@ -27,7 +27,7 @@ export default async function SkillsPage({ params }: PageProps) {
   return (
     <article className="shell skills-page">
       <header className="skills-page__header">
-        <p className="eyebrow">{copy.foundation.eyebrow}</p>
+        <p className="eyebrow">{skillCopy.eyebrow}</p>
         <h1>{copy.foundation.skills.title}</h1>
         <p>{copy.foundation.skills.summary}</p>
       </header>

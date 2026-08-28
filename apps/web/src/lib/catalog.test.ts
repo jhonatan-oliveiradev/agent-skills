@@ -66,4 +66,50 @@ describe("catalog adapter", () => {
       powershell: "./install.ps1 --skill craft-premium-motion",
     });
   });
+
+  it("resolves localized active and planned pack details", () => {
+    const adapter = catalogAdapter as typeof catalogAdapter & {
+      getLocalizedPacks?: (locale: "en" | "pt-BR") => readonly {
+        slug: string;
+        name: string;
+        status: "active" | "planned";
+        skills: readonly { slug: string; displayName: string }[];
+      }[];
+      getLocalizedPackBySlug?: (
+        locale: "en" | "pt-BR",
+        slug: string,
+      ) => { name: string; description: string; outcomes: readonly string[] } | undefined;
+    };
+
+    expect(adapter.getLocalizedPacks).toBeTypeOf("function");
+    const packs = adapter.getLocalizedPacks?.("pt-BR") ?? [];
+    expect(packs).toHaveLength(6);
+    expect(packs.find((pack) => pack.slug === "frontend-product")).toMatchObject({
+      name: "Frontend e Produto",
+      status: "active",
+    });
+    expect(packs.find((pack) => pack.slug === "backend-data")).toMatchObject({
+      name: "Backend e Dados",
+      status: "planned",
+      skills: [],
+    });
+
+    expect(adapter.getLocalizedPackBySlug?.("en", "motion")?.outcomes).toHaveLength(2);
+    expect(adapter.getLocalizedPackBySlug?.("en", "missing-pack")).toBeUndefined();
+  });
+
+  it("derives pack installation commands only for active packs", () => {
+    const adapter = catalogAdapter as typeof catalogAdapter & {
+      getPackInstallCommands?: (slug: string, status: "active" | "planned") =>
+        | { bash: string; powershell: string }
+        | undefined;
+    };
+
+    expect(adapter.getPackInstallCommands).toBeTypeOf("function");
+    expect(adapter.getPackInstallCommands?.("motion", "active")).toEqual({
+      bash: "./install.sh --pack motion",
+      powershell: "./install.ps1 --pack motion",
+    });
+    expect(adapter.getPackInstallCommands?.("backend-data", "planned")).toBeUndefined();
+  });
 });

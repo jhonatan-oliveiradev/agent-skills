@@ -319,7 +319,15 @@ select {
   padding-block: clamp(4rem, 8vw, 7rem);
 }
 
+.packs-page {
+  padding-block: clamp(4rem, 8vw, 7rem);
+}
+
 .skills-page__header {
+  max-width: 48rem;
+}
+
+.packs-page__header {
   max-width: 48rem;
 }
 
@@ -331,10 +339,205 @@ select {
   line-height: 0.95;
 }
 
+.packs-page__header h1 {
+  margin: 0.8rem 0 1rem;
+  font-size: clamp(3rem, 8vw, 6rem);
+  font-weight: 500;
+  letter-spacing: -0.06em;
+  line-height: 0.95;
+}
+
 .skills-page__header > p:last-child {
   color: var(--text-muted);
   font-size: clamp(1rem, 2vw, 1.25rem);
   line-height: 1.65;
+}
+
+.packs-page__header > p:last-child {
+  color: var(--text-muted);
+  font-size: clamp(1rem, 2vw, 1.25rem);
+  line-height: 1.65;
+}
+
+.pack-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+  margin-top: 3rem;
+}
+
+.pack-card,
+.pack-detail-page {
+  --pack-accent: var(--brand);
+}
+
+[data-color="violet"] { --pack-accent: #8b5cf6; }
+[data-color="amber"] { --pack-accent: #d97706; }
+[data-color="cyan"] { --pack-accent: #0891b2; }
+[data-color="green"] { --pack-accent: #15803d; }
+[data-color="coral"] { --pack-accent: #e05d44; }
+
+.pack-card {
+  min-height: 20rem;
+  border: 1px solid var(--border);
+  border-top: 0.3rem solid var(--pack-accent);
+  border-radius: 0.8rem;
+  background: var(--surface);
+}
+
+.pack-card[data-status="planned"] {
+  border-top-style: dashed;
+  background: color-mix(in srgb, var(--surface) 65%, var(--canvas));
+}
+
+.pack-card__link {
+  display: flex;
+  min-height: 100%;
+  box-sizing: border-box;
+  flex-direction: column;
+  padding: clamp(1.25rem, 4vw, 2rem);
+  text-decoration: none;
+}
+
+.pack-card:hover {
+  border-color: var(--pack-accent);
+  transform: translateY(-0.15rem);
+}
+
+.pack-card__meta {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  color: var(--text-muted);
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.pack-card__meta span:first-child {
+  color: var(--pack-accent);
+}
+
+.pack-card h2 {
+  max-width: 14ch;
+  margin: 3.5rem 0 1rem;
+  font-size: clamp(1.8rem, 4vw, 2.8rem);
+  font-weight: 500;
+  letter-spacing: -0.045em;
+  line-height: 1;
+}
+
+.pack-card p {
+  max-width: 42rem;
+  margin: 0;
+  color: var(--text-muted);
+  line-height: 1.65;
+}
+
+.pack-card__action {
+  margin-top: auto;
+  padding-top: 2rem;
+  color: var(--pack-accent);
+  font-weight: 800;
+}
+
+.pack-detail-page {
+  padding-block: clamp(3rem, 7vw, 6rem);
+}
+
+.pack-detail__hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1.6fr) minmax(14rem, 0.4fr);
+  align-items: end;
+  gap: clamp(2rem, 7vw, 6rem);
+  border-top: 0.3rem solid var(--pack-accent);
+  padding-top: 2rem;
+}
+
+.pack-detail__hero .eyebrow {
+  color: var(--pack-accent);
+}
+
+.pack-detail__hero h1 {
+  max-width: 16ch;
+  margin: 0;
+  font-size: clamp(2.8rem, 7vw, 5.6rem);
+  font-weight: 500;
+  letter-spacing: -0.06em;
+  line-height: 0.98;
+}
+
+.pack-detail__summary {
+  max-width: 48rem;
+  margin: 1.5rem 0 0;
+  color: var(--text-muted);
+  font-size: clamp(1.05rem, 2vw, 1.3rem);
+  line-height: 1.65;
+}
+
+.pack-detail__intro {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(2rem, 7vw, 6rem);
+  margin-block: clamp(3rem, 8vw, 6rem);
+}
+
+.pack-detail__intro > p {
+  margin: 0;
+  color: var(--text);
+  font-size: clamp(1.25rem, 3vw, 1.8rem);
+  line-height: 1.45;
+}
+
+.pack-detail__intro h2,
+.pack-composition h2,
+.planned-pack-note h2 {
+  margin: 0 0 1rem;
+  font-size: clamp(1.6rem, 3vw, 2.2rem);
+  letter-spacing: -0.035em;
+}
+
+.pack-installation {
+  display: grid;
+  grid-template-columns: 0.7fr 1.3fr;
+  gap: clamp(2rem, 6vw, 5rem);
+}
+
+.pack-installation h2 {
+  margin-top: 0;
+  font-size: clamp(1.7rem, 3vw, 2.4rem);
+  letter-spacing: -0.035em;
+}
+
+.planned-pack-note {
+  max-width: 48rem;
+  border-left: 0.3rem solid var(--pack-accent);
+  background: var(--surface);
+  padding: clamp(1.5rem, 4vw, 2.5rem);
+}
+
+.planned-pack-note .eyebrow {
+  color: var(--pack-accent);
+}
+
+.planned-pack-note > p:last-child {
+  margin-bottom: 0;
+  color: var(--text-muted);
+  line-height: 1.7;
+}
+
+.pack-composition {
+  margin-top: clamp(4rem, 10vw, 8rem);
+  border-top: 1px solid var(--border);
+  padding-top: 2rem;
+}
+
+.pack-composition__heading {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 2rem;
 }
 
 .catalog-toolbar {
@@ -764,7 +967,8 @@ select {
   }
 
   .skill-detail__hero,
-  .skill-detail__content {
+  .skill-detail__content,
+  .pack-detail__hero {
     grid-template-columns: 1fr;
   }
 
@@ -775,7 +979,10 @@ select {
 
 @media (max-width: 44rem) {
   .catalog-filters,
-  .skill-grid {
+  .skill-grid,
+  .pack-grid,
+  .pack-detail__intro,
+  .pack-installation {
     grid-template-columns: 1fr;
   }
 

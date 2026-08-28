@@ -28,6 +28,7 @@ export interface Messages {
     readonly localesCount: string;
   };
   readonly skillsCatalog: {
+    readonly eyebrow: string;
     readonly searchLabel: string;
     readonly searchPlaceholder: string;
     readonly category: string;
@@ -44,6 +45,33 @@ export interface Messages {
     readonly loading: string;
     readonly values: Readonly<Record<"advanced" | "intermediate" | "stable", string>>;
     readonly categories: Readonly<Record<string, string>>;
+  };
+  readonly packCatalog: {
+    readonly eyebrow: string;
+    readonly summary: string;
+    readonly active: string;
+    readonly planned: string;
+    readonly skills: string;
+    readonly view: string;
+  };
+  readonly packDetail: {
+    readonly back: string;
+    readonly active: string;
+    readonly planned: string;
+    readonly outcomes: string;
+    readonly composition: string;
+    readonly skills: string;
+    readonly version: string;
+    readonly installation: string;
+    readonly installationSummary: string;
+    readonly plannedTitle: string;
+    readonly plannedSummary: string;
+    readonly bash: string;
+    readonly powershell: string;
+    readonly copy: string;
+    readonly copied: string;
+    readonly notFoundTitle: string;
+    readonly notFoundSummary: string;
   };
   readonly skillDetail: {
     readonly back: string;
@@ -163,6 +191,7 @@ export const messages = {
       localesCount: "locales",
     },
     skillsCatalog: {
+      eyebrow: "Skills catalog",
       searchLabel: "Search skills",
       searchPlaceholder: "Search by name, outcome, or tag",
       category: "Category",
@@ -186,6 +215,33 @@ export const messages = {
         motion: "Motion",
         "product-design": "Product design",
       },
+    },
+    packCatalog: {
+      eyebrow: "Pack collection",
+      summary: "Combine related skills into focused workflows, from product interfaces to motion and game development.",
+      active: "Active",
+      planned: "Planned",
+      skills: "{count} skills",
+      view: "View pack",
+    },
+    packDetail: {
+      back: "Back to packs",
+      active: "Active",
+      planned: "Planned",
+      outcomes: "Expected outcomes",
+      composition: "Pack composition",
+      skills: "skills",
+      version: "Version",
+      installation: "Install this pack",
+      installationSummary: "Run the command for your operating system from the repository root.",
+      plannedTitle: "This pack is on the roadmap",
+      plannedSummary: "Its skills will be added through public proposals and independent validation. Installation will become available only when the pack is active.",
+      bash: "Bash",
+      powershell: "PowerShell",
+      copy: "Copy",
+      copied: "Copied",
+      notFoundTitle: "Pack not found",
+      notFoundSummary: "This pack does not exist in the current collection or is no longer available.",
     },
     skillDetail: {
       back: "Back to skills",
@@ -304,6 +360,7 @@ export const messages = {
       localesCount: "idiomas",
     },
     skillsCatalog: {
+      eyebrow: "Catálogo de skills",
       searchLabel: "Buscar skills",
       searchPlaceholder: "Busque por nome, resultado ou tag",
       category: "Categoria",
@@ -327,6 +384,33 @@ export const messages = {
         motion: "Motion",
         "product-design": "Design de produto",
       },
+    },
+    packCatalog: {
+      eyebrow: "Coleção de pacotes",
+      summary: "Combine skills relacionadas em fluxos focados, de interfaces de produto a motion e desenvolvimento de jogos.",
+      active: "Ativo",
+      planned: "Planejado",
+      skills: "{count} skills",
+      view: "Ver pacote",
+    },
+    packDetail: {
+      back: "Voltar para pacotes",
+      active: "Ativo",
+      planned: "Planejado",
+      outcomes: "Resultados esperados",
+      composition: "Composição do pacote",
+      skills: "skills",
+      version: "Versão",
+      installation: "Instale este pacote",
+      installationSummary: "Execute o comando do seu sistema operacional na raiz do repositório.",
+      plannedTitle: "Este pacote está no roadmap",
+      plannedSummary: "Suas skills serão adicionadas por propostas públicas e validação independente. A instalação ficará disponível apenas quando o pacote estiver ativo.",
+      bash: "Bash",
+      powershell: "PowerShell",
+      copy: "Copiar",
+      copied: "Copiado",
+      notFoundTitle: "Pacote não encontrado",
+      notFoundSummary: "Este pacote não existe na coleção atual ou não está mais disponível.",
     },
     skillDetail: {
       back: "Voltar para skills",
