@@ -58,6 +58,42 @@ The motion stack is intentionally layered: `craft-premium-motion` owns direction
 
 The skill also requires Tailwind-aware Prettier configuration, including the Tailwind v4 stylesheet entry and class sorting inside helpers such as `cn`, `clsx`, and `cva`.
 
+## Microsite foundation
+
+The public microsite foundation is an isolated Next.js application in
+`apps/web`; the repository root remains a normal Node project, not an npm
+workspace. Install and run the application locally with:
+
+```bash
+npm install --prefix apps/web
+npm --prefix apps/web run dev
+```
+
+Repository validation remains available through `npm test` and `npm run
+validate`. The web gates can be run from the repository root:
+
+```bash
+npm run web:test
+npm run web:typecheck
+npm run web:lint
+NEXT_PUBLIC_SITE_URL=https://skills.jhonatanoliveira.com npm run web:build
+```
+
+### Vercel handoff
+
+Configure Vercel with **Root Directory** `apps/web` and grant the build access
+to repository files above that directory. The application's `prebuild` step
+validates and synchronizes `../../catalog/generated/catalog.json`, so a
+root-directory-only checkout cannot build it correctly.
+
+`dev` is the pre-production integration branch; `main` is the production
+branch. Pull requests receive Vercel Preview Deployments. For each Preview,
+set `NEXT_PUBLIC_SITE_URL` to that Preview's `https://<deployment>.vercel.app`
+URL. For production, set it to the canonical
+`https://skills.jhonatanoliveira.com` URL. The canonical domain is
+`skills.jhonatanoliveira.com`; `https://agent-skills-vert.vercel.app` remains
+the fallback deployment URL.
+
 ## Install
 
 Codex and other Agent Skills-compatible runtimes can discover personal skills under `~/.agents/skills/`.

@@ -19,6 +19,13 @@ jobs:
           node-version: 22
       - run: npm test
       - run: npm run validate
+      - run: npm ci --prefix apps/web
+      - run: npm run web:test
+      - run: npm run web:typecheck
+      - run: npm run web:lint
+      - run: npm run web:build
+        env:
+          NEXT_PUBLIC_SITE_URL: https://skills.jhonatanoliveira.com
       - name: Smoke test Bash installer
         if: runner.os == 'Linux'
         shell: bash

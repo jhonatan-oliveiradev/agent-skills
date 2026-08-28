@@ -6,3 +6,9 @@ node_modules/
 .env
 .env.*
 !.env.example
+
+apps/web/.next/
+apps/web/node_modules/
+apps/web/coverage/
+apps/web/src/generated/
+apps/web/tsconfig.tsbuildinfo
