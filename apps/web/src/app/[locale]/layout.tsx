@@ -40,7 +40,7 @@ export default async function LocaleLayout({
 
   return (
     <html lang={locale} suppressHydrationWarning>
-      <body>
+      <body className="bg-canvas font-display text-foreground antialiased">
         <ThemeProvider
           attribute="class"
           defaultTheme="system"

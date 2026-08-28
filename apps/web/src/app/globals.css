@@ -1,37 +1,89 @@
 @import "tailwindcss";
 
+@font-face {
+  font-family: "Instrument Sans";
+  src: url("./fonts/instrument-sans-latin.woff2") format("woff2");
+  font-style: normal;
+  font-weight: 400 700;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "IBM Plex Mono";
+  src: url("./fonts/ibm-plex-mono-latin.woff2") format("woff2");
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+
+@theme inline {
+  --font-display: var(--font-instrument);
+  --font-mono: var(--font-plex-mono);
+  --color-canvas: var(--editorial-canvas);
+  --color-surface: var(--editorial-surface);
+  --color-surface-elevated: var(--editorial-surface-elevated);
+  --color-foreground: var(--editorial-foreground);
+  --color-muted: var(--editorial-muted);
+  --color-line: var(--editorial-line);
+  --color-control: var(--editorial-control);
+  --color-accent: var(--editorial-accent);
+  --color-accent-contrast: var(--editorial-accent-contrast);
+  --color-focus: var(--editorial-focus);
+  --color-success: var(--editorial-success);
+  --color-warning: var(--editorial-warning);
+  --color-danger: var(--editorial-danger);
+  --ease-editorial: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
 :root {
   color-scheme: light;
-  --canvas: #f8fafc;
-  --surface: #ffffff;
-  --surface-elevated: #ffffff;
-  --text: #172033;
-  --text-muted: #5d6880;
-  --border: #cbd5e1;
-  --control-border: #64748b;
-  --brand: #254edb;
-  --brand-contrast: #ffffff;
-  --focus: #1d4ed8;
-  --success: #15803d;
-  --warning: #b45309;
-  --danger: #b91c1c;
+  --font-instrument: "Instrument Sans", "Helvetica Neue", sans-serif;
+  --font-plex-mono: "IBM Plex Mono", "SFMono-Regular", monospace;
+  --editorial-canvas: #f3f1ec;
+  --editorial-surface: #fbfaf7;
+  --editorial-surface-elevated: #ffffff;
+  --editorial-foreground: #111317;
+  --editorial-muted: #64676f;
+  --editorial-line: #cfcec9;
+  --editorial-control: #8b8d93;
+  --editorial-accent: #1745e8;
+  --editorial-accent-contrast: #ffffff;
+  --editorial-focus: #1745e8;
+  --editorial-success: #16784a;
+  --editorial-warning: #9a5b08;
+  --editorial-danger: #b52832;
+  --canvas: var(--editorial-canvas);
+  --surface: var(--editorial-surface);
+  --surface-elevated: var(--editorial-surface-elevated);
+  --text: var(--editorial-foreground);
+  --text-muted: var(--editorial-muted);
+  --border: var(--editorial-line);
+  --control-border: var(--editorial-control);
+  --brand: var(--editorial-accent);
+  --brand-contrast: var(--editorial-accent-contrast);
+  --focus: var(--editorial-focus);
+  --success: var(--editorial-success);
+  --warning: var(--editorial-warning);
+  --danger: var(--editorial-danger);
+  scrollbar-color: var(--editorial-control) var(--editorial-canvas);
+  scrollbar-width: thin;
 }
 
 .dark {
   color-scheme: dark;
-  --canvas: #0b1020;
-  --surface: #131a2c;
-  --surface-elevated: #1a2338;
-  --text: #e7edf8;
-  --text-muted: #aebbd0;
-  --border: #334155;
-  --control-border: #737f98;
-  --brand: #8ba7ff;
-  --brand-contrast: #10172a;
-  --focus: #a5b8ff;
-  --success: #4ade80;
-  --warning: #fbbf24;
-  --danger: #fca5a5;
+  --editorial-canvas: #07090f;
+  --editorial-surface: #0d111b;
+  --editorial-surface-elevated: #141a27;
+  --editorial-foreground: #f2f4f8;
+  --editorial-muted: #979eaa;
+  --editorial-line: #2b3240;
+  --editorial-control: #697181;
+  --editorial-accent: #6f91ff;
+  --editorial-accent-contrast: #070b16;
+  --editorial-focus: #8ea8ff;
+  --editorial-success: #58d49a;
+  --editorial-warning: #f0bd63;
+  --editorial-danger: #ff8b95;
 }
 
 * {
@@ -41,9 +93,26 @@
 body {
   min-height: 100vh;
   margin: 0;
-  background-color: var(--canvas);
-  color: var(--text);
-  font-family: Arial, Helvetica, sans-serif;
+  text-rendering: optimizeLegibility;
+}
+
+::-webkit-scrollbar {
+  width: 0.65rem;
+  height: 0.65rem;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--editorial-canvas);
+}
+
+::-webkit-scrollbar-thumb {
+  border: 0.15rem solid var(--editorial-canvas);
+  border-radius: 999px;
+  background: var(--editorial-control);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--editorial-muted);
 }
 
 a {
@@ -2108,17 +2177,4 @@ select {
 
 .skip-link:focus {
   transform: translateY(0);
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  *,
-  *::before,
-  *::after {
-    transition:
-      background-color 150ms ease,
-      border-color 150ms ease,
-      color 150ms ease,
-      outline-color 150ms ease,
-      transform 150ms ease;
-  }
 }
