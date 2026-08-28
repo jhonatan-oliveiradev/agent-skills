@@ -126,23 +126,27 @@ describe("localized layout", () => {
   });
 });
 
-describe("foundation home", () => {
+describe("definitive home", () => {
   it.each([
-    ["en", "Composable skills for capable agents.", "18 skills", "6 packs", "2 locales", "Choose → install → invoke"],
-    ["pt-BR", "Habilidades combináveis para agentes capazes.", "18 skills", "6 pacotes", "2 idiomas", "Escolha → instale → invoque"],
-  ] as const)("renders catalog-backed localized content for %s", async (locale, title, skills, packs, locales, process) => {
-    render(await HomePage({ params: Promise.resolve({ locale }) }));
+    ["en", "Composable skills for capable agents.", "18 skills", "6 packs", "2 locales", "Choose the right starting point", "Proof, not promises."],
+    ["pt-BR", "Habilidades combináveis para agentes capazes.", "18 skills", "6 pacotes", "2 idiomas", "Escolha o ponto de partida", "Evidência, não promessas."],
+  ] as const)("renders the definitive catalog-backed home for %s", async (locale, title, skills, packs, locales, startingPoint, proof) => {
+    const { container } = render(await HomePage({ params: Promise.resolve({ locale }) }));
 
     expect(screen.getByRole("heading", { level: 1, name: title })).toBeInTheDocument();
     expect(screen.getByText(skills)).toBeInTheDocument();
     expect(screen.getByText(packs)).toBeInTheDocument();
     expect(screen.getByText(locales)).toBeInTheDocument();
-    expect(screen.getByRole("heading", { name: process })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: startingPoint })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: proof })).toBeInTheDocument();
+    expect(container.querySelectorAll(".home-pack-card")).toHaveLength(3);
+    expect(container.querySelectorAll(".home-case-card")).toHaveLength(2);
     expect(screen.getByRole("link", { name: locale === "en" ? "Explore skills" : "Explorar skills" })).toHaveAttribute(
       "href",
       `/${locale}/skills`,
     );
-    expect(screen.getByText(locale === "en" ? /searchable catalog/i : /catálogo com busca/i)).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: locale === "en" ? "Read the roadmap" : "Ver o roteiro" })).toHaveAttribute("href", `/${locale}/roadmap`);
+    expect(screen.queryByText(locale === "en" ? /foundation delivery/i : /entrega de fundação/i)).not.toBeInTheDocument();
   });
 
   it.each([

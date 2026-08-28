@@ -20,7 +20,19 @@ export interface Messages {
     readonly summary: string;
     readonly primaryAction: string;
     readonly secondaryAction: string;
-    readonly foundationNote: string;
+  };
+  readonly home: {
+    readonly paths: {
+      readonly eyebrow: string;
+      readonly title: string;
+      readonly summary: string;
+      readonly skills: { readonly title: string; readonly summary: string; readonly action: string };
+      readonly packs: { readonly title: string; readonly summary: string; readonly action: string };
+      readonly guide: { readonly title: string; readonly summary: string; readonly action: string };
+    };
+    readonly packs: { readonly eyebrow: string; readonly title: string; readonly summary: string; readonly view: string; readonly viewAll: string; readonly skills: string };
+    readonly proof: { readonly eyebrow: string; readonly title: string; readonly summary: string; readonly view: string; readonly viewAll: string };
+    readonly roadmap: { readonly eyebrow: string; readonly title: string; readonly summary: string; readonly action: string; readonly contribute: string };
   };
   readonly catalog: {
     readonly skillsCount: string;
@@ -236,8 +248,38 @@ export const messages = {
       summary: "Browse production-ready skills and packs for building better agents.",
       primaryAction: "Explore skills",
       secondaryAction: "View packs",
-      foundationNote:
-        "Explore the searchable catalog now. Skill detail pages arrive in a later release.",
+    },
+    home: {
+      paths: {
+        eyebrow: "One collection, three paths",
+        title: "Choose the right starting point",
+        summary: "Start with one focused workflow, a connected pack, or the complete installation guide.",
+        skills: { title: "Find one precise skill", summary: "Search by outcome, category, difficulty, or maturity and install only the workflow you need.", action: "Browse the catalog" },
+        packs: { title: "Adopt a connected workflow", summary: "Combine complementary skills in an ordered, installable pack built around a practical goal.", action: "Browse collections" },
+        guide: { title: "Install with confidence", summary: "Follow the supported Bash or PowerShell path and verify what your agent can discover.", action: "Getting started" },
+      },
+      packs: {
+        eyebrow: "Active packs",
+        title: "Start with a connected workflow.",
+        summary: "Three installable collections organize complementary skills without hiding their individual contracts.",
+        view: "View pack",
+        viewAll: "Explore all packs",
+        skills: "{count} skills",
+      },
+      proof: {
+        eyebrow: "Built with Skills",
+        title: "Proof, not promises.",
+        summary: "See how the collection shaped real product decisions and verifiable outcomes in Agent Skills Studio itself.",
+        view: "Read case study",
+        viewAll: "View all case studies",
+      },
+      roadmap: {
+        eyebrow: "Open development",
+        title: "Follow what is stable, beta, or still only a proposal.",
+        summary: "The public roadmap separates shipped capabilities from planned directions and advances them through evidence.",
+        action: "Read the roadmap",
+        contribute: "Contribute to the collection",
+      },
     },
     catalog: {
       skillsCount: "skills",
@@ -491,8 +533,38 @@ export const messages = {
       summary: "Explore habilidades e pacotes prontos para produzir agentes melhores.",
       primaryAction: "Explorar skills",
       secondaryAction: "Ver pacotes",
-      foundationNote:
-        "Explore agora o catálogo com busca. As páginas de detalhes das skills chegam em uma entrega futura.",
+    },
+    home: {
+      paths: {
+        eyebrow: "Uma coleção, três caminhos",
+        title: "Escolha o ponto de partida",
+        summary: "Comece por um fluxo focado, um pacote conectado ou pelo guia completo de instalação.",
+        skills: { title: "Encontre uma skill precisa", summary: "Busque por resultado, categoria, dificuldade ou maturidade e instale apenas o fluxo necessário.", action: "Abrir o catálogo" },
+        packs: { title: "Adote um fluxo conectado", summary: "Combine skills complementares em um pacote ordenado e instalável, criado em torno de um objetivo prático.", action: "Explorar coleções" },
+        guide: { title: "Instale com confiança", summary: "Siga o caminho suportado em Bash ou PowerShell e verifique o que seu agente consegue descobrir.", action: "Primeiros passos" },
+      },
+      packs: {
+        eyebrow: "Pacotes ativos",
+        title: "Comece por um fluxo conectado.",
+        summary: "Três coleções instaláveis organizam skills complementares sem ocultar seus contratos individuais.",
+        view: "Ver pacote",
+        viewAll: "Explorar todos os pacotes",
+        skills: "{count} skills",
+      },
+      proof: {
+        eyebrow: "Feito com Skills",
+        title: "Evidência, não promessas.",
+        summary: "Veja como a coleção orientou decisões reais de produto e resultados verificáveis no próprio Agent Skills Studio.",
+        view: "Ler estudo de caso",
+        viewAll: "Ver todos os estudos de caso",
+      },
+      roadmap: {
+        eyebrow: "Desenvolvimento aberto",
+        title: "Acompanhe o que está estável, em beta ou ainda é apenas uma proposta.",
+        summary: "O roteiro público separa capacidades entregues de direções planejadas e faz cada uma avançar por evidências.",
+        action: "Ver o roteiro",
+        contribute: "Contribuir com a coleção",
+      },
     },
     catalog: {
       skillsCount: "skills",
