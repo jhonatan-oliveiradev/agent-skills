@@ -8,6 +8,7 @@
   --text: #172033;
   --text-muted: #5d6880;
   --border: #cbd5e1;
+  --control-border: #64748b;
   --brand: #254edb;
   --brand-contrast: #ffffff;
   --focus: #1d4ed8;
@@ -24,6 +25,7 @@
   --text: #e7edf8;
   --text-muted: #aebbd0;
   --border: #334155;
+  --control-border: #737f98;
   --brand: #8ba7ff;
   --brand-contrast: #10172a;
   --focus: #a5b8ff;
@@ -145,7 +147,7 @@ select {
 
 .site-controls select,
 .locale-switcher {
-  border: 1px solid var(--border);
+  border: 1px solid var(--control-border);
   border-radius: 999px;
   background-color: var(--surface);
   color: var(--text);
@@ -209,7 +211,7 @@ select {
   min-height: 2.75rem;
   align-items: center;
   justify-content: center;
-  border: 1px solid var(--border);
+  border: 1px solid var(--control-border);
   border-radius: 0.6rem;
   padding: 0.7rem 1rem;
   font-weight: 700;
@@ -404,7 +406,7 @@ select {
   top: 1rem;
   left: 1rem;
   transform: translateY(-200%);
-  border: 1px solid var(--border);
+  border: 1px solid var(--control-border);
   border-radius: 0.375rem;
   background-color: var(--surface-elevated);
   color: var(--text);

@@ -1,8 +1,8 @@
 # Agent Skills Studio — Microsite Design
 
-**Status:** Approved  
-**Date:** 2026-08-27  
-**Target:** Agent Skills Studio v1 microsite  
+**Status:** Approved
+**Date:** 2026-08-27
+**Target:** Agent Skills Studio v1 microsite
 **Repository:** `jhonatan-oliveiradev/agent-skills`
 
 ## 1. Purpose
@@ -409,4 +409,3 @@ The dedicated microsite phase is complete when:
 - the canonical domain, fallback URL, redirects, sitemap, metadata, and 404
   behavior are correct;
 - at least three concrete **Built with Skills** outcomes are published.
-

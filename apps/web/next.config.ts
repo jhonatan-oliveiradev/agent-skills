@@ -26,11 +26,6 @@ const nextConfig: NextConfig = {
         destination: `/en/${path}`,
         permanent: true,
       })),
-      {
-        source: "/pt-br/:path*",
-        destination: "/pt-BR/:path*",
-        permanent: true,
-      },
     ];
   },
 };

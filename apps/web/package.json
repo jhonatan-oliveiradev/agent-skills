@@ -10,7 +10,9 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint . --max-warnings=0",
+    "pretypecheck": "node scripts/sync-catalog.mjs && next typegen",
     "typecheck": "tsc --noEmit",
+    "pretest": "node scripts/sync-catalog.mjs",
     "test": "vitest run"
   },
   "dependencies": {

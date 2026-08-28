@@ -28,10 +28,15 @@ export function getLocaleRedirectTarget(
   return prefersPortuguese(languages) ? "/pt-BR" : "/en";
 }
 
-export function LocaleRedirect() {
+interface LocaleRedirectProps {
+  readonly location?: Pick<Location, "replace">;
+}
+
+export function LocaleRedirect({ location }: LocaleRedirectProps = {}) {
   useEffect(() => {
-    window.location.replace(getLocaleRedirectTarget(getPreferredLocale(), navigator.languages));
-  }, []);
+    const redirectLocation = location ?? window.location;
+    redirectLocation.replace(getLocaleRedirectTarget(getPreferredLocale(), navigator.languages));
+  }, [location]);
 
   return null;
 }

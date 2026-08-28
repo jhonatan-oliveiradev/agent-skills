@@ -27,14 +27,14 @@ describe("locale routing", () => {
 });
 
 describe("legacy locale redirects", () => {
-  it("keeps lower-case Portuguese and legacy skills URLs canonical and permanent", async () => {
+  it("keeps case-insensitive locale handling out of static redirects", async () => {
     const redirects = await nextConfig.redirects?.();
 
-    expect(redirects).toContainEqual({
-      source: "/pt-br/:path*",
-      destination: "/pt-BR/:path*",
-      permanent: true,
-    });
+    expect(redirects).not.toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({ destination: "/pt-BR/:path*" }),
+      ]),
+    );
     expect(redirects).toContainEqual({
       source: "/skills/:path*",
       destination: "/en/skills/:path*",
