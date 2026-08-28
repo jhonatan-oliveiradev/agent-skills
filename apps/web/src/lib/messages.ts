@@ -71,6 +71,24 @@ export interface Messages {
     readonly remove: { readonly title: string; readonly summary: string };
     readonly next: { readonly eyebrow: string; readonly title: string; readonly summary: string; readonly skills: string; readonly packs: string };
   };
+  readonly builtWithSkills: {
+    readonly eyebrow: string;
+    readonly title: string;
+    readonly summary: string;
+    readonly casesLabel: string;
+    readonly skillsApplied: string;
+    readonly readCase: string;
+    readonly back: string;
+    readonly caseStudy: string;
+    readonly published: string;
+    readonly challenge: string;
+    readonly workflowsTitle: string;
+    readonly decisions: string;
+    readonly decisionsTitle: string;
+    readonly results: string;
+    readonly resultsTitle: string;
+    readonly evidence: string;
+  };
   readonly packDetail: {
     readonly back: string;
     readonly active: string;
@@ -282,6 +300,24 @@ export const messages = {
         packs: "View packs",
       },
     },
+    builtWithSkills: {
+      eyebrow: "Proof in practice",
+      title: "Built with Skills",
+      summary: "Real product decisions and verifiable outcomes created by applying workflows from this collection to Agent Skills Studio itself.",
+      casesLabel: "Built with Skills case studies",
+      skillsApplied: "Skills applied",
+      readCase: "Read case study",
+      back: "Back to Built with Skills",
+      caseStudy: "Case study",
+      published: "Published",
+      challenge: "The challenge",
+      workflowsTitle: "Workflows behind the result",
+      decisions: "Decisions",
+      decisionsTitle: "From guidance to implementation",
+      results: "Verifiable result",
+      resultsTitle: "What shipped",
+      evidence: "View evidence record",
+    },
     packDetail: {
       back: "Back to packs",
       active: "Active",
@@ -491,6 +527,24 @@ export const messages = {
         skills: "Explorar skills",
         packs: "Ver pacotes",
       },
+    },
+    builtWithSkills: {
+      eyebrow: "Prova na prática",
+      title: "Feito com Skills",
+      summary: "Decisões reais de produto e resultados verificáveis produzidos ao aplicar os fluxos desta coleção no próprio Agent Skills Studio.",
+      casesLabel: "Estudos de caso Feito com Skills",
+      skillsApplied: "Skills aplicadas",
+      readCase: "Ler estudo de caso",
+      back: "Voltar para Feito com Skills",
+      caseStudy: "Estudo de caso",
+      published: "Publicado em",
+      challenge: "O desafio",
+      workflowsTitle: "Fluxos por trás do resultado",
+      decisions: "Decisões",
+      decisionsTitle: "Da orientação à implementação",
+      results: "Resultado verificável",
+      resultsTitle: "O que foi entregue",
+      evidence: "Ver registro de evidência",
     },
     packDetail: {
       back: "Voltar para pacotes",
