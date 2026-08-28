@@ -9,10 +9,10 @@ import {
   symlinkSync,
 } from "node:fs";
 import { createServer } from "node:net";
-import { tmpdir } from "node:os";
-import { relative, resolve, sep } from "node:path";
+import { resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { describe, expect, it } from "vitest";
+import { isFixtureLocationSafe } from "./next-request-fixture";
 
 const webRoot = resolve(fileURLToPath(new URL("../..", import.meta.url)));
 const fixtureEntries = [
@@ -25,7 +25,7 @@ const fixtureEntries = [
 ] as const;
 
 function createNextRequestFixture(): string {
-  const fixtureRoot = mkdtempSync(resolve(tmpdir(), "next-locale-redirect-"));
+  const fixtureRoot = mkdtempSync(resolve(webRoot, "..", "next-locale-redirect-"));
 
   for (const entry of fixtureEntries) {
     cpSync(resolve(webRoot, entry), resolve(fixtureRoot, entry), {
@@ -95,14 +95,28 @@ async function stopServer(child: ChildProcess) {
 }
 
 describe("legacy Portuguese locale redirect", () => {
-  it("creates its Next project outside the Vitest project root", () => {
+  it("rejects a fixture outside the web root when it crosses Windows volumes", () => {
+    expect(
+      isFixtureLocationSafe(
+        "D:\\a\\agent-skills\\agent-skills\\apps\\web",
+        "C:\\Users\\runneradmin\\AppData\\Local\\Temp\\next-locale-redirect-123",
+        "win32",
+      ),
+    ).toBe(false);
+    expect(
+      isFixtureLocationSafe(
+        "D:\\a\\agent-skills\\agent-skills\\apps\\web",
+        "D:\\a\\agent-skills\\agent-skills\\apps\\next-locale-redirect-123",
+        "win32",
+      ),
+    ).toBe(true);
+  });
+
+  it("creates its Next project outside the Vitest project root on the same volume", () => {
     const fixtureRoot = createNextRequestFixture();
 
     try {
-      const fixturePathFromWebRoot = relative(webRoot, fixtureRoot);
-      expect(
-        fixturePathFromWebRoot === ".." || fixturePathFromWebRoot.startsWith(`..${sep}`),
-      ).toBe(true);
+      expect(isFixtureLocationSafe(webRoot, fixtureRoot)).toBe(true);
     } finally {
       rmSync(fixtureRoot, { recursive: true, force: true });
     }
@@ -169,7 +183,11 @@ describe("legacy Portuguese locale redirect", () => {
         const canonicalResponse = await fetch(`${origin}/pt-BR/skills`, {
           redirect: "manual",
         });
-        expect(canonicalResponse.status).toBe(200);
+        const canonicalBody = await canonicalResponse.text();
+        expect(
+          canonicalResponse.status,
+          `canonical response body:\n${canonicalBody}\nNext.js logs:\n${logs}`,
+        ).toBe(200);
         expect(canonicalResponse.headers.get("location")).toBeNull();
       } finally {
         await stopServer(child);
