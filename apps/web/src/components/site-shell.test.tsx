@@ -161,7 +161,6 @@ describe("foundation home", () => {
 
 describe("foundation navigation targets", () => {
   it.each([
-    ["packs", PacksPage, "Packs", "Pacotes"],
     ["roadmap", RoadmapPage, "Roadmap", "Roteiro"],
     ["about", AboutPage, "About", "Sobre"],
   ] as const)("renders a localized static shell for /%s", async (_section, Page, enHeading, ptHeading) => {
@@ -173,6 +172,18 @@ describe("foundation navigation targets", () => {
     render(await Page({ params: Promise.resolve({ locale: "pt-BR" }) }));
     expect(screen.getByRole("heading", { level: 1, name: ptHeading })).toBeInTheDocument();
     expect(screen.getByText("Base desta rota", { selector: "p" })).toBeInTheDocument();
+  });
+
+  it.each([
+    ["en", "Packs", "Active", "Planned"],
+    ["pt-BR", "Pacotes", "Ativo", "Planejado"],
+  ] as const)("renders active and planned packs for %s", async (locale, heading, active, planned) => {
+    const { container } = render(await PacksPage({ params: Promise.resolve({ locale }) }));
+
+    expect(screen.getByRole("heading", { level: 1, name: heading })).toBeInTheDocument();
+    expect(container.querySelectorAll(".pack-card")).toHaveLength(6);
+    expect(screen.getAllByText(active)).toHaveLength(3);
+    expect(screen.getAllByText(planned)).toHaveLength(3);
   });
 
   it.each([

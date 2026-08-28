@@ -43,7 +43,22 @@ interface CatalogSkill {
 
 interface CatalogPack {
   readonly slug: string;
-  readonly locales: Readonly<Record<Locale, { readonly name: string }>>;
+  readonly status: "active" | "planned";
+  readonly featured: boolean;
+  readonly color: string;
+  readonly version: string;
+  readonly skillSlugs: readonly string[];
+  readonly locales: Readonly<
+    Record<
+      Locale,
+      {
+        readonly name: string;
+        readonly summary: string;
+        readonly description: string;
+        readonly outcomes: readonly string[];
+      }
+    >
+  >;
 }
 
 export interface Catalog {
@@ -69,6 +84,19 @@ export interface LocalizedSkillDetail extends SkillCatalogItem, CatalogSkillLoca
   readonly relatedSkills: readonly { readonly slug: string; readonly displayName: string }[];
   readonly version: string;
   readonly updatedAt: string;
+}
+
+export interface LocalizedPack {
+  readonly slug: string;
+  readonly status: "active" | "planned";
+  readonly featured: boolean;
+  readonly color: string;
+  readonly version: string;
+  readonly name: string;
+  readonly summary: string;
+  readonly description: string;
+  readonly outcomes: readonly string[];
+  readonly skills: readonly SkillCatalogItem[];
 }
 
 const catalog = Object.freeze(generatedCatalog) as unknown as Catalog;
@@ -128,5 +156,33 @@ export function getSkillInstallCommands(slug: string) {
   return {
     bash: `./install.sh --skill ${slug}`,
     powershell: `./install.ps1 --skill ${slug}`,
+  } as const;
+}
+
+export function getLocalizedPacks(locale: Locale): readonly LocalizedPack[] {
+  const skills = getLocalizedSkills(locale);
+  return catalog.packs.map((pack) => ({
+    slug: pack.slug,
+    status: pack.status,
+    featured: pack.featured,
+    color: pack.color,
+    version: pack.version,
+    ...pack.locales[locale],
+    skills: pack.skillSlugs.map((slug) => skills.find((skill) => skill.slug === slug)!),
+  }));
+}
+
+export function getLocalizedPackBySlug(
+  locale: Locale,
+  slug: string,
+): LocalizedPack | undefined {
+  return getLocalizedPacks(locale).find((pack) => pack.slug === slug);
+}
+
+export function getPackInstallCommands(slug: string, status: "active" | "planned") {
+  if (status !== "active") return undefined;
+  return {
+    bash: `./install.sh --pack ${slug}`,
+    powershell: `./install.ps1 --pack ${slug}`,
   } as const;
 }
