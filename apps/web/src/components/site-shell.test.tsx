@@ -14,6 +14,8 @@ vi.mock("next/navigation", () => ({
 }));
 
 import AboutPage from "@/app/[locale]/about/page";
+import ChangelogPage from "@/app/[locale]/changelog/page";
+import ContributePage from "@/app/[locale]/contribute/page";
 import BuiltWithSkillsPage from "@/app/[locale]/built-with-skills/page";
 import BuiltWithSkillsDetailPage from "@/app/[locale]/built-with-skills/[slug]/page";
 import GettingStartedPage from "@/app/[locale]/getting-started/page";
@@ -195,16 +197,37 @@ describe("foundation navigation targets", () => {
   });
 
   it.each([
-    ["about", AboutPage, "About", "Sobre"],
-  ] as const)("renders a localized static shell for /%s", async (_section, Page, enHeading, ptHeading) => {
+    ["about", AboutPage, "About the studio", "Sobre o studio"],
+    ["contribute", ContributePage, "Build the collection with us", "Construa a coleção com a gente"],
+    ["changelog", ChangelogPage, "Changelog", "Histórico de mudanças"],
+  ] as const)("renders real localized content for /%s", async (_section, Page, enHeading, ptHeading) => {
     const { unmount } = render(await Page({ params: Promise.resolve({ locale: "en" }) }));
     expect(screen.getByRole("heading", { level: 1, name: enHeading })).toBeInTheDocument();
-    expect(screen.getByText("Foundation route", { selector: "p" })).toBeInTheDocument();
     unmount();
 
     render(await Page({ params: Promise.resolve({ locale: "pt-BR" }) }));
     expect(screen.getByRole("heading", { level: 1, name: ptHeading })).toBeInTheDocument();
-    expect(screen.getByText("Base desta rota", { selector: "p" })).toBeInTheDocument();
+  });
+
+  it("publishes real contribution paths and readable release notes", async () => {
+    const { unmount } = render(await ContributePage({ params: Promise.resolve({ locale: "en" }) }));
+    expect(screen.getByRole("link", { name: /open an issue/i })).toHaveAttribute(
+      "href",
+      "https://github.com/jhonatan-oliveiradev/agent-skills/issues/new",
+    );
+    expect(screen.getByRole("link", { name: /open a pull request/i })).toHaveAttribute(
+      "href",
+      "https://github.com/jhonatan-oliveiradev/agent-skills/compare",
+    );
+    unmount();
+
+    render(await ChangelogPage({ params: Promise.resolve({ locale: "en" }) }));
+    expect(screen.getByRole("heading", { name: "1.0.0-beta.1" })).toBeInTheDocument();
+    expect(screen.getByText(/searchable.*catalog/i)).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: /source changelog/i })).toHaveAttribute(
+      "href",
+      expect.stringContaining("CHANGELOG.md"),
+    );
   });
 
   it.each([

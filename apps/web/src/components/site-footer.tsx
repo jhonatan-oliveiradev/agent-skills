@@ -17,6 +17,8 @@ export function SiteFooter({ locale }: Readonly<{ locale: Locale }>) {
     ["/built-with-skills", copy.navigation.builtWithSkills],
     ["/roadmap", copy.navigation.roadmap],
     ["/about", copy.navigation.about],
+    ["/contribute", copy.navigation.contribute],
+    ["/changelog", copy.navigation.changelog],
   ] as const;
 
   return (

@@ -9,8 +9,11 @@ All notable changes to this skill library are documented here.
 - Added the isolated bilingual Next.js foundation, its catalog synchronization,
   root web gates, and Linux/Windows CI validation.
 - Documented the Vercel Root Directory, Preview/production branch policy, and
-  deployment URLs. The complete catalog browsing experience remains a future
-  microsite slice.
+  deployment URLs.
+- Added the searchable 18-skill catalog, localized skill detail pages, six pack
+  experiences, and pack installation guidance.
+- Added Getting Started, Built with Skills case studies, the evidence-backed
+  public roadmap, and bilingual About, Contribute, and Changelog pages.
 
 ### Catalog & Packs
 

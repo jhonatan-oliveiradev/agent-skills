@@ -878,6 +878,250 @@ select {
   line-height: 1.65;
 }
 
+.project-page {
+  padding-block: clamp(4rem, 8vw, 7rem);
+}
+
+.project-page__hero {
+  max-width: 58rem;
+}
+
+.project-page__hero h1 {
+  max-width: 14ch;
+  margin: 0.8rem 0 1rem;
+  font-size: clamp(3rem, 8vw, 6rem);
+  font-weight: 500;
+  letter-spacing: -0.06em;
+  line-height: 0.95;
+}
+
+.project-page__hero > p:last-child {
+  max-width: 48rem;
+  color: var(--text-muted);
+  font-size: clamp(1rem, 2vw, 1.25rem);
+  line-height: 1.65;
+}
+
+.project-page__statement {
+  display: grid;
+  grid-template-columns: 0.55fr 1.45fr;
+  gap: clamp(2rem, 7vw, 6rem);
+  margin-block: clamp(3rem, 8vw, 6rem);
+  border-block: 1px solid var(--border);
+  padding-block: clamp(2rem, 5vw, 3.5rem);
+}
+
+.project-page__statement p {
+  margin: 0;
+}
+
+.project-page__statement > p:last-child {
+  max-width: 44rem;
+  color: var(--text-muted);
+  font-size: clamp(1.1rem, 2.5vw, 1.55rem);
+  line-height: 1.55;
+}
+
+.project-page__section {
+  margin-top: clamp(3rem, 8vw, 6rem);
+}
+
+.principle-list {
+  border-top: 1px solid var(--border);
+}
+
+.principle-list article {
+  display: grid;
+  grid-template-columns: 4rem 0.7fr 1.3fr;
+  gap: clamp(1rem, 4vw, 3rem);
+  border-bottom: 1px solid var(--border);
+  padding-block: 1.5rem;
+}
+
+.principle-list span,
+.contribution-grid > article > span {
+  color: var(--brand);
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+}
+
+.principle-list h2,
+.principle-list p {
+  margin: 0;
+}
+
+.principle-list h2 {
+  font-size: clamp(1.35rem, 3vw, 2rem);
+  font-weight: 500;
+  letter-spacing: -0.04em;
+}
+
+.principle-list p {
+  color: var(--text-muted);
+  line-height: 1.65;
+}
+
+.project-page__callout {
+  display: grid;
+  grid-template-columns: 1.2fr 0.8fr;
+  align-items: end;
+  gap: 2rem;
+  margin-top: clamp(4rem, 10vw, 8rem);
+  border-top: 0.3rem solid var(--brand);
+  background: var(--surface-elevated);
+  padding: clamp(1.5rem, 5vw, 3rem);
+}
+
+.project-page__callout h2,
+.project-page__expectations h2 {
+  margin: 0;
+  font-size: clamp(1.8rem, 4vw, 3rem);
+  font-weight: 500;
+  letter-spacing: -0.045em;
+  line-height: 1.05;
+}
+
+.project-page__callout div > p:last-child {
+  max-width: 44rem;
+  color: var(--text-muted);
+  line-height: 1.65;
+}
+
+.project-page__callout > a {
+  justify-self: end;
+}
+
+.contribution-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.contribution-grid article {
+  display: flex;
+  min-height: 18rem;
+  box-sizing: border-box;
+  flex-direction: column;
+  border: 1px solid var(--border);
+  border-top: 0.25rem solid var(--brand);
+  border-radius: 0.8rem;
+  background: var(--surface);
+  padding: clamp(1.25rem, 4vw, 2rem);
+}
+
+.contribution-grid h2 {
+  margin: 2.5rem 0 0.75rem;
+  font-size: clamp(1.5rem, 3vw, 2.2rem);
+  font-weight: 500;
+  letter-spacing: -0.04em;
+}
+
+.contribution-grid p {
+  margin: 0;
+  color: var(--text-muted);
+  line-height: 1.6;
+}
+
+.contribution-grid a {
+  margin-top: auto;
+  padding-top: 1.5rem;
+  color: var(--brand);
+  font-weight: 800;
+  text-underline-offset: 0.3rem;
+}
+
+.project-page__expectations {
+  display: grid;
+  grid-template-columns: 0.7fr 1.3fr;
+  gap: clamp(2rem, 7vw, 6rem);
+  margin-top: clamp(4rem, 10vw, 8rem);
+  border-top: 1px solid var(--border);
+  padding-top: clamp(3rem, 7vw, 5rem);
+}
+
+.project-page__expectations ol {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.project-page__expectations li {
+  display: grid;
+  grid-template-columns: 3rem 1fr;
+  gap: 1rem;
+  border-top: 1px solid var(--border);
+  padding-block: 1rem;
+  color: var(--text-muted);
+  line-height: 1.55;
+}
+
+.project-page__expectations li span {
+  color: var(--brand);
+  font-size: 0.75rem;
+  font-weight: 800;
+}
+
+.release {
+  border-top: 1px solid var(--border);
+  padding-block: clamp(2.5rem, 7vw, 5rem);
+}
+
+.release > header {
+  display: flex;
+  align-items: start;
+  justify-content: space-between;
+  gap: 2rem;
+}
+
+.release h2 {
+  margin: 0;
+  font-size: clamp(2.2rem, 6vw, 4.5rem);
+  font-weight: 500;
+  letter-spacing: -0.055em;
+}
+
+.release > header > span {
+  color: var(--text-muted);
+  font-size: 0.8rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.release__groups {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(2rem, 6vw, 5rem);
+  margin-top: 3rem;
+}
+
+.release__groups h3 {
+  font-size: 1.3rem;
+}
+
+.release__groups ul {
+  margin: 0;
+  padding-left: 1.25rem;
+  color: var(--text-muted);
+}
+
+.release__groups li {
+  padding-left: 0.35rem;
+  line-height: 1.65;
+}
+
+.release__groups li + li {
+  margin-top: 0.9rem;
+}
+
+.project-page__source {
+  display: inline-flex;
+  color: var(--brand);
+  font-weight: 800;
+  text-underline-offset: 0.3rem;
+}
+
 .roadmap__contribute > a {
   justify-self: end;
 }
@@ -1583,8 +1827,18 @@ select {
 
   .roadmap__principle,
   .roadmap__contribute,
-  .roadmap-item-list {
+  .roadmap-item-list,
+  .project-page__statement,
+  .project-page__callout,
+  .project-page__expectations,
+  .principle-list article,
+  .contribution-grid,
+  .release__groups {
     grid-template-columns: 1fr;
+  }
+
+  .project-page__callout > a {
+    justify-self: start;
   }
 
   .roadmap-stage > header {
