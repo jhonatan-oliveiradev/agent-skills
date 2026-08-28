@@ -14,6 +14,8 @@ vi.mock("next/navigation", () => ({
 }));
 
 import AboutPage from "@/app/[locale]/about/page";
+import BuiltWithSkillsPage from "@/app/[locale]/built-with-skills/page";
+import BuiltWithSkillsDetailPage from "@/app/[locale]/built-with-skills/[slug]/page";
 import GettingStartedPage from "@/app/[locale]/getting-started/page";
 import LocaleLayout from "@/app/[locale]/layout";
 import HomePage, { generateMetadata } from "@/app/[locale]/page";
@@ -161,6 +163,37 @@ describe("foundation home", () => {
 });
 
 describe("foundation navigation targets", () => {
+  it.each([
+    ["en", "Built with Skills", "Catalog experience", "Pack experience"],
+    ["pt-BR", "Feito com Skills", "Experiência do catálogo", "Experiência dos pacotes"],
+  ] as const)("renders real built-with-skills cases for %s", async (locale, heading, catalog, packs) => {
+    const { container } = render(
+      await BuiltWithSkillsPage({ params: Promise.resolve({ locale }) }),
+    );
+
+    expect(screen.getByRole("heading", { level: 1, name: heading })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: catalog })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: packs })).toBeInTheDocument();
+    expect(container.querySelectorAll(".built-case-card")).toHaveLength(2);
+  });
+
+  it("links a case study to its evidence record and applied skills", async () => {
+    render(
+      await BuiltWithSkillsDetailPage({
+        params: Promise.resolve({ locale: "en", slug: "catalog-experience" }),
+      }),
+    );
+
+    expect(screen.getByRole("link", { name: "View evidence record" })).toHaveAttribute(
+      "href",
+      expect.stringContaining("docs/built-with-skills/2026-08-28-catalog-experience.md"),
+    );
+    expect(screen.getByRole("link", { name: "Designing UI Systems" })).toHaveAttribute(
+      "href",
+      "/en/skills/designing-ui-systems",
+    );
+  });
+
   it.each([
     ["roadmap", RoadmapPage, "Roadmap", "Roteiro"],
     ["about", AboutPage, "About", "Sobre"],

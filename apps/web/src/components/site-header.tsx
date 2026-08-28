@@ -12,6 +12,7 @@ export function SiteHeader({ locale }: Readonly<{ locale: Locale }>) {
     ["/skills", copy.navigation.skills],
     ["/packs", copy.navigation.packs],
     ["/getting-started", copy.navigation.gettingStarted],
+    ["/built-with-skills", copy.navigation.builtWithSkills],
     ["/roadmap", copy.navigation.roadmap],
     ["/about", copy.navigation.about],
   ] as const;
