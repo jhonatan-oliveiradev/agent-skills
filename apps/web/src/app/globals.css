@@ -1,0 +1,80 @@
+@import "tailwindcss";
+
+:root {
+  color-scheme: light;
+  --canvas: #f8fafc;
+  --surface: #ffffff;
+  --surface-elevated: #ffffff;
+  --text: #172033;
+  --text-muted: #5d6880;
+  --border: #cbd5e1;
+  --brand: #254edb;
+  --brand-contrast: #ffffff;
+  --focus: #1d4ed8;
+  --success: #15803d;
+  --warning: #b45309;
+  --danger: #b91c1c;
+}
+
+.dark {
+  color-scheme: dark;
+  --canvas: #0b1020;
+  --surface: #131a2c;
+  --surface-elevated: #1a2338;
+  --text: #e7edf8;
+  --text-muted: #aebbd0;
+  --border: #334155;
+  --brand: #8ba7ff;
+  --brand-contrast: #10172a;
+  --focus: #a5b8ff;
+  --success: #4ade80;
+  --warning: #fbbf24;
+  --danger: #fca5a5;
+}
+
+* {
+  border-color: var(--border);
+}
+
+body {
+  min-height: 100vh;
+  margin: 0;
+  background-color: var(--canvas);
+  color: var(--text);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+:focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: 3px;
+}
+
+.skip-link {
+  position: fixed;
+  z-index: 50;
+  top: 1rem;
+  left: 1rem;
+  transform: translateY(-200%);
+  border: 1px solid var(--border);
+  border-radius: 0.375rem;
+  background-color: var(--surface-elevated);
+  color: var(--text);
+  padding: 0.75rem 1rem;
+}
+
+.skip-link:focus {
+  transform: translateY(0);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  *,
+  *::before,
+  *::after {
+    transition:
+      background-color 150ms ease,
+      border-color 150ms ease,
+      color 150ms ease,
+      outline-color 150ms ease,
+      transform 150ms ease;
+  }
+}

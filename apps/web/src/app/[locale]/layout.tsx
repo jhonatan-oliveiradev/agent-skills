@@ -1,6 +1,19 @@
 import type { ReactNode } from "react";
+import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+import "../globals.css";
+import { ThemeProvider } from "@/components/theme-provider";
 import { isLocale } from "@/lib/i18n";
+
+export const metadata: Metadata = {
+  metadataBase: new URL(
+    process.env.NEXT_PUBLIC_SITE_URL ?? "https://skills.jhonatanoliveira.com",
+  ),
+  title: {
+    default: "Agent Skills Studio",
+    template: "%s | Agent Skills Studio",
+  },
+};
 
 export const dynamicParams = false;
 
@@ -22,8 +35,17 @@ export default async function LocaleLayout({
   }
 
   return (
-    <html lang={locale}>
-      <body>{children}</body>
+    <html lang={locale} suppressHydrationWarning>
+      <body>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          disableTransitionOnChange
+          enableSystem
+        >
+          {children}
+        </ThemeProvider>
+      </body>
     </html>
   );
 }
