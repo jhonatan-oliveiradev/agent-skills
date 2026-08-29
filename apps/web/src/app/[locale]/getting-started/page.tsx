@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { CopyCommand } from "@/components/copy-command";
+import { InstallationTerminal } from "@/components/installation-terminal";
 import { resolveLocale } from "@/components/foundation-route";
 import { installationCommands } from "@/lib/installation";
 import { messages } from "@/lib/messages";
@@ -37,6 +38,7 @@ export default async function GettingStartedPage({ params }: PageProps) {
       </section>
       <section className="getting-started__section" aria-labelledby="install-title">
         <SectionHeading number="02" id="install-title" title={copy.install.title} summary={copy.install.summary} />
+        <InstallationTerminal command={installationCommands.complete.bash} label={copy.install.demoLabel} success={copy.install.demoSuccess} />
         <div className="install-option-grid">
           <InstallOption copy={copy} title={copy.install.complete} commands={installationCommands.complete} />
           <InstallOption copy={copy} title={copy.install.skill} commands={installationCommands.skill} />

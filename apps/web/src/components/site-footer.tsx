@@ -6,6 +6,7 @@ import type { Locale } from "@/lib/locales";
 import { messages } from "@/lib/messages";
 
 const repositoryUrl = "https://github.com/jhonatan-oliveiradev/agent-skills";
+const portfolioUrl = "https://jhonatanoliveira.com";
 
 export function SiteFooter({ locale }: Readonly<{ locale: Locale }>) {
   const copy = messages[locale];
@@ -52,6 +53,12 @@ export function SiteFooter({ locale }: Readonly<{ locale: Locale }>) {
             {copy.footer.contribute}
           </a>
         </div>
+      </div>
+      <div className="shell site-footer__signature">
+        <p>© {new Date().getFullYear()} Agent Skills Studio</p>
+        <a href={portfolioUrl} rel="author noreferrer" target="_blank">
+          {copy.footer.signature}<span aria-hidden="true">↗</span>
+        </a>
       </div>
     </footer>
   );

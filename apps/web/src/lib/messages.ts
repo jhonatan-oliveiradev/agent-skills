@@ -5,6 +5,8 @@ export interface Messages {
   readonly brandLabel: string;
   readonly navigation: {
     readonly label: string;
+    readonly open: string;
+    readonly close: string;
     readonly skills: string;
     readonly packs: string;
     readonly gettingStarted: string;
@@ -76,7 +78,7 @@ export interface Messages {
     readonly copy: string;
     readonly copied: string;
     readonly requirements: { readonly title: string; readonly items: readonly string[] };
-    readonly install: { readonly title: string; readonly summary: string; readonly complete: string; readonly skill: string; readonly pack: string };
+    readonly install: { readonly title: string; readonly summary: string; readonly complete: string; readonly skill: string; readonly pack: string; readonly demoLabel: string; readonly demoSuccess: string };
     readonly verify: { readonly title: string; readonly summary: string };
     readonly maintenanceLabel: string;
     readonly update: { readonly title: string; readonly summary: string };
@@ -202,6 +204,7 @@ export interface Messages {
     readonly contribute: string;
     readonly version: string;
     readonly navigationLabel: string;
+    readonly signature: string;
   };
   readonly metadata: {
     readonly title: string;
@@ -235,6 +238,8 @@ export const messages = {
     brandLabel: "Agent Skills Studio",
     navigation: {
       label: "Primary navigation",
+      open: "Open navigation",
+      close: "Close navigation",
       skills: "Explore skills",
       packs: "Packs",
       gettingStarted: "Getting started",
@@ -341,6 +346,8 @@ export const messages = {
         complete: "Complete collection",
         skill: "One skill",
         pack: "One active pack",
+        demoLabel: "Installation demonstration",
+        demoSuccess: "18 skills ready to use.",
       },
       verify: {
         title: "Verify the installation",
@@ -490,6 +497,7 @@ export const messages = {
       contribute: "Contribute on GitHub",
       version: "Version {version}",
       navigationLabel: "Footer navigation",
+      signature: "Designed and built by Jhonatan Oliveira",
     },
     metadata: {
       title: "Composable agent skills",
@@ -522,6 +530,8 @@ export const messages = {
     brandLabel: "Agent Skills Studio",
     navigation: {
       label: "Navegação principal",
+      open: "Abrir navegação",
+      close: "Fechar navegação",
       skills: "Explorar skills",
       packs: "Pacotes",
       gettingStarted: "Primeiros passos",
@@ -628,6 +638,8 @@ export const messages = {
         complete: "Coleção completa",
         skill: "Uma skill",
         pack: "Um pacote ativo",
+        demoLabel: "Demonstração da instalação",
+        demoSuccess: "18 skills prontas para usar.",
       },
       verify: {
         title: "Verifique a instalação",
@@ -777,6 +789,7 @@ export const messages = {
       contribute: "Contribuir no GitHub",
       version: "Versão {version}",
       navigationLabel: "Navegação do rodapé",
+      signature: "Criado por Jhonatan Oliveira",
     },
     metadata: {
       title: "Skills combináveis para agentes",

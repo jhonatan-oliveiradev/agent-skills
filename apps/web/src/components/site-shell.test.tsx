@@ -87,6 +87,31 @@ describe("SiteHeader", () => {
       ).not.toBeInTheDocument();
     },
   );
+
+  it("opens and closes the editorial mobile navigation without losing accessible links", () => {
+    renderHeader("en");
+
+    const trigger = screen.getByRole("button", { name: "Open navigation" });
+    expect(trigger).toHaveAttribute("aria-expanded", "false");
+    expect(screen.getByTestId("editorial-navigation")).toHaveAttribute("data-open", "false");
+
+    fireEvent.click(trigger);
+    expect(screen.getByRole("button", { name: "Close navigation" })).toHaveAttribute(
+      "aria-expanded",
+      "true",
+    );
+    expect(screen.getByTestId("editorial-navigation")).toHaveAttribute("data-open", "true");
+    expect(screen.getByRole("link", { name: "Explore skills" })).toHaveAttribute(
+      "href",
+      "/en/skills",
+    );
+
+    fireEvent.click(screen.getByRole("button", { name: "Close navigation" }));
+    expect(screen.getByRole("button", { name: "Open navigation" })).toHaveAttribute(
+      "aria-expanded",
+      "false",
+    );
+  });
 });
 
 describe("SiteFooter", () => {
@@ -106,6 +131,11 @@ describe("SiteFooter", () => {
     );
     expect(screen.getByText(version)).toBeInTheDocument();
     expect(screen.getByRole("navigation", { name: locale === "en" ? "Footer navigation" : "Navegação do rodapé" })).toBeInTheDocument();
+    expect(
+      screen.getByRole("link", {
+        name: locale === "en" ? "Designed and built by Jhonatan Oliveira" : "Criado por Jhonatan Oliveira",
+      }),
+    ).toHaveAttribute("href", "https://jhonatanoliveira.com");
   });
 });
 
@@ -169,6 +199,16 @@ describe("definitive home", () => {
 });
 
 describe("foundation navigation targets", () => {
+  it("shows an animated terminal demonstration in the installation guide", async () => {
+    const { container } = render(
+      await GettingStartedPage({ params: Promise.resolve({ locale: "pt-BR" }) }),
+    );
+
+    expect(screen.getByRole("region", { name: "Demonstração da instalação" })).toBeInTheDocument();
+    expect(container.querySelector("[data-terminal-demo]")).toHaveTextContent("bash install.sh");
+    expect(screen.getByText("18 skills prontas para usar.")).toBeInTheDocument();
+  });
+
   it.each([
     ["en", "Built with Skills", "Catalog experience", "Pack experience"],
     ["pt-BR", "Feito com Skills", "Experiência do catálogo", "Experiência dos pacotes"],
@@ -273,7 +313,7 @@ describe("foundation navigation targets", () => {
     expect(screen.getByRole("heading", { level: 1, name: heading })).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: fullInstall })).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: verify })).toBeInTheDocument();
-    expect(screen.getByText("bash install.sh")).toBeInTheDocument();
+    expect(screen.getAllByText("bash install.sh")).toHaveLength(2);
     expect(screen.getByText("./install.ps1")).toBeInTheDocument();
     expect(screen.getByText("./install.sh --skill craft-premium-motion")).toBeInTheDocument();
     expect(screen.getByText("./install.sh --pack motion")).toBeInTheDocument();
