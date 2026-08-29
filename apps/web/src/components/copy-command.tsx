@@ -1,8 +1,8 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { Check, Copy } from "lucide-react";
-import { motion, useReducedMotion } from "motion/react";
+import { Check, Copy } from "lucide";
+import { MorphIcon } from "morphicons/react";
 
 export function CopyCommand({
   command,
@@ -11,7 +11,6 @@ export function CopyCommand({
 }: Readonly<{ command: string; label: string; copiedLabel: string }>) {
   const [copied, setCopied] = useState(false);
   const resetTimer = useRef<number | null>(null);
-  const reducedMotion = useReducedMotion();
 
   useEffect(
     () => () => {
@@ -34,7 +33,6 @@ export function CopyCommand({
   }
 
   const actionLabel = copied ? copiedLabel : label;
-  const Icon = copied ? Check : Copy;
 
   return (
     <div className="command-block">
@@ -46,14 +44,7 @@ export function CopyCommand({
         title={actionLabel}
         type="button"
       >
-        <motion.span
-          animate={{ rotate: copied && !reducedMotion ? -8 : 0, scale: copied ? 1.08 : 1 }}
-          className="grid place-items-center"
-          initial={false}
-          transition={reducedMotion ? { duration: 0 } : { duration: 0.16 }}
-        >
-          <Icon aria-hidden="true" size={17} strokeWidth={1.8} />
-        </motion.span>
+        <MorphIcon aria-hidden="true" icon={copied ? Check : Copy} reducedMotion="user" size={17} spring="snappy" strokeWidth={1.8} />
       </button>
       <span aria-live="polite" className="sr-only" role="status">
         {copied ? copiedLabel : ""}
