@@ -39,7 +39,7 @@ export default async function GettingStartedPage({ params }: PageProps) {
       <section className="getting-started__section" aria-labelledby="install-title">
         <SectionHeading number="02" id="install-title" title={copy.install.title} summary={copy.install.summary} />
         <InstallationTerminal command={installationCommands.complete.bash} label={copy.install.demoLabel} success={copy.install.demoSuccess} />
-        <div className="install-option-grid">
+        <div className="install-command-matrix">
           <InstallOption copy={copy} title={copy.install.complete} commands={installationCommands.complete} />
           <InstallOption copy={copy} title={copy.install.skill} commands={installationCommands.skill} />
           <InstallOption copy={copy} title={copy.install.pack} commands={installationCommands.pack} />
@@ -47,10 +47,11 @@ export default async function GettingStartedPage({ params }: PageProps) {
       </section>
       <section className="getting-started__section getting-started__verify" aria-labelledby="verify-title">
         <SectionHeading number="03" id="verify-title" title={copy.verify.title} summary={copy.verify.summary} />
-        <div className="command-pair">
+        <article className="installation-command-row installation-command-row--verify">
+          <div className="installation-command-row__label"><span className="eyebrow">03A</span><h3>{copy.verify.commands}</h3></div>
           <Command copy={copy} label={copy.bash} command={installationCommands.verify.bash} />
           <Command copy={copy} label={copy.powershell} command={installationCommands.verify.powershell} />
-        </div>
+        </article>
       </section>
       <section className="maintenance-grid" aria-label={copy.maintenanceLabel}>
         <article><p className="eyebrow">04</p><h2>{copy.update.title}</h2><p>{copy.update.summary}</p></article>
@@ -68,11 +69,11 @@ export default async function GettingStartedPage({ params }: PageProps) {
 }
 
 function SectionHeading({ number, id, title, summary }: Readonly<{ number: string; id: string; title: string; summary: string }>) {
-  return <div className="getting-started__section-heading"><p className="eyebrow">{number}</p><h2 id={id}>{title}</h2><p>{summary}</p></div>;
+  return <div className="getting-started__section-heading"><div><p className="eyebrow">{number}</p><h2 id={id}>{title}</h2></div><p>{summary}</p></div>;
 }
 
 function InstallOption({ copy, title, commands }: Readonly<{ copy: GettingStartedCopy; title: string; commands: Readonly<{ bash: string; powershell: string }> }>) {
-  return <article className="install-option"><h3>{title}</h3><Command copy={copy} label={copy.bash} command={commands.bash} /><Command copy={copy} label={copy.powershell} command={commands.powershell} /></article>;
+  return <article className="installation-command-row"><div className="installation-command-row__label"><h3>{title}</h3></div><Command copy={copy} label={copy.bash} command={commands.bash} /><Command copy={copy} label={copy.powershell} command={commands.powershell} /></article>;
 }
 
 function Command({ copy, label, command }: Readonly<{ copy: GettingStartedCopy; label: string; command: string }>) {

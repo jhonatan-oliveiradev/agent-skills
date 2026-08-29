@@ -48,6 +48,11 @@ describe("SiteHeader", () => {
   ] as const)("renders localized primary navigation for %s", (locale, label, href, navLabel) => {
     renderHeader(locale);
 
+    fireEvent.click(
+      screen.getByRole("button", {
+        name: locale === "en" ? "Open navigation" : "Abrir navegação",
+      }),
+    );
     const navigationRegion = screen.getByRole("navigation", { name: navLabel });
     expect(within(navigationRegion).getByRole("link", { name: label })).toHaveAttribute(
       "href",
@@ -62,7 +67,8 @@ describe("SiteHeader", () => {
     const hrefs = within(header)
       .getAllByRole("link")
       .map((link) => link.getAttribute("href"));
-    expect(new Set(hrefs).size).toBe(hrefs.length);
+    expect(hrefs.filter((linkHref) => linkHref === href)).toHaveLength(2);
+    expect(new Set(hrefs).size).toBe(hrefs.length - 1);
   });
 
   it.each([
@@ -88,29 +94,36 @@ describe("SiteHeader", () => {
     },
   );
 
-  it("opens and closes the editorial mobile navigation without losing accessible links", () => {
+  it("opens the NX-like navigation panel and closes it with Escape", () => {
     renderHeader("en");
 
     const trigger = screen.getByRole("button", { name: "Open navigation" });
     expect(trigger).toHaveAttribute("aria-expanded", "false");
-    expect(screen.getByTestId("editorial-navigation")).toHaveAttribute("data-open", "false");
+    expect(screen.queryByRole("dialog", { name: "Primary navigation" })).not.toBeInTheDocument();
+    expect(screen.getByText("OPEN SKILLS · DESIGN · ENGINEERING")).toBeInTheDocument();
 
     fireEvent.click(trigger);
     expect(screen.getByRole("button", { name: "Close navigation" })).toHaveAttribute(
       "aria-expanded",
       "true",
     );
-    expect(screen.getByTestId("editorial-navigation")).toHaveAttribute("data-open", "true");
-    expect(screen.getByRole("link", { name: "Explore skills" })).toHaveAttribute(
+    const dialog = screen.getByRole("dialog", { name: "Primary navigation" });
+    expect(within(dialog).getByRole("link", { name: "Explore skills" })).toHaveAttribute(
+      "href",
+      "/en/skills",
+    );
+    expect(within(dialog).getByText("01")).toBeInTheDocument();
+    expect(within(dialog).getByRole("link", { name: "Start exploring" })).toHaveAttribute(
       "href",
       "/en/skills",
     );
 
-    fireEvent.click(screen.getByRole("button", { name: "Close navigation" }));
+    fireEvent.keyDown(document, { key: "Escape" });
     expect(screen.getByRole("button", { name: "Open navigation" })).toHaveAttribute(
       "aria-expanded",
       "false",
     );
+    expect(screen.queryByRole("dialog", { name: "Primary navigation" })).not.toBeInTheDocument();
   });
 });
 
@@ -207,6 +220,22 @@ describe("foundation navigation targets", () => {
     expect(screen.getByRole("region", { name: "Demonstração da instalação" })).toBeInTheDocument();
     expect(container.querySelector("[data-terminal-demo]")).toHaveTextContent("bash install.sh");
     expect(screen.getByText("18 skills prontas para usar.")).toBeInTheDocument();
+  });
+
+  it("renders full installation commands in aligned editorial rows", async () => {
+    const { container } = render(
+      await GettingStartedPage({ params: Promise.resolve({ locale: "pt-BR" }) }),
+    );
+
+    const installRows = container.querySelectorAll(".install-command-matrix > .installation-command-row");
+    expect(installRows).toHaveLength(3);
+    installRows.forEach((row) => expect(row.querySelectorAll("code")).toHaveLength(2));
+    expect(installRows[1]).toHaveTextContent("./install.sh --skill craft-premium-motion");
+    expect(installRows[1]).toHaveTextContent("./install.ps1 --skill craft-premium-motion");
+
+    const verifyRow = container.querySelector(".getting-started__verify .installation-command-row");
+    expect(verifyRow).toBeInTheDocument();
+    expect(verifyRow?.querySelectorAll("code")).toHaveLength(2);
   });
 
   it.each([

@@ -7,6 +7,8 @@ export interface Messages {
     readonly label: string;
     readonly open: string;
     readonly close: string;
+    readonly descriptor: string;
+    readonly cta: string;
     readonly skills: string;
     readonly packs: string;
     readonly gettingStarted: string;
@@ -79,7 +81,7 @@ export interface Messages {
     readonly copied: string;
     readonly requirements: { readonly title: string; readonly items: readonly string[] };
     readonly install: { readonly title: string; readonly summary: string; readonly complete: string; readonly skill: string; readonly pack: string; readonly demoLabel: string; readonly demoSuccess: string };
-    readonly verify: { readonly title: string; readonly summary: string };
+    readonly verify: { readonly title: string; readonly summary: string; readonly commands: string };
     readonly maintenanceLabel: string;
     readonly update: { readonly title: string; readonly summary: string };
     readonly remove: { readonly title: string; readonly summary: string };
@@ -240,6 +242,8 @@ export const messages = {
       label: "Primary navigation",
       open: "Open navigation",
       close: "Close navigation",
+      descriptor: "OPEN SKILLS · DESIGN · ENGINEERING",
+      cta: "Start exploring",
       skills: "Explore skills",
       packs: "Packs",
       gettingStarted: "Getting started",
@@ -352,6 +356,7 @@ export const messages = {
       verify: {
         title: "Verify the installation",
         summary: "List the destination and confirm that the selected skill directories contain their canonical SKILL.md files.",
+        commands: "Verification commands",
       },
       maintenanceLabel: "Maintenance",
       update: {
@@ -532,6 +537,8 @@ export const messages = {
       label: "Navegação principal",
       open: "Abrir navegação",
       close: "Fechar navegação",
+      descriptor: "SKILLS ABERTAS · DESIGN · ENGENHARIA",
+      cta: "Começar a explorar",
       skills: "Explorar skills",
       packs: "Pacotes",
       gettingStarted: "Primeiros passos",
@@ -644,6 +651,7 @@ export const messages = {
       verify: {
         title: "Verifique a instalação",
         summary: "Liste o destino e confirme que as pastas selecionadas contêm seus arquivos SKILL.md canônicos.",
+        commands: "Comandos de verificação",
       },
       maintenanceLabel: "Manutenção",
       update: {
