@@ -21,17 +21,18 @@ export function SiteHeader({ locale }: Readonly<{ locale: Locale }>) {
   return (
     <header className="site-header">
       <div className="shell site-header__inner">
-        <Link className="brand-link" href={`/${locale}` as Route}>
-          <span aria-hidden="true" className="brand-mark">
-            AS
-          </span>
-          <span>{copy.brandLabel}</span>
-        </Link>
-        <EditorialNavigation closeLabel={copy.navigation.close} label={copy.navigation.label} links={links} openLabel={copy.navigation.open} />
+        <div className="site-identity">
+          <Link className="brand-link" href={`/${locale}` as Route}>
+            <span aria-hidden="true" className="brand-mark">AS</span>
+            <span>{copy.brandLabel}</span>
+          </Link>
+          <span className="site-descriptor">{copy.navigation.descriptor}</span>
+        </div>
         <div className="site-controls">
           <LocaleSwitcher locale={locale} />
           <ThemeTransitionToggle locale={locale} />
         </div>
+        <EditorialNavigation closeLabel={copy.navigation.close} cta={copy.navigation.cta} label={copy.navigation.label} links={links} openLabel={copy.navigation.open} />
       </div>
     </header>
   );
