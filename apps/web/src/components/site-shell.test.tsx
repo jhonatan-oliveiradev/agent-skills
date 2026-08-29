@@ -66,15 +66,15 @@ describe("SiteHeader", () => {
   });
 
   it.each([
-    ["en", "Theme", "Switch language to Português (Brasil)", "/pt-BR/skills/example", "pt-BR"],
-    ["pt-BR", "Tema", "Mudar idioma para English", "/en/skills/example", "en"],
+    ["en", "Switch to dark theme", "Switch language to Português (Brasil)", "/pt-BR/skills/example", "pt-BR"],
+    ["pt-BR", "Mudar para tema escuro", "Mudar idioma para English", "/en/skills/example", "en"],
   ] as const)(
     "keeps the current path and persists the alternate locale from %s",
     (locale, themeLabel, switchLabel, href, storedLocale) => {
       navigation.pathname = `/${locale}/skills/example`;
       const { container } = renderHeader(locale);
 
-      expect(screen.getByRole("combobox", { name: themeLabel })).toBeInTheDocument();
+      expect(screen.getByRole("button", { name: themeLabel })).toBeInTheDocument();
       const localeLink = screen.getByRole("link", { name: switchLabel });
       expect(localeLink).toHaveTextContent(storedLocale === "en" ? "EN" : "PT-BR");
       expect(localeLink).toHaveAttribute("href", href);

@@ -1,21 +1,94 @@
 import { fireEvent, render, screen } from "@testing-library/react";
-import { ThemeProvider } from "next-themes";
-import { describe, expect, it } from "vitest";
-import { ThemeSwitcher } from "./theme-switcher";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import { ThemeTransitionToggle } from "./theme-switcher";
 
-describe("ThemeSwitcher", () => {
-  it("offers system, light, and dark choices with an accessible name", () => {
-    render(
-      <ThemeProvider attribute="class">
-        <ThemeSwitcher locale="en" />
-      </ThemeProvider>,
-    );
+const themeState = vi.hoisted(() => ({
+  reducedMotion: false,
+  resolvedTheme: "light" as "light" | "dark" | undefined,
+  setTheme: vi.fn(),
+}));
 
-    const control = screen.getByRole("combobox", { name: "Theme" });
-    expect(control).toHaveValue("system");
-    expect(screen.getByRole("option", { name: "Light" })).toBeInTheDocument();
-    expect(screen.getByRole("option", { name: "Dark" })).toBeInTheDocument();
-    fireEvent.change(control, { target: { value: "dark" } });
-    expect(control).toHaveValue("dark");
+vi.mock("next-themes", () => ({
+  useTheme: () => ({
+    resolvedTheme: themeState.resolvedTheme,
+    setTheme: themeState.setTheme,
+  }),
+}));
+
+vi.mock("motion/react", async (importOriginal) => {
+  const motion = await importOriginal<typeof import("motion/react")>();
+  return { ...motion, useReducedMotion: () => themeState.reducedMotion };
+});
+
+function installViewTransition() {
+  const startViewTransition = vi.fn((update: () => void) => {
+    update();
+    return {
+      finished: Promise.resolve(),
+      ready: Promise.resolve(),
+      skipTransition: vi.fn(),
+      updateCallbackDone: Promise.resolve(),
+    };
+  });
+
+  Object.defineProperty(document, "startViewTransition", {
+    configurable: true,
+    value: startViewTransition,
+  });
+
+  return startViewTransition;
+}
+
+describe("ThemeTransitionToggle", () => {
+  beforeEach(() => {
+    themeState.reducedMotion = false;
+    themeState.resolvedTheme = "light";
+    themeState.setTheme.mockReset();
+  });
+
+  afterEach(() => {
+    Reflect.deleteProperty(document, "startViewTransition");
+    delete document.documentElement.dataset.themeTransition;
+    delete document.documentElement.dataset.themeTransitionBlur;
+  });
+
+  it("switches from the resolved system theme without requiring View Transitions", () => {
+    render(<ThemeTransitionToggle locale="en" />);
+
+    fireEvent.click(screen.getByRole("button", { name: "Switch to dark theme" }));
+
+    expect(themeState.setTheme).toHaveBeenCalledWith("dark");
+  });
+
+  it("reveals the light theme from the bottom when View Transitions are available", () => {
+    themeState.resolvedTheme = "dark";
+    const startViewTransition = installViewTransition();
+
+    render(<ThemeTransitionToggle locale="en" />);
+    fireEvent.click(screen.getByRole("button", { name: "Switch to light theme" }));
+
+    expect(startViewTransition).toHaveBeenCalledOnce();
+    expect(themeState.setTheme).toHaveBeenCalledWith("light");
+    expect(document.documentElement.dataset.themeTransition).toBe("bottom-up");
+    expect(document.documentElement.dataset.themeTransitionBlur).toBe("false");
+  });
+
+  it("bypasses View Transitions when reduced motion is requested", () => {
+    themeState.reducedMotion = true;
+    const startViewTransition = installViewTransition();
+
+    render(<ThemeTransitionToggle locale="en" />);
+    fireEvent.click(screen.getByRole("button", { name: "Switch to dark theme" }));
+
+    expect(startViewTransition).not.toHaveBeenCalled();
+    expect(themeState.setTheme).toHaveBeenCalledWith("dark");
+  });
+
+  it("provides an equivalent localized accessible name", () => {
+    render(<ThemeTransitionToggle locale="pt-BR" />);
+
+    expect(
+      screen.getByRole("button", { name: "Mudar para tema escuro" }),
+    ).toBeVisible();
   });
 });

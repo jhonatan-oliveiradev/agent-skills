@@ -4,7 +4,7 @@ import { localizePath } from "@/lib/i18n";
 import type { Locale } from "@/lib/locales";
 import { messages } from "@/lib/messages";
 import { LocaleSwitcher } from "./locale-switcher";
-import { ThemeSwitcher } from "./theme-switcher";
+import { ThemeTransitionToggle } from "./theme-switcher";
 
 export function SiteHeader({ locale }: Readonly<{ locale: Locale }>) {
   const copy = messages[locale];
@@ -37,7 +37,7 @@ export function SiteHeader({ locale }: Readonly<{ locale: Locale }>) {
         </nav>
         <div className="site-controls">
           <LocaleSwitcher locale={locale} />
-          <ThemeSwitcher locale={locale} />
+          <ThemeTransitionToggle locale={locale} />
         </div>
       </div>
     </header>

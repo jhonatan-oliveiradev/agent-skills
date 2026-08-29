@@ -193,6 +193,8 @@ export interface Messages {
     readonly light: string;
     readonly dark: string;
     readonly system: string;
+    readonly switchToLight: string;
+    readonly switchToDark: string;
   };
   readonly footer: {
     readonly summary: string;
@@ -479,6 +481,8 @@ export const messages = {
       light: "Light",
       dark: "Dark",
       system: "System",
+      switchToLight: "Switch to light theme",
+      switchToDark: "Switch to dark theme",
     },
     footer: {
       summary: "Open skills for building useful agents.",
@@ -764,6 +768,8 @@ export const messages = {
       light: "Claro",
       dark: "Escuro",
       system: "Sistema",
+      switchToLight: "Mudar para tema claro",
+      switchToDark: "Mudar para tema escuro",
     },
     footer: {
       summary: "Habilidades abertas para criar agentes úteis.",
