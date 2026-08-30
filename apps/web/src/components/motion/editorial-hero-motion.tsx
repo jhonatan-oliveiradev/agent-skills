@@ -19,7 +19,7 @@ export function EditorialHeroMotion({ eyebrow, title, summary, children, engine 
 
   return (
     <section
-      className="relative isolate min-h-[calc(100svh-4.5rem)] overflow-hidden border-b border-line bg-canvas"
+      className="relative isolate min-h-[calc(100svh-4.5rem)] overflow-hidden border-b border-line bg-canvas [&_canvas]:!size-full"
       data-layout="manifesto-dominant"
       data-motion={reducedMotion ? "static" : "active"}
     >
