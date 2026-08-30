@@ -1,5 +1,5 @@
-import { act, render, screen } from "@testing-library/react";
-import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import { render, screen, within } from "@testing-library/react";
+import { afterEach, describe, expect, it, vi } from "vitest";
 
 const motionState = vi.hoisted(() => ({ reduced: false }));
 
@@ -8,81 +8,41 @@ vi.mock("motion/react", async (importOriginal) => {
   return { ...actual, useReducedMotion: () => motionState.reduced };
 });
 
-import { EditorialHeroMotion } from "./editorial-hero-motion";
-import { ProceduralLightCanvas } from "./procedural-light-canvas";
+import { MethodEngine } from "./method-engine";
 
 describe("editorial Home motion", () => {
-  beforeEach(() => {
-    motionState.reduced = false;
-    vi.stubGlobal("ResizeObserver", class {
-      observe() {}
-      disconnect() {}
-    });
-    vi.stubGlobal("IntersectionObserver", class {
-      constructor(private readonly callback: IntersectionObserverCallback) {}
-      observe(target: Element) {
-        this.callback([{ isIntersecting: true, target } as IntersectionObserverEntry], this as unknown as IntersectionObserver);
-      }
-      unobserve() {}
-      disconnect() {}
-    });
-    vi.spyOn(HTMLCanvasElement.prototype, "getContext").mockReturnValue(null);
-  });
-
   afterEach(() => {
+    motionState.reduced = false;
     vi.restoreAllMocks();
-    vi.unstubAllGlobals();
   });
 
-  it("keeps the manifesto readable when motion is disabled", () => {
+  it("shows the complete method when motion is disabled", () => {
     motionState.reduced = true;
 
     const { container } = render(
-      <EditorialHeroMotion
-        eyebrow="Agent Skills Studio"
-        title={<>Skills are not prompts.<br />{" "}They are working methods.</>}
-        summary="Open workflows for capable agents."
+      <MethodEngine
+        copy={{
+          label: "Method Engine",
+          promptLabel: "Natural request",
+          prompt: "Create a premium experience for this collection.",
+          stages: ["Context", "Method", "Evidence"],
+          resultLabel: "Verified outcome",
+          result: "Implemented · responsive · accessible · validated",
+        }}
+        metrics={["18 skills", "6 packs", "2 locales"]}
       />,
     );
 
-    expect(screen.getByRole("heading", { name: "Skills are not prompts. They are working methods." })).toBeVisible();
-    expect(screen.getByText("Open workflows for capable agents.")).toBeVisible();
-    expect(container.querySelector("canvas")).not.toBeInTheDocument();
+    const region = screen.getByRole("region", { name: "Method Engine" });
+    expect(within(region).getByText(/Create a premium experience for this collection\./)).toBeVisible();
+    expect(within(region).getByText("Context")).toBeVisible();
+    expect(within(region).getByText("Method")).toBeVisible();
+    expect(within(region).getByText("Evidence")).toBeVisible();
+    expect(within(region).getByText("designing-ui-systems")).toBeVisible();
+    expect(within(region).getByText("building-premium-nextjs-interfaces")).toBeVisible();
+    expect(within(region).getByText("craft-premium-motion")).toBeVisible();
+    expect(within(region).getByText("Implemented · responsive · accessible · validated")).toBeVisible();
+    expect(within(region).getByText("18 skills")).toBeVisible();
     expect(container.querySelector('[data-motion="static"]')).toBeInTheDocument();
-  });
-
-  it("cancels its animation frame when the procedural canvas unmounts", () => {
-    let frame = 0;
-    const cancel = vi.fn();
-    vi.stubGlobal("requestAnimationFrame", vi.fn(() => ++frame));
-    vi.stubGlobal("cancelAnimationFrame", cancel);
-
-    const { unmount } = render(<ProceduralLightCanvas />);
-    act(() => unmount());
-
-    expect(cancel).toHaveBeenCalledWith(1);
-  });
-
-  it("pauses the procedural loop outside the viewport and resumes on return", () => {
-    let intersectionCallback: IntersectionObserverCallback | undefined;
-    vi.stubGlobal("IntersectionObserver", class {
-      constructor(callback: IntersectionObserverCallback) { intersectionCallback = callback; }
-      observe() {}
-      unobserve() {}
-      disconnect() {}
-    });
-    const request = vi.fn(() => 7);
-    const cancel = vi.fn();
-    vi.stubGlobal("requestAnimationFrame", request);
-    vi.stubGlobal("cancelAnimationFrame", cancel);
-
-    render(<ProceduralLightCanvas />);
-    expect(intersectionCallback).toBeTypeOf("function");
-
-    act(() => intersectionCallback?.([{ isIntersecting: false } as IntersectionObserverEntry], {} as IntersectionObserver));
-    expect(cancel).toHaveBeenCalledWith(7);
-
-    act(() => intersectionCallback?.([{ isIntersecting: true } as IntersectionObserverEntry], {} as IntersectionObserver));
-    expect(request).toHaveBeenCalledTimes(2);
   });
 });

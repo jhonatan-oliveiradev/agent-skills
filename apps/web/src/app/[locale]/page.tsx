@@ -2,6 +2,7 @@ import type { Metadata, Route } from "next";
 import Link from "next/link";
 import type { CSSProperties } from "react";
 import { EditorialHeroMotion } from "@/components/motion/editorial-hero-motion";
+import { MethodEngine } from "@/components/motion/method-engine";
 import { ScrollProgress } from "@/components/motion/scroll-progress";
 import { resolveLocale } from "@/components/foundation-route";
 import { getBuiltWithSkillsCases } from "@/lib/built-with-skills";
@@ -42,6 +43,7 @@ export default async function HomePage({ params }: HomePageProps) {
     [catalog.packs.length, copy.catalog.packsCount],
     [catalog.locales.length, copy.catalog.localesCount],
   ] as const;
+  const localizedMetrics = metrics.map(([count, label]) => `${count} ${label}`);
   const steps = [copy.process.choose, copy.process.install, copy.process.invoke];
   const paths = [
     { ...copy.home.paths.skills, href: "/skills" },
@@ -57,7 +59,7 @@ export default async function HomePage({ params }: HomePageProps) {
           eyebrow={manifesto.eyebrow}
           summary={manifesto.summary}
           title={<><span id="home-manifesto-title">{manifesto.titleLead}</span><br />{" "}{manifesto.titleClose}</>}
-          visualLabel={manifesto.visualLabel}
+          engine={<MethodEngine copy={manifesto.engine} metrics={localizedMetrics} />}
         >
           <div className="flex flex-wrap gap-3">
               <Link
@@ -74,13 +76,6 @@ export default async function HomePage({ params }: HomePageProps) {
               </Link>
           </div>
         </EditorialHeroMotion>
-        <div className="shell -mt-16 pb-10 relative z-20">
-          <ul aria-label={manifesto.summary} className="catalog-metrics max-w-sm ml-auto">
-            {metrics.map(([count, label]) => (
-              <li key={label}>{`${count} ${label}`}</li>
-            ))}
-          </ul>
-        </div>
       </section>
 
       <section className="home-paths">
