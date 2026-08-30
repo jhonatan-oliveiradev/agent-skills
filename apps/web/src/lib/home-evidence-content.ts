@@ -1,6 +1,31 @@
 import type { Locale } from "./locales";
 
+export type HomeCaseStageId = "problem" | "method" | "transformation" | "evidence";
+
+export type HomeCaseStage = Readonly<{
+  id: HomeCaseStageId;
+  eyebrow: string;
+  title: string;
+  summary: string;
+}>;
+
+type HomeAct = Readonly<{
+  id: "manifesto-case" | "methods-systems" | "proof-open-system";
+  label: string;
+}>;
+
 export type HomeEvidenceCopy = Readonly<{
+  acts: readonly [HomeAct, HomeAct, HomeAct];
+  caseStudy: Readonly<{
+    eyebrow: string;
+    title: string;
+    summary: string;
+    stages: readonly [HomeCaseStage, HomeCaseStage, HomeCaseStage, HomeCaseStage];
+    evidence: readonly string[];
+    beforeLabel: string;
+    afterLabel: string;
+    viewCases: string;
+  }>;
   proof: Readonly<{
     eyebrow: string;
     title: string;
@@ -69,6 +94,46 @@ export type HomeEvidenceCopy = Readonly<{
 
 export const homeEvidenceContent = {
   en: {
+    acts: [
+      { id: "manifesto-case", label: "Manifesto / Case 001" },
+      { id: "methods-systems", label: "Methods / Systems" },
+      { id: "proof-open-system", label: "Proof / Open system" },
+    ],
+    caseStudy: {
+      eyebrow: "Built with Skills / Case 001",
+      title: "This Home was built with Skills.",
+      summary: "The thesis should survive contact with the product. This interface is the first proof: method in, verifiable outcome out.",
+      stages: [
+        {
+          id: "problem",
+          eyebrow: "01 / Problem",
+          title: "The interface worked. The authorship did not.",
+          summary: "The hierarchy felt compressed and the product did not yet look as deliberate as the methods it publishes.",
+        },
+        {
+          id: "method",
+          eyebrow: "02 / Method",
+          title: "The method changed the process.",
+          summary: "Research, design approval, implementation, visual QA and accessibility constraints shaped the work instead of decoration-first iteration.",
+        },
+        {
+          id: "transformation",
+          eyebrow: "03 / Transformation",
+          title: "Structure before spectacle.",
+          summary: "Typography, spacing, grid and the Dark Veil atmosphere were recomposed around a clearer editorial hierarchy and responsive behavior.",
+        },
+        {
+          id: "evidence",
+          eyebrow: "04 / Evidence",
+          title: "The result can be inspected.",
+          summary: "The redesigned hero shipped with reduced-motion support, responsive QA and repository evidence instead of an unverifiable marketing claim.",
+        },
+      ],
+      evidence: ["PR #22", "3 production files changed", "Tests passed", "390 / 1440 / 1920 visual QA"],
+      beforeLabel: "Before",
+      afterLabel: "After",
+      viewCases: "Inspect all evidence",
+    },
     proof: {
       eyebrow: "Built with Skills / Case 001",
       title: "This Home was built with Skills.",
@@ -135,6 +200,46 @@ export const homeEvidenceContent = {
     },
   },
   "pt-BR": {
+    acts: [
+      { id: "manifesto-case", label: "Manifesto / Case 001" },
+      { id: "methods-systems", label: "Métodos / Sistemas" },
+      { id: "proof-open-system", label: "Prova / Sistema aberto" },
+    ],
+    caseStudy: {
+      eyebrow: "Built with Skills / Case 001",
+      title: "Esta Home foi construída com Skills.",
+      summary: "A tese precisa sobreviver ao contato com o produto. Esta interface é a primeira prova: entra método, sai resultado verificável.",
+      stages: [
+        {
+          id: "problem",
+          eyebrow: "01 / Problema",
+          title: "A interface funcionava. A autoria ainda não.",
+          summary: "A hierarquia estava comprimida e o produto ainda não parecia tão deliberado quanto os métodos que publica.",
+        },
+        {
+          id: "method",
+          eyebrow: "02 / Método",
+          title: "O método mudou o processo.",
+          summary: "Pesquisa, aprovação de design, implementação, QA visual e acessibilidade passaram a orientar o trabalho em vez de uma iteração centrada em decoração.",
+        },
+        {
+          id: "transformation",
+          eyebrow: "03 / Transformação",
+          title: "Estrutura antes do espetáculo.",
+          summary: "Tipografia, espaçamento, grid e a atmosfera do Dark Veil foram recompostos em torno de uma hierarquia editorial mais clara e responsiva.",
+        },
+        {
+          id: "evidence",
+          eyebrow: "04 / Evidência",
+          title: "O resultado pode ser inspecionado.",
+          summary: "A hero redesenhada foi entregue com reduced motion, QA responsivo e evidência no repositório em vez de uma promessa de marketing não verificável.",
+        },
+      ],
+      evidence: ["PR #22", "3 arquivos de produção alterados", "Testes aprovados", "QA visual em 390 / 1440 / 1920"],
+      beforeLabel: "Antes",
+      afterLabel: "Depois",
+      viewCases: "Inspecionar todas as evidências",
+    },
     proof: {
       eyebrow: "Built with Skills / Case 001",
       title: "Esta Home foi construída com Skills.",
