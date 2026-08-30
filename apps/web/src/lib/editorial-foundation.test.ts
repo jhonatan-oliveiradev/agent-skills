@@ -26,6 +26,18 @@ describe("editorial design foundation", () => {
     expect(css).toMatch(/\.dark\s*\{[\s\S]*?--editorial-canvas:/);
   });
 
+  it("uses the Dark Veil violet family as the product accent in both themes", async () => {
+    const css = await read("app/globals.css");
+
+    expect(css).toMatch(/:root\s*\{[\s\S]*?--editorial-accent:\s*#6d28d9;/);
+    expect(css).toMatch(/:root\s*\{[\s\S]*?--editorial-focus:\s*#7c3aed;/);
+    expect(css).toMatch(/\.dark\s*\{[\s\S]*?--editorial-accent:\s*#a78bfa;/);
+    expect(css).toMatch(/\.dark\s*\{[\s\S]*?--editorial-focus:\s*#c4b5fd;/);
+    expect(css).not.toMatch(/--editorial-accent:\s*#1745e8;/);
+    expect(css).not.toMatch(/--editorial-accent:\s*#6f91ff;/);
+    expect(css).not.toMatch(/--editorial-focus:\s*#8ea8ff;/);
+  });
+
   it("preserves legacy aliases while the internal pages migrate", async () => {
     const css = await read("app/globals.css");
 
