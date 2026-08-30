@@ -1,6 +1,5 @@
 import type { Metadata, Route } from "next";
 import Link from "next/link";
-import type { CSSProperties } from "react";
 import { EditorialHeroMotion } from "@/components/motion/editorial-hero-motion";
 import { MethodEngine } from "@/components/motion/method-engine";
 import { ScrollProgress } from "@/components/motion/scroll-progress";
@@ -270,10 +269,7 @@ export default async function HomePage({ params }: HomePageProps) {
 
           <div className="home-pack-rail">
             {activePacks.map((pack) => (
-              <article
-                key={pack.slug}
-                style={{ "--pack-accent": pack.color } as CSSProperties}
-              >
+              <article key={pack.slug}>
                 <div className="home-pack-rail__meta">
                   <span>{evidence.packs.skills.replace("{count}", String(pack.skills.length))}</span>
                   <span>{pack.version}</span>
@@ -353,7 +349,7 @@ export default async function HomePage({ params }: HomePageProps) {
                     </td>
                     <td>
                       {row.external ? (
-                        <a href={row.evidenceHref} rel="noreferrer" target="_blank">{row.evidence} ↗</a>
+                        <a href={row.evidenceHref} rel="noreferrer noopener" target="_blank">{row.evidence} ↗</a>
                       ) : (
                         <Link href={row.evidenceHref}>{row.evidence} →</Link>
                       )}
