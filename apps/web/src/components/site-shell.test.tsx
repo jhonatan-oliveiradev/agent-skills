@@ -180,6 +180,8 @@ describe("definitive home", () => {
     expect(screen.getByText(skills)).toBeInTheDocument();
     expect(screen.getByText(packs)).toBeInTheDocument();
     expect(screen.getByText(locales)).toBeInTheDocument();
+    expect(screen.getByRole("region", { name: locale === "en" ? "Method Engine" : "Motor de Método" })).toBeInTheDocument();
+    expect(container.querySelector("canvas")).not.toBeInTheDocument();
     expect(screen.getByRole("heading", { name: startingPoint })).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: proof })).toBeInTheDocument();
     expect(container.querySelectorAll(".home-pack-card")).toHaveLength(3);
