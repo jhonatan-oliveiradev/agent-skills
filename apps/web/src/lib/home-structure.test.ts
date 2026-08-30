@@ -8,25 +8,23 @@ async function readHome() {
   return readFile(resolve(appRoot, "app/[locale]/page.tsx"), "utf8");
 }
 
-describe("Home evidence-first composition", () => {
-  it("orders proof before catalog-oriented sections and keeps roadmap last", async () => {
+describe("Home Living Research Archive composition", () => {
+  it("orders the three editorial acts and removes the standalone transformation section", async () => {
     const source = await readHome();
-    const markers = [
-      'data-home-section="proof"',
-      'data-home-section="transformation"',
-      'data-home-section="methods"',
-      'data-home-section="packs"',
-      'data-home-section="workflow"',
-      'data-home-section="ledger"',
-      'data-home-section="roadmap"',
-    ];
 
-    const positions = markers.map((marker) => source.indexOf(marker));
-    positions.forEach((position) => expect(position).toBeGreaterThan(-1));
-    expect(positions).toEqual([...positions].sort((a, b) => a - b));
+    const manifestoCase = source.indexOf('data-home-act="manifesto-case"');
+    const methodsSystems = source.indexOf('data-home-act="methods-systems"');
+    const proofOpenSystem = source.indexOf('data-home-act="proof-open-system"');
+
+    expect(manifestoCase).toBeGreaterThan(-1);
+    expect(methodsSystems).toBeGreaterThan(-1);
+    expect(proofOpenSystem).toBeGreaterThan(-1);
+    expect(manifestoCase).toBeLessThan(methodsSystems);
+    expect(methodsSystems).toBeLessThan(proofOpenSystem);
+    expect(source).not.toContain('data-home-section="transformation"');
   });
 
-  it("removes the legacy path-card and three-card process formulas from the Home", async () => {
+  it("keeps the method index and evidence ledger while rejecting legacy card formulas", async () => {
     const source = await readHome();
 
     expect(source).not.toContain("home-path-grid");
