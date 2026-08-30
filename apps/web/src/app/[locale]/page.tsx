@@ -1,5 +1,5 @@
 import type { Metadata, Route } from "next";
-import Link from "next/link";
+import { HomeCaseStudyStory } from "@/components/home/home-case-study-story";
 import { HomeClosing } from "@/components/home/home-closing";
 import { HomeEvidenceLedger } from "@/components/home/home-evidence-ledger";
 import { HomeManifestoHero } from "@/components/home/home-manifesto-hero";
@@ -100,64 +100,32 @@ export default async function HomePage({ params }: HomePageProps) {
     };
   });
 
+  const caseEvidenceLinks = [
+    {
+      label: "PR #22",
+      href: "https://github.com/jhonatan-oliveiradev/agent-skills/pull/22",
+      external: true,
+    },
+    {
+      label: evidence.caseStudy.viewCases,
+      href: localizePath("/built-with-skills", locale),
+      external: false,
+    },
+  ] as const;
+
   return (
     <>
       <ScrollProgress />
 
       <section aria-label={evidence.acts[0].label} data-home-act="manifesto-case">
         <HomeManifestoHero locale={locale} copy={manifesto} metrics={localizedMetrics} />
-
-        <section className="home-proof-v2" data-home-section="proof">
-          <div className="shell">
-            <div className="home-proof-v2__heading">
-              <div>
-                <p className="eyebrow">{evidence.caseStudy.eyebrow}</p>
-                <h2>{evidence.caseStudy.title}</h2>
-                <p>{evidence.caseStudy.summary}</p>
-              </div>
-              <Link href={localizePath("/built-with-skills", locale) as Route}>
-                {evidence.caseStudy.viewCases} →
-              </Link>
-            </div>
-
-            <div className="home-proof-v2__case">
-              <ol className="home-transformation-rail" aria-label={evidence.caseStudy.title}>
-                {evidence.caseStudy.stages.map((stage) => (
-                  <li key={stage.id} data-case-stage={stage.id}>
-                    <span>{stage.eyebrow}</span>
-                    <h3>{stage.title}</h3>
-                    <p>{stage.summary}</p>
-                  </li>
-                ))}
-              </ol>
-
-              <div className="home-proof-v2__visual" aria-hidden="true">
-                <figure className="home-proof-preview home-proof-preview--before">
-                  <figcaption>{evidence.caseStudy.beforeLabel}</figcaption>
-                  <div className="home-proof-preview__browser">
-                    <div className="home-proof-preview__bar"><i /><i /><i /></div>
-                    <div className="home-proof-preview__before-layout">
-                      <div><b /><span /><span /><span /><em /></div>
-                      <aside><span /><span /><span /></aside>
-                    </div>
-                  </div>
-                </figure>
-                <div className="home-proof-v2__transition" />
-                <figure className="home-proof-preview home-proof-preview--after">
-                  <figcaption>{evidence.caseStudy.afterLabel}</figcaption>
-                  <div className="home-proof-preview__browser">
-                    <div className="home-proof-preview__bar"><i /><i /><i /></div>
-                    <div className="home-proof-preview__after-layout">
-                      <div className="home-proof-preview__veil" />
-                      <div className="home-proof-preview__manifesto"><b /><strong /><strong /><span /></div>
-                      <aside><span /><span /><span /><em /></aside>
-                    </div>
-                  </div>
-                </figure>
-              </div>
-            </div>
-          </div>
-        </section>
+        <HomeCaseStudyStory
+          eyebrow={evidence.caseStudy.eyebrow}
+          title={evidence.caseStudy.title}
+          summary={evidence.caseStudy.summary}
+          stages={evidence.caseStudy.stages}
+          evidenceLinks={caseEvidenceLinks}
+        />
       </section>
 
       <section aria-label={evidence.acts[1].label} data-home-act="methods-systems">
