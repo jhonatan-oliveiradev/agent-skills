@@ -57,6 +57,7 @@ export default async function HomePage({ params }: HomePageProps) {
       displayName: skill.displayName,
       discipline: method.discipline,
       category: skill.category,
+      outcome: skill.primaryBenefit,
       href: `/${locale}/skills/${method.slug}` as Route,
     };
   });
@@ -66,8 +67,10 @@ export default async function HomePage({ params }: HomePageProps) {
     name: pack.name,
     summary: pack.summary,
     version: pack.version,
+    status: pack.status,
     skillCount: pack.skills.length,
     outcomes: pack.outcomes,
+    representativeSkills: pack.skills.map((skill) => skill.displayName),
     href: `/${locale}/packs/${pack.slug}` as Route,
   }));
 
