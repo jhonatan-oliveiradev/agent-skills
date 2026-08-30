@@ -1,5 +1,6 @@
 import { render, screen } from "@testing-library/react";
 import { afterEach, describe, expect, it, vi } from "vitest";
+import { motionValue } from "motion/react";
 
 const motionState = vi.hoisted(() => ({ reduced: false }));
 
@@ -16,6 +17,7 @@ vi.mock("motion/react", async (importOriginal) => {
 
 import HomePage from "@/app/[locale]/page";
 import { HomeCaseStudyStory } from "./home-case-study-story";
+import { HomeEvidenceThread } from "./home-evidence-thread";
 
 const caseStudyProps = {
   eyebrow: "Built with Skills / Case 001",
@@ -62,5 +64,15 @@ describe("Living Research Archive Home", () => {
     expect(container.querySelector('[data-case-mode="linear"]')).toBeInTheDocument();
     expect(container.querySelector('[data-case-sticky="true"]')).not.toBeInTheDocument();
     expect(container.querySelectorAll("[data-case-stage]")).toHaveLength(4);
+  });
+
+  it("renders the Evidence Thread as decorative SVG geometry without a canvas", () => {
+    const { container } = render(<HomeEvidenceThread progress={motionValue(0.5)} mode="case" />);
+    const thread = screen.getByTestId("evidence-thread");
+
+    expect(thread).toHaveAttribute("aria-hidden", "true");
+    expect(thread.querySelector("svg")).toBeInTheDocument();
+    expect(thread.querySelector("canvas")).not.toBeInTheDocument();
+    expect(container.querySelectorAll("canvas")).toHaveLength(0);
   });
 });
