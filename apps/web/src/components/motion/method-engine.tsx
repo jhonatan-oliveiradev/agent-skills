@@ -39,7 +39,7 @@ export function MethodEngine({ copy, metrics }: MethodEngineProps) {
       <span aria-hidden="true" className="absolute bottom-0 left-0 size-3 border-b border-l border-accent" />
       <span aria-hidden="true" className="absolute bottom-0 right-0 size-3 border-b border-r border-accent" />
 
-      <div className="relative border-b border-line px-5 py-4 sm:px-6">
+      <div className="relative border-b border-line px-5 py-4 sm:px-7 sm:py-5 xl:px-8">
         <div className="flex flex-wrap items-center justify-between gap-3 font-mono text-[0.62rem] uppercase tracking-[0.14em]">
           <span className="text-accent">AS / METHOD 01</span>
           <span className="flex items-center gap-2 text-muted"><span aria-hidden="true" className="size-1.5 rounded-full bg-success shadow-[0_0_1rem_var(--editorial-success)]" />{copy.label}</span>
@@ -49,13 +49,13 @@ export function MethodEngine({ copy, metrics }: MethodEngineProps) {
         </ul>
       </div>
 
-      <div className="relative p-5 sm:p-6">
-        <motion.div initial={initial} animate={{ opacity: 1, y: 0 }} transition={transition(0.1)} className="border-l-2 border-accent bg-canvas/70 px-4 py-3">
+      <div className="relative p-5 sm:p-7 xl:p-8">
+        <motion.div initial={initial} animate={{ opacity: 1, y: 0 }} transition={transition(0.1)} className="border-l-2 border-accent bg-canvas/75 px-4 py-4 sm:px-5">
           <p className="m-0 font-mono text-[0.6rem] uppercase tracking-[0.14em] text-muted">01 / {copy.promptLabel}</p>
-          <p className="mt-2 max-w-[38ch] text-sm leading-relaxed text-foreground">“{copy.prompt}”</p>
+          <p className="mt-3 max-w-[48ch] text-[clamp(0.9rem,1.2vw,1.05rem)] leading-relaxed text-foreground">“{copy.prompt}”</p>
         </motion.div>
 
-        <div className="relative my-6 grid grid-cols-3 gap-2">
+        <div className="relative my-7 grid grid-cols-3 gap-3 sm:my-8">
           <div aria-hidden="true" className="absolute left-[16.66%] right-[16.66%] top-3.5 h-px bg-line" />
           <motion.div aria-hidden="true" initial={reducedMotion ? false : { scaleX: 0 }} animate={{ scaleX: 1 }} transition={transition(0.28)} className="absolute left-[16.66%] right-[16.66%] top-3.5 h-px origin-left bg-accent" />
           {copy.stages.map((stage, index) => (
@@ -68,15 +68,15 @@ export function MethodEngine({ copy, metrics }: MethodEngineProps) {
 
         <div className="space-y-2">
           {skills.map((skill, index) => (
-            <motion.div key={skill} initial={initial} animate={{ opacity: 1, y: 0 }} transition={transition(0.42 + index * 0.1)} className="group flex items-center gap-3 border-y border-line/70 bg-canvas/45 px-3 py-2.5 transition-[border-color,transform] duration-300 ease-editorial hover:translate-x-1 hover:border-accent">
+            <motion.div key={skill} initial={initial} animate={{ opacity: 1, y: 0 }} transition={transition(0.42 + index * 0.1)} className="group flex items-center gap-3 border-y border-line/70 bg-canvas/55 px-4 py-3 transition-[border-color,transform] duration-300 ease-editorial hover:translate-x-1 hover:border-accent">
               <span className="font-mono text-[0.58rem] text-accent">0{index + 1}</span>
-              <span className="min-w-0 truncate font-mono text-[0.66rem] text-foreground">{skill}</span>
+              <span className="min-w-0 font-mono text-[0.68rem] leading-relaxed text-foreground sm:text-[0.72rem]">{skill}</span>
               <span aria-hidden="true" className="ml-auto h-px w-6 bg-line transition-[width,background-color] duration-300 group-hover:w-10 group-hover:bg-accent" />
             </motion.div>
           ))}
         </div>
 
-        <motion.div initial={initial} animate={{ opacity: 1, y: 0 }} transition={transition(0.78)} className="mt-5 border border-accent bg-[color-mix(in_srgb,var(--editorial-accent)_9%,var(--editorial-surface))] p-4">
+        <motion.div initial={initial} animate={{ opacity: 1, y: 0 }} transition={transition(0.78)} className="mt-6 border border-accent bg-[color-mix(in_srgb,var(--editorial-accent)_9%,var(--editorial-surface))] p-4 sm:p-5">
           <p className="m-0 flex items-center gap-2 font-mono text-[0.6rem] uppercase tracking-[0.14em] text-accent"><span aria-hidden="true">✓</span> {copy.resultLabel}</p>
           <p className="mt-2 text-sm font-medium leading-relaxed text-foreground">{copy.result}</p>
         </motion.div>

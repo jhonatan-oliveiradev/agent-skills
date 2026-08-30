@@ -8,12 +8,38 @@ vi.mock("motion/react", async (importOriginal) => {
   return { ...actual, useReducedMotion: () => motionState.reduced };
 });
 
+import { EditorialHeroMotion } from "./editorial-hero-motion";
+import { DarkVeil } from "./dark-veil";
 import { MethodEngine } from "./method-engine";
 
 describe("editorial Home motion", () => {
   afterEach(() => {
     motionState.reduced = false;
     vi.restoreAllMocks();
+  });
+
+  it("gives the manifesto and method engine an expanded hero composition", () => {
+    const { container } = render(
+      <EditorialHeroMotion
+        eyebrow="Agent Skills Studio"
+        title="Skills are methods."
+        summary="Open workflows for capable agents."
+        engine={<div>Method Engine</div>}
+      />,
+    );
+
+    expect(container.querySelector('[data-layout="expanded"]')).toBeInTheDocument();
+    expect(screen.getByText("Method Engine")).toBeInTheDocument();
+  });
+
+  it("renders a static Dark Veil atmosphere without WebGL for reduced motion", () => {
+    motionState.reduced = true;
+
+    const { container } = render(<DarkVeil />);
+
+    const atmosphere = container.querySelector('[data-dark-veil="static"]');
+    expect(atmosphere).toBeInTheDocument();
+    expect(container.querySelector("canvas")).not.toBeInTheDocument();
   });
 
   it("shows the complete method when motion is disabled", () => {
