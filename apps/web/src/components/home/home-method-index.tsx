@@ -6,6 +6,7 @@ export type HomeMethodIndexItem = Readonly<{
   displayName: string;
   discipline: string;
   category: string;
+  outcome: string;
   href: Route;
 }>;
 
@@ -20,9 +21,9 @@ export type HomeMethodIndexProps = Readonly<{
 
 export function HomeMethodIndex({ eyebrow, title, summary, viewAllLabel, viewAllHref, methods }: HomeMethodIndexProps) {
   return (
-    <section className="home-methods-v2" data-home-section="methods">
+    <section className="home-methods-v2 home-methods-archive" data-home-section="methods">
       <div className="shell">
-        <div className="home-editorial-heading">
+        <div className="home-editorial-heading home-methods-archive__heading">
           <div>
             <p className="eyebrow">{eyebrow}</p>
             <h2>{title}</h2>
@@ -41,6 +42,7 @@ export function HomeMethodIndex({ eyebrow, title, summary, viewAllLabel, viewAll
                 <span className="home-method-index__name">
                   <strong>{method.displayName}</strong>
                   <small>{method.discipline}</small>
+                  <span className="home-method-index__outcome">{method.outcome}</span>
                 </span>
                 <span className="home-method-index__meta">{method.category}</span>
                 <svg aria-hidden="true" viewBox="0 0 24 24">
