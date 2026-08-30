@@ -1,0 +1,42 @@
+name: Patch Living Archive regression selector
+
+on:
+  push:
+    branches: [refactor/home-living-research-archive]
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    if: ${{ !contains(github.event.head_commit.message, '[living-archive-test-patch]') }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: refactor/home-living-research-archive
+      - name: Update Home dossier selector
+        shell: bash
+        run: |
+          node <<'NODE'
+          const fs = require('node:fs');
+          const path = 'apps/web/src/components/site-shell.test.tsx';
+          let source = fs.readFileSync(path, 'utf8');
+          source = source.replace(
+            'expect(container.querySelectorAll(".home-pack-rail article")).toHaveLength(3);',
+            'expect(container.querySelectorAll(".home-pack-dossier")).toHaveLength(3);',
+          );
+          fs.writeFileSync(path, source);
+          NODE
+      - name: Commit regression update
+        shell: bash
+        run: |
+          if git diff --quiet -- apps/web/src/components/site-shell.test.tsx; then
+            echo "Selector already current."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add apps/web/src/components/site-shell.test.tsx
+          git commit -m "test(web): follow Living Archive dossier markup [living-archive-test-patch]"
+          git push origin HEAD:refactor/home-living-research-archive
