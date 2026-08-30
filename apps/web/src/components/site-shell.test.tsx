@@ -184,7 +184,7 @@ describe("definitive home", () => {
     expect(container.querySelector("canvas")).not.toBeInTheDocument();
     expect(screen.getByRole("heading", { name: startingPoint })).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: proof })).toBeInTheDocument();
-    expect(container.querySelectorAll(".home-pack-rail article")).toHaveLength(3);
+    expect(container.querySelectorAll(".home-pack-dossier")).toHaveLength(3);
     expect(container.querySelectorAll(".home-method-index li")).toHaveLength(3);
     expect(container.querySelectorAll(".home-workflow-rail li")).toHaveLength(4);
     expect(screen.getByRole("link", { name: locale === "en" ? "Explore the collection" : "Explorar a coleção" })).toHaveAttribute(
