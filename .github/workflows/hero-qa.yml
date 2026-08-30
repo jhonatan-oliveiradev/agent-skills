@@ -1,0 +1,77 @@
+name: Hero visual QA
+
+on:
+  push:
+    branches: [ci/hero-dark-veil-green]
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: npm test
+      - run: npm run validate
+      - run: npm ci --prefix apps/web
+      - run: npm run web:test
+      - run: npm run web:typecheck
+      - run: npm run web:lint
+      - run: npm run web:build
+        env:
+          NEXT_PUBLIC_SITE_URL: https://skills.jhonatanoliveira.com
+      - name: Capture hero QA screenshots
+        shell: bash
+        run: |
+          cd apps/web
+          npm install --no-save --package-lock=false playwright@1.55.0
+          npx playwright install chromium
+          npm start > /tmp/agent-skills-next.log 2>&1 &
+          server_pid=$!
+          trap 'kill $server_pid || true' EXIT
+          ready=0
+          for _ in {1..30}; do
+            if curl -fsSL http://127.0.0.1:3000/pt-BR >/dev/null; then
+              ready=1
+              break
+            fi
+            sleep 1
+          done
+          if [ "$ready" -ne 1 ]; then
+            cat /tmp/agent-skills-next.log
+            exit 1
+          fi
+          mkdir -p hero-qa
+          node --input-type=module <<'NODE'
+          import { chromium } from 'playwright';
+
+          const browser = await chromium.launch({ headless: true, args: ['--use-angle=swiftshader'] });
+          const viewports = [
+            { name: 'mobile-390', width: 390, height: 844 },
+            { name: 'desktop-1440', width: 1440, height: 1000 },
+            { name: 'desktop-1920', width: 1920, height: 1080 },
+          ];
+
+          for (const viewport of viewports) {
+            const context = await browser.newContext({
+              viewport: { width: viewport.width, height: viewport.height },
+              colorScheme: 'dark',
+              reducedMotion: 'no-preference',
+              deviceScaleFactor: 1,
+            });
+            await context.addInitScript(() => localStorage.setItem('theme', 'dark'));
+            const page = await context.newPage();
+            await page.goto('http://127.0.0.1:3000/pt-BR', { waitUntil: 'networkidle' });
+            await page.waitForTimeout(1800);
+            await page.screenshot({ path: `hero-qa/${viewport.name}.png`, fullPage: false });
+            await context.close();
+          }
+
+          await browser.close();
+          NODE
+      - uses: actions/upload-artifact@v4
+        with:
+          name: hero-dark-veil-qa-fixed
+          path: apps/web/hero-qa/*.png
+          if-no-files-found: error
