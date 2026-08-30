@@ -171,8 +171,8 @@ describe("localized layout", () => {
 
 describe("definitive home", () => {
   it.each([
-    ["en", "Skills are not prompts. They are working methods.", "18 skills", "6 packs", "2 locales", "Choose the right starting point", "Proof, not promises."],
-    ["pt-BR", "Skills não são prompts. São métodos de trabalho.", "18 skills", "6 pacotes", "2 idiomas", "Escolha o ponto de partida", "Evidência, não promessas."],
+    ["en", "Skills are not prompts. They are working methods.", "18 skills", "6 packs", "2 locales", "This Home was built with Skills.", "Open the method. Inspect the evidence. Judge the result."],
+    ["pt-BR", "Skills não são prompts. São métodos de trabalho.", "18 skills", "6 pacotes", "2 idiomas", "Esta Home foi construída com Skills.", "Abra o método. Inspecione a evidência. Julgue o resultado."],
   ] as const)("renders the definitive catalog-backed home for %s", async (locale, title, skills, packs, locales, startingPoint, proof) => {
     const { container } = render(await HomePage({ params: Promise.resolve({ locale }) }));
 
@@ -184,8 +184,9 @@ describe("definitive home", () => {
     expect(container.querySelector("canvas")).not.toBeInTheDocument();
     expect(screen.getByRole("heading", { name: startingPoint })).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: proof })).toBeInTheDocument();
-    expect(container.querySelectorAll(".home-pack-card")).toHaveLength(3);
-    expect(container.querySelectorAll(".home-case-card")).toHaveLength(2);
+    expect(container.querySelectorAll(".home-pack-rail article")).toHaveLength(3);
+    expect(container.querySelectorAll(".home-method-index li")).toHaveLength(3);
+    expect(container.querySelectorAll(".home-workflow-rail li")).toHaveLength(4);
     expect(screen.getByRole("link", { name: locale === "en" ? "Explore the collection" : "Explorar a coleção" })).toHaveAttribute(
       "href",
       `/${locale}/skills`,
