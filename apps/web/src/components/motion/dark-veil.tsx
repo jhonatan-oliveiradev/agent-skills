@@ -11,64 +11,137 @@ const vertex = /* glsl */ `
   }
 `;
 
+// React Bits Dark Veil shader, adapted to the Studio theme/lifecycle.
 const fragment = /* glsl */ `
-  precision highp float;
+  #ifdef GL_ES
+  precision lowp float;
+  #endif
 
   uniform vec2 uResolution;
   uniform float uTime;
+  uniform float uHueShift;
+  uniform float uNoise;
+  uniform float uScan;
+  uniform float uScanFreq;
+  uniform float uWarp;
+  uniform float uLightMode;
 
-  float hash(vec2 p) {
-    return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453123);
+  #define iTime uTime
+  #define iResolution uResolution
+
+  vec4 buf[8];
+
+  float rand(vec2 c) {
+    return fract(sin(dot(c, vec2(12.9898, 78.233))) * 43758.5453);
   }
 
-  float noise(vec2 p) {
-    vec2 i = floor(p);
-    vec2 f = fract(p);
-    f = f * f * (3.0 - 2.0 * f);
-    return mix(mix(hash(i), hash(i + vec2(1.0, 0.0)), f.x),
-      mix(hash(i + vec2(0.0, 1.0)), hash(i + vec2(1.0)), f.x), f.y);
+  mat3 rgb2yiq = mat3(
+    0.299, 0.587, 0.114,
+    0.596, -0.274, -0.322,
+    0.211, -0.523, 0.312
+  );
+  mat3 yiq2rgb = mat3(
+    1.0, 0.956, 0.621,
+    1.0, -0.272, -0.647,
+    1.0, -1.106, 1.703
+  );
+
+  vec3 hueShiftRGB(vec3 col, float deg) {
+    vec3 yiq = rgb2yiq * col;
+    float rad = radians(deg);
+    float cosh = cos(rad);
+    float sinh = sin(rad);
+    vec3 yiqShift = vec3(
+      yiq.x,
+      yiq.y * cosh - yiq.z * sinh,
+      yiq.y * sinh + yiq.z * cosh
+    );
+    return clamp(yiq2rgb * yiqShift, 0.0, 1.0);
   }
 
-  float fbm(vec2 p) {
-    float value = 0.0;
-    float amplitude = 0.5;
-    for (int i = 0; i < 5; i++) {
-      value += amplitude * noise(p);
-      p = mat2(1.6, 1.2, -1.2, 1.6) * p;
-      amplitude *= 0.5;
-    }
-    return value;
+  vec4 sigmoid(vec4 x) {
+    return 1.0 / (1.0 + exp(-x));
+  }
+
+  vec4 cppn_fn(vec2 coordinate, float in0, float in1, float in2) {
+    buf[6] = vec4(coordinate.x, coordinate.y, 0.3948333106474662 + in0, 0.36 + in1);
+    buf[7] = vec4(0.14 + in2, sqrt(coordinate.x * coordinate.x + coordinate.y * coordinate.y), 0.0, 0.0);
+    buf[0] = mat4(vec4(6.5404263,-3.6126034,0.7590882,-1.13613),vec4(2.4582713,3.1660357,1.2219609,0.06276096),vec4(-5.478085,-6.159632,1.8701609,-4.7742867),vec4(6.039214,-5.542865,-0.90925294,3.251348))*buf[6]+mat4(vec4(0.8473259,-5.722911,3.975766,1.6522468),vec4(-0.24321538,0.5839259,-1.7661959,-5.350116),vec4(0.0,0.0,0.0,0.0),vec4(0.0,0.0,0.0,0.0))*buf[7]+vec4(0.21808943,1.1243913,-1.7969975,5.0294676);
+    buf[1] = mat4(vec4(-3.3522482,-6.0612736,0.55641043,-4.4719114),vec4(0.8631464,1.7432913,5.643898,1.6106541),vec4(2.4941394,-3.5012043,1.7184316,6.357333),vec4(3.310376,8.209261,1.1355612,-1.165539))*buf[6]+mat4(vec4(5.24046,-13.034365,0.009859298,15.870829),vec4(2.987511,3.129433,-0.89023495,-1.6822904),vec4(0.0,0.0,0.0,0.0),vec4(0.0,0.0,0.0,0.0))*buf[7]+vec4(-5.9457836,-6.573602,-0.8812491,1.5436668);
+    buf[0] = sigmoid(buf[0]);
+    buf[1] = sigmoid(buf[1]);
+    buf[2] = mat4(vec4(-15.219568,8.095543,-2.429353,-1.9381982),vec4(-5.951362,4.3115187,2.6393783,1.274315),vec4(-7.3145227,6.7297835,5.2473326,5.9411426),vec4(5.0796127,8.979051,-1.7278991,-1.158976))*buf[6]+mat4(vec4(-11.967154,-11.608155,6.1486754,11.237008),vec4(2.124141,-6.263192,-1.7050359,-0.7021966),vec4(0.0,0.0,0.0,0.0),vec4(0.0,0.0,0.0,0.0))*buf[7]+vec4(-4.17164,-3.2281182,-4.576417,-3.6401186);
+    buf[3] = mat4(vec4(3.1832156,-13.738922,1.879223,3.233465),vec4(0.64300746,12.768129,1.9141049,0.50990224),vec4(-0.049295485,4.4807224,1.4733979,1.801449),vec4(5.0039253,13.000481,3.3991797,-4.5561905))*buf[6]+mat4(vec4(-0.1285731,7.720628,-3.1425676,4.742367),vec4(0.6393625,3.714393,-0.8108378,-0.39174938),vec4(0.0,0.0,0.0,0.0),vec4(0.0,0.0,0.0,0.0))*buf[7]+vec4(-1.1811101,-21.621881,0.7851888,1.2329718);
+    buf[2] = sigmoid(buf[2]);
+    buf[3] = sigmoid(buf[3]);
+    buf[4] = mat4(vec4(5.214916,-7.183024,2.7228765,2.6592617),vec4(-5.601878,-25.3591,4.067988,0.4602802),vec4(-10.57759,24.286327,21.102104,37.546658),vec4(4.3024497,-1.9625226,2.3458803,-1.372816))*buf[0]+mat4(vec4(-17.6526,-10.507558,2.2587414,12.462782),vec4(6.265566,-502.75443,-12.642513,0.9112289),vec4(-10.983244,20.741234,-9.701768,-0.7635988),vec4(5.383626,1.4819539,-4.1911616,-4.8444734))*buf[1]+mat4(vec4(12.785233,-16.345072,-0.39901125,1.7955981),vec4(-30.48365,-1.8345358,1.4542528,-1.1118771),vec4(19.872723,-7.337935,-42.941723,-98.52709),vec4(8.337645,-2.7312303,-2.2927687,-36.142323))*buf[2]+mat4(vec4(-16.298317,3.5471997,-0.44300047,-9.444417),vec4(57.5077,-35.609753,16.163465,-4.1534753),vec4(-0.07470326,-3.8656476,-7.0901804,3.1523974),vec4(-12.559385,-7.077619,1.490437,-0.8211543))*buf[3]+vec4(-7.67914,15.927437,1.3207729,-1.6686112);
+    buf[5] = mat4(vec4(-1.4109162,-0.372762,-3.770383,-21.367174),vec4(-6.2103205,-9.35908,0.92529047,8.82561),vec4(11.460242,-22.348068,13.625772,-18.693201),vec4(-0.3429052,-3.9905605,-2.4626114,-0.45033523))*buf[0]+mat4(vec4(7.3481627,-4.3661838,-6.3037653,-3.868115),vec4(1.5462853,6.5488915,1.9701879,-0.58291394),vec4(6.5858274,-2.2180402,3.7127688,-1.3730392),vec4(-5.7973905,10.134961,-2.3395722,-5.965605))*buf[1]+mat4(vec4(-2.5132585,-6.6685553,-1.4029363,-0.16285264),vec4(-0.37908727,0.53738135,4.389061,-1.3024765),vec4(-0.70647055,2.0111287,-5.1659346,-3.728635),vec4(-13.562562,10.487719,-0.9173751,-2.6487076))*buf[2]+mat4(vec4(-8.645013,6.5546675,-6.3944063,-5.5933375),vec4(-0.57783127,-1.077275,36.91025,5.736769),vec4(14.283112,3.7146652,7.1452246,-4.5958776),vec4(2.7192075,3.6021907,-4.366337,-2.3653464))*buf[3]+vec4(-5.9000807,-4.329569,1.2427121,8.59503);
+    buf[4] = sigmoid(buf[4]);
+    buf[5] = sigmoid(buf[5]);
+    buf[6] = mat4(vec4(-1.61102,0.7970257,1.4675229,0.20917463),vec4(-28.793737,-7.1390953,1.5025433,4.656581),vec4(-10.94861,39.66238,0.74318546,-10.095605),vec4(-0.7229728,-1.5483948,0.7301322,2.1687684))*buf[0]+mat4(vec4(3.2547753,21.489103,-1.0194173,-3.3100595),vec4(-3.7316632,-3.3792162,-7.223193,-0.23685838),vec4(13.1804495,0.7916005,5.338587,5.687114),vec4(-4.167605,-17.798311,-6.815736,-1.6451967))*buf[1]+mat4(vec4(0.604885,-7.800309,-7.213122,-2.741014),vec4(-3.522382,-0.12359311,-0.5258442,0.43852118),vec4(9.6752825,-22.853785,2.062431,0.099892326),vec4(-4.3196306,-17.730087,2.5184598,5.30267))*buf[2]+mat4(vec4(-6.545563,-15.790176,-6.0438633,-5.415399),vec4(-43.591583,28.551912,-16.00161,18.84728),vec4(4.212382,8.394307,3.0958717,8.657522),vec4(-5.0237565,-4.450633,-4.4768,-5.5010443))*buf[3]+mat4(vec4(1.6985557,-67.05806,6.897715,1.9004834),vec4(1.8680354,2.3915145,2.5231109,4.081538),vec4(11.158006,1.7294737,2.0738268,7.386411),vec4(-4.256034,-306.24686,8.258898,-17.132736))*buf[4]+mat4(vec4(1.6889864,-4.5852966,3.8534803,-6.3482175),vec4(1.3543309,-1.2640043,9.932754,2.9079645),vec4(-5.2770967,0.07150358,-0.13962056,3.3269649),vec4(28.34703,-4.918278,6.1044083,4.085355))*buf[5]+vec4(6.6818056,12.522166,-3.7075126,-4.104386);
+    buf[7] = mat4(vec4(-8.265602,-4.7027016,5.098234,0.7509808),vec4(8.6507845,-17.15949,16.51939,-8.884479),vec4(-4.036479,-2.3946867,-2.6055532,-1.9866527),vec4(-2.2167742,-1.8135649,-5.9759874,4.8846445))*buf[0]+mat4(vec4(6.7790847,3.5076547,-2.8191125,-2.7028968),vec4(-5.743024,-0.27844876,1.4958696,-5.0517144),vec4(13.122226,15.735168,-2.9397483,-4.101023),vec4(-14.375265,-5.030483,-6.2599335,2.9848232))*buf[1]+mat4(vec4(4.0950394,-0.94011575,-5.674733,4.755022),vec4(4.3809423,4.8310084,1.7425908,-3.437416),vec4(2.117492,0.16342592,-104.56341,16.949184),vec4(-5.22543,-2.994248,3.8350096,-1.9364246))*buf[2]+mat4(vec4(-5.900337,1.7946124,-13.604192,-3.8060522),vec4(6.6583457,31.911177,25.164474,91.81147),vec4(11.840538,4.1503043,-0.7314397,6.768467),vec4(-6.3967767,4.034772,6.1714606,-0.32874924))*buf[3]+mat4(vec4(3.4992442,-196.91893,-8.923708,2.8142626),vec4(3.4806502,-3.1846354,5.1725626,5.1804223),vec4(-2.4009497,15.585794,1.2863957,2.0252278),vec4(-71.25271,-62.441242,-8.138444,0.50670296))*buf[4]+mat4(vec4(-12.291733,-11.176166,-7.3474145,4.390294),vec4(10.805477,5.6337385,-0.9385842,-4.7348723),vec4(-12.869276,-7.039391,5.3029537,7.5436664),vec4(1.4593618,8.91898,3.5101583,5.840625))*buf[5]+vec4(2.2415268,-6.705987,-0.98861027,-2.117676);
+    buf[6] = sigmoid(buf[6]);
+    buf[7] = sigmoid(buf[7]);
+    buf[0] = mat4(vec4(1.6794263,1.3817469,2.9625452,0.0),vec4(-1.8834411,-1.4806935,-3.5924516,0.0),vec4(-1.3279216,-1.0918057,-2.3124623,0.0),vec4(0.2662234,0.23235129,0.44178495,0.0))*buf[0]+mat4(vec4(-0.6299101,-0.5945583,-0.9125601,0.0),vec4(0.17828953,0.18300213,0.18182953,0.0),vec4(-2.96544,-2.5819945,-4.9001055,0.0),vec4(1.4195864,1.1868085,2.5176322,0.0))*buf[1]+mat4(vec4(-1.2584374,-1.0552157,-2.1688404,0.0),vec4(-0.7200217,-0.52666044,-1.438251,0.0),vec4(0.15345335,0.15196142,0.272854,0.0),vec4(0.945728,0.8861938,1.2766753,0.0))*buf[2]+mat4(vec4(-2.4218085,-1.968602,-4.35166,0.0),vec4(-22.683098,-18.0544,-41.954372,0.0),vec4(0.63792,0.5470648,1.1078634,0.0),vec4(-1.5489894,-1.3075932,-2.6444845,0.0))*buf[3]+mat4(vec4(-0.49252132,-0.39877754,-0.91366625,0.0),vec4(0.95609266,0.7923952,1.640221,0.0),vec4(0.30616966,0.15693925,0.8639857,0.0),vec4(1.1825981,0.94504964,2.176963,0.0))*buf[4]+mat4(vec4(0.35446745,0.3293795,0.59547555,0.0),vec4(-0.58784515,-0.48177817,-1.0614829,0.0),vec4(2.5271258,1.9991658,4.6846647,0.0),vec4(0.13042648,0.08864098,0.30187556,0.0))*buf[5]+mat4(vec4(-1.7718065,-1.4033192,-3.3355875,0.0),vec4(3.1664357,2.638297,5.378702,0.0),vec4(-3.1724713,-2.6107926,-5.549295,0.0),vec4(-2.851368,-2.249092,-5.3013067,0.0))*buf[6]+mat4(vec4(1.5203838,1.2212278,2.8404984,0.0),vec4(1.5210563,1.2651345,2.683903,0.0),vec4(2.9789467,2.4364579,5.2347264,0.0),vec4(2.2270417,1.8825914,3.8028636,0.0))*buf[7]+vec4(-1.5468478,-3.6171484,0.24762098,0.0);
+    buf[0] = sigmoid(buf[0]);
+    return vec4(buf[0].x, buf[0].y, buf[0].z, 1.0);
+  }
+
+  void mainImage(out vec4 fragColor, in vec2 fragCoord) {
+    vec2 uv = fragCoord / uResolution.xy * 2.0 - 1.0;
+    uv.x *= uResolution.x / uResolution.y;
+    uv.y *= -1.0;
+    uv += uWarp * vec2(
+      sin(uv.y * 6.283 + uTime * 0.5),
+      cos(uv.x * 6.283 + uTime * 0.5)
+    ) * 0.05;
+    fragColor = cppn_fn(
+      uv,
+      0.1 * sin(0.3 * uTime),
+      0.1 * sin(0.69 * uTime),
+      0.1 * sin(0.44 * uTime)
+    );
   }
 
   void main() {
-    vec2 uv = gl_FragCoord.xy / uResolution.xy;
-    vec2 p = uv * 2.0 - 1.0;
-    p.x *= uResolution.x / max(uResolution.y, 1.0);
+    vec4 col;
+    mainImage(col, gl_FragCoord.xy);
+    col.rgb = hueShiftRGB(col.rgb, uHueShift);
+    float scanlineValue = sin(gl_FragCoord.y * uScanFreq) * 0.5 + 0.5;
+    col.rgb *= 1.0 - (scanlineValue * scanlineValue) * uScan;
+    col.rgb += (rand(gl_FragCoord.xy + uTime) - 0.5) * uNoise;
 
-    float time = uTime * 0.11;
-    float field = fbm(vec2(p.x * 0.72 + time, p.y * 1.15 - time * 0.55));
-    float fold = sin((p.x + field * 1.8) * 2.1 - time * 2.0) * 0.5 + 0.5;
-    float veil = smoothstep(0.26, 0.95, field * 0.72 + fold * 0.52);
-    float focus = smoothstep(1.35, 0.08, length(p - vec2(0.38, 0.02)));
-    veil *= mix(0.28, 1.0, focus);
+    vec3 result = clamp(col.rgb, 0.0, 1.0);
+    if (uLightMode > 0.5) {
+      float energy = max(result.r, max(result.g, result.b));
+      vec3 hue = result / max(energy, 0.001);
+      float coverage = smoothstep(0.08, 0.82, energy);
+      vec3 ink = mix(hue * 0.32, hue * 0.78, smoothstep(0.0, 1.0, energy));
+      result = mix(vec3(1.0), ink, coverage * 0.82);
+    }
 
-    vec3 midnight = vec3(0.005, 0.012, 0.035);
-    vec3 blue = vec3(0.055, 0.16, 0.55);
-    vec3 violet = vec3(0.28, 0.11, 0.62);
-    vec3 color = mix(midnight, blue, veil * 0.72);
-    color = mix(color, violet, smoothstep(0.68, 1.0, veil) * 0.45);
-    color *= 0.72 + 0.28 * smoothstep(1.5, 0.15, length(p));
-
-    gl_FragColor = vec4(color, 1.0);
+    gl_FragColor = vec4(result, 1.0);
   }
 `;
+
+const VEIL_SPEED = 0.38;
+const VEIL_HUE_SHIFT = -10;
+const VEIL_NOISE = 0.018;
+const VEIL_SCAN = 0;
+const VEIL_SCAN_FREQUENCY = 0;
+const VEIL_WARP = 0.42;
+const VEIL_RESOLUTION_SCALE = 0.9;
+
+const atmosphereClassName =
+  "pointer-events-none absolute inset-0 overflow-hidden bg-[radial-gradient(ellipse_82%_78%_at_78%_48%,color-mix(in_srgb,var(--editorial-accent)_34%,transparent),transparent_72%),linear-gradient(120deg,var(--editorial-canvas)_8%,color-mix(in_srgb,var(--editorial-accent)_10%,var(--editorial-canvas))_56%,var(--editorial-canvas)_100%)] [mask-image:linear-gradient(90deg,transparent_0%,rgba(0,0,0,.34)_24%,#000_54%,#000_100%)]";
 
 function StaticVeil() {
   return (
     <div
       aria-hidden="true"
-      className="absolute inset-0 bg-[radial-gradient(ellipse_70%_65%_at_72%_48%,color-mix(in_srgb,var(--editorial-accent)_24%,transparent),transparent_72%),linear-gradient(135deg,color-mix(in_srgb,var(--editorial-accent)_7%,var(--editorial-canvas)),var(--editorial-canvas)_62%)]"
+      className={atmosphereClassName}
       data-dark-veil="static"
+      data-veil-profile="react-bits"
     />
   );
 }
@@ -87,7 +160,7 @@ export function DarkVeil() {
 
     let renderer: Renderer;
     try {
-      renderer = new Renderer({ alpha: false, dpr: Math.min(window.devicePixelRatio, 1.5) });
+      renderer = new Renderer({ alpha: false, dpr: Math.min(window.devicePixelRatio, 1.4) });
     } catch {
       host.dataset.darkVeil = "static";
       return;
@@ -95,7 +168,7 @@ export function DarkVeil() {
 
     const { gl } = renderer;
     const canvas = gl.canvas as HTMLCanvasElement;
-    canvas.className = "block size-full opacity-70 dark:opacity-85";
+    canvas.className = "block size-full opacity-80 saturate-[1.08] contrast-[1.06] dark:opacity-95";
     canvas.setAttribute("aria-hidden", "true");
     host.appendChild(canvas);
 
@@ -105,12 +178,25 @@ export function DarkVeil() {
       uniforms: {
         uTime: { value: 0 },
         uResolution: { value: new Vec2(1, 1) },
+        uHueShift: { value: VEIL_HUE_SHIFT },
+        uNoise: { value: VEIL_NOISE },
+        uScan: { value: VEIL_SCAN },
+        uScanFreq: { value: VEIL_SCAN_FREQUENCY },
+        uWarp: { value: VEIL_WARP },
+        uLightMode: { value: 0 },
       },
     });
     const mesh = new Mesh(gl, { geometry: new Triangle(gl), program });
+
+    const updateTheme = () => {
+      program.uniforms.uLightMode.value = document.documentElement.classList.contains("dark") ? 0 : 1;
+    };
     const resize = () => {
       const { width, height } = host.getBoundingClientRect();
-      renderer.setSize(Math.max(width, 1), Math.max(height, 1));
+      renderer.setSize(
+        Math.max(width * VEIL_RESOLUTION_SCALE, 1),
+        Math.max(height * VEIL_RESOLUTION_SCALE, 1),
+      );
       program.uniforms.uResolution.value.set(gl.canvas.width, gl.canvas.height);
     };
 
@@ -120,27 +206,32 @@ export function DarkVeil() {
     const startedAt = performance.now();
     const render = (now: number) => {
       if (visible && pageVisible) {
-        program.uniforms.uTime.value = (now - startedAt) / 1000;
+        program.uniforms.uTime.value = ((now - startedAt) / 1000) * VEIL_SPEED;
         renderer.render({ scene: mesh });
       }
       frame = requestAnimationFrame(render);
     };
-    const observer = new IntersectionObserver(([entry]) => {
+
+    const intersectionObserver = new IntersectionObserver(([entry]) => {
       visible = entry.isIntersecting;
     });
+    const themeObserver = new MutationObserver(updateTheme);
     const onVisibilityChange = () => {
       pageVisible = document.visibilityState !== "hidden";
     };
 
-    observer.observe(host);
+    intersectionObserver.observe(host);
+    themeObserver.observe(document.documentElement, { attributes: true, attributeFilter: ["class"] });
     window.addEventListener("resize", resize, { passive: true });
     document.addEventListener("visibilitychange", onVisibilityChange);
+    updateTheme();
     resize();
     frame = requestAnimationFrame(render);
 
     return () => {
       cancelAnimationFrame(frame);
-      observer.disconnect();
+      intersectionObserver.disconnect();
+      themeObserver.disconnect();
       window.removeEventListener("resize", resize);
       document.removeEventListener("visibilitychange", onVisibilityChange);
       canvas.remove();
@@ -156,8 +247,9 @@ export function DarkVeil() {
     <div
       ref={hostRef}
       aria-hidden="true"
-      className="absolute inset-0 overflow-hidden bg-[radial-gradient(ellipse_70%_65%_at_72%_48%,color-mix(in_srgb,var(--editorial-accent)_24%,transparent),transparent_72%),linear-gradient(135deg,color-mix(in_srgb,var(--editorial-accent)_7%,var(--editorial-canvas)),var(--editorial-canvas)_62%)]"
+      className={atmosphereClassName}
       data-dark-veil="active"
+      data-veil-profile="react-bits"
     />
   );
 }

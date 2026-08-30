@@ -18,7 +18,7 @@ describe("editorial Home motion", () => {
     vi.restoreAllMocks();
   });
 
-  it("gives the manifesto and method engine an expanded hero composition", () => {
+  it("gives the manifesto a dominant 7/5 desktop hero composition", () => {
     const { container } = render(
       <EditorialHeroMotion
         eyebrow="Agent Skills Studio"
@@ -28,17 +28,26 @@ describe("editorial Home motion", () => {
       />,
     );
 
-    expect(container.querySelector('[data-layout="expanded"]')).toBeInTheDocument();
+    expect(container.querySelector('[data-layout="manifesto-dominant"]')).toBeInTheDocument();
+
+    const copyRegion = container.querySelector('[data-hero-copy="true"]');
+    const engineRegion = container.querySelector('[data-hero-engine="true"]');
+    expect(copyRegion).toHaveClass("lg:col-span-7");
+    expect(engineRegion).toHaveClass("lg:col-span-5");
+
+    const title = screen.getByRole("heading", { level: 1 });
+    expect(title).toHaveClass("max-w-[15ch]");
     expect(screen.getByText("Method Engine")).toBeInTheDocument();
   });
 
-  it("renders a static Dark Veil atmosphere without WebGL for reduced motion", () => {
+  it("renders a static React Bits Dark Veil atmosphere without WebGL for reduced motion", () => {
     motionState.reduced = true;
 
     const { container } = render(<DarkVeil />);
 
     const atmosphere = container.querySelector('[data-dark-veil="static"]');
     expect(atmosphere).toBeInTheDocument();
+    expect(container.querySelector('[data-veil-profile="react-bits"]')).toBeInTheDocument();
     expect(container.querySelector("canvas")).not.toBeInTheDocument();
   });
 
