@@ -21,7 +21,7 @@ jobs:
       - run: npm run web:build
         env:
           NEXT_PUBLIC_SITE_URL: https://skills.jhonatanoliveira.com
-      - name: Capture hero QA screenshots
+      - name: Validate rendered hero and capture screenshots
         shell: bash
         run: |
           cd apps/web
@@ -45,6 +45,7 @@ jobs:
           mkdir -p hero-qa
           node --input-type=module <<'NODE'
           import { chromium } from 'playwright';
+          import assert from 'node:assert/strict';
 
           const browser = await chromium.launch({ headless: true, args: ['--use-angle=swiftshader'] });
           const viewports = [
@@ -62,16 +63,51 @@ jobs:
             });
             await context.addInitScript(() => localStorage.setItem('theme', 'dark'));
             const page = await context.newPage();
+            const errors = [];
+            page.on('console', (message) => {
+              if (message.type() === 'error') errors.push(`console: ${message.text()}`);
+            });
+            page.on('pageerror', (error) => errors.push(`pageerror: ${error.message}`));
+
             await page.goto('http://127.0.0.1:3000/pt-BR', { waitUntil: 'networkidle' });
             await page.waitForTimeout(1800);
+
+            assert.match(page.url(), /\/pt-BR\/?$/);
+            assert.ok((await page.title()).trim().length > 0, 'page title must not be empty');
+            assert.equal(await page.getByRole('heading', { level: 1 }).count(), 1);
+            assert.match(await page.getByRole('heading', { level: 1 }).innerText(), /Skills não são prompts\./);
+            assert.equal(await page.locator('nextjs-portal').count(), 0, 'framework error overlay present');
+            assert.deepEqual(errors, [], `runtime errors at ${viewport.name}:\n${errors.join('\n')}`);
+
             await page.screenshot({ path: `hero-qa/${viewport.name}.png`, fullPage: false });
             await context.close();
           }
+
+          const interactionContext = await browser.newContext({
+            viewport: { width: 1440, height: 1000 },
+            colorScheme: 'dark',
+            reducedMotion: 'no-preference',
+          });
+          await interactionContext.addInitScript(() => localStorage.setItem('theme', 'dark'));
+          const interactionPage = await interactionContext.newPage();
+          const interactionErrors = [];
+          interactionPage.on('console', (message) => {
+            if (message.type() === 'error') interactionErrors.push(`console: ${message.text()}`);
+          });
+          interactionPage.on('pageerror', (error) => interactionErrors.push(`pageerror: ${error.message}`));
+          await interactionPage.goto('http://127.0.0.1:3000/pt-BR', { waitUntil: 'networkidle' });
+          await Promise.all([
+            interactionPage.waitForURL(/\/pt-BR\/getting-started\/?$/),
+            interactionPage.getByRole('link', { name: 'Ver o método' }).click(),
+          ]);
+          assert.match(interactionPage.url(), /\/pt-BR\/getting-started\/?$/);
+          assert.deepEqual(interactionErrors, [], `runtime errors after CTA interaction:\n${interactionErrors.join('\n')}`);
+          await interactionContext.close();
 
           await browser.close();
           NODE
       - uses: actions/upload-artifact@v4
         with:
-          name: hero-dark-veil-qa-fixed
+          name: hero-dark-veil-qa-final
           path: apps/web/hero-qa/*.png
           if-no-files-found: error
