@@ -171,8 +171,8 @@ describe("localized layout", () => {
 
 describe("definitive home", () => {
   it.each([
-    ["en", "Composable skills for capable agents.", "18 skills", "6 packs", "2 locales", "Choose the right starting point", "Proof, not promises."],
-    ["pt-BR", "Habilidades combináveis para agentes capazes.", "18 skills", "6 pacotes", "2 idiomas", "Escolha o ponto de partida", "Evidência, não promessas."],
+    ["en", "Skills are not prompts. They are working methods.", "18 skills", "6 packs", "2 locales", "Choose the right starting point", "Proof, not promises."],
+    ["pt-BR", "Skills não são prompts. São métodos de trabalho.", "18 skills", "6 pacotes", "2 idiomas", "Escolha o ponto de partida", "Evidência, não promessas."],
   ] as const)("renders the definitive catalog-backed home for %s", async (locale, title, skills, packs, locales, startingPoint, proof) => {
     const { container } = render(await HomePage({ params: Promise.resolve({ locale }) }));
 
@@ -184,7 +184,7 @@ describe("definitive home", () => {
     expect(screen.getByRole("heading", { name: proof })).toBeInTheDocument();
     expect(container.querySelectorAll(".home-pack-card")).toHaveLength(3);
     expect(container.querySelectorAll(".home-case-card")).toHaveLength(2);
-    expect(screen.getByRole("link", { name: locale === "en" ? "Explore skills" : "Explorar skills" })).toHaveAttribute(
+    expect(screen.getByRole("link", { name: locale === "en" ? "Explore the collection" : "Explorar a coleção" })).toHaveAttribute(
       "href",
       `/${locale}/skills`,
     );

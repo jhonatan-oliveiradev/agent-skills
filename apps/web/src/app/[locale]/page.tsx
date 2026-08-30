@@ -1,11 +1,14 @@
 import type { Metadata, Route } from "next";
 import Link from "next/link";
 import type { CSSProperties } from "react";
+import { EditorialHeroMotion } from "@/components/motion/editorial-hero-motion";
+import { ScrollProgress } from "@/components/motion/scroll-progress";
 import { resolveLocale } from "@/components/foundation-route";
 import { getBuiltWithSkillsCases } from "@/lib/built-with-skills";
 import { getCatalog, getLocalizedPacks } from "@/lib/catalog";
 import { localizePath } from "@/lib/i18n";
 import { messages } from "@/lib/messages";
+import { homeManifesto } from "@/lib/home-content";
 
 type HomePageProps = Readonly<{ params: Promise<{ locale: string }> }>;
 
@@ -30,6 +33,7 @@ export async function generateMetadata({ params }: HomePageProps): Promise<Metad
 export default async function HomePage({ params }: HomePageProps) {
   const locale = await resolveLocale(params);
   const copy = messages[locale];
+  const manifesto = homeManifesto[locale];
   const catalog = getCatalog();
   const activePacks = getLocalizedPacks(locale).filter((pack) => pack.status === "active");
   const cases = getBuiltWithSkillsCases(locale);
@@ -47,28 +51,31 @@ export default async function HomePage({ params }: HomePageProps) {
 
   return (
     <>
-      <section className="hero-section">
-        <div className="shell hero-section__grid">
-          <div>
-            <p className="eyebrow">{copy.hero.eyebrow}</p>
-            <h1>{copy.hero.title}</h1>
-            <p className="hero-section__summary">{copy.hero.summary}</p>
-            <div className="hero-actions">
+      <ScrollProgress />
+      <section aria-labelledby="home-manifesto-title" className="relative">
+        <EditorialHeroMotion
+          eyebrow={manifesto.eyebrow}
+          summary={manifesto.summary}
+          title={<><span id="home-manifesto-title">{manifesto.titleLead}</span><br />{" "}{manifesto.titleClose}</>}
+          visualLabel={manifesto.visualLabel}
+        >
+          <div className="flex flex-wrap gap-3">
               <Link
                 className="button button--primary"
                 href={localizePath("/skills", locale) as Route}
               >
-                {copy.hero.primaryAction}
+                {manifesto.primaryAction}
               </Link>
               <Link
                 className="button button--secondary"
-                href={localizePath("/packs", locale) as Route}
+                href={localizePath(manifesto.secondaryHref, locale) as Route}
               >
-                {copy.hero.secondaryAction}
+                {manifesto.secondaryAction}
               </Link>
-            </div>
           </div>
-          <ul aria-label={copy.hero.summary} className="catalog-metrics">
+        </EditorialHeroMotion>
+        <div className="shell -mt-16 pb-10 relative z-20">
+          <ul aria-label={manifesto.summary} className="catalog-metrics max-w-sm ml-auto">
             {metrics.map(([count, label]) => (
               <li key={label}>{`${count} ${label}`}</li>
             ))}
