@@ -49,6 +49,14 @@ describe("Living Research Archive Home", () => {
     expect(screen.queryByRole("heading", { name: oldTransformationHeading })).not.toBeInTheDocument();
   });
 
+  it.each(["en", "pt-BR"] as const)("renders methods as an index and packs as editorial dossiers for %s", async (locale) => {
+    const { container } = render(await HomePage({ params: Promise.resolve({ locale }) }));
+
+    expect(container.querySelectorAll(".home-method-index > li")).toHaveLength(3);
+    expect(container.querySelectorAll(".home-pack-dossier")).toHaveLength(3);
+    expect(container.querySelectorAll(".home-pack-dossier__skills")).toHaveLength(3);
+  });
+
   it("renders Case 001 as a four-stage sticky story when motion is enabled", () => {
     const { container } = render(<HomeCaseStudyStory {...caseStudyProps} />);
 
