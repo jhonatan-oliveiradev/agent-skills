@@ -2,13 +2,13 @@
 
 import { useEffect, useRef, useState } from "react";
 import {
-  motion,
   useMotionValueEvent,
   useReducedMotion,
   useScroll,
   useSpring,
 } from "motion/react";
 import type { HomeCaseStage } from "@/lib/home-evidence-content";
+import { HomeEvidenceThread } from "./home-evidence-thread";
 
 export type HomeCaseEvidenceLink = Readonly<{
   label: string;
@@ -93,11 +93,16 @@ export function HomeCaseStudyStory({
         data-case-sticky={linearMode ? undefined : "true"}
       >
         <div className="shell home-case-story__stage-grid">
+          <HomeEvidenceThread
+            className="absolute inset-y-0 left-[48%] hidden w-[20%] opacity-55 md:block"
+            mode="case"
+            progress={progress}
+          />
+
           <div className="home-case-story__artifact-wrap" aria-hidden="true">
-            <motion.div
+            <div
               className="home-case-story__artifact"
               data-active-case-stage={activeStage?.id}
-              style={linearMode ? undefined : { "--case-progress": progress } as never}
             >
               <div className="home-case-story__browser-bar"><i /><i /><i /></div>
               <div className="home-case-story__artifact-grid">
@@ -117,7 +122,7 @@ export function HomeCaseStudyStory({
               </div>
               <div className="home-case-story__veil" />
               <div className="home-case-story__scanline" />
-            </motion.div>
+            </div>
           </div>
 
           <ol className="home-case-story__rail">
