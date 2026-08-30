@@ -36,12 +36,11 @@ Sequence:
 1. Existing manifesto hero remains visually recognizable.
 2. Dark Veil produces the visual origin of the violet system.
 3. A thin `Evidence Thread` exits the hero and introduces Case 001.
-4. Case 001 becomes a single long-form sticky transformation sequence:
+4. Case 001 becomes a single long-form sticky transformation sequence with four states:
    - Problem
    - Method
    - Transformation
-   - Result
-   - Evidence
+   - Result / Evidence
 5. The sequence ends with inspectable links to relevant skills, case records, and PR evidence.
 
 The existing separate `This Home was built with Skills` and `From problem to outcome` sections should be absorbed into this single narrative chapter.
@@ -137,7 +136,7 @@ Introduce the relevant skills and the process they enforce. The artifact begins 
 
 Typography, spacing, grid, and Dark Veil material reorganize. This is the most expressive transition but must remain smooth and legible.
 
-#### 04 — Evidence
+#### 04 — Result / Evidence
 
 Reveal the final current Home treatment. Surface proof links and QA facts. The thread resolves into an evidence marker and hands the visitor to Act II.
 
