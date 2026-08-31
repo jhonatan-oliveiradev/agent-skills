@@ -1,5 +1,11 @@
 import type { Locale } from "./locales";
 
+export interface CaseEvidence {
+  readonly type: "source" | "pull-request" | "commit" | "qa";
+  readonly label: string;
+  readonly href: string;
+}
+
 export interface BuiltWithSkillsCase {
   readonly slug: string;
   readonly date: string;
@@ -10,15 +16,30 @@ export interface BuiltWithSkillsCase {
   readonly skills: readonly string[];
   readonly decisions: readonly { readonly title: string; readonly summary: string }[];
   readonly results: readonly string[];
+  readonly evidence: readonly CaseEvidence[];
 }
+
+type CaseSourceEvidence = Readonly<{
+  type: CaseEvidence["type"];
+  href: string;
+  labels: Readonly<Record<Locale, string>>;
+}>;
 
 type CaseSource = Readonly<{
   slug: string;
   date: string;
   sourcePath: string;
   skills: readonly string[];
-  locales: Readonly<Record<Locale, Omit<BuiltWithSkillsCase, "slug" | "date" | "sourcePath" | "skills">>>;
+  evidence: readonly CaseSourceEvidence[];
+  locales: Readonly<
+    Record<
+      Locale,
+      Omit<BuiltWithSkillsCase, "slug" | "date" | "sourcePath" | "skills" | "evidence">
+    >
+  >;
 }>;
+
+const repositoryUrl = "https://github.com/jhonatan-oliveiradev/agent-skills";
 
 const sharedSkills = [
   "designing-ui-systems",
@@ -26,12 +47,26 @@ const sharedSkills = [
   "building-conversion-product-pages",
 ] as const;
 
+function sourceEvidence(sourcePath: string): readonly CaseSourceEvidence[] {
+  return [
+    {
+      type: "source",
+      href: `${repositoryUrl}/blob/main/${sourcePath}`,
+      labels: {
+        en: "Source record",
+        "pt-BR": "Registro-fonte",
+      },
+    },
+  ];
+}
+
 const cases = [
   {
     slug: "catalog-experience",
     date: "2026-08-28",
     sourcePath: "docs/built-with-skills/2026-08-28-catalog-experience.md",
     skills: sharedSkills,
+    evidence: sourceEvidence("docs/built-with-skills/2026-08-28-catalog-experience.md"),
     locales: {
       en: {
         title: "Catalog experience",
@@ -72,6 +107,7 @@ const cases = [
     date: "2026-08-28",
     sourcePath: "docs/built-with-skills/2026-08-28-pack-experience.md",
     skills: sharedSkills,
+    evidence: sourceEvidence("docs/built-with-skills/2026-08-28-pack-experience.md"),
     locales: {
       en: {
         title: "Pack experience",
@@ -115,6 +151,11 @@ export function getBuiltWithSkillsCases(locale: Locale): readonly BuiltWithSkill
     date: item.date,
     sourcePath: item.sourcePath,
     skills: item.skills,
+    evidence: item.evidence.map((entry) => ({
+      type: entry.type,
+      label: entry.labels[locale],
+      href: entry.href,
+    })),
     ...item.locales[locale],
   }));
 }
