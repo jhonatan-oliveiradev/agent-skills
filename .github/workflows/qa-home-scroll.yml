@@ -1,0 +1,232 @@
+name: QA Home Scroll Choreography
+
+on:
+  push:
+    branches: [fix/home-living-archive-scroll-choreography]
+
+jobs:
+  rendered-qa:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: npm ci --prefix apps/web
+      - run: npm run web:build
+        env:
+          NEXT_PUBLIC_SITE_URL: https://skills.jhonatanoliveira.com
+      - name: Install Playwright for temporary QA
+        working-directory: apps/web
+        run: |
+          npm install --no-save --package-lock=false playwright@1.55.0
+          npx playwright install --with-deps chromium
+      - name: Start production server
+        shell: bash
+        run: |
+          npm --prefix apps/web run start -- -p 3000 > /tmp/agent-skills.log 2>&1 &
+          echo $! > /tmp/agent-skills.pid
+          for i in {1..60}; do
+            if curl -fsS http://127.0.0.1:3000/pt-BR >/dev/null; then
+              exit 0
+            fi
+            sleep 1
+          done
+          cat /tmp/agent-skills.log
+          exit 1
+      - name: Validate scroll choreography and capture screenshots
+        working-directory: apps/web
+        run: |
+          cat > qa-home-scroll.mjs <<'NODE'
+          import assert from 'node:assert/strict';
+          import { mkdir, writeFile } from 'node:fs/promises';
+          import { chromium } from 'playwright';
+
+          const baseURL = 'http://127.0.0.1:3000';
+          const out = 'qa-home-scroll-output';
+          await mkdir(out, { recursive: true });
+          const report = { caseStages: [], consoleErrors: [], pageErrors: [], checks: [] };
+
+          function collectErrors(page, scope) {
+            page.on('console', (message) => {
+              if (message.type() === 'error') report.consoleErrors.push(`${scope}: ${message.text()}`);
+            });
+            page.on('pageerror', (error) => report.pageErrors.push(`${scope}: ${error.message}`));
+          }
+
+          async function setTheme(page, theme) {
+            await page.addInitScript((value) => localStorage.setItem('theme', value), theme);
+          }
+
+          async function waitForHome(page) {
+            await page.goto(`${baseURL}/pt-BR`, { waitUntil: 'networkidle' });
+            await page.waitForSelector('[data-home-section="case-study"]');
+            await page.waitForTimeout(900);
+          }
+
+          async function assertNoHorizontalOverflow(page, label) {
+            const overflow = await page.evaluate(() => ({
+              scrollWidth: document.documentElement.scrollWidth,
+              clientWidth: document.documentElement.clientWidth,
+            }));
+            assert.ok(overflow.scrollWidth <= overflow.clientWidth + 1, `${label}: horizontal overflow ${overflow.scrollWidth}/${overflow.clientWidth}`);
+            report.checks.push(`${label}: no horizontal overflow`);
+          }
+
+          const browser = await chromium.launch({ headless: true });
+
+          // Primary desktop dark-mode interaction QA.
+          const desktop = await browser.newContext({ viewport: { width: 1440, height: 900 }, reducedMotion: 'no-preference' });
+          const page = await desktop.newPage();
+          collectErrors(page, 'desktop');
+          await setTheme(page, 'dark');
+          await waitForHome(page);
+
+          assert.equal(await page.locator('[data-home-section="case-study"]').getAttribute('data-scroll-choreography'), 'scrubbed');
+          assert.equal(await page.locator('[data-home-section="methods"]').getAttribute('data-scroll-choreography'), 'staggered');
+          assert.equal(await page.locator('[data-home-section="packs"]').getAttribute('data-scroll-choreography'), 'staged');
+          assert.equal(await page.locator('[data-home-section="workflow"]').getAttribute('data-scroll-choreography'), 'scrubbed');
+          assert.equal(await page.locator('[data-case-artifact]').count(), 1);
+          await assertNoHorizontalOverflow(page, 'desktop initial');
+
+          const caseMetrics = await page.locator('[data-case-sticky="true"]').evaluate((element) => ({
+            top: element.getBoundingClientRect().top + window.scrollY,
+            height: window.innerHeight,
+          }));
+          const distance = Math.max(caseMetrics.height * 3.4, 2400);
+          const stageProgress = [0.06, 0.31, 0.57, 0.86];
+          const expectedStages = ['problem', 'method', 'transformation', 'evidence'];
+
+          for (let i = 0; i < stageProgress.length; i += 1) {
+            const progress = stageProgress[i];
+            const scrollY = Math.max(0, caseMetrics.top - 72 + distance * progress);
+            await page.evaluate((value) => window.scrollTo(0, value), scrollY);
+            await page.waitForTimeout(650);
+            const active = await page.locator('[data-case-stage][aria-current="step"]').getAttribute('data-case-stage');
+            report.caseStages.push({ progress, active, scrollY });
+            assert.equal(active, expectedStages[i], `case stage ${i + 1} should be ${expectedStages[i]}, got ${active}`);
+            await page.screenshot({ path: `${out}/case-${i + 1}-${expectedStages[i]}.png`, fullPage: false });
+          }
+
+          const threadOffset = await page.locator('[data-home-section="case-study"] [data-evidence-thread-progress="gsap"]').evaluate((element) => getComputedStyle(element).strokeDashoffset);
+          report.checks.push(`case thread final dashoffset: ${threadOffset}`);
+
+          for (const [selector, file] of [
+            ['[data-home-section="methods"]', 'methods.png'],
+            ['[data-home-section="packs"]', 'packs.png'],
+            ['[data-home-section="workflow"]', 'workflow.png'],
+          ]) {
+            await page.locator(selector).scrollIntoViewIfNeeded();
+            await page.waitForTimeout(900);
+            await page.screenshot({ path: `${out}/${file}`, fullPage: false });
+            await assertNoHorizontalOverflow(page, file);
+          }
+
+          const packTwo = page.locator('[data-pack-stage="02"]');
+          const packTwoBounds = await packTwo.evaluate((article) => {
+            const heading = article.querySelector('h3');
+            if (!heading) return null;
+            const a = article.getBoundingClientRect();
+            const h = heading.getBoundingClientRect();
+            return { articleLeft: a.left, articleRight: a.right, headingLeft: h.left, headingRight: h.right, headingWidth: h.width };
+          });
+          assert.ok(packTwoBounds, 'pack 02 heading bounds unavailable');
+          assert.ok(packTwoBounds.headingLeft >= packTwoBounds.articleLeft - 1, 'pack 02 heading clips left');
+          assert.ok(packTwoBounds.headingRight <= packTwoBounds.articleRight + 1, 'pack 02 heading clips right');
+          report.checks.push(`pack 02 heading fits: ${JSON.stringify(packTwoBounds)}`);
+
+          const ctaHref = await page.getByRole('link', { name: 'Explorar a coleção' }).getAttribute('href');
+          assert.equal(ctaHref, '/pt-BR/skills');
+          const navigationPage = await desktop.newPage();
+          await setTheme(navigationPage, 'dark');
+          await navigationPage.goto(`${baseURL}/pt-BR`, { waitUntil: 'domcontentloaded' });
+          await navigationPage.getByRole('link', { name: 'Explorar a coleção' }).click();
+          await navigationPage.waitForURL('**/pt-BR/skills');
+          report.checks.push('primary CTA navigates to /pt-BR/skills');
+          await navigationPage.close();
+
+          // Tablet keeps choreography but must remain composed.
+          const tablet = await browser.newContext({ viewport: { width: 768, height: 1024 }, reducedMotion: 'no-preference' });
+          const tabletPage = await tablet.newPage();
+          collectErrors(tabletPage, 'tablet');
+          await setTheme(tabletPage, 'dark');
+          await waitForHome(tabletPage);
+          assert.equal(await tabletPage.locator('[data-home-section="case-study"]').getAttribute('data-scroll-choreography'), 'scrubbed');
+          await assertNoHorizontalOverflow(tabletPage, 'tablet');
+          await tabletPage.locator('[data-home-section="packs"]').scrollIntoViewIfNeeded();
+          await tabletPage.waitForTimeout(700);
+          await tabletPage.screenshot({ path: `${out}/tablet-768.png`, fullPage: false });
+          await tablet.close();
+
+          // Wide desktop composition.
+          const wide = await browser.newContext({ viewport: { width: 1920, height: 1080 }, reducedMotion: 'no-preference' });
+          const widePage = await wide.newPage();
+          collectErrors(widePage, 'wide');
+          await setTheme(widePage, 'dark');
+          await waitForHome(widePage);
+          await assertNoHorizontalOverflow(widePage, 'wide');
+          await widePage.locator('[data-home-section="case-study"]').scrollIntoViewIfNeeded();
+          await widePage.waitForTimeout(700);
+          await widePage.screenshot({ path: `${out}/wide-1920.png`, fullPage: false });
+          await wide.close();
+
+          // Mobile: all complex choreography must become static/linear.
+          const mobile = await browser.newContext({ viewport: { width: 390, height: 844 }, reducedMotion: 'no-preference' });
+          const mobilePage = await mobile.newPage();
+          collectErrors(mobilePage, 'mobile');
+          await setTheme(mobilePage, 'dark');
+          await waitForHome(mobilePage);
+          assert.equal(await mobilePage.locator('[data-home-section="case-study"]').getAttribute('data-case-mode'), 'linear');
+          assert.equal(await mobilePage.locator('[data-home-section="case-study"]').getAttribute('data-scroll-choreography'), 'static');
+          assert.equal(await mobilePage.locator('[data-home-section="methods"]').getAttribute('data-scroll-choreography'), 'static');
+          assert.equal(await mobilePage.locator('[data-home-section="packs"]').getAttribute('data-scroll-choreography'), 'static');
+          assert.equal(await mobilePage.locator('[data-home-section="workflow"]').getAttribute('data-scroll-choreography'), 'static');
+          await assertNoHorizontalOverflow(mobilePage, 'mobile');
+          await mobilePage.locator('[data-home-section="packs"]').scrollIntoViewIfNeeded();
+          await mobilePage.screenshot({ path: `${out}/mobile-390.png`, fullPage: false });
+          await mobile.close();
+
+          // Desktop reduced motion: readable normal flow, no pin choreography.
+          const reduced = await browser.newContext({ viewport: { width: 1440, height: 900 }, reducedMotion: 'reduce' });
+          const reducedPage = await reduced.newPage();
+          collectErrors(reducedPage, 'reduced');
+          await setTheme(reducedPage, 'dark');
+          await waitForHome(reducedPage);
+          assert.equal(await reducedPage.locator('[data-home-section="case-study"]').getAttribute('data-scroll-choreography'), 'static');
+          assert.equal(await reducedPage.locator('[data-home-section="methods"]').getAttribute('data-scroll-choreography'), 'static');
+          assert.equal(await reducedPage.locator('[data-home-section="packs"]').getAttribute('data-scroll-choreography'), 'static');
+          assert.equal(await reducedPage.locator('[data-home-section="workflow"]').getAttribute('data-scroll-choreography'), 'static');
+          assert.equal(await reducedPage.locator('[data-case-sticky="true"]').count(), 0);
+          await assertNoHorizontalOverflow(reducedPage, 'reduced motion');
+          await reducedPage.locator('[data-home-section="case-study"]').scrollIntoViewIfNeeded();
+          await reducedPage.screenshot({ path: `${out}/reduced-motion.png`, fullPage: false });
+          await reduced.close();
+
+          // Light mode sanity check at desktop.
+          const light = await browser.newContext({ viewport: { width: 1440, height: 900 }, reducedMotion: 'no-preference' });
+          const lightPage = await light.newPage();
+          collectErrors(lightPage, 'light');
+          await setTheme(lightPage, 'light');
+          await waitForHome(lightPage);
+          await assertNoHorizontalOverflow(lightPage, 'light');
+          await lightPage.locator('[data-home-section="methods"]').scrollIntoViewIfNeeded();
+          await lightPage.waitForTimeout(600);
+          await lightPage.screenshot({ path: `${out}/light-desktop.png`, fullPage: false });
+          await light.close();
+
+          await desktop.close();
+          await browser.close();
+
+          // React Bits / WebGL may warn but should not emit runtime errors.
+          assert.deepEqual(report.pageErrors, [], `page errors: ${report.pageErrors.join('\n')}`);
+          assert.deepEqual(report.consoleErrors, [], `console errors: ${report.consoleErrors.join('\n')}`);
+          await writeFile(`${out}/report.json`, JSON.stringify(report, null, 2));
+          console.log(JSON.stringify(report, null, 2));
+          NODE
+          node qa-home-scroll.mjs
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: home-scroll-rendered-qa
+          path: apps/web/qa-home-scroll-output
+          if-no-files-found: warn
