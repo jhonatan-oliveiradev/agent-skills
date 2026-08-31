@@ -2,8 +2,10 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { EvidenceReport } from "@/components/evidence/evidence-report";
 import { getBuiltWithSkillsCaseBySlug, getBuiltWithSkillsSlugs } from "@/lib/built-with-skills";
-import { getLocalizedSkillBySlug, getSupportedLocales } from "@/lib/catalog";
+import { getLocalizedPacks, getLocalizedSkillBySlug, getSupportedLocales } from "@/lib/catalog";
+import { getRelatedPacksForCase } from "@/lib/cross-domain-relations";
 import { editorialEvidenceCopy } from "@/lib/editorial-evidence-copy";
+import { editorialRelationsCopy } from "@/lib/editorial-relations-copy";
 import { isLocale } from "@/lib/i18n";
 import { messages } from "@/lib/messages";
 
@@ -52,14 +54,17 @@ export default async function BuiltWithSkillsDetailPage({ params }: PageProps) {
   if (!item) notFound();
 
   const skills = item.skills.map((skillSlug) => getLocalizedSkillBySlug(locale, skillSlug)!);
+  const relatedSystems = getRelatedPacksForCase(getLocalizedPacks(locale), item);
 
   return (
     <EvidenceReport
       item={item}
       skills={skills}
+      relatedSystems={relatedSystems}
       locale={locale}
       copy={messages[locale].builtWithSkills}
       editorialCopy={editorialEvidenceCopy[locale]}
+      relationsCopy={editorialRelationsCopy[locale]}
     />
   );
 }
