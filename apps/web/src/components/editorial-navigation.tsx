@@ -197,7 +197,7 @@ export function EditorialNavigation({
                         <span>{activeLink.kicker}</span>
                         <p>{activeLink.summary}</p>
                         <span className="primary-navigation__context-index" aria-hidden="true">
-                          {String(activeIndex + 1).padStart(2, "0")}
+                          {String(activeIndex + 1).padStart(2, "0")} / {String(links.length).padStart(2, "0")}
                         </span>
                       </motion.div>
                     </AnimatePresence>
