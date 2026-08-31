@@ -142,6 +142,7 @@ export function PackBlueprint(props: Readonly<PackBlueprintProps>) {
                     key={relation.case.slug}
                   >
                     <Link
+                      aria-label={relation.case.title}
                       data-interaction="connect"
                       href={`/${locale}/built-with-skills/${relation.case.slug}` as Route}
                     >
