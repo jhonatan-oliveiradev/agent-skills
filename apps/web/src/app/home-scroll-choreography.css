@@ -155,6 +155,11 @@
 }
 
 @media (max-width: 767px) {
+  .home-case-story[data-scroll-choreography="static"] .home-case-story__stage {
+    overflow-x: clip;
+    overflow-y: visible;
+  }
+
   .home-case-story[data-scroll-choreography="static"] .home-case-story__stage-grid {
     min-height: auto;
   }
