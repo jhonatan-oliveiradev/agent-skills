@@ -179,6 +179,9 @@ export function EditorialNavigation({
                           <span className="sr-only">{link.label}</span>
                           <TextRoll>{link.label}</TextRoll>
                         </Link>
+                        <p className="primary-navigation__mobile-context" data-mobile-context="inline">
+                          {link.summary}
+                        </p>
                       </motion.li>
                     ))}
                   </ol>
