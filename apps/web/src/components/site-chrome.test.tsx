@@ -28,8 +28,8 @@ describe("editorial site chrome", () => {
 
   it.each([
     ["en", "Open navigation", "Built with skills", "Real product work, decisions, and evidence created with the collection.", "Roadmap", "Status follows evidence, from proposal to stable."],
-    ["pt-BR", "Abrir navegação", "Feito com Skills", "Trabalho real, decisões e evidências criadas com a coleção.", "Roteiro", "O status segue evidências, da proposta ao estável."],
-  ] as const)("turns the %s header into a contextual studio index", (locale, openLabel, proofLabel, proofContext, roadmapLabel, roadmapContext) => {
+    ["pt-BR", "Abrir navegação", "Feito com habilidades", "Trabalho real, decisões e evidências criadas com a coleção.", "Roteiro", "O status segue evidências, da proposta ao estável."],
+  ] as const)("turns the %s header into a contextual studio index", async (locale, openLabel, proofLabel, proofContext, roadmapLabel, roadmapContext) => {
     const { container } = renderHeader(locale);
 
     expect(container.querySelector('[data-site-chrome="publication-bar"]')).toBeInTheDocument();
@@ -44,11 +44,11 @@ describe("editorial site chrome", () => {
 
     const proofLink = within(dialog).getByRole("link", { name: proofLabel });
     fireEvent.mouseEnter(proofLink);
-    expect(within(dialog).getByText(proofContext)).toBeInTheDocument();
+    expect(await within(dialog).findByText(proofContext)).toBeInTheDocument();
 
     const roadmapLink = within(dialog).getByRole("link", { name: roadmapLabel });
     fireEvent.focus(roadmapLink);
-    expect(within(dialog).getByText(roadmapContext)).toBeInTheDocument();
+    expect(await within(dialog).findByText(roadmapContext)).toBeInTheDocument();
   });
 
   it.each([
@@ -57,14 +57,17 @@ describe("editorial site chrome", () => {
   ] as const)("turns the %s footer into end matter and a colophon", (locale, manifesto, explore, project, source) => {
     const { container } = render(<SiteFooter locale={locale} />);
 
-    const footer = container.querySelector('[data-footer-mode="end-matter"]');
+    const footer = container.querySelector<HTMLElement>('[data-footer-mode="end-matter"]');
     expect(footer).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: manifesto })).toBeInTheDocument();
     expect(screen.getByText(explore)).toBeInTheDocument();
     expect(screen.getByText(project)).toBeInTheDocument();
     expect(screen.getByText(source)).toBeInTheDocument();
     expect(screen.getByText("AGENT SKILLS STUDIO")).toBeInTheDocument();
-    expect(screen.getByText(/18 skills/i)).toBeInTheDocument();
-    expect(screen.getByText(/6 packs|6 pacotes/i)).toBeInTheDocument();
+
+    const collection = footer?.querySelector<HTMLElement>(".site-footer__collection");
+    expect(collection).toBeInTheDocument();
+    expect(within(collection!).getByText(/18 skills/i)).toBeInTheDocument();
+    expect(within(collection!).getByText(/6 packs|6 pacotes/i)).toBeInTheDocument();
   });
 });
