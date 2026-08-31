@@ -6,9 +6,9 @@ import { motion, useReducedMotion, type MotionValue } from "motion/react";
 export type EvidenceThreadMode = "case" | "workflow" | "ledger";
 
 export type HomeEvidenceThreadProps = Readonly<{
-  progress: MotionValue<number>;
   mode: EvidenceThreadMode;
   className?: string;
+  progress?: MotionValue<number>;
 }>;
 
 const pathForMode: Record<EvidenceThreadMode, string> = {
@@ -19,6 +19,7 @@ const pathForMode: Record<EvidenceThreadMode, string> = {
 
 export function HomeEvidenceThread({ progress, mode, className }: HomeEvidenceThreadProps) {
   const reducedMotion = useReducedMotion();
+  const path = pathForMode[mode];
 
   return (
     <div
@@ -34,22 +35,38 @@ export function HomeEvidenceThread({ progress, mode, className }: HomeEvidenceTh
         viewBox="0 0 100 100"
       >
         <path
-          d={pathForMode[mode]}
+          d={path}
           fill="none"
           opacity="0.14"
           stroke="currentColor"
           strokeWidth="0.8"
           vectorEffect="non-scaling-stroke"
         />
-        <motion.path
-          d={pathForMode[mode]}
-          fill="none"
-          pathLength={reducedMotion ? 1 : progress}
-          stroke="currentColor"
-          strokeLinecap="square"
-          strokeWidth="1.35"
-          vectorEffect="non-scaling-stroke"
-        />
+        {progress ? (
+          <motion.path
+            d={path}
+            data-evidence-thread-progress="motion"
+            fill="none"
+            pathLength={reducedMotion ? 1 : progress}
+            stroke="currentColor"
+            strokeLinecap="square"
+            strokeWidth="1.35"
+            vectorEffect="non-scaling-stroke"
+          />
+        ) : (
+          <path
+            d={path}
+            data-evidence-thread-progress="gsap"
+            fill="none"
+            pathLength={1}
+            stroke="currentColor"
+            strokeDasharray="1"
+            strokeDashoffset={reducedMotion ? 0 : 1}
+            strokeLinecap="square"
+            strokeWidth="1.35"
+            vectorEffect="non-scaling-stroke"
+          />
+        )}
       </svg>
     </div>
   );

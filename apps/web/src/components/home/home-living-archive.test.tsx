@@ -49,20 +49,40 @@ describe("Living Research Archive Home", () => {
     expect(screen.queryByRole("heading", { name: oldTransformationHeading })).not.toBeInTheDocument();
   });
 
-  it.each(["en", "pt-BR"] as const)("renders methods as an index and packs as editorial dossiers for %s", async (locale) => {
+  it.each(["en", "pt-BR"] as const)("renders methods and packs as scroll-reactive editorial systems for %s", async (locale) => {
     const { container } = render(await HomePage({ params: Promise.resolve({ locale }) }));
 
-    expect(container.querySelectorAll(".home-method-index > li")).toHaveLength(3);
+    const methods = container.querySelector('[data-home-section="methods"]');
+    const packs = container.querySelector('[data-home-section="packs"]');
+
+    expect(methods).toHaveAttribute("data-scroll-choreography", "staggered");
+    expect(packs).toHaveAttribute("data-scroll-choreography", "staged");
+    expect(container.querySelectorAll("[data-method-stage]")).toHaveLength(3);
     expect(container.querySelectorAll(".home-pack-dossier")).toHaveLength(3);
+    expect(container.querySelectorAll("[data-pack-stage]")).toHaveLength(3);
     expect(container.querySelectorAll(".home-pack-dossier__skills")).toHaveLength(3);
   });
 
-  it("renders Case 001 as a four-stage sticky story when motion is enabled", () => {
+  it("connects the four workflow movements with a scrubbed Evidence Thread", async () => {
+    const { container } = render(await HomePage({ params: Promise.resolve({ locale: "en" }) }));
+    const workflow = container.querySelector('[data-home-section="workflow"]');
+
+    expect(workflow).toHaveAttribute("data-scroll-choreography", "scrubbed");
+    expect(container.querySelectorAll("[data-workflow-stage]")).toHaveLength(4);
+    expect(workflow?.querySelector('[data-evidence-thread-mode="workflow"]')).toBeInTheDocument();
+    expect(workflow?.querySelector("canvas")).not.toBeInTheDocument();
+  });
+
+  it("renders Case 001 as one scrubbed four-checkpoint scene when motion is enabled", () => {
     const { container } = render(<HomeCaseStudyStory {...caseStudyProps} />);
 
-    expect(container.querySelector('[data-case-mode="sticky"]')).toBeInTheDocument();
+    const story = container.querySelector('[data-case-mode="sticky"]');
+    expect(story).toBeInTheDocument();
+    expect(story).toHaveAttribute("data-scroll-choreography", "scrubbed");
     expect(container.querySelector('[data-case-sticky="true"]')).toBeInTheDocument();
+    expect(container.querySelectorAll("[data-case-artifact]")).toHaveLength(1);
     expect(container.querySelectorAll("[data-case-stage]")).toHaveLength(4);
+    expect(container.querySelectorAll("[data-case-checkpoint]")).toHaveLength(4);
   });
 
   it("renders Case 001 in linear document flow when reduced motion is enabled", () => {
@@ -70,7 +90,9 @@ describe("Living Research Archive Home", () => {
     const { container } = render(<HomeCaseStudyStory {...caseStudyProps} />);
 
     expect(container.querySelector('[data-case-mode="linear"]')).toBeInTheDocument();
+    expect(container.querySelector('[data-scroll-choreography="static"]')).toBeInTheDocument();
     expect(container.querySelector('[data-case-sticky="true"]')).not.toBeInTheDocument();
+    expect(container.querySelectorAll("[data-case-artifact]")).toHaveLength(1);
     expect(container.querySelectorAll("[data-case-stage]")).toHaveLength(4);
   });
 
