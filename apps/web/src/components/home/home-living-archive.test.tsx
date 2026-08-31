@@ -57,12 +57,16 @@ describe("Living Research Archive Home", () => {
     expect(container.querySelectorAll(".home-pack-dossier__skills")).toHaveLength(3);
   });
 
-  it("renders Case 001 as a four-stage sticky story when motion is enabled", () => {
+  it("renders Case 001 as one scrubbed four-checkpoint scene when motion is enabled", () => {
     const { container } = render(<HomeCaseStudyStory {...caseStudyProps} />);
 
-    expect(container.querySelector('[data-case-mode="sticky"]')).toBeInTheDocument();
+    const story = container.querySelector('[data-case-mode="sticky"]');
+    expect(story).toBeInTheDocument();
+    expect(story).toHaveAttribute("data-scroll-choreography", "scrubbed");
     expect(container.querySelector('[data-case-sticky="true"]')).toBeInTheDocument();
+    expect(container.querySelectorAll("[data-case-artifact]")).toHaveLength(1);
     expect(container.querySelectorAll("[data-case-stage]")).toHaveLength(4);
+    expect(container.querySelectorAll("[data-case-checkpoint]")).toHaveLength(4);
   });
 
   it("renders Case 001 in linear document flow when reduced motion is enabled", () => {
@@ -70,7 +74,9 @@ describe("Living Research Archive Home", () => {
     const { container } = render(<HomeCaseStudyStory {...caseStudyProps} />);
 
     expect(container.querySelector('[data-case-mode="linear"]')).toBeInTheDocument();
+    expect(container.querySelector('[data-scroll-choreography="static"]')).toBeInTheDocument();
     expect(container.querySelector('[data-case-sticky="true"]')).not.toBeInTheDocument();
+    expect(container.querySelectorAll("[data-case-artifact]")).toHaveLength(1);
     expect(container.querySelectorAll("[data-case-stage]")).toHaveLength(4);
   });
 
