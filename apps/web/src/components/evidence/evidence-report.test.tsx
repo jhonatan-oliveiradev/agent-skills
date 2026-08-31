@@ -29,7 +29,7 @@ describe("Evidence Report", () => {
       "href",
       "/en/skills/designing-ui-systems",
     );
-    expect(screen.getByText("SOURCE / AVAILABLE")).toBeInTheDocument();
+    expect(screen.getAllByText("SOURCE / AVAILABLE")).toHaveLength(2);
     expect(screen.getByRole("link", { name: "Source record" })).toHaveAttribute(
       "href",
       "https://github.com/jhonatan-oliveiradev/agent-skills/blob/main/docs/built-with-skills/2026-08-28-catalog-experience.md",
