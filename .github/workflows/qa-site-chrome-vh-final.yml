@@ -1,0 +1,142 @@
+name: QA Site Chrome Viewport Final
+
+on:
+  push:
+    branches: [ci/site-chrome-vh-final]
+
+jobs:
+  rendered-qa:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: npm ci --prefix apps/web
+      - run: npm run web:build
+        env:
+          NEXT_PUBLIC_SITE_URL: https://skills.jhonatanoliveira.com
+      - name: Install Playwright
+        working-directory: apps/web
+        run: |
+          npm install --no-save --package-lock=false playwright@1.55.0
+          npx playwright install --with-deps chromium
+      - name: Start production server
+        shell: bash
+        run: |
+          npm --prefix apps/web run start -- -p 3000 > /tmp/agent-skills.log 2>&1 &
+          for i in {1..60}; do
+            if curl -fsS http://127.0.0.1:3000/pt-BR >/dev/null; then exit 0; fi
+            sleep 1
+          done
+          cat /tmp/agent-skills.log
+          exit 1
+      - name: Validate final chrome
+        working-directory: apps/web
+        run: |
+          cat > qa.mjs <<'NODE'
+          import assert from 'node:assert/strict';
+          import { mkdir, writeFile } from 'node:fs/promises';
+          import { chromium } from 'playwright';
+
+          const out = 'qa-site-chrome-vh-final-output';
+          await mkdir(out, { recursive: true });
+          const report = { desktop: {}, mobile: {}, reducedMotion: {}, normalErrors: [] };
+          const browser = await chromium.launch({ headless: true });
+
+          async function open(page) {
+            await page.addInitScript(() => localStorage.setItem('theme', 'dark'));
+            await page.goto('http://127.0.0.1:3000/pt-BR', { waitUntil: 'networkidle' });
+            await page.waitForSelector('[data-site-chrome="publication-bar"]');
+          }
+
+          async function desktop(width, height) {
+            const label = `${width}x${height}`;
+            const context = await browser.newContext({ viewport: { width, height }, reducedMotion: 'no-preference' });
+            const page = await context.newPage();
+            page.on('console', m => { if (m.type() === 'error') report.normalErrors.push(`${label}: ${m.text()}`); });
+            page.on('pageerror', e => report.normalErrors.push(`${label}: ${e.message}`));
+            await open(page);
+            const headerBox = await page.locator('[data-site-chrome="publication-bar"]').boundingBox();
+            await page.getByRole('button', { name: 'Abrir navegação' }).click();
+            const dialog = page.getByRole('dialog', { name: 'Navegação principal' });
+            await dialog.waitFor();
+            await page.waitForTimeout(520);
+            const layer = page.locator('[data-navigation-transition="header-reveal"]');
+            const layerBox = await layer.boundingBox();
+            const metrics = await dialog.evaluate(el => ({ clientHeight: el.clientHeight, scrollHeight: el.scrollHeight, overflowY: getComputedStyle(el).overflowY }));
+            const frame = await dialog.locator('.primary-navigation__frame').evaluate(el => ({ clientHeight: el.clientHeight, scrollHeight: el.scrollHeight }));
+            const last = await dialog.locator('.primary-navigation__list li').last().boundingBox();
+            const meta = await dialog.locator('.primary-navigation__footer').boundingBox();
+            assert.ok(headerBox && layerBox, `${label}: missing layout boxes`);
+            assert.ok(Math.abs(layerBox.y - headerBox.height) <= 2, `${label}: index is not anchored to header`);
+            assert.ok(Math.abs(layerBox.height + headerBox.height - height) <= 2, `${label}: header + index != viewport`);
+            assert.ok(metrics.scrollHeight <= metrics.clientHeight + 1, `${label}: dialog scrolls`);
+            assert.ok(frame.scrollHeight <= frame.clientHeight + 1, `${label}: frame scrolls`);
+            assert.ok(last && last.y + last.height <= height + 1, `${label}: last item clipped`);
+            assert.ok(meta && meta.y + meta.height <= height + 1, `${label}: metadata clipped`);
+            await page.screenshot({ path: `${out}/${label}-open.png` });
+
+            if (label === '1440x900') {
+              await page.keyboard.press('Escape');
+              assert.equal(await page.getByRole('dialog', { name: 'Navegação principal' }).count(), 0, 'closing menu remains accessible');
+              assert.equal(await layer.count(), 1, 'visual exit missing');
+              await page.screenshot({ path: `${out}/${label}-closing.png` });
+              await page.waitForTimeout(560);
+              assert.equal(await layer.count(), 0, 'visual exit did not finish');
+              const wordmark = page.locator('[data-wordmark-scale="restrained"]');
+              await wordmark.scrollIntoViewIfNeeded();
+              const wordmarkMetrics = await wordmark.evaluate(el => ({ fontSize: parseFloat(getComputedStyle(el).fontSize), width: el.getBoundingClientRect().width }));
+              assert.ok(wordmarkMetrics.fontSize <= 180, `wordmark oversized: ${wordmarkMetrics.fontSize}px`);
+              await wordmark.screenshot({ path: `${out}/${label}-wordmark.png` });
+              report.desktop[label] = { headerBox, layerBox, metrics, frame, wordmarkMetrics };
+            } else report.desktop[label] = { headerBox, layerBox, metrics, frame };
+            await context.close();
+          }
+
+          for (const size of [[1366,768],[1440,900],[1920,800],[1920,1080]]) await desktop(...size);
+
+          const mobile = await browser.newContext({ viewport: { width: 390, height: 844 }, reducedMotion: 'no-preference' });
+          const mp = await mobile.newPage();
+          mp.on('console', m => { if (m.type() === 'error') report.normalErrors.push(`mobile: ${m.text()}`); });
+          await open(mp);
+          await mp.getByRole('button', { name: 'Abrir navegação' }).click();
+          const md = mp.getByRole('dialog', { name: 'Navegação principal' });
+          await md.waitFor();
+          await mp.waitForTimeout(520);
+          const mm = await md.evaluate(el => ({ clientHeight: el.clientHeight, scrollHeight: el.scrollHeight }));
+          assert.equal(await md.locator('[data-mobile-context="inline"]').count(), 6);
+          assert.ok(mm.scrollHeight >= mm.clientHeight, 'mobile must remain scroll-capable');
+          await mp.screenshot({ path: `${out}/390x844-open.png` });
+          report.mobile = mm;
+          await mobile.close();
+
+          const reduced = await browser.newContext({ viewport: { width: 1440, height: 900 }, reducedMotion: 'reduce' });
+          const rp = await reduced.newPage();
+          const reducedErrors = [];
+          rp.on('console', m => { if (m.type() === 'error') reducedErrors.push(m.text()); });
+          await open(rp);
+          await rp.getByRole('button', { name: 'Abrir navegação' }).click();
+          await rp.getByRole('dialog', { name: 'Navegação principal' }).waitFor();
+          await rp.keyboard.press('Escape');
+          assert.equal(await rp.getByRole('dialog', { name: 'Navegação principal' }).count(), 0);
+          await rp.waitForTimeout(30);
+          assert.equal(await rp.locator('[data-navigation-transition="header-reveal"]').count(), 0);
+          const unexpectedReduced = reducedErrors.filter(e => !e.startsWith('Minified React error #418;'));
+          assert.deepEqual(unexpectedReduced, []);
+          assert.ok(reducedErrors.filter(e => e.startsWith('Minified React error #418;')).length <= 1);
+          report.reducedMotion = { knownBaseline418: reducedErrors.some(e => e.startsWith('Minified React error #418;')) };
+          await reduced.close();
+
+          assert.deepEqual(report.normalErrors, [], report.normalErrors.join('\n'));
+          await browser.close();
+          await writeFile(`${out}/report.json`, JSON.stringify(report, null, 2));
+          console.log(JSON.stringify(report, null, 2));
+          NODE
+          node qa.mjs
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: site-chrome-vh-final
+          path: apps/web/qa-site-chrome-vh-final-output
+          if-no-files-found: warn
