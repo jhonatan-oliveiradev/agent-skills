@@ -10,6 +10,7 @@ import "../home-scroll-choreography.css";
 import "../home-scroll-systems.css";
 import "../home-scroll-workflow.css";
 import "../home-final-polish.css";
+import "../editorial-pages.css";
 import "../site-chrome.css";
 import "../site-chrome-responsive.css";
 import "../site-chrome-refinement.css";
