@@ -41,7 +41,7 @@ jobs:
 
           const out = 'qa-site-chrome-output';
           await mkdir(out, { recursive: true });
-          const report = { checks: [], consoleErrors: [], pageErrors: [] };
+          const report = { checks: [], consoleErrors: [], pageErrors: [], overflows: {} };
 
           function collectErrors(page, scope) {
             page.on('console', message => {
@@ -50,12 +50,35 @@ jobs:
             page.on('pageerror', error => report.pageErrors.push(`${scope}: ${error.message}`));
           }
 
+          async function overflowInfo(page) {
+            return page.evaluate(() => {
+              const clientWidth = document.documentElement.clientWidth;
+              const scrollWidth = document.documentElement.scrollWidth;
+              const offenders = [...document.querySelectorAll('body *')]
+                .map(element => {
+                  const rect = element.getBoundingClientRect();
+                  const style = getComputedStyle(element);
+                  return {
+                    tag: element.tagName.toLowerCase(),
+                    cls: typeof element.className === 'string' ? element.className : '',
+                    text: (element.textContent || '').trim().slice(0, 70),
+                    left: Math.round(rect.left),
+                    right: Math.round(rect.right),
+                    width: Math.round(rect.width),
+                    overflow: style.overflowX,
+                    position: style.position,
+                  };
+                })
+                .filter(item => item.right > clientWidth + 1 || item.left < -1)
+                .slice(0, 16);
+              return { clientWidth, scrollWidth, offenders };
+            });
+          }
+
           async function assertNoOverflow(page, label) {
-            const info = await page.evaluate(() => ({
-              clientWidth: document.documentElement.clientWidth,
-              scrollWidth: document.documentElement.scrollWidth,
-            }));
-            assert.ok(info.scrollWidth <= info.clientWidth + 1, `${label}: overflow ${info.scrollWidth}/${info.clientWidth}`);
+            const info = await overflowInfo(page);
+            report.overflows[label] = info;
+            assert.ok(info.scrollWidth <= info.clientWidth + 1, `${label}: overflow ${info.scrollWidth}/${info.clientWidth}; offenders=${JSON.stringify(info.offenders)}`);
             report.checks.push(`${label}: no horizontal overflow`);
           }
 
@@ -105,6 +128,10 @@ jobs:
           const mobilePage = await mobile.newPage();
           collectErrors(mobilePage, 'mobile');
           await openHome(mobilePage);
+          const mobileClosedInfo = await overflowInfo(mobilePage);
+          report.overflows['mobile closed'] = mobileClosedInfo;
+          console.log('MOBILE_CLOSED_OVERFLOW', JSON.stringify(mobileClosedInfo));
+          await mobilePage.screenshot({ path: `${out}/mobile-closed.png` });
           await assertNoOverflow(mobilePage, 'mobile closed');
           await mobilePage.getByRole('button', { name: 'Abrir navegação' }).click();
           const mobileDialog = mobilePage.getByRole('dialog');
