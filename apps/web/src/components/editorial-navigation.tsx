@@ -49,25 +49,31 @@ export function EditorialNavigation({
   versionLabel,
 }: EditorialNavigationProps) {
   const [open, setOpen] = useState(false);
+  const [closing, setClosing] = useState(false);
   const [activeIndex, setActiveIndex] = useState(0);
   const reducedMotion = useReducedMotion();
   const triggerRef = useRef<HTMLButtonElement>(null);
   const panelRef = useRef<HTMLDivElement>(null);
   const activeLink = links[activeIndex] ?? links[0]!;
+  const visible = open || closing;
 
   useEffect(() => {
-    if (!open) return;
+    if (!visible) return;
     const previousOverflow = document.body.style.overflow;
     document.body.style.overflow = "hidden";
-    panelRef.current?.querySelector<HTMLElement>("a")?.focus();
+
+    if (open) {
+      panelRef.current?.querySelector<HTMLElement>("a")?.focus();
+    }
 
     function onKeyDown(event: KeyboardEvent) {
-      if (event.key === "Escape") {
+      if (event.key === "Escape" && open) {
         setOpen(false);
+        setClosing(!reducedMotion);
         triggerRef.current?.focus();
         return;
       }
-      if (event.key !== "Tab" || !panelRef.current) return;
+      if (!open || event.key !== "Tab" || !panelRef.current) return;
       const focusable = Array.from(
         panelRef.current.querySelectorAll<HTMLElement>('a, button:not([disabled])'),
       );
@@ -87,10 +93,16 @@ export function EditorialNavigation({
       document.body.style.overflow = previousOverflow;
       document.removeEventListener("keydown", onKeyDown);
     };
-  }, [open]);
+  }, [open, reducedMotion, visible]);
+
+  function openNavigation() {
+    setClosing(false);
+    setOpen(true);
+  }
 
   function close() {
     setOpen(false);
+    setClosing(!reducedMotion);
     triggerRef.current?.focus();
   }
 
@@ -101,7 +113,7 @@ export function EditorialNavigation({
         aria-expanded={open}
         aria-label={open ? closeLabel : openLabel}
         className="navigation-trigger"
-        onClick={() => setOpen((current) => !current)}
+        onClick={open ? close : openNavigation}
         ref={triggerRef}
         title={open ? closeLabel : openLabel}
         type="button"
@@ -116,133 +128,134 @@ export function EditorialNavigation({
           strokeWidth={1.7}
         />
       </button>
-      <AnimatePresence initial={false}>
-        {open ? (
-          <div className="navigation-layer" data-navigation-transition="header-reveal">
-            <motion.button
-              animate={{ opacity: 1 }}
-              aria-hidden="true"
-              className="navigation-backdrop"
-              exit={{ opacity: 0 }}
-              initial={{ opacity: 0 }}
-              onClick={close}
-              tabIndex={-1}
-              transition={reducedMotion ? { duration: 0 } : { duration: 0.28 }}
-              type="button"
-            />
-            <motion.div
-              animate={{ clipPath: "inset(0% 0% 0% 0%)", opacity: 1 }}
-              aria-label={label}
-              aria-modal="true"
-              className="primary-navigation"
-              data-navigation-mode="studio-index"
-              data-viewport-contract="desktop-100dvh"
-              exit={
-                reducedMotion
-                  ? { opacity: 0 }
-                  : { clipPath: "inset(0% 0% 100% 0%)", opacity: 0.96 }
-              }
-              id="primary-navigation"
-              initial={
-                reducedMotion
-                  ? false
-                  : { clipPath: "inset(0% 0% 100% 0%)", opacity: 0.96 }
-              }
-              ref={panelRef}
-              role="dialog"
-              style={{ maxHeight: "none" }}
-              transition={
-                reducedMotion
-                  ? { duration: 0 }
-                  : { duration: 0.48, ease: [0.22, 1, 0.36, 1] }
-              }
-            >
-              <div className="shell primary-navigation__frame">
-                <div className="primary-navigation__masthead">
-                  <div>
-                    <span className="primary-navigation__eyebrow">{indexLabel} / 01—06</span>
-                    <h2>{indexTitle}</h2>
-                  </div>
-                  <p>{indexSummary}</p>
+      {visible ? (
+        <div className="navigation-layer" data-navigation-transition="header-reveal">
+          <motion.button
+            animate={{ opacity: open ? 1 : 0 }}
+            aria-hidden="true"
+            className="navigation-backdrop"
+            initial={reducedMotion ? false : { opacity: 0 }}
+            onClick={close}
+            style={{ pointerEvents: open ? "auto" : "none" }}
+            tabIndex={-1}
+            transition={reducedMotion ? { duration: 0 } : { duration: 0.28 }}
+            type="button"
+          />
+          <motion.div
+            animate={
+              open
+                ? { clipPath: "inset(0% 0% 0% 0%)", opacity: 1 }
+                : { clipPath: "inset(0% 0% 100% 0%)", opacity: 0.96 }
+            }
+            aria-hidden={open ? undefined : true}
+            aria-label={open ? label : undefined}
+            aria-modal={open ? true : undefined}
+            className="primary-navigation"
+            data-navigation-mode="studio-index"
+            data-viewport-contract="desktop-100dvh"
+            id="primary-navigation"
+            initial={
+              reducedMotion
+                ? false
+                : { clipPath: "inset(0% 0% 100% 0%)", opacity: 0.96 }
+            }
+            onAnimationComplete={() => {
+              if (!open && closing) setClosing(false);
+            }}
+            ref={panelRef}
+            role={open ? "dialog" : undefined}
+            style={{ maxHeight: "none", pointerEvents: open ? "auto" : "none" }}
+            transition={
+              reducedMotion
+                ? { duration: 0 }
+                : { duration: 0.48, ease: [0.22, 1, 0.36, 1] }
+            }
+          >
+            <div className="shell primary-navigation__frame">
+              <div className="primary-navigation__masthead">
+                <div>
+                  <span className="primary-navigation__eyebrow">{indexLabel} / 01—06</span>
+                  <h2>{indexTitle}</h2>
                 </div>
-
-                <div className="primary-navigation__layout">
-                  <nav aria-label={label} className="primary-navigation__list">
-                    <ol>
-                      {links.map((link, index) => (
-                        <motion.li
-                          animate={{ opacity: 1, y: 0 }}
-                          data-active={activeIndex === index ? "true" : "false"}
-                          initial={reducedMotion ? false : { opacity: 0, y: 14 }}
-                          key={link.href}
-                          transition={
-                            reducedMotion
-                              ? { duration: 0 }
-                              : { delay: 0.1 + index * 0.04, duration: 0.32 }
-                          }
-                        >
-                          <span aria-hidden="true">{String(index + 1).padStart(2, "0")}</span>
-                          <Link
-                            href={link.href}
-                            onClick={close}
-                            onFocus={() => setActiveIndex(index)}
-                            onMouseEnter={() => setActiveIndex(index)}
-                          >
-                            <span className="sr-only">{link.label}</span>
-                            <TextRoll>{link.label}</TextRoll>
-                          </Link>
-                          <p className="primary-navigation__mobile-context" data-mobile-context="inline">
-                            {link.summary}
-                          </p>
-                        </motion.li>
-                      ))}
-                    </ol>
-                  </nav>
-
-                  <aside aria-live="polite" className="primary-navigation__context">
-                    <AnimatePresence mode="wait">
-                      <motion.div
-                        animate={{ opacity: 1, y: 0 }}
-                        exit={reducedMotion ? undefined : { opacity: 0, y: -8 }}
-                        initial={reducedMotion ? false : { opacity: 0, y: 8 }}
-                        key={activeLink.href}
-                        transition={reducedMotion ? { duration: 0 } : { duration: 0.22 }}
-                      >
-                        <span>{activeLink.kicker}</span>
-                        <p>{activeLink.summary}</p>
-                        <span className="primary-navigation__context-index" aria-hidden="true">
-                          {String(activeIndex + 1).padStart(2, "0")} / {String(links.length).padStart(2, "0")}
-                        </span>
-                      </motion.div>
-                    </AnimatePresence>
-                  </aside>
-                </div>
-
-                <div className="primary-navigation__footer">
-                  <dl className="primary-navigation__metadata">
-                    <div>
-                      <dt>{collectionLabel}</dt>
-                      <dd>{metadata.skills} SKILLS</dd>
-                    </div>
-                    <div>
-                      <dt aria-hidden="true">&nbsp;</dt>
-                      <dd>{metadata.packs} PACKS</dd>
-                    </div>
-                    <div>
-                      <dt>{versionLabel}</dt>
-                      <dd>{metadata.version}</dd>
-                    </div>
-                  </dl>
-                  <Link className="primary-navigation__cta" href={links[0]!.href} onClick={close}>
-                    <span>{cta}</span>
-                    <span aria-hidden="true">↗</span>
-                  </Link>
-                </div>
+                <p>{indexSummary}</p>
               </div>
-            </motion.div>
-          </div>
-        ) : null}
-      </AnimatePresence>
+
+              <div className="primary-navigation__layout">
+                <nav aria-label={label} className="primary-navigation__list">
+                  <ol>
+                    {links.map((link, index) => (
+                      <motion.li
+                        animate={{ opacity: 1, y: 0 }}
+                        data-active={activeIndex === index ? "true" : "false"}
+                        initial={reducedMotion ? false : { opacity: 0, y: 14 }}
+                        key={link.href}
+                        transition={
+                          reducedMotion
+                            ? { duration: 0 }
+                            : { delay: 0.1 + index * 0.04, duration: 0.32 }
+                        }
+                      >
+                        <span aria-hidden="true">{String(index + 1).padStart(2, "0")}</span>
+                        <Link
+                          href={link.href}
+                          onClick={close}
+                          onFocus={() => setActiveIndex(index)}
+                          onMouseEnter={() => setActiveIndex(index)}
+                        >
+                          <span className="sr-only">{link.label}</span>
+                          <TextRoll>{link.label}</TextRoll>
+                        </Link>
+                        <p className="primary-navigation__mobile-context" data-mobile-context="inline">
+                          {link.summary}
+                        </p>
+                      </motion.li>
+                    ))}
+                  </ol>
+                </nav>
+
+                <aside aria-live="polite" className="primary-navigation__context">
+                  <AnimatePresence mode="wait">
+                    <motion.div
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={reducedMotion ? undefined : { opacity: 0, y: -8 }}
+                      initial={reducedMotion ? false : { opacity: 0, y: 8 }}
+                      key={activeLink.href}
+                      transition={reducedMotion ? { duration: 0 } : { duration: 0.22 }}
+                    >
+                      <span>{activeLink.kicker}</span>
+                      <p>{activeLink.summary}</p>
+                      <span className="primary-navigation__context-index" aria-hidden="true">
+                        {String(activeIndex + 1).padStart(2, "0")} / {String(links.length).padStart(2, "0")}
+                      </span>
+                    </motion.div>
+                  </AnimatePresence>
+                </aside>
+              </div>
+
+              <div className="primary-navigation__footer">
+                <dl className="primary-navigation__metadata">
+                  <div>
+                    <dt>{collectionLabel}</dt>
+                    <dd>{metadata.skills} SKILLS</dd>
+                  </div>
+                  <div>
+                    <dt aria-hidden="true">&nbsp;</dt>
+                    <dd>{metadata.packs} PACKS</dd>
+                  </div>
+                  <div>
+                    <dt>{versionLabel}</dt>
+                    <dd>{metadata.version}</dd>
+                  </div>
+                </dl>
+                <Link className="primary-navigation__cta" href={links[0]!.href} onClick={close}>
+                  <span>{cta}</span>
+                  <span aria-hidden="true">↗</span>
+                </Link>
+              </div>
+            </div>
+          </motion.div>
+        </div>
+      ) : null}
     </>
   );
 }
