@@ -242,9 +242,9 @@ describe("foundation navigation targets", () => {
   });
 
   it.each([
-    ["en", "Built with Skills", "Catalog experience", "Pack experience"],
-    ["pt-BR", "Feito com Skills", "Experiência do catálogo", "Experiência dos pacotes"],
-  ] as const)("renders real built-with-skills cases for %s", async (locale, heading, catalog, packs) => {
+    ["en", "Don't trust the description. Inspect the result.", "Catalog experience", "Pack experience"],
+    ["pt-BR", "Não confie na descrição. Inspecione o resultado.", "Experiência do catálogo", "Experiência dos pacotes"],
+  ] as const)("renders the evidence archive for %s", async (locale, heading, catalog, packs) => {
     const { container } = render(
       await BuiltWithSkillsPage({ params: Promise.resolve({ locale }) }),
     );
@@ -252,19 +252,20 @@ describe("foundation navigation targets", () => {
     expect(screen.getByRole("heading", { level: 1, name: heading })).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: catalog })).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: packs })).toBeInTheDocument();
-    expect(container.querySelectorAll(".built-case-card")).toHaveLength(2);
+    expect(container.querySelectorAll("[data-evidence-feature]")).toHaveLength(2);
+    expect(container.querySelector(".built-case-card")).not.toBeInTheDocument();
   });
 
-  it("links a case study to its evidence record and applied skills", async () => {
+  it("links a case study to its explicit source evidence and applied skills", async () => {
     render(
       await BuiltWithSkillsDetailPage({
         params: Promise.resolve({ locale: "en", slug: "catalog-experience" }),
       }),
     );
 
-    expect(screen.getByRole("link", { name: "View evidence record" })).toHaveAttribute(
+    expect(screen.getByRole("link", { name: "Source record" })).toHaveAttribute(
       "href",
-      expect.stringContaining("docs/built-with-skills/2026-08-28-catalog-experience.md"),
+      "https://github.com/jhonatan-oliveiradev/agent-skills/blob/main/docs/built-with-skills/2026-08-28-catalog-experience.md",
     );
     expect(screen.getByRole("link", { name: "Designing UI Systems" })).toHaveAttribute(
       "href",

@@ -17,6 +17,21 @@ describe("built with skills records", () => {
     expect(cases.every((item) => item.results.length > 0)).toBe(true);
   });
 
+  it("publishes explicit source evidence instead of inferring verification", () => {
+    const cases = getBuiltWithSkillsCases("en");
+
+    for (const item of cases) {
+      expect(item.evidence).toHaveLength(1);
+      expect(item.evidence[0]).toMatchObject({
+        type: "source",
+        label: "Source record",
+      });
+      expect(item.evidence[0]?.href).toBe(
+        `https://github.com/jhonatan-oliveiradev/agent-skills/blob/main/${item.sourcePath}`,
+      );
+    }
+  });
+
   it("resolves a case by slug and rejects unknown slugs", () => {
     expect(getBuiltWithSkillsCaseBySlug("en", "catalog-experience")?.title).toBe(
       "Catalog experience",
