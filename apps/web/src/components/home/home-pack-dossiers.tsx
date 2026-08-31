@@ -98,9 +98,9 @@ export function HomePackDossiers({
             ease: "none",
             scrollTrigger: {
               trigger: dossier,
-              start: "top 90%",
-              end: "center 54%",
-              scrub: 0.62,
+              start: "top 78%",
+              end: "top 40%",
+              scrub: 0.2,
               invalidateOnRefresh: true,
             },
           },
@@ -116,9 +116,9 @@ export function HomePackDossiers({
               ease: "none",
               scrollTrigger: {
                 trigger: dossier,
-                start: "top 72%",
-                end: "center 48%",
-                scrub: 0.5,
+                start: "top 64%",
+                end: "top 42%",
+                scrub: 0.16,
                 invalidateOnRefresh: true,
               },
             },
@@ -134,9 +134,9 @@ export function HomePackDossiers({
               ease: "none",
               scrollTrigger: {
                 trigger: dossier,
-                start: "top 78%",
-                end: "center 52%",
-                scrub: 0.45,
+                start: "top 72%",
+                end: "top 48%",
+                scrub: 0.16,
                 invalidateOnRefresh: true,
               },
             },
@@ -157,6 +157,7 @@ export function HomePackDossiers({
       className="home-packs-v2 home-pack-archive"
       data-home-section="packs"
       data-scroll-choreography={staticMode ? "static" : "staged"}
+      data-scroll-timing={staticMode ? "static" : "reading-zone"}
     >
       <div className="shell">
         <div className="home-editorial-heading home-pack-archive__heading">
