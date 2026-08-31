@@ -54,6 +54,7 @@ export default async function PackDetailPage({ params }: PackPageProps) {
   if (!pack) notFound();
 
   const copy = messages[locale];
+  const editorialCopy = editorialPacksCopy[locale];
   const commands = getPackInstallCommands(pack.slug, pack.status);
   const structuredData = {
     "@context": "https://schema.org",
@@ -77,7 +78,10 @@ export default async function PackDetailPage({ params }: PackPageProps) {
         detail={copy.packDetail}
         skillsCopy={copy.skillsCatalog}
         commands={commands}
-        compositionPending={editorialPacksCopy[locale].compositionPending}
+        compositionPending={editorialCopy.compositionPending}
+        systemLabel={editorialCopy.systemLabel}
+        intentLabel={editorialCopy.intentLabel}
+        statusLabel={editorialCopy.statusMetric}
       />
     </>
   );
