@@ -11,6 +11,7 @@ import "../home-scroll-systems.css";
 import "../home-scroll-workflow.css";
 import "../site-chrome.css";
 import "../site-chrome-responsive.css";
+import "../site-chrome-refinement.css";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 import { ThemeProvider } from "@/components/theme-provider";
