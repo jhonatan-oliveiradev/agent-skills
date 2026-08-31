@@ -8,6 +8,7 @@ import "../home-living-archive.css";
 import "../home-living-systems.css";
 import "../home-scroll-choreography.css";
 import "../home-scroll-systems.css";
+import "../home-scroll-workflow.css";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 import { ThemeProvider } from "@/components/theme-provider";
