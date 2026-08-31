@@ -65,12 +65,13 @@ describe("Living Research Archive Home", () => {
     expect(container.querySelectorAll(".home-pack-dossier__skills")).toHaveLength(3);
   });
 
-  it("connects the four workflow movements with a stage-anchored Evidence Thread", async () => {
+  it("drives the four workflow movements from one section timeline", async () => {
     const { container } = render(await HomePage({ params: Promise.resolve({ locale: "en" }) }));
     const workflow = container.querySelector('[data-home-section="workflow"]');
 
     expect(workflow).toHaveAttribute("data-scroll-choreography", "scrubbed");
-    expect(workflow).toHaveAttribute("data-scroll-timing", "stage-anchored");
+    expect(workflow).toHaveAttribute("data-scroll-timing", "section-timeline");
+    expect(workflow?.querySelector('[data-workflow-track="single-timeline"]')).toBeInTheDocument();
     expect(container.querySelectorAll("[data-workflow-stage]")).toHaveLength(4);
     expect(workflow?.querySelector('[data-evidence-thread-mode="workflow"]')).toBeInTheDocument();
     expect(workflow?.querySelector("canvas")).not.toBeInTheDocument();

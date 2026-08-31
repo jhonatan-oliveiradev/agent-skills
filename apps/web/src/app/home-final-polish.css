@@ -1,0 +1,266 @@
+[data-home-act] {
+  position: relative;
+}
+
+.home-methods-archive,
+.home-pack-archive,
+.home-method-workflow,
+.home-ledger,
+.home-roadmap {
+  scroll-margin-top: var(--site-publication-bar-height, 4.5rem);
+}
+
+.home-methods-v2,
+.home-packs-v2,
+.home-workflow,
+.home-ledger {
+  padding-block: clamp(5rem, 8.5vw, 8.25rem);
+}
+
+.home-editorial-heading .eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+}
+
+.home-editorial-heading .eyebrow::after {
+  width: clamp(1.6rem, 3vw, 3.5rem);
+  height: 1px;
+  background: linear-gradient(90deg, color-mix(in srgb, var(--brand) 70%, transparent), transparent);
+  content: "";
+}
+
+.home-method-index li {
+  border-bottom-color: color-mix(in srgb, var(--border) 92%, var(--brand));
+  transition: border-color 320ms var(--ease-editorial);
+}
+
+.home-method-index li::after {
+  position: absolute;
+  z-index: 2;
+  right: 0;
+  bottom: -1px;
+  left: 0;
+  height: 1px;
+  background: linear-gradient(90deg, var(--brand), color-mix(in srgb, var(--brand) 24%, transparent) 42%, transparent 78%);
+  content: "";
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 520ms var(--ease-editorial);
+  pointer-events: none;
+}
+
+.home-method-index li:has(a:hover),
+.home-method-index li:has(a:focus-visible) {
+  border-bottom-color: color-mix(in srgb, var(--brand) 36%, var(--border));
+}
+
+.home-method-index li:has(a:hover)::after,
+.home-method-index li:has(a:focus-visible)::after {
+  transform: scaleX(1);
+}
+
+.home-method-index__number,
+.home-method-index__meta {
+  transition: color 300ms var(--ease-editorial), opacity 300ms var(--ease-editorial);
+}
+
+.home-method-index li:has(a:hover) .home-method-index__number,
+.home-method-index li:has(a:focus-visible) .home-method-index__number {
+  color: var(--text);
+}
+
+.home-method-index li:has(a:hover) .home-method-index__meta,
+.home-method-index li:has(a:focus-visible) .home-method-index__meta {
+  color: color-mix(in srgb, var(--brand) 72%, var(--text-muted));
+}
+
+.home-pack-dossier {
+  transition:
+    border-color 360ms var(--ease-editorial),
+    box-shadow 520ms var(--ease-editorial),
+    background-color 360ms var(--ease-editorial);
+}
+
+.home-pack-dossier:hover,
+.home-pack-dossier:focus-within {
+  border-color: color-mix(in srgb, var(--brand) 42%, var(--border));
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, var(--brand) 7%, transparent) inset,
+    0 2.2rem 5.5rem rgb(0 0 0 / 0.12);
+}
+
+.home-pack-dossier__meta span + span::before {
+  margin-right: 0.65rem;
+  color: color-mix(in srgb, var(--brand) 54%, var(--border));
+  content: "·";
+}
+
+.home-pack-dossier__outcomes li {
+  position: relative;
+  padding-left: 1.15rem;
+}
+
+.home-pack-dossier__outcomes li::before {
+  position: absolute;
+  top: 0.8rem;
+  left: 0;
+  color: var(--brand);
+  content: "—";
+}
+
+.home-pack-dossier__link {
+  position: relative;
+  text-decoration: none;
+}
+
+.home-pack-dossier__link::after {
+  position: absolute;
+  right: 0;
+  bottom: -0.28rem;
+  left: 0;
+  height: 1px;
+  background: currentColor;
+  content: "";
+  opacity: 0.42;
+  transform: scaleX(0.34);
+  transform-origin: left center;
+  transition: opacity 300ms var(--ease-editorial), transform 420ms var(--ease-editorial);
+}
+
+.home-pack-dossier__link:hover::after,
+.home-pack-dossier__link:focus-visible::after {
+  opacity: 1;
+  transform: scaleX(1);
+}
+
+.home-ledger {
+  position: relative;
+  overflow: clip;
+  background:
+    linear-gradient(180deg, color-mix(in srgb, var(--brand) 2.5%, transparent), transparent 28%),
+    var(--canvas);
+}
+
+.home-ledger::before {
+  position: absolute;
+  top: 0;
+  left: clamp(1rem, 6vw, 7rem);
+  width: 1px;
+  height: 24%;
+  background: linear-gradient(180deg, color-mix(in srgb, var(--brand) 62%, transparent), transparent);
+  content: "";
+  opacity: 0.42;
+  pointer-events: none;
+}
+
+.home-evidence-ledger {
+  margin-top: clamp(3.5rem, 7vw, 6rem);
+  border-top: 1px solid color-mix(in srgb, var(--border) 84%, var(--brand));
+}
+
+.home-evidence-ledger table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.home-evidence-ledger th,
+.home-evidence-ledger td {
+  border-bottom: 1px solid color-mix(in srgb, var(--border) 92%, var(--brand));
+}
+
+.home-evidence-ledger th {
+  padding-block: 0.9rem;
+  text-align: left;
+}
+
+.home-evidence-ledger td {
+  padding-block: clamp(1.25rem, 2.2vw, 1.75rem);
+  transition: background-color 300ms var(--ease-editorial), color 300ms var(--ease-editorial);
+}
+
+.home-evidence-ledger tbody tr {
+  transition: background-color 320ms var(--ease-editorial);
+}
+
+.home-evidence-ledger tbody tr:hover,
+.home-evidence-ledger tbody tr:focus-within {
+  background: linear-gradient(90deg, color-mix(in srgb, var(--brand) 6%, transparent), transparent 70%);
+}
+
+.home-evidence-ledger tbody td:first-child a {
+  font-weight: 650;
+  text-decoration-color: color-mix(in srgb, var(--brand) 34%, transparent);
+}
+
+.home-evidence-ledger tbody td:last-child a {
+  color: var(--brand);
+  font-family: var(--font-mono);
+  font-size: 0.76rem;
+  font-weight: 700;
+  letter-spacing: 0.035em;
+  text-decoration-color: color-mix(in srgb, var(--brand) 45%, transparent);
+  text-underline-offset: 0.28rem;
+}
+
+.home-roadmap {
+  position: relative;
+  overflow: clip;
+  background:
+    radial-gradient(circle at 78% 34%, color-mix(in srgb, var(--brand) 8%, transparent), transparent 24rem),
+    var(--surface);
+}
+
+.home-roadmap::before {
+  position: absolute;
+  inset: 0;
+  border-top: 1px solid color-mix(in srgb, var(--border) 84%, var(--brand));
+  content: "";
+  pointer-events: none;
+}
+
+.home-roadmap__inner {
+  position: relative;
+  z-index: 1;
+}
+
+.home-roadmap h2 {
+  text-wrap: balance;
+}
+
+@media (max-width: 767px) {
+  .home-methods-v2,
+  .home-packs-v2,
+  .home-workflow,
+  .home-ledger {
+    padding-block: 4.5rem;
+  }
+
+  .home-editorial-heading .eyebrow::after {
+    width: 2rem;
+  }
+
+  .home-pack-dossier:hover,
+  .home-pack-dossier:focus-within {
+    box-shadow: none;
+  }
+
+  .home-evidence-ledger {
+    margin-top: 3rem;
+    overflow-x: auto;
+    overscroll-behavior-inline: contain;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .home-method-index li,
+  .home-method-index li::after,
+  .home-method-index__number,
+  .home-method-index__meta,
+  .home-pack-dossier,
+  .home-pack-dossier__link::after,
+  .home-evidence-ledger tbody tr,
+  .home-evidence-ledger td {
+    transition: none !important;
+  }
+}

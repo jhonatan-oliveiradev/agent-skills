@@ -53,71 +53,73 @@ export function HomeMethodWorkflow({ eyebrow, title, summary, movements }: HomeM
         return;
       }
 
-      const field = rootRef.current.querySelector<HTMLElement>(".home-method-workflow__field");
-      const stages = gsap.utils.toArray<HTMLElement>("[data-workflow-stage]", rootRef.current);
-      const threadPath = rootRef.current.querySelector<SVGPathElement>(
+      const root = rootRef.current;
+      const field = root.querySelector<HTMLElement>(".home-method-workflow__field");
+      const stages = gsap.utils.toArray<HTMLElement>("[data-workflow-stage]", root);
+      const threadPath = root.querySelector<SVGPathElement>(
         '[data-evidence-thread-progress="gsap"]',
       );
 
       if (!field || stages.length === 0 || !threadPath) return;
 
-      gsap.fromTo(
-        threadPath,
-        { strokeDasharray: 1, strokeDashoffset: 1 },
-        {
-          strokeDashoffset: 0,
-          ease: "none",
-          scrollTrigger: {
-            trigger: field,
-            start: "top 72%",
-            end: "bottom 42%",
-            scrub: 0.16,
-            invalidateOnRefresh: true,
-          },
-        },
-      );
-
-      stages.forEach((stage, index) => {
-        gsap.fromTo(
-          stage,
-          {
-            autoAlpha: 0.38,
-            y: 24,
-            scale: 0.975,
-            transformOrigin: "50% 50%",
-          },
-          {
-            autoAlpha: 1,
-            y: 0,
-            scale: 1.025,
-            ease: "none",
-            scrollTrigger: {
-              trigger: stage,
-              start: "top 72%",
-              end: "center 56%",
-              scrub: 0.16,
-              invalidateOnRefresh: true,
-            },
-          },
+      const setActiveStage = (progress: number) => {
+        const activeIndex = Math.min(
+          stages.length - 1,
+          Math.floor(Math.max(0, Math.min(0.9999, progress)) * stages.length),
         );
 
-        const next = stages[index + 1];
-        if (!next) return;
-
-        gsap.to(stage, {
-          autoAlpha: 0.55,
-          y: -6,
-          scale: 0.995,
-          ease: "none",
-          scrollTrigger: {
-            trigger: next,
-            start: "top 60%",
-            end: "top 48%",
-            scrub: 0.14,
-            invalidateOnRefresh: true,
-          },
+        root.dataset.workflowActive = String(activeIndex + 1).padStart(2, "0");
+        stages.forEach((stage, index) => {
+          stage.dataset.active = index === activeIndex ? "true" : "false";
         });
+      };
+
+      gsap.set(stages, {
+        autoAlpha: 0.44,
+        y: 16,
+        scale: 0.99,
+        transformOrigin: "50% 50%",
       });
+      gsap.set(stages[0], { autoAlpha: 1, y: 0, scale: 1.012 });
+      gsap.set(threadPath, { strokeDasharray: 1, strokeDashoffset: 1 });
+      setActiveStage(0);
+
+      const timeline = gsap.timeline({
+        defaults: { ease: "none" },
+        scrollTrigger: {
+          trigger: field,
+          start: "top 74%",
+          end: "bottom 38%",
+          scrub: 0.16,
+          invalidateOnRefresh: true,
+          onRefresh: (self) => setActiveStage(self.progress),
+          onUpdate: (self) => setActiveStage(self.progress),
+        },
+      });
+
+      timeline.to(threadPath, { strokeDashoffset: 0, duration: 1 }, 0);
+
+      stages.forEach((stage, index) => {
+        const position = index / stages.length;
+
+        if (index > 0) {
+          timeline.to(
+            stages[index - 1],
+            { autoAlpha: 0.5, y: -4, scale: 0.995, duration: 0.1 },
+            position,
+          );
+          timeline.to(
+            stage,
+            { autoAlpha: 1, y: 0, scale: 1.012, duration: 0.12 },
+            position,
+          );
+        }
+      });
+
+      return () => {
+        delete root.dataset.workflowActive;
+        stages.forEach((stage) => delete stage.dataset.active);
+      };
     },
     {
       scope: rootRef,
@@ -132,7 +134,7 @@ export function HomeMethodWorkflow({ eyebrow, title, summary, movements }: HomeM
       className="home-workflow home-method-workflow"
       data-home-section="workflow"
       data-scroll-choreography={staticMode ? "static" : "scrubbed"}
-      data-scroll-timing={staticMode ? "static" : "stage-anchored"}
+      data-scroll-timing={staticMode ? "static" : "section-timeline"}
     >
       <div className="shell">
         <div className="home-editorial-heading home-editorial-heading--wide">
@@ -143,7 +145,10 @@ export function HomeMethodWorkflow({ eyebrow, title, summary, movements }: HomeM
           <p>{summary}</p>
         </div>
 
-        <div className="home-method-workflow__field">
+        <div
+          className="home-method-workflow__field"
+          data-workflow-track={staticMode ? "static" : "single-timeline"}
+        >
           <HomeEvidenceThread
             className="home-method-workflow__thread"
             mode="workflow"

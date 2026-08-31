@@ -5,8 +5,8 @@
 
 .home-method-workflow__field {
   position: relative;
-  margin-top: clamp(3.5rem, 8vw, 6rem);
-  padding-block: clamp(2rem, 5vw, 4.5rem);
+  margin-top: clamp(3rem, 6vw, 5rem);
+  padding-block: clamp(2rem, 4vw, 3.75rem);
 }
 
 .home-method-workflow__thread {
@@ -16,8 +16,8 @@
   right: 1.5rem;
   bottom: 0.2rem;
   left: 1.5rem;
-  opacity: 0.66;
-  filter: drop-shadow(0 0 0.8rem color-mix(in srgb, var(--brand) 18%, transparent));
+  opacity: 0.58;
+  filter: drop-shadow(0 0 0.8rem color-mix(in srgb, var(--brand) 16%, transparent));
 }
 
 .home-method-workflow[data-scroll-choreography="scrubbed"] [data-evidence-thread-progress="gsap"] {
@@ -26,6 +26,7 @@
 }
 
 .home-method-workflow .home-workflow-rail {
+  position: relative;
   z-index: 1;
   margin-top: 0;
 }
@@ -35,33 +36,87 @@
 }
 
 .home-method-workflow .home-workflow-rail li {
-  min-height: 15rem;
-  padding: clamp(3rem, 6vw, 5rem) clamp(0.75rem, 1.6vw, 1.5rem) 1.5rem;
-  border-top: 1px solid color-mix(in srgb, var(--border) 84%, var(--brand));
-  background: linear-gradient(180deg, color-mix(in srgb, var(--surface) 36%, transparent), transparent 76%);
+  position: relative;
+  min-height: 14rem;
+  padding: clamp(2.8rem, 5vw, 4.5rem) clamp(0.9rem, 1.8vw, 1.6rem) 1.6rem;
+  border-top: 1px solid color-mix(in srgb, var(--border) 88%, var(--brand));
+  background: linear-gradient(180deg, color-mix(in srgb, var(--surface) 26%, transparent), transparent 74%);
+  transition:
+    border-color 320ms var(--ease-editorial),
+    background-color 320ms var(--ease-editorial),
+    box-shadow 420ms var(--ease-editorial);
+}
+
+.home-method-workflow .home-workflow-rail li::after {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, color-mix(in srgb, var(--brand) 8%, transparent), transparent 68%);
+  content: "";
+  opacity: 0;
+  transition: opacity 360ms var(--ease-editorial);
+  pointer-events: none;
 }
 
 .home-method-workflow[data-scroll-choreography="scrubbed"] [data-workflow-stage] {
   will-change: transform, opacity;
 }
 
+.home-method-workflow[data-scroll-choreography="scrubbed"] [data-workflow-stage][data-active="true"] {
+  border-top-color: color-mix(in srgb, var(--brand) 58%, var(--border));
+  box-shadow: 0 -1px 0 color-mix(in srgb, var(--brand) 18%, transparent) inset;
+}
+
+.home-method-workflow[data-scroll-choreography="scrubbed"] [data-workflow-stage][data-active="true"]::after {
+  opacity: 1;
+}
+
 .home-method-workflow .home-workflow-rail li > span {
-  top: -0.75rem;
-  left: clamp(0.75rem, 1.6vw, 1.5rem);
+  top: -0.8rem;
+  left: clamp(0.9rem, 1.8vw, 1.6rem);
+  display: grid;
+  width: 1.7rem;
+  height: 1.7rem;
+  place-items: center;
+  border: 1px solid color-mix(in srgb, var(--border) 84%, var(--brand));
   background: var(--surface);
+  transition:
+    border-color 320ms var(--ease-editorial),
+    background-color 320ms var(--ease-editorial),
+    color 320ms var(--ease-editorial);
+}
+
+.home-method-workflow[data-scroll-choreography="scrubbed"] [data-workflow-stage][data-active="true"] > span {
+  border-color: color-mix(in srgb, var(--brand) 68%, var(--border));
+  background: color-mix(in srgb, var(--brand) 12%, var(--surface));
+  color: var(--text);
+}
+
+.home-method-workflow .home-workflow-rail li > div {
+  position: relative;
+  z-index: 1;
 }
 
 .home-method-workflow .home-workflow-rail h3 {
   max-width: 11ch;
-  font-size: clamp(1.25rem, 2.1vw, 1.9rem);
+  font-size: clamp(1.3rem, 2.15vw, 1.95rem);
   font-weight: 550;
-  letter-spacing: -0.04em;
-  line-height: 0.98;
+  letter-spacing: -0.045em;
+  line-height: 0.96;
+  transition: color 320ms var(--ease-editorial);
 }
 
 .home-method-workflow .home-workflow-rail p {
   max-width: 18rem;
   margin-top: 1rem;
+  transition: color 320ms var(--ease-editorial);
+}
+
+.home-method-workflow[data-scroll-choreography="scrubbed"] [data-workflow-stage][data-active="true"] h3 {
+  color: var(--text);
+}
+
+.home-method-workflow[data-scroll-choreography="scrubbed"] [data-workflow-stage][data-active="true"] p {
+  color: color-mix(in srgb, var(--text) 72%, var(--text-muted));
 }
 
 .home-method-workflow[data-scroll-choreography="static"] [data-evidence-thread-progress="gsap"] {
@@ -70,6 +125,7 @@
 
 @media (max-width: 767px) {
   .home-method-workflow__field {
+    margin-top: 2.5rem;
     padding-block: 1rem;
   }
 
@@ -87,12 +143,17 @@
     padding: 2.5rem 0 2.5rem 3.25rem;
     border-top: 1px solid var(--border);
     background: transparent;
+    box-shadow: none;
     opacity: 1 !important;
     transform: none !important;
   }
 
+  .home-method-workflow .home-workflow-rail li::after {
+    display: none;
+  }
+
   .home-method-workflow .home-workflow-rail li > span {
-    top: 2.35rem;
+    top: 2.25rem;
     left: 0;
   }
 
@@ -105,5 +166,13 @@
   .home-method-workflow[data-scroll-choreography="static"] [data-workflow-stage] {
     opacity: 1 !important;
     transform: none !important;
+  }
+
+  .home-method-workflow .home-workflow-rail li,
+  .home-method-workflow .home-workflow-rail li::after,
+  .home-method-workflow .home-workflow-rail li > span,
+  .home-method-workflow .home-workflow-rail h3,
+  .home-method-workflow .home-workflow-rail p {
+    transition: none !important;
   }
 }
