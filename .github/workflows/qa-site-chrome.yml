@@ -1,0 +1,151 @@
+name: QA Site Chrome Editorial
+
+on:
+  push:
+    branches: [refactor/site-chrome-editorial]
+
+jobs:
+  rendered-qa:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: npm ci --prefix apps/web
+      - run: npm run web:build
+        env:
+          NEXT_PUBLIC_SITE_URL: https://skills.jhonatanoliveira.com
+      - name: Install Playwright
+        working-directory: apps/web
+        run: |
+          npm install --no-save --package-lock=false playwright@1.55.0
+          npx playwright install --with-deps chromium
+      - name: Start production server
+        shell: bash
+        run: |
+          npm --prefix apps/web run start -- -p 3000 > /tmp/agent-skills.log 2>&1 &
+          for i in {1..60}; do
+            if curl -fsS http://127.0.0.1:3000/pt-BR >/dev/null; then exit 0; fi
+            sleep 1
+          done
+          cat /tmp/agent-skills.log
+          exit 1
+      - name: Validate rendered chrome
+        working-directory: apps/web
+        run: |
+          cat > qa-site-chrome.mjs <<'NODE'
+          import assert from 'node:assert/strict';
+          import { mkdir, writeFile } from 'node:fs/promises';
+          import { chromium } from 'playwright';
+
+          const out = 'qa-site-chrome-output';
+          await mkdir(out, { recursive: true });
+          const report = { checks: [], consoleErrors: [], pageErrors: [] };
+
+          function collectErrors(page, scope) {
+            page.on('console', message => {
+              if (message.type() === 'error') report.consoleErrors.push(`${scope}: ${message.text()}`);
+            });
+            page.on('pageerror', error => report.pageErrors.push(`${scope}: ${error.message}`));
+          }
+
+          async function assertNoOverflow(page, label) {
+            const info = await page.evaluate(() => ({
+              clientWidth: document.documentElement.clientWidth,
+              scrollWidth: document.documentElement.scrollWidth,
+            }));
+            assert.ok(info.scrollWidth <= info.clientWidth + 1, `${label}: overflow ${info.scrollWidth}/${info.clientWidth}`);
+            report.checks.push(`${label}: no horizontal overflow`);
+          }
+
+          async function openHome(page, theme = 'dark') {
+            await page.addInitScript(value => localStorage.setItem('theme', value), theme);
+            await page.goto('http://127.0.0.1:3000/pt-BR', { waitUntil: 'networkidle' });
+            await page.waitForSelector('[data-site-chrome="publication-bar"]');
+          }
+
+          const browser = await chromium.launch({ headless: true });
+
+          const desktop = await browser.newContext({ viewport: { width: 1440, height: 900 }, reducedMotion: 'no-preference' });
+          const page = await desktop.newPage();
+          collectErrors(page, 'desktop');
+          await openHome(page);
+          await assertNoOverflow(page, 'desktop closed');
+          await page.screenshot({ path: `${out}/desktop-header-closed.png` });
+
+          const trigger = page.getByRole('button', { name: 'Abrir navegação' });
+          await trigger.click();
+          const dialog = page.getByRole('dialog');
+          await dialog.waitFor();
+          assert.equal(await dialog.getAttribute('data-navigation-mode'), 'studio-index');
+          assert.equal(await page.evaluate(() => document.body.style.overflow), 'hidden');
+          const box = await dialog.boundingBox();
+          assert.ok(box && box.height >= 890 && box.width >= 1430, `studio index does not fill viewport: ${JSON.stringify(box)}`);
+          await page.screenshot({ path: `${out}/desktop-index-skills.png` });
+
+          await dialog.getByRole('link', { name: 'Feito com habilidades' }).hover();
+          await dialog.getByText('Trabalho real, decisões e evidências criadas com a coleção.').waitFor();
+          await page.screenshot({ path: `${out}/desktop-index-proof.png` });
+
+          await dialog.getByRole('link', { name: 'Roteiro' }).focus();
+          await dialog.getByText('O status segue evidências, da proposta ao estável.').waitFor();
+          await page.screenshot({ path: `${out}/desktop-index-roadmap.png` });
+          await page.keyboard.press('Escape');
+          await dialog.waitFor({ state: 'detached' });
+          assert.equal(await page.evaluate(() => document.body.style.overflow), '');
+          report.checks.push('desktop index opens, updates context, locks scroll, and closes with Escape');
+
+          await page.locator('[data-footer-mode="end-matter"]').scrollIntoViewIfNeeded();
+          await page.waitForTimeout(250);
+          await assertNoOverflow(page, 'desktop footer');
+          await page.screenshot({ path: `${out}/desktop-footer.png` });
+
+          const mobile = await browser.newContext({ viewport: { width: 390, height: 844 }, reducedMotion: 'no-preference' });
+          const mobilePage = await mobile.newPage();
+          collectErrors(mobilePage, 'mobile');
+          await openHome(mobilePage);
+          await assertNoOverflow(mobilePage, 'mobile closed');
+          await mobilePage.getByRole('button', { name: 'Abrir navegação' }).click();
+          const mobileDialog = mobilePage.getByRole('dialog');
+          await mobileDialog.waitFor();
+          await assertNoOverflow(mobilePage, 'mobile index');
+          await mobilePage.screenshot({ path: `${out}/mobile-index.png` });
+          await mobilePage.keyboard.press('Escape');
+          await mobilePage.locator('[data-footer-mode="end-matter"]').scrollIntoViewIfNeeded();
+          await mobilePage.waitForTimeout(250);
+          await assertNoOverflow(mobilePage, 'mobile footer');
+          await mobilePage.screenshot({ path: `${out}/mobile-footer.png` });
+          await mobile.close();
+
+          const light = await browser.newContext({ viewport: { width: 1440, height: 900 }, reducedMotion: 'no-preference' });
+          const lightPage = await light.newPage();
+          collectErrors(lightPage, 'light');
+          await openHome(lightPage, 'light');
+          await lightPage.getByRole('button', { name: 'Abrir navegação' }).click();
+          await lightPage.screenshot({ path: `${out}/light-index.png` });
+          await light.close();
+
+          const reduced = await browser.newContext({ viewport: { width: 1440, height: 900 }, reducedMotion: 'reduce' });
+          const reducedPage = await reduced.newPage();
+          collectErrors(reducedPage, 'reduced');
+          await openHome(reducedPage);
+          await reducedPage.getByRole('button', { name: 'Abrir navegação' }).click();
+          await reducedPage.getByRole('dialog').waitFor();
+          await reducedPage.screenshot({ path: `${out}/reduced-index.png` });
+          await reduced.close();
+
+          await desktop.close();
+          await browser.close();
+          assert.deepEqual(report.consoleErrors, [], report.consoleErrors.join('\n'));
+          assert.deepEqual(report.pageErrors, [], report.pageErrors.join('\n'));
+          await writeFile(`${out}/report.json`, JSON.stringify(report, null, 2));
+          console.log(JSON.stringify(report, null, 2));
+          NODE
+          node qa-site-chrome.mjs
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: site-chrome-rendered-qa
+          path: apps/web/qa-site-chrome-output
+          if-no-files-found: warn
