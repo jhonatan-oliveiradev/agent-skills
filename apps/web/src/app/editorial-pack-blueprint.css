@@ -84,7 +84,7 @@
 
 .pack-blueprint__intent::before {
   color: var(--brand);
-  content: "SYSTEM INTENT";
+  content: attr(data-intent-label);
   font-family: var(--font-mono);
   font-size: 0.66rem;
   font-weight: 700;
