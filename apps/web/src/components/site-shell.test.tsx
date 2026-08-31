@@ -242,9 +242,9 @@ describe("foundation navigation targets", () => {
   });
 
   it.each([
-    ["en", "Built with Skills", "Catalog experience", "Pack experience"],
-    ["pt-BR", "Feito com Skills", "Experiência do catálogo", "Experiência dos pacotes"],
-  ] as const)("renders real built-with-skills cases for %s", async (locale, heading, catalog, packs) => {
+    ["en", "Don't trust the description. Inspect the result.", "Catalog experience", "Pack experience"],
+    ["pt-BR", "Não confie na descrição. Inspecione o resultado.", "Experiência do catálogo", "Experiência dos pacotes"],
+  ] as const)("renders the evidence archive for %s", async (locale, heading, catalog, packs) => {
     const { container } = render(
       await BuiltWithSkillsPage({ params: Promise.resolve({ locale }) }),
     );
@@ -252,7 +252,8 @@ describe("foundation navigation targets", () => {
     expect(screen.getByRole("heading", { level: 1, name: heading })).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: catalog })).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: packs })).toBeInTheDocument();
-    expect(container.querySelectorAll(".built-case-card")).toHaveLength(2);
+    expect(container.querySelectorAll("[data-evidence-feature]")).toHaveLength(2);
+    expect(container.querySelector(".built-case-card")).not.toBeInTheDocument();
   });
 
   it("links a case study to its evidence record and applied skills", async () => {
