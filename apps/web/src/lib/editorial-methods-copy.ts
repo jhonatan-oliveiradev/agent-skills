@@ -9,6 +9,10 @@ interface EditorialMethodsCopy {
   readonly categoriesMetric: string;
   readonly versionMetric: string;
   readonly filterLabel: string;
+  readonly methodLabel: string;
+  readonly onThisMethod: string;
+  readonly promptLabel: string;
+  readonly technicalNotes: string;
 }
 
 export const editorialMethodsCopy = {
@@ -22,6 +26,10 @@ export const editorialMethodsCopy = {
     categoriesMetric: "DOMAINS",
     versionMetric: "VERSION",
     filterLabel: "Filter the archive",
+    methodLabel: "METHOD",
+    onThisMethod: "On this method",
+    promptLabel: "PROMPT",
+    technicalNotes: "TECHNICAL NOTES",
   },
   "pt-BR": {
     archiveLabel: "MÉTODOS / ARQUIVO",
@@ -33,5 +41,9 @@ export const editorialMethodsCopy = {
     categoriesMetric: "DOMÍNIOS",
     versionMetric: "VERSÃO",
     filterLabel: "Filtrar o arquivo",
+    methodLabel: "MÉTODO",
+    onThisMethod: "Neste método",
+    promptLabel: "PROMPT",
+    technicalNotes: "NOTAS TÉCNICAS",
   },
 } as const satisfies Readonly<Record<Locale, EditorialMethodsCopy>>;
