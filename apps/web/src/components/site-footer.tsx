@@ -82,8 +82,8 @@ export function SiteFooter({ locale }: Readonly<{ locale: Locale }>) {
             <h3>{chrome.collection}</h3>
             <dl>
               <div>
-                <dt>{copy.footer.version.replace("{version}", "")}</dt>
-                <dd>{catalog.version}</dd>
+                <dt>Release</dt>
+                <dd>{copy.footer.version.replace("{version}", catalog.version)}</dd>
               </div>
               <div>
                 <dt>Methods</dt>
@@ -101,7 +101,6 @@ export function SiteFooter({ locale }: Readonly<{ locale: Locale }>) {
       <div className="site-footer__wordmark-wrap" aria-hidden="true">
         <p className="site-footer__wordmark">AGENT SKILLS STUDIO</p>
       </div>
-      <span className="sr-only">AGENT SKILLS STUDIO</span>
 
       <div className="shell site-footer__signature">
         <p>© {new Date().getFullYear()} Agent Skills Studio</p>
