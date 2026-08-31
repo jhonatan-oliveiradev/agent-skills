@@ -1,0 +1,525 @@
+.pack-blueprint {
+  padding-bottom: clamp(6rem, 12vw, 11rem);
+}
+
+.pack-blueprint__back {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.65rem;
+  margin-top: clamp(1.5rem, 3vw, 2.5rem);
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.055em;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: color 220ms var(--ease-editorial), transform 260ms var(--ease-editorial);
+}
+
+.pack-blueprint__back:hover,
+.pack-blueprint__back:focus-visible {
+  color: var(--text);
+  transform: translateX(-0.2rem);
+}
+
+.pack-blueprint__back:focus-visible,
+.pack-composition-map__sequence a:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 0.3rem;
+}
+
+.pack-blueprint__hero {
+  display: grid;
+  min-height: clamp(34rem, 72dvh, 50rem);
+  grid-template-columns: minmax(0, 1.45fr) minmax(14rem, 0.55fr);
+  gap: clamp(3rem, 8vw, 9rem);
+  align-items: end;
+  padding-block: clamp(4rem, 10dvh, 8rem) clamp(2.5rem, 5vw, 4rem);
+  border-bottom: 1px solid color-mix(in srgb, var(--border) 80%, var(--brand));
+}
+
+.pack-blueprint__hero-copy {
+  min-width: 0;
+}
+
+.pack-blueprint__hero .eyebrow {
+  color: var(--brand);
+}
+
+.pack-blueprint__hero h1 {
+  max-width: 11ch;
+  margin: clamp(1.25rem, 3vw, 2.2rem) 0 0;
+  font-size: clamp(4rem, 9vw, 9rem);
+  font-weight: 500;
+  letter-spacing: -0.075em;
+  line-height: 0.84;
+  text-wrap: balance;
+}
+
+.pack-blueprint__summary {
+  max-width: 46rem;
+  margin: clamp(1.6rem, 3vw, 2.5rem) 0 0;
+  color: var(--text-muted);
+  font-size: clamp(1rem, 1.45vw, 1.25rem);
+  line-height: 1.58;
+}
+
+.pack-blueprint__metadata {
+  align-self: end;
+  border-top: 1px solid var(--border);
+}
+
+.pack-blueprint__metadata .editorial-page__metadata-item {
+  grid-template-columns: minmax(5rem, 0.6fr) 1fr;
+}
+
+.pack-blueprint__intent {
+  display: grid;
+  grid-template-columns: minmax(8rem, 0.35fr) minmax(0, 1fr);
+  gap: clamp(2rem, 6vw, 7rem);
+  padding-block: clamp(4rem, 9vw, 8rem);
+  border-bottom: 1px solid var(--border);
+}
+
+.pack-blueprint__intent::before {
+  color: var(--brand);
+  content: "SYSTEM INTENT";
+  font-family: var(--font-mono);
+  font-size: 0.66rem;
+  font-weight: 700;
+  letter-spacing: 0.07em;
+}
+
+.pack-blueprint__intent p {
+  max-width: 32ch;
+  margin: 0;
+  font-size: clamp(2rem, 4.5vw, 4.8rem);
+  font-weight: 510;
+  letter-spacing: -0.055em;
+  line-height: 0.98;
+  text-wrap: balance;
+}
+
+.pack-blueprint__reader {
+  display: grid;
+  grid-template-columns: minmax(12rem, 0.28fr) minmax(0, 1fr);
+  gap: clamp(3rem, 7vw, 8rem);
+  padding-top: clamp(4rem, 8vw, 7rem);
+}
+
+.pack-blueprint__reader-index {
+  min-width: 0;
+}
+
+.pack-blueprint__reader-index .editorial-reader-nav {
+  position: sticky;
+  top: calc(var(--site-publication-bar-height, 4.5rem) + 2rem);
+}
+
+.pack-blueprint__reader-content {
+  min-width: 0;
+}
+
+.pack-blueprint__outcomes,
+.pack-blueprint__planned-note,
+.pack-blueprint__composition-anchor,
+.pack-blueprint__installation {
+  scroll-margin-top: calc(var(--site-publication-bar-height, 4.5rem) + 2rem);
+}
+
+.pack-blueprint__outcomes {
+  padding-bottom: clamp(5rem, 9vw, 8rem);
+}
+
+.pack-blueprint__outcomes ol {
+  margin: clamp(2rem, 4vw, 3.5rem) 0 0;
+  padding: 0;
+  border-top: 1px solid color-mix(in srgb, var(--border) 78%, var(--brand));
+  list-style: none;
+}
+
+.pack-blueprint__outcomes li {
+  display: grid;
+  grid-template-columns: clamp(2.5rem, 5vw, 4.5rem) minmax(0, 1fr);
+  gap: clamp(1rem, 3vw, 2.5rem);
+  padding-block: clamp(1.8rem, 4vw, 3.5rem);
+  border-bottom: 1px solid var(--border);
+}
+
+.pack-blueprint__outcomes li > span {
+  padding-top: 0.25rem;
+  color: var(--brand);
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  font-weight: 700;
+}
+
+.pack-blueprint__outcomes li p {
+  max-width: 27ch;
+  margin: 0;
+  font-size: clamp(1.6rem, 3.2vw, 3.2rem);
+  font-weight: 520;
+  letter-spacing: -0.045em;
+  line-height: 1.05;
+  text-wrap: balance;
+}
+
+.pack-blueprint__planned-note {
+  position: relative;
+  margin-bottom: clamp(5rem, 9vw, 8rem);
+  padding: clamp(2rem, 4vw, 3.5rem);
+  border: 1px solid color-mix(in srgb, var(--brand) 28%, var(--border));
+  background:
+    repeating-linear-gradient(90deg, transparent 0 3.5rem, color-mix(in srgb, var(--border) 18%, transparent) 3.5rem calc(3.5rem + 1px)),
+    color-mix(in srgb, var(--brand) 3%, transparent);
+}
+
+.pack-blueprint__planned-note h2 {
+  max-width: 15ch;
+  margin: 1.2rem 0 0;
+  font-size: clamp(2rem, 4.2vw, 4rem);
+  font-weight: 520;
+  letter-spacing: -0.055em;
+  line-height: 0.96;
+}
+
+.pack-blueprint__planned-note > p:last-child {
+  max-width: 44rem;
+  margin: 1.5rem 0 0;
+  color: var(--text-muted);
+  line-height: 1.6;
+}
+
+.pack-composition-map {
+  padding-block: clamp(1rem, 3vw, 2rem) clamp(5rem, 10vw, 9rem);
+}
+
+.pack-composition-map__heading {
+  display: grid;
+  grid-template-columns: clamp(3rem, 6vw, 5.5rem) minmax(0, 1fr);
+  gap: clamp(1rem, 3vw, 2.5rem);
+  align-items: baseline;
+  margin-bottom: clamp(2rem, 5vw, 4rem);
+}
+
+.pack-composition-map__heading .eyebrow {
+  color: var(--brand);
+}
+
+.pack-composition-map__heading h2 {
+  margin: 0;
+  font-size: clamp(2.5rem, 5.5vw, 5.5rem);
+  font-weight: 510;
+  letter-spacing: -0.06em;
+  line-height: 0.92;
+}
+
+.pack-composition-map__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.25fr) minmax(14rem, 0.55fr);
+  gap: clamp(2rem, 5vw, 5rem);
+  align-items: start;
+}
+
+.pack-composition-map__sequence {
+  position: relative;
+  margin: 0;
+  padding: 0;
+  border-top: 1px solid color-mix(in srgb, var(--border) 78%, var(--brand));
+  list-style: none;
+}
+
+.pack-composition-map__sequence::before {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 2.05rem;
+  width: 1px;
+  background: linear-gradient(var(--brand), color-mix(in srgb, var(--brand) 16%, var(--border)) 70%, transparent);
+  content: "";
+  opacity: 0.4;
+  pointer-events: none;
+}
+
+.pack-composition-map__sequence li {
+  position: relative;
+  border-bottom: 1px solid var(--border);
+  transition: opacity 280ms var(--ease-editorial);
+}
+
+.pack-composition-map__sequence a {
+  position: relative;
+  display: grid;
+  grid-template-columns: 4.1rem minmax(0, 1fr) 1.5rem;
+  gap: 1rem;
+  align-items: center;
+  min-height: 5.6rem;
+  padding: 0.9rem 0;
+  color: inherit;
+  text-decoration: none;
+}
+
+.pack-composition-map__sequence a::before {
+  position: absolute;
+  top: 50%;
+  left: 1.76rem;
+  width: 0.62rem;
+  height: 0.62rem;
+  border: 1px solid color-mix(in srgb, var(--brand) 65%, var(--border));
+  border-radius: 999px;
+  background: var(--canvas);
+  content: "";
+  transform: translateY(-50%);
+  transition: background-color 240ms var(--ease-editorial), box-shadow 280ms var(--ease-editorial), transform 280ms var(--ease-editorial);
+}
+
+.pack-composition-map__index {
+  position: relative;
+  z-index: 1;
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  font-size: 0.64rem;
+  font-weight: 700;
+  text-align: right;
+}
+
+.pack-composition-map__method {
+  font-size: clamp(1rem, 1.55vw, 1.3rem);
+  font-weight: 630;
+  letter-spacing: -0.025em;
+  transition: color 240ms var(--ease-editorial), transform 300ms var(--ease-editorial);
+}
+
+.pack-composition-map__arrow {
+  justify-self: end;
+  color: var(--brand);
+  transition: color 220ms var(--ease-editorial), transform 300ms var(--ease-editorial);
+}
+
+.pack-composition-map__sequence:has(li[data-active="true"]) li:not([data-active="true"]) {
+  opacity: 0.46;
+}
+
+.pack-composition-map__sequence li[data-active="true"] a::before,
+.pack-composition-map__sequence a:hover::before,
+.pack-composition-map__sequence a:focus-visible::before {
+  background: var(--brand);
+  box-shadow: 0 0 0 0.35rem color-mix(in srgb, var(--brand) 12%, transparent);
+  transform: translateY(-50%) scale(1.05);
+}
+
+.pack-composition-map__sequence li[data-active="true"] .pack-composition-map__method,
+.pack-composition-map__sequence a:hover .pack-composition-map__method,
+.pack-composition-map__sequence a:focus-visible .pack-composition-map__method {
+  color: var(--text);
+  transform: translateX(0.3rem);
+}
+
+.pack-composition-map__sequence li[data-active="true"] .pack-composition-map__arrow,
+.pack-composition-map__sequence a:hover .pack-composition-map__arrow,
+.pack-composition-map__sequence a:focus-visible .pack-composition-map__arrow {
+  color: var(--text);
+  transform: translate(0.2rem, -0.2rem);
+}
+
+.pack-composition-map__context {
+  position: sticky;
+  top: calc(var(--site-publication-bar-height, 4.5rem) + 2rem);
+  min-height: 13rem;
+  padding: 1.5rem 0 0 clamp(1rem, 2vw, 2rem);
+  border-top: 1px solid color-mix(in srgb, var(--brand) 45%, var(--border));
+  border-left: 1px solid var(--border);
+}
+
+.pack-composition-map__context > p {
+  margin: 0;
+  color: var(--brand);
+  font-family: var(--font-mono);
+  font-size: 0.63rem;
+  font-weight: 700;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+}
+
+.pack-composition-map__context strong {
+  display: block;
+  margin-top: 1.1rem;
+  font-size: clamp(1.25rem, 2vw, 1.8rem);
+  font-weight: 620;
+  letter-spacing: -0.035em;
+  line-height: 1.05;
+}
+
+.pack-composition-map__context span {
+  display: block;
+  margin-top: 1rem;
+  color: var(--text-muted);
+  font-size: 0.88rem;
+  line-height: 1.55;
+}
+
+.pack-composition-map__pending {
+  display: grid;
+  grid-template-columns: 4rem minmax(0, 1fr);
+  gap: 1.5rem;
+  padding-block: clamp(2rem, 4vw, 3.5rem);
+  border-block: 1px solid var(--border);
+  color: var(--text-muted);
+}
+
+.pack-composition-map__pending > span {
+  color: var(--brand);
+  font-family: var(--font-mono);
+}
+
+.pack-composition-map__pending p {
+  margin: 0;
+  font-size: clamp(1.2rem, 2vw, 1.7rem);
+}
+
+.pack-blueprint__installation {
+  padding-top: clamp(4rem, 8vw, 7rem);
+  border-top: 1px solid color-mix(in srgb, var(--border) 80%, var(--brand));
+}
+
+.pack-blueprint__commands {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1px;
+  margin-top: clamp(2rem, 4vw, 3.5rem);
+  border: 1px solid var(--border);
+  background: var(--border);
+}
+
+.pack-blueprint__commands > div {
+  min-width: 0;
+  padding: clamp(1.25rem, 2.5vw, 2rem);
+  background: var(--surface);
+}
+
+.pack-blueprint__commands > div > p {
+  margin: 0 0 1rem;
+  color: var(--brand);
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.065em;
+  text-transform: uppercase;
+}
+
+.pack-blueprint[data-pack-state="planned"] .pack-blueprint__hero {
+  background: linear-gradient(145deg, color-mix(in srgb, var(--brand) 3%, transparent), transparent 50%);
+}
+
+@media (max-width: 64rem) {
+  .pack-blueprint__hero {
+    min-height: auto;
+    grid-template-columns: 1fr;
+    gap: 3rem;
+  }
+
+  .pack-blueprint__metadata {
+    max-width: none;
+  }
+
+  .pack-blueprint__reader {
+    grid-template-columns: 1fr;
+    gap: 3rem;
+  }
+
+  .pack-blueprint__reader-index .editorial-reader-nav {
+    position: static;
+  }
+
+  .pack-composition-map__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .pack-composition-map__context {
+    position: static;
+    min-height: auto;
+  }
+}
+
+@media (max-width: 44rem) {
+  .pack-blueprint__hero {
+    padding-block: 3.5rem 2.5rem;
+  }
+
+  .pack-blueprint__hero h1 {
+    font-size: clamp(3.3rem, 17vw, 5.4rem);
+  }
+
+  .pack-blueprint__intent {
+    grid-template-columns: 1fr;
+    gap: 1.2rem;
+    padding-block: 3.5rem;
+  }
+
+  .pack-blueprint__intent p {
+    font-size: clamp(1.8rem, 9vw, 2.8rem);
+  }
+
+  .pack-blueprint__outcomes li {
+    grid-template-columns: 2rem minmax(0, 1fr);
+  }
+
+  .pack-blueprint__outcomes li p {
+    font-size: clamp(1.45rem, 7vw, 2.2rem);
+  }
+
+  .pack-composition-map__heading {
+    grid-template-columns: 2rem minmax(0, 1fr);
+  }
+
+  .pack-composition-map__heading h2 {
+    font-size: clamp(2.4rem, 12vw, 3.8rem);
+  }
+
+  .pack-composition-map__sequence::before {
+    left: 1.4rem;
+  }
+
+  .pack-composition-map__sequence a {
+    grid-template-columns: 2.9rem minmax(0, 1fr) 1.2rem;
+  }
+
+  .pack-composition-map__sequence a::before {
+    left: 1.12rem;
+  }
+
+  .pack-composition-map__index {
+    text-align: left;
+  }
+
+  .pack-composition-map__context {
+    padding-left: 0;
+    border-left: 0;
+  }
+
+  .pack-blueprint__commands {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pack-blueprint__back,
+  .pack-composition-map__sequence li,
+  .pack-composition-map__sequence a::before,
+  .pack-composition-map__method,
+  .pack-composition-map__arrow {
+    transition: none !important;
+  }
+
+  .pack-blueprint__back:hover,
+  .pack-blueprint__back:focus-visible,
+  .pack-composition-map__sequence li[data-active="true"] .pack-composition-map__method,
+  .pack-composition-map__sequence a:hover .pack-composition-map__method,
+  .pack-composition-map__sequence a:focus-visible .pack-composition-map__method,
+  .pack-composition-map__sequence li[data-active="true"] .pack-composition-map__arrow,
+  .pack-composition-map__sequence a:hover .pack-composition-map__arrow,
+  .pack-composition-map__sequence a:focus-visible .pack-composition-map__arrow {
+    transform: none;
+  }
+}
