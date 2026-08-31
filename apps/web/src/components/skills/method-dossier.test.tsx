@@ -41,6 +41,28 @@ describe("Method Dossier", () => {
       expect(withinText(specimen)).not.toHaveLength(0);
     });
   });
+
+  it("connects a method to its canonical system and explicit evidence reports", async () => {
+    const { container } = render(
+      await SkillDetailPage({
+        params: Promise.resolve({ locale: "en", slug: "designing-ui-systems" }),
+      }),
+    );
+
+    expect(screen.getByRole("link", { name: "Frontend & Product" })).toHaveAttribute(
+      "href",
+      "/en/packs/frontend-product",
+    );
+    expect(container.querySelector("[data-method-evidence]")).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: "Catalog experience" })).toHaveAttribute(
+      "href",
+      "/en/built-with-skills/catalog-experience",
+    );
+    expect(screen.getByRole("link", { name: "Pack experience" })).toHaveAttribute(
+      "href",
+      "/en/built-with-skills/pack-experience",
+    );
+  });
 });
 
 function withinText(element: Element) {
