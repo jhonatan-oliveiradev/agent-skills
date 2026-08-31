@@ -118,6 +118,7 @@ export function EvidenceReport({
                   {relatedSystems.map((relation) => (
                     <li className="editorial-relation-row" key={relation.pack.slug}>
                       <Link
+                        aria-label={relation.pack.name}
                         data-interaction="connect"
                         href={`/${locale}/packs/${relation.pack.slug}` as Route}
                       >
