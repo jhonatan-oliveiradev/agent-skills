@@ -1,0 +1,51 @@
+name: QA Reduced Motion Baseline
+
+on:
+  push:
+    branches: [ci/site-chrome-reduced-baseline]
+
+jobs:
+  rendered-qa:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: npm ci --prefix apps/web
+      - run: npm run web:build
+        env:
+          NEXT_PUBLIC_SITE_URL: https://skills.jhonatanoliveira.com
+      - name: Install Playwright
+        working-directory: apps/web
+        run: |
+          npm install --no-save --package-lock=false playwright@1.55.0
+          npx playwright install --with-deps chromium
+      - name: Start production server
+        shell: bash
+        run: |
+          npm --prefix apps/web run start -- -p 3000 > /tmp/agent-skills.log 2>&1 &
+          for i in {1..60}; do
+            if curl -fsS http://127.0.0.1:3000/pt-BR >/dev/null; then exit 0; fi
+            sleep 1
+          done
+          cat /tmp/agent-skills.log
+          exit 1
+      - name: Check reduced-motion hydration baseline
+        working-directory: apps/web
+        run: |
+          cat > qa-reduced-baseline.mjs <<'NODE'
+          import { chromium } from 'playwright';
+          const browser = await chromium.launch({ headless: true });
+          const context = await browser.newContext({ viewport: { width: 1440, height: 900 }, reducedMotion: 'reduce' });
+          const page = await context.newPage();
+          const errors = [];
+          page.on('console', message => { if (message.type() === 'error') errors.push(message.text()); });
+          page.on('pageerror', error => errors.push(error.message));
+          await page.goto('http://127.0.0.1:3000/pt-BR', { waitUntil: 'networkidle' });
+          await page.waitForTimeout(300);
+          console.log(JSON.stringify({ errors }, null, 2));
+          await browser.close();
+          if (errors.length) process.exitCode = 2;
+          NODE
+          node qa-reduced-baseline.mjs
