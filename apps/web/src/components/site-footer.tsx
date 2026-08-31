@@ -99,7 +99,7 @@ export function SiteFooter({ locale }: Readonly<{ locale: Locale }>) {
       </div>
 
       <div className="site-footer__wordmark-wrap" aria-hidden="true">
-        <p className="site-footer__wordmark">AGENT SKILLS STUDIO</p>
+        <p className="site-footer__wordmark" data-wordmark-scale="restrained">AGENT SKILLS STUDIO</p>
       </div>
 
       <div className="shell site-footer__signature">
