@@ -49,25 +49,31 @@ export function EditorialNavigation({
   versionLabel,
 }: EditorialNavigationProps) {
   const [open, setOpen] = useState(false);
+  const [closing, setClosing] = useState(false);
   const [activeIndex, setActiveIndex] = useState(0);
   const reducedMotion = useReducedMotion();
   const triggerRef = useRef<HTMLButtonElement>(null);
   const panelRef = useRef<HTMLDivElement>(null);
   const activeLink = links[activeIndex] ?? links[0]!;
+  const visible = open || closing;
 
   useEffect(() => {
-    if (!open) return;
+    if (!visible) return;
     const previousOverflow = document.body.style.overflow;
     document.body.style.overflow = "hidden";
-    panelRef.current?.querySelector<HTMLElement>("a")?.focus();
+
+    if (open) {
+      panelRef.current?.querySelector<HTMLElement>("a")?.focus();
+    }
 
     function onKeyDown(event: KeyboardEvent) {
-      if (event.key === "Escape") {
+      if (event.key === "Escape" && open) {
         setOpen(false);
+        setClosing(!reducedMotion);
         triggerRef.current?.focus();
         return;
       }
-      if (event.key !== "Tab" || !panelRef.current) return;
+      if (!open || event.key !== "Tab" || !panelRef.current) return;
       const focusable = Array.from(
         panelRef.current.querySelectorAll<HTMLElement>('a, button:not([disabled])'),
       );
@@ -87,10 +93,16 @@ export function EditorialNavigation({
       document.body.style.overflow = previousOverflow;
       document.removeEventListener("keydown", onKeyDown);
     };
-  }, [open]);
+  }, [open, reducedMotion, visible]);
+
+  function openNavigation() {
+    setClosing(false);
+    setOpen(true);
+  }
 
   function close() {
     setOpen(false);
+    setClosing(!reducedMotion);
     triggerRef.current?.focus();
   }
 
@@ -101,7 +113,7 @@ export function EditorialNavigation({
         aria-expanded={open}
         aria-label={open ? closeLabel : openLabel}
         className="navigation-trigger"
-        onClick={() => setOpen((current) => !current)}
+        onClick={open ? close : openNavigation}
         ref={triggerRef}
         title={open ? closeLabel : openLabel}
         type="button"
@@ -116,33 +128,47 @@ export function EditorialNavigation({
           strokeWidth={1.7}
         />
       </button>
-      {open ? (
-        <div className="navigation-layer">
+      {visible ? (
+        <div className="navigation-layer" data-navigation-transition="header-reveal">
           <motion.button
-            animate={{ opacity: 1 }}
+            animate={{ opacity: open ? 1 : 0 }}
             aria-hidden="true"
             className="navigation-backdrop"
-            initial={{ opacity: 0 }}
+            initial={reducedMotion ? false : { opacity: 0 }}
             onClick={close}
+            style={{ pointerEvents: open ? "auto" : "none" }}
             tabIndex={-1}
-            transition={reducedMotion ? { duration: 0 } : { duration: 0.22 }}
+            transition={reducedMotion ? { duration: 0 } : { duration: 0.28 }}
             type="button"
           />
           <motion.div
-            animate={{ opacity: 1, y: 0 }}
-            aria-label={label}
-            aria-modal="true"
+            animate={
+              open
+                ? { clipPath: "inset(0% 0% 0% 0%)", opacity: 1 }
+                : { clipPath: "inset(0% 0% 100% 0%)", opacity: 0.96 }
+            }
+            aria-hidden={open ? undefined : true}
+            aria-label={open ? label : undefined}
+            aria-modal={open ? true : undefined}
             className="primary-navigation"
             data-navigation-mode="studio-index"
+            data-viewport-contract="desktop-100dvh"
             id="primary-navigation"
-            initial={reducedMotion ? false : { opacity: 0, y: -18 }}
+            initial={
+              reducedMotion
+                ? false
+                : { clipPath: "inset(0% 0% 100% 0%)", opacity: 0.96 }
+            }
+            onAnimationComplete={() => {
+              if (!open && closing) setClosing(false);
+            }}
             ref={panelRef}
-            role="dialog"
-            style={{ maxHeight: "none" }}
+            role={open ? "dialog" : undefined}
+            style={{ maxHeight: "none", pointerEvents: open ? "auto" : "none" }}
             transition={
               reducedMotion
                 ? { duration: 0 }
-                : { duration: 0.38, ease: [0.22, 1, 0.36, 1] }
+                : { duration: 0.48, ease: [0.22, 1, 0.36, 1] }
             }
           >
             <div className="shell primary-navigation__frame">
@@ -161,12 +187,12 @@ export function EditorialNavigation({
                       <motion.li
                         animate={{ opacity: 1, y: 0 }}
                         data-active={activeIndex === index ? "true" : "false"}
-                        initial={reducedMotion ? false : { opacity: 0, y: 16 }}
+                        initial={reducedMotion ? false : { opacity: 0, y: 14 }}
                         key={link.href}
                         transition={
                           reducedMotion
                             ? { duration: 0 }
-                            : { delay: 0.06 + index * 0.045, duration: 0.34 }
+                            : { delay: 0.1 + index * 0.04, duration: 0.32 }
                         }
                       >
                         <span aria-hidden="true">{String(index + 1).padStart(2, "0")}</span>

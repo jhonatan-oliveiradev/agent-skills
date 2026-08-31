@@ -38,6 +38,8 @@ describe("editorial site chrome", () => {
     fireEvent.click(screen.getByRole("button", { name: openLabel }));
     const dialog = screen.getByRole("dialog");
     expect(dialog).toHaveAttribute("data-navigation-mode", "studio-index");
+    expect(dialog).toHaveAttribute("data-viewport-contract", "desktop-100dvh");
+    expect(container.querySelector('[data-navigation-transition="header-reveal"]')).toBeInTheDocument();
     expect(within(dialog).getByText("18 SKILLS")).toBeInTheDocument();
     expect(within(dialog).getByText("6 PACKS")).toBeInTheDocument();
     expect(within(dialog).getByText("1.0.0-beta.1")).toBeInTheDocument();
@@ -64,7 +66,9 @@ describe("editorial site chrome", () => {
     expect(screen.getByText(explore)).toBeInTheDocument();
     expect(screen.getByText(project)).toBeInTheDocument();
     expect(screen.getByText(source)).toBeInTheDocument();
-    expect(screen.getByText("AGENT SKILLS STUDIO")).toBeInTheDocument();
+    const wordmark = screen.getByText("AGENT SKILLS STUDIO");
+    expect(wordmark).toBeInTheDocument();
+    expect(wordmark).toHaveAttribute("data-wordmark-scale", "restrained");
 
     const collection = footer?.querySelector<HTMLElement>(".site-footer__collection");
     expect(collection).toBeInTheDocument();
