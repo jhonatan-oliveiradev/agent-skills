@@ -7,6 +7,7 @@ import "../home-evidence.css";
 import "../home-living-archive.css";
 import "../home-living-systems.css";
 import "../home-scroll-choreography.css";
+import "../home-scroll-systems.css";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 import { ThemeProvider } from "@/components/theme-provider";
