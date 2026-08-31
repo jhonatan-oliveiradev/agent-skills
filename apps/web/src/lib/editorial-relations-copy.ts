@@ -55,3 +55,13 @@ export function formatMethodOverlap(locale: Locale, matching: number, total: num
     ? `${matching} / ${total} métodos representados`
     : `${matching} / ${total} methods represented`;
 }
+
+export function formatMethodCount(locale: Locale, count: number) {
+  if (locale === "pt-BR") return `${count} ${count === 1 ? "método" : "métodos"}`;
+  return `${count} ${count === 1 ? "method" : "methods"}`;
+}
+
+export function formatSystemStatus(locale: Locale, status: "active" | "planned") {
+  if (locale === "pt-BR") return status === "active" ? "ativo" : "planejado";
+  return status;
+}
