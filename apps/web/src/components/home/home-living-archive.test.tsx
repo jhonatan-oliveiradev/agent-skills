@@ -49,11 +49,17 @@ describe("Living Research Archive Home", () => {
     expect(screen.queryByRole("heading", { name: oldTransformationHeading })).not.toBeInTheDocument();
   });
 
-  it.each(["en", "pt-BR"] as const)("renders methods as an index and packs as editorial dossiers for %s", async (locale) => {
+  it.each(["en", "pt-BR"] as const)("renders methods and packs as scroll-reactive editorial systems for %s", async (locale) => {
     const { container } = render(await HomePage({ params: Promise.resolve({ locale }) }));
 
-    expect(container.querySelectorAll(".home-method-index > li")).toHaveLength(3);
+    const methods = container.querySelector('[data-home-section="methods"]');
+    const packs = container.querySelector('[data-home-section="packs"]');
+
+    expect(methods).toHaveAttribute("data-scroll-choreography", "staggered");
+    expect(packs).toHaveAttribute("data-scroll-choreography", "staged");
+    expect(container.querySelectorAll("[data-method-stage]")).toHaveLength(3);
     expect(container.querySelectorAll(".home-pack-dossier")).toHaveLength(3);
+    expect(container.querySelectorAll("[data-pack-stage]")).toHaveLength(3);
     expect(container.querySelectorAll(".home-pack-dossier__skills")).toHaveLength(3);
   });
 
