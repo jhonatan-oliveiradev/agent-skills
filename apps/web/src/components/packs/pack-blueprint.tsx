@@ -20,19 +20,36 @@ export interface PackBlueprintProps {
   readonly skillsCopy: Messages["skillsCatalog"];
   readonly commands: PackInstallCommands | undefined;
   readonly compositionPending: string;
+  readonly systemLabel: string;
+  readonly intentLabel: string;
+  readonly statusLabel: string;
 }
 
 export function PackBlueprint(props: Readonly<PackBlueprintProps>) {
-  const { pack, locale, detail, skillsCopy, commands, compositionPending } = props;
+  const {
+    pack,
+    locale,
+    detail,
+    skillsCopy,
+    commands,
+    compositionPending,
+    systemLabel,
+    intentLabel,
+    statusLabel,
+  } = props;
   const active = pack.status === "active";
   const status = active ? detail.active : detail.planned;
-  const readerItems = [
-    { id: "outcomes", label: detail.outcomes },
-    { id: "composition", label: detail.composition },
-    active
-      ? { id: "installation", label: detail.installation }
-      : { id: "roadmap-status", label: detail.plannedTitle },
-  ];
+  const readerItems = active
+    ? [
+        { id: "outcomes", label: detail.outcomes },
+        { id: "composition", label: detail.composition },
+        { id: "installation", label: detail.installation },
+      ]
+    : [
+        { id: "outcomes", label: detail.outcomes },
+        { id: "roadmap-status", label: detail.plannedTitle },
+        { id: "composition", label: detail.composition },
+      ];
 
   return (
     <article className="shell pack-blueprint" data-pack-state={pack.status} data-color={pack.color}>
@@ -42,7 +59,7 @@ export function PackBlueprint(props: Readonly<PackBlueprintProps>) {
 
       <header className="pack-blueprint__hero" data-pack-blueprint="hero">
         <div className="pack-blueprint__hero-copy">
-          <p className="eyebrow">SYSTEM / {status}</p>
+          <p className="eyebrow">{systemLabel} / {status}</p>
           <h1>{pack.name}</h1>
           <p className="pack-blueprint__summary">{pack.summary}</p>
         </div>
@@ -51,12 +68,12 @@ export function PackBlueprint(props: Readonly<PackBlueprintProps>) {
           items={[
             { label: detail.skills.toUpperCase(), value: String(pack.skills.length).padStart(2, "0") },
             { label: detail.version.toUpperCase(), value: pack.version },
-            { label: "STATUS", value: status },
+            { label: statusLabel, value: status },
           ]}
         />
       </header>
 
-      <section className="pack-blueprint__intent" aria-label={pack.name}>
+      <section className="pack-blueprint__intent" aria-label={pack.name} data-intent-label={intentLabel}>
         <p>{pack.description}</p>
       </section>
 
