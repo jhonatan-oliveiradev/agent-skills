@@ -1,12 +1,15 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { PackBlueprint } from "@/components/packs/pack-blueprint";
+import { getBuiltWithSkillsCases } from "@/lib/built-with-skills";
 import {
   getCatalog,
   getLocalizedPackBySlug,
   getPackInstallCommands,
 } from "@/lib/catalog";
+import { getCasesUsingPackMethods } from "@/lib/cross-domain-relations";
 import { editorialPacksCopy } from "@/lib/editorial-packs-copy";
+import { editorialRelationsCopy } from "@/lib/editorial-relations-copy";
 import { isLocale } from "@/lib/i18n";
 import { messages } from "@/lib/messages";
 
@@ -56,6 +59,7 @@ export default async function PackDetailPage({ params }: PackPageProps) {
   const copy = messages[locale];
   const editorialCopy = editorialPacksCopy[locale];
   const commands = getPackInstallCommands(pack.slug, pack.status);
+  const evidenceRelations = getCasesUsingPackMethods(getBuiltWithSkillsCases(locale), pack);
   const structuredData = {
     "@context": "https://schema.org",
     "@type": "CollectionPage",
@@ -78,6 +82,8 @@ export default async function PackDetailPage({ params }: PackPageProps) {
         detail={copy.packDetail}
         skillsCopy={copy.skillsCatalog}
         commands={commands}
+        evidenceRelations={evidenceRelations}
+        relationsCopy={editorialRelationsCopy[locale]}
         compositionPending={editorialCopy.compositionPending}
         systemLabel={editorialCopy.systemLabel}
         intentLabel={editorialCopy.intentLabel}
