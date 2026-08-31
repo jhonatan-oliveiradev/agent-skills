@@ -56,29 +56,33 @@ describe("Living Research Archive Home", () => {
     const packs = container.querySelector('[data-home-section="packs"]');
 
     expect(methods).toHaveAttribute("data-scroll-choreography", "staggered");
+    expect(methods).toHaveAttribute("data-scroll-timing", "reading-zone");
     expect(packs).toHaveAttribute("data-scroll-choreography", "staged");
+    expect(packs).toHaveAttribute("data-scroll-timing", "reading-zone");
     expect(container.querySelectorAll("[data-method-stage]")).toHaveLength(3);
     expect(container.querySelectorAll(".home-pack-dossier")).toHaveLength(3);
     expect(container.querySelectorAll("[data-pack-stage]")).toHaveLength(3);
     expect(container.querySelectorAll(".home-pack-dossier__skills")).toHaveLength(3);
   });
 
-  it("connects the four workflow movements with a scrubbed Evidence Thread", async () => {
+  it("connects the four workflow movements with a stage-anchored Evidence Thread", async () => {
     const { container } = render(await HomePage({ params: Promise.resolve({ locale: "en" }) }));
     const workflow = container.querySelector('[data-home-section="workflow"]');
 
     expect(workflow).toHaveAttribute("data-scroll-choreography", "scrubbed");
+    expect(workflow).toHaveAttribute("data-scroll-timing", "stage-anchored");
     expect(container.querySelectorAll("[data-workflow-stage]")).toHaveLength(4);
     expect(workflow?.querySelector('[data-evidence-thread-mode="workflow"]')).toBeInTheDocument();
     expect(workflow?.querySelector("canvas")).not.toBeInTheDocument();
   });
 
-  it("renders Case 001 as one scrubbed four-checkpoint scene when motion is enabled", () => {
+  it("renders Case 001 as one scrubbed four-checkpoint scene with a reading dwell", () => {
     const { container } = render(<HomeCaseStudyStory {...caseStudyProps} />);
 
     const story = container.querySelector('[data-case-mode="sticky"]');
     expect(story).toBeInTheDocument();
     expect(story).toHaveAttribute("data-scroll-choreography", "scrubbed");
+    expect(story).toHaveAttribute("data-scroll-timing", "dwell-then-transform");
     expect(container.querySelector('[data-case-sticky="true"]')).toBeInTheDocument();
     expect(container.querySelectorAll("[data-case-artifact]")).toHaveLength(1);
     expect(container.querySelectorAll("[data-case-stage]")).toHaveLength(4);

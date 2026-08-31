@@ -10,6 +10,8 @@ import { HomeEvidenceThread } from "./home-evidence-thread";
 
 gsap.registerPlugin(ScrollTrigger, useGSAP);
 
+const CASE_STAGE_PROGRESS = [0, 0.27, 0.53, 0.78] as const;
+
 export type HomeCaseEvidenceLink = Readonly<{
   label: string;
   href: string;
@@ -92,7 +94,11 @@ export function HomeCaseStudyStory({
       if (threadPath) gsap.set(threadPath, { strokeDasharray: 1, strokeDashoffset: 1 });
 
       const setActiveCheckpoint = (progress: number) => {
-        const next = Math.min(stages.length - 1, Math.max(0, Math.floor(progress * stages.length)));
+        let next = 0;
+        for (let index = 1; index < Math.min(stages.length, CASE_STAGE_PROGRESS.length); index += 1) {
+          if (progress >= CASE_STAGE_PROGRESS[index]) next = index;
+        }
+
         if (next === activeRef.current) return;
         activeRef.current = next;
         setActiveIndex(next);
@@ -102,9 +108,9 @@ export function HomeCaseStudyStory({
         defaults: { ease: "none" },
         scrollTrigger: {
           trigger: stageRef.current,
-          start: "top top+=72",
-          end: () => `+=${Math.max(window.innerHeight * 3.4, 2400)}`,
-          scrub: 0.65,
+          start: "top top+=88",
+          end: () => `+=${Math.max(window.innerHeight * 2.9, 2100)}`,
+          scrub: 0.18,
           pin: stageRef.current,
           pinSpacing: true,
           anticipatePin: 1,
@@ -114,62 +120,63 @@ export function HomeCaseStudyStory({
       });
 
       timeline
+        // 0 → ~10%: intentional dwell. The reader gets the Problem state before motion starts.
         .addLabel("problem", 0)
         .to(
           grid,
           {
             xPercent: 0,
             scale: 0.985,
-            duration: 1,
+            duration: 0.62,
           },
-          0,
+          0.38,
         )
         .to(
           aside,
           {
             xPercent: 0,
-            duration: 1,
+            duration: 0.62,
           },
-          0,
+          0.38,
         )
         .to(
           copyLines,
           {
             scaleX: 0.93,
             opacity: 0.88,
-            stagger: 0.035,
-            duration: 0.9,
+            stagger: 0.025,
+            duration: 0.58,
           },
-          0.05,
+          0.4,
         )
-        .to(scanline, { autoAlpha: 0.72, yPercent: 8, duration: 0.8 }, 0.15)
-        .to(threadPath, { strokeDashoffset: 0.68, duration: 1 }, 0)
-        .to(checkpoints[0], { autoAlpha: 0, y: -18, pointerEvents: "none", duration: 0.18 }, 0.78)
-        .to(checkpoints[1], { autoAlpha: 1, y: 0, pointerEvents: "auto", duration: 0.2 }, 0.82)
+        .to(scanline, { autoAlpha: 0.72, yPercent: 8, duration: 0.55 }, 0.44)
+        .to(threadPath, { strokeDashoffset: 0.68, duration: 0.64 }, 0.36)
+        .to(checkpoints[0], { autoAlpha: 0, y: -18, pointerEvents: "none", duration: 0.16 }, 0.92)
+        .to(checkpoints[1], { autoAlpha: 1, y: 0, pointerEvents: "auto", duration: 0.18 }, 0.96)
         .addLabel("method", 1)
         .to(
           artifact,
           {
             scale: 1.012,
-            duration: 1,
+            duration: 0.82,
           },
-          1,
+          1.04,
         )
         .to(
           copyLines,
           {
             scaleX: 1,
             opacity: 1,
-            stagger: 0.03,
-            duration: 0.8,
+            stagger: 0.025,
+            duration: 0.72,
           },
-          1,
+          1.06,
         )
-        .to(scanline, { autoAlpha: 0.9, yPercent: 72, duration: 0.9 }, 1)
-        .to(threadPath, { strokeDashoffset: 0.38, duration: 1 }, 1)
-        .to(checkpoints[1], { autoAlpha: 0, y: -18, pointerEvents: "none", duration: 0.18 }, 1.78)
-        .to(checkpoints[2], { autoAlpha: 1, y: 0, pointerEvents: "auto", duration: 0.2 }, 1.82)
-        .addLabel("transformation", 2)
+        .to(scanline, { autoAlpha: 0.9, yPercent: 72, duration: 0.78 }, 1.04)
+        .to(threadPath, { strokeDashoffset: 0.38, duration: 0.82 }, 1.04)
+        .to(checkpoints[1], { autoAlpha: 0, y: -18, pointerEvents: "none", duration: 0.16 }, 1.86)
+        .to(checkpoints[2], { autoAlpha: 1, y: 0, pointerEvents: "auto", duration: 0.18 }, 1.9)
+        .addLabel("transformation", 1.94)
         .to(
           veil,
           {
@@ -178,43 +185,43 @@ export function HomeCaseStudyStory({
             yPercent: 0,
             rotation: -7,
             scale: 1.06,
-            duration: 1,
+            duration: 0.86,
           },
-          2,
+          1.98,
         )
         .to(
           grid,
           {
             xPercent: 1.2,
             scale: 1.012,
-            duration: 1,
+            duration: 0.86,
           },
-          2,
+          1.98,
         )
-        .to(scanline, { autoAlpha: 0.35, yPercent: 135, duration: 0.85 }, 2)
-        .to(threadPath, { strokeDashoffset: 0.12, duration: 1 }, 2)
-        .to(checkpoints[2], { autoAlpha: 0, y: -18, pointerEvents: "none", duration: 0.18 }, 2.78)
-        .to(checkpoints[3], { autoAlpha: 1, y: 0, pointerEvents: "auto", duration: 0.2 }, 2.82)
-        .addLabel("evidence", 3)
+        .to(scanline, { autoAlpha: 0.35, yPercent: 135, duration: 0.78 }, 1.98)
+        .to(threadPath, { strokeDashoffset: 0.12, duration: 0.84 }, 1.98)
+        .to(checkpoints[2], { autoAlpha: 0, y: -18, pointerEvents: "none", duration: 0.16 }, 2.78)
+        .to(checkpoints[3], { autoAlpha: 1, y: 0, pointerEvents: "auto", duration: 0.18 }, 2.82)
+        .addLabel("evidence", 2.86)
         .to(
           artifact,
           {
             scale: 1.025,
-            duration: 0.8,
+            duration: 0.7,
           },
-          3,
+          2.9,
         )
         .to(
           aside,
           {
             xPercent: 2,
             borderColor: "rgba(167, 139, 250, 0.46)",
-            duration: 0.8,
+            duration: 0.7,
           },
-          3,
+          2.9,
         )
-        .to(scanline, { autoAlpha: 0, duration: 0.45 }, 3)
-        .to(threadPath, { strokeDashoffset: 0, duration: 0.8 }, 3);
+        .to(scanline, { autoAlpha: 0, duration: 0.4 }, 2.9)
+        .to(threadPath, { strokeDashoffset: 0, duration: 0.68 }, 2.9);
     },
     {
       scope: rootRef,
@@ -230,6 +237,7 @@ export function HomeCaseStudyStory({
       data-case-mode={linearMode ? "linear" : "sticky"}
       data-home-section="case-study"
       data-scroll-choreography={linearMode ? "static" : "scrubbed"}
+      data-scroll-timing={linearMode ? "static" : "dwell-then-transform"}
     >
       <div className="shell home-case-story__intro">
         <p className="eyebrow">{eyebrow}</p>

@@ -81,9 +81,9 @@ export function HomeMethodIndex({ eyebrow, title, summary, viewAllLabel, viewAll
             ease: "none",
             scrollTrigger: {
               trigger: row,
-              start: "top 88%",
-              end: "center 58%",
-              scrub: 0.48,
+              start: "top 76%",
+              end: "center 54%",
+              scrub: 0.18,
               invalidateOnRefresh: true,
             },
           },
@@ -99,9 +99,9 @@ export function HomeMethodIndex({ eyebrow, title, summary, viewAllLabel, viewAll
               ease: "none",
               scrollTrigger: {
                 trigger: row,
-                start: "top 74%",
+                start: "top 68%",
                 end: "center 48%",
-                scrub: 0.4,
+                scrub: 0.16,
                 invalidateOnRefresh: true,
               },
             },
@@ -117,9 +117,9 @@ export function HomeMethodIndex({ eyebrow, title, summary, viewAllLabel, viewAll
               ease: "none",
               scrollTrigger: {
                 trigger: row,
-                start: "top 82%",
-                end: "center 54%",
-                scrub: 0.4,
+                start: "top 72%",
+                end: "center 52%",
+                scrub: 0.16,
                 invalidateOnRefresh: true,
               },
             },
@@ -132,9 +132,9 @@ export function HomeMethodIndex({ eyebrow, title, summary, viewAllLabel, viewAll
             ease: "none",
             scrollTrigger: {
               trigger: rows[index + 1],
-              start: "top 68%",
+              start: "top 62%",
               end: "top 48%",
-              scrub: 0.35,
+              scrub: 0.14,
               invalidateOnRefresh: true,
             },
           });
@@ -154,6 +154,7 @@ export function HomeMethodIndex({ eyebrow, title, summary, viewAllLabel, viewAll
       className="home-methods-v2 home-methods-archive"
       data-home-section="methods"
       data-scroll-choreography={staticMode ? "static" : "staggered"}
+      data-scroll-timing={staticMode ? "static" : "reading-zone"}
     >
       <div className="shell">
         <div className="home-editorial-heading home-methods-archive__heading">
