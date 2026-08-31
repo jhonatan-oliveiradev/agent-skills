@@ -138,6 +138,7 @@ export function EditorialNavigation({
             initial={reducedMotion ? false : { opacity: 0, y: -18 }}
             ref={panelRef}
             role="dialog"
+            style={{ maxHeight: "none" }}
             transition={
               reducedMotion
                 ? { duration: 0 }
