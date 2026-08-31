@@ -63,6 +63,16 @@ describe("Living Research Archive Home", () => {
     expect(container.querySelectorAll(".home-pack-dossier__skills")).toHaveLength(3);
   });
 
+  it("connects the four workflow movements with a scrubbed Evidence Thread", async () => {
+    const { container } = render(await HomePage({ params: Promise.resolve({ locale: "en" }) }));
+    const workflow = container.querySelector('[data-home-section="workflow"]');
+
+    expect(workflow).toHaveAttribute("data-scroll-choreography", "scrubbed");
+    expect(container.querySelectorAll("[data-workflow-stage]")).toHaveLength(4);
+    expect(workflow?.querySelector('[data-evidence-thread-mode="workflow"]')).toBeInTheDocument();
+    expect(workflow?.querySelector("canvas")).not.toBeInTheDocument();
+  });
+
   it("renders Case 001 as one scrubbed four-checkpoint scene when motion is enabled", () => {
     const { container } = render(<HomeCaseStudyStory {...caseStudyProps} />);
 
