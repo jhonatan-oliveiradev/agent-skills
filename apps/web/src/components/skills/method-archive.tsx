@@ -2,46 +2,35 @@
 
 import { parseAsString, useQueryStates } from "nuqs";
 import { useMemo } from "react";
+import type { Messages } from "@/lib/messages";
 import {
   filterSkills,
   type SkillCatalogItem,
   type SkillFilters,
 } from "@/lib/skill-filters";
-import { SkillCard } from "./skill-card";
+import { MethodRow } from "./method-row";
 
 interface FilterOption {
   readonly value: string;
   readonly label: string;
 }
 
-interface SkillsCatalogCopy {
-  readonly searchLabel: string;
-  readonly searchPlaceholder: string;
-  readonly category: string;
-  readonly pack: string;
-  readonly difficulty: string;
-  readonly maturity: string;
-  readonly all: string;
-  readonly results: string;
-  readonly noResultsTitle: string;
-  readonly noResultsSummary: string;
-  readonly clear: string;
-  readonly benefit: string;
-  readonly tags: string;
-  readonly values: Readonly<Record<string, string>>;
-  readonly categories: Readonly<Record<string, string>>;
-}
+type ArchiveOptions = Readonly<
+  Record<"categories" | "packs" | "difficulties" | "maturities", readonly FilterOption[]>
+>;
 
-export function SkillsCatalog({
+export function MethodArchive({
   skills,
   options,
   copy,
   locale,
+  filterLabel,
 }: Readonly<{
   skills: readonly SkillCatalogItem[];
-  options: Readonly<Record<"categories" | "packs" | "difficulties" | "maturities", readonly FilterOption[]>>;
-  copy: SkillsCatalogCopy;
+  options: ArchiveOptions;
+  copy: Messages["skillsCatalog"];
   locale: string;
+  filterLabel: string;
 }>) {
   const [queryState, setQueryState] = useQueryStates(
     {
@@ -53,11 +42,13 @@ export function SkillsCatalog({
     },
     { history: "replace", shallow: true, clearOnDefault: true },
   );
+
   const filters = useMemo<Required<SkillFilters>>(
     () => ({ query: queryState.q, ...queryState }),
     [queryState],
   );
   const results = useMemo(() => filterSkills(skills, filters), [skills, filters]);
+  const hasActiveFilters = Object.values(filters).some(Boolean);
 
   function updateFilter(key: keyof SkillFilters, value: string) {
     const queryKey = key === "query" ? "q" : key;
@@ -74,7 +65,7 @@ export function SkillsCatalog({
     values: readonly FilterOption[],
   ) {
     return (
-      <label>
+      <label className="method-archive__select">
         <span>{label}</span>
         <select value={filters[key]} onChange={(event) => updateFilter(key, event.target.value)}>
           <option value="">{copy.all}</option>
@@ -89,9 +80,9 @@ export function SkillsCatalog({
   }
 
   return (
-    <>
-      <section className="catalog-toolbar" aria-label={copy.results.replace("{count}", String(results.length))}>
-        <label className="catalog-search">
+    <section className="method-archive" data-method-archive>
+      <div className="method-archive__controls" aria-label={filterLabel}>
+        <label className="method-archive__search">
           <span>{copy.searchLabel}</span>
           <input
             type="search"
@@ -100,41 +91,65 @@ export function SkillsCatalog({
             onChange={(event) => updateFilter("query", event.target.value)}
           />
         </label>
-        <div className="catalog-filters">
-          {selectFilter(copy.category, "category", options.categories)}
+
+        <div className="method-archive__categories" role="group" aria-label={copy.category}>
+          <button
+            type="button"
+            data-active={!filters.category}
+            onClick={() => updateFilter("category", "")}
+          >
+            {copy.all}
+          </button>
+          {options.categories.map((option) => {
+            const active = filters.category === option.value;
+            return (
+              <button
+                type="button"
+                data-active={active}
+                key={option.value}
+                onClick={() => updateFilter("category", active ? "" : option.value)}
+              >
+                {option.label}
+              </button>
+            );
+          })}
+        </div>
+
+        <div className="method-archive__secondary-filters">
           {selectFilter(copy.pack, "pack", options.packs)}
           {selectFilter(copy.difficulty, "difficulty", options.difficulties)}
           {selectFilter(copy.maturity, "maturity", options.maturities)}
         </div>
-        <div className="catalog-toolbar__summary" aria-live="polite">
+
+        <div className="method-archive__summary" aria-live="polite">
           <strong>{copy.results.replace("{count}", String(results.length))}</strong>
-          {Object.values(filters).some(Boolean) ? (
+          {hasActiveFilters ? (
             <button type="button" onClick={clearFilters}>
               {copy.clear}
             </button>
           ) : null}
         </div>
-      </section>
+      </div>
 
       {results.length ? (
-        <section className="skill-grid">
+        <div className="method-archive__list">
           {results.map((skill) => (
-            <SkillCard
+            <MethodRow
               key={skill.slug}
               skill={skill}
+              index={skills.findIndex((candidate) => candidate.slug === skill.slug)}
               href={`/${locale}/skills/${skill.slug}`}
               labels={{
                 benefit: copy.benefit,
-                category: copy.category,
-                tags: copy.tags,
-                values: copy.values,
-                categories: copy.categories,
+                category: copy.categories[skill.category] ?? skill.category.replaceAll("-", " "),
+                difficulty: copy.values[skill.difficulty as keyof typeof copy.values] ?? skill.difficulty,
+                maturity: copy.values[skill.maturity as keyof typeof copy.values] ?? skill.maturity,
               }}
             />
           ))}
-        </section>
+        </div>
       ) : (
-        <section className="catalog-empty">
+        <section className="catalog-empty method-archive__empty">
           <h2>{copy.noResultsTitle}</h2>
           <p>{copy.noResultsSummary}</p>
           <button type="button" className="button button--secondary" onClick={clearFilters}>
@@ -142,6 +157,6 @@ export function SkillsCatalog({
           </button>
         </section>
       )}
-    </>
+    </section>
   );
 }

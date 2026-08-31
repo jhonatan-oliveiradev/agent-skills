@@ -74,4 +74,21 @@ describe("editorial design foundation", () => {
     expect(instrumentLicense).toContain("SIL OPEN FONT LICENSE");
     expect(plexLicense).toContain("SIL OPEN FONT LICENSE");
   });
+
+  it("keeps editorial page styles and global chrome owned by the locale layout", async () => {
+    const [layout, skillsIndex, skillDetail] = await Promise.all([
+      read("app/[locale]/layout.tsx"),
+      read("app/[locale]/skills/page.tsx"),
+      read("app/[locale]/skills/[slug]/page.tsx"),
+    ]);
+
+    expect(layout).toContain('import "../editorial-pages.css"');
+    expect(layout).toContain("<SiteHeader locale={locale} />");
+    expect(layout).toContain("<SiteFooter locale={locale} />");
+
+    for (const route of [skillsIndex, skillDetail]) {
+      expect(route).not.toContain("SiteHeader");
+      expect(route).not.toContain("SiteFooter");
+    }
+  });
 });

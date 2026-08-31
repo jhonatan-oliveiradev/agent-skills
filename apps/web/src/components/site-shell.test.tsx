@@ -352,9 +352,19 @@ describe("foundation navigation targets", () => {
   });
 
   it.each([
-    ["en", "Skills", "18 skills found"],
-    ["pt-BR", "Habilidades", "18 skills encontradas"],
-  ] as const)("renders the localized skills catalog for %s", async (locale, heading, count) => {
+    [
+      "en",
+      "Methods for agents that need to work better.",
+      "Search skills",
+      "/en/skills/designing-ui-systems",
+    ],
+    [
+      "pt-BR",
+      "Métodos para agentes que precisam trabalhar melhor.",
+      "Buscar skills",
+      "/pt-BR/skills/designing-ui-systems",
+    ],
+  ] as const)("renders the localized method archive for %s", async (locale, heading, searchLabel, methodHref) => {
     const { container } = render(
       <NuqsTestingAdapter>
         {await SkillsPage({ params: Promise.resolve({ locale }) })}
@@ -362,7 +372,9 @@ describe("foundation navigation targets", () => {
     );
 
     expect(screen.getByRole("heading", { level: 1, name: heading })).toBeInTheDocument();
-    expect(screen.getByText(count)).toBeInTheDocument();
-    expect(container.querySelectorAll(".skill-card")).toHaveLength(18);
+    expect(screen.getByRole("searchbox", { name: searchLabel })).toBeInTheDocument();
+    expect(container.querySelectorAll("[data-method-row]")).toHaveLength(18);
+    expect(container.querySelector(`[data-method-row] a[href="${methodHref}"]`)).toBeInTheDocument();
+    expect(container.querySelector(".skill-card")).not.toBeInTheDocument();
   });
 });

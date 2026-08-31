@@ -1,11 +1,13 @@
 import type { Metadata } from "next";
 import { Suspense } from "react";
+import { EditorialPageHero } from "@/components/editorial/editorial-page-hero";
 import {
   createFoundationMetadata,
   resolveLocale,
 } from "@/components/foundation-route";
-import { SkillsCatalog } from "@/components/skills-catalog";
+import { MethodArchive } from "@/components/skills/method-archive";
 import { getCatalog, getLocalizedPackNames, getLocalizedSkills } from "@/lib/catalog";
+import { editorialMethodsCopy } from "@/lib/editorial-methods-copy";
 import { messages } from "@/lib/messages";
 
 type PageProps = Readonly<{ params: Promise<{ locale: string }> }>;
@@ -18,24 +20,34 @@ export default async function SkillsPage({ params }: PageProps) {
   const locale = await resolveLocale(params);
   const catalog = getCatalog();
   const packNames = getLocalizedPackNames(locale);
-  const copy = messages[locale];
-  const skillCopy = copy.skillsCatalog;
+  const skillCopy = messages[locale].skillsCatalog;
+  const editorialCopy = editorialMethodsCopy[locale];
   const categoryNames: Readonly<Record<string, string>> = skillCopy.categories;
   const localizedSkills = getLocalizedSkills(locale);
   const activePacks = new Set(localizedSkills.flatMap((skill) => skill.packs));
+  const metadata = [
+    { label: editorialCopy.methodsMetric, value: String(localizedSkills.length).padStart(2, "0") },
+    { label: editorialCopy.packsMetric, value: String(activePacks.size).padStart(2, "0") },
+    { label: editorialCopy.categoriesMetric, value: String(catalog.filters.categories.length).padStart(2, "0") },
+    { label: editorialCopy.versionMetric, value: catalog.version },
+  ] as const;
 
   return (
-    <article className="shell skills-page">
-      <header className="skills-page__header">
-        <p className="eyebrow">{skillCopy.eyebrow}</p>
-        <h1>{copy.foundation.skills.title}</h1>
-        <p>{copy.foundation.skills.summary}</p>
-      </header>
-      <Suspense fallback={<div className="catalog-loading">{skillCopy.loading}</div>}>
-        <SkillsCatalog
+    <article className="shell editorial-page methods-page" data-method-archive-page>
+      <EditorialPageHero
+        className="methods-page__hero"
+        eyebrow={editorialCopy.archiveLabel}
+        title={editorialCopy.archiveTitle}
+        summary={editorialCopy.archiveSummary}
+        metadata={metadata}
+      />
+
+      <Suspense fallback={<div className="catalog-loading method-archive__loading">{skillCopy.loading}</div>}>
+        <MethodArchive
           skills={localizedSkills}
           locale={locale}
           copy={skillCopy}
+          filterLabel={editorialCopy.filterLabel}
           options={{
             categories: catalog.filters.categories.map((value) => ({
               value,
