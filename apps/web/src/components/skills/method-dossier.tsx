@@ -5,6 +5,7 @@ import { EditorialMetadata } from "@/components/editorial/editorial-metadata";
 import { EditorialSectionHeading } from "@/components/editorial/editorial-section-heading";
 import type { BuiltWithSkillsCase } from "@/lib/built-with-skills";
 import type { LocalizedPack, LocalizedSkillDetail } from "@/lib/catalog";
+import { formatMethodCount, formatSystemStatus } from "@/lib/editorial-relations-copy";
 import type { Locale } from "@/lib/locales";
 import type { Messages } from "@/lib/messages";
 import { MethodReader } from "./method-reader";
@@ -245,9 +246,13 @@ export function MethodDossier({
                     data-interaction="connect"
                     href={`/${locale}/packs/${pack.slug}` as Route}
                   >
-                    <span className="editorial-relation-row__eyebrow">{pack.status}</span>
+                    <span className="editorial-relation-row__eyebrow">
+                      {formatSystemStatus(locale, pack.status)}
+                    </span>
                     <strong>{pack.name}</strong>
-                    <span className="editorial-relation-row__meta">{pack.skills.length} methods</span>
+                    <span className="editorial-relation-row__meta">
+                      {formatMethodCount(locale, pack.skills.length)}
+                    </span>
                     <span className="editorial-relation-row__arrow" aria-hidden="true">↗</span>
                   </Link>
                 </li>
