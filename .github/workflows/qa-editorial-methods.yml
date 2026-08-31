@@ -79,8 +79,6 @@ jobs:
             const metrics = await page.evaluate(() => ({
               clientWidth: document.documentElement.clientWidth,
               scrollWidth: document.documentElement.scrollWidth,
-              headerCount: document.querySelectorAll("body > div header, body > header, header[data-site-chrome]").length,
-              footerCount: document.querySelectorAll("footer[data-footer-mode]").length,
             }));
 
             if (metrics.scrollWidth > metrics.clientWidth + 1) {
@@ -167,3 +165,4 @@ jobs:
           name: editorial-methods-rendered-qa
           path: apps/web/.qa-methods
           if-no-files-found: error
+          include-hidden-files: true
