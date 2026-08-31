@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
+import { EditorialPageHero } from "@/components/editorial/editorial-page-hero";
 import { createFoundationMetadata, resolveLocale } from "@/components/foundation-route";
-import { PackCard } from "@/components/pack-card";
-import { getLocalizedPacks } from "@/lib/catalog";
-import { messages } from "@/lib/messages";
+import { PackArchive } from "@/components/packs/pack-archive";
+import { getCatalog, getLocalizedPacks } from "@/lib/catalog";
+import { editorialPacksCopy } from "@/lib/editorial-packs-copy";
 
 type PageProps = Readonly<{ params: Promise<{ locale: string }> }>;
 
@@ -12,26 +13,40 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
 export default async function PacksPage({ params }: PageProps) {
   const locale = await resolveLocale(params);
-  const copy = messages[locale];
+  const catalog = getCatalog();
   const packs = getLocalizedPacks(locale);
+  const copy = editorialPacksCopy[locale];
+  const activeCount = packs.filter((pack) => pack.status === "active").length;
+  const plannedCount = packs.length - activeCount;
+  const metadata = [
+    { label: copy.systemsMetric, value: String(packs.length).padStart(2, "0") },
+    { label: copy.activeMetric, value: String(activeCount).padStart(2, "0") },
+    { label: copy.plannedMetric, value: String(plannedCount).padStart(2, "0") },
+    { label: copy.versionMetric, value: catalog.version },
+  ] as const;
 
   return (
-    <article className="shell packs-page">
-      <header className="packs-page__header">
-        <p className="eyebrow">{copy.packCatalog.eyebrow}</p>
-        <h1>{copy.foundation.packs.title}</h1>
-        <p>{copy.packCatalog.summary}</p>
-      </header>
-      <section className="pack-grid" aria-label={copy.navigation.packs}>
-        {packs.map((pack) => (
-          <PackCard
-            key={pack.slug}
-            pack={pack}
-            href={`/${locale}/packs/${pack.slug}`}
-            labels={copy.packCatalog}
-          />
-        ))}
-      </section>
+    <article className="shell packs-page editorial-packs-page" data-pack-archive-page>
+      <EditorialPageHero
+        className="editorial-packs-page__hero"
+        eyebrow={copy.archiveLabel}
+        title={copy.archiveTitle}
+        summary={copy.archiveSummary}
+        metadata={metadata}
+      />
+
+      <PackArchive
+        packs={packs}
+        locale={locale}
+        labels={{
+          active: copy.active,
+          planned: copy.planned,
+          methods: copy.methods,
+          composition: copy.composition,
+          compositionPending: copy.compositionPending,
+          explore: copy.explore,
+        }}
+      />
     </article>
   );
 }

@@ -320,20 +320,17 @@ describe("foundation navigation targets", () => {
   });
 
   it.each([
-    ["en", "Packs", "Active", "Planned"],
-    ["pt-BR", "Pacotes", "Ativo", "Planejado"],
-  ] as const)("renders active and planned packs for %s", async (locale, heading, active, planned) => {
+    ["en", "Methods that become stronger together.", "/en/packs/frontend-product"],
+    ["pt-BR", "Métodos que ficam melhores juntos.", "/pt-BR/packs/frontend-product"],
+  ] as const)("renders the curated systems archive for %s", async (locale, heading, packHref) => {
     const { container } = render(await PacksPage({ params: Promise.resolve({ locale }) }));
 
     expect(screen.getByRole("heading", { level: 1, name: heading })).toBeInTheDocument();
-    expect(container.querySelectorAll(".pack-card")).toHaveLength(6);
-    expect(screen.getAllByText(active)).toHaveLength(3);
-    expect(screen.getAllByText(planned)).toHaveLength(3);
-    expect(
-      screen.getAllByText(
-        locale === "en" ? "Composition in progress" : "Composição em definição",
-      ),
-    ).toHaveLength(3);
+    expect(container.querySelectorAll("[data-pack-dossier]")).toHaveLength(6);
+    expect(container.querySelectorAll('[data-pack-dossier][data-status="active"]')).toHaveLength(3);
+    expect(container.querySelectorAll('[data-pack-dossier][data-status="planned"]')).toHaveLength(3);
+    expect(container.querySelector(`[data-pack-dossier] a[href="${packHref}"]`)).toBeInTheDocument();
+    expect(container.querySelector(".pack-card")).not.toBeInTheDocument();
   });
 
   it.each([
