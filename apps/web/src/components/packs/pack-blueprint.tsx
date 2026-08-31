@@ -5,6 +5,9 @@ import { EditorialMetadata } from "@/components/editorial/editorial-metadata";
 import { EditorialReaderNav } from "@/components/editorial/editorial-reader-nav";
 import { EditorialSectionHeading } from "@/components/editorial/editorial-section-heading";
 import type { LocalizedPack } from "@/lib/catalog";
+import type { PackEvidenceRelation } from "@/lib/cross-domain-relations";
+import { formatMethodOverlap } from "@/lib/editorial-relations-copy";
+import type { Locale } from "@/lib/locales";
 import type { Messages } from "@/lib/messages";
 import { PackCompositionMap } from "./pack-composition-map";
 
@@ -13,12 +16,21 @@ interface PackInstallCommands {
   readonly powershell: string;
 }
 
+interface RelationsCopy {
+  readonly relatedEvidence: string;
+  readonly relatedEvidenceSummary: string;
+  readonly inspectReport: string;
+  readonly methodOverlap: string;
+}
+
 export interface PackBlueprintProps {
   readonly pack: LocalizedPack;
-  readonly locale: string;
+  readonly locale: Locale;
   readonly detail: Messages["packDetail"];
   readonly skillsCopy: Messages["skillsCatalog"];
   readonly commands: PackInstallCommands | undefined;
+  readonly evidenceRelations: readonly PackEvidenceRelation[];
+  readonly relationsCopy: RelationsCopy;
   readonly compositionPending: string;
   readonly systemLabel: string;
   readonly intentLabel: string;
@@ -32,6 +44,8 @@ export function PackBlueprint(props: Readonly<PackBlueprintProps>) {
     detail,
     skillsCopy,
     commands,
+    evidenceRelations,
+    relationsCopy,
     compositionPending,
     systemLabel,
     intentLabel,
@@ -39,17 +53,13 @@ export function PackBlueprint(props: Readonly<PackBlueprintProps>) {
   } = props;
   const active = pack.status === "active";
   const status = active ? detail.active : detail.planned;
-  const readerItems = active
-    ? [
-        { id: "outcomes", label: detail.outcomes },
-        { id: "composition", label: detail.composition },
-        { id: "installation", label: detail.installation },
-      ]
-    : [
-        { id: "outcomes", label: detail.outcomes },
-        { id: "roadmap-status", label: detail.plannedTitle },
-        { id: "composition", label: detail.composition },
-      ];
+  const readerItems = [
+    { id: "outcomes", label: detail.outcomes },
+    ...(!active ? [{ id: "roadmap-status", label: detail.plannedTitle }] : []),
+    { id: "composition", label: detail.composition },
+    ...(evidenceRelations.length ? [{ id: "evidence", label: relationsCopy.relatedEvidence }] : []),
+    ...(commands ? [{ id: "installation", label: detail.installation }] : []),
+  ];
 
   return (
     <article className="shell pack-blueprint" data-pack-state={pack.status} data-color={pack.color}>
@@ -113,6 +123,47 @@ export function PackBlueprint(props: Readonly<PackBlueprintProps>) {
               labels={{ composition: detail.composition, benefit: skillsCopy.benefit, pending: compositionPending }}
             />
           </div>
+
+          {evidenceRelations.length ? (
+            <section
+              className="pack-blueprint__evidence editorial-relations"
+              data-pack-evidence
+              id="evidence"
+            >
+              <EditorialSectionHeading
+                title={relationsCopy.relatedEvidence}
+                summary={relationsCopy.relatedEvidenceSummary}
+              />
+              <ul className="editorial-relations__list">
+                {evidenceRelations.map((relation) => (
+                  <li
+                    className="editorial-relation-row"
+                    data-pack-evidence-relation
+                    key={relation.case.slug}
+                  >
+                    <Link
+                      aria-label={relation.case.title}
+                      data-interaction="connect"
+                      href={`/${locale}/built-with-skills/${relation.case.slug}` as Route}
+                    >
+                      <span className="editorial-relation-row__eyebrow">
+                        {relationsCopy.methodOverlap}
+                      </span>
+                      <strong>{relation.case.title}</strong>
+                      <span className="editorial-relation-row__meta">
+                        {formatMethodOverlap(
+                          locale,
+                          relation.matchingSkillSlugs.length,
+                          pack.skills.length,
+                        )}
+                      </span>
+                      <span className="editorial-relation-row__arrow" aria-hidden="true">↗</span>
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </section>
+          ) : null}
 
           {commands ? (
             <section id="installation" className="pack-blueprint__installation">

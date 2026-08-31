@@ -25,6 +25,23 @@ describe("System Blueprint", () => {
     expect(screen.getByText("./install.sh --pack frontend-product")).toBeInTheDocument();
   });
 
+  it("connects a pack to reports using methods from the system without claiming pack usage", async () => {
+    const { container } = render(
+      await PackDetailPage({
+        params: Promise.resolve({ locale: "en", slug: "frontend-product" }),
+      }),
+    );
+
+    expect(container.querySelector("[data-pack-evidence]")).toBeInTheDocument();
+    expect(container.querySelectorAll("[data-pack-evidence-relation]")).toHaveLength(2);
+    expect(screen.getByRole("link", { name: "Catalog experience" })).toHaveAttribute(
+      "href",
+      "/en/built-with-skills/catalog-experience",
+    );
+    expect(screen.getAllByText("3 / 8 methods represented")).toHaveLength(2);
+    expect(screen.queryByText(/pack used/i)).not.toBeInTheDocument();
+  });
+
   it("keeps planned packs honest and never renders fake installation controls", async () => {
     const { container } = render(
       await PackDetailPage({

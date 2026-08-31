@@ -5,24 +5,37 @@ import { EditorialReaderNav } from "@/components/editorial/editorial-reader-nav"
 import { EditorialSectionHeading } from "@/components/editorial/editorial-section-heading";
 import type { BuiltWithSkillsCase } from "@/lib/built-with-skills";
 import type { LocalizedSkillDetail } from "@/lib/catalog";
+import type { CasePackRelation } from "@/lib/cross-domain-relations";
 import type { editorialEvidenceCopy } from "@/lib/editorial-evidence-copy";
+import { formatMethodOverlap } from "@/lib/editorial-relations-copy";
 import type { Locale } from "@/lib/locales";
 import type { Messages } from "@/lib/messages";
 
 type EvidenceCopy = (typeof editorialEvidenceCopy)[Locale];
 
+interface RelationsCopy {
+  readonly relatedSystems: string;
+  readonly relatedSystemsSummary: string;
+  readonly methodOverlap: string;
+  readonly overlapDisclaimer: string;
+}
+
 export function EvidenceReport({
   item,
   skills,
+  relatedSystems,
   locale,
   copy,
   editorialCopy,
+  relationsCopy,
 }: Readonly<{
   item: BuiltWithSkillsCase;
   skills: readonly LocalizedSkillDetail[];
+  relatedSystems: readonly CasePackRelation[];
   locale: Locale;
   copy: Messages["builtWithSkills"];
   editorialCopy: EvidenceCopy;
+  relationsCopy: RelationsCopy;
 }>) {
   const readerItems = [
     { id: "challenge", label: copy.challenge },
@@ -93,6 +106,41 @@ export function EvidenceReport({
                 </li>
               ))}
             </ol>
+
+            {relatedSystems.length ? (
+              <div className="editorial-relations evidence-report__related-systems" data-related-systems>
+                <div className="editorial-relations__intro">
+                  <p className="eyebrow">{relationsCopy.methodOverlap}</p>
+                  <h3>{relationsCopy.relatedSystems}</h3>
+                  <p>{relationsCopy.relatedSystemsSummary}</p>
+                </div>
+                <ul className="editorial-relations__list">
+                  {relatedSystems.map((relation) => (
+                    <li className="editorial-relation-row" key={relation.pack.slug}>
+                      <Link
+                        aria-label={relation.pack.name}
+                        data-interaction="connect"
+                        href={`/${locale}/packs/${relation.pack.slug}` as Route}
+                      >
+                        <span className="editorial-relation-row__eyebrow">
+                          {relationsCopy.methodOverlap}
+                        </span>
+                        <strong>{relation.pack.name}</strong>
+                        <span className="editorial-relation-row__meta">
+                          {formatMethodOverlap(
+                            locale,
+                            relation.matchingSkillSlugs.length,
+                            relation.pack.skills.length,
+                          )}
+                        </span>
+                        <span className="editorial-relation-row__arrow" aria-hidden="true">↗</span>
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+                <p className="editorial-relations__disclaimer">{relationsCopy.overlapDisclaimer}</p>
+              </div>
+            ) : null}
           </section>
 
           <section id="decisions" className="evidence-report__decisions">
