@@ -14,6 +14,7 @@ import "../editorial-pages.css";
 import "../editorial-methods.css";
 import "../editorial-method-dossier.css";
 import "../editorial-packs.css";
+import "../editorial-pack-blueprint.css";
 import "../site-chrome.css";
 import "../site-chrome-responsive.css";
 import "../site-chrome-refinement.css";
