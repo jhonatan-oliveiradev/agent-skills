@@ -1,13 +1,16 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { MethodDossier } from "@/components/skills/method-dossier";
+import { getBuiltWithSkillsCases } from "@/lib/built-with-skills";
 import {
   getCatalog,
-  getLocalizedPackNames,
+  getLocalizedPacks,
   getLocalizedSkillBySlug,
   getSkillInstallCommands,
 } from "@/lib/catalog";
+import { getCasesUsingSkill, getPacksContainingSkill } from "@/lib/cross-domain-relations";
 import { editorialMethodsCopy } from "@/lib/editorial-methods-copy";
+import { editorialRelationsCopy } from "@/lib/editorial-relations-copy";
 import { isLocale } from "@/lib/i18n";
 import { messages } from "@/lib/messages";
 
@@ -62,7 +65,8 @@ export default async function SkillDetailPage({ params }: SkillPageProps) {
   const detail = copy.skillDetail;
   const categoryNames: Readonly<Record<string, string>> = copy.skillsCatalog.categories;
   const commands = getSkillInstallCommands(skill.slug);
-  const packNames = getLocalizedPackNames(locale);
+  const relatedPacks = getPacksContainingSkill(getLocalizedPacks(locale), skill.slug);
+  const evidenceCases = getCasesUsingSkill(getBuiltWithSkillsCases(locale), skill.slug);
   const category = categoryNames[skill.category] ?? skill.category;
   const difficulty =
     copy.skillsCatalog.values[skill.difficulty as keyof typeof copy.skillsCatalog.values] ??
@@ -96,12 +100,14 @@ export default async function SkillDetailPage({ params }: SkillPageProps) {
         category={category}
         difficulty={difficulty}
         maturity={maturity}
-        packNames={packNames}
+        relatedPacks={relatedPacks}
+        evidenceCases={evidenceCases}
         commands={commands}
         sourceUrl={sourceUrl}
         detail={detail}
         catalogCopy={copy.skillsCatalog}
         editorialCopy={editorialMethodsCopy[locale]}
+        relationsCopy={editorialRelationsCopy[locale]}
       />
     </>
   );
