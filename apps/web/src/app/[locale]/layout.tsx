@@ -12,6 +12,7 @@ import "../home-scroll-workflow.css";
 import "../home-final-polish.css";
 import "../editorial-pages.css";
 import "../editorial-methods.css";
+import "../editorial-method-dossier.css";
 import "../site-chrome.css";
 import "../site-chrome-responsive.css";
 import "../site-chrome-refinement.css";
