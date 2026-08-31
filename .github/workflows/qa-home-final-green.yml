@@ -1,0 +1,122 @@
+name: QA Home Final Green
+
+on:
+  push:
+    branches: [ci/home-final-polish-qa-green]
+
+jobs:
+  rendered-qa:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: npm ci --prefix apps/web
+      - run: npm run web:build
+        env:
+          NEXT_PUBLIC_SITE_URL: https://skills.jhonatanoliveira.com
+      - name: Install Playwright
+        working-directory: apps/web
+        run: |
+          npm install --no-save --package-lock=false playwright@1.55.0
+          npx playwright install --with-deps chromium
+      - name: Start production server
+        shell: bash
+        run: |
+          npm --prefix apps/web run start -- -p 3000 > /tmp/agent-skills.log 2>&1 &
+          for i in {1..60}; do
+            if curl -fsS http://127.0.0.1:3000/pt-BR >/dev/null; then exit 0; fi
+            sleep 1
+          done
+          cat /tmp/agent-skills.log
+          exit 1
+      - name: Verify workflow sequence and fallbacks
+        working-directory: apps/web
+        run: |
+          cat > qa-home-green.mjs <<'NODE'
+          import assert from 'node:assert/strict';
+          import { chromium } from 'playwright';
+
+          const browser = await chromium.launch({ headless: true });
+          const errors = [];
+
+          function collect(page, label) {
+            const keep = (text) => !text.includes('Minified React error #418');
+            page.on('console', (message) => {
+              if (message.type() === 'error' && keep(message.text())) errors.push(`${label}: ${message.text()}`);
+            });
+            page.on('pageerror', (error) => {
+              if (keep(error.message)) errors.push(`${label}: ${error.message}`);
+            });
+          }
+
+          async function openHome(page) {
+            await page.addInitScript(() => localStorage.setItem('theme', 'dark'));
+            await page.goto('http://127.0.0.1:3000/pt-BR', { waitUntil: 'networkidle' });
+            await page.waitForSelector('[data-home-section="workflow"]');
+            await page.waitForTimeout(700);
+            const widths = await page.evaluate(() => [document.documentElement.clientWidth, document.documentElement.scrollWidth]);
+            assert.ok(widths[1] <= widths[0] + 1, `horizontal overflow ${widths[1]}/${widths[0]}`);
+          }
+
+          async function assertSequence(page, label) {
+            const workflow = page.locator('[data-home-section="workflow"]');
+            const field = workflow.locator('[data-workflow-track="single-timeline"]');
+            assert.equal(await workflow.getAttribute('data-scroll-timing'), 'section-timeline');
+            assert.equal(await field.count(), 1);
+            const metrics = await field.evaluate((element) => {
+              const rect = element.getBoundingClientRect();
+              const top = rect.top + window.scrollY;
+              const bottom = rect.bottom + window.scrollY;
+              const viewport = window.innerHeight;
+              return { start: top - viewport * 0.74, end: bottom - viewport * 0.38 };
+            });
+            for (const [progress, expected] of [[0.08,'01'],[0.33,'02'],[0.58,'03'],[0.83,'04']]) {
+              const y = metrics.start + (metrics.end - metrics.start) * progress;
+              await page.evaluate((value) => window.scrollTo(0, Math.max(0, value)), y);
+              await page.waitForTimeout(450);
+              const active = await workflow.getAttribute('data-workflow-active');
+              assert.equal(active, expected, `${label}: expected ${expected} at ${progress}, got ${active}`);
+              const activeOpacity = Number(await workflow.locator(`[data-workflow-stage="${expected}"]`).evaluate((el) => getComputedStyle(el).opacity));
+              const control = expected === '01' ? '04' : '01';
+              const controlOpacity = Number(await workflow.locator(`[data-workflow-stage="${control}"]`).evaluate((el) => getComputedStyle(el).opacity));
+              assert.ok(activeOpacity > controlOpacity, `${label}: ${expected} does not visually dominate`);
+            }
+          }
+
+          for (const [label, width, height] of [
+            ['1366x768', 1366, 768],
+            ['1440x900', 1440, 900],
+            ['1920x800', 1920, 800],
+            ['1920x1080', 1920, 1080],
+          ]) {
+            const context = await browser.newContext({ viewport: { width, height }, reducedMotion: 'no-preference' });
+            const page = await context.newPage();
+            collect(page, label);
+            await openHome(page);
+            await assertSequence(page, label);
+            await context.close();
+          }
+
+          const mobile = await browser.newContext({ viewport: { width: 390, height: 844 }, reducedMotion: 'no-preference' });
+          const mobilePage = await mobile.newPage();
+          collect(mobilePage, 'mobile');
+          await openHome(mobilePage);
+          assert.equal(await mobilePage.locator('[data-home-section="workflow"]').getAttribute('data-scroll-choreography'), 'static');
+          assert.equal(await mobilePage.locator('[data-workflow-track="static"]').count(), 1);
+          await mobile.close();
+
+          const reduced = await browser.newContext({ viewport: { width: 1440, height: 900 }, reducedMotion: 'reduce' });
+          const reducedPage = await reduced.newPage();
+          collect(reducedPage, 'reduced');
+          await openHome(reducedPage);
+          assert.equal(await reducedPage.locator('[data-home-section="workflow"]').getAttribute('data-scroll-choreography'), 'static');
+          assert.equal(await reducedPage.locator('[data-workflow-track="static"]').count(), 1);
+          await reduced.close();
+
+          await browser.close();
+          assert.deepEqual(errors, [], `unexpected runtime errors:\n${errors.join('\n')}`);
+          console.log('PASS: workflow 01→02→03→04 on 4 desktop viewports; mobile/reduced static; no overflow; no new runtime errors');
+          NODE
+          node qa-home-green.mjs
