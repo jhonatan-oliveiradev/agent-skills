@@ -36,4 +36,20 @@ describe("Evidence Report", () => {
     );
     expect(container.querySelector(".built-case-detail__evidence")).not.toBeInTheDocument();
   });
+
+  it("connects explicit methods back to related systems without asserting pack usage", async () => {
+    const { container } = render(
+      await BuiltWithSkillsDetailPage({
+        params: Promise.resolve({ locale: "en", slug: "catalog-experience" }),
+      }),
+    );
+
+    expect(container.querySelector("[data-related-systems]")).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: "Frontend & Product" })).toHaveAttribute(
+      "href",
+      "/en/packs/frontend-product",
+    );
+    expect(screen.getByText("3 / 8 methods represented")).toBeInTheDocument();
+    expect(screen.getByText("Method overlap only — not proof that the pack was used as a unit.")).toBeInTheDocument();
+  });
 });
