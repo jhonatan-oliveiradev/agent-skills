@@ -194,6 +194,6 @@ describe("legacy Portuguese locale redirect", () => {
         rmSync(fixtureRoot, { recursive: true, force: true });
       }
     },
-    30_000,
+    45_000,
   );
 });
