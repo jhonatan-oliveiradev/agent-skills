@@ -1,0 +1,181 @@
+name: QA Home Final Polish
+
+on:
+  push:
+    branches: [ci/home-final-polish-qa]
+
+jobs:
+  rendered-qa:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: npm ci --prefix apps/web
+      - run: npm run web:build
+        env:
+          NEXT_PUBLIC_SITE_URL: https://skills.jhonatanoliveira.com
+      - name: Install Playwright
+        working-directory: apps/web
+        run: |
+          npm install --no-save --package-lock=false playwright@1.55.0
+          npx playwright install --with-deps chromium
+      - name: Start production server
+        shell: bash
+        run: |
+          npm --prefix apps/web run start -- -p 3000 > /tmp/agent-skills.log 2>&1 &
+          for i in {1..60}; do
+            if curl -fsS http://127.0.0.1:3000/pt-BR >/dev/null; then exit 0; fi
+            sleep 1
+          done
+          cat /tmp/agent-skills.log
+          exit 1
+      - name: Validate workflow timeline and Home polish
+        working-directory: apps/web
+        run: |
+          cat > qa-home-final.mjs <<'NODE'
+          import assert from 'node:assert/strict';
+          import { mkdir, writeFile } from 'node:fs/promises';
+          import { chromium } from 'playwright';
+
+          const out = 'qa-home-final-output';
+          const baseURL = 'http://127.0.0.1:3000';
+          await mkdir(out, { recursive: true });
+          const report = { workflow: [], overflow: {}, consoleErrors: [], pageErrors: [], checks: [] };
+
+          function collectErrors(page, scope) {
+            page.on('console', (message) => {
+              if (message.type() !== 'error') return;
+              const text = message.text();
+              if (text.includes('Minified React error #418')) return;
+              report.consoleErrors.push(`${scope}: ${text}`);
+            });
+            page.on('pageerror', (error) => report.pageErrors.push(`${scope}: ${error.message}`));
+          }
+
+          async function load(page, theme = 'dark') {
+            await page.addInitScript((value) => localStorage.setItem('theme', value), theme);
+            await page.goto(`${baseURL}/pt-BR`, { waitUntil: 'networkidle' });
+            await page.waitForSelector('[data-home-section="workflow"]');
+            await page.waitForTimeout(800);
+          }
+
+          async function noOverflow(page, label) {
+            const value = await page.evaluate(() => ({
+              client: document.documentElement.clientWidth,
+              scroll: document.documentElement.scrollWidth,
+            }));
+            report.overflow[label] = value;
+            assert.ok(value.scroll <= value.client + 1, `${label}: overflow ${value.scroll}/${value.client}`);
+          }
+
+          async function workflowSequence(page, label) {
+            const workflow = page.locator('[data-home-section="workflow"]');
+            const field = workflow.locator('[data-workflow-track="single-timeline"]');
+            assert.equal(await workflow.getAttribute('data-scroll-timing'), 'section-timeline');
+            assert.equal(await field.count(), 1);
+
+            const metrics = await field.evaluate((element) => {
+              const rect = element.getBoundingClientRect();
+              const top = rect.top + window.scrollY;
+              const bottom = rect.bottom + window.scrollY;
+              const viewport = window.innerHeight;
+              return {
+                start: top - viewport * 0.74,
+                end: bottom - viewport * 0.38,
+              };
+            });
+
+            const samples = [0.08, 0.33, 0.58, 0.83];
+            const expected = ['01', '02', '03', '04'];
+            for (let index = 0; index < samples.length; index += 1) {
+              const progress = samples[index];
+              const y = metrics.start + (metrics.end - metrics.start) * progress;
+              await page.evaluate((value) => window.scrollTo(0, Math.max(0, value)), y);
+              await page.waitForTimeout(500);
+              const active = await workflow.getAttribute('data-workflow-active');
+              const activeStage = workflow.locator(`[data-workflow-stage="${expected[index]}"]`);
+              const inactiveStage = workflow.locator(`[data-workflow-stage="${expected[index] === '01' ? '04' : '01'}"]`);
+              const activeOpacity = Number(await activeStage.evaluate((el) => getComputedStyle(el).opacity));
+              const inactiveOpacity = Number(await inactiveStage.evaluate((el) => getComputedStyle(el).opacity));
+              report.workflow.push({ label, progress, active, activeOpacity, inactiveOpacity });
+              assert.equal(active, expected[index], `${label}: expected ${expected[index]} at ${progress}, got ${active}`);
+              assert.ok(activeOpacity > inactiveOpacity, `${label}: active stage should dominate at ${progress}`);
+              await page.screenshot({ path: `${out}/${label}-workflow-${expected[index]}.png`, fullPage: false });
+            }
+          }
+
+          const browser = await chromium.launch({ headless: true });
+
+          for (const [label, width, height] of [
+            ['desktop-1366x768', 1366, 768],
+            ['desktop-1440x900', 1440, 900],
+            ['desktop-1920x800', 1920, 800],
+            ['desktop-1920x1080', 1920, 1080],
+          ]) {
+            const context = await browser.newContext({ viewport: { width, height }, reducedMotion: 'no-preference' });
+            const page = await context.newPage();
+            collectErrors(page, label);
+            await load(page);
+            await noOverflow(page, label);
+            await workflowSequence(page, label);
+            await page.locator('[data-home-section="methods"]').scrollIntoViewIfNeeded();
+            await page.waitForTimeout(450);
+            await page.screenshot({ path: `${out}/${label}-methods.png`, fullPage: false });
+            await page.locator('[data-home-section="packs"]').scrollIntoViewIfNeeded();
+            await page.waitForTimeout(450);
+            await page.screenshot({ path: `${out}/${label}-packs.png`, fullPage: false });
+            await page.locator('[data-home-section="ledger"]').scrollIntoViewIfNeeded();
+            await page.waitForTimeout(450);
+            await page.screenshot({ path: `${out}/${label}-ledger.png`, fullPage: false });
+            await context.close();
+          }
+
+          const mobile = await browser.newContext({ viewport: { width: 390, height: 844 }, reducedMotion: 'no-preference' });
+          const mobilePage = await mobile.newPage();
+          collectErrors(mobilePage, 'mobile');
+          await load(mobilePage);
+          assert.equal(await mobilePage.locator('[data-home-section="workflow"]').getAttribute('data-scroll-choreography'), 'static');
+          assert.equal(await mobilePage.locator('[data-workflow-track="static"]').count(), 1);
+          await noOverflow(mobilePage, 'mobile');
+          await mobilePage.locator('[data-home-section="workflow"]').scrollIntoViewIfNeeded();
+          await mobilePage.waitForTimeout(300);
+          await mobilePage.screenshot({ path: `${out}/mobile-workflow.png`, fullPage: false });
+          await mobile.close();
+
+          const reduced = await browser.newContext({ viewport: { width: 1440, height: 900 }, reducedMotion: 'reduce' });
+          const reducedPage = await reduced.newPage();
+          collectErrors(reducedPage, 'reduced');
+          await load(reducedPage);
+          assert.equal(await reducedPage.locator('[data-home-section="workflow"]').getAttribute('data-scroll-choreography'), 'static');
+          assert.equal(await reducedPage.locator('[data-workflow-track="static"]').count(), 1);
+          await noOverflow(reducedPage, 'reduced');
+          await reduced.close();
+
+          const light = await browser.newContext({ viewport: { width: 1440, height: 900 }, reducedMotion: 'no-preference' });
+          const lightPage = await light.newPage();
+          collectErrors(lightPage, 'light');
+          await load(lightPage, 'light');
+          await noOverflow(lightPage, 'light');
+          await lightPage.locator('[data-home-section="ledger"]').scrollIntoViewIfNeeded();
+          await lightPage.waitForTimeout(450);
+          await lightPage.screenshot({ path: `${out}/light-ledger.png`, fullPage: false });
+          await light.close();
+
+          await browser.close();
+          assert.deepEqual(report.pageErrors, [], `page errors: ${report.pageErrors.join('\n')}`);
+          assert.deepEqual(report.consoleErrors, [], `console errors: ${report.consoleErrors.join('\n')}`);
+          report.checks.push('single workflow timeline reached 01 → 02 → 03 → 04 on all desktop viewports');
+          report.checks.push('mobile and reduced motion remain static');
+          report.checks.push('no horizontal overflow on tested viewports');
+          await writeFile(`${out}/report.json`, JSON.stringify(report, null, 2));
+          console.log(JSON.stringify(report, null, 2));
+          NODE
+          node qa-home-final.mjs
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: home-final-polish-qa
+          path: apps/web/qa-home-final-output
+          if-no-files-found: warn
