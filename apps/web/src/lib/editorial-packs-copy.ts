@@ -8,6 +8,9 @@ interface EditorialPacksCopy {
   readonly activeMetric: string;
   readonly plannedMetric: string;
   readonly versionMetric: string;
+  readonly systemLabel: string;
+  readonly intentLabel: string;
+  readonly statusMetric: string;
   readonly active: string;
   readonly planned: string;
   readonly methods: string;
@@ -26,6 +29,9 @@ export const editorialPacksCopy = {
     activeMetric: "ACTIVE",
     plannedMetric: "PLANNED",
     versionMetric: "VERSION",
+    systemLabel: "SYSTEM",
+    intentLabel: "SYSTEM INTENT",
+    statusMetric: "STATUS",
     active: "ACTIVE SYSTEM",
     planned: "PLANNED SYSTEM",
     methods: "METHODS",
@@ -42,6 +48,9 @@ export const editorialPacksCopy = {
     activeMetric: "ATIVOS",
     plannedMetric: "PLANEJADOS",
     versionMetric: "VERSÃO",
+    systemLabel: "SISTEMA",
+    intentLabel: "INTENÇÃO DO SISTEMA",
+    statusMetric: "STATUS",
     active: "SISTEMA ATIVO",
     planned: "SISTEMA PLANEJADO",
     methods: "MÉTODOS",
