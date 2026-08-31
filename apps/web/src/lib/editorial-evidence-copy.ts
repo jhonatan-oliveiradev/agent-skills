@@ -13,6 +13,11 @@ interface EditorialEvidenceCopy {
   readonly sourceAvailable: string;
   readonly inspect: string;
   readonly evidenceRecord: string;
+  readonly readerLabel: string;
+  readonly reportIntent: string;
+  readonly evidenceState: string;
+  readonly sourceType: string;
+  readonly openEvidence: string;
 }
 
 export const editorialEvidenceCopy = {
@@ -30,6 +35,11 @@ export const editorialEvidenceCopy = {
     sourceAvailable: "SOURCE / AVAILABLE",
     inspect: "Inspect report",
     evidenceRecord: "Evidence record",
+    readerLabel: "In this report",
+    reportIntent: "From problem to inspectable record.",
+    evidenceState: "EVIDENCE STATE",
+    sourceType: "SOURCE RECORD",
+    openEvidence: "Open evidence",
   },
   "pt-BR": {
     archiveLabel: "EVIDÊNCIA / TRABALHO REAL",
@@ -45,5 +55,10 @@ export const editorialEvidenceCopy = {
     sourceAvailable: "FONTE / DISPONÍVEL",
     inspect: "Inspecionar relatório",
     evidenceRecord: "Registro de evidência",
+    readerLabel: "Neste relatório",
+    reportIntent: "Do problema ao registro inspecionável.",
+    evidenceState: "ESTADO DA EVIDÊNCIA",
+    sourceType: "REGISTRO-FONTE",
+    openEvidence: "Abrir evidência",
   },
 } as const satisfies Readonly<Record<Locale, EditorialEvidenceCopy>>;
