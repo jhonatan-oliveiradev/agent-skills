@@ -53,75 +53,70 @@ export function HomeMethodWorkflow({ eyebrow, title, summary, movements }: HomeM
         return;
       }
 
+      const field = rootRef.current.querySelector<HTMLElement>(".home-method-workflow__field");
       const stages = gsap.utils.toArray<HTMLElement>("[data-workflow-stage]", rootRef.current);
       const threadPath = rootRef.current.querySelector<SVGPathElement>(
         '[data-evidence-thread-progress="gsap"]',
       );
 
-      if (stages.length === 0 || !threadPath) return;
+      if (!field || stages.length === 0 || !threadPath) return;
 
-      gsap.set(stages, {
-        autoAlpha: 0.38,
-        y: 24,
-        scale: 0.975,
-        transformOrigin: "50% 50%",
-      });
-      gsap.set(stages[0], { autoAlpha: 1, y: 0, scale: 1.02 });
-      gsap.set(threadPath, { strokeDasharray: 1, strokeDashoffset: 1 });
-
-      const timeline = gsap.timeline({
-        defaults: { ease: "none" },
-        scrollTrigger: {
-          trigger: rootRef.current,
-          start: "top 78%",
-          end: "bottom 30%",
-          scrub: 0.58,
-          invalidateOnRefresh: true,
+      gsap.fromTo(
+        threadPath,
+        { strokeDasharray: 1, strokeDashoffset: 1 },
+        {
+          strokeDashoffset: 0,
+          ease: "none",
+          scrollTrigger: {
+            trigger: field,
+            start: "top 72%",
+            end: "bottom 42%",
+            scrub: 0.16,
+            invalidateOnRefresh: true,
+          },
         },
-      });
-
-      timeline.to(threadPath, { strokeDashoffset: 0, duration: movements.length }, 0);
+      );
 
       stages.forEach((stage, index) => {
-        const start = index;
-        const previous = stages[index - 1];
-
-        if (previous) {
-          timeline.to(
-            previous,
-            {
-              autoAlpha: 0.5,
-              y: -8,
-              scale: 0.99,
-              duration: 0.32,
-            },
-            start,
-          );
-        }
-
-        timeline.to(
+        gsap.fromTo(
           stage,
+          {
+            autoAlpha: 0.38,
+            y: 24,
+            scale: 0.975,
+            transformOrigin: "50% 50%",
+          },
           {
             autoAlpha: 1,
             y: 0,
             scale: 1.025,
-            duration: 0.4,
+            ease: "none",
+            scrollTrigger: {
+              trigger: stage,
+              start: "top 72%",
+              end: "center 56%",
+              scrub: 0.16,
+              invalidateOnRefresh: true,
+            },
           },
-          start + 0.05,
         );
 
-        if (index < stages.length - 1) {
-          timeline.to(
-            stage,
-            {
-              autoAlpha: 0.58,
-              y: -4,
-              scale: 1,
-              duration: 0.3,
-            },
-            start + 0.72,
-          );
-        }
+        const next = stages[index + 1];
+        if (!next) return;
+
+        gsap.to(stage, {
+          autoAlpha: 0.55,
+          y: -6,
+          scale: 0.995,
+          ease: "none",
+          scrollTrigger: {
+            trigger: next,
+            start: "top 60%",
+            end: "top 48%",
+            scrub: 0.14,
+            invalidateOnRefresh: true,
+          },
+        });
       });
     },
     {
@@ -137,6 +132,7 @@ export function HomeMethodWorkflow({ eyebrow, title, summary, movements }: HomeM
       className="home-workflow home-method-workflow"
       data-home-section="workflow"
       data-scroll-choreography={staticMode ? "static" : "scrubbed"}
+      data-scroll-timing={staticMode ? "static" : "stage-anchored"}
     >
       <div className="shell">
         <div className="home-editorial-heading home-editorial-heading--wide">
