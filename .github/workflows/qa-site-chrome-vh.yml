@@ -1,0 +1,196 @@
+name: QA Site Chrome Viewport
+
+on:
+  push:
+    branches: [ci/site-chrome-vh-qa]
+
+jobs:
+  rendered-qa:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: npm ci --prefix apps/web
+      - run: npm run web:build
+        env:
+          NEXT_PUBLIC_SITE_URL: https://skills.jhonatanoliveira.com
+      - name: Install Playwright
+        working-directory: apps/web
+        run: |
+          npm install --no-save --package-lock=false playwright@1.55.0
+          npx playwright install --with-deps chromium
+      - name: Start production server
+        shell: bash
+        run: |
+          npm --prefix apps/web run start -- -p 3000 > /tmp/agent-skills.log 2>&1 &
+          for i in {1..60}; do
+            if curl -fsS http://127.0.0.1:3000/pt-BR >/dev/null; then exit 0; fi
+            sleep 1
+          done
+          cat /tmp/agent-skills.log
+          exit 1
+      - name: Validate viewport containment and transitions
+        working-directory: apps/web
+        run: |
+          cat > qa-site-chrome-vh.mjs <<'NODE'
+          import assert from 'node:assert/strict';
+          import { mkdir, writeFile } from 'node:fs/promises';
+          import { chromium } from 'playwright';
+
+          const out = 'qa-site-chrome-vh-output';
+          await mkdir(out, { recursive: true });
+          const report = { desktop: {}, mobile: {}, reducedMotion: {}, consoleErrors: [], pageErrors: [] };
+          const browser = await chromium.launch({ headless: true });
+
+          function collectErrors(page, scope) {
+            page.on('console', message => {
+              if (message.type() === 'error') report.consoleErrors.push(`${scope}: ${message.text()}`);
+            });
+            page.on('pageerror', error => report.pageErrors.push(`${scope}: ${error.message}`));
+          }
+
+          async function openHome(page) {
+            await page.addInitScript(() => localStorage.setItem('theme', 'dark'));
+            await page.goto('http://127.0.0.1:3000/pt-BR', { waitUntil: 'networkidle' });
+            await page.waitForSelector('[data-site-chrome="publication-bar"]');
+          }
+
+          async function documentOverflow(page) {
+            return page.evaluate(() => ({
+              clientWidth: document.documentElement.clientWidth,
+              scrollWidth: document.documentElement.scrollWidth,
+            }));
+          }
+
+          async function validateDesktop(width, height) {
+            const label = `${width}x${height}`;
+            const context = await browser.newContext({ viewport: { width, height }, reducedMotion: 'no-preference' });
+            const page = await context.newPage();
+            collectErrors(page, label);
+            await openHome(page);
+
+            const header = page.locator('[data-site-chrome="publication-bar"]');
+            const headerBox = await header.boundingBox();
+            assert.ok(headerBox, `${label}: missing header box`);
+
+            await page.getByRole('button', { name: 'Abrir navegação' }).click();
+            const dialog = page.getByRole('dialog', { name: 'Navegação principal' });
+            await dialog.waitFor();
+
+            await page.waitForTimeout(90);
+            await page.screenshot({ path: `${out}/${label}-opening.png` });
+            await page.waitForTimeout(520);
+
+            const layer = page.locator('[data-navigation-transition="header-reveal"]');
+            const layerBox = await layer.boundingBox();
+            const dialogMetrics = await dialog.evaluate(element => ({
+              clientHeight: element.clientHeight,
+              scrollHeight: element.scrollHeight,
+              overflowY: getComputedStyle(element).overflowY,
+              clipPath: getComputedStyle(element).clipPath,
+            }));
+            const frameMetrics = await dialog.locator('.primary-navigation__frame').evaluate(element => ({
+              clientHeight: element.clientHeight,
+              scrollHeight: element.scrollHeight,
+            }));
+            const layoutMetrics = await dialog.locator('.primary-navigation__layout').evaluate(element => ({
+              clientHeight: element.clientHeight,
+              scrollHeight: element.scrollHeight,
+            }));
+            const lastItemBox = await dialog.locator('.primary-navigation__list li').last().boundingBox();
+            const footerBox = await dialog.locator('.primary-navigation__footer').boundingBox();
+            const overflow = await documentOverflow(page);
+
+            assert.ok(layerBox, `${label}: missing navigation layer box`);
+            assert.ok(Math.abs(layerBox.y - headerBox.height) <= 2, `${label}: layer does not start below header (${layerBox.y}/${headerBox.height})`);
+            assert.ok(Math.abs((layerBox.height + headerBox.height) - height) <= 2, `${label}: header + index do not fill viewport`);
+            assert.ok(dialogMetrics.scrollHeight <= dialogMetrics.clientHeight + 1, `${label}: dialog scrolls ${dialogMetrics.scrollHeight}/${dialogMetrics.clientHeight}`);
+            assert.ok(frameMetrics.scrollHeight <= frameMetrics.clientHeight + 1, `${label}: frame scrolls ${frameMetrics.scrollHeight}/${frameMetrics.clientHeight}`);
+            assert.ok(layoutMetrics.scrollHeight <= layoutMetrics.clientHeight + 1, `${label}: layout scrolls ${layoutMetrics.scrollHeight}/${layoutMetrics.clientHeight}`);
+            assert.ok(lastItemBox && lastItemBox.y + lastItemBox.height <= height + 1, `${label}: last item falls below viewport`);
+            assert.ok(footerBox && footerBox.y + footerBox.height <= height + 1, `${label}: menu metadata falls below viewport`);
+            assert.ok(overflow.scrollWidth <= overflow.clientWidth + 1, `${label}: horizontal overflow ${overflow.scrollWidth}/${overflow.clientWidth}`);
+
+            await page.screenshot({ path: `${out}/${label}-open.png` });
+
+            if (label === '1440x900') {
+              await page.keyboard.press('Escape');
+              assert.equal(await page.getByRole('dialog', { name: 'Navegação principal' }).count(), 0, `${label}: closing dialog remains accessible`);
+              assert.equal(await layer.count(), 1, `${label}: visual exit was not preserved`);
+              await page.screenshot({ path: `${out}/${label}-closing.png` });
+              await page.waitForTimeout(560);
+              assert.equal(await layer.count(), 0, `${label}: exit layer did not unmount`);
+
+              await page.locator('[data-footer-mode="end-matter"]').scrollIntoViewIfNeeded();
+              await page.waitForTimeout(100);
+              const wordmark = page.locator('[data-wordmark-scale="restrained"]');
+              const wordmarkMetrics = await wordmark.evaluate(element => ({
+                fontSize: Number.parseFloat(getComputedStyle(element).fontSize),
+                width: element.getBoundingClientRect().width,
+              }));
+              assert.ok(wordmarkMetrics.fontSize <= 180, `${label}: wordmark still oversized at ${wordmarkMetrics.fontSize}px`);
+              await page.screenshot({ path: `${out}/${label}-footer.png` });
+              report.desktop[label] = { headerBox, layerBox, dialogMetrics, frameMetrics, layoutMetrics, overflow, wordmarkMetrics };
+            } else {
+              report.desktop[label] = { headerBox, layerBox, dialogMetrics, frameMetrics, layoutMetrics, overflow };
+            }
+
+            await context.close();
+          }
+
+          for (const [width, height] of [[1366, 768], [1440, 900], [1920, 800], [1920, 1080]]) {
+            await validateDesktop(width, height);
+          }
+
+          {
+            const context = await browser.newContext({ viewport: { width: 390, height: 844 }, reducedMotion: 'no-preference' });
+            const page = await context.newPage();
+            collectErrors(page, '390x844');
+            await openHome(page);
+            await page.getByRole('button', { name: 'Abrir navegação' }).click();
+            const dialog = page.getByRole('dialog', { name: 'Navegação principal' });
+            await dialog.waitFor();
+            await page.waitForTimeout(520);
+            const metrics = await dialog.evaluate(element => ({ clientHeight: element.clientHeight, scrollHeight: element.scrollHeight, overflowY: getComputedStyle(element).overflowY }));
+            const mobileContexts = await dialog.locator('[data-mobile-context="inline"]').count();
+            const overflow = await documentOverflow(page);
+            assert.equal(mobileContexts, 6, 'mobile: contextual summaries missing');
+            assert.ok(metrics.scrollHeight >= metrics.clientHeight, 'mobile: expected scroll-capable layout contract');
+            assert.ok(overflow.scrollWidth <= overflow.clientWidth + 1, `mobile: horizontal overflow ${overflow.scrollWidth}/${overflow.clientWidth}`);
+            await page.screenshot({ path: `${out}/390x844-open.png` });
+            report.mobile = { metrics, mobileContexts, overflow };
+            await context.close();
+          }
+
+          {
+            const context = await browser.newContext({ viewport: { width: 1440, height: 900 }, reducedMotion: 'reduce' });
+            const page = await context.newPage();
+            collectErrors(page, 'reduced-motion');
+            await openHome(page);
+            await page.getByRole('button', { name: 'Abrir navegação' }).click();
+            const dialog = page.getByRole('dialog', { name: 'Navegação principal' });
+            await dialog.waitFor();
+            const clipPath = await dialog.evaluate(element => getComputedStyle(element).clipPath);
+            await page.keyboard.press('Escape');
+            assert.equal(await page.getByRole('dialog', { name: 'Navegação principal' }).count(), 0, 'reduced motion: dialog remains accessible after close');
+            await page.waitForTimeout(30);
+            assert.equal(await page.locator('[data-navigation-transition="header-reveal"]').count(), 0, 'reduced motion: layer should unmount immediately');
+            report.reducedMotion = { clipPath };
+            await context.close();
+          }
+
+          await browser.close();
+          assert.deepEqual(report.consoleErrors, [], report.consoleErrors.join('\n'));
+          assert.deepEqual(report.pageErrors, [], report.pageErrors.join('\n'));
+          await writeFile(`${out}/report.json`, JSON.stringify(report, null, 2));
+          console.log(JSON.stringify(report, null, 2));
+          NODE
+          node qa-site-chrome-vh.mjs
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: site-chrome-vh-rendered-qa
+          path: apps/web/qa-site-chrome-vh-output
+          if-no-files-found: warn
