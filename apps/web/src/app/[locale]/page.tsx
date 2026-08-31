@@ -4,6 +4,7 @@ import { HomeClosing } from "@/components/home/home-closing";
 import { HomeEvidenceLedger } from "@/components/home/home-evidence-ledger";
 import { HomeManifestoHero } from "@/components/home/home-manifesto-hero";
 import { HomeMethodIndex } from "@/components/home/home-method-index";
+import { HomeMethodWorkflow } from "@/components/home/home-method-workflow";
 import { HomePackDossiers } from "@/components/home/home-pack-dossiers";
 import { ScrollProgress } from "@/components/motion/scroll-progress";
 import { resolveLocale } from "@/components/foundation-route";
@@ -152,25 +153,12 @@ export default async function HomePage({ params }: HomePageProps) {
           packs={packDossiers}
         />
 
-        <section className="home-workflow" data-home-section="workflow">
-          <div className="shell">
-            <div className="home-editorial-heading home-editorial-heading--wide">
-              <div>
-                <p className="eyebrow">{evidence.workflow.eyebrow}</p>
-                <h2>{evidence.workflow.title}</h2>
-              </div>
-              <p>{evidence.workflow.summary}</p>
-            </div>
-            <ol className="home-workflow-rail">
-              {evidence.workflow.movements.map((movement, index) => (
-                <li key={movement.title}>
-                  <span>{String(index + 1).padStart(2, "0")}</span>
-                  <div><h3>{movement.title}</h3><p>{movement.summary}</p></div>
-                </li>
-              ))}
-            </ol>
-          </div>
-        </section>
+        <HomeMethodWorkflow
+          eyebrow={evidence.workflow.eyebrow}
+          title={evidence.workflow.title}
+          summary={evidence.workflow.summary}
+          movements={evidence.workflow.movements}
+        />
       </section>
 
       <section aria-label={evidence.acts[2].label} data-home-act="proof-open-system">
