@@ -1,11 +1,12 @@
 import type { Route } from "next";
 import Link from "next/link";
+import { CopyCommand } from "@/components/copy-command";
 import { EditorialMetadata } from "@/components/editorial/editorial-metadata";
 import { EditorialSectionHeading } from "@/components/editorial/editorial-section-heading";
-import type { LocalizedSkillDetail } from "@/lib/catalog";
+import type { BuiltWithSkillsCase } from "@/lib/built-with-skills";
+import type { LocalizedPack, LocalizedSkillDetail } from "@/lib/catalog";
 import type { Locale } from "@/lib/locales";
 import type { Messages } from "@/lib/messages";
-import { CopyCommand } from "@/components/copy-command";
 import { MethodReader } from "./method-reader";
 import { PromptSpecimen } from "./prompt-specimen";
 
@@ -16,6 +17,14 @@ interface DossierEditorialCopy {
   readonly technicalNotes: string;
 }
 
+interface RelationsCopy {
+  readonly partOfSystems: string;
+  readonly partOfSystemsSummary: string;
+  readonly usedInEvidence: string;
+  readonly usedInEvidenceSummary: string;
+  readonly inspectReport: string;
+}
+
 export function MethodDossier({
   skill,
   index,
@@ -23,12 +32,14 @@ export function MethodDossier({
   category,
   difficulty,
   maturity,
-  packNames,
+  relatedPacks,
+  evidenceCases,
   commands,
   sourceUrl,
   detail,
   catalogCopy,
   editorialCopy,
+  relationsCopy,
 }: Readonly<{
   skill: LocalizedSkillDetail;
   index: number;
@@ -36,12 +47,14 @@ export function MethodDossier({
   category: string;
   difficulty: string;
   maturity: string;
-  packNames: Readonly<Record<string, string>>;
+  relatedPacks: readonly LocalizedPack[];
+  evidenceCases: readonly BuiltWithSkillsCase[];
   commands: Readonly<{ bash: string; powershell: string }>;
   sourceUrl: string;
   detail: Messages["skillDetail"];
   catalogCopy: Messages["skillsCatalog"];
   editorialCopy: DossierEditorialCopy;
+  relationsCopy: RelationsCopy;
 }>) {
   const ordinal = String(index + 1).padStart(2, "0");
   const sections = [
@@ -52,7 +65,10 @@ export function MethodDossier({
     { id: "installation", label: detail.installation },
     { id: "compatibility", label: detail.compatibility },
     { id: "dependencies", label: detail.dependencies },
-    ...(skill.packs.length ? [{ id: "packs", label: detail.packs }] : []),
+    ...(relatedPacks.length ? [{ id: "packs", label: relationsCopy.partOfSystems }] : []),
+    ...(evidenceCases.length
+      ? [{ id: "used-in-evidence", label: relationsCopy.usedInEvidence }]
+      : []),
     ...(skill.relatedSkills.length
       ? [{ id: "related-skills", label: detail.relatedSkills }]
       : []),
@@ -215,13 +231,50 @@ export function MethodDossier({
           )}
         </section>
 
-        {skill.packs.length ? (
+        {relatedPacks.length ? (
           <section className="method-dossier__section" data-editorial-section id="packs">
-            <EditorialSectionHeading title={detail.packs} />
-            <ul className="method-dossier__link-rows">
-              {skill.packs.map((pack) => (
-                <li key={pack}>
-                  <span>{packNames[pack] ?? pack}</span>
+            <EditorialSectionHeading
+              title={relationsCopy.partOfSystems}
+              summary={relationsCopy.partOfSystemsSummary}
+            />
+            <ul className="editorial-relations__list">
+              {relatedPacks.map((pack) => (
+                <li className="editorial-relation-row" key={pack.slug}>
+                  <Link data-interaction="connect" href={`/${locale}/packs/${pack.slug}` as Route}>
+                    <span className="editorial-relation-row__eyebrow">{pack.status}</span>
+                    <strong>{pack.name}</strong>
+                    <span className="editorial-relation-row__meta">{pack.skills.length} methods</span>
+                    <span className="editorial-relation-row__arrow" aria-hidden="true">↗</span>
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </section>
+        ) : null}
+
+        {evidenceCases.length ? (
+          <section
+            className="method-dossier__section editorial-relations"
+            data-editorial-section
+            data-method-evidence
+            id="used-in-evidence"
+          >
+            <EditorialSectionHeading
+              title={relationsCopy.usedInEvidence}
+              summary={relationsCopy.usedInEvidenceSummary}
+            />
+            <ul className="editorial-relations__list">
+              {evidenceCases.map((item) => (
+                <li className="editorial-relation-row" key={item.slug}>
+                  <Link
+                    data-interaction="navigate"
+                    href={`/${locale}/built-with-skills/${item.slug}` as Route}
+                  >
+                    <span className="editorial-relation-row__eyebrow">{item.date}</span>
+                    <strong>{item.title}</strong>
+                    <span className="editorial-relation-row__meta">{relationsCopy.inspectReport}</span>
+                    <span className="editorial-relation-row__arrow" aria-hidden="true">↗</span>
+                  </Link>
                 </li>
               ))}
             </ul>
