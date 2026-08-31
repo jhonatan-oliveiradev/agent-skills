@@ -1,0 +1,78 @@
+name: QA Site Chrome Footer Final
+
+on:
+  push:
+    branches: [ci/site-chrome-footer-final]
+
+jobs:
+  rendered-qa:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: npm ci --prefix apps/web
+      - run: npm run web:build
+        env:
+          NEXT_PUBLIC_SITE_URL: https://skills.jhonatanoliveira.com
+      - name: Install Playwright
+        working-directory: apps/web
+        run: |
+          npm install --no-save --package-lock=false playwright@1.55.0
+          npx playwright install --with-deps chromium
+      - name: Start production server
+        shell: bash
+        run: |
+          npm --prefix apps/web run start -- -p 3000 > /tmp/agent-skills.log 2>&1 &
+          for i in {1..60}; do
+            if curl -fsS http://127.0.0.1:3000/pt-BR/about >/dev/null; then exit 0; fi
+            sleep 1
+          done
+          cat /tmp/agent-skills.log
+          exit 1
+      - name: Capture footer wordmark
+        working-directory: apps/web
+        run: |
+          cat > qa-footer.mjs <<'NODE'
+          import assert from 'node:assert/strict';
+          import { mkdir, writeFile } from 'node:fs/promises';
+          import { chromium } from 'playwright';
+          const out = 'qa-site-chrome-footer-final-output';
+          await mkdir(out, { recursive: true });
+          const browser = await chromium.launch({ headless: true });
+          const report = {};
+          for (const [width,height] of [[1440,900],[1920,800]]) {
+            const label = `${width}x${height}`;
+            const context = await browser.newContext({ viewport: { width, height } });
+            const page = await context.newPage();
+            const errors=[];
+            page.on('console', m => { if(m.type()==='error') errors.push(m.text()); });
+            page.on('pageerror', e => errors.push(e.message));
+            await page.goto('http://127.0.0.1:3000/pt-BR/about', { waitUntil: 'networkidle' });
+            const wordmark = page.locator('[data-wordmark-scale="restrained"]');
+            await wordmark.scrollIntoViewIfNeeded();
+            await page.waitForTimeout(200);
+            const metrics = await wordmark.evaluate(el => ({
+              fontSize: parseFloat(getComputedStyle(el).fontSize),
+              width: el.getBoundingClientRect().width,
+              top: el.getBoundingClientRect().top,
+              bottom: el.getBoundingClientRect().bottom,
+            }));
+            assert.ok(metrics.fontSize <= width * 0.121, `${label}: unexpected wordmark scale ${metrics.fontSize}`);
+            assert.deepEqual(errors, [], errors.join('\n'));
+            await page.screenshot({ path: `${out}/${label}-footer.png` });
+            report[label]=metrics;
+            await context.close();
+          }
+          await browser.close();
+          await writeFile(`${out}/report.json`, JSON.stringify(report,null,2));
+          console.log(JSON.stringify(report,null,2));
+          NODE
+          node qa-footer.mjs
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: site-chrome-footer-final
+          path: apps/web/qa-site-chrome-footer-final-output
+          if-no-files-found: warn
