@@ -240,7 +240,11 @@ export function MethodDossier({
             <ul className="editorial-relations__list">
               {relatedPacks.map((pack) => (
                 <li className="editorial-relation-row" key={pack.slug}>
-                  <Link data-interaction="connect" href={`/${locale}/packs/${pack.slug}` as Route}>
+                  <Link
+                    aria-label={pack.name}
+                    data-interaction="connect"
+                    href={`/${locale}/packs/${pack.slug}` as Route}
+                  >
                     <span className="editorial-relation-row__eyebrow">{pack.status}</span>
                     <strong>{pack.name}</strong>
                     <span className="editorial-relation-row__meta">{pack.skills.length} methods</span>
@@ -267,6 +271,7 @@ export function MethodDossier({
               {evidenceCases.map((item) => (
                 <li className="editorial-relation-row" key={item.slug}>
                   <Link
+                    aria-label={item.title}
                     data-interaction="navigate"
                     href={`/${locale}/built-with-skills/${item.slug}` as Route}
                   >
