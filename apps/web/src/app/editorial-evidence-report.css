@@ -1,0 +1,483 @@
+.evidence-report {
+  padding-bottom: clamp(7rem, 13vw, 12rem);
+}
+
+.evidence-report__back {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.65rem;
+  margin-top: clamp(1.5rem, 3vw, 2.5rem);
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.055em;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: color 220ms var(--ease-editorial), transform 260ms var(--ease-editorial);
+}
+
+.evidence-report__back:hover,
+.evidence-report__back:focus-visible {
+  color: var(--text);
+  transform: translateX(-0.2rem);
+}
+
+.evidence-report__back:focus-visible,
+.evidence-report__method-list a:focus-visible,
+.evidence-report__records a:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 0.3rem;
+}
+
+.evidence-report__hero {
+  display: grid;
+  min-height: clamp(36rem, 76dvh, 54rem);
+  grid-template-columns: minmax(0, 1.42fr) minmax(14rem, 0.58fr);
+  gap: clamp(3rem, 8vw, 9rem);
+  align-items: end;
+  padding-block: clamp(4rem, 10dvh, 8rem) clamp(2.8rem, 5vw, 4.5rem);
+  border-bottom: 1px solid color-mix(in srgb, var(--border) 76%, var(--brand));
+}
+
+.evidence-report__hero-copy {
+  min-width: 0;
+}
+
+.evidence-report__hero .eyebrow {
+  color: var(--brand);
+}
+
+.evidence-report__hero h1 {
+  max-width: 10ch;
+  margin: clamp(1.25rem, 3vw, 2.2rem) 0 0;
+  font-size: clamp(4rem, 9vw, 9rem);
+  font-weight: 500;
+  letter-spacing: -0.075em;
+  line-height: 0.84;
+  text-wrap: balance;
+}
+
+.evidence-report__summary {
+  max-width: 46rem;
+  margin: clamp(1.6rem, 3vw, 2.5rem) 0 0;
+  color: var(--text-muted);
+  font-size: clamp(1rem, 1.45vw, 1.25rem);
+  line-height: 1.58;
+}
+
+.evidence-report__metadata {
+  align-self: end;
+  border-top: 1px solid var(--border);
+}
+
+.evidence-report__metadata .editorial-page__metadata-item {
+  grid-template-columns: minmax(7rem, 0.7fr) minmax(0, 1fr);
+}
+
+.evidence-report__intent {
+  display: grid;
+  grid-template-columns: minmax(6rem, 0.22fr) minmax(0, 1fr);
+  gap: clamp(2rem, 6vw, 7rem);
+  align-items: baseline;
+  padding-block: clamp(3.2rem, 7vw, 6rem);
+  border-bottom: 1px solid var(--border);
+}
+
+.evidence-report__intent span {
+  color: var(--brand);
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.07em;
+}
+
+.evidence-report__intent p {
+  max-width: 24ch;
+  margin: 0;
+  font-size: clamp(2rem, 4.6vw, 4.8rem);
+  font-weight: 510;
+  letter-spacing: -0.055em;
+  line-height: 0.98;
+  text-wrap: balance;
+}
+
+.evidence-report__reader {
+  display: grid;
+  grid-template-columns: minmax(12rem, 0.28fr) minmax(0, 1fr);
+  gap: clamp(3rem, 7vw, 8rem);
+  padding-top: clamp(4rem, 8vw, 7rem);
+}
+
+.evidence-report__reader-index {
+  min-width: 0;
+}
+
+.evidence-report__reader-index .editorial-reader-nav {
+  position: sticky;
+  top: calc(var(--site-publication-bar-height, 4.5rem) + 2rem);
+}
+
+.evidence-report__reader-content {
+  min-width: 0;
+}
+
+.evidence-report__challenge,
+.evidence-report__methods,
+.evidence-report__decisions,
+.evidence-report__outcomes,
+.evidence-report__evidence {
+  scroll-margin-top: calc(var(--site-publication-bar-height, 4.5rem) + 2rem);
+  padding-bottom: clamp(5rem, 10vw, 9rem);
+}
+
+.evidence-report__challenge-statement {
+  max-width: 28ch;
+  margin: clamp(2rem, 4vw, 3.5rem) 0 0;
+  font-size: clamp(2rem, 4.8vw, 5rem);
+  font-weight: 510;
+  letter-spacing: -0.058em;
+  line-height: 0.99;
+  text-wrap: balance;
+}
+
+.evidence-report__method-list {
+  position: relative;
+  margin: clamp(2rem, 4vw, 3.5rem) 0 0;
+  padding: 0;
+  border-top: 1px solid color-mix(in srgb, var(--border) 74%, var(--brand));
+  list-style: none;
+}
+
+.evidence-report__method-list::before {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 2.05rem;
+  width: 1px;
+  background: linear-gradient(var(--brand), color-mix(in srgb, var(--brand) 14%, var(--border)), transparent);
+  content: "";
+  opacity: 0.34;
+  pointer-events: none;
+}
+
+.evidence-report__method-list li {
+  position: relative;
+  border-bottom: 1px solid var(--border);
+}
+
+.evidence-report__method-list a {
+  position: relative;
+  display: grid;
+  grid-template-columns: 4.1rem minmax(0, 1fr) 1.5rem;
+  gap: 1rem;
+  align-items: center;
+  min-height: 7rem;
+  padding-block: 1.15rem;
+  color: inherit;
+  text-decoration: none;
+}
+
+.evidence-report__method-list a::before {
+  position: absolute;
+  top: 50%;
+  left: 1.76rem;
+  width: 0.62rem;
+  height: 0.62rem;
+  border: 1px solid color-mix(in srgb, var(--brand) 65%, var(--border));
+  border-radius: 999px;
+  background: var(--canvas);
+  content: "";
+  transform: translateY(-50%);
+  transition: background-color 240ms var(--ease-editorial), box-shadow 280ms var(--ease-editorial), transform 280ms var(--ease-editorial);
+}
+
+.evidence-report__method-index {
+  position: relative;
+  z-index: 1;
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  font-size: 0.64rem;
+  font-weight: 700;
+  text-align: right;
+}
+
+.evidence-report__method-copy {
+  display: grid;
+  gap: 0.55rem;
+}
+
+.evidence-report__method-copy strong {
+  font-size: clamp(1.1rem, 1.7vw, 1.45rem);
+  font-weight: 630;
+  letter-spacing: -0.03em;
+  transition: color 240ms var(--ease-editorial), transform 300ms var(--ease-editorial);
+}
+
+.evidence-report__method-copy > span {
+  max-width: 48rem;
+  color: var(--text-muted);
+  font-size: 0.88rem;
+  line-height: 1.5;
+}
+
+.evidence-report__method-arrow {
+  justify-self: end;
+  color: var(--brand);
+  transition: color 220ms var(--ease-editorial), transform 300ms var(--ease-editorial);
+}
+
+.evidence-report__method-list a:hover::before,
+.evidence-report__method-list a:focus-visible::before {
+  background: var(--brand);
+  box-shadow: 0 0 0 0.35rem color-mix(in srgb, var(--brand) 12%, transparent);
+  transform: translateY(-50%) scale(1.05);
+}
+
+.evidence-report__method-list a:hover .evidence-report__method-copy strong,
+.evidence-report__method-list a:focus-visible .evidence-report__method-copy strong {
+  color: var(--text);
+  transform: translateX(0.3rem);
+}
+
+.evidence-report__method-list a:hover .evidence-report__method-arrow,
+.evidence-report__method-list a:focus-visible .evidence-report__method-arrow {
+  color: var(--text);
+  transform: translate(0.2rem, -0.2rem);
+}
+
+.evidence-report__decisions ol,
+.evidence-report__outcomes ol {
+  margin: clamp(2rem, 4vw, 3.5rem) 0 0;
+  padding: 0;
+  border-top: 1px solid color-mix(in srgb, var(--border) 75%, var(--brand));
+  list-style: none;
+}
+
+.evidence-report__decisions li {
+  display: grid;
+  grid-template-columns: clamp(2.8rem, 5vw, 4.5rem) minmax(0, 1fr);
+  gap: clamp(1rem, 3vw, 2.5rem);
+  padding-block: clamp(1.8rem, 4vw, 3.2rem);
+  border-bottom: 1px solid var(--border);
+}
+
+.evidence-report__decisions li > span,
+.evidence-report__outcomes li > span {
+  padding-top: 0.2rem;
+  color: var(--brand);
+  font-family: var(--font-mono);
+  font-size: 0.66rem;
+  font-weight: 700;
+}
+
+.evidence-report__decisions h3 {
+  max-width: 22ch;
+  margin: 0;
+  font-size: clamp(1.55rem, 3vw, 3rem);
+  font-weight: 550;
+  letter-spacing: -0.045em;
+  line-height: 1.03;
+}
+
+.evidence-report__decisions p {
+  max-width: 46rem;
+  margin: 1rem 0 0;
+  color: var(--text-muted);
+  line-height: 1.62;
+}
+
+.evidence-report__outcomes li {
+  display: grid;
+  grid-template-columns: clamp(2.8rem, 5vw, 4.5rem) minmax(0, 1fr);
+  gap: clamp(1rem, 3vw, 2.5rem);
+  padding-block: clamp(1.8rem, 4vw, 3.5rem);
+  border-bottom: 1px solid var(--border);
+}
+
+.evidence-report__outcomes p {
+  max-width: 30ch;
+  margin: 0;
+  font-size: clamp(1.5rem, 3.2vw, 3.2rem);
+  font-weight: 520;
+  letter-spacing: -0.045em;
+  line-height: 1.06;
+  text-wrap: balance;
+}
+
+.evidence-report__evidence {
+  padding-top: clamp(1rem, 3vw, 2rem);
+  border-top: 1px solid color-mix(in srgb, var(--brand) 34%, var(--border));
+}
+
+.evidence-report__evidence-state {
+  display: grid;
+  grid-template-columns: minmax(8rem, 0.35fr) minmax(0, 1fr);
+  gap: clamp(1.5rem, 4vw, 4rem);
+  align-items: baseline;
+  margin-top: clamp(2rem, 4vw, 3.5rem);
+  padding-block: 1.4rem;
+  border-block: 1px solid var(--border);
+}
+
+.evidence-report__evidence-state span {
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  font-size: 0.64rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+}
+
+.evidence-report__evidence-state strong {
+  color: color-mix(in srgb, var(--brand) 78%, var(--text));
+  font-family: var(--font-mono);
+  font-size: clamp(0.9rem, 1.4vw, 1.05rem);
+  letter-spacing: 0.05em;
+}
+
+.evidence-report__records {
+  margin-top: clamp(1.5rem, 3vw, 2.5rem);
+}
+
+.evidence-report__records a {
+  display: grid;
+  grid-template-columns: minmax(8rem, 0.35fr) minmax(0, 1fr) auto 1.5rem;
+  gap: clamp(1rem, 3vw, 3rem);
+  align-items: baseline;
+  padding-block: clamp(1.5rem, 3vw, 2.4rem);
+  border-bottom: 1px solid var(--border);
+  color: inherit;
+  text-decoration: none;
+  transition: background-color 260ms var(--ease-editorial), padding-inline 300ms var(--ease-editorial);
+}
+
+.evidence-report__records a:hover,
+.evidence-report__records a:focus-visible {
+  padding-inline: 0.75rem;
+  background: color-mix(in srgb, var(--brand) 4%, transparent);
+}
+
+.evidence-report__records a > span:first-child,
+.evidence-report__records a > span:nth-last-child(2) {
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  font-size: 0.64rem;
+  font-weight: 700;
+  letter-spacing: 0.055em;
+  text-transform: uppercase;
+}
+
+.evidence-report__records strong {
+  font-size: clamp(1rem, 1.5vw, 1.2rem);
+  font-weight: 620;
+}
+
+.evidence-report__records a > span:last-child {
+  color: var(--brand);
+  transition: color 220ms var(--ease-editorial), transform 280ms var(--ease-editorial);
+}
+
+.evidence-report__records a:hover > span:last-child,
+.evidence-report__records a:focus-visible > span:last-child {
+  color: var(--text);
+  transform: translate(0.2rem, -0.2rem);
+}
+
+@media (max-width: 64rem) {
+  .evidence-report__hero {
+    min-height: auto;
+    grid-template-columns: 1fr;
+    gap: 3rem;
+  }
+
+  .evidence-report__reader {
+    grid-template-columns: 1fr;
+    gap: 3rem;
+  }
+
+  .evidence-report__reader-index .editorial-reader-nav {
+    position: static;
+  }
+}
+
+@media (max-width: 44rem) {
+  .evidence-report__hero {
+    padding-block: 3.5rem 2.5rem;
+  }
+
+  .evidence-report__hero h1 {
+    font-size: clamp(3.3rem, 17vw, 5.4rem);
+  }
+
+  .evidence-report__intent {
+    grid-template-columns: 1fr;
+    gap: 1.2rem;
+  }
+
+  .evidence-report__intent p,
+  .evidence-report__challenge-statement {
+    font-size: clamp(1.8rem, 9vw, 2.9rem);
+  }
+
+  .evidence-report__method-list::before {
+    left: 1.4rem;
+  }
+
+  .evidence-report__method-list a {
+    grid-template-columns: 2.9rem minmax(0, 1fr) 1.2rem;
+  }
+
+  .evidence-report__method-list a::before {
+    left: 1.12rem;
+  }
+
+  .evidence-report__method-index {
+    text-align: left;
+  }
+
+  .evidence-report__decisions li,
+  .evidence-report__outcomes li {
+    grid-template-columns: 2rem minmax(0, 1fr);
+  }
+
+  .evidence-report__evidence-state {
+    grid-template-columns: 1fr;
+    gap: 0.7rem;
+  }
+
+  .evidence-report__records a {
+    grid-template-columns: 1fr auto;
+    gap: 0.6rem 1rem;
+  }
+
+  .evidence-report__records a > span:first-child,
+  .evidence-report__records strong {
+    grid-column: 1 / -1;
+  }
+
+  .evidence-report__records a > span:nth-last-child(2) {
+    grid-column: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .evidence-report__back,
+  .evidence-report__method-list a::before,
+  .evidence-report__method-copy strong,
+  .evidence-report__method-arrow,
+  .evidence-report__records a,
+  .evidence-report__records a > span:last-child {
+    transition: none !important;
+  }
+
+  .evidence-report__back:hover,
+  .evidence-report__back:focus-visible,
+  .evidence-report__method-list a:hover .evidence-report__method-copy strong,
+  .evidence-report__method-list a:focus-visible .evidence-report__method-copy strong,
+  .evidence-report__method-list a:hover .evidence-report__method-arrow,
+  .evidence-report__method-list a:focus-visible .evidence-report__method-arrow,
+  .evidence-report__records a:hover > span:last-child,
+  .evidence-report__records a:focus-visible > span:last-child {
+    transform: none;
+  }
+}
