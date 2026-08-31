@@ -89,7 +89,8 @@
   .home-pack-archive .home-pack-dossier h3,
   .home-pack-archive .home-pack-dossier:nth-child(2) h3 {
     max-width: 100%;
-    font-size: clamp(2.8rem, 13vw, 4.5rem);
+    font-size: clamp(2.35rem, 10.8vw, 3.6rem);
+    letter-spacing: -0.055em;
   }
 }
 
