@@ -41,6 +41,7 @@ describe("editorial site chrome", () => {
     expect(within(dialog).getByText("18 SKILLS")).toBeInTheDocument();
     expect(within(dialog).getByText("6 PACKS")).toBeInTheDocument();
     expect(within(dialog).getByText("1.0.0-beta.1")).toBeInTheDocument();
+    expect(dialog.querySelectorAll(".primary-navigation__mobile-context")).toHaveLength(6);
 
     const proofLink = within(dialog).getByRole("link", { name: proofLabel });
     fireEvent.mouseEnter(proofLink);
