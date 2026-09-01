@@ -16,6 +16,19 @@ interface FieldManualCopy {
   }[];
 }
 
+interface LivingProgramCopy {
+  readonly publicationLabel: string;
+  readonly indexLabel: string;
+  readonly metrics: Readonly<{
+    stages: string;
+    entries: string;
+    empty: string;
+  }>;
+  readonly emptyLabel: string;
+  readonly entrySingular: string;
+  readonly entryPlural: string;
+}
+
 export const fieldManualCopy = {
   en: {
     publicationLabel: "FIELD MANUAL",
@@ -52,3 +65,30 @@ export const fieldManualCopy = {
     ],
   },
 } as const satisfies Readonly<Record<Locale, FieldManualCopy>>;
+
+export const livingProgramCopy = {
+  en: {
+    publicationLabel: "LIVING PROGRAM",
+    indexLabel: "Program index",
+    metrics: {
+      stages: "Stages",
+      entries: "Published entries",
+      empty: "Open stages",
+    },
+    emptyLabel: "No published entries",
+    entrySingular: "entry",
+    entryPlural: "entries",
+  },
+  "pt-BR": {
+    publicationLabel: "PROGRAMA VIVO",
+    indexLabel: "Índice do programa",
+    metrics: {
+      stages: "Etapas",
+      entries: "Entradas publicadas",
+      empty: "Etapas abertas",
+    },
+    emptyLabel: "Sem entradas publicadas",
+    entrySingular: "entrada",
+    entryPlural: "entradas",
+  },
+} as const satisfies Readonly<Record<Locale, LivingProgramCopy>>;

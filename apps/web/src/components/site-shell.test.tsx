@@ -317,7 +317,7 @@ describe("foundation navigation targets", () => {
     expect(screen.getByRole("heading", { name: proposal })).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: stable })).toBeInTheDocument();
     expect(screen.getAllByText(empty)).toHaveLength(4);
-    expect(container.querySelectorAll(".roadmap-item")).toHaveLength(8);
+    expect(container.querySelectorAll("[data-program-record]")).toHaveLength(8);
   });
 
   it.each([
