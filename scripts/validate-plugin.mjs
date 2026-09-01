@@ -27,6 +27,15 @@ async function readJson(filePath, errors) {
   }
 }
 
+async function hasFile(filePath) {
+  try {
+    return (await stat(filePath)).isFile();
+  } catch (error) {
+    if (error?.code === "ENOENT" || error?.code === "ENOTDIR") return false;
+    throw error;
+  }
+}
+
 export async function validatePlugin(repoRoot) {
   const resolvedRoot = path.resolve(repoRoot);
   const errors = [];
@@ -84,6 +93,18 @@ export async function validatePlugin(repoRoot) {
   }
   if (entry?.policy?.authentication !== "NOT_REQUIRED") {
     errors.push("skills-only plugin must not require authentication");
+  }
+
+  const declaresMcpInManifest = plugin.mcpServers !== undefined || plugin.mcp !== undefined;
+  let declaresMcpFile = false;
+  try {
+    declaresMcpFile = await hasFile(path.join(resolvedRoot, "mcp.json"))
+      || await hasFile(path.join(resolvedRoot, ".mcp.json"));
+  } catch {
+    errors.push("MCP declaration check is unreadable");
+  }
+  if (declaresMcpInManifest || declaresMcpFile) {
+    errors.push("MCP declarations would make this imported skills-only plugin Desktop only instead of ChatGPT web compatible");
   }
 
   return errors;
