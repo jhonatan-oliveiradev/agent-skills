@@ -16,7 +16,7 @@ describe("catalog adapter", () => {
     );
 
     expect(catalog.sourceDigest).toBe(source.sourceDigest);
-    expect(catalog.skills).toHaveLength(22);
+    expect(catalog.skills).toHaveLength(26);
     expect(catalog.packs).toHaveLength(6);
     expect(getCatalogCounts()).toEqual(source.counts);
     expect(getSupportedLocales()).toEqual(["en", "pt-BR"]);
@@ -93,6 +93,11 @@ describe("catalog adapter", () => {
       status: "active",
     });
     expect(packs.find((pack) => pack.slug === "backend-data")?.skills).toHaveLength(4);
+    expect(packs.find((pack) => pack.slug === "architecture-engineering")).toMatchObject({
+      name: "Arquitetura e Engenharia",
+      status: "active",
+    });
+    expect(packs.find((pack) => pack.slug === "architecture-engineering")?.skills).toHaveLength(4);
     expect(packs.find((pack) => pack.slug === "quality-testing")).toMatchObject({
       status: "planned",
       skills: [],
@@ -117,6 +122,10 @@ describe("catalog adapter", () => {
     expect(adapter.getPackInstallCommands?.("backend-data", "active")).toEqual({
       bash: "./install.sh --pack backend-data",
       powershell: "./install.ps1 --pack backend-data",
+    });
+    expect(adapter.getPackInstallCommands?.("architecture-engineering", "active")).toEqual({
+      bash: "./install.sh --pack architecture-engineering",
+      powershell: "./install.ps1 --pack architecture-engineering",
     });
     expect(adapter.getPackInstallCommands?.("quality-testing", "planned")).toBeUndefined();
   });
