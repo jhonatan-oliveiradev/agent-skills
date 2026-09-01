@@ -1,6 +1,6 @@
 # Agent Skills Studio
 
-A curated Agent Skills library for production frontend, product design, motion, visual QA, delivery workflows, backend and data engineering, software architecture and engineering, and game-development tasks. It is inspired by useful patterns from the broader agent-skills ecosystem, but the skills in this repository are intentionally rewritten, consolidated, and kept project-agnostic.
+A curated Agent Skills library for production frontend, product design, motion, visual QA, delivery workflows, backend and data engineering, software architecture and engineering, quality and testing, and game-development tasks. It is inspired by useful patterns from the broader agent-skills ecosystem, but the skills in this repository are intentionally rewritten, consolidated, and kept project-agnostic.
 
 ## Principles
 
@@ -47,6 +47,12 @@ kept.
 - `documenting-architecture-decisions`
 - `planning-safe-refactors`
 
+### Quality & testing
+- `designing-test-strategies`
+- `testing-integration-boundaries`
+- `testing-web-applications-end-to-end`
+- `building-regression-tests`
+
 ### Delivery & knowledge capture
 - `shipping-github-vercel-changes`
 - `turning-techniques-into-skills`
@@ -75,6 +81,12 @@ The methods prefer database constraints and measured access patterns over specul
 The Architecture & Engineering pack is deliberately topology- and runtime-agnostic. It separates four concerns that should remain independently invokable: choosing application architecture from real quality attributes and constraints, designing cohesive software boundaries, documenting significant decisions with ADRs, and planning structural refactors as releasable migration slices.
 
 The methods prefer the least distributed architecture that satisfies demonstrated forces, explicit ownership and dependency direction, durable decision rationale, and incremental evolution with verification and rollback. They do not require CodeGraph or another code-intelligence runtime.
+
+## Quality & Testing v1
+
+The Quality & Testing pack separates four concerns that should remain independently invokable: designing a risk-based verification strategy, testing real integration boundaries, exercising a small set of critical web journeys end to end, and turning reproduced defects into durable regression guards.
+
+The methods prefer the smallest test scope that can provide trustworthy evidence, real controllable dependencies over mocks that merely repeat assumptions, user-facing browser contracts over implementation selectors, and observed RED → GREEN evidence for regression fixes. Playwright is an optional implementation tool, not a dependency of the pack.
 
 ## New web-app default
 
@@ -166,10 +178,10 @@ The active, installable packs are:
 - `motion` — Motion (5 skills);
 - `game-development` — Game Development (5 skills);
 - `backend-data` — Backend & Data (4 skills);
-- `architecture-engineering` — Architecture & Engineering (4 skills).
+- `architecture-engineering` — Architecture & Engineering (4 skills);
+- `quality-testing` — Quality & Testing (4 skills).
 
-The catalog also publishes one roadmap pack that is not yet installable:
-`quality-testing` (Quality & Testing).
+All six published packs are active and installable.
 
 Install an active pack on Bash or PowerShell:
 
@@ -193,8 +205,7 @@ only once:
 ./install.ps1 --pack motion --skill turning-techniques-into-skills
 ```
 
-Selecting an unknown pack or a planned pack such as `quality-testing` is rejected
-before the destination is changed.
+Selecting an unknown pack is rejected before the destination is changed.
 
 When adding a skill, add its `catalog/skills/<slug>.json` metadata in both `en`
 and `pt-BR`, update every affected pack in both locales, then regenerate and
@@ -229,10 +240,10 @@ Os pacotes ativos e instaláveis são:
 - `motion` — Motion (5 skills);
 - `game-development` — Desenvolvimento de Jogos (5 skills);
 - `backend-data` — Backend e Dados (4 skills);
-- `architecture-engineering` — Arquitetura e Engenharia (4 skills).
+- `architecture-engineering` — Arquitetura e Engenharia (4 skills);
+- `quality-testing` — Qualidade e Testes (4 skills).
 
-O catálogo também publica um pacote planejado, ainda não instalável:
-`quality-testing` (Qualidade e Testes).
+Todos os seis pacotes publicados estão ativos e são instaláveis.
 
 Instale um pacote ativo com Bash ou PowerShell:
 
@@ -256,8 +267,7 @@ duplicatas são instaladas apenas uma vez:
 ./install.ps1 --pack motion --skill turning-techniques-into-skills
 ```
 
-Um pacote desconhecido ou planejado, como `quality-testing`, é rejeitado antes de
-qualquer alteração no destino.
+Um pacote desconhecido é rejeitado antes de qualquer alteração no destino.
 
 Ao adicionar uma skill, inclua os metadados em
 `catalog/skills/<slug>.json` nos dois idiomas, `en` e `pt-BR`, atualize cada
@@ -333,7 +343,7 @@ cd agent-skills
 code ../my-next-app
 ```
 
-Inside Codex, you can then work normally. The project-local `AGENTS.md` provides repository rules, while the reusable skills provide specialized workflows such as UI fidelity, motion, visual QA, backend/data engineering, architecture, and delivery. You can let Codex select a matching skill or explicitly name one in the prompt.
+Inside Codex, you can then work normally. The project-local `AGENTS.md` provides repository rules, while the reusable skills provide specialized workflows such as UI fidelity, motion, visual QA, backend/data engineering, architecture, quality/testing, and delivery. You can let Codex select a matching skill or explicitly name one in the prompt.
 
 ## Validate
 
@@ -370,4 +380,4 @@ See `CHANGELOG.md` for release notes.
 
 ## Attribution
 
-Research sources include the MIT-licensed `MengTo/Skills`, GreenSock's MIT-licensed official GSAP skills, LottieFiles' MIT-licensed motion-design skill, and Apache-2.0 `img2threejs`, plus official PostgreSQL and Node.js documentation, the OWASP API Security Top 10, SEI and Microsoft architecture guidance, AWS architectural decision records, and Martin Fowler refactoring patterns used as references for the engineering methods. `MAPPING.md` records whether each source was adapted, merged, referenced, or deliberately kept separate. Local skill text is maintained independently rather than mirrored wholesale.
+Research sources include the MIT-licensed `MengTo/Skills`, GreenSock's MIT-licensed official GSAP skills, LottieFiles' MIT-licensed motion-design skill, and Apache-2.0 `img2threejs`, plus official PostgreSQL and Node.js documentation, the OWASP API Security Top 10, SEI and Microsoft architecture guidance, AWS architectural decision records, Martin Fowler engineering and testing guidance, Playwright best practices, Google Testing Blog guidance, and Microsoft testing strategy references used for the engineering and quality methods. `MAPPING.md` records whether each source was adapted, merged, referenced, or deliberately kept separate. Local skill text is maintained independently rather than mirrored wholesale.

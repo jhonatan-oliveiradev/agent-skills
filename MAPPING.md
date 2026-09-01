@@ -24,7 +24,7 @@ publish roadmap categories without claiming members.
 | Game Development (`game-development`) | Active | 5 game-development and procedural-3D skills |
 | Backend & Data (`backend-data`) | Active | 4 relational-modeling, Node API, PostgreSQL migration, and query-profiling skills |
 | Architecture & Engineering (`architecture-engineering`) | Active | 4 architecture-selection, software-boundary, ADR, and safe-refactoring skills |
-| Quality & Testing (`quality-testing`) | Planned | No members until the category is implemented |
+| Quality & Testing (`quality-testing`) | Active | 4 test-strategy, integration-boundary, web-E2E, and regression-testing skills |
 
 `reconstructing-images-as-threejs` intentionally appears in both Motion and
 Game Development. This cross-pack placement clarifies distribution only; its
@@ -137,6 +137,18 @@ Added for concise ADRs that preserve context, decision drivers, alternatives, co
 ### `planning-safe-refactors`
 Added for converting broad structural changes into releasable migration slices with seams, regression evidence, rollback paths, and cleanup conditions.
 
+### `designing-test-strategies`
+Added for risk-based verification planning that maps important behaviors to the smallest useful test layer instead of treating coverage percentage as the strategy.
+
+### `testing-integration-boundaries`
+Added for proving serialization, persistence, protocol, transaction, and failure behavior at real controllable dependency boundaries.
+
+### `testing-web-applications-end-to-end`
+Added for critical browser journeys using user-facing interactions plus UI, URL, console, network, state, and visual evidence without making a browser runner a hard dependency.
+
+### `building-regression-tests`
+Added for turning reproduced defects into deterministic guards that demonstrate RED before the fix, GREEN after it, and remain at the narrowest layer that proves the broken contract.
+
 ## Why the 81 web-design skills were not installed individually
 
 The upstream collection contains many excellent micro-techniques and art-direction presets. Keeping all of them globally installed would create poor skill discovery: several skills could trigger on the same frontend request and push the agent toward visual effects before understanding product intent. The curated pack keeps broad operating procedures global and leaves effect-specific skills as on-demand upstream references.
@@ -185,3 +197,18 @@ Backend & Data v1 does not mirror vendor documentation. The local methods combin
 | Martin Fowler, Strangler Fig modernization | Referenced | `skills/planning-safe-refactors` |
 
 Architecture & Engineering v1 does not mirror those sources or require a graph-analysis runtime. The local methods combine stable decision and migration procedures while remaining usable with the agent's native repository tools.
+
+## Quality & Testing research — 2026-09-01
+
+| Source | Decision | Local destination |
+|---|---|---|
+| Google Testing Blog, How Much Testing is Enough? | Referenced | `skills/designing-test-strategies` + `skills/testing-web-applications-end-to-end` |
+| Google Testing Blog, Test Sizes | Referenced | `skills/testing-integration-boundaries` |
+| Google Testing Blog, Just Say No to More End-to-End Tests | Referenced | `skills/testing-web-applications-end-to-end` |
+| Microsoft Azure Well-Architected testing strategies | Referenced | `skills/designing-test-strategies` |
+| Martin Fowler, Test Pyramid + Practical Test Pyramid | Referenced | `skills/designing-test-strategies` + `skills/testing-integration-boundaries` |
+| Playwright Best Practices | Referenced | `skills/testing-web-applications-end-to-end` |
+| Martin Fowler, Self Testing Code + testing culture | Referenced | `skills/building-regression-tests` |
+| Google Testing Blog, flaky test guidance | Referenced | `skills/building-regression-tests` |
+
+Quality & Testing v1 does not mirror a test framework or mandate a runner. The local methods define verification strategy and evidence boundaries while remaining usable with the testing tools already present in a project.
