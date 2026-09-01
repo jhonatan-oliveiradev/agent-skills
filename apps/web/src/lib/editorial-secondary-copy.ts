@@ -6,6 +6,7 @@ interface FieldManualCopy {
   readonly publicationLabel: string;
   readonly editionLabel: string;
   readonly indexLabel: string;
+  readonly claudeCodeLabel: string;
   readonly metrics: readonly {
     readonly label: string;
     readonly value: string;
@@ -34,6 +35,7 @@ export const fieldManualCopy = {
     publicationLabel: "FIELD MANUAL",
     editionLabel: "01 / INITIAL SETUP",
     indexLabel: "Manual index",
+    claudeCodeLabel: "Claude Code · personal",
     metrics: [
       { label: "STAGES", value: "05 stages" },
       { label: "SHELLS", value: "Bash + PowerShell" },
@@ -51,6 +53,7 @@ export const fieldManualCopy = {
     publicationLabel: "MANUAL DE CAMPO",
     editionLabel: "01 / CONFIGURAÇÃO INICIAL",
     indexLabel: "Índice do manual",
+    claudeCodeLabel: "Claude Code · pessoal",
     metrics: [
       { label: "ETAPAS", value: "05 etapas" },
       { label: "SHELLS", value: "Bash + PowerShell" },

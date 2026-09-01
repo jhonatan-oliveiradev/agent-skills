@@ -132,6 +132,11 @@ export default async function GettingStartedPage({ params }: PageProps) {
             commands={installationCommands.pack}
           />
         </div>
+        <InstallOption
+          copy={copy}
+          title={manual.claudeCodeLabel}
+          commands={installationCommands.claudeCode}
+        />
       </section>
 
       <section
