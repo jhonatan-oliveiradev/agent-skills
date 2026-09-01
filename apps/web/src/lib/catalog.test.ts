@@ -16,7 +16,7 @@ describe("catalog adapter", () => {
     );
 
     expect(catalog.sourceDigest).toBe(source.sourceDigest);
-    expect(catalog.skills).toHaveLength(18);
+    expect(catalog.skills).toHaveLength(22);
     expect(catalog.packs).toHaveLength(6);
     expect(getCatalogCounts()).toEqual(source.counts);
     expect(getSupportedLocales()).toEqual(["en", "pt-BR"]);
@@ -90,6 +90,10 @@ describe("catalog adapter", () => {
     });
     expect(packs.find((pack) => pack.slug === "backend-data")).toMatchObject({
       name: "Backend e Dados",
+      status: "active",
+    });
+    expect(packs.find((pack) => pack.slug === "backend-data")?.skills).toHaveLength(4);
+    expect(packs.find((pack) => pack.slug === "quality-testing")).toMatchObject({
       status: "planned",
       skills: [],
     });
@@ -110,6 +114,10 @@ describe("catalog adapter", () => {
       bash: "./install.sh --pack motion",
       powershell: "./install.ps1 --pack motion",
     });
-    expect(adapter.getPackInstallCommands?.("backend-data", "planned")).toBeUndefined();
+    expect(adapter.getPackInstallCommands?.("backend-data", "active")).toEqual({
+      bash: "./install.sh --pack backend-data",
+      powershell: "./install.ps1 --pack backend-data",
+    });
+    expect(adapter.getPackInstallCommands?.("quality-testing", "planned")).toBeUndefined();
   });
 });
