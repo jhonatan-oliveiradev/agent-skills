@@ -8,6 +8,10 @@ async function readHome() {
   return readFile(resolve(appRoot, "app/[locale]/page.tsx"), "utf8");
 }
 
+async function readHomeLivingSystems() {
+  return readFile(resolve(appRoot, "app/home-living-systems.css"), "utf8");
+}
+
 describe("Home Living Research Archive composition", () => {
   it("orders the three editorial acts and removes the standalone transformation section", async () => {
     const source = await readHome();
@@ -31,5 +35,14 @@ describe("Home Living Research Archive composition", () => {
     expect(source).not.toContain("process-grid");
     expect(source).toContain("home-method-index");
     expect(source).toContain("home-evidence-ledger");
+  });
+
+  it("gives all five active pack dossiers an intentional desktop composition", async () => {
+    const source = await readHomeLivingSystems();
+
+    expect(source).toContain(".home-pack-dossier:nth-child(4)");
+    expect(source).toContain(".home-pack-dossier:nth-child(5)");
+    expect(source).toMatch(/nth-child\(4\)[\s\S]*grid-column:/);
+    expect(source).toMatch(/nth-child\(5\)[\s\S]*grid-column:/);
   });
 });
