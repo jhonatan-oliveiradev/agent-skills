@@ -3,7 +3,7 @@
   "slug": "backend-data",
   "status": "active",
   "featured": false,
-  "color": "green",
+  "color": "violet",
   "version": "1.0.0-beta.1",
   "skills": [
     "designing-relational-data-models",
