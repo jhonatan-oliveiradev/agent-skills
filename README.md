@@ -1,6 +1,6 @@
 # Agent Skills Studio
 
-A curated Agent Skills library for production frontend, product design, motion, visual QA, delivery workflows, backend and data engineering, and game-development tasks. It is inspired by useful patterns from the broader agent-skills ecosystem, but the skills in this repository are intentionally rewritten, consolidated, and kept project-agnostic.
+A curated Agent Skills library for production frontend, product design, motion, visual QA, delivery workflows, backend and data engineering, software architecture and engineering, and game-development tasks. It is inspired by useful patterns from the broader agent-skills ecosystem, but the skills in this repository are intentionally rewritten, consolidated, and kept project-agnostic.
 
 ## Principles
 
@@ -41,6 +41,12 @@ kept.
 - `evolving-postgres-schemas-safely`
 - `profiling-postgres-query-performance`
 
+### Architecture & engineering
+- `choosing-application-architecture`
+- `designing-software-boundaries`
+- `documenting-architecture-decisions`
+- `planning-safe-refactors`
+
 ### Delivery & knowledge capture
 - `shipping-github-vercel-changes`
 - `turning-techniques-into-skills`
@@ -63,6 +69,12 @@ The motion stack is intentionally layered: `craft-premium-motion` owns direction
 The Backend & Data pack is deliberately provider- and ORM-independent. It separates four concerns that should remain independently invokable: relational modeling, Node.js API trust boundaries, safe PostgreSQL schema evolution, and evidence-led PostgreSQL query profiling.
 
 The methods prefer database constraints and measured access patterns over speculative abstraction, use compatibility-first production migration strategies, and require execution evidence before query/index recommendations.
+
+## Architecture & Engineering v1
+
+The Architecture & Engineering pack is deliberately topology- and runtime-agnostic. It separates four concerns that should remain independently invokable: choosing application architecture from real quality attributes and constraints, designing cohesive software boundaries, documenting significant decisions with ADRs, and planning structural refactors as releasable migration slices.
+
+The methods prefer the least distributed architecture that satisfies demonstrated forces, explicit ownership and dependency direction, durable decision rationale, and incremental evolution with verification and rollback. They do not require CodeGraph or another code-intelligence runtime.
 
 ## New web-app default
 
@@ -153,11 +165,11 @@ The active, installable packs are:
 - `frontend-product` — Frontend & Product (8 skills);
 - `motion` — Motion (5 skills);
 - `game-development` — Game Development (5 skills);
-- `backend-data` — Backend & Data (4 skills).
+- `backend-data` — Backend & Data (4 skills);
+- `architecture-engineering` — Architecture & Engineering (4 skills).
 
-The catalog also publishes two roadmap packs that are not yet installable:
-`architecture-engineering` (Architecture & Engineering) and `quality-testing`
-(Quality & Testing).
+The catalog also publishes one roadmap pack that is not yet installable:
+`quality-testing` (Quality & Testing).
 
 Install an active pack on Bash or PowerShell:
 
@@ -216,11 +228,11 @@ Os pacotes ativos e instaláveis são:
 - `frontend-product` — Frontend e Produto (8 skills);
 - `motion` — Motion (5 skills);
 - `game-development` — Desenvolvimento de Jogos (5 skills);
-- `backend-data` — Backend e Dados (4 skills).
+- `backend-data` — Backend e Dados (4 skills);
+- `architecture-engineering` — Arquitetura e Engenharia (4 skills).
 
-O catálogo também publica dois pacotes planejados, ainda não instaláveis:
-`architecture-engineering` (Arquitetura e Engenharia) e `quality-testing`
-(Qualidade e Testes).
+O catálogo também publica um pacote planejado, ainda não instalável:
+`quality-testing` (Qualidade e Testes).
 
 Instale um pacote ativo com Bash ou PowerShell:
 
@@ -321,7 +333,7 @@ cd agent-skills
 code ../my-next-app
 ```
 
-Inside Codex, you can then work normally. The project-local `AGENTS.md` provides repository rules, while the reusable skills provide specialized workflows such as UI fidelity, motion, visual QA, backend/data engineering, and delivery. You can let Codex select a matching skill or explicitly name one in the prompt.
+Inside Codex, you can then work normally. The project-local `AGENTS.md` provides repository rules, while the reusable skills provide specialized workflows such as UI fidelity, motion, visual QA, backend/data engineering, architecture, and delivery. You can let Codex select a matching skill or explicitly name one in the prompt.
 
 ## Validate
 
@@ -358,4 +370,4 @@ See `CHANGELOG.md` for release notes.
 
 ## Attribution
 
-Research sources include the MIT-licensed `MengTo/Skills`, GreenSock's MIT-licensed official GSAP skills, LottieFiles' MIT-licensed motion-design skill, and Apache-2.0 `img2threejs`, plus official PostgreSQL and Node.js documentation and the OWASP API Security Top 10 used as references for Backend & Data v1. `MAPPING.md` records whether each source was adapted, merged, referenced, or deliberately kept separate. Local skill text is maintained independently rather than mirrored wholesale.
+Research sources include the MIT-licensed `MengTo/Skills`, GreenSock's MIT-licensed official GSAP skills, LottieFiles' MIT-licensed motion-design skill, and Apache-2.0 `img2threejs`, plus official PostgreSQL and Node.js documentation, the OWASP API Security Top 10, SEI and Microsoft architecture guidance, AWS architectural decision records, and Martin Fowler refactoring patterns used as references for the engineering methods. `MAPPING.md` records whether each source was adapted, merged, referenced, or deliberately kept separate. Local skill text is maintained independently rather than mirrored wholesale.
