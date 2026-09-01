@@ -7,8 +7,8 @@ import RoadmapPage from "@/app/[locale]/roadmap/page";
 
 describe("Roadmap Living Program", () => {
   it.each([
-    ["en", "LIVING PROGRAM", "Program index", "Open an issue"],
-    ["pt-BR", "PROGRAMA VIVO", "Índice do programa", "Abrir uma issue"],
+    ["en", "LIVING PROGRAM", "Program index", "Open GitHub Issues"],
+    ["pt-BR", "PROGRAMA VIVO", "Índice do programa", "Abrir Issues no GitHub"],
   ] as const)(
     "renders the localized seven-stage editorial program for %s",
     async (locale, publicationLabel, indexLabel, contributeAction) => {
