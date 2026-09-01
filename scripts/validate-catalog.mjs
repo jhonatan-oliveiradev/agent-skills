@@ -7,7 +7,7 @@ import { assembleCatalog, checkCatalogBytes, getCatalogPaths, inspectJsonDirecto
 import { containsForbiddenPrivateData } from "./lib/privacy.mjs";
 import { inspectSkillsRoot } from "./lib/skills.mjs";
 
-const allowedCategories = new Set(["frontend", "product-design", "motion", "game-development", "backend-data", "architecture-engineering", "delivery", "meta"]);
+const allowedCategories = new Set(["frontend", "product-design", "motion", "game-development", "backend-data", "architecture-engineering", "quality-testing", "delivery", "meta"]);
 const allowedMaturity = new Set(["proposed", "research", "experimental", "beta", "stable", "deprecated"]);
 const allowedDifficulty = new Set(["beginner", "intermediate", "advanced"]);
 const allowedSurfaces = new Set(["chatgpt", "codex"]);

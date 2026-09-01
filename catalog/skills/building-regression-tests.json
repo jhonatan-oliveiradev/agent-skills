@@ -1,0 +1,39 @@
+{
+  "$schema": "../schemas/skill.schema.json",
+  "slug": "building-regression-tests",
+  "category": "quality-testing",
+  "packs": ["quality-testing"],
+  "maturity": "beta",
+  "difficulty": "intermediate",
+  "featured": false,
+  "compatibility": {
+    "surfaces": ["chatgpt", "codex"],
+    "operatingSystems": ["linux", "macos", "windows"],
+    "installModes": ["plugin", "filesystem"]
+  },
+  "tags": ["testing", "regression", "bugs", "tdd", "debugging"],
+  "dependencies": [],
+  "relatedSkills": ["designing-test-strategies", "testing-integration-boundaries", "testing-web-applications-end-to-end"],
+  "version": "1.0.0-beta.1",
+  "updatedAt": "2026-09-01",
+  "locales": {
+    "en": {
+      "displayName": "Building Regression Tests",
+      "summary": "Turns a reproduced defect into a deterministic automated guard that fails before the fix and protects the violated behavior afterward.",
+      "primaryBenefit": "Makes bug fixes durable and proves the new test actually detects the defect instead of merely passing alongside the fix.",
+      "whenToUse": "Use when a bug, outage, production defect, or failed higher-level test must become a durable automated guard before the implementation is changed.",
+      "whenNotToUse": "Do not use for a new behavior that has never failed and is better specified through ordinary feature-level TDD or the broader test strategy.",
+      "useCases": ["Reproduce a production bug in the smallest reliable automated test before changing code", "Move a failure discovered by E2E into a narrower regression test after identifying the real broken boundary"],
+      "examplePrompts": ["Use building-regression-tests to reproduce this bug as a failing automated test first, then identify the narrowest layer where the regression should live."]
+    },
+    "pt-BR": {
+      "displayName": "Construção de Testes de Regressão",
+      "summary": "Transforma um defeito reproduzido em uma proteção automatizada determinística que falha antes da correção e preserva o comportamento violado depois dela.",
+      "primaryBenefit": "Torna correções de bugs duráveis e prova que o novo teste realmente detecta o defeito em vez de apenas passar junto com a correção.",
+      "whenToUse": "Use quando um bug, outage, defeito de produção ou falha em teste de nível mais alto precisa se tornar uma proteção automatizada durável antes da implementação ser alterada.",
+      "whenNotToUse": "Não use para um comportamento novo que nunca falhou e é melhor especificado por TDD comum da feature ou pela estratégia mais ampla de testes.",
+      "useCases": ["Reproduzir um bug de produção no menor teste automatizado confiável antes de alterar o código", "Mover uma falha encontrada por E2E para um teste de regressão mais estreito depois de identificar o verdadeiro limite quebrado"],
+      "examplePrompts": ["Use building-regression-tests para reproduzir este bug primeiro como um teste automatizado falhando e então identificar a menor camada onde a regressão deve permanecer."]
+    }
+  }
+}

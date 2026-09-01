@@ -21,7 +21,7 @@ export const editorialMethodsCopy = {
     archiveLabel: "METHODS / ARCHIVE",
     archiveTitle: "Methods for agents that need to work better.",
     archiveSummary:
-      "A versioned library of working methods for design, frontend, motion, delivery, backend, data, architecture, engineering, and agent practice — organized for comparison before installation.",
+      "A versioned library of working methods for design, frontend, motion, delivery, backend, data, architecture, engineering, quality, testing, and agent practice — organized for comparison before installation.",
     methodsMetric: "METHODS",
     packsMetric: "PACKS",
     categoriesMetric: "DOMAINS",
@@ -30,6 +30,7 @@ export const editorialMethodsCopy = {
     categoryLabels: {
       "backend-data": "Backend & data",
       "architecture-engineering": "Architecture & engineering",
+      "quality-testing": "Quality & testing",
     },
     methodLabel: "METHOD",
     onThisMethod: "On this method",
@@ -40,7 +41,7 @@ export const editorialMethodsCopy = {
     archiveLabel: "MÉTODOS / ARQUIVO",
     archiveTitle: "Métodos para agentes que precisam trabalhar melhor.",
     archiveSummary:
-      "Uma biblioteca versionada de métodos de trabalho para design, frontend, motion, delivery, backend, dados, arquitetura, engenharia e prática com agentes — organizada para comparação antes da instalação.",
+      "Uma biblioteca versionada de métodos de trabalho para design, frontend, motion, delivery, backend, dados, arquitetura, engenharia, qualidade, testes e prática com agentes — organizada para comparação antes da instalação.",
     methodsMetric: "MÉTODOS",
     packsMetric: "PACOTES",
     categoriesMetric: "DOMÍNIOS",
@@ -49,6 +50,7 @@ export const editorialMethodsCopy = {
     categoryLabels: {
       "backend-data": "Backend e dados",
       "architecture-engineering": "Arquitetura e engenharia",
+      "quality-testing": "Qualidade e testes",
     },
     methodLabel: "MÉTODO",
     onThisMethod: "Neste método",

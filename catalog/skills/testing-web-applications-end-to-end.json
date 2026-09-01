@@ -1,0 +1,39 @@
+{
+  "$schema": "../schemas/skill.schema.json",
+  "slug": "testing-web-applications-end-to-end",
+  "category": "quality-testing",
+  "packs": ["quality-testing"],
+  "maturity": "beta",
+  "difficulty": "intermediate",
+  "featured": false,
+  "compatibility": {
+    "surfaces": ["chatgpt", "codex"],
+    "operatingSystems": ["linux", "macos", "windows"],
+    "installModes": ["plugin", "filesystem"]
+  },
+  "tags": ["testing", "end-to-end", "browser", "web", "user-journeys"],
+  "dependencies": [],
+  "relatedSkills": ["designing-test-strategies", "building-regression-tests", "auditing-pixel-perfect-frontend"],
+  "version": "1.0.0-beta.1",
+  "updatedAt": "2026-09-01",
+  "locales": {
+    "en": {
+      "displayName": "Testing Web Applications End to End",
+      "summary": "Verifies critical browser journeys through the assembled web application using user-facing interactions and observable browser evidence.",
+      "primaryBenefit": "Protects the few workflows that require real routing, client state, authentication, UI, and network behavior to work together without turning the whole suite into browser tests.",
+      "whenToUse": "Use when a web application's assembled browser experience, critical user journeys, routing, forms, authentication, client state, or network behavior must be verified beyond component and integration tests.",
+      "whenNotToUse": "Do not use for isolated logic or edge cases that a narrower test can prove with equal confidence and faster feedback.",
+      "useCases": ["Verify that a signed-in user can complete a critical creation or checkout flow", "Diagnose a browser-only failure using UI, URL, console, network, storage, and screenshot evidence"],
+      "examplePrompts": ["Use testing-web-applications-end-to-end to define and verify this critical browser journey without coupling the test to implementation details."]
+    },
+    "pt-BR": {
+      "displayName": "Teste End-to-End de Aplicações Web",
+      "summary": "Verifica jornadas críticas no navegador através da aplicação web montada usando interações orientadas ao usuário e evidências observáveis do browser.",
+      "primaryBenefit": "Protege os poucos fluxos que exigem routing, estado do cliente, autenticação, UI e rede funcionando juntos sem transformar toda a suíte em testes de navegador.",
+      "whenToUse": "Use quando a experiência montada de uma aplicação web no navegador, jornadas críticas, routing, formulários, autenticação, estado do cliente ou comportamento de rede precisam ser verificados além de testes de componente e integração.",
+      "whenNotToUse": "Não use para lógica isolada ou edge cases que um teste mais estreito consegue provar com a mesma confiança e feedback mais rápido.",
+      "useCases": ["Verificar que um usuário autenticado consegue concluir um fluxo crítico de criação ou checkout", "Diagnosticar uma falha exclusiva do navegador usando evidências de UI, URL, console, network, storage e screenshot"],
+      "examplePrompts": ["Use testing-web-applications-end-to-end para definir e verificar esta jornada crítica no navegador sem acoplar o teste a detalhes de implementação."]
+    }
+  }
+}

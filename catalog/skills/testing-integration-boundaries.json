@@ -1,0 +1,39 @@
+{
+  "$schema": "../schemas/skill.schema.json",
+  "slug": "testing-integration-boundaries",
+  "category": "quality-testing",
+  "packs": ["quality-testing"],
+  "maturity": "beta",
+  "difficulty": "intermediate",
+  "featured": false,
+  "compatibility": {
+    "surfaces": ["chatgpt", "codex"],
+    "operatingSystems": ["linux", "macos", "windows"],
+    "installModes": ["plugin", "filesystem"]
+  },
+  "tags": ["testing", "integration", "boundaries", "databases", "external-services"],
+  "dependencies": [],
+  "relatedSkills": ["designing-test-strategies", "building-regression-tests", "building-reliable-node-api-boundaries"],
+  "version": "1.0.0-beta.1",
+  "updatedAt": "2026-09-01",
+  "locales": {
+    "en": {
+      "displayName": "Testing Integration Boundaries",
+      "summary": "Verifies the real contracts where code crosses databases, filesystems, queues, network services, or other independently behaving dependencies.",
+      "primaryBenefit": "Finds serialization, persistence, protocol, and failure-mode defects that mocks and isolated unit tests cannot prove away.",
+      "whenToUse": "Use when code crosses a database, filesystem, queue, network API, process, or module boundary and isolated tests cannot prove serialization, persistence, protocol, or failure behavior.",
+      "whenNotToUse": "Do not use when the behavior is fully deterministic inside one unit and no external contract or side effect participates in the risk.",
+      "useCases": ["Verify repository behavior against the real database engine used by the application", "Test how an API client parses success and failure responses at the service boundary"],
+      "examplePrompts": ["Use testing-integration-boundaries to identify the real dependency boundary here and design the narrowest integration test that proves its contract."]
+    },
+    "pt-BR": {
+      "displayName": "Teste de Limites de Integração",
+      "summary": "Verifica os contratos reais onde o código cruza bancos de dados, filesystems, filas, serviços de rede ou outras dependências com comportamento independente.",
+      "primaryBenefit": "Encontra defeitos de serialização, persistência, protocolo e modos de falha que mocks e testes unitários isolados não conseguem provar.",
+      "whenToUse": "Use quando o código cruza um banco de dados, filesystem, fila, API de rede, processo ou limite de módulo e testes isolados não conseguem provar serialização, persistência, protocolo ou comportamento de falha.",
+      "whenNotToUse": "Não use quando o comportamento é totalmente determinístico dentro de uma única unidade e nenhum contrato externo ou efeito colateral participa do risco.",
+      "useCases": ["Verificar o comportamento de um repository contra o mesmo engine de banco usado pela aplicação", "Testar como um cliente de API interpreta respostas de sucesso e falha no limite do serviço"],
+      "examplePrompts": ["Use testing-integration-boundaries para identificar o limite de dependência real aqui e desenhar o menor teste de integração que prove seu contrato."]
+    }
+  }
+}

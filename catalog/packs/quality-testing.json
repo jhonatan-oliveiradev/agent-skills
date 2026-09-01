@@ -1,23 +1,28 @@
 {
   "$schema": "../schemas/pack.schema.json",
   "slug": "quality-testing",
-  "status": "planned",
+  "status": "active",
   "featured": false,
   "color": "coral",
   "version": "1.0.0-beta.1",
-  "skills": [],
+  "skills": [
+    "designing-test-strategies",
+    "testing-integration-boundaries",
+    "testing-web-applications-end-to-end",
+    "building-regression-tests"
+  ],
   "locales": {
     "en": {
       "name": "Quality & Testing",
-      "summary": "Planned guidance for verification strategy, regression control, and evidence-based quality gates.",
-      "description": "This planned pack will cover quality and testing workflows; skills will enter through public proposals and independent validation.",
-      "outcomes": ["Build verification strategies around observable product behavior", "Reduce regression risk with repeatable evidence and quality gates"]
+      "summary": "Risk-based test strategy, integration boundaries, critical browser journeys, and regression protection for software that needs trustworthy verification evidence.",
+      "description": "An installable verification workflow for deciding what to test, proving real dependency boundaries, exercising a small set of critical web journeys, and turning known defects into durable automated regression guards.",
+      "outcomes": ["Build a layered verification strategy where each important risk has evidence at the smallest useful test scope", "Protect integration contracts, critical user journeys, and known defects with deterministic tests that produce actionable failure evidence"]
     },
     "pt-BR": {
       "name": "Qualidade e Testes",
-      "summary": "Orientações planejadas para estratégia de verificação, controle de regressões e critérios de qualidade baseados em evidências.",
-      "description": "Este pack planejado abordará fluxos de qualidade e testes; as skills entrarão por meio de propostas públicas e validação independente.",
-      "outcomes": ["Construir estratégias de verificação em torno do comportamento observável do produto", "Reduzir o risco de regressão com evidências repetíveis e critérios de qualidade"]
+      "summary": "Estratégia de testes baseada em risco, limites de integração, jornadas críticas no navegador e proteção contra regressões para software que precisa de evidências confiáveis de verificação.",
+      "description": "Um fluxo instalável de verificação para decidir o que testar, provar limites reais de dependência, exercitar um conjunto pequeno de jornadas web críticas e transformar defeitos conhecidos em proteções automatizadas duráveis contra regressão.",
+      "outcomes": ["Construir uma estratégia de verificação em camadas onde cada risco importante possui evidência no menor escopo útil de teste", "Proteger contratos de integração, jornadas críticas do usuário e defeitos conhecidos com testes determinísticos que produzem evidências acionáveis de falha"]
     }
   }
 }

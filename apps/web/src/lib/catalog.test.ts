@@ -16,7 +16,7 @@ describe("catalog adapter", () => {
     );
 
     expect(catalog.sourceDigest).toBe(source.sourceDigest);
-    expect(catalog.skills).toHaveLength(26);
+    expect(catalog.skills).toHaveLength(30);
     expect(catalog.packs).toHaveLength(6);
     expect(getCatalogCounts()).toEqual(source.counts);
     expect(getSupportedLocales()).toEqual(["en", "pt-BR"]);
@@ -67,7 +67,7 @@ describe("catalog adapter", () => {
     });
   });
 
-  it("resolves localized active and planned pack details", () => {
+  it("resolves all localized packs as active systems", () => {
     const adapter = catalogAdapter as typeof catalogAdapter & {
       getLocalizedPacks?: (locale: "en" | "pt-BR") => readonly {
         slug: string;
@@ -84,6 +84,7 @@ describe("catalog adapter", () => {
     expect(adapter.getLocalizedPacks).toBeTypeOf("function");
     const packs = adapter.getLocalizedPacks?.("pt-BR") ?? [];
     expect(packs).toHaveLength(6);
+    expect(packs.every((pack) => pack.status === "active")).toBe(true);
     expect(packs.find((pack) => pack.slug === "frontend-product")).toMatchObject({
       name: "Frontend e Produto",
       status: "active",
@@ -99,9 +100,10 @@ describe("catalog adapter", () => {
     });
     expect(packs.find((pack) => pack.slug === "architecture-engineering")?.skills).toHaveLength(4);
     expect(packs.find((pack) => pack.slug === "quality-testing")).toMatchObject({
-      status: "planned",
-      skills: [],
+      name: "Qualidade e Testes",
+      status: "active",
     });
+    expect(packs.find((pack) => pack.slug === "quality-testing")?.skills).toHaveLength(4);
 
     expect(adapter.getLocalizedPackBySlug?.("en", "motion")?.outcomes).toHaveLength(2);
     expect(adapter.getLocalizedPackBySlug?.("en", "missing-pack")).toBeUndefined();
@@ -126,6 +128,10 @@ describe("catalog adapter", () => {
     expect(adapter.getPackInstallCommands?.("architecture-engineering", "active")).toEqual({
       bash: "./install.sh --pack architecture-engineering",
       powershell: "./install.ps1 --pack architecture-engineering",
+    });
+    expect(adapter.getPackInstallCommands?.("quality-testing", "active")).toEqual({
+      bash: "./install.sh --pack quality-testing",
+      powershell: "./install.ps1 --pack quality-testing",
     });
     expect(adapter.getPackInstallCommands?.("quality-testing", "planned")).toBeUndefined();
   });

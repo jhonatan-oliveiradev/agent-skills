@@ -6,7 +6,7 @@
     "en",
     "pt-BR"
   ],
-  "sourceDigest": "b5d01e95875dc1565f4a1c23a349babb23a498a9d4daa8cdb919e5346b7aa18b",
+  "sourceDigest": "e85cd7f17873e959226e59850febbfa93fe34939f2140dbc1b9ee842ba5dee05",
   "filters": {
     "categories": [
       "architecture-engineering",
@@ -16,7 +16,8 @@
       "game-development",
       "meta",
       "motion",
-      "product-design"
+      "product-design",
+      "quality-testing"
     ],
     "packs": [
       "architecture-engineering",
@@ -41,6 +42,8 @@
       "backfills",
       "blast-radius",
       "boundaries",
+      "browser",
+      "bugs",
       "character-art",
       "cohesion",
       "combat-animation",
@@ -49,13 +52,17 @@
       "conversion",
       "coupling",
       "data-modeling",
+      "databases",
+      "debugging",
       "decision-making",
       "decision-records",
       "design-systems",
       "design-tokens",
       "developer-tooling",
       "documentation",
+      "end-to-end",
       "explain",
+      "external-services",
       "figma",
       "frontend-fidelity",
       "game-assets",
@@ -69,6 +76,7 @@
       "incremental-delivery",
       "indexes",
       "indexing",
+      "integration",
       "interaction-design",
       "interface-design",
       "landing-pages",
@@ -89,16 +97,19 @@
       "product-marketing",
       "profiling",
       "project-scaffolding",
+      "quality",
       "quality-attributes",
       "query-performance",
       "react",
       "refactoring",
+      "regression",
       "regression-review",
       "regression-testing",
       "relational-design",
       "release-workflow",
       "responsive-design",
       "reusable-processes",
+      "risk",
       "runtime-performance",
       "runtime-validation",
       "schema-evolution",
@@ -106,16 +117,22 @@
       "scrolltrigger",
       "sprite-animation",
       "tailwind-css",
+      "tdd",
+      "test-strategy",
+      "testing",
       "threejs",
       "topology",
       "tradeoffs",
       "typescript",
       "ui-implementation",
+      "user-journeys",
       "validation",
       "vercel",
+      "verification",
       "visual-audit",
       "visual-consistency",
       "visual-fidelity",
+      "web",
       "web-motion",
       "webgl",
       "workflow-design",
@@ -153,11 +170,11 @@
     ]
   },
   "counts": {
-    "skills": 26,
+    "skills": 30,
     "packs": {
       "total": 6,
-      "active": 5,
-      "planned": 1
+      "active": 6,
+      "planned": 0
     },
     "categories": {
       "architecture-engineering": 4,
@@ -167,22 +184,24 @@
       "game-development": 5,
       "meta": 1,
       "motion": 4,
-      "product-design": 2
+      "product-design": 2,
+      "quality-testing": 4
     },
     "maturity": {
-      "beta": 8,
+      "beta": 12,
       "stable": 18
     },
     "difficulty": {
-      "advanced": 18,
-      "intermediate": 8
+      "advanced": 19,
+      "intermediate": 11
     },
     "activePackMembership": {
       "architecture-engineering": 4,
       "backend-data": 4,
       "frontend-product": 8,
       "game-development": 5,
-      "motion": 5
+      "motion": 5,
+      "quality-testing": 4
     }
   },
   "skills": [
@@ -524,6 +543,77 @@
           ],
           "examplePrompts": [
             "Use building-premium-nextjs-interfaces para redesenhar esta experiência em Next.js com hierarquia mais forte e estados responsivos prontos para produção."
+          ]
+        }
+      }
+    },
+    {
+      "$schema": "../schemas/skill.schema.json",
+      "slug": "building-regression-tests",
+      "category": "quality-testing",
+      "packs": [
+        "quality-testing"
+      ],
+      "maturity": "beta",
+      "difficulty": "intermediate",
+      "featured": false,
+      "compatibility": {
+        "surfaces": [
+          "chatgpt",
+          "codex"
+        ],
+        "operatingSystems": [
+          "linux",
+          "macos",
+          "windows"
+        ],
+        "installModes": [
+          "plugin",
+          "filesystem"
+        ]
+      },
+      "tags": [
+        "testing",
+        "regression",
+        "bugs",
+        "tdd",
+        "debugging"
+      ],
+      "dependencies": [],
+      "relatedSkills": [
+        "designing-test-strategies",
+        "testing-integration-boundaries",
+        "testing-web-applications-end-to-end"
+      ],
+      "version": "1.0.0-beta.1",
+      "updatedAt": "2026-09-01",
+      "locales": {
+        "en": {
+          "displayName": "Building Regression Tests",
+          "summary": "Turns a reproduced defect into a deterministic automated guard that fails before the fix and protects the violated behavior afterward.",
+          "primaryBenefit": "Makes bug fixes durable and proves the new test actually detects the defect instead of merely passing alongside the fix.",
+          "whenToUse": "Use when a bug, outage, production defect, or failed higher-level test must become a durable automated guard before the implementation is changed.",
+          "whenNotToUse": "Do not use for a new behavior that has never failed and is better specified through ordinary feature-level TDD or the broader test strategy.",
+          "useCases": [
+            "Reproduce a production bug in the smallest reliable automated test before changing code",
+            "Move a failure discovered by E2E into a narrower regression test after identifying the real broken boundary"
+          ],
+          "examplePrompts": [
+            "Use building-regression-tests to reproduce this bug as a failing automated test first, then identify the narrowest layer where the regression should live."
+          ]
+        },
+        "pt-BR": {
+          "displayName": "Construção de Testes de Regressão",
+          "summary": "Transforma um defeito reproduzido em uma proteção automatizada determinística que falha antes da correção e preserva o comportamento violado depois dela.",
+          "primaryBenefit": "Torna correções de bugs duráveis e prova que o novo teste realmente detecta o defeito em vez de apenas passar junto com a correção.",
+          "whenToUse": "Use quando um bug, outage, defeito de produção ou falha em teste de nível mais alto precisa se tornar uma proteção automatizada durável antes da implementação ser alterada.",
+          "whenNotToUse": "Não use para um comportamento novo que nunca falhou e é melhor especificado por TDD comum da feature ou pela estratégia mais ampla de testes.",
+          "useCases": [
+            "Reproduzir um bug de produção no menor teste automatizado confiável antes de alterar o código",
+            "Mover uma falha encontrada por E2E para um teste de regressão mais estreito depois de identificar o verdadeiro limite quebrado"
+          ],
+          "examplePrompts": [
+            "Use building-regression-tests para reproduzir este bug primeiro como um teste automatizado falhando e então identificar a menor camada onde a regressão deve permanecer."
           ]
         }
       }
@@ -1016,6 +1106,77 @@
           ],
           "examplePrompts": [
             "Use designing-software-boundaries para mapear responsabilidades, acoplamento, ownership de estado e direções de dependência desta codebase antes de propor novos limites de módulo."
+          ]
+        }
+      }
+    },
+    {
+      "$schema": "../schemas/skill.schema.json",
+      "slug": "designing-test-strategies",
+      "category": "quality-testing",
+      "packs": [
+        "quality-testing"
+      ],
+      "maturity": "beta",
+      "difficulty": "advanced",
+      "featured": false,
+      "compatibility": {
+        "surfaces": [
+          "chatgpt",
+          "codex"
+        ],
+        "operatingSystems": [
+          "linux",
+          "macos",
+          "windows"
+        ],
+        "installModes": [
+          "plugin",
+          "filesystem"
+        ]
+      },
+      "tags": [
+        "testing",
+        "quality",
+        "risk",
+        "test-strategy",
+        "verification"
+      ],
+      "dependencies": [],
+      "relatedSkills": [
+        "testing-integration-boundaries",
+        "testing-web-applications-end-to-end",
+        "building-regression-tests"
+      ],
+      "version": "1.0.0-beta.1",
+      "updatedAt": "2026-09-01",
+      "locales": {
+        "en": {
+          "displayName": "Designing Test Strategies",
+          "summary": "Builds a risk-based verification portfolio that assigns each important behavior to the smallest test layer able to provide trustworthy evidence.",
+          "primaryBenefit": "Prevents both under-testing critical risks and over-investing in slow, redundant broad-stack tests.",
+          "whenToUse": "Use when a feature, service, or release needs a deliberate verification plan and the team is unsure which risks belong in unit, integration, end-to-end, or non-functional tests.",
+          "whenNotToUse": "Do not use when one already-defined regression or boundary test is sufficient and no broader verification portfolio needs to be designed.",
+          "useCases": [
+            "Define the verification strategy for a new product capability before implementation",
+            "Rebalance a slow test suite around critical risks and unique evidence at each layer"
+          ],
+          "examplePrompts": [
+            "Use designing-test-strategies to map this feature's risks to the smallest useful test layers and define the release evidence we actually need."
+          ]
+        },
+        "pt-BR": {
+          "displayName": "Desenho de Estratégias de Teste",
+          "summary": "Constrói um portfólio de verificação baseado em risco que associa cada comportamento importante à menor camada de teste capaz de produzir evidência confiável.",
+          "primaryBenefit": "Evita tanto subtestar riscos críticos quanto investir demais em testes amplos, lentos e redundantes.",
+          "whenToUse": "Use quando uma feature, serviço ou release precisa de um plano deliberado de verificação e a equipe não sabe quais riscos pertencem a testes unitários, de integração, end-to-end ou não funcionais.",
+          "whenNotToUse": "Não use quando um único teste de regressão ou de boundary já definido é suficiente e não há necessidade de desenhar um portfólio mais amplo de verificação.",
+          "useCases": [
+            "Definir a estratégia de verificação de uma nova capacidade de produto antes da implementação",
+            "Reequilibrar uma suíte lenta em torno de riscos críticos e evidências únicas em cada camada"
+          ],
+          "examplePrompts": [
+            "Use designing-test-strategies para mapear os riscos desta feature às menores camadas úteis de teste e definir as evidências de release que realmente precisamos."
           ]
         }
       }
@@ -1824,6 +1985,77 @@
     },
     {
       "$schema": "../schemas/skill.schema.json",
+      "slug": "testing-integration-boundaries",
+      "category": "quality-testing",
+      "packs": [
+        "quality-testing"
+      ],
+      "maturity": "beta",
+      "difficulty": "intermediate",
+      "featured": false,
+      "compatibility": {
+        "surfaces": [
+          "chatgpt",
+          "codex"
+        ],
+        "operatingSystems": [
+          "linux",
+          "macos",
+          "windows"
+        ],
+        "installModes": [
+          "plugin",
+          "filesystem"
+        ]
+      },
+      "tags": [
+        "testing",
+        "integration",
+        "boundaries",
+        "databases",
+        "external-services"
+      ],
+      "dependencies": [],
+      "relatedSkills": [
+        "designing-test-strategies",
+        "building-regression-tests",
+        "building-reliable-node-api-boundaries"
+      ],
+      "version": "1.0.0-beta.1",
+      "updatedAt": "2026-09-01",
+      "locales": {
+        "en": {
+          "displayName": "Testing Integration Boundaries",
+          "summary": "Verifies the real contracts where code crosses databases, filesystems, queues, network services, or other independently behaving dependencies.",
+          "primaryBenefit": "Finds serialization, persistence, protocol, and failure-mode defects that mocks and isolated unit tests cannot prove away.",
+          "whenToUse": "Use when code crosses a database, filesystem, queue, network API, process, or module boundary and isolated tests cannot prove serialization, persistence, protocol, or failure behavior.",
+          "whenNotToUse": "Do not use when the behavior is fully deterministic inside one unit and no external contract or side effect participates in the risk.",
+          "useCases": [
+            "Verify repository behavior against the real database engine used by the application",
+            "Test how an API client parses success and failure responses at the service boundary"
+          ],
+          "examplePrompts": [
+            "Use testing-integration-boundaries to identify the real dependency boundary here and design the narrowest integration test that proves its contract."
+          ]
+        },
+        "pt-BR": {
+          "displayName": "Teste de Limites de Integração",
+          "summary": "Verifica os contratos reais onde o código cruza bancos de dados, filesystems, filas, serviços de rede ou outras dependências com comportamento independente.",
+          "primaryBenefit": "Encontra defeitos de serialização, persistência, protocolo e modos de falha que mocks e testes unitários isolados não conseguem provar.",
+          "whenToUse": "Use quando o código cruza um banco de dados, filesystem, fila, API de rede, processo ou limite de módulo e testes isolados não conseguem provar serialização, persistência, protocolo ou comportamento de falha.",
+          "whenNotToUse": "Não use quando o comportamento é totalmente determinístico dentro de uma única unidade e nenhum contrato externo ou efeito colateral participa do risco.",
+          "useCases": [
+            "Verificar o comportamento de um repository contra o mesmo engine de banco usado pela aplicação",
+            "Testar como um cliente de API interpreta respostas de sucesso e falha no limite do serviço"
+          ],
+          "examplePrompts": [
+            "Use testing-integration-boundaries para identificar o limite de dependência real aqui e desenhar o menor teste de integração que prove seu contrato."
+          ]
+        }
+      }
+    },
+    {
+      "$schema": "../schemas/skill.schema.json",
       "slug": "testing-playable-games",
       "category": "game-development",
       "packs": [
@@ -1886,6 +2118,77 @@
           ],
           "examplePrompts": [
             "Use testing-playable-games para verificar este build em controles, combate, transições e performance durante sessões longas."
+          ]
+        }
+      }
+    },
+    {
+      "$schema": "../schemas/skill.schema.json",
+      "slug": "testing-web-applications-end-to-end",
+      "category": "quality-testing",
+      "packs": [
+        "quality-testing"
+      ],
+      "maturity": "beta",
+      "difficulty": "intermediate",
+      "featured": false,
+      "compatibility": {
+        "surfaces": [
+          "chatgpt",
+          "codex"
+        ],
+        "operatingSystems": [
+          "linux",
+          "macos",
+          "windows"
+        ],
+        "installModes": [
+          "plugin",
+          "filesystem"
+        ]
+      },
+      "tags": [
+        "testing",
+        "end-to-end",
+        "browser",
+        "web",
+        "user-journeys"
+      ],
+      "dependencies": [],
+      "relatedSkills": [
+        "designing-test-strategies",
+        "building-regression-tests",
+        "auditing-pixel-perfect-frontend"
+      ],
+      "version": "1.0.0-beta.1",
+      "updatedAt": "2026-09-01",
+      "locales": {
+        "en": {
+          "displayName": "Testing Web Applications End to End",
+          "summary": "Verifies critical browser journeys through the assembled web application using user-facing interactions and observable browser evidence.",
+          "primaryBenefit": "Protects the few workflows that require real routing, client state, authentication, UI, and network behavior to work together without turning the whole suite into browser tests.",
+          "whenToUse": "Use when a web application's assembled browser experience, critical user journeys, routing, forms, authentication, client state, or network behavior must be verified beyond component and integration tests.",
+          "whenNotToUse": "Do not use for isolated logic or edge cases that a narrower test can prove with equal confidence and faster feedback.",
+          "useCases": [
+            "Verify that a signed-in user can complete a critical creation or checkout flow",
+            "Diagnose a browser-only failure using UI, URL, console, network, storage, and screenshot evidence"
+          ],
+          "examplePrompts": [
+            "Use testing-web-applications-end-to-end to define and verify this critical browser journey without coupling the test to implementation details."
+          ]
+        },
+        "pt-BR": {
+          "displayName": "Teste End-to-End de Aplicações Web",
+          "summary": "Verifica jornadas críticas no navegador através da aplicação web montada usando interações orientadas ao usuário e evidências observáveis do browser.",
+          "primaryBenefit": "Protege os poucos fluxos que exigem routing, estado do cliente, autenticação, UI e rede funcionando juntos sem transformar toda a suíte em testes de navegador.",
+          "whenToUse": "Use quando a experiência montada de uma aplicação web no navegador, jornadas críticas, routing, formulários, autenticação, estado do cliente ou comportamento de rede precisam ser verificados além de testes de componente e integração.",
+          "whenNotToUse": "Não use para lógica isolada ou edge cases que um teste mais estreito consegue provar com a mesma confiança e feedback mais rápido.",
+          "useCases": [
+            "Verificar que um usuário autenticado consegue concluir um fluxo crítico de criação ou checkout",
+            "Diagnosticar uma falha exclusiva do navegador usando evidências de UI, URL, console, network, storage e screenshot"
+          ],
+          "examplePrompts": [
+            "Use testing-web-applications-end-to-end para definir e verificar esta jornada crítica no navegador sem acoplar o teste a detalhes de implementação."
           ]
         }
       }
@@ -2553,32 +2856,90 @@
     },
     {
       "slug": "quality-testing",
-      "status": "planned",
+      "status": "active",
       "featured": false,
       "color": "coral",
       "version": "1.0.0-beta.1",
       "locales": {
         "en": {
           "name": "Quality & Testing",
-          "summary": "Planned guidance for verification strategy, regression control, and evidence-based quality gates.",
-          "description": "This planned pack will cover quality and testing workflows; skills will enter through public proposals and independent validation.",
+          "summary": "Risk-based test strategy, integration boundaries, critical browser journeys, and regression protection for software that needs trustworthy verification evidence.",
+          "description": "An installable verification workflow for deciding what to test, proving real dependency boundaries, exercising a small set of critical web journeys, and turning known defects into durable automated regression guards.",
           "outcomes": [
-            "Build verification strategies around observable product behavior",
-            "Reduce regression risk with repeatable evidence and quality gates"
+            "Build a layered verification strategy where each important risk has evidence at the smallest useful test scope",
+            "Protect integration contracts, critical user journeys, and known defects with deterministic tests that produce actionable failure evidence"
           ]
         },
         "pt-BR": {
           "name": "Qualidade e Testes",
-          "summary": "Orientações planejadas para estratégia de verificação, controle de regressões e critérios de qualidade baseados em evidências.",
-          "description": "Este pack planejado abordará fluxos de qualidade e testes; as skills entrarão por meio de propostas públicas e validação independente.",
+          "summary": "Estratégia de testes baseada em risco, limites de integração, jornadas críticas no navegador e proteção contra regressões para software que precisa de evidências confiáveis de verificação.",
+          "description": "Um fluxo instalável de verificação para decidir o que testar, provar limites reais de dependência, exercitar um conjunto pequeno de jornadas web críticas e transformar defeitos conhecidos em proteções automatizadas duráveis contra regressão.",
           "outcomes": [
-            "Construir estratégias de verificação em torno do comportamento observável do produto",
-            "Reduzir o risco de regressão com evidências repetíveis e critérios de qualidade"
+            "Construir uma estratégia de verificação em camadas onde cada risco importante possui evidência no menor escopo útil de teste",
+            "Proteger contratos de integração, jornadas críticas do usuário e defeitos conhecidos com testes determinísticos que produzem evidências acionáveis de falha"
           ]
         }
       },
-      "skillSlugs": [],
-      "skills": []
+      "skillSlugs": [
+        "designing-test-strategies",
+        "testing-integration-boundaries",
+        "testing-web-applications-end-to-end",
+        "building-regression-tests"
+      ],
+      "skills": [
+        {
+          "slug": "designing-test-strategies",
+          "displayName": {
+            "en": "Designing Test Strategies",
+            "pt-BR": "Desenho de Estratégias de Teste"
+          },
+          "summary": {
+            "en": "Builds a risk-based verification portfolio that assigns each important behavior to the smallest test layer able to provide trustworthy evidence.",
+            "pt-BR": "Constrói um portfólio de verificação baseado em risco que associa cada comportamento importante à menor camada de teste capaz de produzir evidência confiável."
+          },
+          "difficulty": "advanced",
+          "maturity": "beta"
+        },
+        {
+          "slug": "testing-integration-boundaries",
+          "displayName": {
+            "en": "Testing Integration Boundaries",
+            "pt-BR": "Teste de Limites de Integração"
+          },
+          "summary": {
+            "en": "Verifies the real contracts where code crosses databases, filesystems, queues, network services, or other independently behaving dependencies.",
+            "pt-BR": "Verifica os contratos reais onde o código cruza bancos de dados, filesystems, filas, serviços de rede ou outras dependências com comportamento independente."
+          },
+          "difficulty": "intermediate",
+          "maturity": "beta"
+        },
+        {
+          "slug": "testing-web-applications-end-to-end",
+          "displayName": {
+            "en": "Testing Web Applications End to End",
+            "pt-BR": "Teste End-to-End de Aplicações Web"
+          },
+          "summary": {
+            "en": "Verifies critical browser journeys through the assembled web application using user-facing interactions and observable browser evidence.",
+            "pt-BR": "Verifica jornadas críticas no navegador através da aplicação web montada usando interações orientadas ao usuário e evidências observáveis do browser."
+          },
+          "difficulty": "intermediate",
+          "maturity": "beta"
+        },
+        {
+          "slug": "building-regression-tests",
+          "displayName": {
+            "en": "Building Regression Tests",
+            "pt-BR": "Construção de Testes de Regressão"
+          },
+          "summary": {
+            "en": "Turns a reproduced defect into a deterministic automated guard that fails before the fix and protects the violated behavior afterward.",
+            "pt-BR": "Transforma um defeito reproduzido em uma proteção automatizada determinística que falha antes da correção e preserva o comportamento violado depois dela."
+          },
+          "difficulty": "intermediate",
+          "maturity": "beta"
+        }
+      ]
     }
   ]
 }
