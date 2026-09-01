@@ -3,6 +3,7 @@ import Link from "next/link";
 import { CopyCommand } from "@/components/copy-command";
 import { resolveLocale } from "@/components/foundation-route";
 import { InstallationTerminal } from "@/components/installation-terminal";
+import { getCatalog } from "@/lib/catalog";
 import { fieldManualCopy } from "@/lib/editorial-secondary-copy";
 import { installationCommands } from "@/lib/installation";
 import { messages } from "@/lib/messages";
@@ -31,6 +32,7 @@ export default async function GettingStartedPage({ params }: PageProps) {
   const locale = await resolveLocale(params);
   const copy = messages[locale].gettingStarted;
   const manual = fieldManualCopy[locale];
+  const catalog = getCatalog();
 
   return (
     <article className="shell getting-started-page field-manual" data-field-manual>
@@ -113,7 +115,7 @@ export default async function GettingStartedPage({ params }: PageProps) {
         <InstallationTerminal
           command={installationCommands.complete.bash}
           label={copy.install.demoLabel}
-          success={copy.install.demoSuccess}
+          success={`${catalog.skills.length} ${manual.installationSuccessSuffix}`}
         />
         <div className="install-command-matrix">
           <InstallOption

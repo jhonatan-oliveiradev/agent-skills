@@ -1,6 +1,6 @@
 # Agent Skills Studio
 
-A curated Agent Skills library for production frontend, product design, motion, visual QA, delivery workflows, and game-development tasks. It is inspired by useful patterns from the broader agent-skills ecosystem, but the skills in this repository are intentionally rewritten, consolidated, and kept project-agnostic.
+A curated Agent Skills library for production frontend, product design, motion, visual QA, delivery workflows, backend and data engineering, and game-development tasks. It is inspired by useful patterns from the broader agent-skills ecosystem, but the skills in this repository are intentionally rewritten, consolidated, and kept project-agnostic.
 
 ## Principles
 
@@ -35,6 +35,12 @@ kept.
 - `orchestrating-cinematic-web-motion`
 - `optimizing-frontend-motion-performance`
 
+### Backend & data
+- `designing-relational-data-models`
+- `building-reliable-node-api-boundaries`
+- `evolving-postgres-schemas-safely`
+- `profiling-postgres-query-performance`
+
 ### Delivery & knowledge capture
 - `shipping-github-vercel-changes`
 - `turning-techniques-into-skills`
@@ -51,6 +57,12 @@ kept.
 The motion stack is intentionally layered: `craft-premium-motion` owns direction and technology selection; `engineering-gsap-animations` owns GSAP implementation in React/Next.js; and `optimizing-frontend-motion-performance` owns runtime profiling. This avoids making GSAP the default for effects that CSS or Motion can handle.
 
 `reconstructing-images-as-threejs` is an optional, evidence-limited workflow for code-only procedural reconstruction. It does not replace authored GLB/Blender pipelines and must not claim exact hidden geometry or animation readiness without the required gates.
+
+## Backend & Data v1
+
+The Backend & Data pack is deliberately provider- and ORM-independent. It separates four concerns that should remain independently invokable: relational modeling, Node.js API trust boundaries, safe PostgreSQL schema evolution, and evidence-led PostgreSQL query profiling.
+
+The methods prefer database constraints and measured access patterns over speculative abstraction, use compatibility-first production migration strategies, and require execution evidence before query/index recommendations.
 
 ## New web-app default
 
@@ -140,20 +152,21 @@ The active, installable packs are:
 
 - `frontend-product` — Frontend & Product (8 skills);
 - `motion` — Motion (5 skills);
-- `game-development` — Game Development (5 skills).
+- `game-development` — Game Development (5 skills);
+- `backend-data` — Backend & Data (4 skills).
 
-The catalog also publishes three roadmap packs that are not yet installable:
-`architecture-engineering` (Architecture & Engineering), `backend-data`
-(Backend & Data), and `quality-testing` (Quality & Testing).
+The catalog also publishes two roadmap packs that are not yet installable:
+`architecture-engineering` (Architecture & Engineering) and `quality-testing`
+(Quality & Testing).
 
 Install an active pack on Bash or PowerShell:
 
 ```bash
-./install.sh --pack motion
+./install.sh --pack backend-data
 ```
 
 ```powershell
-./install.ps1 --pack motion
+./install.ps1 --pack backend-data
 ```
 
 Pack and individual selections can be mixed. Pack members retain manifest
@@ -168,7 +181,7 @@ only once:
 ./install.ps1 --pack motion --skill turning-techniques-into-skills
 ```
 
-Selecting an unknown pack or a planned pack such as `backend-data` is rejected
+Selecting an unknown pack or a planned pack such as `quality-testing` is rejected
 before the destination is changed.
 
 When adding a skill, add its `catalog/skills/<slug>.json` metadata in both `en`
@@ -202,20 +215,21 @@ Os pacotes ativos e instaláveis são:
 
 - `frontend-product` — Frontend e Produto (8 skills);
 - `motion` — Motion (5 skills);
-- `game-development` — Desenvolvimento de Jogos (5 skills).
+- `game-development` — Desenvolvimento de Jogos (5 skills);
+- `backend-data` — Backend e Dados (4 skills).
 
-O catálogo também publica três pacotes planejados, ainda não instaláveis:
-`architecture-engineering` (Arquitetura e Engenharia), `backend-data` (Backend
-e Dados) e `quality-testing` (Qualidade e Testes).
+O catálogo também publica dois pacotes planejados, ainda não instaláveis:
+`architecture-engineering` (Arquitetura e Engenharia) e `quality-testing`
+(Qualidade e Testes).
 
 Instale um pacote ativo com Bash ou PowerShell:
 
 ```bash
-./install.sh --pack motion
+./install.sh --pack backend-data
 ```
 
 ```powershell
-./install.ps1 --pack motion
+./install.ps1 --pack backend-data
 ```
 
 É possível combinar seleções de pacote e skill. Os membros dos pacotes mantêm
@@ -230,7 +244,7 @@ duplicatas são instaladas apenas uma vez:
 ./install.ps1 --pack motion --skill turning-techniques-into-skills
 ```
 
-Um pacote desconhecido ou planejado, como `backend-data`, é rejeitado antes de
+Um pacote desconhecido ou planejado, como `quality-testing`, é rejeitado antes de
 qualquer alteração no destino.
 
 Ao adicionar uma skill, inclua os metadados em
@@ -307,7 +321,7 @@ cd agent-skills
 code ../my-next-app
 ```
 
-Inside Codex, you can then work normally. The project-local `AGENTS.md` provides repository rules, while the reusable skills provide specialized workflows such as UI fidelity, motion, visual QA, and delivery. You can let Codex select a matching skill or explicitly name one in the prompt.
+Inside Codex, you can then work normally. The project-local `AGENTS.md` provides repository rules, while the reusable skills provide specialized workflows such as UI fidelity, motion, visual QA, backend/data engineering, and delivery. You can let Codex select a matching skill or explicitly name one in the prompt.
 
 ## Validate
 
@@ -344,4 +358,4 @@ See `CHANGELOG.md` for release notes.
 
 ## Attribution
 
-Research sources include the MIT-licensed `MengTo/Skills`, GreenSock's MIT-licensed official GSAP skills, LottieFiles' MIT-licensed motion-design skill, and Apache-2.0 `img2threejs`. `MAPPING.md` records whether each source was adapted, merged, referenced, or deliberately kept separate. Local skill text is maintained independently rather than mirrored wholesale.
+Research sources include the MIT-licensed `MengTo/Skills`, GreenSock's MIT-licensed official GSAP skills, LottieFiles' MIT-licensed motion-design skill, and Apache-2.0 `img2threejs`, plus official PostgreSQL and Node.js documentation and the OWASP API Security Top 10 used as references for Backend & Data v1. `MAPPING.md` records whether each source was adapted, merged, referenced, or deliberately kept separate. Local skill text is maintained independently rather than mirrored wholesale.

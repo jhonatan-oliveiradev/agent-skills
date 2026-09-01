@@ -6,9 +6,10 @@
     "en",
     "pt-BR"
   ],
-  "sourceDigest": "9af07da3a8c53683ee3d84cb24b2cef3afd0434aad776f154ff52e90449910b3",
+  "sourceDigest": "9dc9060d11fedfdeaf0d1f8bf8230acec0e225ea0c6ded3f21892defea3ce42c",
   "filters": {
     "categories": [
+      "backend-data",
       "delivery",
       "frontend",
       "game-development",
@@ -31,15 +32,21 @@
       "animation-lifecycle",
       "animation-performance",
       "animation-pipeline",
+      "api-design",
       "asset-pipeline",
+      "authorization",
+      "backfills",
       "character-art",
       "combat-animation",
       "component-apis",
+      "constraints",
       "conversion",
+      "data-modeling",
       "design-systems",
       "design-tokens",
       "developer-tooling",
       "documentation",
+      "explain",
       "figma",
       "frontend-fidelity",
       "game-assets",
@@ -50,28 +57,37 @@
       "github",
       "gsap",
       "image-reconstruction",
+      "indexes",
+      "indexing",
       "interaction-design",
       "interface-design",
       "landing-pages",
       "memory-leaks",
+      "migrations",
       "motion-design",
       "motion-performance",
       "nextjs",
+      "nodejs",
+      "observability",
       "performance",
       "playtesting",
+      "postgresql",
       "pricing-pages",
       "procedural-3d",
       "product-marketing",
       "profiling",
       "project-scaffolding",
+      "query-performance",
       "react",
       "regression-review",
       "regression-testing",
+      "relational-design",
       "release-workflow",
       "responsive-design",
       "reusable-processes",
       "runtime-performance",
       "runtime-validation",
+      "schema-evolution",
       "scroll-animation",
       "scrolltrigger",
       "sprite-animation",
@@ -79,15 +95,18 @@
       "threejs",
       "typescript",
       "ui-implementation",
+      "validation",
       "vercel",
       "visual-audit",
       "visual-consistency",
       "visual-fidelity",
       "web-motion",
       "webgl",
-      "workflow-design"
+      "workflow-design",
+      "zero-downtime"
     ],
     "maturity": [
+      "beta",
       "stable"
     ],
     "difficulty": [
@@ -111,18 +130,21 @@
       "Figma",
       "GSAP",
       "GitHub",
+      "Node.js",
+      "PostgreSQL",
       "Three.js",
       "Vercel"
     ]
   },
   "counts": {
-    "skills": 18,
+    "skills": 22,
     "packs": {
       "total": 6,
-      "active": 3,
-      "planned": 3
+      "active": 4,
+      "planned": 2
     },
     "categories": {
+      "backend-data": 4,
       "delivery": 1,
       "frontend": 5,
       "game-development": 5,
@@ -131,13 +153,15 @@
       "product-design": 2
     },
     "maturity": {
+      "beta": 4,
       "stable": 18
     },
     "difficulty": {
-      "advanced": 12,
-      "intermediate": 6
+      "advanced": 15,
+      "intermediate": 7
     },
     "activePackMembership": {
+      "backend-data": 4,
       "frontend-product": 8,
       "game-development": 5,
       "motion": 5
@@ -488,6 +512,82 @@
     },
     {
       "$schema": "../schemas/skill.schema.json",
+      "slug": "building-reliable-node-api-boundaries",
+      "category": "backend-data",
+      "packs": [
+        "backend-data"
+      ],
+      "maturity": "beta",
+      "difficulty": "advanced",
+      "featured": false,
+      "compatibility": {
+        "surfaces": [
+          "chatgpt",
+          "codex"
+        ],
+        "operatingSystems": [
+          "linux",
+          "macos",
+          "windows"
+        ],
+        "installModes": [
+          "plugin",
+          "filesystem"
+        ]
+      },
+      "tags": [
+        "nodejs",
+        "api-design",
+        "authorization",
+        "validation",
+        "observability"
+      ],
+      "dependencies": [
+        {
+          "name": "Node.js",
+          "type": "tool",
+          "required": true,
+          "url": "https://nodejs.org"
+        }
+      ],
+      "relatedSkills": [
+        "designing-relational-data-models"
+      ],
+      "version": "1.0.0-beta.1",
+      "updatedAt": "2026-09-01",
+      "locales": {
+        "en": {
+          "displayName": "Building Reliable Node API Boundaries",
+          "summary": "Structures Node.js API boundaries around explicit validation, authorization, atomic mutation, failure semantics, and request observability.",
+          "primaryBenefit": "Reduces trust-boundary mistakes and makes endpoint behavior easier to verify under retries and downstream failures.",
+          "whenToUse": "Use when implementing or reviewing Node.js API or service endpoints that cross trust or data boundaries and require explicit validation, authorization, failure semantics, observability, or retry behavior.",
+          "whenNotToUse": "Do not use for an internal pure function or a transport-free domain operation with no external trust boundary.",
+          "useCases": [
+            "Design a mutation endpoint with object-level authorization",
+            "Harden an existing Node.js handler against replay, malformed input, and downstream failure"
+          ],
+          "examplePrompts": [
+            "Use building-reliable-node-api-boundaries to review this endpoint for validation, authorization, transaction, retry, and observability gaps."
+          ]
+        },
+        "pt-BR": {
+          "displayName": "Construção de Limites Confiáveis de API em Node",
+          "summary": "Estrutura limites de API em Node.js com validação, autorização, mutação atômica, semântica de falhas e observabilidade de requisição explícitas.",
+          "primaryBenefit": "Reduz falhas em limites de confiança e torna o comportamento dos endpoints mais verificável diante de retries e falhas downstream.",
+          "whenToUse": "Use ao implementar ou revisar endpoints de API ou serviços Node.js que atravessem limites de confiança ou dados e exijam validação, autorização, semântica de falhas, observabilidade ou comportamento de retry explícitos.",
+          "whenNotToUse": "Não use para uma função interna pura ou uma operação de domínio sem transporte e sem limite externo de confiança.",
+          "useCases": [
+            "Projetar um endpoint de mutação com autorização em nível de objeto",
+            "Endurecer um handler Node.js existente contra replay, entrada malformada e falha downstream"
+          ],
+          "examplePrompts": [
+            "Use building-reliable-node-api-boundaries para revisar este endpoint em busca de lacunas de validação, autorização, transação, retry e observabilidade."
+          ]
+        }
+      }
+    },
+    {
+      "$schema": "../schemas/skill.schema.json",
       "slug": "craft-premium-motion",
       "category": "motion",
       "packs": [
@@ -693,6 +793,76 @@
     },
     {
       "$schema": "../schemas/skill.schema.json",
+      "slug": "designing-relational-data-models",
+      "category": "backend-data",
+      "packs": [
+        "backend-data"
+      ],
+      "maturity": "beta",
+      "difficulty": "intermediate",
+      "featured": false,
+      "compatibility": {
+        "surfaces": [
+          "chatgpt",
+          "codex"
+        ],
+        "operatingSystems": [
+          "linux",
+          "macos",
+          "windows"
+        ],
+        "installModes": [
+          "plugin",
+          "filesystem"
+        ]
+      },
+      "tags": [
+        "postgresql",
+        "data-modeling",
+        "relational-design",
+        "constraints",
+        "indexes"
+      ],
+      "dependencies": [],
+      "relatedSkills": [
+        "building-reliable-node-api-boundaries",
+        "evolving-postgres-schemas-safely"
+      ],
+      "version": "1.0.0-beta.1",
+      "updatedAt": "2026-09-01",
+      "locales": {
+        "en": {
+          "displayName": "Designing Relational Data Models",
+          "summary": "Turns domain invariants, ownership, relationships, and access patterns into explicit relational structures.",
+          "primaryBenefit": "Creates schemas that reject invalid states and support real product queries without premature denormalization.",
+          "whenToUse": "Use when defining or reviewing a relational data model where entities, ownership, cardinality, lifecycle, constraints, or access patterns need explicit decisions before implementation.",
+          "whenNotToUse": "Do not use for a storage shape that is intentionally non-relational or for isolated query tuning after the model is already fixed.",
+          "useCases": [
+            "Design a PostgreSQL schema from product invariants",
+            "Review relationships, constraints, and index assumptions before migration"
+          ],
+          "examplePrompts": [
+            "Use designing-relational-data-models to turn these product rules into a relational schema and call out every important invariant."
+          ]
+        },
+        "pt-BR": {
+          "displayName": "Modelagem de Dados Relacionais",
+          "summary": "Transforma invariantes de domínio, propriedade, relacionamentos e padrões de acesso em estruturas relacionais explícitas.",
+          "primaryBenefit": "Cria schemas que rejeitam estados inválidos e atendem consultas reais do produto sem desnormalização prematura.",
+          "whenToUse": "Use ao definir ou revisar um modelo relacional em que entidades, propriedade, cardinalidade, ciclo de vida, constraints ou padrões de acesso precisem de decisões explícitas antes da implementação.",
+          "whenNotToUse": "Não use para uma estrutura de armazenamento intencionalmente não relacional nem para otimização isolada de consultas quando o modelo já estiver fixado.",
+          "useCases": [
+            "Projetar um schema PostgreSQL a partir das invariantes do produto",
+            "Revisar relacionamentos, constraints e hipóteses de índices antes da migration"
+          ],
+          "examplePrompts": [
+            "Use designing-relational-data-models para transformar estas regras de produto em um schema relacional e explicitar todas as invariantes importantes."
+          ]
+        }
+      }
+    },
+    {
+      "$schema": "../schemas/skill.schema.json",
       "slug": "designing-ui-systems",
       "category": "product-design",
       "packs": [
@@ -832,6 +1002,83 @@
           ],
           "examplePrompts": [
             "Use engineering-gsap-animations para implementar esta timeline escolhida em GSAP com ciclo de vida correto no React e comportamento para redução de movimento."
+          ]
+        }
+      }
+    },
+    {
+      "$schema": "../schemas/skill.schema.json",
+      "slug": "evolving-postgres-schemas-safely",
+      "category": "backend-data",
+      "packs": [
+        "backend-data"
+      ],
+      "maturity": "beta",
+      "difficulty": "advanced",
+      "featured": false,
+      "compatibility": {
+        "surfaces": [
+          "chatgpt",
+          "codex"
+        ],
+        "operatingSystems": [
+          "linux",
+          "macos",
+          "windows"
+        ],
+        "installModes": [
+          "plugin",
+          "filesystem"
+        ]
+      },
+      "tags": [
+        "postgresql",
+        "migrations",
+        "schema-evolution",
+        "backfills",
+        "zero-downtime"
+      ],
+      "dependencies": [
+        {
+          "name": "PostgreSQL",
+          "type": "tool",
+          "required": true,
+          "url": "https://www.postgresql.org"
+        }
+      ],
+      "relatedSkills": [
+        "designing-relational-data-models",
+        "profiling-postgres-query-performance"
+      ],
+      "version": "1.0.0-beta.1",
+      "updatedAt": "2026-09-01",
+      "locales": {
+        "en": {
+          "displayName": "Evolving PostgreSQL Schemas Safely",
+          "summary": "Plans compatibility-first PostgreSQL changes across DDL, backfills, validation, application rollout, and cleanup.",
+          "primaryBenefit": "Turns risky production schema changes into staged operations with explicit lock, rewrite, compatibility, and rollback considerations.",
+          "whenToUse": "Use when changing a PostgreSQL schema that already contains production data or serves live traffic, especially for columns, constraints, indexes, types, backfills, renames, or destructive cleanup.",
+          "whenNotToUse": "Do not use for disposable local schemas with no retained data, compatibility window, or production traffic.",
+          "useCases": [
+            "Add a required column to a large live table",
+            "Plan a rename or type migration without breaking rolling application deploys"
+          ],
+          "examplePrompts": [
+            "Use evolving-postgres-schemas-safely to design an expand-migrate-contract plan for this production migration."
+          ]
+        },
+        "pt-BR": {
+          "displayName": "Evolução Segura de Schemas PostgreSQL",
+          "summary": "Planeja mudanças PostgreSQL orientadas à compatibilidade entre DDL, backfills, validação, rollout da aplicação e cleanup.",
+          "primaryBenefit": "Transforma mudanças arriscadas de schema em produção em operações por etapas com riscos de lock, rewrite, compatibilidade e recuperação explícitos.",
+          "whenToUse": "Use ao alterar um schema PostgreSQL que já contenha dados de produção ou atenda tráfego ativo, especialmente para colunas, constraints, índices, tipos, backfills, renomes ou cleanup destrutivo.",
+          "whenNotToUse": "Não use para schemas locais descartáveis sem dados preservados, janela de compatibilidade ou tráfego de produção.",
+          "useCases": [
+            "Adicionar uma coluna obrigatória a uma tabela grande em produção",
+            "Planejar um renome ou mudança de tipo sem quebrar deploys graduais da aplicação"
+          ],
+          "examplePrompts": [
+            "Use evolving-postgres-schemas-safely para desenhar um plano expand-migrate-contract para esta migration de produção."
           ]
         }
       }
@@ -1038,6 +1285,83 @@
           ],
           "examplePrompts": [
             "Use orchestrating-cinematic-web-motion para coreografar esta página em Next.js com cenas de scroll contidas e estados completos de redução de movimento."
+          ]
+        }
+      }
+    },
+    {
+      "$schema": "../schemas/skill.schema.json",
+      "slug": "profiling-postgres-query-performance",
+      "category": "backend-data",
+      "packs": [
+        "backend-data"
+      ],
+      "maturity": "beta",
+      "difficulty": "advanced",
+      "featured": false,
+      "compatibility": {
+        "surfaces": [
+          "chatgpt",
+          "codex"
+        ],
+        "operatingSystems": [
+          "linux",
+          "macos",
+          "windows"
+        ],
+        "installModes": [
+          "plugin",
+          "filesystem"
+        ]
+      },
+      "tags": [
+        "postgresql",
+        "query-performance",
+        "explain",
+        "indexing",
+        "profiling"
+      ],
+      "dependencies": [
+        {
+          "name": "PostgreSQL",
+          "type": "tool",
+          "required": true,
+          "url": "https://www.postgresql.org"
+        }
+      ],
+      "relatedSkills": [
+        "designing-relational-data-models",
+        "evolving-postgres-schemas-safely"
+      ],
+      "version": "1.0.0-beta.1",
+      "updatedAt": "2026-09-01",
+      "locales": {
+        "en": {
+          "displayName": "Profiling PostgreSQL Query Performance",
+          "summary": "Diagnoses slow or uncertain PostgreSQL access paths from representative inputs and execution-plan evidence before changing indexes.",
+          "primaryBenefit": "Replaces index guesswork with measurable before-and-after evidence across plan shape, rows, buffers, and application access patterns.",
+          "whenToUse": "Use when a PostgreSQL query is slow, resource-heavy, regressed, or has uncertain index behavior and the cause needs to be measured before changing SQL, schema, or indexes.",
+          "whenNotToUse": "Do not use to pre-optimize unmeasured queries or to add speculative indexes before a concrete workload exists.",
+          "useCases": [
+            "Investigate a query latency regression with EXPLAIN evidence",
+            "Decide whether a composite or partial index matches a real access pattern"
+          ],
+          "examplePrompts": [
+            "Use profiling-postgres-query-performance to diagnose this slow query from the plan before recommending any index."
+          ]
+        },
+        "pt-BR": {
+          "displayName": "Profiling de Performance de Queries PostgreSQL",
+          "summary": "Diagnostica caminhos de acesso PostgreSQL lentos ou incertos a partir de entradas representativas e evidências do plano de execução antes de alterar índices.",
+          "primaryBenefit": "Substitui suposições sobre índices por evidências mensuráveis de antes e depois em plano, linhas, buffers e padrões de acesso da aplicação.",
+          "whenToUse": "Use quando uma query PostgreSQL estiver lenta, consumir muitos recursos, tiver regredido ou apresentar comportamento incerto de índices e a causa precisar ser medida antes de alterar SQL, schema ou índices.",
+          "whenNotToUse": "Não use para pré-otimizar queries sem medição nem para adicionar índices especulativos antes de existir uma carga concreta.",
+          "useCases": [
+            "Investigar uma regressão de latência com evidências do EXPLAIN",
+            "Decidir se um índice composto ou parcial corresponde a um padrão de acesso real"
+          ],
+          "examplePrompts": [
+            "Use profiling-postgres-query-performance para diagnosticar esta query lenta a partir do plano antes de recomendar qualquer índice."
           ]
         }
       }
@@ -1410,6 +1734,93 @@
   ],
   "packs": [
     {
+      "slug": "backend-data",
+      "status": "active",
+      "featured": false,
+      "color": "violet",
+      "version": "1.0.0-beta.1",
+      "locales": {
+        "en": {
+          "name": "Backend & Data",
+          "summary": "Data modeling, Node.js service boundaries, safe schema evolution, and PostgreSQL performance for dependable backend systems.",
+          "description": "An installable workflow for shaping relational models, implementing explicit API boundaries, evolving live PostgreSQL schemas safely, and diagnosing query performance with evidence.",
+          "outcomes": [
+            "Design data and service boundaries that encode invariants and authorization explicitly",
+            "Evolve and tune PostgreSQL systems with measured migration and query evidence"
+          ]
+        },
+        "pt-BR": {
+          "name": "Backend e Dados",
+          "summary": "Modelagem de dados, limites de serviços Node.js, evolução segura de schemas e performance PostgreSQL para backends confiáveis.",
+          "description": "Um fluxo instalável para estruturar modelos relacionais, implementar limites explícitos de API, evoluir schemas PostgreSQL ativos com segurança e diagnosticar performance de queries com evidências.",
+          "outcomes": [
+            "Projetar limites de dados e serviços que expressem invariantes e autorização de forma explícita",
+            "Evoluir e otimizar sistemas PostgreSQL com evidências de migrations e queries"
+          ]
+        }
+      },
+      "skillSlugs": [
+        "designing-relational-data-models",
+        "building-reliable-node-api-boundaries",
+        "evolving-postgres-schemas-safely",
+        "profiling-postgres-query-performance"
+      ],
+      "skills": [
+        {
+          "slug": "designing-relational-data-models",
+          "displayName": {
+            "en": "Designing Relational Data Models",
+            "pt-BR": "Modelagem de Dados Relacionais"
+          },
+          "summary": {
+            "en": "Turns domain invariants, ownership, relationships, and access patterns into explicit relational structures.",
+            "pt-BR": "Transforma invariantes de domínio, propriedade, relacionamentos e padrões de acesso em estruturas relacionais explícitas."
+          },
+          "difficulty": "intermediate",
+          "maturity": "beta"
+        },
+        {
+          "slug": "building-reliable-node-api-boundaries",
+          "displayName": {
+            "en": "Building Reliable Node API Boundaries",
+            "pt-BR": "Construção de Limites Confiáveis de API em Node"
+          },
+          "summary": {
+            "en": "Structures Node.js API boundaries around explicit validation, authorization, atomic mutation, failure semantics, and request observability.",
+            "pt-BR": "Estrutura limites de API em Node.js com validação, autorização, mutação atômica, semântica de falhas e observabilidade de requisição explícitas."
+          },
+          "difficulty": "advanced",
+          "maturity": "beta"
+        },
+        {
+          "slug": "evolving-postgres-schemas-safely",
+          "displayName": {
+            "en": "Evolving PostgreSQL Schemas Safely",
+            "pt-BR": "Evolução Segura de Schemas PostgreSQL"
+          },
+          "summary": {
+            "en": "Plans compatibility-first PostgreSQL changes across DDL, backfills, validation, application rollout, and cleanup.",
+            "pt-BR": "Planeja mudanças PostgreSQL orientadas à compatibilidade entre DDL, backfills, validação, rollout da aplicação e cleanup."
+          },
+          "difficulty": "advanced",
+          "maturity": "beta"
+        },
+        {
+          "slug": "profiling-postgres-query-performance",
+          "displayName": {
+            "en": "Profiling PostgreSQL Query Performance",
+            "pt-BR": "Profiling de Performance de Queries PostgreSQL"
+          },
+          "summary": {
+            "en": "Diagnoses slow or uncertain PostgreSQL access paths from representative inputs and execution-plan evidence before changing indexes.",
+            "pt-BR": "Diagnostica caminhos de acesso PostgreSQL lentos ou incertos a partir de entradas representativas e evidências do plano de execução antes de alterar índices."
+          },
+          "difficulty": "advanced",
+          "maturity": "beta"
+        }
+      ]
+    },
+    {
       "slug": "frontend-product",
       "status": "active",
       "featured": true,
@@ -1777,35 +2188,6 @@
           "outcomes": [
             "Avaliar limites de sistemas e trade-offs arquiteturais",
             "Estabelecer práticas de engenharia fáceis de manter entre serviços e aplicações"
-          ]
-        }
-      },
-      "skillSlugs": [],
-      "skills": []
-    },
-    {
-      "slug": "backend-data",
-      "status": "planned",
-      "featured": false,
-      "color": "green",
-      "version": "1.0.0-beta.1",
-      "locales": {
-        "en": {
-          "name": "Backend & Data",
-          "summary": "Planned guidance for backend services, data models, storage, and operational reliability.",
-          "description": "This planned pack will cover backend and data workflows; skills will enter through public proposals and independent validation.",
-          "outcomes": [
-            "Design dependable backend and data flows",
-            "Operate storage and service boundaries with clear reliability criteria"
-          ]
-        },
-        "pt-BR": {
-          "name": "Backend e Dados",
-          "summary": "Orientações planejadas para serviços de backend, modelos de dados, armazenamento e confiabilidade operacional.",
-          "description": "Este pack planejado abordará fluxos de backend e dados; as skills entrarão por meio de propostas públicas e validação independente.",
-          "outcomes": [
-            "Projetar fluxos confiáveis de backend e dados",
-            "Operar limites de armazenamento e serviços com critérios claros de confiabilidade"
           ]
         }
       },

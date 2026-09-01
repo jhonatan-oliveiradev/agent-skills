@@ -22,7 +22,11 @@ export default async function SkillsPage({ params }: PageProps) {
   const packNames = getLocalizedPackNames(locale);
   const skillCopy = messages[locale].skillsCatalog;
   const editorialCopy = editorialMethodsCopy[locale];
-  const categoryNames: Readonly<Record<string, string>> = skillCopy.categories;
+  const categoryNames: Readonly<Record<string, string>> = {
+    ...skillCopy.categories,
+    ...editorialCopy.categoryLabels,
+  };
+  const archiveCopy = { ...skillCopy, categories: categoryNames };
   const localizedSkills = getLocalizedSkills(locale);
   const activePacks = new Set(localizedSkills.flatMap((skill) => skill.packs));
   const metadata = [
@@ -46,7 +50,7 @@ export default async function SkillsPage({ params }: PageProps) {
         <MethodArchive
           skills={localizedSkills}
           locale={locale}
-          copy={skillCopy}
+          copy={archiveCopy}
           filterLabel={editorialCopy.filterLabel}
           options={{
             categories: catalog.filters.categories.map((value) => ({
