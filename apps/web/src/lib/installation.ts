@@ -1,5 +1,9 @@
 export const installationCommands = {
   complete: { bash: "bash install.sh", powershell: "./install.ps1" },
+  claudeCode: {
+    bash: "bash install.sh --target claude-code",
+    powershell: "./install.ps1 --target claude-code",
+  },
   skill: {
     bash: "./install.sh --skill craft-premium-motion",
     powershell: "./install.ps1 --skill craft-premium-motion",
