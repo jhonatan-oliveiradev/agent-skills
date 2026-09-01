@@ -6,7 +6,7 @@
     "en",
     "pt-BR"
   ],
-  "sourceDigest": "8de703af3d492fb2f66c43bc818dc2b94313eb3d02ace7801a17f769aa257cd3",
+  "sourceDigest": "9dc9060d11fedfdeaf0d1f8bf8230acec0e225ea0c6ded3f21892defea3ce42c",
   "filters": {
     "categories": [
       "backend-data",
@@ -1737,7 +1737,7 @@
       "slug": "backend-data",
       "status": "active",
       "featured": false,
-      "color": "green",
+      "color": "violet",
       "version": "1.0.0-beta.1",
       "locales": {
         "en": {
