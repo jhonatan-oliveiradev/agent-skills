@@ -1,0 +1,39 @@
+{
+  "$schema": "../schemas/skill.schema.json",
+  "slug": "designing-relational-data-models",
+  "category": "backend-data",
+  "packs": ["backend-data"],
+  "maturity": "beta",
+  "difficulty": "intermediate",
+  "featured": false,
+  "compatibility": {
+    "surfaces": ["chatgpt", "codex"],
+    "operatingSystems": ["linux", "macos", "windows"],
+    "installModes": ["plugin", "filesystem"]
+  },
+  "tags": ["postgresql", "data-modeling", "relational-design", "constraints", "indexes"],
+  "dependencies": [],
+  "relatedSkills": ["building-reliable-node-api-boundaries", "evolving-postgres-schemas-safely"],
+  "version": "1.0.0-beta.1",
+  "updatedAt": "2026-09-01",
+  "locales": {
+    "en": {
+      "displayName": "Designing Relational Data Models",
+      "summary": "Turns domain invariants, ownership, relationships, and access patterns into explicit relational structures.",
+      "primaryBenefit": "Creates schemas that reject invalid states and support real product queries without premature denormalization.",
+      "whenToUse": "Use when defining or reviewing a relational data model where entities, ownership, cardinality, lifecycle, constraints, or access patterns need explicit decisions before implementation.",
+      "whenNotToUse": "Do not use for a storage shape that is intentionally non-relational or for isolated query tuning after the model is already fixed.",
+      "useCases": ["Design a PostgreSQL schema from product invariants", "Review relationships, constraints, and index assumptions before migration"],
+      "examplePrompts": ["Use designing-relational-data-models to turn these product rules into a relational schema and call out every important invariant."]
+    },
+    "pt-BR": {
+      "displayName": "Modelagem de Dados Relacionais",
+      "summary": "Transforma invariantes de domínio, propriedade, relacionamentos e padrões de acesso em estruturas relacionais explícitas.",
+      "primaryBenefit": "Cria schemas que rejeitam estados inválidos e atendem consultas reais do produto sem desnormalização prematura.",
+      "whenToUse": "Use ao definir ou revisar um modelo relacional em que entidades, propriedade, cardinalidade, ciclo de vida, constraints ou padrões de acesso precisem de decisões explícitas antes da implementação.",
+      "whenNotToUse": "Não use para uma estrutura de armazenamento intencionalmente não relacional nem para otimização isolada de consultas quando o modelo já estiver fixado.",
+      "useCases": ["Projetar um schema PostgreSQL a partir das invariantes do produto", "Revisar relacionamentos, constraints e hipóteses de índices antes da migration"],
+      "examplePrompts": ["Use designing-relational-data-models para transformar estas regras de produto em um schema relacional e explicitar todas as invariantes importantes."]
+    }
+  }
+}

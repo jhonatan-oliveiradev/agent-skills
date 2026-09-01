@@ -1,23 +1,28 @@
 {
   "$schema": "../schemas/pack.schema.json",
   "slug": "backend-data",
-  "status": "planned",
+  "status": "active",
   "featured": false,
   "color": "green",
   "version": "1.0.0-beta.1",
-  "skills": [],
+  "skills": [
+    "designing-relational-data-models",
+    "building-reliable-node-api-boundaries",
+    "evolving-postgres-schemas-safely",
+    "profiling-postgres-query-performance"
+  ],
   "locales": {
     "en": {
       "name": "Backend & Data",
-      "summary": "Planned guidance for backend services, data models, storage, and operational reliability.",
-      "description": "This planned pack will cover backend and data workflows; skills will enter through public proposals and independent validation.",
-      "outcomes": ["Design dependable backend and data flows", "Operate storage and service boundaries with clear reliability criteria"]
+      "summary": "Data modeling, Node.js service boundaries, safe schema evolution, and PostgreSQL performance for dependable backend systems.",
+      "description": "An installable workflow for shaping relational models, implementing explicit API boundaries, evolving live PostgreSQL schemas safely, and diagnosing query performance with evidence.",
+      "outcomes": ["Design data and service boundaries that encode invariants and authorization explicitly", "Evolve and tune PostgreSQL systems with measured migration and query evidence"]
     },
     "pt-BR": {
       "name": "Backend e Dados",
-      "summary": "Orientações planejadas para serviços de backend, modelos de dados, armazenamento e confiabilidade operacional.",
-      "description": "Este pack planejado abordará fluxos de backend e dados; as skills entrarão por meio de propostas públicas e validação independente.",
-      "outcomes": ["Projetar fluxos confiáveis de backend e dados", "Operar limites de armazenamento e serviços com critérios claros de confiabilidade"]
+      "summary": "Modelagem de dados, limites de serviços Node.js, evolução segura de schemas e performance PostgreSQL para backends confiáveis.",
+      "description": "Um fluxo instalável para estruturar modelos relacionais, implementar limites explícitos de API, evoluir schemas PostgreSQL ativos com segurança e diagnosticar performance de queries com evidências.",
+      "outcomes": ["Projetar limites de dados e serviços que expressem invariantes e autorização de forma explícita", "Evoluir e otimizar sistemas PostgreSQL com evidências de migrations e queries"]
     }
   }
 }

@@ -1,0 +1,39 @@
+{
+  "$schema": "../schemas/skill.schema.json",
+  "slug": "evolving-postgres-schemas-safely",
+  "category": "backend-data",
+  "packs": ["backend-data"],
+  "maturity": "beta",
+  "difficulty": "advanced",
+  "featured": false,
+  "compatibility": {
+    "surfaces": ["chatgpt", "codex"],
+    "operatingSystems": ["linux", "macos", "windows"],
+    "installModes": ["plugin", "filesystem"]
+  },
+  "tags": ["postgresql", "migrations", "schema-evolution", "backfills", "zero-downtime"],
+  "dependencies": [{"name": "PostgreSQL", "type": "tool", "required": true, "url": "https://www.postgresql.org"}],
+  "relatedSkills": ["designing-relational-data-models", "profiling-postgres-query-performance"],
+  "version": "1.0.0-beta.1",
+  "updatedAt": "2026-09-01",
+  "locales": {
+    "en": {
+      "displayName": "Evolving PostgreSQL Schemas Safely",
+      "summary": "Plans compatibility-first PostgreSQL changes across DDL, backfills, validation, application rollout, and cleanup.",
+      "primaryBenefit": "Turns risky production schema changes into staged operations with explicit lock, rewrite, compatibility, and rollback considerations.",
+      "whenToUse": "Use when changing a PostgreSQL schema that already contains production data or serves live traffic, especially for columns, constraints, indexes, types, backfills, renames, or destructive cleanup.",
+      "whenNotToUse": "Do not use for disposable local schemas with no retained data, compatibility window, or production traffic.",
+      "useCases": ["Add a required column to a large live table", "Plan a rename or type migration without breaking rolling application deploys"],
+      "examplePrompts": ["Use evolving-postgres-schemas-safely to design an expand-migrate-contract plan for this production migration."]
+    },
+    "pt-BR": {
+      "displayName": "Evolução Segura de Schemas PostgreSQL",
+      "summary": "Planeja mudanças PostgreSQL orientadas à compatibilidade entre DDL, backfills, validação, rollout da aplicação e cleanup.",
+      "primaryBenefit": "Transforma mudanças arriscadas de schema em produção em operações por etapas com riscos de lock, rewrite, compatibilidade e recuperação explícitos.",
+      "whenToUse": "Use ao alterar um schema PostgreSQL que já contenha dados de produção ou atenda tráfego ativo, especialmente para colunas, constraints, índices, tipos, backfills, renomes ou cleanup destrutivo.",
+      "whenNotToUse": "Não use para schemas locais descartáveis sem dados preservados, janela de compatibilidade ou tráfego de produção.",
+      "useCases": ["Adicionar uma coluna obrigatória a uma tabela grande em produção", "Planejar um renome ou mudança de tipo sem quebrar deploys graduais da aplicação"],
+      "examplePrompts": ["Use evolving-postgres-schemas-safely para desenhar um plano expand-migrate-contract para esta migration de produção."]
+    }
+  }
+}
