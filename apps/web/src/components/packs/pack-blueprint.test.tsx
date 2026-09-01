@@ -38,10 +38,9 @@ describe("System Blueprint", () => {
     expect(within(composition!).getAllByRole("link")).toHaveLength(4);
     expect(screen.getByRole("heading", { name: "Install this pack" })).toBeInTheDocument();
     expect(screen.getByText("./install.sh --pack backend-data")).toBeInTheDocument();
-    expect(screen.getByRole("link", { name: "Designing Relational Data Models" })).toHaveAttribute(
-      "href",
-      "/en/skills/designing-relational-data-models",
-    );
+    expect(
+      within(composition!).getByRole("link", { name: /Designing Relational Data Models$/ }),
+    ).toHaveAttribute("href", "/en/skills/designing-relational-data-models");
   });
 
   it("connects a pack to reports using methods from the system without claiming pack usage", async () => {
