@@ -1,88 +1,50 @@
-name: Materialize Application Security documentation
+name: Validate skills
 
 on:
+  push:
+    branches: [main, dev]
   pull_request:
 
-permissions:
-  contents: write
-
 jobs:
-  materialize:
-    runs-on: ubuntu-latest
+  validate:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
         with:
-          ref: ${{ github.event.pull_request.head.ref }}
-      - name: Update README and provenance mapping
+          node-version: 22
+      - run: npm test
+      - run: npm run validate
+      - run: npm ci --prefix apps/web
+      - run: npm run web:test
+      - run: npm run web:typecheck
+      - run: npm run web:lint
+      - run: npm run web:build
+        env:
+          NEXT_PUBLIC_SITE_URL: https://skills.jhonatanoliveira.com
+      - name: Smoke test Bash installer
+        if: runner.os == 'Linux'
         shell: bash
         run: |
-          node <<'NODE'
-          const fs = require('node:fs');
-
-          function replace(file, before, after) {
-            let source = fs.readFileSync(file, 'utf8');
-            if (!source.includes(before)) throw new Error(`Expected text not found in ${file}: ${before}`);
-            source = source.replace(before, after);
-            fs.writeFileSync(file, source);
-          }
-
-          replace('README.md',
-            'A curated Agent Skills library for production frontend, product design, motion, visual QA, delivery workflows, backend and data engineering, software architecture and engineering, quality and testing, and game-development tasks.',
-            'A curated Agent Skills library for production frontend, product design, motion, visual QA, delivery workflows, backend and data engineering, software architecture and engineering, quality and testing, application security, and game-development tasks.'
-          );
-
-          replace('README.md',
-            '### Quality & testing\n- `designing-test-strategies`\n- `testing-integration-boundaries`\n- `testing-web-applications-end-to-end`\n- `building-regression-tests`\n',
-            '### Quality & testing\n- `designing-test-strategies`\n- `testing-integration-boundaries`\n- `testing-web-applications-end-to-end`\n- `building-regression-tests`\n\n### Application security\n- `threat-modeling-applications`\n- `reviewing-web-security`\n- `reviewing-api-security`\n- `auditing-dependency-risk`\n'
-          );
-
-          replace('README.md',
-            'The methods prefer the smallest test scope that can provide trustworthy evidence, real controllable dependencies over mocks that merely repeat assumptions, user-facing browser contracts over implementation selectors, and observed RED → GREEN evidence for regression fixes. Playwright is an optional implementation tool, not a dependency of the pack.\n',
-            'The methods prefer the smallest test scope that can provide trustworthy evidence, real controllable dependencies over mocks that merely repeat assumptions, user-facing browser contracts over implementation selectors, and observed RED → GREEN evidence for regression fixes. Playwright is an optional implementation tool, not a dependency of the pack.\n\n## Application Security v1\n\nThe Application Security pack separates four concerns that should remain independently invokable: threat modeling from real architecture and trust boundaries, structured web-application security review, API-specific authorization and business-invariant review, and dependency/supply-chain risk triage.\n\nThe methods require authorized scope, reproducible evidence, realistic preconditions, controls at the enforcing boundary, and explicit post-remediation verification. Scanners and security tools can provide evidence, but no scanner, framework, or vendor is a dependency of the pack.\n'
-          );
-
-          replace('README.md',
-            '- `quality-testing` — Quality & Testing (4 skills).\n\nAll six published packs are active and installable.',
-            '- `quality-testing` — Quality & Testing (4 skills);\n- `application-security` — Application Security (4 skills).\n\nAll seven published packs are active and installable.'
-          );
-
-          replace('README.md',
-            '- `quality-testing` — Qualidade e Testes (4 skills).\n\nTodos os seis pacotes publicados estão ativos e são instaláveis.',
-            '- `quality-testing` — Qualidade e Testes (4 skills);\n- `application-security` — Segurança de Aplicações (4 skills).\n\nTodos os sete pacotes publicados estão ativos e são instaláveis.'
-          );
-
-          replace('README.md',
-            'architecture, quality/testing, and delivery.',
-            'architecture, quality/testing, application security, and delivery.'
-          );
-
-          replace('README.md',
-            'the OWASP API Security Top 10, SEI and Microsoft architecture guidance, AWS architectural decision records, Martin Fowler engineering and testing guidance, Playwright best practices, Google Testing Blog guidance, and Microsoft testing strategy references used for the engineering and quality methods.',
-            'the OWASP Top 10:2025, OWASP ASVS 5.0.0, OWASP API Security Top 10:2023, OWASP Web Security Testing Guide and Software Supply Chain Security guidance, SEI and Microsoft architecture guidance, AWS architectural decision records, Martin Fowler engineering and testing guidance, Playwright best practices, Google Testing Blog guidance, and Microsoft testing strategy references used for the engineering, quality, and application-security methods.'
-          );
-
-          replace('MAPPING.md',
-            '| Quality & Testing (`quality-testing`) | Active | 4 test-strategy, integration-boundary, web-E2E, and regression-testing skills |',
-            '| Quality & Testing (`quality-testing`) | Active | 4 test-strategy, integration-boundary, web-E2E, and regression-testing skills |\n| Application Security (`application-security`) | Active | 4 threat-modeling, web-security, API-security, and dependency-risk skills |'
-          );
-
-          replace('MAPPING.md',
-            '### `building-regression-tests`\nAdded for turning reproduced defects into deterministic guards that demonstrate RED before the fix, GREEN after it, and remain at the narrowest layer that proves the broken contract.\n',
-            '### `building-regression-tests`\nAdded for turning reproduced defects into deterministic guards that demonstrate RED before the fix, GREEN after it, and remain at the narrowest layer that proves the broken contract.\n\n### `threat-modeling-applications`\nAdded for design-time security analysis that maps assets, actors, trust boundaries, abuse cases, controls, verification evidence, and residual risk before implementation or release.\n\n### `reviewing-web-security`\nAdded for authorized web-application review across access control, sessions, browser-facing controls, input/output boundaries, deployment configuration, cryptography, errors, and security telemetry.\n\n### `reviewing-api-security`\nAdded for API-specific review of identity, object/property/function authorization, business-flow and resource abuse, SSRF, inventory, configuration, and third-party consumption.\n\n### `auditing-dependency-risk`\nAdded for contextual software-supply-chain triage using manifests, lockfiles, advisories, runtime reachability, provenance, integrity controls, and the smallest safe remediation.\n'
-          );
-
-          let mapping = fs.readFileSync('MAPPING.md', 'utf8');
-          const research = '\n\n## Application Security research — 2026-09-01\n\n| Source | Decision | Local destination |\n|---|---|---|\n| OWASP Threat Modeling guidance | Referenced | `skills/threat-modeling-applications` |\n| OWASP Application Security Verification Standard 5.0.0 | Referenced | `skills/threat-modeling-applications` + `skills/reviewing-web-security` + `skills/reviewing-api-security` |\n| OWASP Top 10:2025 | Referenced | `skills/threat-modeling-applications` + `skills/reviewing-web-security` + `skills/auditing-dependency-risk` |\n| OWASP Web Security Testing Guide | Referenced | `skills/reviewing-web-security` |\n| OWASP API Security Top 10:2023 | Referenced | `skills/reviewing-api-security` |\n| OWASP Software Supply Chain Security Cheat Sheet | Referenced | `skills/auditing-dependency-risk` |\n\nApplication Security v1 does not mirror OWASP checklists or require a security scanner. The local methods turn those references into scoped operating procedures that require authorization, application context, reproducible evidence, realistic impact, remediation guidance, and verification.\n';
-          if (!mapping.includes('## Application Security research — 2026-09-01')) {
-            mapping = `${mapping.trimEnd()}${research}`;
-            fs.writeFileSync('MAPPING.md', mapping);
-          }
-          NODE
-      - name: Commit documentation
-        shell: bash
+          target="$(mktemp -d)"
+          pack_target="$(mktemp -d)"
+          ./install.sh --destination "$target"
+          ./install.sh --destination "$pack_target" --pack motion
+          test -f "$target/craft-premium-motion/SKILL.md"
+          test -f "$pack_target/craft-premium-motion/SKILL.md"
+          test ! -e "$pack_target/designing-action-combat/SKILL.md"
+      - name: Smoke test PowerShell installer
+        if: runner.os == 'Windows'
+        shell: pwsh
         run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add README.md MAPPING.md
-          git commit -m "docs: document Application Security v1"
-          git push origin HEAD:${{ github.event.pull_request.head.ref }}
+          $target = Join-Path $env:RUNNER_TEMP "agent-skills-install"
+          ./install.ps1 --destination $target
+          if (-not (Test-Path (Join-Path $target "craft-premium-motion/SKILL.md"))) { exit 1 }
+          $packTarget = Join-Path $env:RUNNER_TEMP "agent-skills-motion-pack"
+          ./install.ps1 --destination $packTarget --pack motion
+          if (-not (Test-Path (Join-Path $packTarget "craft-premium-motion/SKILL.md"))) { exit 1 }
+          if (Test-Path (Join-Path $packTarget "designing-action-combat/SKILL.md")) { exit 1 }
