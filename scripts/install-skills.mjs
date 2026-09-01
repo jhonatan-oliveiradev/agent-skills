@@ -9,6 +9,33 @@ import { fileURLToPath } from "node:url";
 import { getSkillsRoot, listSkills } from "./lib/skills.mjs";
 import { loadValidatedCatalog } from "./validate-catalog.mjs";
 
+const installTargets = new Map([
+  ["agents", new Map([
+    ["personal", ({ homeDir }) => path.join(homeDir, ".agents", "skills")],
+  ])],
+  ["claude-code", new Map([
+    ["personal", ({ homeDir }) => path.join(homeDir, ".claude", "skills")],
+    ["project", ({ cwd }) => path.join(cwd, ".claude", "skills")],
+  ])],
+]);
+
+export function resolveInstallDestination({
+  target = "agents",
+  scope = "personal",
+  destination,
+  homeDir = homedir(),
+  cwd = process.cwd(),
+} = {}) {
+  const scopes = installTargets.get(target);
+  if (!scopes) throw new Error(`Unknown install target: ${target}`);
+
+  const resolveScope = scopes.get(scope);
+  if (!resolveScope) throw new Error(`Install target ${target} does not support scope ${scope}`);
+
+  if (destination) return path.resolve(destination);
+  return path.resolve(resolveScope({ homeDir, cwd }));
+}
+
 function isWithin(parent, candidate) {
   const relative = path.relative(parent, candidate);
   return relative === "" || (!relative.startsWith(`..${path.sep}`) && relative !== ".." && !path.isAbsolute(relative));
@@ -161,16 +188,25 @@ export async function installSkills({ repoRoot, destination, names, packs }) {
 }
 
 function parseArgs(argv) {
-  const args = { destination: path.join(homedir(), ".agents", "skills"), names: [], packs: [] };
+  const args = {
+    target: "agents",
+    scope: "personal",
+    destination: undefined,
+    names: [],
+    packs: [],
+  };
 
   for (let index = 0; index < argv.length; index += 1) {
     const argument = argv[index];
     if (argument === "--destination" && argv[index + 1]) args.destination = argv[++index];
+    else if (argument === "--target" && argv[index + 1]) args.target = argv[++index];
+    else if (argument === "--scope" && argv[index + 1]) args.scope = argv[++index];
     else if (argument === "--skill" && argv[index + 1]) args.names.push(argv[++index]);
     else if (argument === "--pack" && argv[index + 1]) args.packs.push(argv[++index]);
     else throw new Error(`Unknown option: ${argument}`);
   }
 
+  args.destination = resolveInstallDestination(args);
   return args;
 }
 
