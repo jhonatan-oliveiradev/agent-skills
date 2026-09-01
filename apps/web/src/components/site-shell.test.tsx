@@ -317,7 +317,7 @@ describe("foundation navigation targets", () => {
     expect(screen.getByRole("heading", { name: proposal })).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: stable })).toBeInTheDocument();
     expect(screen.getAllByText(empty)).toHaveLength(4);
-    expect(container.querySelectorAll("[data-program-record]")).toHaveLength(7);
+    expect(container.querySelectorAll("[data-program-record]")).toHaveLength(6);
   });
 
   it.each([
@@ -328,8 +328,8 @@ describe("foundation navigation targets", () => {
 
     expect(screen.getByRole("heading", { level: 1, name: heading })).toBeInTheDocument();
     expect(container.querySelectorAll("[data-pack-dossier]")).toHaveLength(6);
-    expect(container.querySelectorAll('[data-pack-dossier][data-status="active"]')).toHaveLength(4);
-    expect(container.querySelectorAll('[data-pack-dossier][data-status="planned"]')).toHaveLength(2);
+    expect(container.querySelectorAll('[data-pack-dossier][data-status="active"]')).toHaveLength(5);
+    expect(container.querySelectorAll('[data-pack-dossier][data-status="planned"]')).toHaveLength(1);
     expect(container.querySelector(`[data-pack-dossier] a[href="${packHref}"]`)).toBeInTheDocument();
     expect(container.querySelector(".pack-card")).not.toBeInTheDocument();
   });
@@ -371,7 +371,7 @@ describe("foundation navigation targets", () => {
 
     expect(screen.getByRole("heading", { level: 1, name: heading })).toBeInTheDocument();
     expect(screen.getByRole("searchbox", { name: searchLabel })).toBeInTheDocument();
-    expect(container.querySelectorAll("[data-method-row]")).toHaveLength(22);
+    expect(container.querySelectorAll("[data-method-row]")).toHaveLength(26);
     expect(container.querySelector(`[data-method-row] a[href="${methodHref}"]`)).toBeInTheDocument();
     expect(container.querySelector(".skill-card")).not.toBeInTheDocument();
   });
