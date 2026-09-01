@@ -16,8 +16,8 @@ describe("catalog adapter", () => {
     );
 
     expect(catalog.sourceDigest).toBe(source.sourceDigest);
-    expect(catalog.skills).toHaveLength(30);
-    expect(catalog.packs).toHaveLength(6);
+    expect(catalog.skills).toHaveLength(34);
+    expect(catalog.packs).toHaveLength(7);
     expect(getCatalogCounts()).toEqual(source.counts);
     expect(getSupportedLocales()).toEqual(["en", "pt-BR"]);
   });
@@ -83,7 +83,7 @@ describe("catalog adapter", () => {
 
     expect(adapter.getLocalizedPacks).toBeTypeOf("function");
     const packs = adapter.getLocalizedPacks?.("pt-BR") ?? [];
-    expect(packs).toHaveLength(6);
+    expect(packs).toHaveLength(7);
     expect(packs.every((pack) => pack.status === "active")).toBe(true);
     expect(packs.find((pack) => pack.slug === "frontend-product")).toMatchObject({
       name: "Frontend e Produto",
@@ -104,6 +104,11 @@ describe("catalog adapter", () => {
       status: "active",
     });
     expect(packs.find((pack) => pack.slug === "quality-testing")?.skills).toHaveLength(4);
+    expect(packs.find((pack) => pack.slug === "application-security")).toMatchObject({
+      name: "Segurança de Aplicações",
+      status: "active",
+    });
+    expect(packs.find((pack) => pack.slug === "application-security")?.skills).toHaveLength(4);
 
     expect(adapter.getLocalizedPackBySlug?.("en", "motion")?.outcomes).toHaveLength(2);
     expect(adapter.getLocalizedPackBySlug?.("en", "missing-pack")).toBeUndefined();
@@ -132,6 +137,10 @@ describe("catalog adapter", () => {
     expect(adapter.getPackInstallCommands?.("quality-testing", "active")).toEqual({
       bash: "./install.sh --pack quality-testing",
       powershell: "./install.ps1 --pack quality-testing",
+    });
+    expect(adapter.getPackInstallCommands?.("application-security", "active")).toEqual({
+      bash: "./install.sh --pack application-security",
+      powershell: "./install.ps1 --pack application-security",
     });
     expect(adapter.getPackInstallCommands?.("quality-testing", "planned")).toBeUndefined();
   });
