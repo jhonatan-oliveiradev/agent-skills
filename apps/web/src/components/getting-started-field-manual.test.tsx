@@ -7,7 +7,7 @@ import GettingStartedPage from "@/app/[locale]/getting-started/page";
 
 describe("Getting Started Field Manual", () => {
   it.each([
-    ["en", "FIELD MANUAL", "05 stages", "First setup", "Explore skills", "Browse packs"],
+    ["en", "FIELD MANUAL", "05 stages", "First setup", "Explore skills", "View packs"],
     ["pt-BR", "MANUAL DE CAMPO", "05 etapas", "Primeira configuração", "Explorar skills", "Ver pacotes"],
   ] as const)(
     "renders the localized five-stage manual architecture for %s",
