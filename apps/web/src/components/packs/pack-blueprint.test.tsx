@@ -1,4 +1,4 @@
-import { render, screen } from "@testing-library/react";
+import { render, screen, within } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 
 vi.mock("server-only", () => ({}));
@@ -33,7 +33,9 @@ describe("System Blueprint", () => {
     );
 
     expect(container.querySelector('[data-pack-state="active"]')).toBeInTheDocument();
-    expect(container.querySelectorAll("[data-pack-method]")).toHaveLength(4);
+    const composition = container.querySelector<HTMLElement>("[data-pack-composition-map]");
+    expect(composition).toBeInTheDocument();
+    expect(within(composition!).getAllByRole("link")).toHaveLength(4);
     expect(screen.getByRole("heading", { name: "Install this pack" })).toBeInTheDocument();
     expect(screen.getByText("./install.sh --pack backend-data")).toBeInTheDocument();
     expect(screen.getByRole("link", { name: "Designing Relational Data Models" })).toHaveAttribute(
