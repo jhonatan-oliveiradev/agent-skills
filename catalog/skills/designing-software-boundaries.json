@@ -1,0 +1,39 @@
+{
+  "$schema": "../schemas/skill.schema.json",
+  "slug": "designing-software-boundaries",
+  "category": "architecture-engineering",
+  "packs": ["architecture-engineering"],
+  "maturity": "beta",
+  "difficulty": "advanced",
+  "featured": false,
+  "compatibility": {
+    "surfaces": ["chatgpt", "codex"],
+    "operatingSystems": ["linux", "macos", "windows"],
+    "installModes": ["plugin", "filesystem"]
+  },
+  "tags": ["architecture", "boundaries", "coupling", "cohesion", "ownership"],
+  "dependencies": [],
+  "relatedSkills": ["choosing-application-architecture", "building-reliable-node-api-boundaries", "planning-safe-refactors"],
+  "version": "1.0.0-beta.1",
+  "updatedAt": "2026-09-01",
+  "locales": {
+    "en": {
+      "displayName": "Designing Software Boundaries",
+      "summary": "Shapes modules or services around cohesive responsibilities, explicit ownership, narrow contracts, intentional dependency direction, and controlled state sharing.",
+      "primaryBenefit": "Reduces change coupling and keeps consumers dependent on stable capabilities instead of implementation details.",
+      "whenToUse": "Use when modules, services, packages, or teams have unclear ownership, cyclic dependencies, shared state, change coupling, or responsibilities that are difficult to evolve independently.",
+      "whenNotToUse": "Do not use merely to create more folders or services when existing responsibilities and change boundaries are already clear and cohesive.",
+      "useCases": ["Restructure a codebase whose modules import each other's internals and change together", "Define ownership and contracts before extracting a capability into an independently deployed service"],
+      "examplePrompts": ["Use designing-software-boundaries to map the responsibilities, coupling, state ownership, and dependency directions in this codebase before proposing new module boundaries."]
+    },
+    "pt-BR": {
+      "displayName": "Desenho de Limites de Software",
+      "summary": "Estrutura módulos ou serviços em torno de responsabilidades coesas, ownership explícito, contratos estreitos, direção intencional de dependências e compartilhamento controlado de estado.",
+      "primaryBenefit": "Reduz acoplamento de mudança e mantém consumidores dependentes de capacidades estáveis em vez de detalhes de implementação.",
+      "whenToUse": "Use quando módulos, serviços, pacotes ou equipes têm ownership incerto, dependências cíclicas, estado compartilhado, acoplamento de mudança ou responsabilidades difíceis de evoluir de forma independente.",
+      "whenNotToUse": "Não use apenas para criar mais pastas ou serviços quando responsabilidades e limites de mudança existentes já são claros e coesos.",
+      "useCases": ["Reestruturar uma codebase cujos módulos importam internals uns dos outros e mudam juntos", "Definir ownership e contratos antes de extrair uma capacidade para um serviço com deploy independente"],
+      "examplePrompts": ["Use designing-software-boundaries para mapear responsabilidades, acoplamento, ownership de estado e direções de dependência desta codebase antes de propor novos limites de módulo."]
+    }
+  }
+}
