@@ -1,66 +1,50 @@
-name: Materialize Application Security web state
+name: Validate skills
 
 on:
+  push:
+    branches: [main, dev]
   pull_request:
 
-permissions:
-  contents: write
-
 jobs:
-  materialize:
-    runs-on: ubuntu-latest
+  validate:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
         with:
-          ref: ${{ github.event.pull_request.head.ref }}
-      - name: Align derived web contracts and seventh pack composition
+          node-version: 22
+      - run: npm test
+      - run: npm run validate
+      - run: npm ci --prefix apps/web
+      - run: npm run web:test
+      - run: npm run web:typecheck
+      - run: npm run web:lint
+      - run: npm run web:build
+        env:
+          NEXT_PUBLIC_SITE_URL: https://skills.jhonatanoliveira.com
+      - name: Smoke test Bash installer
+        if: runner.os == 'Linux'
         shell: bash
         run: |
-          node <<'NODE'
-          const fs = require('node:fs');
-
-          function replace(file, before, after) {
-            let source = fs.readFileSync(file, 'utf8');
-            if (!source.includes(before)) throw new Error(`Expected text not found in ${file}: ${before}`);
-            source = source.replace(before, after);
-            fs.writeFileSync(file, source);
-          }
-
-          const shell = 'apps/web/src/components/site-shell.test.tsx';
-          replace(shell, '"30 skills", "6 packs"', '"34 skills", "7 packs"');
-          replace(shell, '"30 skills", "6 pacotes"', '"34 skills", "7 pacotes"');
-          replace(shell, 'querySelectorAll(".home-pack-dossier")).toHaveLength(6)', 'querySelectorAll(".home-pack-dossier")).toHaveLength(7)');
-          replace(shell, '"30 skills prontas para usar."', '"34 skills prontas para usar."');
-          replace(shell, 'querySelectorAll("[data-pack-dossier]")).toHaveLength(6)', 'querySelectorAll("[data-pack-dossier]")).toHaveLength(7)');
-          replace(shell, 'querySelectorAll(\'[data-pack-dossier][data-status="active"]\')).toHaveLength(6)', 'querySelectorAll(\'[data-pack-dossier][data-status="active"]\')).toHaveLength(7)');
-          replace(shell, 'querySelectorAll("[data-method-row]")).toHaveLength(30)', 'querySelectorAll("[data-method-row]")).toHaveLength(34)');
-
-          const chrome = 'apps/web/src/components/site-chrome.test.tsx';
-          replace(chrome, 'getByText("30 SKILLS")', 'getByText("34 SKILLS")');
-          replace(chrome, 'getByText("6 PACKS")', 'getByText("7 PACKS")');
-          replace(chrome, 'getByText(/30 skills/i)', 'getByText(/34 skills/i)');
-          replace(chrome, 'getByText(/6 packs|6 pacotes/i)', 'getByText(/7 packs|7 pacotes/i)');
-
-          const home = 'apps/web/src/components/home/home-living-archive.test.tsx';
-          replace(home, 'querySelectorAll(".home-pack-dossier")).toHaveLength(6)', 'querySelectorAll(".home-pack-dossier")).toHaveLength(7)');
-          replace(home, 'querySelectorAll("[data-pack-stage]")).toHaveLength(6)', 'querySelectorAll("[data-pack-stage]")).toHaveLength(7)');
-          replace(home, 'querySelectorAll(".home-pack-dossier__skills")).toHaveLength(6)', 'querySelectorAll(".home-pack-dossier__skills")).toHaveLength(7)');
-
-          const css = 'apps/web/src/app/home-living-systems.css';
-          replace(css,
-            '.home-pack-dossier:nth-child(6) {\n  grid-column: 2 / span 10;\n  margin-top: clamp(2rem, 5vw, 5rem);\n}\n',
-            '.home-pack-dossier:nth-child(6) {\n  grid-column: 2 / span 10;\n  margin-top: clamp(2rem, 5vw, 5rem);\n}\n\n.home-pack-dossier:nth-child(7) {\n  grid-column: 1 / span 7;\n  margin-top: clamp(3rem, 7vw, 7rem);\n}\n'
-          );
-          replace(css,
-            '  .home-pack-dossier:nth-child(5),\n  .home-pack-dossier:nth-child(6) {',
-            '  .home-pack-dossier:nth-child(5),\n  .home-pack-dossier:nth-child(6),\n  .home-pack-dossier:nth-child(7) {'
-          );
-          NODE
-      - name: Commit web state
-        shell: bash
+          target="$(mktemp -d)"
+          pack_target="$(mktemp -d)"
+          ./install.sh --destination "$target"
+          ./install.sh --destination "$pack_target" --pack motion
+          test -f "$target/craft-premium-motion/SKILL.md"
+          test -f "$pack_target/craft-premium-motion/SKILL.md"
+          test ! -e "$pack_target/designing-action-combat/SKILL.md"
+      - name: Smoke test PowerShell installer
+        if: runner.os == 'Windows'
+        shell: pwsh
         run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add apps/web/src/components/site-shell.test.tsx apps/web/src/components/site-chrome.test.tsx apps/web/src/components/home/home-living-archive.test.tsx apps/web/src/app/home-living-systems.css
-          git commit -m "test: align web state with Application Security"
-          git push origin HEAD:${{ github.event.pull_request.head.ref }}
+          $target = Join-Path $env:RUNNER_TEMP "agent-skills-install"
+          ./install.ps1 --destination $target
+          if (-not (Test-Path (Join-Path $target "craft-premium-motion/SKILL.md"))) { exit 1 }
+          $packTarget = Join-Path $env:RUNNER_TEMP "agent-skills-motion-pack"
+          ./install.ps1 --destination $packTarget --pack motion
+          if (-not (Test-Path (Join-Path $packTarget "craft-premium-motion/SKILL.md"))) { exit 1 }
+          if (Test-Path (Join-Path $packTarget "designing-action-combat/SKILL.md")) { exit 1 }
