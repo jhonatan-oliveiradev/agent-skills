@@ -1,0 +1,39 @@
+{
+  "$schema": "../schemas/skill.schema.json",
+  "slug": "planning-safe-refactors",
+  "category": "architecture-engineering",
+  "packs": ["architecture-engineering"],
+  "maturity": "beta",
+  "difficulty": "advanced",
+  "featured": false,
+  "compatibility": {
+    "surfaces": ["chatgpt", "codex"],
+    "operatingSystems": ["linux", "macos", "windows"],
+    "installModes": ["plugin", "filesystem"]
+  },
+  "tags": ["architecture", "refactoring", "migration", "blast-radius", "incremental-delivery"],
+  "dependencies": [],
+  "relatedSkills": ["designing-software-boundaries", "documenting-architecture-decisions"],
+  "version": "1.0.0-beta.1",
+  "updatedAt": "2026-09-01",
+  "locales": {
+    "en": {
+      "displayName": "Planning Safe Refactors",
+      "summary": "Turns broad structural changes into releasable migration slices with protected contracts, explicit seams, verification evidence, and rollback paths.",
+      "primaryBenefit": "Reduces refactor blast radius while keeping the system releasable and making structural progress observable at every slice.",
+      "whenToUse": "Use when a structural refactor crosses multiple modules, dependencies, data flows, or deployments and cannot be completed safely as one atomic change without a large blast radius.",
+      "whenNotToUse": "Do not use when the change is small, local, behavior-preserving, and safely reviewable and reversible as one atomic change.",
+      "useCases": ["Replace a shared framework or dependency without migrating every consumer in one release", "Gradually extract a legacy capability while keeping old and new paths verifiable during migration"],
+      "examplePrompts": ["Use planning-safe-refactors to map the blast radius of this structural change and produce incremental slices with seams, regression evidence, rollback, and cleanup conditions."]
+    },
+    "pt-BR": {
+      "displayName": "Planejamento de Refactors Seguros",
+      "summary": "Transforma mudanças estruturais amplas em fatias de migração publicáveis com contratos protegidos, seams explícitos, evidências de verificação e caminhos de rollback.",
+      "primaryBenefit": "Reduz o blast radius de refactors enquanto mantém o sistema publicável e torna o progresso estrutural observável em cada fatia.",
+      "whenToUse": "Use quando um refactor estrutural atravessa vários módulos, dependências, fluxos de dados ou deploys e não pode ser concluído com segurança em uma única mudança atômica sem grande blast radius.",
+      "whenNotToUse": "Não use quando a mudança é pequena, local, preserva comportamento e pode ser revisada e revertida com segurança como uma única alteração atômica.",
+      "useCases": ["Substituir um framework ou dependência compartilhada sem migrar todos os consumidores em um único release", "Extrair gradualmente uma capacidade legada mantendo caminhos antigo e novo verificáveis durante a migração"],
+      "examplePrompts": ["Use planning-safe-refactors para mapear o blast radius desta mudança estrutural e produzir fatias incrementais com seams, evidência de regressão, rollback e condições de limpeza."]
+    }
+  }
+}

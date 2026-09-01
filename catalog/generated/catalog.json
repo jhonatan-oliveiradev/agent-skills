@@ -6,9 +6,10 @@
     "en",
     "pt-BR"
   ],
-  "sourceDigest": "9dc9060d11fedfdeaf0d1f8bf8230acec0e225ea0c6ded3f21892defea3ce42c",
+  "sourceDigest": "b5d01e95875dc1565f4a1c23a349babb23a498a9d4daa8cdb919e5346b7aa18b",
   "filters": {
     "categories": [
+      "architecture-engineering",
       "backend-data",
       "delivery",
       "frontend",
@@ -28,20 +29,28 @@
     "tags": [
       "accessibility",
       "action-combat",
+      "adr",
       "agent-skills",
       "animation-lifecycle",
       "animation-performance",
       "animation-pipeline",
       "api-design",
+      "architecture",
       "asset-pipeline",
       "authorization",
       "backfills",
+      "blast-radius",
+      "boundaries",
       "character-art",
+      "cohesion",
       "combat-animation",
       "component-apis",
       "constraints",
       "conversion",
+      "coupling",
       "data-modeling",
+      "decision-making",
+      "decision-records",
       "design-systems",
       "design-tokens",
       "developer-tooling",
@@ -57,18 +66,21 @@
       "github",
       "gsap",
       "image-reconstruction",
+      "incremental-delivery",
       "indexes",
       "indexing",
       "interaction-design",
       "interface-design",
       "landing-pages",
       "memory-leaks",
+      "migration",
       "migrations",
       "motion-design",
       "motion-performance",
       "nextjs",
       "nodejs",
       "observability",
+      "ownership",
       "performance",
       "playtesting",
       "postgresql",
@@ -77,8 +89,10 @@
       "product-marketing",
       "profiling",
       "project-scaffolding",
+      "quality-attributes",
       "query-performance",
       "react",
+      "refactoring",
       "regression-review",
       "regression-testing",
       "relational-design",
@@ -93,6 +107,8 @@
       "sprite-animation",
       "tailwind-css",
       "threejs",
+      "topology",
+      "tradeoffs",
       "typescript",
       "ui-implementation",
       "validation",
@@ -137,13 +153,14 @@
     ]
   },
   "counts": {
-    "skills": 22,
+    "skills": 26,
     "packs": {
       "total": 6,
-      "active": 4,
-      "planned": 2
+      "active": 5,
+      "planned": 1
     },
     "categories": {
+      "architecture-engineering": 4,
       "backend-data": 4,
       "delivery": 1,
       "frontend": 5,
@@ -153,14 +170,15 @@
       "product-design": 2
     },
     "maturity": {
-      "beta": 4,
+      "beta": 8,
       "stable": 18
     },
     "difficulty": {
-      "advanced": 15,
-      "intermediate": 7
+      "advanced": 18,
+      "intermediate": 8
     },
     "activePackMembership": {
+      "architecture-engineering": 4,
       "backend-data": 4,
       "frontend-product": 8,
       "game-development": 5,
@@ -588,6 +606,76 @@
     },
     {
       "$schema": "../schemas/skill.schema.json",
+      "slug": "choosing-application-architecture",
+      "category": "architecture-engineering",
+      "packs": [
+        "architecture-engineering"
+      ],
+      "maturity": "beta",
+      "difficulty": "advanced",
+      "featured": false,
+      "compatibility": {
+        "surfaces": [
+          "chatgpt",
+          "codex"
+        ],
+        "operatingSystems": [
+          "linux",
+          "macos",
+          "windows"
+        ],
+        "installModes": [
+          "plugin",
+          "filesystem"
+        ]
+      },
+      "tags": [
+        "architecture",
+        "quality-attributes",
+        "tradeoffs",
+        "topology",
+        "decision-making"
+      ],
+      "dependencies": [],
+      "relatedSkills": [
+        "designing-software-boundaries",
+        "documenting-architecture-decisions"
+      ],
+      "version": "1.0.0-beta.1",
+      "updatedAt": "2026-09-01",
+      "locales": {
+        "en": {
+          "displayName": "Choosing Application Architecture",
+          "summary": "Derives an application architecture from quality attributes, change boundaries, operational capability, and deployment constraints instead of pattern preference.",
+          "primaryBenefit": "Makes architectural topology a traceable trade-off decision and avoids distributed complexity that lacks a demonstrated requirement.",
+          "whenToUse": "Use when starting or reshaping an application where deployment topology, scaling, reliability, ownership, coupling, or delivery constraints make the architectural shape unclear.",
+          "whenNotToUse": "Do not use when the change is local to one established module and does not alter system-level quality attributes, deployment shape, or ownership boundaries.",
+          "useCases": [
+            "Choose between a modular monolith and distributed services for a growing product",
+            "Reassess an existing architecture after scaling, reliability, or team ownership constraints changed"
+          ],
+          "examplePrompts": [
+            "Use choosing-application-architecture to compare realistic architecture options for this system from its quality attributes, change boundaries, deployment needs, and operational constraints."
+          ]
+        },
+        "pt-BR": {
+          "displayName": "Escolha de Arquitetura de Aplicação",
+          "summary": "Deriva a arquitetura de uma aplicação de atributos de qualidade, limites de mudança, capacidade operacional e restrições de deploy em vez de preferência por padrões.",
+          "primaryBenefit": "Transforma a topologia arquitetural em uma decisão rastreável de trade-offs e evita complexidade distribuída sem requisito demonstrado.",
+          "whenToUse": "Use ao iniciar ou reestruturar uma aplicação quando topologia de deploy, escala, confiabilidade, ownership, acoplamento ou restrições de entrega tornam a forma arquitetural incerta.",
+          "whenNotToUse": "Não use quando a mudança é local a um módulo estabelecido e não altera atributos de qualidade sistêmicos, topologia de deploy ou limites de ownership.",
+          "useCases": [
+            "Escolher entre um monólito modular e serviços distribuídos para um produto em crescimento",
+            "Reavaliar uma arquitetura existente após mudanças de escala, confiabilidade ou ownership das equipes"
+          ],
+          "examplePrompts": [
+            "Use choosing-application-architecture para comparar opções arquiteturais realistas para este sistema a partir de atributos de qualidade, limites de mudança, necessidades de deploy e restrições operacionais."
+          ]
+        }
+      }
+    },
+    {
+      "$schema": "../schemas/skill.schema.json",
       "slug": "craft-premium-motion",
       "category": "motion",
       "packs": [
@@ -863,6 +951,77 @@
     },
     {
       "$schema": "../schemas/skill.schema.json",
+      "slug": "designing-software-boundaries",
+      "category": "architecture-engineering",
+      "packs": [
+        "architecture-engineering"
+      ],
+      "maturity": "beta",
+      "difficulty": "advanced",
+      "featured": false,
+      "compatibility": {
+        "surfaces": [
+          "chatgpt",
+          "codex"
+        ],
+        "operatingSystems": [
+          "linux",
+          "macos",
+          "windows"
+        ],
+        "installModes": [
+          "plugin",
+          "filesystem"
+        ]
+      },
+      "tags": [
+        "architecture",
+        "boundaries",
+        "coupling",
+        "cohesion",
+        "ownership"
+      ],
+      "dependencies": [],
+      "relatedSkills": [
+        "choosing-application-architecture",
+        "building-reliable-node-api-boundaries",
+        "planning-safe-refactors"
+      ],
+      "version": "1.0.0-beta.1",
+      "updatedAt": "2026-09-01",
+      "locales": {
+        "en": {
+          "displayName": "Designing Software Boundaries",
+          "summary": "Shapes modules or services around cohesive responsibilities, explicit ownership, narrow contracts, intentional dependency direction, and controlled state sharing.",
+          "primaryBenefit": "Reduces change coupling and keeps consumers dependent on stable capabilities instead of implementation details.",
+          "whenToUse": "Use when modules, services, packages, or teams have unclear ownership, cyclic dependencies, shared state, change coupling, or responsibilities that are difficult to evolve independently.",
+          "whenNotToUse": "Do not use merely to create more folders or services when existing responsibilities and change boundaries are already clear and cohesive.",
+          "useCases": [
+            "Restructure a codebase whose modules import each other's internals and change together",
+            "Define ownership and contracts before extracting a capability into an independently deployed service"
+          ],
+          "examplePrompts": [
+            "Use designing-software-boundaries to map the responsibilities, coupling, state ownership, and dependency directions in this codebase before proposing new module boundaries."
+          ]
+        },
+        "pt-BR": {
+          "displayName": "Desenho de Limites de Software",
+          "summary": "Estrutura módulos ou serviços em torno de responsabilidades coesas, ownership explícito, contratos estreitos, direção intencional de dependências e compartilhamento controlado de estado.",
+          "primaryBenefit": "Reduz acoplamento de mudança e mantém consumidores dependentes de capacidades estáveis em vez de detalhes de implementação.",
+          "whenToUse": "Use quando módulos, serviços, pacotes ou equipes têm ownership incerto, dependências cíclicas, estado compartilhado, acoplamento de mudança ou responsabilidades difíceis de evoluir de forma independente.",
+          "whenNotToUse": "Não use apenas para criar mais pastas ou serviços quando responsabilidades e limites de mudança existentes já são claros e coesos.",
+          "useCases": [
+            "Reestruturar uma codebase cujos módulos importam internals uns dos outros e mudam juntos",
+            "Definir ownership e contratos antes de extrair uma capacidade para um serviço com deploy independente"
+          ],
+          "examplePrompts": [
+            "Use designing-software-boundaries para mapear responsabilidades, acoplamento, ownership de estado e direções de dependência desta codebase antes de propor novos limites de módulo."
+          ]
+        }
+      }
+    },
+    {
+      "$schema": "../schemas/skill.schema.json",
       "slug": "designing-ui-systems",
       "category": "product-design",
       "packs": [
@@ -926,6 +1085,76 @@
           ],
           "examplePrompts": [
             "Use designing-ui-systems para transformar estes padrões recorrentes de interface em um sistema coerente de tokens e componentes."
+          ]
+        }
+      }
+    },
+    {
+      "$schema": "../schemas/skill.schema.json",
+      "slug": "documenting-architecture-decisions",
+      "category": "architecture-engineering",
+      "packs": [
+        "architecture-engineering"
+      ],
+      "maturity": "beta",
+      "difficulty": "intermediate",
+      "featured": false,
+      "compatibility": {
+        "surfaces": [
+          "chatgpt",
+          "codex"
+        ],
+        "operatingSystems": [
+          "linux",
+          "macos",
+          "windows"
+        ],
+        "installModes": [
+          "plugin",
+          "filesystem"
+        ]
+      },
+      "tags": [
+        "architecture",
+        "adr",
+        "decision-records",
+        "tradeoffs",
+        "documentation"
+      ],
+      "dependencies": [],
+      "relatedSkills": [
+        "choosing-application-architecture",
+        "designing-software-boundaries"
+      ],
+      "version": "1.0.0-beta.1",
+      "updatedAt": "2026-09-01",
+      "locales": {
+        "en": {
+          "displayName": "Documenting Architecture Decisions",
+          "summary": "Captures architecturally significant choices as concise decision records with context, drivers, alternatives, consequences, and review triggers.",
+          "primaryBenefit": "Preserves the rationale behind expensive decisions so future changes can evaluate the original trade-offs instead of reopening them from memory.",
+          "whenToUse": "Use when a software decision materially affects structure, quality attributes, dependencies, interfaces, technology choices, or team direction and its rationale must remain reviewable over time.",
+          "whenNotToUse": "Do not use for routine implementation details that are inexpensive to reverse and already evident from the code or local documentation.",
+          "useCases": [
+            "Record why a team chose a modular monolith instead of microservices",
+            "Supersede an accepted architecture decision after new scale or reliability evidence changes the trade-off"
+          ],
+          "examplePrompts": [
+            "Use documenting-architecture-decisions to turn this architecture discussion into a focused ADR with context, decision drivers, realistic alternatives, consequences, and a review trigger."
+          ]
+        },
+        "pt-BR": {
+          "displayName": "Documentação de Decisões de Arquitetura",
+          "summary": "Registra escolhas arquiteturalmente significativas em decisões concisas com contexto, drivers, alternativas, consequências e gatilhos de revisão.",
+          "primaryBenefit": "Preserva a justificativa de decisões caras para que mudanças futuras avaliem os trade-offs originais em vez de reabrir a discussão pela memória.",
+          "whenToUse": "Use quando uma decisão de software afeta materialmente estrutura, atributos de qualidade, dependências, interfaces, escolhas tecnológicas ou direção da equipe e sua justificativa precisa continuar revisável ao longo do tempo.",
+          "whenNotToUse": "Não use para detalhes rotineiros de implementação que são baratos de reverter e já ficam evidentes no código ou na documentação local.",
+          "useCases": [
+            "Registrar por que uma equipe escolheu um monólito modular em vez de microsserviços",
+            "Substituir uma decisão arquitetural aceita depois que novas evidências de escala ou confiabilidade alteram o trade-off"
+          ],
+          "examplePrompts": [
+            "Use documenting-architecture-decisions para transformar esta discussão de arquitetura em um ADR focado, com contexto, drivers da decisão, alternativas realistas, consequências e gatilho de revisão."
           ]
         }
       }
@@ -1285,6 +1514,76 @@
           ],
           "examplePrompts": [
             "Use orchestrating-cinematic-web-motion para coreografar esta página em Next.js com cenas de scroll contidas e estados completos de redução de movimento."
+          ]
+        }
+      }
+    },
+    {
+      "$schema": "../schemas/skill.schema.json",
+      "slug": "planning-safe-refactors",
+      "category": "architecture-engineering",
+      "packs": [
+        "architecture-engineering"
+      ],
+      "maturity": "beta",
+      "difficulty": "advanced",
+      "featured": false,
+      "compatibility": {
+        "surfaces": [
+          "chatgpt",
+          "codex"
+        ],
+        "operatingSystems": [
+          "linux",
+          "macos",
+          "windows"
+        ],
+        "installModes": [
+          "plugin",
+          "filesystem"
+        ]
+      },
+      "tags": [
+        "architecture",
+        "refactoring",
+        "migration",
+        "blast-radius",
+        "incremental-delivery"
+      ],
+      "dependencies": [],
+      "relatedSkills": [
+        "designing-software-boundaries",
+        "documenting-architecture-decisions"
+      ],
+      "version": "1.0.0-beta.1",
+      "updatedAt": "2026-09-01",
+      "locales": {
+        "en": {
+          "displayName": "Planning Safe Refactors",
+          "summary": "Turns broad structural changes into releasable migration slices with protected contracts, explicit seams, verification evidence, and rollback paths.",
+          "primaryBenefit": "Reduces refactor blast radius while keeping the system releasable and making structural progress observable at every slice.",
+          "whenToUse": "Use when a structural refactor crosses multiple modules, dependencies, data flows, or deployments and cannot be completed safely as one atomic change without a large blast radius.",
+          "whenNotToUse": "Do not use when the change is small, local, behavior-preserving, and safely reviewable and reversible as one atomic change.",
+          "useCases": [
+            "Replace a shared framework or dependency without migrating every consumer in one release",
+            "Gradually extract a legacy capability while keeping old and new paths verifiable during migration"
+          ],
+          "examplePrompts": [
+            "Use planning-safe-refactors to map the blast radius of this structural change and produce incremental slices with seams, regression evidence, rollback, and cleanup conditions."
+          ]
+        },
+        "pt-BR": {
+          "displayName": "Planejamento de Refactors Seguros",
+          "summary": "Transforma mudanças estruturais amplas em fatias de migração publicáveis com contratos protegidos, seams explícitos, evidências de verificação e caminhos de rollback.",
+          "primaryBenefit": "Reduz o blast radius de refactors enquanto mantém o sistema publicável e torna o progresso estrutural observável em cada fatia.",
+          "whenToUse": "Use quando um refactor estrutural atravessa vários módulos, dependências, fluxos de dados ou deploys e não pode ser concluído com segurança em uma única mudança atômica sem grande blast radius.",
+          "whenNotToUse": "Não use quando a mudança é pequena, local, preserva comportamento e pode ser revisada e revertida com segurança como uma única alteração atômica.",
+          "useCases": [
+            "Substituir um framework ou dependência compartilhada sem migrar todos os consumidores em um único release",
+            "Extrair gradualmente uma capacidade legada mantendo caminhos antigo e novo verificáveis durante a migração"
+          ],
+          "examplePrompts": [
+            "Use planning-safe-refactors para mapear o blast radius desta mudança estrutural e produzir fatias incrementais com seams, evidência de regressão, rollback e condições de limpeza."
           ]
         }
       }
@@ -1734,6 +2033,93 @@
   ],
   "packs": [
     {
+      "slug": "architecture-engineering",
+      "status": "active",
+      "featured": false,
+      "color": "cyan",
+      "version": "1.0.0-beta.1",
+      "locales": {
+        "en": {
+          "name": "Architecture & Engineering",
+          "summary": "Architecture selection, software boundaries, decision records, and incremental refactoring for systems that need to evolve without accidental complexity.",
+          "description": "An installable workflow for deriving an architecture from real constraints, shaping cohesive ownership boundaries, preserving significant decisions, and evolving structure through safe migration slices.",
+          "outcomes": [
+            "Make architecture and boundary choices traceable to quality attributes, ownership, and change patterns",
+            "Evolve structural decisions incrementally with recorded trade-offs, verification evidence, and rollback paths"
+          ]
+        },
+        "pt-BR": {
+          "name": "Arquitetura e Engenharia",
+          "summary": "Escolha arquitetural, limites de software, registros de decisão e refactoring incremental para sistemas que precisam evoluir sem complexidade acidental.",
+          "description": "Um fluxo instalável para derivar arquitetura de restrições reais, estruturar limites coesos de ownership, preservar decisões significativas e evoluir a estrutura por fatias seguras de migração.",
+          "outcomes": [
+            "Tornar escolhas de arquitetura e limites rastreáveis a atributos de qualidade, ownership e padrões de mudança",
+            "Evoluir decisões estruturais de forma incremental com trade-offs registrados, evidências de verificação e caminhos de rollback"
+          ]
+        }
+      },
+      "skillSlugs": [
+        "choosing-application-architecture",
+        "designing-software-boundaries",
+        "documenting-architecture-decisions",
+        "planning-safe-refactors"
+      ],
+      "skills": [
+        {
+          "slug": "choosing-application-architecture",
+          "displayName": {
+            "en": "Choosing Application Architecture",
+            "pt-BR": "Escolha de Arquitetura de Aplicação"
+          },
+          "summary": {
+            "en": "Derives an application architecture from quality attributes, change boundaries, operational capability, and deployment constraints instead of pattern preference.",
+            "pt-BR": "Deriva a arquitetura de uma aplicação de atributos de qualidade, limites de mudança, capacidade operacional e restrições de deploy em vez de preferência por padrões."
+          },
+          "difficulty": "advanced",
+          "maturity": "beta"
+        },
+        {
+          "slug": "designing-software-boundaries",
+          "displayName": {
+            "en": "Designing Software Boundaries",
+            "pt-BR": "Desenho de Limites de Software"
+          },
+          "summary": {
+            "en": "Shapes modules or services around cohesive responsibilities, explicit ownership, narrow contracts, intentional dependency direction, and controlled state sharing.",
+            "pt-BR": "Estrutura módulos ou serviços em torno de responsabilidades coesas, ownership explícito, contratos estreitos, direção intencional de dependências e compartilhamento controlado de estado."
+          },
+          "difficulty": "advanced",
+          "maturity": "beta"
+        },
+        {
+          "slug": "documenting-architecture-decisions",
+          "displayName": {
+            "en": "Documenting Architecture Decisions",
+            "pt-BR": "Documentação de Decisões de Arquitetura"
+          },
+          "summary": {
+            "en": "Captures architecturally significant choices as concise decision records with context, drivers, alternatives, consequences, and review triggers.",
+            "pt-BR": "Registra escolhas arquiteturalmente significativas em decisões concisas com contexto, drivers, alternativas, consequências e gatilhos de revisão."
+          },
+          "difficulty": "intermediate",
+          "maturity": "beta"
+        },
+        {
+          "slug": "planning-safe-refactors",
+          "displayName": {
+            "en": "Planning Safe Refactors",
+            "pt-BR": "Planejamento de Refactors Seguros"
+          },
+          "summary": {
+            "en": "Turns broad structural changes into releasable migration slices with protected contracts, explicit seams, verification evidence, and rollback paths.",
+            "pt-BR": "Transforma mudanças estruturais amplas em fatias de migração publicáveis com contratos protegidos, seams explícitos, evidências de verificação e caminhos de rollback."
+          },
+          "difficulty": "advanced",
+          "maturity": "beta"
+        }
+      ]
+    },
+    {
       "slug": "backend-data",
       "status": "active",
       "featured": false,
@@ -2164,35 +2550,6 @@
           "maturity": "stable"
         }
       ]
-    },
-    {
-      "slug": "architecture-engineering",
-      "status": "planned",
-      "featured": false,
-      "color": "cyan",
-      "version": "1.0.0-beta.1",
-      "locales": {
-        "en": {
-          "name": "Architecture & Engineering",
-          "summary": "Planned guidance for durable software architecture and engineering decisions.",
-          "description": "This planned pack will cover architecture and engineering workflows; skills will enter through public proposals and independent validation.",
-          "outcomes": [
-            "Evaluate system boundaries and architectural tradeoffs",
-            "Establish maintainable engineering practices across services and applications"
-          ]
-        },
-        "pt-BR": {
-          "name": "Arquitetura e Engenharia",
-          "summary": "Orientações planejadas para decisões duráveis de arquitetura e engenharia de software.",
-          "description": "Este pack planejado abordará fluxos de arquitetura e engenharia; as skills entrarão por meio de propostas públicas e validação independente.",
-          "outcomes": [
-            "Avaliar limites de sistemas e trade-offs arquiteturais",
-            "Estabelecer práticas de engenharia fáceis de manter entre serviços e aplicações"
-          ]
-        }
-      },
-      "skillSlugs": [],
-      "skills": []
     },
     {
       "slug": "quality-testing",

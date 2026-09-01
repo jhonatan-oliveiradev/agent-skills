@@ -23,7 +23,7 @@ publish roadmap categories without claiming members.
 | Motion (`motion`) | Active | 5 motion and procedural-3D skills |
 | Game Development (`game-development`) | Active | 5 game-development and procedural-3D skills |
 | Backend & Data (`backend-data`) | Active | 4 relational-modeling, Node API, PostgreSQL migration, and query-profiling skills |
-| Architecture & Engineering (`architecture-engineering`) | Planned | No members until the category is implemented |
+| Architecture & Engineering (`architecture-engineering`) | Active | 4 architecture-selection, software-boundary, ADR, and safe-refactoring skills |
 | Quality & Testing (`quality-testing`) | Planned | No members until the category is implemented |
 
 `reconstructing-images-as-threejs` intentionally appears in both Motion and
@@ -125,6 +125,18 @@ Added for compatibility-first PostgreSQL production changes using expand, migrat
 ### `profiling-postgres-query-performance`
 Added for evidence-led PostgreSQL query diagnosis using representative inputs and execution plans before changing SQL or indexes.
 
+### `choosing-application-architecture`
+Added for architecture selection driven by quality attributes, change boundaries, deployment constraints, and operational capability rather than pattern preference.
+
+### `designing-software-boundaries`
+Added for shaping cohesive ownership, state, contracts, and dependency direction without conflating internal structural boundaries with external API trust boundaries.
+
+### `documenting-architecture-decisions`
+Added for concise ADRs that preserve context, decision drivers, alternatives, consequences, and explicit review triggers.
+
+### `planning-safe-refactors`
+Added for converting broad structural changes into releasable migration slices with seams, regression evidence, rollback paths, and cleanup conditions.
+
 ## Why the 81 web-design skills were not installed individually
 
 The upstream collection contains many excellent micro-techniques and art-direction presets. Keeping all of them globally installed would create poor skill discovery: several skills could trigger on the same frontend request and push the agent toward visual effects before understanding product intent. The curated pack keeps broad operating procedures global and leaves effect-specific skills as on-demand upstream references.
@@ -160,3 +172,16 @@ Adapts the evidence, staged reconstruction, confidence, procedural factory, and 
 | OWASP API Security Top 10 — 2023 | Referenced | `skills/building-reliable-node-api-boundaries` |
 
 Backend & Data v1 does not mirror vendor documentation. The local methods combine stable operating procedures around those references and intentionally avoid requiring an ORM, hosted PostgreSQL provider, or framework-specific API layer.
+
+## Architecture & Engineering research — 2026-09-01
+
+| Source | Decision | Local destination |
+|---|---|---|
+| SEI guidance on software architecture quality attributes | Referenced | `skills/choosing-application-architecture` |
+| Microsoft architectural principles | Referenced | `skills/choosing-application-architecture` + `skills/designing-software-boundaries` |
+| AWS guidance on cohesion and coupling | Referenced | `skills/designing-software-boundaries` |
+| AWS architectural decision record process | Referenced | `skills/documenting-architecture-decisions` + `skills/choosing-application-architecture` |
+| Martin Fowler, Branch by Abstraction | Referenced | `skills/planning-safe-refactors` |
+| Martin Fowler, Strangler Fig modernization | Referenced | `skills/planning-safe-refactors` |
+
+Architecture & Engineering v1 does not mirror those sources or require a graph-analysis runtime. The local methods combine stable decision and migration procedures while remaining usable with the agent's native repository tools.

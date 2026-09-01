@@ -179,6 +179,16 @@
   margin-top: clamp(1rem, 3vw, 2.5rem);
 }
 
+.home-pack-dossier:nth-child(4) {
+  grid-column: 1 / span 6;
+  margin-top: clamp(2rem, 6vw, 6rem);
+}
+
+.home-pack-dossier:nth-child(5) {
+  grid-column: 7 / span 6;
+  margin-top: clamp(6rem, 12vw, 12rem);
+}
+
 .home-pack-dossier::before {
   position: absolute;
   z-index: -1;
@@ -323,7 +333,9 @@
 
   .home-pack-dossier:nth-child(1),
   .home-pack-dossier:nth-child(2),
-  .home-pack-dossier:nth-child(3) {
+  .home-pack-dossier:nth-child(3),
+  .home-pack-dossier:nth-child(4),
+  .home-pack-dossier:nth-child(5) {
     grid-column: 1 / -1;
     margin-top: 0;
   }
