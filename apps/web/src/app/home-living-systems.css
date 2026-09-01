@@ -189,6 +189,11 @@
   margin-top: clamp(6rem, 12vw, 12rem);
 }
 
+.home-pack-dossier:nth-child(6) {
+  grid-column: 2 / span 10;
+  margin-top: clamp(2rem, 5vw, 5rem);
+}
+
 .home-pack-dossier::before {
   position: absolute;
   z-index: -1;
@@ -335,7 +340,8 @@
   .home-pack-dossier:nth-child(2),
   .home-pack-dossier:nth-child(3),
   .home-pack-dossier:nth-child(4),
-  .home-pack-dossier:nth-child(5) {
+  .home-pack-dossier:nth-child(5),
+  .home-pack-dossier:nth-child(6) {
     grid-column: 1 / -1;
     margin-top: 0;
   }
