@@ -5,13 +5,48 @@ vi.mock("server-only", () => ({}));
 
 import GettingStartedPage from "@/app/[locale]/getting-started/page";
 
+const repositoryUrl = "https://github.com/jhonatan-oliveiradev/agent-skills";
+
 describe("Getting Started Field Manual", () => {
   it.each([
-    ["en", "FIELD MANUAL", "05 stages", "First setup", "Explore skills", "View packs", "Claude Code · personal"],
-    ["pt-BR", "MANUAL DE CAMPO", "05 etapas", "Primeira configuração", "Explorar skills", "Ver pacotes", "Claude Code · pessoal"],
+    [
+      "en",
+      "FIELD MANUAL",
+      "05 stages",
+      "First setup",
+      "Explore skills",
+      "View packs",
+      "Claude Code · personal",
+      "ChatGPT · plugin marketplace",
+      "Plugins → Skills → Create → Upload from computer",
+      "Workspace settings → Plugins → Add → Import marketplace",
+    ],
+    [
+      "pt-BR",
+      "MANUAL DE CAMPO",
+      "05 etapas",
+      "Primeira configuração",
+      "Explorar skills",
+      "Ver pacotes",
+      "Claude Code · pessoal",
+      "ChatGPT · marketplace de plugins",
+      "Plugins → Habilidades → Criar → Carregar do computador",
+      "Configurações do workspace → Plugins → Adicionar → Importar marketplace",
+    ],
   ] as const)(
     "renders the localized five-stage manual architecture for %s",
-    async (locale, manualLabel, stagesLabel, setupLabel, skillsAction, packsAction, claudeLabel) => {
+    async (
+      locale,
+      manualLabel,
+      stagesLabel,
+      setupLabel,
+      skillsAction,
+      packsAction,
+      claudeLabel,
+      chatgptLabel,
+      skillUploadPath,
+      marketplacePath,
+    ) => {
       const { container } = render(
         await GettingStartedPage({ params: Promise.resolve({ locale }) }),
       );
@@ -33,6 +68,13 @@ describe("Getting Started Field Manual", () => {
       expect(screen.getByText(claudeLabel)).toBeInTheDocument();
       expect(screen.getByText("bash install.sh --target claude-code")).toBeInTheDocument();
       expect(screen.getByText("./install.ps1 --target claude-code")).toBeInTheDocument();
+
+      const chatgpt = container.querySelector("[data-chatgpt-distribution]");
+      expect(chatgpt).toBeInTheDocument();
+      expect(screen.getByText(chatgptLabel)).toBeInTheDocument();
+      expect(screen.getByText(skillUploadPath)).toBeInTheDocument();
+      expect(screen.getByText(marketplacePath)).toBeInTheDocument();
+      expect(screen.getByText(repositoryUrl)).toBeInTheDocument();
 
       expect(screen.getByRole("link", { name: skillsAction })).toHaveAttribute(
         "data-interaction",
