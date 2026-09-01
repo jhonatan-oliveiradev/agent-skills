@@ -9,6 +9,7 @@ interface EditorialMethodsCopy {
   readonly categoriesMetric: string;
   readonly versionMetric: string;
   readonly filterLabel: string;
+  readonly categoryLabels: Readonly<Record<string, string>>;
   readonly methodLabel: string;
   readonly onThisMethod: string;
   readonly promptLabel: string;
@@ -20,12 +21,13 @@ export const editorialMethodsCopy = {
     archiveLabel: "METHODS / ARCHIVE",
     archiveTitle: "Methods for agents that need to work better.",
     archiveSummary:
-      "A versioned library of working methods for design, frontend, motion, delivery, and agent practice — organized for comparison before installation.",
+      "A versioned library of working methods for design, frontend, motion, delivery, backend, data, and agent practice — organized for comparison before installation.",
     methodsMetric: "METHODS",
     packsMetric: "PACKS",
     categoriesMetric: "DOMAINS",
     versionMetric: "VERSION",
     filterLabel: "Filter the archive",
+    categoryLabels: { "backend-data": "Backend & data" },
     methodLabel: "METHOD",
     onThisMethod: "On this method",
     promptLabel: "PROMPT",
@@ -35,12 +37,13 @@ export const editorialMethodsCopy = {
     archiveLabel: "MÉTODOS / ARQUIVO",
     archiveTitle: "Métodos para agentes que precisam trabalhar melhor.",
     archiveSummary:
-      "Uma biblioteca versionada de métodos de trabalho para design, frontend, motion, delivery e prática com agentes — organizada para comparação antes da instalação.",
+      "Uma biblioteca versionada de métodos de trabalho para design, frontend, motion, delivery, backend, dados e prática com agentes — organizada para comparação antes da instalação.",
     methodsMetric: "MÉTODOS",
     packsMetric: "PACOTES",
     categoriesMetric: "DOMÍNIOS",
     versionMetric: "VERSÃO",
     filterLabel: "Filtrar o arquivo",
+    categoryLabels: { "backend-data": "Backend e dados" },
     methodLabel: "MÉTODO",
     onThisMethod: "Neste método",
     promptLabel: "PROMPT",
