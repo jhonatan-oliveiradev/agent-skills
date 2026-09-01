@@ -1,9 +1,13 @@
 import assert from "node:assert/strict";
-import { readFile } from "node:fs/promises";
+import { execFile } from "node:child_process";
+import { mkdtemp, readFile, readdir } from "node:fs/promises";
+import { tmpdir } from "node:os";
 import path from "node:path";
 import test from "node:test";
+import { promisify } from "node:util";
 import { fileURLToPath } from "node:url";
 
+const execFileAsync = promisify(execFile);
 const repositoryRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const packPath = path.join(repositoryRoot, "catalog", "packs", "backend-data.json");
 const schemaPath = path.join(repositoryRoot, "catalog", "schemas", "skill.schema.json");
@@ -53,5 +57,25 @@ test("publishes bilingual metadata with bidirectional backend pack membership", 
     assert.ok(metadata.locales["pt-BR"].displayName);
     assert.ok(metadata.locales.en.examplePrompts.length > 0);
     assert.ok(metadata.locales["pt-BR"].examplePrompts.length > 0);
+  }
+});
+
+test("installs only the four Backend & Data methods through the real CLI", async () => {
+  const destination = await mkdtemp(path.join(tmpdir(), "agent-skills-backend-data-"));
+
+  await execFileAsync(process.execPath, [
+    path.join(repositoryRoot, "scripts", "install-skills.mjs"),
+    "--destination",
+    destination,
+    "--pack",
+    "backend-data",
+  ]);
+
+  assert.deepEqual((await readdir(destination)).sort(), [...backendSkills].sort());
+  for (const slug of backendSkills) {
+    assert.match(
+      await readFile(path.join(destination, slug, "SKILL.md"), "utf8"),
+      new RegExp(`name: ${slug}`),
+    );
   }
 });
