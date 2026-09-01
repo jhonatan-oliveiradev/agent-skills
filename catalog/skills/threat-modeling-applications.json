@@ -1,0 +1,39 @@
+{
+  "$schema": "../schemas/skill.schema.json",
+  "slug": "threat-modeling-applications",
+  "category": "application-security",
+  "packs": ["application-security"],
+  "maturity": "beta",
+  "difficulty": "advanced",
+  "featured": false,
+  "compatibility": {
+    "surfaces": ["chatgpt", "codex"],
+    "operatingSystems": ["linux", "macos", "windows"],
+    "installModes": ["plugin", "filesystem"]
+  },
+  "tags": ["security", "threat-modeling", "risk", "architecture", "abuse-cases"],
+  "dependencies": [],
+  "relatedSkills": ["reviewing-web-security", "reviewing-api-security", "designing-software-boundaries"],
+  "version": "1.0.0-beta.1",
+  "updatedAt": "2026-09-01",
+  "locales": {
+    "en": {
+      "displayName": "Threat Modeling Applications",
+      "summary": "Maps assets, actors, entry points, trust boundaries, and abuse cases into prioritized security controls and verification evidence.",
+      "primaryBenefit": "Finds design-level security risk before it becomes an implementation defect or production incident.",
+      "whenToUse": "Use when a feature, service, or application needs security risks identified from its architecture, assets, trust boundaries, and abuse cases before implementation or release.",
+      "whenNotToUse": "Do not use as a substitute for a focused code-level review when the threat model and security requirements are already established.",
+      "useCases": ["Threat-model a new authenticated workflow before implementation", "Revisit security assumptions after a new integration or trust boundary is introduced"],
+      "examplePrompts": ["Use threat-modeling-applications to map this architecture's assets, trust boundaries, abuse cases, controls, and verification evidence before we ship it."]
+    },
+    "pt-BR": {
+      "displayName": "Modelagem de Ameaças de Aplicações",
+      "summary": "Mapeia ativos, atores, pontos de entrada, limites de confiança e casos de abuso em controles de segurança priorizados e evidências de verificação.",
+      "primaryBenefit": "Encontra riscos de segurança no nível de design antes que virem defeitos de implementação ou incidentes em produção.",
+      "whenToUse": "Use quando uma feature, serviço ou aplicação precisa ter riscos de segurança identificados a partir da arquitetura, ativos, limites de confiança e casos de abuso antes da implementação ou release.",
+      "whenNotToUse": "Não use como substituto de uma revisão focada de código quando o modelo de ameaças e os requisitos de segurança já estão estabelecidos.",
+      "useCases": ["Modelar ameaças de um novo fluxo autenticado antes da implementação", "Revisitar suposições de segurança após a inclusão de uma nova integração ou limite de confiança"],
+      "examplePrompts": ["Use threat-modeling-applications para mapear ativos, limites de confiança, casos de abuso, controles e evidências de verificação desta arquitetura antes do release."]
+    }
+  }
+}
