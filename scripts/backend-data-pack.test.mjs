@@ -27,6 +27,7 @@ test("promotes backend-data to an active four-method pack", async () => {
   const pack = await readJson(packPath);
 
   assert.equal(pack.status, "active");
+  assert.equal(pack.color, "violet");
   assert.deepEqual(pack.skills, backendSkills);
 });
 
