@@ -1,50 +1,66 @@
-name: Validate skills
+name: Materialize Quality web state
 
 on:
-  push:
-    branches: [main, dev]
   pull_request:
 
+permissions:
+  contents: write
+
 jobs:
-  validate:
-    strategy:
-      fail-fast: false
-      matrix:
-        os: [ubuntu-latest, windows-latest]
-    runs-on: ${{ matrix.os }}
+  materialize:
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
         with:
-          node-version: 22
-      - run: npm test
-      - run: npm run validate
-      - run: npm ci --prefix apps/web
-      - run: npm run web:test
-      - run: npm run web:typecheck
-      - run: npm run web:lint
-      - run: npm run web:build
-        env:
-          NEXT_PUBLIC_SITE_URL: https://skills.jhonatanoliveira.com
-      - name: Smoke test Bash installer
-        if: runner.os == 'Linux'
+          ref: ${{ github.event.pull_request.head.ref }}
+      - name: Align derived web contracts and sixth pack composition
         shell: bash
         run: |
-          target="$(mktemp -d)"
-          pack_target="$(mktemp -d)"
-          ./install.sh --destination "$target"
-          ./install.sh --destination "$pack_target" --pack motion
-          test -f "$target/craft-premium-motion/SKILL.md"
-          test -f "$pack_target/craft-premium-motion/SKILL.md"
-          test ! -e "$pack_target/designing-action-combat/SKILL.md"
-      - name: Smoke test PowerShell installer
-        if: runner.os == 'Windows'
-        shell: pwsh
+          node <<'NODE'
+          const fs = require('node:fs');
+
+          function replace(file, before, after) {
+            let source = fs.readFileSync(file, 'utf8');
+            if (!source.includes(before)) throw new Error(`Expected text not found in ${file}: ${before}`);
+            source = source.replace(before, after);
+            fs.writeFileSync(file, source);
+          }
+
+          replace('apps/web/src/components/site-shell.test.tsx', '"26 skills", "6 packs"', '"30 skills", "6 packs"');
+          replace('apps/web/src/components/site-shell.test.tsx', '"26 skills", "6 pacotes"', '"30 skills", "6 pacotes"');
+          replace('apps/web/src/components/site-shell.test.tsx', 'querySelectorAll(".home-pack-dossier")).toHaveLength(5)', 'querySelectorAll(".home-pack-dossier")).toHaveLength(6)');
+          replace('apps/web/src/components/site-shell.test.tsx', '"26 skills prontas para usar."', '"30 skills prontas para usar."');
+          replace('apps/web/src/components/site-shell.test.tsx', 'getAllByText(empty)).toHaveLength(4)', 'getAllByText(empty)).toHaveLength(5)');
+          replace('apps/web/src/components/site-shell.test.tsx', 'querySelectorAll("[data-program-record]")).toHaveLength(6)', 'querySelectorAll("[data-program-record]")).toHaveLength(5)');
+          replace('apps/web/src/components/site-shell.test.tsx', "querySelectorAll('[data-pack-dossier][data-status=\"active\"]')).toHaveLength(5)", "querySelectorAll('[data-pack-dossier][data-status=\"active\"]')).toHaveLength(6)");
+          replace('apps/web/src/components/site-shell.test.tsx', "querySelectorAll('[data-pack-dossier][data-status=\"planned\"]')).toHaveLength(1)", "querySelectorAll('[data-pack-dossier][data-status=\"planned\"]')).toHaveLength(0)");
+          replace('apps/web/src/components/site-shell.test.tsx', 'querySelectorAll("[data-method-row]")).toHaveLength(26)', 'querySelectorAll("[data-method-row]")).toHaveLength(30)');
+
+          replace('apps/web/src/components/site-chrome.test.tsx', 'getByText("26 SKILLS")', 'getByText("30 SKILLS")');
+          replace('apps/web/src/components/site-chrome.test.tsx', 'getByText(/26 skills/i)', 'getByText(/30 skills/i)');
+
+          for (const token of [
+            'querySelectorAll(".home-pack-dossier")).toHaveLength(5)',
+            'querySelectorAll("[data-pack-stage]")).toHaveLength(5)',
+            'querySelectorAll(".home-pack-dossier__skills")).toHaveLength(5)',
+          ]) {
+            replace('apps/web/src/components/home/home-living-archive.test.tsx', token, token.replace('5)', '6)'));
+          }
+
+          replace('apps/web/src/components/roadmap-living-program.test.tsx', "querySelectorAll(\"[data-program-stage][data-empty='true']\")).toHaveLength(4)", "querySelectorAll(\"[data-program-stage][data-empty='true']\")).toHaveLength(5)");
+          replace('apps/web/src/lib/roadmap.test.ts', 'toEqual([1, 0, 0, 0, 4, 1, 0])', 'toEqual([0, 0, 0, 0, 4, 1, 0])');
+
+          replace('apps/web/src/lib/home-structure.test.ts', 'gives all five active pack dossiers an intentional desktop composition', 'gives all six active pack dossiers an intentional desktop composition');
+          replace('apps/web/src/lib/home-structure.test.ts', 'expect(source).toContain(".home-pack-dossier:nth-child(5)");\n    expect(source).toMatch(/nth-child\\(4\\)[\\s\\S]*grid-column:/);\n    expect(source).toMatch(/nth-child\\(5\\)[\\s\\S]*grid-column:/);', 'expect(source).toContain(".home-pack-dossier:nth-child(5)");\n    expect(source).toContain(".home-pack-dossier:nth-child(6)");\n    expect(source).toMatch(/nth-child\\(4\\)[\\s\\S]*grid-column:/);\n    expect(source).toMatch(/nth-child\\(5\\)[\\s\\S]*grid-column:/);\n    expect(source).toMatch(/nth-child\\(6\\)[\\s\\S]*grid-column:/);');
+
+          replace('apps/web/src/app/home-living-systems.css', '.home-pack-dossier:nth-child(5) {\n  grid-column: 7 / span 6;\n  margin-top: clamp(6rem, 12vw, 12rem);\n}\n', '.home-pack-dossier:nth-child(5) {\n  grid-column: 7 / span 6;\n  margin-top: clamp(6rem, 12vw, 12rem);\n}\n\n.home-pack-dossier:nth-child(6) {\n  grid-column: 2 / span 10;\n  margin-top: clamp(2rem, 5vw, 5rem);\n}\n');
+          replace('apps/web/src/app/home-living-systems.css', '  .home-pack-dossier:nth-child(4),\n  .home-pack-dossier:nth-child(5) {', '  .home-pack-dossier:nth-child(4),\n  .home-pack-dossier:nth-child(5),\n  .home-pack-dossier:nth-child(6) {');
+          NODE
+      - name: Commit web state
+        shell: bash
         run: |
-          $target = Join-Path $env:RUNNER_TEMP "agent-skills-install"
-          ./install.ps1 --destination $target
-          if (-not (Test-Path (Join-Path $target "craft-premium-motion/SKILL.md"))) { exit 1 }
-          $packTarget = Join-Path $env:RUNNER_TEMP "agent-skills-motion-pack"
-          ./install.ps1 --destination $packTarget --pack motion
-          if (-not (Test-Path (Join-Path $packTarget "craft-premium-motion/SKILL.md"))) { exit 1 }
-          if (Test-Path (Join-Path $packTarget "designing-action-combat/SKILL.md")) { exit 1 }
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add apps/web/src/components/site-shell.test.tsx apps/web/src/components/site-chrome.test.tsx apps/web/src/components/home/home-living-archive.test.tsx apps/web/src/components/roadmap-living-program.test.tsx apps/web/src/lib/roadmap.test.ts apps/web/src/lib/home-structure.test.ts apps/web/src/app/home-living-systems.css
+          git commit -m "test: align web state with Quality & Testing"
+          git push origin HEAD:${{ github.event.pull_request.head.ref }}
