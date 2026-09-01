@@ -1,93 +1,50 @@
-name: Materialize Quality documentation
+name: Validate skills
 
 on:
+  push:
+    branches: [main, dev]
   pull_request:
 
-permissions:
-  contents: write
-
 jobs:
-  materialize:
-    runs-on: ubuntu-latest
+  validate:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
         with:
-          ref: ${{ github.event.pull_request.head.ref }}
-      - name: Update README and provenance mapping
+          node-version: 22
+      - run: npm test
+      - run: npm run validate
+      - run: npm ci --prefix apps/web
+      - run: npm run web:test
+      - run: npm run web:typecheck
+      - run: npm run web:lint
+      - run: npm run web:build
+        env:
+          NEXT_PUBLIC_SITE_URL: https://skills.jhonatanoliveira.com
+      - name: Smoke test Bash installer
+        if: runner.os == 'Linux'
         shell: bash
         run: |
-          node <<'NODE'
-          const fs = require('node:fs');
-
-          function replace(file, before, after) {
-            let source = fs.readFileSync(file, 'utf8');
-            if (!source.includes(before)) throw new Error(`Expected text not found in ${file}: ${before}`);
-            source = source.replace(before, after);
-            fs.writeFileSync(file, source);
-          }
-
-          replace('README.md',
-            'A curated Agent Skills library for production frontend, product design, motion, visual QA, delivery workflows, backend and data engineering, software architecture and engineering, and game-development tasks.',
-            'A curated Agent Skills library for production frontend, product design, motion, visual QA, delivery workflows, backend and data engineering, software architecture and engineering, quality and testing, and game-development tasks.'
-          );
-
-          replace('README.md',
-            '### Architecture & engineering\n- `choosing-application-architecture`\n- `designing-software-boundaries`\n- `documenting-architecture-decisions`\n- `planning-safe-refactors`\n',
-            '### Architecture & engineering\n- `choosing-application-architecture`\n- `designing-software-boundaries`\n- `documenting-architecture-decisions`\n- `planning-safe-refactors`\n\n### Quality & testing\n- `designing-test-strategies`\n- `testing-integration-boundaries`\n- `testing-web-applications-end-to-end`\n- `building-regression-tests`\n'
-          );
-
-          replace('README.md',
-            'The methods prefer the least distributed architecture that satisfies demonstrated forces, explicit ownership and dependency direction, durable decision rationale, and incremental evolution with verification and rollback. They do not require CodeGraph or another code-intelligence runtime.\n',
-            'The methods prefer the least distributed architecture that satisfies demonstrated forces, explicit ownership and dependency direction, durable decision rationale, and incremental evolution with verification and rollback. They do not require CodeGraph or another code-intelligence runtime.\n\n## Quality & Testing v1\n\nThe Quality & Testing pack separates four concerns that should remain independently invokable: designing a risk-based verification strategy, testing real integration boundaries, exercising a small set of critical web journeys end to end, and turning reproduced defects into durable regression guards.\n\nThe methods prefer the smallest test scope that can provide trustworthy evidence, real controllable dependencies over mocks that merely repeat assumptions, user-facing browser contracts over implementation selectors, and observed RED → GREEN evidence for regression fixes. Playwright is an optional implementation tool, not a dependency of the pack.\n'
-          );
-
-          replace('README.md',
-            '- `architecture-engineering` — Architecture & Engineering (4 skills).\n\nThe catalog also publishes one roadmap pack that is not yet installable:\n`quality-testing` (Quality & Testing).',
-            '- `architecture-engineering` — Architecture & Engineering (4 skills);\n- `quality-testing` — Quality & Testing (4 skills).\n\nAll six published packs are active and installable.'
-          );
-          replace('README.md',
-            'Selecting an unknown pack or a planned pack such as `quality-testing` is rejected\nbefore the destination is changed.',
-            'Selecting an unknown pack is rejected before the destination is changed.'
-          );
-
-          replace('README.md',
-            '- `architecture-engineering` — Arquitetura e Engenharia (4 skills).\n\nO catálogo também publica um pacote planejado, ainda não instalável:\n`quality-testing` (Qualidade e Testes).',
-            '- `architecture-engineering` — Arquitetura e Engenharia (4 skills);\n- `quality-testing` — Qualidade e Testes (4 skills).\n\nTodos os seis pacotes publicados estão ativos e são instaláveis.'
-          );
-          replace('README.md',
-            'Um pacote desconhecido ou planejado, como `quality-testing`, é rejeitado antes de\nqualquer alteração no destino.',
-            'Um pacote desconhecido é rejeitado antes de qualquer alteração no destino.'
-          );
-          replace('README.md',
-            'visual QA, backend/data engineering, architecture, and delivery.',
-            'visual QA, backend/data engineering, architecture, quality/testing, and delivery.'
-          );
-          replace('README.md',
-            'AWS architectural decision records, and Martin Fowler refactoring patterns used as references for the engineering methods.',
-            'AWS architectural decision records, Martin Fowler engineering and testing guidance, Playwright best practices, Google Testing Blog guidance, and Microsoft testing strategy references used for the engineering and quality methods.'
-          );
-
-          replace('MAPPING.md',
-            '| Quality & Testing (`quality-testing`) | Planned | No members until the category is implemented |',
-            '| Quality & Testing (`quality-testing`) | Active | 4 test-strategy, integration-boundary, web-E2E, and regression-testing skills |'
-          );
-          replace('MAPPING.md',
-            '### `planning-safe-refactors`\nAdded for converting broad structural changes into releasable migration slices with seams, regression evidence, rollback paths, and cleanup conditions.\n',
-            '### `planning-safe-refactors`\nAdded for converting broad structural changes into releasable migration slices with seams, regression evidence, rollback paths, and cleanup conditions.\n\n### `designing-test-strategies`\nAdded for risk-based verification planning that maps important behaviors to the smallest useful test layer instead of treating coverage percentage as the strategy.\n\n### `testing-integration-boundaries`\nAdded for proving serialization, persistence, protocol, transaction, and failure behavior at real controllable dependency boundaries.\n\n### `testing-web-applications-end-to-end`\nAdded for critical browser journeys using user-facing interactions plus UI, URL, console, network, state, and visual evidence without making a browser runner a hard dependency.\n\n### `building-regression-tests`\nAdded for turning reproduced defects into deterministic guards that demonstrate RED before the fix, GREEN after it, and remain at the narrowest layer that proves the broken contract.\n'
-          );
-
-          let mapping = fs.readFileSync('MAPPING.md', 'utf8');
-          const qualityResearch = '\n\n## Quality & Testing research — 2026-09-01\n\n| Source | Decision | Local destination |\n|---|---|---|\n| Google Testing Blog, How Much Testing is Enough? | Referenced | `skills/designing-test-strategies` + `skills/testing-web-applications-end-to-end` |\n| Google Testing Blog, Test Sizes | Referenced | `skills/testing-integration-boundaries` |\n| Google Testing Blog, Just Say No to More End-to-End Tests | Referenced | `skills/testing-web-applications-end-to-end` |\n| Microsoft Azure Well-Architected testing strategies | Referenced | `skills/designing-test-strategies` |\n| Martin Fowler, Test Pyramid + Practical Test Pyramid | Referenced | `skills/designing-test-strategies` + `skills/testing-integration-boundaries` |\n| Playwright Best Practices | Referenced | `skills/testing-web-applications-end-to-end` |\n| Martin Fowler, Self Testing Code + testing culture | Referenced | `skills/building-regression-tests` |\n| Google Testing Blog, flaky test guidance | Referenced | `skills/building-regression-tests` |\n\nQuality & Testing v1 does not mirror a test framework or mandate a runner. The local methods define verification strategy and evidence boundaries while remaining usable with the testing tools already present in a project.\n';
-          if (!mapping.includes('## Quality & Testing research — 2026-09-01')) {
-            mapping = `${mapping.trimEnd()}${qualityResearch}`;
-            fs.writeFileSync('MAPPING.md', mapping);
-          }
-          NODE
-      - name: Commit documentation
-        shell: bash
+          target="$(mktemp -d)"
+          pack_target="$(mktemp -d)"
+          ./install.sh --destination "$target"
+          ./install.sh --destination "$pack_target" --pack motion
+          test -f "$target/craft-premium-motion/SKILL.md"
+          test -f "$pack_target/craft-premium-motion/SKILL.md"
+          test ! -e "$pack_target/designing-action-combat/SKILL.md"
+      - name: Smoke test PowerShell installer
+        if: runner.os == 'Windows'
+        shell: pwsh
         run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add README.md MAPPING.md
-          git commit -m "docs: document Quality & Testing v1"
-          git push origin HEAD:${{ github.event.pull_request.head.ref }}
+          $target = Join-Path $env:RUNNER_TEMP "agent-skills-install"
+          ./install.ps1 --destination $target
+          if (-not (Test-Path (Join-Path $target "craft-premium-motion/SKILL.md"))) { exit 1 }
+          $packTarget = Join-Path $env:RUNNER_TEMP "agent-skills-motion-pack"
+          ./install.ps1 --destination $packTarget --pack motion
+          if (-not (Test-Path (Join-Path $packTarget "craft-premium-motion/SKILL.md"))) { exit 1 }
+          if (Test-Path (Join-Path $packTarget "designing-action-combat/SKILL.md")) { exit 1 }
