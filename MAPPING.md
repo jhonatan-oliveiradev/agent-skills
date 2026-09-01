@@ -7,6 +7,7 @@ Source: `MengTo/Skills` (snapshot reviewed 2026-08-20). Upstream README reports 
 Legend:
 - **Adapted** — core workflow retained conceptually and rewritten for this pack.
 - **Merged** — several narrow upstream skills are covered by one broader local skill.
+- **Referenced** — authoritative material informs the local method without being mirrored as a skill.
 - **Deferred** — useful, but should stay upstream until a project needs the exact technique.
 - **Skipped** — too voice-specific, vendor-specific, or unrelated to the current workflow.
 
@@ -21,8 +22,8 @@ publish roadmap categories without claiming members.
 | Frontend & Product (`frontend-product`) | Active | 8 frontend, product-design, and delivery skills |
 | Motion (`motion`) | Active | 5 motion and procedural-3D skills |
 | Game Development (`game-development`) | Active | 5 game-development and procedural-3D skills |
+| Backend & Data (`backend-data`) | Active | 4 relational-modeling, Node API, PostgreSQL migration, and query-profiling skills |
 | Architecture & Engineering (`architecture-engineering`) | Planned | No members until the category is implemented |
-| Backend & Data (`backend-data`) | Planned | No members until the category is implemented |
 | Quality & Testing (`quality-testing`) | Planned | No members until the category is implemented |
 
 `reconstructing-images-as-threejs` intentionally appears in both Motion and
@@ -112,6 +113,18 @@ Added as a first-class bridge between Figma and the dominant production stack in
 ### `shipping-github-vercel-changes`
 Consolidates branch, PR, verification, environment, Preview/Production, and deployment-readback practices into a reusable delivery workflow.
 
+### `designing-relational-data-models`
+Added as the domain-first relational modeling layer for entity identity, ownership, cardinality, constraints, and access-pattern-led indexing.
+
+### `building-reliable-node-api-boundaries`
+Added for Node.js trust boundaries that need explicit parsing, authentication, object/property authorization, mutation scope, retry semantics, and request observability.
+
+### `evolving-postgres-schemas-safely`
+Added for compatibility-first PostgreSQL production changes using expand, migrate, constrain, switch, and contract phases rather than destructive one-step migrations.
+
+### `profiling-postgres-query-performance`
+Added for evidence-led PostgreSQL query diagnosis using representative inputs and execution plans before changing SQL or indexes.
+
 ## Why the 81 web-design skills were not installed individually
 
 The upstream collection contains many excellent micro-techniques and art-direction presets. Keeping all of them globally installed would create poor skill discovery: several skills could trigger on the same frontend request and push the agent toward visual effects before understanding product intent. The curated pack keeps broad operating procedures global and leaves effect-specific skills as on-demand upstream references.
@@ -135,3 +148,15 @@ Uses the official GreenSock skills as the technical source for GSAP core, timeli
 ### `reconstructing-images-as-threejs`
 
 Adapts the evidence, staged reconstruction, confidence, procedural factory, and review-gate concepts from `img2threejs` without bundling or claiming execution of its Forge toolkit. It is optional and does not replace authored 3D pipelines.
+
+## Backend & Data research — 2026-09-01
+
+| Source | Decision | Local destination |
+|---|---|---|
+| PostgreSQL official documentation: constraints and indexes | Referenced | `skills/designing-relational-data-models` |
+| PostgreSQL official documentation: `ALTER TABLE`, MVCC, and `CREATE INDEX` | Referenced | `skills/evolving-postgres-schemas-safely` |
+| PostgreSQL official documentation: `EXPLAIN`, multicolumn indexes, and partial indexes | Referenced | `skills/profiling-postgres-query-performance` |
+| Node.js official `AsyncLocalStorage` documentation | Referenced | `skills/building-reliable-node-api-boundaries` |
+| OWASP API Security Top 10 — 2023 | Referenced | `skills/building-reliable-node-api-boundaries` |
+
+Backend & Data v1 does not mirror vendor documentation. The local methods combine stable operating procedures around those references and intentionally avoid requiring an ORM, hosted PostgreSQL provider, or framework-specific API layer.
