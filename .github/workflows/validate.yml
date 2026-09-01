@@ -18,6 +18,13 @@ jobs:
         with:
           node-version: 22
       - run: npm test
+      - run: npm run catalog:generate
+      - name: Upload generated catalog
+        if: runner.os == 'Linux'
+        uses: actions/upload-artifact@v4
+        with:
+          name: generated-catalog
+          path: catalog/generated/catalog.json
       - run: npm run validate
       - run: npm ci --prefix apps/web
       - run: npm run web:test
