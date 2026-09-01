@@ -16,7 +16,7 @@ describe("public roadmap", () => {
       "stable",
       "deprecated",
     ]);
-    expect(stages.map((stage) => stage.items.length)).toEqual([2, 0, 0, 0, 4, 1, 0]);
+    expect(stages.map((stage) => stage.items.length)).toEqual([1, 0, 0, 0, 4, 1, 0]);
     expect(stages.find((stage) => stage.id === "stable")?.items[0]?.meta).toContain("18");
     expect(stages.find((stage) => stage.id === "beta")?.items[0]?.meta).toBe(
       "1.0.0-beta.1",
