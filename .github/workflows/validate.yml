@@ -5,6 +5,9 @@ on:
     branches: [main, dev]
   pull_request:
 
+permissions:
+  contents: write
+
 jobs:
   validate:
     strategy:
@@ -14,9 +17,28 @@ jobs:
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.ref }}
       - uses: actions/setup-node@v4
         with:
           node-version: 22
+      - name: Regenerate catalog snapshots
+        shell: bash
+        run: |
+          npm run catalog:generate
+          node apps/web/scripts/sync-catalog.mjs
+      - name: Commit catalog snapshots
+        if: runner.os == 'Linux'
+        shell: bash
+        run: |
+          if git diff --quiet -- catalog/generated/catalog.json apps/web/src/generated/catalog.json; then
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add catalog/generated/catalog.json apps/web/src/generated/catalog.json
+          git commit -m "chore: regenerate architecture catalog"
+          git push origin HEAD:${{ github.event.pull_request.head.ref }}
       - run: npm test
       - run: npm run validate
       - run: npm ci --prefix apps/web
