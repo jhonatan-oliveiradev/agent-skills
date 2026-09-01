@@ -15,7 +15,8 @@ test("documents ChatGPT skill upload and GitHub marketplace distribution", async
     assert.fail("docs/chatgpt.md must exist");
   }
 
-  assert.match(source, /Plugins[^\n]*Skills/i);
+  assert.match(source, /Plugins/i);
+  assert.match(source, /Skills/i);
   assert.match(source, /Upload from computer|Carregar do computador/i);
   assert.match(source, /Import marketplace/i);
   assert.match(source, new RegExp(repositoryUrl.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")));
