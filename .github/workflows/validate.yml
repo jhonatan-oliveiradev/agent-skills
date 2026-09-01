@@ -5,9 +5,6 @@ on:
     branches: [main, dev]
   pull_request:
 
-permissions:
-  contents: write
-
 jobs:
   validate:
     strategy:
@@ -17,38 +14,9 @@ jobs:
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v4
-        with:
-          ref: ${{ github.event.pull_request.head.ref }}
       - uses: actions/setup-node@v4
         with:
           node-version: 22
-      - name: Materialize architecture category validator
-        shell: bash
-        run: |
-          node <<'NODE'
-          const fs = require('node:fs');
-          const file = 'scripts/validate-catalog.mjs';
-          const before = '"game-development", "backend-data", "delivery", "meta"';
-          const after = '"game-development", "backend-data", "architecture-engineering", "delivery", "meta"';
-          let source = fs.readFileSync(file, 'utf8');
-          if (!source.includes(after)) {
-            if (!source.includes(before)) throw new Error('Expected validator category sequence not found');
-            source = source.replace(before, after);
-            fs.writeFileSync(file, source);
-          }
-          NODE
-      - name: Commit materialized validator
-        if: runner.os == 'Linux'
-        shell: bash
-        run: |
-          if git diff --quiet -- scripts/validate-catalog.mjs; then
-            exit 0
-          fi
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add scripts/validate-catalog.mjs
-          git commit -m "feat: allow architecture-engineering catalog category"
-          git push origin HEAD:${{ github.event.pull_request.head.ref }}
       - run: npm test
       - run: npm run validate
       - run: npm ci --prefix apps/web
