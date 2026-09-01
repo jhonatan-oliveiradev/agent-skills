@@ -6,9 +6,10 @@
     "en",
     "pt-BR"
   ],
-  "sourceDigest": "e85cd7f17873e959226e59850febbfa93fe34939f2140dbc1b9ee842ba5dee05",
+  "sourceDigest": "45cac9bee8fe3558806e334df74da02571d136b1dbf3efda8878c448375c9fee",
   "filters": {
     "categories": [
+      "application-security",
       "architecture-engineering",
       "backend-data",
       "delivery",
@@ -20,6 +21,7 @@
       "quality-testing"
     ],
     "packs": [
+      "application-security",
       "architecture-engineering",
       "backend-data",
       "frontend-product",
@@ -28,6 +30,8 @@
       "quality-testing"
     ],
     "tags": [
+      "abuse-cases",
+      "access-control",
       "accessibility",
       "action-combat",
       "adr",
@@ -36,8 +40,10 @@
       "animation-performance",
       "animation-pipeline",
       "api-design",
+      "api-security",
       "architecture",
       "asset-pipeline",
+      "authentication",
       "authorization",
       "backfills",
       "blast-radius",
@@ -56,6 +62,7 @@
       "debugging",
       "decision-making",
       "decision-records",
+      "dependencies",
       "design-systems",
       "design-tokens",
       "developer-tooling",
@@ -88,6 +95,7 @@
       "nextjs",
       "nodejs",
       "observability",
+      "owasp",
       "ownership",
       "performance",
       "playtesting",
@@ -97,6 +105,7 @@
       "product-marketing",
       "profiling",
       "project-scaffolding",
+      "provenance",
       "quality",
       "quality-attributes",
       "query-performance",
@@ -115,11 +124,16 @@
       "schema-evolution",
       "scroll-animation",
       "scrolltrigger",
+      "security",
+      "sessions",
       "sprite-animation",
+      "ssrf",
+      "supply-chain",
       "tailwind-css",
       "tdd",
       "test-strategy",
       "testing",
+      "threat-modeling",
       "threejs",
       "topology",
       "tradeoffs",
@@ -132,8 +146,10 @@
       "visual-audit",
       "visual-consistency",
       "visual-fidelity",
+      "vulnerabilities",
       "web",
       "web-motion",
+      "web-security",
       "webgl",
       "workflow-design",
       "zero-downtime"
@@ -170,13 +186,14 @@
     ]
   },
   "counts": {
-    "skills": 30,
+    "skills": 34,
     "packs": {
-      "total": 6,
-      "active": 6,
+      "total": 7,
+      "active": 7,
       "planned": 0
     },
     "categories": {
+      "application-security": 4,
       "architecture-engineering": 4,
       "backend-data": 4,
       "delivery": 1,
@@ -188,14 +205,15 @@
       "quality-testing": 4
     },
     "maturity": {
-      "beta": 12,
+      "beta": 16,
       "stable": 18
     },
     "difficulty": {
-      "advanced": 19,
-      "intermediate": 11
+      "advanced": 22,
+      "intermediate": 12
     },
     "activePackMembership": {
+      "application-security": 4,
       "architecture-engineering": 4,
       "backend-data": 4,
       "frontend-product": 8,
@@ -205,6 +223,77 @@
     }
   },
   "skills": [
+    {
+      "$schema": "../schemas/skill.schema.json",
+      "slug": "auditing-dependency-risk",
+      "category": "application-security",
+      "packs": [
+        "application-security"
+      ],
+      "maturity": "beta",
+      "difficulty": "intermediate",
+      "featured": false,
+      "compatibility": {
+        "surfaces": [
+          "chatgpt",
+          "codex"
+        ],
+        "operatingSystems": [
+          "linux",
+          "macos",
+          "windows"
+        ],
+        "installModes": [
+          "plugin",
+          "filesystem"
+        ]
+      },
+      "tags": [
+        "security",
+        "dependencies",
+        "supply-chain",
+        "vulnerabilities",
+        "provenance"
+      ],
+      "dependencies": [],
+      "relatedSkills": [
+        "threat-modeling-applications",
+        "reviewing-web-security",
+        "building-regression-tests"
+      ],
+      "version": "1.0.0-beta.1",
+      "updatedAt": "2026-09-01",
+      "locales": {
+        "en": {
+          "displayName": "Auditing Dependency Risk",
+          "summary": "Assesses installed third-party and software-supply-chain risk from lockfiles, advisories, runtime reachability, provenance, integrity controls, and remediation options.",
+          "primaryBenefit": "Separates actionable dependency risk from noisy advisory counts and avoids unsafe broad upgrades without application context.",
+          "whenToUse": "Use when a project needs software-supply-chain or third-party dependency risk assessed from manifests, lockfiles, advisories, provenance, maintenance signals, and realistic runtime exposure before upgrades or release.",
+          "whenNotToUse": "Do not use when the task is purely an application-code vulnerability review with no dependency or build-chain question.",
+          "useCases": [
+            "Triage npm audit or equivalent findings before a production release",
+            "Review whether the project's lockfile, registry, install, and provenance practices reduce supply-chain risk"
+          ],
+          "examplePrompts": [
+            "Use auditing-dependency-risk to triage this project's dependency advisories by actual reachability and supply-chain exposure, then recommend the smallest safe remediation."
+          ]
+        },
+        "pt-BR": {
+          "displayName": "Auditoria de Risco de Dependências",
+          "summary": "Avalia risco de terceiros e da cadeia de suprimentos a partir de lockfiles, advisories, alcançabilidade em runtime, proveniência, controles de integridade e opções de remediação.",
+          "primaryBenefit": "Separa risco acionável de dependências de contagens ruidosas de advisories e evita upgrades amplos e inseguros sem contexto da aplicação.",
+          "whenToUse": "Use quando um projeto precisa avaliar risco da cadeia de suprimentos de software ou de dependências de terceiros a partir de manifests, lockfiles, advisories, proveniência, sinais de manutenção e exposição real em runtime antes de upgrades ou release.",
+          "whenNotToUse": "Não use quando a tarefa é puramente uma revisão de vulnerabilidades no código da aplicação sem questão de dependências ou cadeia de build.",
+          "useCases": [
+            "Triar achados do npm audit ou equivalente antes de um release de produção",
+            "Revisar se lockfile, registry, instalação e práticas de proveniência do projeto reduzem risco de supply chain"
+          ],
+          "examplePrompts": [
+            "Use auditing-dependency-risk para triar os advisories deste projeto por alcançabilidade real e exposição de supply chain e recomendar a menor remediação segura."
+          ]
+        }
+      }
+    },
     {
       "$schema": "../schemas/skill.schema.json",
       "slug": "auditing-pixel-perfect-frontend",
@@ -1904,6 +1993,148 @@
     },
     {
       "$schema": "../schemas/skill.schema.json",
+      "slug": "reviewing-api-security",
+      "category": "application-security",
+      "packs": [
+        "application-security"
+      ],
+      "maturity": "beta",
+      "difficulty": "advanced",
+      "featured": false,
+      "compatibility": {
+        "surfaces": [
+          "chatgpt",
+          "codex"
+        ],
+        "operatingSystems": [
+          "linux",
+          "macos",
+          "windows"
+        ],
+        "installModes": [
+          "plugin",
+          "filesystem"
+        ]
+      },
+      "tags": [
+        "security",
+        "api-security",
+        "authorization",
+        "authentication",
+        "ssrf"
+      ],
+      "dependencies": [],
+      "relatedSkills": [
+        "threat-modeling-applications",
+        "reviewing-web-security",
+        "building-reliable-node-api-boundaries"
+      ],
+      "version": "1.0.0-beta.1",
+      "updatedAt": "2026-09-01",
+      "locales": {
+        "en": {
+          "displayName": "Reviewing API Security",
+          "summary": "Reviews API identity, object/function/property authorization, resource and business-flow abuse, SSRF, configuration, inventory, and third-party consumption.",
+          "primaryBenefit": "Finds API-specific security failures that generic web review often misses, especially authorization and business-invariant violations.",
+          "whenToUse": "Use when an authorized API or backend boundary needs security review for authentication, object/function/property authorization, resource abuse, business-flow abuse, SSRF, configuration, inventory, and third-party consumption.",
+          "whenNotToUse": "Do not use to probe APIs outside the user's authorized scope or when the work is limited to general web-browser controls with no API boundary involved.",
+          "useCases": [
+            "Review a multi-tenant API for object and function authorization gaps",
+            "Assess a webhook or third-party API integration for SSRF and unsafe upstream-data handling"
+          ],
+          "examplePrompts": [
+            "Use reviewing-api-security to audit this authorized API's identity, authorization, business-flow, resource, SSRF, and inventory risks with controlled evidence."
+          ]
+        },
+        "pt-BR": {
+          "displayName": "Revisão de Segurança de APIs",
+          "summary": "Revisa identidade, autorização por objeto/função/propriedade, abuso de recursos e fluxos de negócio, SSRF, configuração, inventário e consumo de terceiros em APIs.",
+          "primaryBenefit": "Encontra falhas específicas de APIs que uma revisão web genérica costuma perder, especialmente violações de autorização e invariantes de negócio.",
+          "whenToUse": "Use quando uma API autorizada ou limite de backend precisa de revisão de autenticação, autorização por objeto/função/propriedade, abuso de recursos, abuso de fluxos de negócio, SSRF, configuração, inventário e consumo de terceiros.",
+          "whenNotToUse": "Não use para sondar APIs fora do escopo autorizado pelo usuário nem quando o trabalho se limita a controles gerais do navegador sem um limite de API envolvido.",
+          "useCases": [
+            "Revisar uma API multi-tenant em busca de lacunas de autorização por objeto e função",
+            "Avaliar uma integração de webhook ou API de terceiros para SSRF e tratamento inseguro de dados externos"
+          ],
+          "examplePrompts": [
+            "Use reviewing-api-security para auditar os riscos de identidade, autorização, fluxo de negócio, recursos, SSRF e inventário desta API autorizada com evidência controlada."
+          ]
+        }
+      }
+    },
+    {
+      "$schema": "../schemas/skill.schema.json",
+      "slug": "reviewing-web-security",
+      "category": "application-security",
+      "packs": [
+        "application-security"
+      ],
+      "maturity": "beta",
+      "difficulty": "advanced",
+      "featured": false,
+      "compatibility": {
+        "surfaces": [
+          "chatgpt",
+          "codex"
+        ],
+        "operatingSystems": [
+          "linux",
+          "macos",
+          "windows"
+        ],
+        "installModes": [
+          "plugin",
+          "filesystem"
+        ]
+      },
+      "tags": [
+        "security",
+        "web-security",
+        "access-control",
+        "sessions",
+        "owasp"
+      ],
+      "dependencies": [],
+      "relatedSkills": [
+        "threat-modeling-applications",
+        "reviewing-api-security",
+        "building-regression-tests"
+      ],
+      "version": "1.0.0-beta.1",
+      "updatedAt": "2026-09-01",
+      "locales": {
+        "en": {
+          "displayName": "Reviewing Web Security",
+          "summary": "Reviews an authorized web application across access control, sessions, input/output boundaries, browser controls, deployment configuration, cryptography, and security telemetry.",
+          "primaryBenefit": "Turns broad web-security checklists and scanner output into scoped, reproducible findings tied to actual application controls.",
+          "whenToUse": "Use when an authorized web application needs a structured security review across access control, sessions, browser-facing controls, input handling, configuration, cryptography, errors, and observability.",
+          "whenNotToUse": "Do not use to probe systems outside the user's authorized scope or when the task is only an API-specific authorization review.",
+          "useCases": [
+            "Review a web application before a production release",
+            "Validate whether a scanner finding is reachable and materially relevant in the application"
+          ],
+          "examplePrompts": [
+            "Use reviewing-web-security to inspect this authorized web app, prioritize material findings, and give me reproducible evidence plus remediation verification steps."
+          ]
+        },
+        "pt-BR": {
+          "displayName": "Revisão de Segurança Web",
+          "summary": "Revisa uma aplicação web autorizada em controle de acesso, sessões, limites de entrada/saída, controles do navegador, configuração de deploy, criptografia e telemetria de segurança.",
+          "primaryBenefit": "Transforma checklists amplos e resultados de scanners em achados reproduzíveis e contextualizados nos controles reais da aplicação.",
+          "whenToUse": "Use quando uma aplicação web autorizada precisa de uma revisão estruturada de controle de acesso, sessões, controles voltados ao navegador, tratamento de entrada, configuração, criptografia, erros e observabilidade.",
+          "whenNotToUse": "Não use para sondar sistemas fora do escopo autorizado pelo usuário nem quando a tarefa é apenas uma revisão específica de autorização de API.",
+          "useCases": [
+            "Revisar uma aplicação web antes de um release de produção",
+            "Validar se um achado de scanner é alcançável e materialmente relevante na aplicação"
+          ],
+          "examplePrompts": [
+            "Use reviewing-web-security para revisar esta aplicação web autorizada, priorizar achados materiais e trazer evidência reproduzível com passos de verificação da correção."
+          ]
+        }
+      }
+    },
+    {
+      "$schema": "../schemas/skill.schema.json",
       "slug": "shipping-github-vercel-changes",
       "category": "delivery",
       "packs": [
@@ -2195,6 +2426,77 @@
     },
     {
       "$schema": "../schemas/skill.schema.json",
+      "slug": "threat-modeling-applications",
+      "category": "application-security",
+      "packs": [
+        "application-security"
+      ],
+      "maturity": "beta",
+      "difficulty": "advanced",
+      "featured": false,
+      "compatibility": {
+        "surfaces": [
+          "chatgpt",
+          "codex"
+        ],
+        "operatingSystems": [
+          "linux",
+          "macos",
+          "windows"
+        ],
+        "installModes": [
+          "plugin",
+          "filesystem"
+        ]
+      },
+      "tags": [
+        "security",
+        "threat-modeling",
+        "risk",
+        "architecture",
+        "abuse-cases"
+      ],
+      "dependencies": [],
+      "relatedSkills": [
+        "reviewing-web-security",
+        "reviewing-api-security",
+        "designing-software-boundaries"
+      ],
+      "version": "1.0.0-beta.1",
+      "updatedAt": "2026-09-01",
+      "locales": {
+        "en": {
+          "displayName": "Threat Modeling Applications",
+          "summary": "Maps assets, actors, entry points, trust boundaries, and abuse cases into prioritized security controls and verification evidence.",
+          "primaryBenefit": "Finds design-level security risk before it becomes an implementation defect or production incident.",
+          "whenToUse": "Use when a feature, service, or application needs security risks identified from its architecture, assets, trust boundaries, and abuse cases before implementation or release.",
+          "whenNotToUse": "Do not use as a substitute for a focused code-level review when the threat model and security requirements are already established.",
+          "useCases": [
+            "Threat-model a new authenticated workflow before implementation",
+            "Revisit security assumptions after a new integration or trust boundary is introduced"
+          ],
+          "examplePrompts": [
+            "Use threat-modeling-applications to map this architecture's assets, trust boundaries, abuse cases, controls, and verification evidence before we ship it."
+          ]
+        },
+        "pt-BR": {
+          "displayName": "Modelagem de Ameaças de Aplicações",
+          "summary": "Mapeia ativos, atores, pontos de entrada, limites de confiança e casos de abuso em controles de segurança priorizados e evidências de verificação.",
+          "primaryBenefit": "Encontra riscos de segurança no nível de design antes que virem defeitos de implementação ou incidentes em produção.",
+          "whenToUse": "Use quando uma feature, serviço ou aplicação precisa ter riscos de segurança identificados a partir da arquitetura, ativos, limites de confiança e casos de abuso antes da implementação ou release.",
+          "whenNotToUse": "Não use como substituto de uma revisão focada de código quando o modelo de ameaças e os requisitos de segurança já estão estabelecidos.",
+          "useCases": [
+            "Modelar ameaças de um novo fluxo autenticado antes da implementação",
+            "Revisitar suposições de segurança após a inclusão de uma nova integração ou limite de confiança"
+          ],
+          "examplePrompts": [
+            "Use threat-modeling-applications para mapear ativos, limites de confiança, casos de abuso, controles e evidências de verificação desta arquitetura antes do release."
+          ]
+        }
+      }
+    },
+    {
+      "$schema": "../schemas/skill.schema.json",
       "slug": "translating-figma-to-nextjs",
       "category": "frontend",
       "packs": [
@@ -2335,6 +2637,93 @@
     }
   ],
   "packs": [
+    {
+      "slug": "application-security",
+      "status": "active",
+      "featured": false,
+      "color": "amber",
+      "version": "1.0.0-beta.1",
+      "locales": {
+        "en": {
+          "name": "Application Security",
+          "summary": "Threat modeling, web and API security review, and dependency-risk analysis for teams that need security evidence before release.",
+          "description": "An installable application-security workflow for finding design threats early, reviewing web and API trust boundaries, and evaluating software-supply-chain risk without turning one scanner or checklist into the security strategy.",
+          "outcomes": [
+            "Turn application architecture and attack surface into prioritized security risks, controls, and verification evidence",
+            "Review web, API, and dependency risk with explicit scope, reproducible findings, remediation guidance, and residual-risk tracking"
+          ]
+        },
+        "pt-BR": {
+          "name": "Segurança de Aplicações",
+          "summary": "Modelagem de ameaças, revisão de segurança web e de APIs e análise de risco de dependências para equipes que precisam de evidências de segurança antes do release.",
+          "description": "Um fluxo instalável de segurança de aplicações para encontrar ameaças de design cedo, revisar limites de confiança web e de APIs e avaliar risco da cadeia de suprimentos de software sem transformar um scanner ou checklist na estratégia de segurança.",
+          "outcomes": [
+            "Transformar arquitetura e superfície de ataque em riscos de segurança priorizados, controles e evidências de verificação",
+            "Revisar riscos web, de APIs e dependências com escopo explícito, achados reproduzíveis, orientação de remediação e acompanhamento do risco residual"
+          ]
+        }
+      },
+      "skillSlugs": [
+        "threat-modeling-applications",
+        "reviewing-web-security",
+        "reviewing-api-security",
+        "auditing-dependency-risk"
+      ],
+      "skills": [
+        {
+          "slug": "threat-modeling-applications",
+          "displayName": {
+            "en": "Threat Modeling Applications",
+            "pt-BR": "Modelagem de Ameaças de Aplicações"
+          },
+          "summary": {
+            "en": "Maps assets, actors, entry points, trust boundaries, and abuse cases into prioritized security controls and verification evidence.",
+            "pt-BR": "Mapeia ativos, atores, pontos de entrada, limites de confiança e casos de abuso em controles de segurança priorizados e evidências de verificação."
+          },
+          "difficulty": "advanced",
+          "maturity": "beta"
+        },
+        {
+          "slug": "reviewing-web-security",
+          "displayName": {
+            "en": "Reviewing Web Security",
+            "pt-BR": "Revisão de Segurança Web"
+          },
+          "summary": {
+            "en": "Reviews an authorized web application across access control, sessions, input/output boundaries, browser controls, deployment configuration, cryptography, and security telemetry.",
+            "pt-BR": "Revisa uma aplicação web autorizada em controle de acesso, sessões, limites de entrada/saída, controles do navegador, configuração de deploy, criptografia e telemetria de segurança."
+          },
+          "difficulty": "advanced",
+          "maturity": "beta"
+        },
+        {
+          "slug": "reviewing-api-security",
+          "displayName": {
+            "en": "Reviewing API Security",
+            "pt-BR": "Revisão de Segurança de APIs"
+          },
+          "summary": {
+            "en": "Reviews API identity, object/function/property authorization, resource and business-flow abuse, SSRF, configuration, inventory, and third-party consumption.",
+            "pt-BR": "Revisa identidade, autorização por objeto/função/propriedade, abuso de recursos e fluxos de negócio, SSRF, configuração, inventário e consumo de terceiros em APIs."
+          },
+          "difficulty": "advanced",
+          "maturity": "beta"
+        },
+        {
+          "slug": "auditing-dependency-risk",
+          "displayName": {
+            "en": "Auditing Dependency Risk",
+            "pt-BR": "Auditoria de Risco de Dependências"
+          },
+          "summary": {
+            "en": "Assesses installed third-party and software-supply-chain risk from lockfiles, advisories, runtime reachability, provenance, integrity controls, and remediation options.",
+            "pt-BR": "Avalia risco de terceiros e da cadeia de suprimentos a partir de lockfiles, advisories, alcançabilidade em runtime, proveniência, controles de integridade e opções de remediação."
+          },
+          "difficulty": "intermediate",
+          "maturity": "beta"
+        }
+      ]
+    },
     {
       "slug": "architecture-engineering",
       "status": "active",
