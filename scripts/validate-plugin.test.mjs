@@ -9,7 +9,7 @@ import { validatePlugin } from "./validate-plugin.mjs";
 
 const repositoryRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 
-async function pluginFixture({ skills = "./skills/", version = true } = {}) {
+async function pluginFixture({ skills = "./skills/", version = true, mcp = false } = {}) {
   const root = await mkdtemp(path.join(tmpdir(), "agent-skills-plugin-"));
   await mkdir(path.join(root, ".codex-plugin"), { recursive: true });
   await mkdir(path.join(root, ".agents", "plugins"), { recursive: true });
@@ -30,6 +30,7 @@ async function pluginFixture({ skills = "./skills/", version = true } = {}) {
       policy: { installation: "AVAILABLE", authentication: "NOT_REQUIRED" },
     }],
   }));
+  if (mcp) await writeFile(path.join(root, "mcp.json"), JSON.stringify({ mcpServers: {} }));
   return root;
 }
 
@@ -81,4 +82,11 @@ test("reports a missing VERSION file as a structured validation error", async ()
 
   const errors = await validatePlugin(root);
   assert.equal(errors.some((error) => error.includes("VERSION") && error.includes("unreadable")), true);
+});
+
+test("rejects MCP declarations that would make the imported plugin desktop-only", async () => {
+  const root = await pluginFixture({ mcp: true });
+
+  const errors = await validatePlugin(root);
+  assert.equal(errors.some((error) => error.includes("MCP") && error.includes("ChatGPT web")), true);
 });

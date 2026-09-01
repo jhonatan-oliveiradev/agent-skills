@@ -7,6 +7,13 @@ interface FieldManualCopy {
   readonly editionLabel: string;
   readonly indexLabel: string;
   readonly claudeCodeLabel: string;
+  readonly chatgptLabel: string;
+  readonly chatgptSummary: string;
+  readonly chatgptSkillUploadLabel: string;
+  readonly chatgptSkillUploadPath: string;
+  readonly chatgptMarketplaceLabel: string;
+  readonly chatgptMarketplacePath: string;
+  readonly chatgptAvailability: string;
   readonly installationSuccessSuffix: string;
   readonly metrics: readonly {
     readonly label: string;
@@ -37,6 +44,15 @@ export const fieldManualCopy = {
     editionLabel: "01 / INITIAL SETUP",
     indexLabel: "Manual index",
     claudeCodeLabel: "Claude Code · personal",
+    chatgptLabel: "ChatGPT · plugin marketplace",
+    chatgptSummary:
+      "Upload one Skill in ChatGPT or import the complete skills-only plugin from GitHub in an eligible workspace.",
+    chatgptSkillUploadLabel: "One Skill",
+    chatgptSkillUploadPath: "Plugins → Skills → Create → Upload from computer",
+    chatgptMarketplaceLabel: "Complete collection",
+    chatgptMarketplacePath: "Workspace settings → Plugins → Add → Import marketplace",
+    chatgptAvailability:
+      "Availability depends on plan, workspace settings, role, region, and surface.",
     installationSuccessSuffix: "skills ready to use.",
     metrics: [
       { label: "STAGES", value: "05 stages" },
@@ -56,6 +72,15 @@ export const fieldManualCopy = {
     editionLabel: "01 / CONFIGURAÇÃO INICIAL",
     indexLabel: "Índice do manual",
     claudeCodeLabel: "Claude Code · pessoal",
+    chatgptLabel: "ChatGPT · marketplace de plugins",
+    chatgptSummary:
+      "Carregue uma Skill no ChatGPT ou importe o plugin completo, somente de skills, pelo GitHub em um workspace elegível.",
+    chatgptSkillUploadLabel: "Uma Skill",
+    chatgptSkillUploadPath: "Plugins → Habilidades → Criar → Carregar do computador",
+    chatgptMarketplaceLabel: "Coleção completa",
+    chatgptMarketplacePath: "Configurações do workspace → Plugins → Adicionar → Importar marketplace",
+    chatgptAvailability:
+      "A disponibilidade depende do plano, configurações do workspace, função, região e superfície.",
     installationSuccessSuffix: "skills prontas para usar.",
     metrics: [
       { label: "ETAPAS", value: "05 etapas" },

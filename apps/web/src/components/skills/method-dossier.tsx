@@ -26,6 +26,11 @@ interface RelationsCopy {
   readonly inspectReport: string;
 }
 
+const surfaceLabels: Readonly<Record<string, string>> = {
+  chatgpt: "ChatGPT",
+  codex: "Codex",
+};
+
 export function MethodDossier({
   skill,
   index,
@@ -197,7 +202,7 @@ export function MethodDossier({
           <dl className="method-dossier__technical-list">
             <div>
               <dt>{detail.surfaces}</dt>
-              <dd>{skill.compatibility.surfaces.join(", ")}</dd>
+              <dd>{formatSurfaceNames(skill.compatibility.surfaces)}</dd>
             </div>
             <div>
               <dt>{detail.operatingSystems}</dt>
@@ -317,4 +322,8 @@ export function MethodDossier({
       </footer>
     </article>
   );
+}
+
+function formatSurfaceNames(surfaces: readonly string[]) {
+  return surfaces.map((surface) => surfaceLabels[surface] ?? surface).join(" · ");
 }

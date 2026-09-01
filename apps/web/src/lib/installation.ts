@@ -17,3 +17,7 @@ export const installationCommands = {
     powershell: 'Get-ChildItem "$HOME\\.agents\\skills"',
   },
 } as const;
+
+export const chatgptDistribution = {
+  repositoryUrl: "https://github.com/jhonatan-oliveiradev/agent-skills",
+} as const;

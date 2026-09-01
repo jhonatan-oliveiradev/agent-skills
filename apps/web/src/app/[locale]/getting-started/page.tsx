@@ -5,7 +5,7 @@ import { resolveLocale } from "@/components/foundation-route";
 import { InstallationTerminal } from "@/components/installation-terminal";
 import { getCatalog } from "@/lib/catalog";
 import { fieldManualCopy } from "@/lib/editorial-secondary-copy";
-import { installationCommands } from "@/lib/installation";
+import { chatgptDistribution, installationCommands } from "@/lib/installation";
 import { messages } from "@/lib/messages";
 
 type PageProps = Readonly<{ params: Promise<{ locale: string }> }>;
@@ -139,6 +139,26 @@ export default async function GettingStartedPage({ params }: PageProps) {
           title={manual.claudeCodeLabel}
           commands={installationCommands.claudeCode}
         />
+        <article className="installation-command-row" data-chatgpt-distribution>
+          <div className="installation-command-row__label">
+            <h3>{manual.chatgptLabel}</h3>
+            <p>{manual.chatgptSummary}</p>
+            <p>{manual.chatgptAvailability}</p>
+          </div>
+          <div className="command-entry">
+            <p>{manual.chatgptSkillUploadLabel}</p>
+            <code>{manual.chatgptSkillUploadPath}</code>
+          </div>
+          <div className="command-entry">
+            <p>{manual.chatgptMarketplaceLabel}</p>
+            <code>{manual.chatgptMarketplacePath}</code>
+            <CopyCommand
+              command={chatgptDistribution.repositoryUrl}
+              label={copy.copy}
+              copiedLabel={copy.copied}
+            />
+          </div>
+        </article>
       </section>
 
       <section
