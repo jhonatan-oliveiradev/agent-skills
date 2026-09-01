@@ -25,6 +25,23 @@ describe("System Blueprint", () => {
     expect(screen.getByText("./install.sh --pack frontend-product")).toBeInTheDocument();
   });
 
+  it("renders Backend & Data as a real four-method installable system", async () => {
+    const { container } = render(
+      await PackDetailPage({
+        params: Promise.resolve({ locale: "en", slug: "backend-data" }),
+      }),
+    );
+
+    expect(container.querySelector('[data-pack-state="active"]')).toBeInTheDocument();
+    expect(container.querySelectorAll("[data-pack-method]")).toHaveLength(4);
+    expect(screen.getByRole("heading", { name: "Install this pack" })).toBeInTheDocument();
+    expect(screen.getByText("./install.sh --pack backend-data")).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: "Designing Relational Data Models" })).toHaveAttribute(
+      "href",
+      "/en/skills/designing-relational-data-models",
+    );
+  });
+
   it("connects a pack to reports using methods from the system without claiming pack usage", async () => {
     const { container } = render(
       await PackDetailPage({
@@ -45,7 +62,7 @@ describe("System Blueprint", () => {
   it("keeps planned packs honest and never renders fake installation controls", async () => {
     const { container } = render(
       await PackDetailPage({
-        params: Promise.resolve({ locale: "en", slug: "backend-data" }),
+        params: Promise.resolve({ locale: "en", slug: "quality-testing" }),
       }),
     );
 
