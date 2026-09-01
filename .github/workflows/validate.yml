@@ -22,21 +22,19 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 22
-      - name: Regenerate catalog snapshots
+      - name: Regenerate catalog snapshot
         shell: bash
-        run: |
-          npm run catalog:generate
-          node apps/web/scripts/sync-catalog.mjs
-      - name: Commit catalog snapshots
+        run: npm run catalog:generate
+      - name: Commit catalog snapshot
         if: runner.os == 'Linux'
         shell: bash
         run: |
-          if git diff --quiet -- catalog/generated/catalog.json apps/web/src/generated/catalog.json; then
+          if git diff --quiet -- catalog/generated/catalog.json; then
             exit 0
           fi
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add catalog/generated/catalog.json apps/web/src/generated/catalog.json
+          git add catalog/generated/catalog.json
           git commit -m "chore: regenerate architecture catalog"
           git push origin HEAD:${{ github.event.pull_request.head.ref }}
       - run: npm test
