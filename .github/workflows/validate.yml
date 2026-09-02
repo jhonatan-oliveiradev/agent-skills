@@ -1,38 +1,50 @@
-name: Materialize brand-design validator
+name: Validate skills
 
 on:
+  push:
+    branches: [main, dev]
   pull_request:
 
-permissions:
-  contents: write
-
 jobs:
-  materialize:
-    if: github.actor != 'github-actions[bot]'
-    runs-on: ubuntu-latest
+  validate:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v4
-        with:
-          ref: ${{ github.event.pull_request.head.ref }}
-          fetch-depth: 0
       - uses: actions/setup-node@v4
         with:
           node-version: 22
-      - name: Add brand-design to validator allowlist
+      - run: npm test
+      - run: npm run validate
+      - run: npm ci --prefix apps/web
+      - run: npm run web:test
+      - run: npm run web:typecheck
+      - run: npm run web:lint
+      - run: npm run web:build
+        env:
+          NEXT_PUBLIC_SITE_URL: https://skills.jhonatanoliveira.com
+      - name: Smoke test Bash installer
+        if: runner.os == 'Linux'
+        shell: bash
         run: |
-          node --input-type=module <<'NODE'
-          import { readFile, writeFile } from 'node:fs/promises';
-          const file = 'scripts/validate-catalog.mjs';
-          const source = await readFile(file, 'utf8');
-          const before = '"engineering-workflow", "delivery", "meta"';
-          const after = '"engineering-workflow", "brand-design", "delivery", "meta"';
-          if (!source.includes(before)) throw new Error('validator category anchor not found');
-          await writeFile(file, source.replace(before, after));
-          NODE
-      - name: Commit materialized validator change
+          target="$(mktemp -d)"
+          pack_target="$(mktemp -d)"
+          ./install.sh --destination "$target"
+          ./install.sh --destination "$pack_target" --pack motion
+          test -f "$target/craft-premium-motion/SKILL.md"
+          test -f "$pack_target/craft-premium-motion/SKILL.md"
+          test ! -e "$pack_target/designing-action-combat/SKILL.md"
+      - name: Smoke test PowerShell installer
+        if: runner.os == 'Windows'
+        shell: pwsh
         run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add scripts/validate-catalog.mjs
-          git commit -m "feat: register brand-design catalog category"
-          git push origin HEAD:${{ github.event.pull_request.head.ref }}
+          $target = Join-Path $env:RUNNER_TEMP "agent-skills-install"
+          ./install.ps1 --destination $target
+          if (-not (Test-Path (Join-Path $target "craft-premium-motion/SKILL.md"))) { exit 1 }
+          $packTarget = Join-Path $env:RUNNER_TEMP "agent-skills-motion-pack"
+          ./install.ps1 --destination $packTarget --pack motion
+          if (-not (Test-Path (Join-Path $packTarget "craft-premium-motion/SKILL.md"))) { exit 1 }
+          if (Test-Path (Join-Path $packTarget "designing-action-combat/SKILL.md")) { exit 1 }
