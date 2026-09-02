@@ -115,6 +115,24 @@ describe("System Blueprint", () => {
     ).toHaveAttribute("href", "/en/skills/planning-engineering-work");
   });
 
+  it("renders Design & Brand as a real five-method installable system", async () => {
+    const { container } = render(
+      await PackDetailPage({
+        params: Promise.resolve({ locale: "en", slug: "design-brand" }),
+      }),
+    );
+
+    expect(container.querySelector('[data-pack-state="active"]')).toBeInTheDocument();
+    const composition = container.querySelector<HTMLElement>("[data-pack-composition-map]");
+    expect(composition).toBeInTheDocument();
+    expect(within(composition!).getAllByRole("link")).toHaveLength(5);
+    expect(screen.getByRole("heading", { name: "Install this pack" })).toBeInTheDocument();
+    expect(screen.getByText("./install.sh --pack design-brand")).toBeInTheDocument();
+    expect(
+      within(composition!).getByRole("link", { name: /Defining Brand Strategy$/ }),
+    ).toHaveAttribute("href", "/en/skills/defining-brand-strategy");
+  });
+
   it("connects a pack to reports using methods from the system without claiming pack usage", async () => {
     const { container } = render(
       await PackDetailPage({

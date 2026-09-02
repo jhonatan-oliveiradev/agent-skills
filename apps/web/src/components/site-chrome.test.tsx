@@ -40,8 +40,8 @@ describe("editorial site chrome", () => {
     expect(dialog).toHaveAttribute("data-navigation-mode", "studio-index");
     expect(dialog).toHaveAttribute("data-viewport-contract", "desktop-100dvh");
     expect(container.querySelector('[data-navigation-transition="header-reveal"]')).toBeInTheDocument();
-    expect(within(dialog).getByText("39 SKILLS")).toBeInTheDocument();
-    expect(within(dialog).getByText("8 PACKS")).toBeInTheDocument();
+    expect(within(dialog).getByText("44 SKILLS")).toBeInTheDocument();
+    expect(within(dialog).getByText("9 PACKS")).toBeInTheDocument();
     expect(within(dialog).getByText("1.0.0-beta.1")).toBeInTheDocument();
     expect(dialog.querySelectorAll(".primary-navigation__mobile-context")).toHaveLength(6);
 
@@ -72,7 +72,7 @@ describe("editorial site chrome", () => {
 
     const collection = footer?.querySelector<HTMLElement>(".site-footer__collection");
     expect(collection).toBeInTheDocument();
-    expect(within(collection!).getByText(/39 skills/i)).toBeInTheDocument();
-    expect(within(collection!).getByText(/8 packs|8 pacotes/i)).toBeInTheDocument();
+    expect(within(collection!).getByText(/44 skills/i)).toBeInTheDocument();
+    expect(within(collection!).getByText(/9 packs|9 pacotes/i)).toBeInTheDocument();
   });
 });
