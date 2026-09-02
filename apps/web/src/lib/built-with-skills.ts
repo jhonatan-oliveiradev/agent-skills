@@ -6,10 +6,18 @@ export interface CaseEvidence {
   readonly href: string;
 }
 
+export interface CaseProject {
+  readonly id: string;
+  readonly name: string;
+  readonly repository?: string;
+}
+
 export interface BuiltWithSkillsCase {
   readonly slug: string;
   readonly date: string;
   readonly sourcePath: string;
+  readonly evidenceClass: "internal" | "real-use";
+  readonly project: CaseProject;
   readonly title: string;
   readonly summary: string;
   readonly challenge: string;
@@ -29,17 +37,28 @@ type CaseSource = Readonly<{
   slug: string;
   date: string;
   sourcePath: string;
+  evidenceClass: BuiltWithSkillsCase["evidenceClass"];
+  project: CaseProject;
   skills: readonly string[];
   evidence: readonly CaseSourceEvidence[];
   locales: Readonly<
     Record<
       Locale,
-      Omit<BuiltWithSkillsCase, "slug" | "date" | "sourcePath" | "skills" | "evidence">
+      Omit<
+        BuiltWithSkillsCase,
+        "slug" | "date" | "sourcePath" | "evidenceClass" | "project" | "skills" | "evidence"
+      >
     >
   >;
 }>;
 
 const repositoryUrl = "https://github.com/jhonatan-oliveiradev/agent-skills";
+
+const agentSkillsStudioProject = {
+  id: "agent-skills-studio",
+  name: "Agent Skills Studio",
+  repository: repositoryUrl,
+} as const satisfies CaseProject;
 
 const sharedSkills = [
   "designing-ui-systems",
@@ -65,6 +84,8 @@ const cases = [
     slug: "catalog-experience",
     date: "2026-08-28",
     sourcePath: "docs/built-with-skills/2026-08-28-catalog-experience.md",
+    evidenceClass: "internal",
+    project: agentSkillsStudioProject,
     skills: sharedSkills,
     evidence: sourceEvidence("docs/built-with-skills/2026-08-28-catalog-experience.md"),
     locales: {
@@ -106,6 +127,8 @@ const cases = [
     slug: "pack-experience",
     date: "2026-08-28",
     sourcePath: "docs/built-with-skills/2026-08-28-pack-experience.md",
+    evidenceClass: "internal",
+    project: agentSkillsStudioProject,
     skills: sharedSkills,
     evidence: sourceEvidence("docs/built-with-skills/2026-08-28-pack-experience.md"),
     locales: {
@@ -150,6 +173,8 @@ export function getBuiltWithSkillsCases(locale: Locale): readonly BuiltWithSkill
     slug: item.slug,
     date: item.date,
     sourcePath: item.sourcePath,
+    evidenceClass: item.evidenceClass,
+    project: item.project,
     skills: item.skills,
     evidence: item.evidence.map((entry) => ({
       type: entry.type,
@@ -158,6 +183,17 @@ export function getBuiltWithSkillsCases(locale: Locale): readonly BuiltWithSkill
     })),
     ...item.locales[locale],
   }));
+}
+
+export function hasInspectableRealUseEvidence(item: BuiltWithSkillsCase) {
+  if (item.evidenceClass !== "real-use") {
+    return true;
+  }
+
+  return item.evidence.some(
+    (entry) =>
+      entry.type === "pull-request" || entry.type === "commit" || entry.type === "qa",
+  );
 }
 
 export function getBuiltWithSkillsCaseBySlug(locale: Locale, slug: string) {

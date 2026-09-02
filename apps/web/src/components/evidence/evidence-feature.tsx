@@ -19,17 +19,22 @@ export function EvidenceFeature({
     leading: string;
     report: string;
     methodsApplied: string;
+    internalEvidence: string;
+    realUseEvidence: string;
     sourceAvailable: string;
     inspect: string;
     evidenceRecord: string;
   }>;
 }>) {
   const source = item.evidence.find((entry) => entry.type === "source");
+  const provenanceLabel =
+    item.evidenceClass === "internal" ? labels.internalEvidence : labels.realUseEvidence;
 
   return (
     <article
       className="evidence-feature"
       data-evidence-feature
+      data-evidence-class={item.evidenceClass}
       data-evidence-leading={leading ? "true" : "false"}
       data-evidence-state="source-available"
       data-interaction="inspect"
@@ -42,6 +47,7 @@ export function EvidenceFeature({
         <div className="evidence-feature__meta">
           <span>{leading ? labels.leading : labels.report}</span>
           <span>{item.date}</span>
+          <span>{provenanceLabel}</span>
           <span>{labels.sourceAvailable}</span>
         </div>
 

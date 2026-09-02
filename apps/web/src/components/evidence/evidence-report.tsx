@@ -44,9 +44,18 @@ export function EvidenceReport({
     { id: "outcomes", label: copy.results },
     { id: "evidence", label: copy.evidence },
   ];
+  const provenanceLabel =
+    item.evidenceClass === "internal"
+      ? editorialCopy.internalEvidence
+      : editorialCopy.realUseEvidence;
 
   return (
-    <article className="shell evidence-report" data-evidence-report data-evidence-state="source-available">
+    <article
+      className="shell evidence-report"
+      data-evidence-report
+      data-evidence-class={item.evidenceClass}
+      data-evidence-state="source-available"
+    >
       <Link className="evidence-report__back" href={`/${locale}/built-with-skills` as Route}>
         <span aria-hidden="true">←</span>
         {copy.back}
@@ -63,6 +72,7 @@ export function EvidenceReport({
           items={[
             { label: copy.published.toUpperCase(), value: item.date },
             { label: editorialCopy.methodsApplied, value: String(skills.length).padStart(2, "0") },
+            { label: editorialCopy.evidenceClass, value: provenanceLabel },
             { label: editorialCopy.evidenceState, value: editorialCopy.sourceAvailable },
           ]}
         />

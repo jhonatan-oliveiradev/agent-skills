@@ -29,12 +29,23 @@ describe("Evidence Report", () => {
       "href",
       "/en/skills/designing-ui-systems",
     );
+    expect(screen.getByText("Internal evidence")).toBeInTheDocument();
     expect(screen.getAllByText("SOURCE / AVAILABLE")).toHaveLength(2);
     expect(screen.getByRole("link", { name: "Source record" })).toHaveAttribute(
       "href",
       "https://github.com/jhonatan-oliveiradev/agent-skills/blob/main/docs/built-with-skills/2026-08-28-catalog-experience.md",
     );
     expect(container.querySelector(".built-case-detail__evidence")).not.toBeInTheDocument();
+  });
+
+  it("renders localized evidence provenance for pt-BR", async () => {
+    render(
+      await BuiltWithSkillsDetailPage({
+        params: Promise.resolve({ locale: "pt-BR", slug: "catalog-experience" }),
+      }),
+    );
+
+    expect(screen.getByText("Evidência interna")).toBeInTheDocument();
   });
 
   it("connects explicit methods back to related systems without asserting pack usage", async () => {

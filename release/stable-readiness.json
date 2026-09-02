@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "candidateVersion": "1.0.0-rc.1",
+  "targetVersion": "1.0.0",
+  "status": "collecting-evidence",
+  "minimums": {
+    "realUseCases": 3,
+    "distinctProjects": 2,
+    "activePacksRepresented": 3
+  },
+  "surfaces": [
+    {
+      "id": "plugin",
+      "stableReady": false,
+      "realUseEvidence": []
+    },
+    {
+      "id": "catalog",
+      "stableReady": false,
+      "realUseEvidence": []
+    },
+    {
+      "id": "installers",
+      "stableReady": false,
+      "realUseEvidence": []
+    },
+    {
+      "id": "microsite",
+      "stableReady": false,
+      "realUseEvidence": []
+    }
+  ]
+}
