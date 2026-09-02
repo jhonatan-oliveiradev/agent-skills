@@ -272,7 +272,7 @@ export const messages = {
       packs: {
         eyebrow: "Active packs",
         title: "Start with a connected workflow.",
-        summary: "Three installable collections organize complementary skills without hiding their individual contracts.",
+        summary: "Ten installable collections organize complementary skills without hiding their individual contracts.",
         view: "View pack",
         viewAll: "Explore all packs",
         skills: "{count} skills",
@@ -351,7 +351,7 @@ export const messages = {
         skill: "One skill",
         pack: "One active pack",
         demoLabel: "Installation demonstration",
-        demoSuccess: "18 skills ready to use.",
+        demoSuccess: "49 skills ready to use.",
       },
       verify: {
         title: "Verify the installation",
@@ -567,7 +567,7 @@ export const messages = {
       packs: {
         eyebrow: "Pacotes ativos",
         title: "Comece por um fluxo conectado.",
-        summary: "Três coleções instaláveis organizam skills complementares sem ocultar seus contratos individuais.",
+        summary: "Dez coleções instaláveis organizam skills complementares sem ocultar seus contratos individuais.",
         view: "Ver pacote",
         viewAll: "Explorar todos os pacotes",
         skills: "{count} skills",
@@ -646,7 +646,7 @@ export const messages = {
         skill: "Uma skill",
         pack: "Um pacote ativo",
         demoLabel: "Demonstração da instalação",
-        demoSuccess: "18 skills prontas para usar.",
+        demoSuccess: "49 skills prontas para usar.",
       },
       verify: {
         title: "Verifique a instalação",
