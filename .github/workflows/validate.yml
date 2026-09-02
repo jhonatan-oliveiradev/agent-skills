@@ -1,50 +1,63 @@
-name: Validate skills
+name: Materialize selecting-working-methods documentation
 
 on:
-  push:
-    branches: [main, dev]
   pull_request:
 
+permissions:
+  contents: write
+
 jobs:
-  validate:
-    strategy:
-      fail-fast: false
-      matrix:
-        os: [ubuntu-latest, windows-latest]
-    runs-on: ${{ matrix.os }}
+  materialize:
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
         with:
-          node-version: 22
-      - run: npm test
-      - run: npm run validate
-      - run: npm ci --prefix apps/web
-      - run: npm run web:test
-      - run: npm run web:typecheck
-      - run: npm run web:lint
-      - run: npm run web:build
-        env:
-          NEXT_PUBLIC_SITE_URL: https://skills.jhonatanoliveira.com
-      - name: Smoke test Bash installer
-        if: runner.os == 'Linux'
+          ref: ${{ github.event.pull_request.head.ref }}
+      - name: Update README and mapping
         shell: bash
         run: |
-          target="$(mktemp -d)"
-          pack_target="$(mktemp -d)"
-          ./install.sh --destination "$target"
-          ./install.sh --destination "$pack_target" --pack motion
-          test -f "$target/craft-premium-motion/SKILL.md"
-          test -f "$pack_target/craft-premium-motion/SKILL.md"
-          test ! -e "$pack_target/designing-action-combat/SKILL.md"
-      - name: Smoke test PowerShell installer
-        if: runner.os == 'Windows'
-        shell: pwsh
+          node <<'NODE'
+          const fs = require('node:fs');
+
+          function replace(file, before, after) {
+            let source = fs.readFileSync(file, 'utf8');
+            if (!source.includes(before)) throw new Error(`Expected text not found in ${file}: ${before}`);
+            source = source.replace(before, after);
+            fs.writeFileSync(file, source);
+          }
+
+          replace('README.md',
+            '### Delivery & knowledge capture\n- `shipping-github-vercel-changes`\n- `turning-techniques-into-skills`\n',
+            '### Agent practice\n- `selecting-working-methods`\n- `turning-techniques-into-skills`\n\n### Delivery\n- `shipping-github-vercel-changes`\n'
+          );
+
+          replace('README.md',
+            'The methods prefer behavior-oriented plans over file checklists, conceptually focused batches over oversized branches, current CI and repository evidence over review assumptions, and explicit confirmed/hypothesis/planned/blocked state over chronological chat transcripts. They do not require a particular VCS host, project-management system, or agent runtime.\n\n## New web-app default',
+            'The methods prefer behavior-oriented plans over file checklists, conceptually focused batches over oversized branches, current CI and repository evidence over review assumptions, and explicit confirmed/hypothesis/planned/blocked state over chronological chat transcripts. They do not require a particular VCS host, project-management system, or agent runtime.\n\n## Selecting Working Methods\n\n`selecting-working-methods` is the catalog-wide router for tasks that could legitimately invoke more than one method. It chooses one primary owner for the core decision, adds supporting methods only for distinct responsibilities, orders them by dependency, and prefers the smallest sufficient sequence over loading an entire pack.\n\nThe router treats **no skill** as a valid outcome when the collection does not materially improve the task. Once a method or sequence is selected, the router delegates and stops; it does not duplicate the specialized workflow. It is pack-agnostic, runtime-agnostic, and intentionally separate from `turning-techniques-into-skills`, which owns skill authoring rather than skill selection.\n\n## New web-app default'
+          );
+
+          replace('README.md',
+            'Inside Codex, you can then work normally. The project-local `AGENTS.md` provides repository rules, while the reusable skills provide specialized workflows such as UI fidelity, motion, visual QA, backend/data engineering, architecture, quality/testing, application security, engineering workflow, and delivery. You can let Codex select a matching skill or explicitly name one in the prompt.',
+            'Inside Codex, you can then work normally. The project-local `AGENTS.md` provides repository rules, while the reusable skills provide specialized workflows such as UI fidelity, motion, visual QA, backend/data engineering, architecture, quality/testing, application security, engineering workflow, and delivery. When ownership is ambiguous or several methods could apply, `selecting-working-methods` can route the task to the smallest useful sequence before execution; you can also explicitly name a specialized skill in the prompt.'
+          );
+
+          replace('MAPPING.md',
+            '### `writing-effective-technical-handoffs`\nAdded for preserving verified engineering state, decisions, constraints, hypotheses, evidence, and the exact restart point when work moves between people, agents, or sessions.\n',
+            '### `writing-effective-technical-handoffs`\nAdded for preserving verified engineering state, decisions, constraints, hypotheses, evidence, and the exact restart point when work moves between people, agents, or sessions.\n\n### `selecting-working-methods`\nAdded as a catalog-wide meta router that identifies one primary method, adds only independently owned supporting responsibilities, orders methods by dependency, permits a no-skill outcome, and delegates rather than executing specialized workflows itself.\n'
+          );
+
+          let mapping = fs.readFileSync('MAPPING.md', 'utf8');
+          const section = '\n\n## Meta routing design — 2026-09-01\n\n`selecting-working-methods` is derived from the Studio\'s existing trigger-specific skill model, pack taxonomy, ownership boundaries, and the authoring rules already captured in `turning-techniques-into-skills`. It is a local orchestration method rather than an adaptation of an upstream router or a dependency on a runtime framework.\n\nThe design deliberately avoids embedding a static decision tree for every skill. Selection is based on the real responsibility in the task, chooses the smallest sufficient set, preserves one primary owner, allows no match, and re-routes when evidence changes the nature of the work.\n';
+          if (!mapping.includes('## Meta routing design — 2026-09-01')) {
+            mapping = `${mapping.trimEnd()}${section}`;
+            fs.writeFileSync('MAPPING.md', mapping);
+          }
+          NODE
+      - name: Commit documentation
+        shell: bash
         run: |
-          $target = Join-Path $env:RUNNER_TEMP "agent-skills-install"
-          ./install.ps1 --destination $target
-          if (-not (Test-Path (Join-Path $target "craft-premium-motion/SKILL.md"))) { exit 1 }
-          $packTarget = Join-Path $env:RUNNER_TEMP "agent-skills-motion-pack"
-          ./install.ps1 --destination $packTarget --pack motion
-          if (-not (Test-Path (Join-Path $packTarget "craft-premium-motion/SKILL.md"))) { exit 1 }
-          if (Test-Path (Join-Path $packTarget "designing-action-combat/SKILL.md")) { exit 1 }
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add README.md MAPPING.md
+          git commit -m "docs: document selecting-working-methods router"
+          git push origin HEAD:${{ github.event.pull_request.head.ref }}
