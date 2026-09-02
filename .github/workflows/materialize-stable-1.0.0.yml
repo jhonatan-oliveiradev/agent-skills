@@ -79,6 +79,10 @@ jobs:
             'screen.getByRole("heading", { name: "1.0.0-rc.2" })',
             'screen.getByRole("heading", { name: "1.0.0" })',
           );
+          shellTest = shellTest.replace(
+            'expect(currentRelease).toHaveTextContent(/searchable.*catalog/i);',
+            'expect(currentRelease).toHaveTextContent(/evidence-qualified.*Stable 1.0.0/i);',
+          );
           await writeFile(shellTestPath, shellTest, "utf8");
           NODE
       - name: Regenerate catalogs
