@@ -25,6 +25,16 @@ test("publishes a concise routing method with explicit selection guardrails", as
   assert.ok(source.length < 6500, "selecting-working-methods should stay concise enough to load as a router");
 });
 
+test("routes neighboring methods by artifact, stage, and verification ownership", async () => {
+  const source = await readFile(skillPath, "utf8");
+
+  assert.match(source, /artifact owner/i);
+  assert.match(source, /stage owner/i);
+  assert.match(source, /verification owner/i);
+  assert.match(source, /do not use a supporting method to redo the primary method/i);
+  assert.ok(source.length < 6500, "ownership guidance must not turn the router into a decision table");
+});
+
 test("publishes selecting-working-methods as bilingual catalog-wide meta guidance", async () => {
   const metadata = JSON.parse(await readFile(metadataPath, "utf8"));
 
