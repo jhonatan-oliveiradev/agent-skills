@@ -191,7 +191,12 @@ describe("legacy Portuguese locale redirect", () => {
         expect(canonicalResponse.headers.get("location")).toBeNull();
       } finally {
         await stopServer(child);
-        rmSync(fixtureRoot, { recursive: true, force: true });
+        rmSync(fixtureRoot, {
+          recursive: true,
+          force: true,
+          maxRetries: 10,
+          retryDelay: 100,
+        });
       }
     },
     45_000,
