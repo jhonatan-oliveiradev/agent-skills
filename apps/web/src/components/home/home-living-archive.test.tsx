@@ -60,9 +60,9 @@ describe("Living Research Archive Home", () => {
     expect(packs).toHaveAttribute("data-scroll-choreography", "staged");
     expect(packs).toHaveAttribute("data-scroll-timing", "reading-zone");
     expect(container.querySelectorAll("[data-method-stage]")).toHaveLength(3);
-    expect(container.querySelectorAll(".home-pack-dossier")).toHaveLength(9);
-    expect(container.querySelectorAll("[data-pack-stage]")).toHaveLength(9);
-    expect(container.querySelectorAll(".home-pack-dossier__skills")).toHaveLength(9);
+    expect(container.querySelectorAll(".home-pack-dossier")).toHaveLength(10);
+    expect(container.querySelectorAll("[data-pack-stage]")).toHaveLength(10);
+    expect(container.querySelectorAll(".home-pack-dossier__skills")).toHaveLength(10);
   });
 
   it("drives the four workflow movements from one section timeline", async () => {
