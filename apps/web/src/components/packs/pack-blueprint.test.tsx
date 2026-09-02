@@ -133,6 +133,24 @@ describe("System Blueprint", () => {
     ).toHaveAttribute("href", "/en/skills/defining-brand-strategy");
   });
 
+  it("renders Codebase Intelligence as a real five-method installable system", async () => {
+    const { container } = render(
+      await PackDetailPage({
+        params: Promise.resolve({ locale: "en", slug: "codebase-intelligence" }),
+      }),
+    );
+
+    expect(container.querySelector('[data-pack-state="active"]')).toBeInTheDocument();
+    const composition = container.querySelector<HTMLElement>("[data-pack-composition-map]");
+    expect(composition).toBeInTheDocument();
+    expect(within(composition!).getAllByRole("link")).toHaveLength(5);
+    expect(screen.getByRole("heading", { name: "Install this pack" })).toBeInTheDocument();
+    expect(screen.getByText("./install.sh --pack codebase-intelligence")).toBeInTheDocument();
+    expect(
+      within(composition!).getByRole("link", { name: /Mapping Existing Codebase Structure$/ }),
+    ).toHaveAttribute("href", "/en/skills/mapping-existing-codebase-structure");
+  });
+
   it("connects a pack to reports using methods from the system without claiming pack usage", async () => {
     const { container } = render(
       await PackDetailPage({

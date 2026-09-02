@@ -16,8 +16,8 @@ describe("catalog adapter", () => {
     );
 
     expect(catalog.sourceDigest).toBe(source.sourceDigest);
-    expect(catalog.skills).toHaveLength(49);
-    expect(catalog.packs).toHaveLength(10);
+    expect(catalog.skills).toHaveLength(54);
+    expect(catalog.packs).toHaveLength(11);
     expect(getCatalogCounts()).toEqual(source.counts);
     expect(getSupportedLocales()).toEqual(["en", "pt-BR"]);
   });
@@ -83,7 +83,7 @@ describe("catalog adapter", () => {
 
     expect(adapter.getLocalizedPacks).toBeTypeOf("function");
     const packs = adapter.getLocalizedPacks?.("pt-BR") ?? [];
-    expect(packs).toHaveLength(10);
+    expect(packs).toHaveLength(11);
     expect(packs.every((pack) => pack.status === "active")).toBe(true);
     expect(packs.find((pack) => pack.slug === "frontend-product")).toMatchObject({
       name: "Frontend e Produto",
@@ -124,6 +124,11 @@ describe("catalog adapter", () => {
       status: "active",
     });
     expect(packs.find((pack) => pack.slug === "writing-communication")?.skills).toHaveLength(5);
+    expect(packs.find((pack) => pack.slug === "codebase-intelligence")).toMatchObject({
+      name: "Inteligência de Codebase",
+      status: "active",
+    });
+    expect(packs.find((pack) => pack.slug === "codebase-intelligence")?.skills).toHaveLength(5);
 
     expect(adapter.getLocalizedPackBySlug?.("en", "motion")?.outcomes).toHaveLength(2);
     expect(adapter.getLocalizedPackBySlug?.("en", "writing-communication")?.outcomes).toHaveLength(3);
@@ -169,6 +174,10 @@ describe("catalog adapter", () => {
     expect(adapter.getPackInstallCommands?.("writing-communication", "active")).toEqual({
       bash: "./install.sh --pack writing-communication",
       powershell: "./install.ps1 --pack writing-communication",
+    });
+    expect(adapter.getPackInstallCommands?.("codebase-intelligence", "active")).toEqual({
+      bash: "./install.sh --pack codebase-intelligence",
+      powershell: "./install.ps1 --pack codebase-intelligence",
     });
     expect(adapter.getPackInstallCommands?.("quality-testing", "planned")).toBeUndefined();
   });
