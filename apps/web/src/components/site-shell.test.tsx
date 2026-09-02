@@ -242,17 +242,18 @@ describe("foundation navigation targets", () => {
   });
 
   it.each([
-    ["en", "Don't trust the description. Inspect the result.", "Catalog experience", "Pack experience"],
-    ["pt-BR", "Não confie na descrição. Inspecione o resultado.", "Experiência do catálogo", "Experiência dos pacotes"],
-  ] as const)("renders the evidence archive for %s", async (locale, heading, catalog, packs) => {
+    ["en", "Don't trust the description. Inspect the result.", "Hardening a translation provider after a production incident", "Catalog experience", "Pack experience"],
+    ["pt-BR", "Não confie na descrição. Inspecione o resultado.", "Hardening de um provider de tradução após um incidente em produção", "Experiência do catálogo", "Experiência dos pacotes"],
+  ] as const)("renders the evidence archive for %s", async (locale, heading, portfolio, catalog, packs) => {
     const { container } = render(
       await BuiltWithSkillsPage({ params: Promise.resolve({ locale }) }),
     );
 
     expect(screen.getByRole("heading", { level: 1, name: heading })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: portfolio })).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: catalog })).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: packs })).toBeInTheDocument();
-    expect(container.querySelectorAll("[data-evidence-feature]")).toHaveLength(2);
+    expect(container.querySelectorAll("[data-evidence-feature]")).toHaveLength(3);
     expect(container.querySelector(".built-case-card")).not.toBeInTheDocument();
   });
 

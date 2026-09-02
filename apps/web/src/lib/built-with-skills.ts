@@ -53,11 +53,18 @@ type CaseSource = Readonly<{
 }>;
 
 const repositoryUrl = "https://github.com/jhonatan-oliveiradev/agent-skills";
+const portfolioCaseSourcePath =
+  "docs/built-with-skills/2026-09-02-portfolio-translation-hardening.md";
 
 const agentSkillsStudioProject = {
   id: "agent-skills-studio",
   name: "Agent Skills Studio",
   repository: repositoryUrl,
+} as const satisfies CaseProject;
+
+const portfolio2025Project = {
+  id: "portfolio-2025",
+  name: "Portfolio 2025",
 } as const satisfies CaseProject;
 
 const sharedSkills = [
@@ -80,6 +87,109 @@ function sourceEvidence(sourcePath: string): readonly CaseSourceEvidence[] {
 }
 
 const cases = [
+  {
+    slug: "portfolio-translation-hardening",
+    date: "2026-09-02",
+    sourcePath: portfolioCaseSourcePath,
+    evidenceClass: "real-use",
+    project: portfolio2025Project,
+    skills: [
+      "selecting-working-methods",
+      "building-regression-tests",
+      "testing-integration-boundaries",
+      "shipping-github-vercel-changes",
+    ],
+    evidence: [
+      {
+        type: "source",
+        href: `${repositoryUrl}/blob/main/${portfolioCaseSourcePath}`,
+        labels: {
+          en: "Public case record",
+          "pt-BR": "Registro público do case",
+        },
+      },
+      {
+        type: "qa",
+        href: `${repositoryUrl}/blob/main/${portfolioCaseSourcePath}#verification-record`,
+        labels: {
+          en: "Verification record",
+          "pt-BR": "Registro de verificação",
+        },
+      },
+    ],
+    locales: {
+      en: {
+        title: "Hardening a translation provider after a production incident",
+        summary:
+          "A real portfolio incident became a regression-first fix that protects the Groq boundary from a retired model override while preserving supported explicit configuration.",
+        challenge:
+          "A production error showed a retired Groq model reaching the translation boundary through a stale environment override. Fix the proven failure path without disabling legitimate overrides or changing the live site before verification.",
+        decisions: [
+          {
+            title: "Route by ownership",
+            summary:
+              "Use method selection to keep regression testing, integration-boundary verification, and delivery as distinct responsibilities instead of stacking overlapping workflows.",
+          },
+          {
+            title: "Reproduce before fixing",
+            summary:
+              "Capture the actual outbound provider model in a boundary-level regression test and require the known retired override to fail before implementation.",
+          },
+          {
+            title: "Guard only the proven legacy value",
+            summary:
+              "Map the exact retired model to the supported default while preserving other explicit model overrides.",
+          },
+          {
+            title: "Keep production isolated",
+            summary:
+              "Merge and verify in the development branch first. No production promotion is claimed, and the missing Vercel development deployment remains documented as a limitation.",
+          },
+        ],
+        results: [
+          "161/161 tests passed on the development merge commit.",
+          "Changed-source lint and CI typecheck passed after merge.",
+          "The retired override now resolves to openai/gpt-oss-20b while other explicit overrides remain configurable.",
+          "No Vercel Preview was emitted for the development merge, so this case does not claim production runtime verification.",
+        ],
+      },
+      "pt-BR": {
+        title: "Hardening de um provider de tradução após um incidente em produção",
+        summary:
+          "Um incidente real do portfólio virou uma correção guiada por regressão que protege a fronteira do Groq contra um override de modelo aposentado sem remover configurações explícitas suportadas.",
+        challenge:
+          "Um erro em produção mostrou um modelo aposentado do Groq chegando à fronteira de tradução por meio de um override antigo de ambiente. Corrigir o caminho comprovado sem desabilitar overrides legítimos nem alterar o site no ar antes da verificação.",
+        decisions: [
+          {
+            title: "Rotear por ownership",
+            summary:
+              "Usar seleção de métodos para manter teste de regressão, verificação da fronteira de integração e entrega como responsabilidades distintas, sem empilhar workflows sobrepostos.",
+          },
+          {
+            title: "Reproduzir antes de corrigir",
+            summary:
+              "Capturar o modelo realmente enviado ao provider em um teste de fronteira e exigir a falha do override aposentado conhecido antes da implementação.",
+          },
+          {
+            title: "Proteger apenas o valor legado comprovado",
+            summary:
+              "Mapear o modelo aposentado exato para o default suportado, preservando outros overrides explícitos de modelo.",
+          },
+          {
+            title: "Manter produção isolada",
+            summary:
+              "Integrar e verificar primeiro na branch de desenvolvimento. Nenhuma promoção para produção é afirmada, e a ausência do deployment de desenvolvimento na Vercel permanece documentada como limitação.",
+          },
+        ],
+        results: [
+          "161/161 testes passaram no commit integrado à branch de desenvolvimento.",
+          "Lint dos arquivos alterados e typecheck de CI passaram após o merge.",
+          "O override aposentado agora resolve para openai/gpt-oss-20b enquanto outros overrides explícitos continuam configuráveis.",
+          "Nenhum Preview da Vercel foi emitido para o merge em desenvolvimento; portanto, este case não afirma verificação de runtime em produção.",
+        ],
+      },
+    },
+  },
   {
     slug: "catalog-experience",
     date: "2026-08-28",

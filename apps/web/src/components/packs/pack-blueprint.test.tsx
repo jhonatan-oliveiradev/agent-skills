@@ -141,12 +141,18 @@ describe("System Blueprint", () => {
     );
 
     expect(container.querySelector("[data-pack-evidence]")).toBeInTheDocument();
-    expect(container.querySelectorAll("[data-pack-evidence-relation]")).toHaveLength(2);
+    expect(container.querySelectorAll("[data-pack-evidence-relation]")).toHaveLength(3);
+    expect(
+      screen.getByRole("link", {
+        name: "Hardening a translation provider after a production incident",
+      }),
+    ).toHaveAttribute("href", "/en/built-with-skills/portfolio-translation-hardening");
     expect(screen.getByRole("link", { name: "Catalog experience" })).toHaveAttribute(
       "href",
       "/en/built-with-skills/catalog-experience",
     );
     expect(screen.getAllByText("3 / 8 methods represented")).toHaveLength(2);
+    expect(screen.getByText("1 / 8 methods represented")).toBeInTheDocument();
     expect(screen.queryByText(/pack used/i)).not.toBeInTheDocument();
   });
 });
