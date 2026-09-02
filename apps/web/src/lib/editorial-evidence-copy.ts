@@ -10,6 +10,9 @@ interface EditorialEvidenceCopy {
   readonly leading: string;
   readonly report: string;
   readonly methodsApplied: string;
+  readonly evidenceClass: string;
+  readonly internalEvidence: string;
+  readonly realUseEvidence: string;
   readonly sourceAvailable: string;
   readonly inspect: string;
   readonly evidenceRecord: string;
@@ -32,6 +35,9 @@ export const editorialEvidenceCopy = {
     leading: "LEADING REPORT",
     report: "EVIDENCE REPORT",
     methodsApplied: "METHODS APPLIED",
+    evidenceClass: "EVIDENCE CLASS",
+    internalEvidence: "Internal evidence",
+    realUseEvidence: "Real-use evidence",
     sourceAvailable: "SOURCE / AVAILABLE",
     inspect: "Inspect report",
     evidenceRecord: "Evidence record",
@@ -52,6 +58,9 @@ export const editorialEvidenceCopy = {
     leading: "RELATÓRIO PRINCIPAL",
     report: "RELATÓRIO DE EVIDÊNCIA",
     methodsApplied: "MÉTODOS APLICADOS",
+    evidenceClass: "CLASSE DA EVIDÊNCIA",
+    internalEvidence: "Evidência interna",
+    realUseEvidence: "Evidência de uso real",
     sourceAvailable: "FONTE / DISPONÍVEL",
     inspect: "Inspecionar relatório",
     evidenceRecord: "Registro de evidência",
