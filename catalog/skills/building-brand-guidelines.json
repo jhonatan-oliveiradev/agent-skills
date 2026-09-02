@@ -2,19 +2,41 @@
   "$schema": "../schemas/skill.schema.json",
   "slug": "building-brand-guidelines",
   "category": "brand-design",
-  "packs": ["design-brand"],
+  "packs": [
+    "design-brand"
+  ],
   "maturity": "beta",
   "difficulty": "intermediate",
   "featured": false,
   "compatibility": {
-    "surfaces": ["chatgpt", "codex"],
-    "operatingSystems": ["linux", "macos", "windows"],
-    "installModes": ["plugin", "filesystem"]
+    "surfaces": [
+      "chatgpt",
+      "codex"
+    ],
+    "operatingSystems": [
+      "linux",
+      "macos",
+      "windows"
+    ],
+    "installModes": [
+      "plugin",
+      "filesystem"
+    ]
   },
-  "tags": ["branding", "brand-guidelines", "design-system", "governance", "accessibility"],
+  "tags": [
+    "branding",
+    "brand-guidelines",
+    "design-system",
+    "governance",
+    "accessibility"
+  ],
   "dependencies": [],
-  "relatedSkills": ["designing-visual-identities", "writing-brand-voice-and-messaging", "designing-ui-systems"],
-  "version": "1.0.0-beta.1",
+  "relatedSkills": [
+    "designing-visual-identities",
+    "writing-brand-voice-and-messaging",
+    "designing-ui-systems"
+  ],
+  "version": "1.0.0-rc.1",
   "updatedAt": "2026-09-01",
   "locales": {
     "en": {
@@ -23,8 +45,13 @@
       "primaryBenefit": "Turns an identity presentation into an operational source of truth that reduces guesswork and visual drift.",
       "whenToUse": "Use when an approved brand identity needs durable rules, assets, examples, accessibility constraints, and governance so multiple people can reproduce it consistently across channels.",
       "whenNotToUse": "Do not use before the core identity has been approved or as a substitute for defining the identity itself.",
-      "useCases": ["Turn a completed identity project into guidelines for internal teams and vendors", "Repair brand drift by documenting typography, color, layout, asset, voice, and governance rules"],
-      "examplePrompts": ["Use building-brand-guidelines to turn this approved identity into a practical source of truth with asset rules, accessibility constraints, realistic examples, and governance."]
+      "useCases": [
+        "Turn a completed identity project into guidelines for internal teams and vendors",
+        "Repair brand drift by documenting typography, color, layout, asset, voice, and governance rules"
+      ],
+      "examplePrompts": [
+        "Use building-brand-guidelines to turn this approved identity into a practical source of truth with asset rules, accessibility constraints, realistic examples, and governance."
+      ]
     },
     "pt-BR": {
       "displayName": "Construção de Brand Guidelines",
@@ -32,8 +59,13 @@
       "primaryBenefit": "Transforma uma apresentação de identidade em uma fonte operacional de verdade que reduz improviso e deriva visual.",
       "whenToUse": "Use quando uma identidade de marca aprovada precisa de regras duráveis, assets, exemplos, restrições de acessibilidade e governança para ser reproduzida com consistência por várias pessoas e canais.",
       "whenNotToUse": "Não use antes da aprovação da identidade central nem como substituto para definir a própria identidade.",
-      "useCases": ["Transformar um projeto de identidade concluído em guidelines para equipes internas e fornecedores", "Corrigir deriva de marca documentando regras de tipografia, cor, layout, assets, voz e governança"],
-      "examplePrompts": ["Use building-brand-guidelines para transformar esta identidade aprovada em uma fonte prática de verdade com regras de assets, acessibilidade, exemplos realistas e governança."]
+      "useCases": [
+        "Transformar um projeto de identidade concluído em guidelines para equipes internas e fornecedores",
+        "Corrigir deriva de marca documentando regras de tipografia, cor, layout, assets, voz e governança"
+      ],
+      "examplePrompts": [
+        "Use building-brand-guidelines para transformar esta identidade aprovada em uma fonte prática de verdade com regras de assets, acessibilidade, exemplos realistas e governança."
+      ]
     }
   }
 }

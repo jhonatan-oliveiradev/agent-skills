@@ -2,19 +2,38 @@
   "$schema": "../schemas/skill.schema.json",
   "slug": "auditing-pixel-perfect-frontend",
   "category": "frontend",
-  "packs": ["frontend-product"],
+  "packs": [
+    "frontend-product"
+  ],
   "maturity": "stable",
   "difficulty": "advanced",
   "featured": false,
   "compatibility": {
-    "surfaces": ["chatgpt", "codex"],
-    "operatingSystems": ["linux", "macos", "windows"],
-    "installModes": ["plugin", "filesystem"]
+    "surfaces": [
+      "chatgpt",
+      "codex"
+    ],
+    "operatingSystems": [
+      "linux",
+      "macos",
+      "windows"
+    ],
+    "installModes": [
+      "plugin",
+      "filesystem"
+    ]
   },
-  "tags": ["visual-audit", "frontend-fidelity", "responsive-design", "regression-review"],
+  "tags": [
+    "visual-audit",
+    "frontend-fidelity",
+    "responsive-design",
+    "regression-review"
+  ],
   "dependencies": [],
-  "relatedSkills": ["implementing-reference-faithful-ui"],
-  "version": "1.0.0-beta.1",
+  "relatedSkills": [
+    "implementing-reference-faithful-ui"
+  ],
+  "version": "1.0.0-rc.1",
   "updatedAt": "2026-08-26",
   "locales": {
     "en": {
@@ -23,8 +42,13 @@
       "primaryBenefit": "Produces actionable findings that direct teams to the most consequential visual regressions first.",
       "whenToUse": "Use when reviewing an implemented frontend against Figma, screenshots, a live reference, or explicit visual acceptance criteria and concrete visual regressions must be identified and prioritized.",
       "whenNotToUse": "Do not use to chase subpixel differences before structural mismatches are resolved or when fidelity is not an acceptance criterion.",
-      "useCases": ["Prioritize visual regressions against a Figma reference", "Audit desktop and mobile layouts independently"],
-      "examplePrompts": ["Use auditing-pixel-perfect-frontend to review this implementation against the supplied reference and rank every mismatch by severity."]
+      "useCases": [
+        "Prioritize visual regressions against a Figma reference",
+        "Audit desktop and mobile layouts independently"
+      ],
+      "examplePrompts": [
+        "Use auditing-pixel-perfect-frontend to review this implementation against the supplied reference and rank every mismatch by severity."
+      ]
     },
     "pt-BR": {
       "displayName": "Auditoria de Frontend Pixel-Perfect",
@@ -32,8 +56,13 @@
       "primaryBenefit": "Produz achados acionáveis que direcionam a equipe primeiro às regressões visuais mais relevantes.",
       "whenToUse": "Use ao revisar um frontend implementado em relação ao Figma, a capturas de tela, a uma referência publicada ou a critérios explícitos de aceite visual, quando for necessário identificar e priorizar regressões visuais concretas.",
       "whenNotToUse": "Não use para perseguir diferenças subpixel antes de resolver incompatibilidades estruturais ou quando fidelidade não for um critério de aceite.",
-      "useCases": ["Priorizar regressões visuais em relação a uma referência do Figma", "Auditar layouts desktop e mobile de forma independente"],
-      "examplePrompts": ["Use auditing-pixel-perfect-frontend para revisar esta implementação em relação à referência fornecida e classificar cada diferença por severidade."]
+      "useCases": [
+        "Priorizar regressões visuais em relação a uma referência do Figma",
+        "Auditar layouts desktop e mobile de forma independente"
+      ],
+      "examplePrompts": [
+        "Use auditing-pixel-perfect-frontend para revisar esta implementação em relação à referência fornecida e classificar cada diferença por severidade."
+      ]
     }
   }
 }

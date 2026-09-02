@@ -2,19 +2,42 @@
   "$schema": "../schemas/skill.schema.json",
   "slug": "writing-product-and-ux-copy",
   "category": "writing-communication",
-  "packs": ["writing-communication"],
+  "packs": [
+    "writing-communication"
+  ],
   "maturity": "beta",
   "difficulty": "intermediate",
   "featured": false,
   "compatibility": {
-    "surfaces": ["chatgpt", "codex"],
-    "operatingSystems": ["linux", "macos", "windows"],
-    "installModes": ["plugin", "filesystem"]
+    "surfaces": [
+      "chatgpt",
+      "codex"
+    ],
+    "operatingSystems": [
+      "linux",
+      "macos",
+      "windows"
+    ],
+    "installModes": [
+      "plugin",
+      "filesystem"
+    ]
   },
-  "tags": ["ux-writing", "microcopy", "product", "interface", "content-design"],
+  "tags": [
+    "ux-writing",
+    "microcopy",
+    "product",
+    "interface",
+    "content-design"
+  ],
   "dependencies": [],
-  "relatedSkills": ["planning-written-communication", "designing-ui-systems", "editing-for-clarity-and-tone", "writing-brand-voice-and-messaging"],
-  "version": "1.0.0-beta.1",
+  "relatedSkills": [
+    "planning-written-communication",
+    "designing-ui-systems",
+    "editing-for-clarity-and-tone",
+    "writing-brand-voice-and-messaging"
+  ],
+  "version": "1.0.0-rc.1",
   "updatedAt": "2026-09-01",
   "locales": {
     "en": {
@@ -23,8 +46,13 @@
       "primaryBenefit": "Makes product states and consequences understandable without inventing behavior or hiding operational meaning behind marketing language.",
       "whenToUse": "Use when writing interface labels, buttons, onboarding, forms, permissions, empty or loading states, errors, confirmations, notifications, or other text tied to product state and user action.",
       "whenNotToUse": "Do not use for marketing surfaces whose primary job is persuasion or for defining the durable brand voice that interface copy may inherit.",
-      "useCases": ["Rewrite form validation and recovery copy so users understand what failed and how to continue", "Design labels, permission text, confirmations, and destructive-action copy for a product flow"],
-      "examplePrompts": ["Use writing-product-and-ux-copy to review this flow state by state. Make every label predict the real action, make errors recoverable, explain consequential permissions, and keep terminology consistent without inventing product behavior."]
+      "useCases": [
+        "Rewrite form validation and recovery copy so users understand what failed and how to continue",
+        "Design labels, permission text, confirmations, and destructive-action copy for a product flow"
+      ],
+      "examplePrompts": [
+        "Use writing-product-and-ux-copy to review this flow state by state. Make every label predict the real action, make errors recoverable, explain consequential permissions, and keep terminology consistent without inventing product behavior."
+      ]
     },
     "pt-BR": {
       "displayName": "Copy de Produto e UX",
@@ -32,8 +60,13 @@
       "primaryBenefit": "Torna estados e consequências do produto compreensíveis sem inventar comportamento nem esconder significado operacional atrás de linguagem de marketing.",
       "whenToUse": "Use ao escrever labels de interface, botões, onboarding, formulários, permissões, estados vazios ou de carregamento, erros, confirmações, notificações ou outros textos ligados ao estado do produto e à ação do usuário.",
       "whenNotToUse": "Não use para superfícies de marketing cuja função principal é persuadir ou para definir a voz durável de marca que a interface pode herdar.",
-      "useCases": ["Reescrever validação de formulário e mensagens de recuperação para que usuários entendam a falha e como continuar", "Definir labels, permissões, confirmações e copy de ações destrutivas para um fluxo de produto"],
-      "examplePrompts": ["Use writing-product-and-ux-copy para revisar este fluxo estado por estado. Faça cada label prever a ação real, torne erros recuperáveis, explique permissões relevantes e mantenha terminologia consistente sem inventar comportamento do produto."]
+      "useCases": [
+        "Reescrever validação de formulário e mensagens de recuperação para que usuários entendam a falha e como continuar",
+        "Definir labels, permissões, confirmações e copy de ações destrutivas para um fluxo de produto"
+      ],
+      "examplePrompts": [
+        "Use writing-product-and-ux-copy para revisar este fluxo estado por estado. Faça cada label prever a ação real, torne erros recuperáveis, explique permissões relevantes e mantenha terminologia consistente sem inventar comportamento do produto."
+      ]
     }
   }
 }

@@ -431,11 +431,9 @@ Use `AGENTS.example.md` as a starting point for project-level agent instructions
 
 ## Versioning
 
-This foundation is the unreleased v1 beta on
-[`feat/agent-skills-studio-v1`](https://github.com/jhonatan-oliveiradev/agent-skills/tree/feat/agent-skills-studio-v1),
-versioned `1.0.0-beta.1`. Its implementation follows the
-[approved design spec](docs/superpowers/specs/2026-08-25-agent-skills-studio-design.md)
-and the [foundation plan](docs/superpowers/plans/2026-08-25-agent-skills-studio-foundation.md).
+The current Studio release version is owned by `VERSION` and synchronized across the root package, plugin manifest, catalog manifest, and web package. `main` is the production branch; release candidates are prepared in focused release branches and promoted only after the complete repository gate passes.
+
+The implementation foundation follows the [approved design spec](docs/superpowers/specs/2026-08-25-agent-skills-studio-design.md) and the [foundation plan](docs/superpowers/plans/2026-08-25-agent-skills-studio-foundation.md).
 
 This repository follows semantic versioning:
 

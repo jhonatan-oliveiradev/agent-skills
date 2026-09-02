@@ -2,16 +2,34 @@
   "$schema": "../schemas/skill.schema.json",
   "slug": "reconstructing-images-as-threejs",
   "category": "game-development",
-  "packs": ["motion", "game-development"],
+  "packs": [
+    "motion",
+    "game-development"
+  ],
   "maturity": "stable",
   "difficulty": "advanced",
   "featured": true,
   "compatibility": {
-    "surfaces": ["chatgpt", "codex"],
-    "operatingSystems": ["linux", "macos", "windows"],
-    "installModes": ["plugin", "filesystem"]
+    "surfaces": [
+      "chatgpt",
+      "codex"
+    ],
+    "operatingSystems": [
+      "linux",
+      "macos",
+      "windows"
+    ],
+    "installModes": [
+      "plugin",
+      "filesystem"
+    ]
   },
-  "tags": ["threejs", "procedural-3d", "image-reconstruction", "runtime-validation"],
+  "tags": [
+    "threejs",
+    "procedural-3d",
+    "image-reconstruction",
+    "runtime-validation"
+  ],
   "dependencies": [
     {
       "name": "Three.js",
@@ -20,8 +38,10 @@
       "url": "https://threejs.org"
     }
   ],
-  "relatedSkills": ["building-hybrid-game-assets"],
-  "version": "1.0.0-beta.1",
+  "relatedSkills": [
+    "building-hybrid-game-assets"
+  ],
+  "version": "1.0.0-rc.1",
   "updatedAt": "2026-08-26",
   "locales": {
     "en": {
@@ -30,8 +50,13 @@
       "primaryBenefit": "Produces an evidence-backed 3D result whose fidelity, inferred geometry, hierarchy, and runtime readiness are honestly demonstrated.",
       "whenToUse": "Use when a supplied image should become a code-only procedural Three.js object or stylized character, especially when fidelity, hidden geometry, animation readiness, runtime hierarchy, review gates, or single-view limitations must be evaluated.",
       "whenNotToUse": "Do not use before procedural Three.js is justified over other asset formats, or when missing hidden geometry or unsupported runtime requirements materially determine success.",
-      "useCases": ["Evaluate whether an image supports procedural 3D reconstruction", "Build and validate a deterministic Three.js object factory"],
-      "examplePrompts": ["Use reconstructing-images-as-threejs to assess this reference and build only the procedural geometry its evidence can support."]
+      "useCases": [
+        "Evaluate whether an image supports procedural 3D reconstruction",
+        "Build and validate a deterministic Three.js object factory"
+      ],
+      "examplePrompts": [
+        "Use reconstructing-images-as-threejs to assess this reference and build only the procedural geometry its evidence can support."
+      ]
     },
     "pt-BR": {
       "displayName": "Reconstrução de Imagens em Three.js",
@@ -39,8 +64,13 @@
       "primaryBenefit": "Produz um resultado 3D respaldado por evidências, demonstrando com honestidade fidelidade, geometria inferida, hierarquia e prontidão para runtime.",
       "whenToUse": "Use quando uma imagem fornecida precisar se tornar um objeto procedural ou personagem estilizado em Three.js feito somente por código, especialmente quando for necessário avaliar fidelidade, geometria oculta, prontidão para animação, hierarquia de runtime, critérios de revisão ou limitações de uma única vista.",
       "whenNotToUse": "Não use antes de justificar Three.js procedural em relação a outros formatos de asset, nem quando geometria oculta ausente ou requisitos de runtime sem suporte forem determinantes para o sucesso.",
-      "useCases": ["Avaliar se uma imagem sustenta uma reconstrução 3D procedural", "Construir e validar uma factory determinística de objetos Three.js"],
-      "examplePrompts": ["Use reconstructing-images-as-threejs para avaliar esta referência e construir apenas a geometria procedural sustentada pelas evidências."]
+      "useCases": [
+        "Avaliar se uma imagem sustenta uma reconstrução 3D procedural",
+        "Construir e validar uma factory determinística de objetos Three.js"
+      ],
+      "examplePrompts": [
+        "Use reconstructing-images-as-threejs para avaliar esta referência e construir apenas a geometria procedural sustentada pelas evidências."
+      ]
     }
   }
 }

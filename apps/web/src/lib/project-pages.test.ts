@@ -9,7 +9,7 @@ describe("project page content", () => {
 
     expect(content.about.principles).toHaveLength(5);
     expect(content.contribute.paths).toHaveLength(4);
-    expect(content.changelog.releases[0]).toMatchObject({ version: "1.0.0-beta.1" });
+    expect(content.changelog.releases[0]).toMatchObject({ version: "1.0.0-rc.1" });
     expect(content.changelog.releases[0].groups.flatMap((group) => group.items).length).toBeGreaterThanOrEqual(6);
   });
 });

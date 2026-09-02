@@ -2,19 +2,41 @@
   "$schema": "../schemas/skill.schema.json",
   "slug": "writing-effective-technical-handoffs",
   "category": "engineering-workflow",
-  "packs": ["engineering-workflow"],
+  "packs": [
+    "engineering-workflow"
+  ],
   "maturity": "beta",
   "difficulty": "intermediate",
   "featured": false,
   "compatibility": {
-    "surfaces": ["chatgpt", "codex"],
-    "operatingSystems": ["linux", "macos", "windows"],
-    "installModes": ["plugin", "filesystem"]
+    "surfaces": [
+      "chatgpt",
+      "codex"
+    ],
+    "operatingSystems": [
+      "linux",
+      "macos",
+      "windows"
+    ],
+    "installModes": [
+      "plugin",
+      "filesystem"
+    ]
   },
-  "tags": ["handoff", "context", "continuity", "documentation", "agents"],
+  "tags": [
+    "handoff",
+    "context",
+    "continuity",
+    "documentation",
+    "agents"
+  ],
   "dependencies": [],
-  "relatedSkills": ["planning-engineering-work", "managing-implementation-slices", "shipping-github-vercel-changes"],
-  "version": "1.0.0-beta.1",
+  "relatedSkills": [
+    "planning-engineering-work",
+    "managing-implementation-slices",
+    "shipping-github-vercel-changes"
+  ],
+  "version": "1.0.0-rc.1",
   "updatedAt": "2026-09-01",
   "locales": {
     "en": {
@@ -23,8 +45,13 @@
       "primaryBenefit": "Preserves continuity across people, agents, and sessions without forcing the next worker to reconstruct the project from chat history or guesses.",
       "whenToUse": "Use when engineering work is being paused, delegated, moved to another session or agent, or transferred to another person and the next worker needs enough verified context to continue without rediscovery.",
       "whenNotToUse": "Do not use as a general meeting summary or chronological transcript when no continuation of engineering work is expected.",
-      "useCases": ["Hand a partially completed implementation to another agent with exact branch, PR, CI, and next-step state", "Pause a debugging session while preserving confirmed facts, failed hypotheses, constraints, and the restart point"],
-      "examplePrompts": ["Use writing-effective-technical-handoffs to capture the verified state of this work so a cold session can continue from the exact next step."]
+      "useCases": [
+        "Hand a partially completed implementation to another agent with exact branch, PR, CI, and next-step state",
+        "Pause a debugging session while preserving confirmed facts, failed hypotheses, constraints, and the restart point"
+      ],
+      "examplePrompts": [
+        "Use writing-effective-technical-handoffs to capture the verified state of this work so a cold session can continue from the exact next step."
+      ]
     },
     "pt-BR": {
       "displayName": "Redação de Handoffs Técnicos Eficazes",
@@ -32,8 +59,13 @@
       "primaryBenefit": "Preserva continuidade entre pessoas, agentes e sessões sem obrigar o próximo responsável a reconstruir o projeto a partir do histórico da conversa ou de suposições.",
       "whenToUse": "Use quando um trabalho de engenharia for pausado, delegado, movido para outra sessão ou agente, ou transferido para outra pessoa e o próximo responsável precisar de contexto verificado suficiente para continuar sem redescoberta.",
       "whenNotToUse": "Não use como resumo geral de reunião ou transcrição cronológica quando não houver continuidade de trabalho de engenharia esperada.",
-      "useCases": ["Transferir uma implementação parcial para outro agente com estado exato de branch, PR, CI e próximo passo", "Pausar uma sessão de debugging preservando fatos confirmados, hipóteses falhas, restrições e ponto de retomada"],
-      "examplePrompts": ["Use writing-effective-technical-handoffs para registrar o estado verificado deste trabalho para que uma sessão sem contexto possa continuar do próximo passo exato."]
+      "useCases": [
+        "Transferir uma implementação parcial para outro agente com estado exato de branch, PR, CI e próximo passo",
+        "Pausar uma sessão de debugging preservando fatos confirmados, hipóteses falhas, restrições e ponto de retomada"
+      ],
+      "examplePrompts": [
+        "Use writing-effective-technical-handoffs para registrar o estado verificado deste trabalho para que uma sessão sem contexto possa continuar do próximo passo exato."
+      ]
     }
   }
 }

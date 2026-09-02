@@ -7,14 +7,29 @@
   "difficulty": "intermediate",
   "featured": false,
   "compatibility": {
-    "surfaces": ["chatgpt", "codex"],
-    "operatingSystems": ["linux", "macos", "windows"],
-    "installModes": ["plugin", "filesystem"]
+    "surfaces": [
+      "chatgpt",
+      "codex"
+    ],
+    "operatingSystems": [
+      "linux",
+      "macos",
+      "windows"
+    ],
+    "installModes": [
+      "plugin",
+      "filesystem"
+    ]
   },
-  "tags": ["agent-skills", "workflow-design", "documentation", "reusable-processes"],
+  "tags": [
+    "agent-skills",
+    "workflow-design",
+    "documentation",
+    "reusable-processes"
+  ],
   "dependencies": [],
   "relatedSkills": [],
-  "version": "1.0.0-beta.1",
+  "version": "1.0.0-rc.1",
   "updatedAt": "2026-08-26",
   "locales": {
     "en": {
@@ -23,8 +38,13 @@
       "primaryBenefit": "Makes proven decision paths reusable and consistent across future projects.",
       "whenToUse": "Use when a useful workflow, implementation pattern, debugging method, design technique, or repeated prompt should become a reusable Agent Skill for future projects.",
       "whenNotToUse": "Do not use for one-off project conventions, trivial documented facts, purely mechanical rules, or a story about a single bug fix.",
-      "useCases": ["Convert a recurring implementation workflow into an Agent Skill", "Refine a vague trigger until it produces consistent decisions"],
-      "examplePrompts": ["Use turning-techniques-into-skills to turn this recurring workflow into a concise, reusable Agent Skill."]
+      "useCases": [
+        "Convert a recurring implementation workflow into an Agent Skill",
+        "Refine a vague trigger until it produces consistent decisions"
+      ],
+      "examplePrompts": [
+        "Use turning-techniques-into-skills to turn this recurring workflow into a concise, reusable Agent Skill."
+      ]
     },
     "pt-BR": {
       "displayName": "Transformação de Técnicas em Skills",
@@ -32,8 +52,13 @@
       "primaryBenefit": "Torna caminhos de decisão comprovados reutilizáveis e consistentes em projetos futuros.",
       "whenToUse": "Use quando um fluxo útil, padrão de implementação, método de depuração, técnica de design ou prompt recorrente precisar se tornar uma Agent Skill reutilizável em projetos futuros.",
       "whenNotToUse": "Não use para convenções pontuais de projeto, fatos triviais já documentados, regras puramente mecânicas ou relatos sobre a correção de um único bug.",
-      "useCases": ["Converter um fluxo recorrente de implementação em uma Agent Skill", "Refinar um acionamento vago até que produza decisões consistentes"],
-      "examplePrompts": ["Use turning-techniques-into-skills para transformar este fluxo recorrente em uma Agent Skill concisa e reutilizável."]
+      "useCases": [
+        "Converter um fluxo recorrente de implementação em uma Agent Skill",
+        "Refinar um acionamento vago até que produza decisões consistentes"
+      ],
+      "examplePrompts": [
+        "Use turning-techniques-into-skills para transformar este fluxo recorrente em uma Agent Skill concisa e reutilizável."
+      ]
     }
   }
 }

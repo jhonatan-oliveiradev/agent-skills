@@ -7,14 +7,34 @@
   "difficulty": "intermediate",
   "featured": true,
   "compatibility": {
-    "surfaces": ["chatgpt", "codex"],
-    "operatingSystems": ["linux", "macos", "windows"],
-    "installModes": ["plugin", "filesystem"]
+    "surfaces": [
+      "chatgpt",
+      "codex"
+    ],
+    "operatingSystems": [
+      "linux",
+      "macos",
+      "windows"
+    ],
+    "installModes": [
+      "plugin",
+      "filesystem"
+    ]
   },
-  "tags": ["agent-skills", "routing", "method-selection", "workflow", "orchestration"],
+  "tags": [
+    "agent-skills",
+    "routing",
+    "method-selection",
+    "workflow",
+    "orchestration"
+  ],
   "dependencies": [],
-  "relatedSkills": ["turning-techniques-into-skills", "planning-engineering-work", "managing-implementation-slices"],
-  "version": "1.0.0-beta.1",
+  "relatedSkills": [
+    "turning-techniques-into-skills",
+    "planning-engineering-work",
+    "managing-implementation-slices"
+  ],
+  "version": "1.0.0-rc.1",
   "updatedAt": "2026-09-01",
   "locales": {
     "en": {

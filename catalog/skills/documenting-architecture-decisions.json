@@ -2,19 +2,40 @@
   "$schema": "../schemas/skill.schema.json",
   "slug": "documenting-architecture-decisions",
   "category": "architecture-engineering",
-  "packs": ["architecture-engineering"],
+  "packs": [
+    "architecture-engineering"
+  ],
   "maturity": "beta",
   "difficulty": "intermediate",
   "featured": false,
   "compatibility": {
-    "surfaces": ["chatgpt", "codex"],
-    "operatingSystems": ["linux", "macos", "windows"],
-    "installModes": ["plugin", "filesystem"]
+    "surfaces": [
+      "chatgpt",
+      "codex"
+    ],
+    "operatingSystems": [
+      "linux",
+      "macos",
+      "windows"
+    ],
+    "installModes": [
+      "plugin",
+      "filesystem"
+    ]
   },
-  "tags": ["architecture", "adr", "decision-records", "tradeoffs", "documentation"],
+  "tags": [
+    "architecture",
+    "adr",
+    "decision-records",
+    "tradeoffs",
+    "documentation"
+  ],
   "dependencies": [],
-  "relatedSkills": ["choosing-application-architecture", "designing-software-boundaries"],
-  "version": "1.0.0-beta.1",
+  "relatedSkills": [
+    "choosing-application-architecture",
+    "designing-software-boundaries"
+  ],
+  "version": "1.0.0-rc.1",
   "updatedAt": "2026-09-01",
   "locales": {
     "en": {
@@ -23,8 +44,13 @@
       "primaryBenefit": "Preserves the rationale behind expensive decisions so future changes can evaluate the original trade-offs instead of reopening them from memory.",
       "whenToUse": "Use when a software decision materially affects structure, quality attributes, dependencies, interfaces, technology choices, or team direction and its rationale must remain reviewable over time.",
       "whenNotToUse": "Do not use for routine implementation details that are inexpensive to reverse and already evident from the code or local documentation.",
-      "useCases": ["Record why a team chose a modular monolith instead of microservices", "Supersede an accepted architecture decision after new scale or reliability evidence changes the trade-off"],
-      "examplePrompts": ["Use documenting-architecture-decisions to turn this architecture discussion into a focused ADR with context, decision drivers, realistic alternatives, consequences, and a review trigger."]
+      "useCases": [
+        "Record why a team chose a modular monolith instead of microservices",
+        "Supersede an accepted architecture decision after new scale or reliability evidence changes the trade-off"
+      ],
+      "examplePrompts": [
+        "Use documenting-architecture-decisions to turn this architecture discussion into a focused ADR with context, decision drivers, realistic alternatives, consequences, and a review trigger."
+      ]
     },
     "pt-BR": {
       "displayName": "Documentação de Decisões de Arquitetura",
@@ -32,8 +58,13 @@
       "primaryBenefit": "Preserva a justificativa de decisões caras para que mudanças futuras avaliem os trade-offs originais em vez de reabrir a discussão pela memória.",
       "whenToUse": "Use quando uma decisão de software afeta materialmente estrutura, atributos de qualidade, dependências, interfaces, escolhas tecnológicas ou direção da equipe e sua justificativa precisa continuar revisável ao longo do tempo.",
       "whenNotToUse": "Não use para detalhes rotineiros de implementação que são baratos de reverter e já ficam evidentes no código ou na documentação local.",
-      "useCases": ["Registrar por que uma equipe escolheu um monólito modular em vez de microsserviços", "Substituir uma decisão arquitetural aceita depois que novas evidências de escala ou confiabilidade alteram o trade-off"],
-      "examplePrompts": ["Use documenting-architecture-decisions para transformar esta discussão de arquitetura em um ADR focado, com contexto, drivers da decisão, alternativas realistas, consequências e gatilho de revisão."]
+      "useCases": [
+        "Registrar por que uma equipe escolheu um monólito modular em vez de microsserviços",
+        "Substituir uma decisão arquitetural aceita depois que novas evidências de escala ou confiabilidade alteram o trade-off"
+      ],
+      "examplePrompts": [
+        "Use documenting-architecture-decisions para transformar esta discussão de arquitetura em um ADR focado, com contexto, drivers da decisão, alternativas realistas, consequências e gatilho de revisão."
+      ]
     }
   }
 }

@@ -18,6 +18,14 @@ Route the task before executing it. Choose the smallest sufficient set of method
 7. If no skill materially improves the task, select **no skill**. A forced match is worse than normal reasoning.
 8. State the chosen method or ordered method sequence briefly, then **delegate**. This router does not execute the specialized workflow itself.
 
+## Ownership test
+Before adding a method, identify what it owns:
+- **Artifact owner:** the method responsible for the main thing being produced or changed.
+- **Stage owner:** the method responsible for the current lifecycle stage; do not preload a later-stage method before its input exists.
+- **Verification owner:** a review or testing method may verify the artifact without becoming a second implementation owner.
+
+Do not use a supporting method to redo the primary method. If two candidates claim the same artifact and stage, choose the more specific owner and exclude the other unless the task contains a genuinely separate responsibility.
+
 ## Routing examples
 - Build a Next.js screen from a Figma source: `translating-figma-to-nextjs` first; add `auditing-pixel-perfect-frontend` for visual verification when needed.
 - Refactor a problematic backend boundary: `designing-software-boundaries` → `planning-safe-refactors`.

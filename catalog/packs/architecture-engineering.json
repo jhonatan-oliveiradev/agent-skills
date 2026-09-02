@@ -4,7 +4,7 @@
   "status": "active",
   "featured": false,
   "color": "cyan",
-  "version": "1.0.0-beta.1",
+  "version": "1.0.0-rc.1",
   "skills": [
     "choosing-application-architecture",
     "designing-software-boundaries",
@@ -16,13 +16,19 @@
       "name": "Architecture & Engineering",
       "summary": "Architecture selection, software boundaries, decision records, and incremental refactoring for systems that need to evolve without accidental complexity.",
       "description": "An installable workflow for deriving an architecture from real constraints, shaping cohesive ownership boundaries, preserving significant decisions, and evolving structure through safe migration slices.",
-      "outcomes": ["Make architecture and boundary choices traceable to quality attributes, ownership, and change patterns", "Evolve structural decisions incrementally with recorded trade-offs, verification evidence, and rollback paths"]
+      "outcomes": [
+        "Make architecture and boundary choices traceable to quality attributes, ownership, and change patterns",
+        "Evolve structural decisions incrementally with recorded trade-offs, verification evidence, and rollback paths"
+      ]
     },
     "pt-BR": {
       "name": "Arquitetura e Engenharia",
       "summary": "Escolha arquitetural, limites de software, registros de decisão e refactoring incremental para sistemas que precisam evoluir sem complexidade acidental.",
       "description": "Um fluxo instalável para derivar arquitetura de restrições reais, estruturar limites coesos de ownership, preservar decisões significativas e evoluir a estrutura por fatias seguras de migração.",
-      "outcomes": ["Tornar escolhas de arquitetura e limites rastreáveis a atributos de qualidade, ownership e padrões de mudança", "Evoluir decisões estruturais de forma incremental com trade-offs registrados, evidências de verificação e caminhos de rollback"]
+      "outcomes": [
+        "Tornar escolhas de arquitetura e limites rastreáveis a atributos de qualidade, ownership e padrões de mudança",
+        "Evoluir decisões estruturais de forma incremental com trade-offs registrados, evidências de verificação e caminhos de rollback"
+      ]
     }
   }
 }

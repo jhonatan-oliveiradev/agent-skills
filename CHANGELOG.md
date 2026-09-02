@@ -2,6 +2,18 @@
 
 All notable changes to this skill library are documented here.
 
+## [1.0.0-rc.1] - 2026-09-02
+
+### Release readiness
+
+- Froze the release candidate at 49 canonical skills and 10 active packs.
+- Added a versioned routing benchmark covering every canonical method as a primary owner, important overlap boundaries, and deliberate no-skill outcomes.
+- Refined `selecting-working-methods` around artifact, stage, and verification ownership without turning routing into a static decision table.
+- Added machine-readable readiness gates for the plugin, catalog and packs, cross-platform installers, and bilingual microsite.
+- Aligned current public release copy and kept ChatGPT, Codex, and Claude-compatible distribution under the existing repository validation gates.
+
+`1.0.0-rc.1` is a release candidate. Stable `1.0.0` remains a later promotion after real-use evidence.
+
 ## [1.0.0-beta.1] - Unreleased
 
 ### Microsite foundation

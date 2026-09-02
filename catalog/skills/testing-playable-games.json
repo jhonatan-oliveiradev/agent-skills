@@ -2,19 +2,38 @@
   "$schema": "../schemas/skill.schema.json",
   "slug": "testing-playable-games",
   "category": "game-development",
-  "packs": ["game-development"],
+  "packs": [
+    "game-development"
+  ],
   "maturity": "stable",
   "difficulty": "advanced",
   "featured": false,
   "compatibility": {
-    "surfaces": ["chatgpt", "codex"],
-    "operatingSystems": ["linux", "macos", "windows"],
-    "installModes": ["plugin", "filesystem"]
+    "surfaces": [
+      "chatgpt",
+      "codex"
+    ],
+    "operatingSystems": [
+      "linux",
+      "macos",
+      "windows"
+    ],
+    "installModes": [
+      "plugin",
+      "filesystem"
+    ]
   },
-  "tags": ["game-testing", "regression-testing", "gameplay", "performance"],
+  "tags": [
+    "game-testing",
+    "regression-testing",
+    "gameplay",
+    "performance"
+  ],
   "dependencies": [],
-  "relatedSkills": ["designing-action-combat"],
-  "version": "1.0.0-beta.1",
+  "relatedSkills": [
+    "designing-action-combat"
+  ],
+  "version": "1.0.0-rc.1",
   "updatedAt": "2026-08-26",
   "locales": {
     "en": {
@@ -23,8 +42,13 @@
       "primaryBenefit": "Provides reproducible evidence that game features survive realistic sequences, transitions, and regression risks.",
       "whenToUse": "Use when verifying a browser or desktop game build for gameplay correctness, controls, combat feel, camera behavior, animation, performance, progression, and regression risk before calling a feature complete.",
       "whenNotToUse": "Do not use as a substitute for focused code-level tests when no playable build or gameplay sequence is available to exercise.",
-      "useCases": ["Verify combat and movement through normal gameplay sequences", "Reproduce camera, progression, or long-session performance failures"],
-      "examplePrompts": ["Use testing-playable-games to verify this build across controls, combat, transitions, and long-session performance."]
+      "useCases": [
+        "Verify combat and movement through normal gameplay sequences",
+        "Reproduce camera, progression, or long-session performance failures"
+      ],
+      "examplePrompts": [
+        "Use testing-playable-games to verify this build across controls, combat, transitions, and long-session performance."
+      ]
     },
     "pt-BR": {
       "displayName": "Validação de Builds Jogáveis",
@@ -32,8 +56,13 @@
       "primaryBenefit": "Fornece evidências reproduzíveis de que as funcionalidades do jogo resistem a sequências, transições e riscos de regressão realistas.",
       "whenToUse": "Use ao verificar um build de jogo para navegador ou desktop quanto à correção do gameplay, controles, sensação do combate, comportamento da câmera, animação, performance, progressão e risco de regressão antes de considerar uma funcionalidade concluída.",
       "whenNotToUse": "Não use como substituto de testes focados no código quando não houver um build jogável ou uma sequência de gameplay disponível para exercitar.",
-      "useCases": ["Verificar combate e movimento em sequências normais de gameplay", "Reproduzir falhas de câmera, progressão ou performance em sessões longas"],
-      "examplePrompts": ["Use testing-playable-games para verificar este build em controles, combate, transições e performance durante sessões longas."]
+      "useCases": [
+        "Verificar combate e movimento em sequências normais de gameplay",
+        "Reproduzir falhas de câmera, progressão ou performance em sessões longas"
+      ],
+      "examplePrompts": [
+        "Use testing-playable-games para verificar este build em controles, combate, transições e performance durante sessões longas."
+      ]
     }
   }
 }

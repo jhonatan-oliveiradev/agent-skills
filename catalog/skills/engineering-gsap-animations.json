@@ -2,16 +2,34 @@
   "$schema": "../schemas/skill.schema.json",
   "slug": "engineering-gsap-animations",
   "category": "motion",
-  "packs": ["motion"],
+  "packs": [
+    "motion"
+  ],
   "maturity": "stable",
   "difficulty": "advanced",
   "featured": false,
   "compatibility": {
-    "surfaces": ["chatgpt", "codex"],
-    "operatingSystems": ["linux", "macos", "windows"],
-    "installModes": ["plugin", "filesystem"]
+    "surfaces": [
+      "chatgpt",
+      "codex"
+    ],
+    "operatingSystems": [
+      "linux",
+      "macos",
+      "windows"
+    ],
+    "installModes": [
+      "plugin",
+      "filesystem"
+    ]
   },
-  "tags": ["gsap", "react", "nextjs", "scrolltrigger", "animation-lifecycle"],
+  "tags": [
+    "gsap",
+    "react",
+    "nextjs",
+    "scrolltrigger",
+    "animation-lifecycle"
+  ],
   "dependencies": [
     {
       "name": "GSAP",
@@ -20,8 +38,10 @@
       "url": "https://gsap.com"
     }
   ],
-  "relatedSkills": ["craft-premium-motion"],
-  "version": "1.0.0-beta.1",
+  "relatedSkills": [
+    "craft-premium-motion"
+  ],
+  "version": "1.0.0-rc.1",
   "updatedAt": "2026-08-26",
   "locales": {
     "en": {
@@ -30,8 +50,13 @@
       "primaryBenefit": "Delivers reliable GSAP animation that survives resizing, route changes, repeated mounting, and accessibility preferences.",
       "whenToUse": "Use when GSAP has been selected for React or Next.js animation, especially timelines, ScrollTrigger, pinning, scrub, SplitText, Flip, SVG, responsive animation, plugin lifecycle, cleanup, or animation-related integration bugs.",
       "whenNotToUse": "Do not use when the animation technology or motion direction is still undecided, or when runtime profiling is the main problem.",
-      "useCases": ["Build a scoped React timeline with correct cleanup", "Repair responsive ScrollTrigger pinning and lifecycle behavior"],
-      "examplePrompts": ["Use engineering-gsap-animations to implement this selected GSAP timeline with correct React lifecycle and reduced-motion behavior."]
+      "useCases": [
+        "Build a scoped React timeline with correct cleanup",
+        "Repair responsive ScrollTrigger pinning and lifecycle behavior"
+      ],
+      "examplePrompts": [
+        "Use engineering-gsap-animations to implement this selected GSAP timeline with correct React lifecycle and reduced-motion behavior."
+      ]
     },
     "pt-BR": {
       "displayName": "Engenharia de Animações com GSAP",
@@ -39,8 +64,13 @@
       "primaryBenefit": "Entrega animações GSAP confiáveis durante redimensionamentos, mudanças de rota, remontagens e preferências de acessibilidade.",
       "whenToUse": "Use quando GSAP tiver sido escolhido para animações em React ou Next.js, especialmente para timelines, ScrollTrigger, pinning, scrub, SplitText, Flip, SVG, animação responsiva, ciclo de vida de plugins, limpeza ou bugs de integração relacionados a animações.",
       "whenNotToUse": "Não use quando a tecnologia de animação ou a direção de motion ainda estiver indefinida, nem quando o problema principal for o profiling em runtime.",
-      "useCases": ["Construir uma timeline isolada em React com limpeza correta", "Corrigir pinning responsivo e ciclo de vida do ScrollTrigger"],
-      "examplePrompts": ["Use engineering-gsap-animations para implementar esta timeline escolhida em GSAP com ciclo de vida correto no React e comportamento para redução de movimento."]
+      "useCases": [
+        "Construir uma timeline isolada em React com limpeza correta",
+        "Corrigir pinning responsivo e ciclo de vida do ScrollTrigger"
+      ],
+      "examplePrompts": [
+        "Use engineering-gsap-animations para implementar esta timeline escolhida em GSAP com ciclo de vida correto no React e comportamento para redução de movimento."
+      ]
     }
   }
 }
