@@ -45,7 +45,8 @@ jobs:
       - name: Commit synchronized catalog state
         shell: bash
         run: |
-          git add catalog/skills catalog/packs catalog/generated/catalog.json apps/web/src/generated/catalog.json
+          git add catalog/skills catalog/packs catalog/generated/catalog.json
+          git add -f apps/web/src/generated/catalog.json
           if git diff --cached --quiet; then
             echo "Catalog state is already current."
             exit 0
