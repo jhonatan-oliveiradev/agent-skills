@@ -32,8 +32,21 @@ describe("cross-domain relations", () => {
     const frontend = packs.find((pack) => pack.slug === "frontend-product")!;
     const relations = getCasesUsingPackMethods(cases, frontend);
 
-    expect(relations).toHaveLength(2);
-    expect(relations[0]).toMatchObject({
+    expect(relations).toHaveLength(3);
+
+    const portfolioRelation = relations.find(
+      (relation) => relation.case.slug === "portfolio-translation-hardening",
+    );
+    expect(portfolioRelation).toMatchObject({
+      case: { slug: "portfolio-translation-hardening" },
+      matchingSkillSlugs: ["shipping-github-vercel-changes"],
+      coversEntirePack: false,
+    });
+
+    const catalogRelation = relations.find(
+      (relation) => relation.case.slug === "catalog-experience",
+    );
+    expect(catalogRelation).toMatchObject({
       case: { slug: "catalog-experience" },
       matchingSkillSlugs: [
         "designing-ui-systems",

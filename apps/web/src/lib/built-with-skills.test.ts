@@ -6,21 +6,25 @@ import {
 } from "./built-with-skills";
 
 describe("built with skills records", () => {
-  it.each(["en", "pt-BR"] as const)("publishes two localized cases for %s", (locale) => {
+  it.each(["en", "pt-BR"] as const)("publishes three localized cases for %s", (locale) => {
     const cases = getBuiltWithSkillsCases(locale);
 
-    expect(cases).toHaveLength(2);
+    expect(cases).toHaveLength(3);
     expect(cases.map((item) => item.slug)).toEqual([
+      "portfolio-translation-hardening",
       "catalog-experience",
       "pack-experience",
     ]);
-    expect(cases.every((item) => item.skills.length === 3)).toBe(true);
+    expect(cases.every((item) => item.skills.length > 0)).toBe(true);
     expect(cases.every((item) => item.results.length > 0)).toBe(true);
   });
 
   it("classifies the existing self-hosted records as internal evidence", () => {
-    const cases = getBuiltWithSkillsCases("en");
+    const cases = getBuiltWithSkillsCases("en").filter(
+      (item) => item.project.id === "agent-skills-studio",
+    );
 
+    expect(cases).toHaveLength(2);
     for (const item of cases) {
       expect(item.evidenceClass).toBe("internal");
       expect(item.project).toEqual({
@@ -31,8 +35,10 @@ describe("built with skills records", () => {
     }
   });
 
-  it("publishes explicit source evidence instead of inferring verification", () => {
-    const cases = getBuiltWithSkillsCases("en");
+  it("publishes explicit source evidence for the internal records", () => {
+    const cases = getBuiltWithSkillsCases("en").filter(
+      (item) => item.evidenceClass === "internal",
+    );
 
     for (const item of cases) {
       expect(item.evidence).toHaveLength(1);
@@ -46,8 +52,32 @@ describe("built with skills records", () => {
     }
   });
 
+  it("publishes Portfolio 2025 as inspectable public-safe real-use evidence", () => {
+    const item = getBuiltWithSkillsCaseBySlug("en", "portfolio-translation-hardening");
+
+    expect(item).toBeDefined();
+    expect(item?.evidenceClass).toBe("real-use");
+    expect(item?.project).toEqual({
+      id: "portfolio-2025",
+      name: "Portfolio 2025",
+    });
+    expect(item?.skills).toEqual([
+      "selecting-working-methods",
+      "building-regression-tests",
+      "testing-integration-boundaries",
+      "shipping-github-vercel-changes",
+    ]);
+    expect(item?.evidence.map((entry) => entry.type)).toEqual(["source", "qa"]);
+    expect(item?.evidence.every((entry) =>
+      entry.href.startsWith("https://github.com/jhonatan-oliveiradev/agent-skills/"),
+    )).toBe(true);
+    expect(item && hasInspectableRealUseEvidence(item)).toBe(true);
+  });
+
   it("requires inspectable project evidence before a case can count as real-use", () => {
-    const internalCase = getBuiltWithSkillsCases("en")[0]!;
+    const internalCase = getBuiltWithSkillsCases("en").find(
+      (item) => item.evidenceClass === "internal",
+    )!;
     const sourceOnlyRealUse = {
       ...internalCase,
       evidenceClass: "real-use" as const,
