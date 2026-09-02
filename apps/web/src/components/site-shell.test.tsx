@@ -302,8 +302,11 @@ describe("foundation navigation targets", () => {
     unmount();
 
     render(await ChangelogPage({ params: Promise.resolve({ locale: "en" }) }));
-    expect(screen.getByRole("heading", { name: "1.0.0-rc.2" })).toBeInTheDocument();
-    expect(screen.getByText(/searchable.*catalog/i)).toBeInTheDocument();
+    const currentReleaseHeading = screen.getByRole("heading", { name: "1.0.0-rc.2" });
+    expect(currentReleaseHeading).toBeInTheDocument();
+    const currentRelease = currentReleaseHeading.closest("article");
+    expect(currentRelease).not.toBeNull();
+    expect(currentRelease).toHaveTextContent(/searchable.*catalog/i);
     expect(screen.getByRole("link", { name: /source changelog/i })).toHaveAttribute(
       "href",
       expect.stringContaining("CHANGELOG.md"),
