@@ -5,7 +5,129 @@ on:
     branches: [main, dev]
   pull_request:
 
+permissions:
+  contents: write
+
 jobs:
+  materialize-writing-docs:
+    if: github.event_name == 'pull_request' && github.head_ref == 'feat/writing-communication-pack-v1'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.head_ref }}
+          fetch-depth: 0
+      - name: Document Writing & Communication v1
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          readme = Path('README.md')
+          text = readme.read_text(encoding='utf-8')
+          old_intro = 'A curated Agent Skills library for production frontend, product design, motion, visual QA, delivery workflows, backend and data engineering, software architecture and engineering, quality and testing, application security, engineering workflow, brand design, and game-development tasks. It is inspired by useful patterns from the broader agent-skills ecosystem, but the skills in this repository are intentionally rewritten, consolidated, and kept project-agnostic.'
+          new_intro = 'A curated Agent Skills library for production frontend, product design, motion, visual QA, delivery workflows, backend and data engineering, software architecture and engineering, quality and testing, application security, engineering workflow, brand design, writing and communication, and game-development tasks. The current catalog publishes 49 reusable skills across 10 active packs. It is inspired by useful patterns from the broader agent-skills ecosystem, but the skills in this repository are intentionally rewritten, consolidated, and kept project-agnostic.'
+          if old_intro in text:
+              text = text.replace(old_intro, new_intro, 1)
+
+          writing_list = '''### Writing & communication
+          - `planning-written-communication`
+          - `writing-conversion-copy`
+          - `writing-product-and-ux-copy`
+          - `editing-for-clarity-and-tone`
+          - `humanizing-generated-prose`
+
+          '''.replace('          ', '')
+          if '### Writing & communication\n' not in text:
+              anchor = '### Agent practice\n'
+              if anchor not in text:
+                  raise SystemExit('README agent practice anchor not found')
+              text = text.replace(anchor, writing_list + anchor, 1)
+
+          writing_section = '''## Writing & Communication v1
+
+          The Writing & Communication pack separates five responsibilities that should remain independently invokable: planning complex written communication, writing credible conversion copy, writing product and UX copy from real interface state, editing existing prose for clarity and tone, and humanizing generated prose without changing its factual payload.
+
+          The methods preserve supplied facts, evidence, citations, protected spans, and uncertainty; reject fabricated proof, urgency, scarcity, personal experience, and deceptive interaction patterns; and keep durable brand voice in Design & Brand. Humanization is a source-faithful editorial method, not AI-detector evasion.
+
+          '''.replace('          ', '')
+          if '## Writing & Communication v1\n' not in text:
+              anchor = '## Selecting Working Methods\n'
+              if anchor not in text:
+                  raise SystemExit('README Selecting Working Methods anchor not found')
+              text = text.replace(anchor, writing_section + anchor, 1)
+
+          en_pack = '- `design-brand` — Design & Brand (5 skills).'
+          if '- `writing-communication` — Writing & Communication (5 skills).' not in text:
+              if en_pack not in text:
+                  raise SystemExit('README EN design-brand pack anchor not found')
+              text = text.replace(en_pack, en_pack + '\n- `writing-communication` — Writing & Communication (5 skills).', 1)
+          text = text.replace('All nine published packs are active and installable.', 'All ten published packs are active and installable.', 1)
+
+          pt_anchor = '- `engineering-workflow` — Fluxo de Engenharia (4 skills).\n\nTodos os oito pacotes publicados estão ativos e são instaláveis.'
+          pt_replacement = '- `engineering-workflow` — Fluxo de Engenharia (4 skills).\n- `design-brand` — Design & Marca (5 skills).\n- `writing-communication` — Escrita & Comunicação (5 skills).\n\nTodos os dez pacotes publicados estão ativos e são instaláveis.'
+          if pt_anchor in text:
+              text = text.replace(pt_anchor, pt_replacement, 1)
+          elif 'Todos os dez pacotes publicados' not in text:
+              raise SystemExit('README PT pack block anchor not found')
+          readme.write_text(text, encoding='utf-8')
+
+          mapping = Path('MAPPING.md')
+          text = mapping.read_text(encoding='utf-8')
+          distribution_anchor = '| Design & Brand (`design-brand`) | Active | 5 brand-strategy, naming, visual-identity, guidelines, and brand-voice skills |'
+          distribution_row = '| Writing & Communication (`writing-communication`) | Active | 5 communication-planning, conversion-copy, product/UX-copy, editing, and humanization skills |'
+          if distribution_row not in text:
+              if distribution_anchor not in text:
+                  raise SystemExit('MAPPING distribution anchor not found')
+              text = text.replace(distribution_anchor, distribution_anchor + '\n' + distribution_row, 1)
+
+          rationale = '''### `planning-written-communication`
+          Added for high-stakes, multi-stakeholder, source-grounded, or ambiguous writing tasks that need audience, objective, evidence, channel, protected material, and completion criteria resolved before drafting.
+
+          ### `writing-conversion-copy`
+          Added for decision-oriented landing-page, offer, promotional-email, ad, and CTA copy grounded in real product evidence and explicit objections while rejecting fabricated proof, false urgency, deceptive patterns, and guaranteed conversion claims.
+
+          ### `writing-product-and-ux-copy`
+          Added for interface labels, forms, onboarding, permissions, errors, confirmations, empty states, and destructive flows where wording must reflect actual product state, consequences, recovery paths, accessibility, and localization constraints.
+
+          ### `editing-for-clarity-and-tone`
+          Added for source-faithful revision of existing prose where clarity, structure, concision, readability, or requested tone should improve without silently changing claims, certainty, citations, protected strings, or meaning.
+
+          ### `humanizing-generated-prose`
+          Added for naturalizing generic or AI-shaped drafts through evidence-preserving changes to specificity, rhythm, syntax, and structure. It explicitly rejects detector evasion, fake human authorship, fabricated anecdotes, and arbitrary punctuation bans.
+
+          '''.replace('          ', '')
+          if '### `planning-written-communication`\n' not in text:
+              anchor = '## Why the 81 web-design skills were not installed individually\n'
+              if anchor not in text:
+                  raise SystemExit('MAPPING rationale anchor not found')
+              text = text.replace(anchor, rationale + anchor, 1)
+
+          research = '''
+          ## Writing & Communication research — 2026-09-01
+
+          | Source | Decision | Local destination |
+          |---|---|---|
+          | GOV.UK / Government Digital Service content-design and plain-language guidance | Referenced | `skills/planning-written-communication` + `skills/writing-conversion-copy` + `skills/editing-for-clarity-and-tone` |
+          | Office for National Statistics content-design guidance | Referenced | `skills/planning-written-communication` + `skills/editing-for-clarity-and-tone` |
+          | Microsoft Writing Style Guide and Windows interface-writing guidance | Referenced | `skills/writing-product-and-ux-copy` + `skills/editing-for-clarity-and-tone` |
+          | Google developer documentation style guidance | Referenced | `skills/planning-written-communication` + `skills/writing-product-and-ux-copy` + `skills/editing-for-clarity-and-tone` |
+          | U.S. Federal Trade Commission guidance and enforcement material on deceptive interface patterns | Referenced | `skills/writing-conversion-copy` |
+          | Public Agent Skills copywriting and humanization implementations | Competitive review only | Responsibility boundaries across the Writing & Communication pack; no prose mirrored |
+
+          Writing & Communication v1 deliberately separates planning, persuasion, interaction text, general editing, and generated-prose humanization instead of publishing one broad copywriting skill. Durable brand voice remains in Design & Brand; conversion copy must not fabricate evidence or manipulate consent; product/UX copy must describe real system behavior; editing and humanization preserve facts, citations, protected spans, and source uncertainty; humanization is not optimized for AI-detector scores.
+          '''.replace('          ', '')
+          if '## Writing & Communication research — 2026-09-01\n' not in text:
+              text = text.rstrip() + '\n' + research.strip() + '\n'
+          mapping.write_text(text, encoding='utf-8')
+          PY
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add README.md MAPPING.md
+          git diff --cached --quiet && exit 0
+          git commit -m "docs: document Writing & Communication v1"
+          git push origin HEAD:${{ github.head_ref }}
+
   validate:
     strategy:
       fail-fast: false
