@@ -1,0 +1,70 @@
+{
+  "$schema": "../schemas/skill.schema.json",
+  "slug": "mapping-existing-codebase-structure",
+  "category": "codebase-intelligence",
+  "packs": [
+    "codebase-intelligence"
+  ],
+  "maturity": "beta",
+  "difficulty": "intermediate",
+  "featured": false,
+  "compatibility": {
+    "surfaces": [
+      "chatgpt",
+      "codex"
+    ],
+    "operatingSystems": [
+      "linux",
+      "macos",
+      "windows"
+    ],
+    "installModes": [
+      "plugin",
+      "filesystem"
+    ]
+  },
+  "tags": [
+    "codebase",
+    "structure",
+    "boundaries",
+    "entrypoints",
+    "evidence"
+  ],
+  "dependencies": [],
+  "relatedSkills": [
+    "designing-software-boundaries",
+    "choosing-application-architecture"
+  ],
+  "version": "1.0.0-rc.1",
+  "updatedAt": "2026-09-02",
+  "locales": {
+    "en": {
+      "displayName": "Mapping Existing Codebase Structure",
+      "summary": "Builds a traceable current-state map of entrypoints, modules, responsibilities, boundaries, and dependency direction without proposing a redesign.",
+      "primaryBenefit": "Replaces architectural guesswork with a scoped structural map whose claims point back to concrete code and configuration evidence.",
+      "whenToUse": "Use when you need to understand how an existing codebase is organized, where execution enters, how modules divide responsibility, or which ownership boundaries are observable before another engineering decision.",
+      "whenNotToUse": "Do not use to choose a future architecture or design new boundaries; Architecture & Engineering owns those decisions through choosing-application-architecture and designing-software-boundaries.",
+      "useCases": [
+        "Orient work in an unfamiliar repository by locating entrypoints, module responsibilities, dependency direction, and ownership signals",
+        "Document the current structural seams around a capability before handing evidence to architecture or change planning"
+      ],
+      "examplePrompts": [
+        "Use mapping-existing-codebase-structure to map the current entrypoints, modules, boundaries, dependency direction, and evidence gaps for this capability. Mark every material claim as observed, inferred, or unresolved and cite its source and location."
+      ]
+    },
+    "pt-BR": {
+      "displayName": "Mapeamento de Estrutura de Codebase Existente",
+      "summary": "Constrói um mapa rastreável do estado atual com entrypoints, módulos, responsabilidades, limites e direção de dependências sem propor um redesign.",
+      "primaryBenefit": "Substitui suposições arquiteturais por um mapa estrutural delimitado cujas afirmações apontam para evidências concretas em código e configuração.",
+      "whenToUse": "Use quando precisar compreender como uma codebase existente está organizada, onde a execução começa, como os módulos dividem responsabilidades ou quais limites de ownership são observáveis antes de outra decisão de engenharia.",
+      "whenNotToUse": "Não use para escolher uma arquitetura futura ou desenhar novos limites; Arquitetura e Engenharia é responsável por essas decisões com choosing-application-architecture e designing-software-boundaries.",
+      "useCases": [
+        "Orientar trabalho em um repositório desconhecido localizando entrypoints, responsabilidades de módulos, direção de dependências e sinais de ownership",
+        "Documentar os seams estruturais atuais de uma capacidade antes de entregar evidências para arquitetura ou planejamento de mudança"
+      ],
+      "examplePrompts": [
+        "Use mapping-existing-codebase-structure para mapear entrypoints, módulos, limites, direção de dependências e lacunas de evidência desta capacidade. Marque cada afirmação material como observada, inferida ou não resolvida e cite sua fonte e localização."
+      ]
+    }
+  }
+}

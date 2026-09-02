@@ -1,0 +1,70 @@
+{
+  "$schema": "../schemas/skill.schema.json",
+  "slug": "analyzing-change-blast-radius",
+  "category": "codebase-intelligence",
+  "packs": [
+    "codebase-intelligence"
+  ],
+  "maturity": "beta",
+  "difficulty": "advanced",
+  "featured": false,
+  "compatibility": {
+    "surfaces": [
+      "chatgpt",
+      "codex"
+    ],
+    "operatingSystems": [
+      "linux",
+      "macos",
+      "windows"
+    ],
+    "installModes": [
+      "plugin",
+      "filesystem"
+    ]
+  },
+  "tags": [
+    "codebase",
+    "blast-radius",
+    "change-impact",
+    "dependencies",
+    "risk"
+  ],
+  "dependencies": [],
+  "relatedSkills": [
+    "planning-safe-refactors",
+    "building-regression-tests"
+  ],
+  "version": "1.0.0-rc.1",
+  "updatedAt": "2026-09-02",
+  "locales": {
+    "en": {
+      "displayName": "Analyzing Change Blast Radius",
+      "summary": "Bounds the potential impact of a proposed change across direct and inferred dependents, contracts, runtime paths, tests, and fixtures.",
+      "primaryBenefit": "Surfaces evidence-backed risk and unresolved impact before a team chooses implementation slices or protection strategy.",
+      "whenToUse": "Use when a proposed change may affect multiple consumers, contracts, runtime paths, data flows, tests, or fixtures and you need an evidence-bounded impact map before planning.",
+      "whenNotToUse": "Do not use to choose migration slices or implement protections; Planning Safe Refactors owns migration strategy and Quality & Testing owns regression-test design.",
+      "useCases": [
+        "Assess which callers, contracts, tests, and user paths may be affected by changing a shared interface",
+        "Identify direct and transitive impact evidence before replacing infrastructure, persistence, or framework behavior"
+      ],
+      "examplePrompts": [
+        "Use analyzing-change-blast-radius to bound the impact of this proposed change across dependents, contracts, runtime paths, tests, and fixtures. Mark findings as observed, inferred, or unresolved and cite the source and location for every material claim."
+      ]
+    },
+    "pt-BR": {
+      "displayName": "Análise de Blast Radius de Mudança",
+      "summary": "Delimita o impacto potencial de uma mudança proposta em dependentes diretos e inferidos, contratos, caminhos de runtime, testes e fixtures.",
+      "primaryBenefit": "Expõe risco sustentado por evidências e impacto não resolvido antes da escolha de fatias de implementação ou estratégia de proteção.",
+      "whenToUse": "Use quando uma mudança proposta puder afetar vários consumidores, contratos, caminhos de runtime, fluxos de dados, testes ou fixtures e você precisar de um mapa de impacto delimitado por evidências antes do planejamento.",
+      "whenNotToUse": "Não use para escolher fatias de migração ou implementar proteções; Planning Safe Refactors é responsável pela estratégia de migração e Qualidade e Testes pelo desenho de testes de regressão.",
+      "useCases": [
+        "Avaliar quais callers, contratos, testes e caminhos de usuário podem ser afetados pela mudança de uma interface compartilhada",
+        "Identificar evidências de impacto direto e transitivo antes de substituir comportamento de infraestrutura, persistência ou framework"
+      ],
+      "examplePrompts": [
+        "Use analyzing-change-blast-radius para delimitar o impacto desta mudança em dependentes, contratos, caminhos de runtime, testes e fixtures. Marque os achados como observados, inferidos ou não resolvidos e cite a fonte e localização de cada afirmação material."
+      ]
+    }
+  }
+}

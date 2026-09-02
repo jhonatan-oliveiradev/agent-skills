@@ -1,0 +1,35 @@
+{
+  "$schema": "../schemas/pack.schema.json",
+  "slug": "codebase-intelligence",
+  "status": "active",
+  "featured": false,
+  "color": "indigo",
+  "version": "1.0.0-rc.1",
+  "skills": [
+    "mapping-existing-codebase-structure",
+    "tracing-code-execution-paths",
+    "analyzing-change-blast-radius",
+    "investigating-codebase-semantically",
+    "planning-codebase-changes-with-evidence"
+  ],
+  "locales": {
+    "en": {
+      "name": "Codebase Intelligence",
+      "summary": "Evidence-led structure mapping, execution tracing, semantic investigation, and change-impact analysis for existing codebases.",
+      "description": "An engine-agnostic workflow for understanding code with progressive context expansion, explicit uncertainty, and optional CodeGraph acceleration.",
+      "outcomes": [
+        "Reconstruct codebase structure and behavior from traceable evidence instead of assumptions",
+        "Reduce unnecessary context expansion while preparing safer architecture, planning, testing, and debugging handoffs"
+      ]
+    },
+    "pt-BR": {
+      "name": "Inteligência de Codebase",
+      "summary": "Mapeamento estrutural, rastreamento de execução, investigação semântica e análise de impacto orientados por evidências em codebases existentes.",
+      "description": "Um fluxo agnóstico de engine para compreender código com expansão progressiva de contexto, incerteza explícita e aceleração opcional pelo CodeGraph.",
+      "outcomes": [
+        "Reconstruir estrutura e comportamento da codebase a partir de evidências rastreáveis, não de suposições",
+        "Reduzir expansão desnecessária de contexto ao preparar handoffs mais seguros para arquitetura, planejamento, testes e debugging"
+      ]
+    }
+  }
+}
