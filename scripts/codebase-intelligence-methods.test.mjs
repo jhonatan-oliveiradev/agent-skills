@@ -53,3 +53,26 @@ test("keeps neighboring ownership outside the five methods", async () => {
   assert.match(planning, /does not.*implement|do not.*implement/i);
   assert.match(planning, /Engineering Workflow|writing-plans/i);
 });
+
+test("documents CodeGraph as attributed optional setup", async () => {
+  const source = await readFile(
+    path.join(root, "skills", "mapping-existing-codebase-structure", "references", "codegraph.md"),
+    "utf8",
+  );
+  assert.match(source, /https:\/\/github\.com\/colbymchenry\/codegraph/);
+  assert.match(source, /codegraph install/);
+  assert.match(source, /codegraph init/);
+  assert.match(source, /codegraph ui/);
+  assert.match(source, /optional/i);
+  assert.match(source, /explicit|authorization/i);
+  assert.match(source, /fallback/i);
+  assert.doesNotMatch(source, /required dependency/i);
+});
+
+test("positions the public Codebase Intelligence catalog", async () => {
+  const source = await readFile(path.join(root, "README.md"), "utf8");
+  assert.match(source, /Codebase Intelligence v1/);
+  assert.match(source, /54 reusable skills/);
+  assert.match(source, /11 active packs/);
+  assert.match(source, /CodeGraph/);
+});
