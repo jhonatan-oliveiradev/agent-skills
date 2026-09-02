@@ -1,0 +1,105 @@
+name: Materialize Stable 1.0.0
+
+on:
+  push:
+    branches: [release/1.0.0]
+
+permissions:
+  contents: write
+
+jobs:
+  materialize:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: release/1.0.0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Promote Stable metadata
+        shell: bash
+        run: |
+          node --input-type=module <<'NODE'
+          import { readFile, readdir, writeFile } from "node:fs/promises";
+          import path from "node:path";
+
+          const stable = "1.0.0";
+          const rc2 = "1.0.0-rc.2";
+
+          async function readJson(file) {
+            return JSON.parse(await readFile(file, "utf8"));
+          }
+
+          async function writeJson(file, value) {
+            await writeFile(file, `${JSON.stringify(value, null, 2)}\n`, "utf8");
+          }
+
+          await writeFile("VERSION", `${stable}\n`, "utf8");
+
+          for (const file of [
+            "package.json",
+            ".codex-plugin/plugin.json",
+            "catalog/catalog.json",
+            "apps/web/package.json",
+          ]) {
+            const value = await readJson(file);
+            value.version = stable;
+            await writeJson(file, value);
+          }
+
+          const lock = await readJson("apps/web/package-lock.json");
+          lock.version = stable;
+          lock.packages[""].version = stable;
+          await writeJson("apps/web/package-lock.json", lock);
+
+          for (const directory of ["catalog/skills", "catalog/packs"]) {
+            for (const name of (await readdir(directory)).filter((name) => name.endsWith(".json"))) {
+              const file = path.join(directory, name);
+              const value = await readJson(file);
+              value.version = stable;
+              await writeJson(file, value);
+            }
+          }
+
+          const readiness = await readJson("release/stable-readiness.json");
+          readiness.schemaVersion = 4;
+          readiness.candidateVersion = stable;
+          readiness.targetVersion = stable;
+          readiness.promotedFrom = rc2;
+          readiness.status = "stable";
+          await writeJson("release/stable-readiness.json", readiness);
+
+          const shellTestPath = "apps/web/src/components/site-shell.test.tsx";
+          let shellTest = await readFile(shellTestPath, "utf8");
+          shellTest = shellTest.replaceAll("Version 1.0.0-rc.2", "Version 1.0.0");
+          shellTest = shellTest.replaceAll("Versão 1.0.0-rc.2", "Versão 1.0.0");
+          shellTest = shellTest.replace(
+            'screen.getByRole("heading", { name: "1.0.0-rc.2" })',
+            'screen.getByRole("heading", { name: "1.0.0" })',
+          );
+          await writeFile(shellTestPath, shellTest, "utf8");
+          NODE
+      - name: Regenerate catalogs
+        run: |
+          npm run catalog:generate
+          node apps/web/scripts/sync-catalog.mjs
+      - name: Verify Stable contracts
+        run: |
+          npm test
+          npm run validate
+          npm ci --prefix apps/web
+          npm run web:test
+      - name: Commit materialized Stable metadata
+        shell: bash
+        run: |
+          git add VERSION package.json .codex-plugin/plugin.json catalog/catalog.json catalog/skills catalog/packs catalog/generated/catalog.json apps/web/package.json apps/web/package-lock.json apps/web/src/generated/catalog.json release/stable-readiness.json apps/web/src/components/site-shell.test.tsx
+          if git diff --cached --quiet; then
+            echo "Stable metadata already materialized."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -m "release: materialize Stable 1.0.0 metadata"
+          git push origin HEAD:release/1.0.0
