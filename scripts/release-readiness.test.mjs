@@ -36,18 +36,21 @@ test("current catalog exposes 54 skills and 11 active packs", async () => {
   assert.deepEqual(catalog.counts.packs, { total: 11, active: 11, planned: 0 });
 });
 
-test("project-level version owners are synchronized at the RC2 candidate", async () => {
+test("project-level version owners are synchronized at Stable 1.0.0", async () => {
   const version = (await readText("VERSION")).trim();
   const rootPackage = await readJson("package.json");
   const plugin = await readJson(".codex-plugin/plugin.json");
   const catalogManifest = await readJson("catalog/catalog.json");
   const webPackage = await readJson("apps/web/package.json");
+  const webLock = await readJson("apps/web/package-lock.json");
 
-  assert.equal(version, "1.0.0-rc.2");
+  assert.equal(version, "1.0.0");
   assert.equal(rootPackage.version, version);
   assert.equal(plugin.version, version);
   assert.equal(catalogManifest.version, version);
   assert.equal(webPackage.version, version);
+  assert.equal(webLock.version, version);
+  assert.equal(webLock.packages[""].version, version);
 });
 
 test("current public release copy does not advertise obsolete beta-era counts or branches", async () => {
@@ -66,13 +69,14 @@ test("root package description reflects the current Studio breadth", async () =>
   assert.match(rootPackage.description, /writing/i);
 });
 
-test("RC2 returns to Stable review after Codebase Intelligence real-use evidence", async () => {
+test("Stable readiness record preserves the qualified RC2 evidence after promotion", async () => {
   const matrix = await readJson("release/stable-readiness.json");
 
-  assert.equal(matrix.schemaVersion, 3);
-  assert.equal(matrix.candidateVersion, "1.0.0-rc.2");
+  assert.equal(matrix.schemaVersion, 4);
+  assert.equal(matrix.candidateVersion, "1.0.0");
   assert.equal(matrix.targetVersion, "1.0.0");
-  assert.equal(matrix.status, "ready-for-stable-review");
+  assert.equal(matrix.promotedFrom, "1.0.0-rc.2");
+  assert.equal(matrix.status, "stable");
   assert.deepEqual(matrix.requiredRealUsePacks, ["codebase-intelligence"]);
   assert.deepEqual(matrix.validatedRealUsePacks, ["codebase-intelligence"]);
   assert.deepEqual(matrix.minimums, {
