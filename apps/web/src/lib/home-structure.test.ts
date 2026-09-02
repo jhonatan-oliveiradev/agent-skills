@@ -37,7 +37,7 @@ describe("Home Living Research Archive composition", () => {
     expect(source).toContain("home-evidence-ledger");
   });
 
-  it("gives all eight active pack dossiers an intentional desktop composition", async () => {
+  it("gives all nine active pack dossiers an intentional desktop composition", async () => {
     const source = await readHomeLivingSystems();
 
     expect(source).toContain(".home-pack-dossier:nth-child(4)");
@@ -45,10 +45,12 @@ describe("Home Living Research Archive composition", () => {
     expect(source).toContain(".home-pack-dossier:nth-child(6)");
     expect(source).toContain(".home-pack-dossier:nth-child(7)");
     expect(source).toContain(".home-pack-dossier:nth-child(8)");
+    expect(source).toContain(".home-pack-dossier:nth-child(9)");
     expect(source).toMatch(/nth-child\(4\)[\s\S]*grid-column:/);
     expect(source).toMatch(/nth-child\(5\)[\s\S]*grid-column:/);
     expect(source).toMatch(/nth-child\(6\)[\s\S]*grid-column:/);
     expect(source).toMatch(/nth-child\(7\)[\s\S]*grid-column:/);
     expect(source).toMatch(/nth-child\(8\)[\s\S]*grid-column:/);
+    expect(source).toMatch(/nth-child\(9\)[\s\S]*grid-column:/);
   });
 });

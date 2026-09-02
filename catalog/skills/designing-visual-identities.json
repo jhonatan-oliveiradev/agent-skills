@@ -1,0 +1,39 @@
+{
+  "$schema": "../schemas/skill.schema.json",
+  "slug": "designing-visual-identities",
+  "category": "brand-design",
+  "packs": ["design-brand"],
+  "maturity": "beta",
+  "difficulty": "advanced",
+  "featured": false,
+  "compatibility": {
+    "surfaces": ["chatgpt", "codex"],
+    "operatingSystems": ["linux", "macos", "windows"],
+    "installModes": ["plugin", "filesystem"]
+  },
+  "tags": ["branding", "visual-identity", "logo", "typography", "color", "art-direction"],
+  "dependencies": [],
+  "relatedSkills": ["defining-brand-strategy", "building-brand-guidelines", "designing-ui-systems"],
+  "version": "1.0.0-beta.1",
+  "updatedAt": "2026-09-01",
+  "locales": {
+    "en": {
+      "displayName": "Designing Visual Identities",
+      "summary": "Turns brand strategy into a coherent recognition system across marks, typography, color, imagery, graphic language, and representative touchpoints.",
+      "primaryBenefit": "Prevents logo-only branding by evaluating the identity as a resilient visual system across real contexts.",
+      "whenToUse": "Use when an approved brand strategy needs a coherent visual identity system across multiple touchpoints, including marks, typography, color, imagery, graphic language, and responsive applications.",
+      "whenNotToUse": "Do not use for product-interface component architecture or when an approved identity only needs to be applied to one asset.",
+      "useCases": ["Create a complete visual identity direction for a new brand", "Refresh an identity that has a logo but lacks a coherent visual system across digital and print touchpoints"],
+      "examplePrompts": ["Use designing-visual-identities to translate this approved brand strategy into distinct visual territories and test the chosen system across realistic touchpoints, accessibility constraints, and reproduction conditions."]
+    },
+    "pt-BR": {
+      "displayName": "Design de Identidades Visuais",
+      "summary": "Transforma estratégia de marca em um sistema coerente de reconhecimento por marca, tipografia, cor, imagem, linguagem gráfica e pontos de contato representativos.",
+      "primaryBenefit": "Evita branding reduzido a logotipo ao avaliar a identidade como sistema visual resiliente em contextos reais.",
+      "whenToUse": "Use quando uma estratégia de marca aprovada precisa virar um sistema coerente de identidade visual em múltiplos pontos de contato, incluindo marca, tipografia, cor, imagem, linguagem gráfica e aplicações responsivas.",
+      "whenNotToUse": "Não use para arquitetura de componentes de interface de produto nem quando uma identidade aprovada precisa apenas ser aplicada em uma peça isolada.",
+      "useCases": ["Criar uma direção completa de identidade visual para uma nova marca", "Renovar uma identidade que possui logotipo, mas não um sistema visual coerente entre pontos de contato digitais e impressos"],
+      "examplePrompts": ["Use designing-visual-identities para traduzir esta estratégia de marca aprovada em territórios visuais distintos e testar o sistema escolhido em pontos de contato reais, restrições de acessibilidade e condições de reprodução."]
+    }
+  }
+}

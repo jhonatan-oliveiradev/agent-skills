@@ -1,6 +1,6 @@
 # Agent Skills Studio
 
-A curated Agent Skills library for production frontend, product design, motion, visual QA, delivery workflows, backend and data engineering, software architecture and engineering, quality and testing, application security, engineering workflow, and game-development tasks. It is inspired by useful patterns from the broader agent-skills ecosystem, but the skills in this repository are intentionally rewritten, consolidated, and kept project-agnostic.
+A curated Agent Skills library for production frontend, product design, motion, visual QA, delivery workflows, backend and data engineering, software architecture and engineering, quality and testing, application security, engineering workflow, brand design, and game-development tasks. It is inspired by useful patterns from the broader agent-skills ecosystem, but the skills in this repository are intentionally rewritten, consolidated, and kept project-agnostic.
 
 ## Principles
 
@@ -65,6 +65,13 @@ kept.
 - `reviewing-pull-requests`
 - `writing-effective-technical-handoffs`
 
+### Brand design
+- `defining-brand-strategy`
+- `naming-brands-and-products`
+- `designing-visual-identities`
+- `building-brand-guidelines`
+- `writing-brand-voice-and-messaging`
+
 ### Agent practice
 - `selecting-working-methods`
 - `turning-techniques-into-skills`
@@ -114,6 +121,12 @@ The methods require authorized scope, reproducible evidence, realistic precondit
 The Engineering Workflow pack separates four concerns that should remain independently invokable: turning broad objectives into verifiable engineering plans, managing implementation as small safe slices, reviewing pull requests against intent and current evidence, and writing technical handoffs that let a cold reader resume without rediscovery.
 
 The methods prefer behavior-oriented plans over file checklists, conceptually focused batches over oversized branches, current CI and repository evidence over review assumptions, and explicit confirmed/hypothesis/planned/blocked state over chronological chat transcripts. They do not require a particular VCS host, project-management system, or agent runtime.
+
+## Design & Brand v1
+
+The Design & Brand pack separates five responsibilities that should remain independently invokable: defining the strategic decision system for the brand, developing and screening names, translating strategy into a visual identity system, documenting reproducible brand guidelines, and defining durable voice and messaging.
+
+The methods treat identity as a system rather than a logo deliverable, keep preliminary trademark searching distinct from legal clearance, make accessibility a design constraint, and separate durable brand voice from conversion copy. Conversion-copy and text-humanization methods are intentionally deferred to the separate Writing & Communication tranche.
 
 ## Selecting Working Methods
 
@@ -214,9 +227,10 @@ The active, installable packs are:
 - `architecture-engineering` — Architecture & Engineering (4 skills);
 - `quality-testing` — Quality & Testing (4 skills);
 - `application-security` — Application Security (4 skills);
-- `engineering-workflow` — Engineering Workflow (4 skills).
+- `engineering-workflow` — Engineering Workflow (4 skills);
+- `design-brand` — Design & Brand (5 skills).
 
-All eight published packs are active and installable.
+All nine published packs are active and installable.
 
 Install an active pack on Bash or PowerShell:
 
