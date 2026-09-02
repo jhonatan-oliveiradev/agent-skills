@@ -53,6 +53,8 @@ type CaseSource = Readonly<{
 }>;
 
 const repositoryUrl = "https://github.com/jhonatan-oliveiradev/agent-skills";
+const rocketCaseSourcePath =
+  "docs/built-with-skills/2026-09-02-rocket-editorial-error-boundary.md";
 const pingCaseSourcePath =
   "docs/built-with-skills/2026-09-02-ping-space-voice-membership-authorization.md";
 const portfolioCaseSourcePath =
@@ -62,6 +64,11 @@ const agentSkillsStudioProject = {
   id: "agent-skills-studio",
   name: "Agent Skills Studio",
   repository: repositoryUrl,
+} as const satisfies CaseProject;
+
+const rocketProject = {
+  id: "rocket-unesp",
+  name: "Rocket UNESP",
 } as const satisfies CaseProject;
 
 const pingProject = {
@@ -94,6 +101,109 @@ function sourceEvidence(sourcePath: string): readonly CaseSourceEvidence[] {
 }
 
 const cases = [
+  {
+    slug: "rocket-editorial-error-boundary",
+    date: "2026-09-02",
+    sourcePath: rocketCaseSourcePath,
+    evidenceClass: "real-use",
+    project: rocketProject,
+    skills: [
+      "building-premium-nextjs-interfaces",
+      "writing-product-and-ux-copy",
+    ],
+    evidence: [
+      {
+        type: "source",
+        href: `${repositoryUrl}/blob/main/${rocketCaseSourcePath}`,
+        labels: {
+          en: "Public case record",
+          "pt-BR": "Registro público do case",
+        },
+      },
+      {
+        type: "qa",
+        href: `${repositoryUrl}/blob/main/${rocketCaseSourcePath}#verification-record`,
+        labels: {
+          en: "Verification record",
+          "pt-BR": "Registro de verificação",
+        },
+      },
+    ],
+    locales: {
+      en: {
+        title: "Shipping a recoverable Rocket error state through real Studio consumption",
+        summary:
+          "A real Rocket frontend improvement consumed the Studio microsite, catalog, filesystem installer, and direct ChatGPT Skill distribution before shipping a tested editorial error boundary.",
+        challenge:
+          "Add a recoverable error boundary to the public Rocket frontend while proving that Agent Skills Studio can be discovered, installed, uploaded to ChatGPT, and used to materially improve a real product change.",
+        decisions: [
+          {
+            title: "Consume before implementing",
+            summary:
+              "Use the public microsite and catalog to select the interface method, then execute the real RC1 installer in the Rocket CI workspace instead of copying a Skill manually.",
+          },
+          {
+            title: "Validate the ChatGPT path that was actually available",
+            summary:
+              "Upload the canonical writing-product-and-ux-copy Skill directly through the ChatGPT Skills UI and treat marketplace plugin import as an alternative mode rather than inventing unavailable evidence.",
+          },
+          {
+            title: "Let the installed Skill change the artifact",
+            summary:
+              "Use the newly installed UX-copy method to remove an unsupported 500 status claim and replace vague failure language with an actionable page-load error and retry path.",
+          },
+          {
+            title: "Keep the final product diff isolated",
+            summary:
+              "Remove the temporary Studio-consumption CI step before merge and count the case only after Rocket main passed tests, lint, typecheck, and production build.",
+          },
+        ],
+        results: [
+          "Rocket gained a recoverable segment-level error boundary with retry and home fallback actions.",
+          "The boundary does not leak technical error details or invent an HTTP 500 status.",
+          "Microsite, catalog, installer, and direct ChatGPT Skill distribution were exercised in real use.",
+          "The directly uploaded ChatGPT Skill materially changed the merged product copy and state semantics.",
+          "Rocket main passed tests, lint, typecheck, and production build on the post-merge commit.",
+        ],
+      },
+      "pt-BR": {
+        title: "Entrega de um estado de erro recuperável no Rocket com consumo real do Studio",
+        summary:
+          "Uma melhoria real do frontend do Rocket consumiu microsite, catálogo, installer em filesystem e distribuição direta de Skill no ChatGPT antes de entregar uma error boundary editorial testada.",
+        challenge:
+          "Adicionar uma error boundary recuperável ao frontend público do Rocket enquanto comprovamos que o Agent Skills Studio pode ser descoberto, instalado, enviado ao ChatGPT e usado para melhorar materialmente uma mudança real de produto.",
+        decisions: [
+          {
+            title: "Consumir antes de implementar",
+            summary:
+              "Usar microsite e catálogo públicos para selecionar o método de interface e executar o installer real do RC1 no workspace de CI do Rocket, em vez de copiar uma Skill manualmente.",
+          },
+          {
+            title: "Validar o caminho do ChatGPT realmente disponível",
+            summary:
+              "Enviar a Skill canônica writing-product-and-ux-copy diretamente pela interface de Habilidades do ChatGPT e tratar importação por marketplace plugin como modo alternativo, sem fabricar evidência indisponível.",
+          },
+          {
+            title: "Fazer a Skill instalada alterar o artefato",
+            summary:
+              "Usar o método de UX copy recém-instalado para remover uma afirmação indevida de status 500 e trocar linguagem vaga por um erro de carregamento acionável com caminho de retry.",
+          },
+          {
+            title: "Manter o diff final do produto isolado",
+            summary:
+              "Remover o step temporário de consumo do Studio antes do merge e contar o case apenas depois de a main do Rocket passar testes, lint, typecheck e build de produção.",
+          },
+        ],
+        results: [
+          "O Rocket ganhou uma error boundary de segmento recuperável com ações de retry e retorno à home.",
+          "A boundary não expõe detalhes técnicos do erro nem inventa um status HTTP 500.",
+          "Microsite, catálogo, installer e distribuição direta de Skill no ChatGPT foram exercitados em uso real.",
+          "A Skill enviada diretamente ao ChatGPT alterou materialmente a copy e a semântica de estado do produto integrado.",
+          "A main do Rocket passou testes, lint, typecheck e build de produção no commit pós-merge.",
+        ],
+      },
+    },
+  },
   {
     slug: "ping-space-voice-membership-authorization",
     date: "2026-09-02",
