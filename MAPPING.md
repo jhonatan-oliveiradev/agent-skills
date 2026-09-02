@@ -27,6 +27,7 @@ publish roadmap categories without claiming members.
 | Quality & Testing (`quality-testing`) | Active | 4 test-strategy, integration-boundary, web-E2E, and regression-testing skills |
 | Application Security (`application-security`) | Active | 4 threat-modeling, web-security, API-security, and dependency-risk skills |
 | Engineering Workflow (`engineering-workflow`) | Active | 4 engineering-planning, implementation-slicing, pull-request-review, and technical-handoff skills |
+| Design & Brand (`design-brand`) | Active | 5 brand-strategy, naming, visual-identity, guidelines, and brand-voice skills |
 
 `reconstructing-images-as-threejs` intentionally appears in both Motion and
 Game Development. This cross-pack placement clarifies distribution only; its
@@ -178,6 +179,21 @@ Added for preserving verified engineering state, decisions, constraints, hypothe
 ### `selecting-working-methods`
 Added as a catalog-wide meta router that identifies one primary method, adds only independently owned supporting responsibilities, orders methods by dependency, permits a no-skill outcome, and delegates rather than executing specialized workflows itself.
 
+### `defining-brand-strategy`
+Added for converting audience, category, offer, proof, positioning, and personality evidence into explicit criteria that downstream brand work can use instead of relying on taste.
+
+### `naming-brands-and-products`
+Added for generating and screening naming territories against strategy, language, real-world use, and preliminary availability while keeping legal trademark clearance explicitly outside the skill.
+
+### `designing-visual-identities`
+Added for translating strategy into a coherent recognition system across marks, typography, color, imagery, graphic language, applications, and accessibility constraints rather than treating a logo as the entire identity.
+
+### `building-brand-guidelines`
+Added for turning an approved identity into a reproducible operating manual with assets, rules, examples, accessibility constraints, ownership, and governance.
+
+### `writing-brand-voice-and-messaging`
+Added for defining durable verbal identity, messaging hierarchy, terminology, and adaptive tone while keeping conversion-page optimization as a separate future writing responsibility.
+
 ## Why the 81 web-design skills were not installed individually
 
 The upstream collection contains many excellent micro-techniques and art-direction presets. Keeping all of them globally installed would create poor skill discovery: several skills could trigger on the same frontend request and push the agent toward visual effects before understanding product intent. The curated pack keeps broad operating procedures global and leaves effect-specific skills as on-demand upstream references.
@@ -274,3 +290,15 @@ Engineering Workflow v1 does not require GitHub, a project-management system, or
 `selecting-working-methods` is derived from the Studio's existing trigger-specific skill model, pack taxonomy, ownership boundaries, and the authoring rules already captured in `turning-techniques-into-skills`. It is a local orchestration method rather than an adaptation of an upstream router or a dependency on a runtime framework.
 
 The design deliberately avoids embedding a static decision tree for every skill. Selection is based on the real responsibility in the task, chooses the smallest sufficient set, preserves one primary owner, allows no match, and re-routes when evidence changes the nature of the work.
+
+## Design & Brand research — 2026-09-01
+
+| Source | Decision | Local destination |
+|---|---|---|
+| Design Council, Double Diamond | Referenced | `skills/defining-brand-strategy` |
+| WIPO Global Brand Database and trademark-availability guidance | Referenced | `skills/naming-brands-and-products` |
+| Design Council public brand guidance | Referenced | `skills/designing-visual-identities` + `skills/building-brand-guidelines` |
+| W3C WCAG guidance for use of color and non-text contrast | Referenced | `skills/designing-visual-identities` + `skills/building-brand-guidelines` |
+| Mailchimp Content Style Guide, Voice and Tone / Writing Principles | Referenced | `skills/writing-brand-voice-and-messaging` |
+
+Design & Brand v1 does not mirror a branding framework or require a design tool. The local methods combine strategic, visual, verbal, accessibility, and governance practices while keeping trademark database searches explicitly preliminary and keeping conversion copy / text humanization outside this pack.
