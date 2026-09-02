@@ -5,7 +5,50 @@ on:
     branches: [main, dev]
   pull_request:
 
+permissions:
+  contents: write
+
 jobs:
+  materialize-writing-web:
+    if: github.event_name == 'pull_request' && github.head_ref == 'feat/writing-communication-pack-v1'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.head_ref }}
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Align shell counts and sync committed web catalog
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          path = Path('apps/web/src/components/site-shell.test.tsx')
+          text = path.read_text(encoding='utf-8')
+          replacements = {
+              '"44 skills"': '"49 skills"',
+              '"9 packs"': '"10 packs"',
+              '"9 pacotes"': '"10 pacotes"',
+              '.home-pack-dossier")).toHaveLength(9)': '.home-pack-dossier")).toHaveLength(10)',
+              '[data-pack-dossier]")).toHaveLength(9)': '[data-pack-dossier]")).toHaveLength(10)',
+              '[data-method-row]")).toHaveLength(44)': '[data-method-row]")).toHaveLength(49)',
+          }
+          for old, new in replacements.items():
+              if old in text:
+                  text = text.replace(old, new)
+          path.write_text(text, encoding='utf-8')
+          PY
+          node apps/web/scripts/sync-catalog.mjs
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add apps/web/src/components/site-shell.test.tsx apps/web/src/generated/catalog.json
+          git diff --cached --quiet && exit 0
+          git commit -m "test: align Writing & Communication web shell"
+          git push origin HEAD:${{ github.head_ref }}
+
   validate:
     strategy:
       fail-fast: false
