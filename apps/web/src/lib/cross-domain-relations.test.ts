@@ -32,7 +32,16 @@ describe("cross-domain relations", () => {
     const frontend = packs.find((pack) => pack.slug === "frontend-product")!;
     const relations = getCasesUsingPackMethods(cases, frontend);
 
-    expect(relations).toHaveLength(4);
+    expect(relations).toHaveLength(5);
+
+    const rocketRelation = relations.find(
+      (relation) => relation.case.slug === "rocket-editorial-error-boundary",
+    );
+    expect(rocketRelation).toMatchObject({
+      case: { slug: "rocket-editorial-error-boundary" },
+      matchingSkillSlugs: ["building-premium-nextjs-interfaces"],
+      coversEntirePack: false,
+    });
 
     const pingRelation = relations.find(
       (relation) => relation.case.slug === "ping-space-voice-membership-authorization",
