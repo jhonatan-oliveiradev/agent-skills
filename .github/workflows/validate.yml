@@ -5,41 +5,7 @@ on:
     branches: [main, dev]
   pull_request:
 
-permissions:
-  contents: write
-
 jobs:
-  materialize-writing-terminal-count:
-    if: github.event_name == 'pull_request' && github.head_ref == 'feat/writing-communication-pack-v1'
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          ref: ${{ github.head_ref }}
-          fetch-depth: 0
-      - name: Align terminal demo count
-        shell: bash
-        run: |
-          python - <<'PY'
-          from pathlib import Path
-
-          path = Path('apps/web/src/components/site-shell.test.tsx')
-          text = path.read_text(encoding='utf-8')
-          old = '"44 skills prontas para usar."'
-          new = '"49 skills prontas para usar."'
-          if new in text:
-              raise SystemExit(0)
-          if old not in text:
-              raise SystemExit('expected terminal count contract not found')
-          path.write_text(text.replace(old, new, 1), encoding='utf-8')
-          PY
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add apps/web/src/components/site-shell.test.tsx
-          git diff --cached --quiet && exit 0
-          git commit -m "test: align Writing & Communication terminal count"
-          git push origin HEAD:${{ github.head_ref }}
-
   validate:
     strategy:
       fail-fast: false
