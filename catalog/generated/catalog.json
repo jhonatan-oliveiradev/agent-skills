@@ -6,12 +6,13 @@
     "en",
     "pt-BR"
   ],
-  "sourceDigest": "32a09f907d9fee3ac5d8ac81165c853a25d8a0d3b90671bc1392fb92de313044",
+  "sourceDigest": "b2b4c9fb2dea09ee84db287fe9b4ec8b1fc1c02d0d1dade0400ded8a85bc053e",
   "filters": {
     "categories": [
       "application-security",
       "architecture-engineering",
       "backend-data",
+      "brand-design",
       "delivery",
       "engineering-workflow",
       "frontend",
@@ -25,6 +26,7 @@
       "application-security",
       "architecture-engineering",
       "backend-data",
+      "design-brand",
       "engineering-workflow",
       "frontend-product",
       "game-development",
@@ -45,20 +47,27 @@
       "api-design",
       "api-security",
       "architecture",
+      "art-direction",
       "asset-pipeline",
+      "audience",
       "authentication",
       "authorization",
       "backfills",
       "blast-radius",
       "boundaries",
+      "brand-guidelines",
+      "brand-voice",
+      "branding",
       "browser",
       "bugs",
       "character-art",
       "code-review",
       "cohesion",
+      "color",
       "combat-animation",
       "component-apis",
       "constraints",
+      "content-strategy",
       "context",
       "continuity",
       "conversion",
@@ -70,9 +79,11 @@
       "decision-records",
       "delivery",
       "dependencies",
+      "design-system",
       "design-systems",
       "design-tokens",
       "developer-tooling",
+      "differentiation",
       "documentation",
       "end-to-end",
       "engineering",
@@ -86,6 +97,7 @@
       "gameplay",
       "git",
       "github",
+      "governance",
       "gsap",
       "handoff",
       "image-reconstruction",
@@ -97,12 +109,16 @@
       "interaction-design",
       "interface-design",
       "landing-pages",
+      "language",
+      "logo",
       "memory-leaks",
+      "messaging",
       "method-selection",
       "migration",
       "migrations",
       "motion-design",
       "motion-performance",
+      "naming",
       "nextjs",
       "nodejs",
       "observability",
@@ -112,6 +128,7 @@
       "performance",
       "planning",
       "playtesting",
+      "positioning",
       "postgresql",
       "pricing-pages",
       "procedural-3d",
@@ -145,6 +162,7 @@
       "small-batches",
       "sprite-animation",
       "ssrf",
+      "strategy",
       "supply-chain",
       "tailwind-css",
       "tdd",
@@ -152,9 +170,12 @@
       "testing",
       "threat-modeling",
       "threejs",
+      "tone",
       "topology",
+      "trademark",
       "tradeoffs",
       "typescript",
+      "typography",
       "ui-implementation",
       "user-journeys",
       "validation",
@@ -163,6 +184,7 @@
       "visual-audit",
       "visual-consistency",
       "visual-fidelity",
+      "visual-identity",
       "vulnerabilities",
       "web",
       "web-motion",
@@ -204,16 +226,17 @@
     ]
   },
   "counts": {
-    "skills": 39,
+    "skills": 44,
     "packs": {
-      "total": 8,
-      "active": 8,
+      "total": 9,
+      "active": 9,
       "planned": 0
     },
     "categories": {
       "application-security": 4,
       "architecture-engineering": 4,
       "backend-data": 4,
+      "brand-design": 5,
       "delivery": 1,
       "engineering-workflow": 4,
       "frontend": 5,
@@ -224,17 +247,18 @@
       "quality-testing": 4
     },
     "maturity": {
-      "beta": 21,
+      "beta": 26,
       "stable": 18
     },
     "difficulty": {
-      "advanced": 23,
-      "intermediate": 16
+      "advanced": 26,
+      "intermediate": 18
     },
     "activePackMembership": {
       "application-security": 4,
       "architecture-engineering": 4,
       "backend-data": 4,
+      "design-brand": 5,
       "engineering-workflow": 4,
       "frontend-product": 8,
       "game-development": 5,
@@ -447,6 +471,77 @@
           ],
           "examplePrompts": [
             "Use bootstrapping-modern-web-apps para criar uma base Next.js optativa para esta nova aplicação."
+          ]
+        }
+      }
+    },
+    {
+      "$schema": "../schemas/skill.schema.json",
+      "slug": "building-brand-guidelines",
+      "category": "brand-design",
+      "packs": [
+        "design-brand"
+      ],
+      "maturity": "beta",
+      "difficulty": "intermediate",
+      "featured": false,
+      "compatibility": {
+        "surfaces": [
+          "chatgpt",
+          "codex"
+        ],
+        "operatingSystems": [
+          "linux",
+          "macos",
+          "windows"
+        ],
+        "installModes": [
+          "plugin",
+          "filesystem"
+        ]
+      },
+      "tags": [
+        "branding",
+        "brand-guidelines",
+        "design-system",
+        "governance",
+        "accessibility"
+      ],
+      "dependencies": [],
+      "relatedSkills": [
+        "designing-visual-identities",
+        "writing-brand-voice-and-messaging",
+        "designing-ui-systems"
+      ],
+      "version": "1.0.0-beta.1",
+      "updatedAt": "2026-09-01",
+      "locales": {
+        "en": {
+          "displayName": "Building Brand Guidelines",
+          "summary": "Documents the approved identity as reproducible rules, assets, examples, accessibility constraints, and governance for real collaborators.",
+          "primaryBenefit": "Turns an identity presentation into an operational source of truth that reduces guesswork and visual drift.",
+          "whenToUse": "Use when an approved brand identity needs durable rules, assets, examples, accessibility constraints, and governance so multiple people can reproduce it consistently across channels.",
+          "whenNotToUse": "Do not use before the core identity has been approved or as a substitute for defining the identity itself.",
+          "useCases": [
+            "Turn a completed identity project into guidelines for internal teams and vendors",
+            "Repair brand drift by documenting typography, color, layout, asset, voice, and governance rules"
+          ],
+          "examplePrompts": [
+            "Use building-brand-guidelines to turn this approved identity into a practical source of truth with asset rules, accessibility constraints, realistic examples, and governance."
+          ]
+        },
+        "pt-BR": {
+          "displayName": "Construção de Brand Guidelines",
+          "summary": "Documenta a identidade aprovada como regras reproduzíveis, assets, exemplos, restrições de acessibilidade e governança para colaboradores reais.",
+          "primaryBenefit": "Transforma uma apresentação de identidade em uma fonte operacional de verdade que reduz improviso e deriva visual.",
+          "whenToUse": "Use quando uma identidade de marca aprovada precisa de regras duráveis, assets, exemplos, restrições de acessibilidade e governança para ser reproduzida com consistência por várias pessoas e canais.",
+          "whenNotToUse": "Não use antes da aprovação da identidade central nem como substituto para definir a própria identidade.",
+          "useCases": [
+            "Transformar um projeto de identidade concluído em guidelines para equipes internas e fornecedores",
+            "Corrigir deriva de marca documentando regras de tipografia, cor, layout, assets, voz e governança"
+          ],
+          "examplePrompts": [
+            "Use building-brand-guidelines para transformar esta identidade aprovada em uma fonte prática de verdade com regras de assets, acessibilidade, exemplos realistas e governança."
           ]
         }
       }
@@ -1012,6 +1107,77 @@
     },
     {
       "$schema": "../schemas/skill.schema.json",
+      "slug": "defining-brand-strategy",
+      "category": "brand-design",
+      "packs": [
+        "design-brand"
+      ],
+      "maturity": "beta",
+      "difficulty": "advanced",
+      "featured": false,
+      "compatibility": {
+        "surfaces": [
+          "chatgpt",
+          "codex"
+        ],
+        "operatingSystems": [
+          "linux",
+          "macos",
+          "windows"
+        ],
+        "installModes": [
+          "plugin",
+          "filesystem"
+        ]
+      },
+      "tags": [
+        "branding",
+        "strategy",
+        "positioning",
+        "audience",
+        "differentiation"
+      ],
+      "dependencies": [],
+      "relatedSkills": [
+        "naming-brands-and-products",
+        "designing-visual-identities",
+        "writing-brand-voice-and-messaging"
+      ],
+      "version": "1.0.0-beta.1",
+      "updatedAt": "2026-09-01",
+      "locales": {
+        "en": {
+          "displayName": "Defining Brand Strategy",
+          "summary": "Turns audience, category, offer, positioning, proof, and personality into explicit criteria for later brand decisions.",
+          "primaryBenefit": "Creates a usable strategic filter so naming, visual identity, and messaging can be judged by fit instead of taste alone.",
+          "whenToUse": "Use when a new, repositioned, or inconsistent brand needs explicit audience, positioning, differentiation, personality, and decision criteria before naming, identity, or messaging work begins.",
+          "whenNotToUse": "Do not use when the brand strategy is already approved and the task is only to execute a specific naming, visual, or verbal deliverable.",
+          "useCases": [
+            "Define the strategic foundation for a new company before naming and identity exploration",
+            "Clarify positioning and brand principles before refreshing an inconsistent identity"
+          ],
+          "examplePrompts": [
+            "Use defining-brand-strategy to turn this business, audience research, competitors, and product evidence into positioning and criteria that can guide the rest of the brand system."
+          ]
+        },
+        "pt-BR": {
+          "displayName": "Definição de Estratégia de Marca",
+          "summary": "Transforma audiência, categoria, oferta, posicionamento, provas e personalidade em critérios explícitos para as decisões posteriores de marca.",
+          "primaryBenefit": "Cria um filtro estratégico utilizável para que naming, identidade visual e mensagem sejam avaliados por aderência, não apenas por gosto.",
+          "whenToUse": "Use quando uma marca nova, reposicionada ou inconsistente precisa explicitar audiência, posicionamento, diferenciação, personalidade e critérios de decisão antes do naming, identidade ou mensagem.",
+          "whenNotToUse": "Não use quando a estratégia de marca já está aprovada e a tarefa é apenas executar um entregável específico de naming, visual ou verbal.",
+          "useCases": [
+            "Definir a base estratégica de uma nova empresa antes de explorar naming e identidade",
+            "Clarificar posicionamento e princípios de marca antes de renovar uma identidade inconsistente"
+          ],
+          "examplePrompts": [
+            "Use defining-brand-strategy para transformar este negócio, pesquisa de audiência, concorrentes e evidências do produto em posicionamento e critérios que orientem todo o sistema de marca."
+          ]
+        }
+      }
+    },
+    {
+      "$schema": "../schemas/skill.schema.json",
       "slug": "designing-action-combat",
       "category": "game-development",
       "packs": [
@@ -1355,6 +1521,78 @@
           ],
           "examplePrompts": [
             "Use designing-ui-systems para transformar estes padrões recorrentes de interface em um sistema coerente de tokens e componentes."
+          ]
+        }
+      }
+    },
+    {
+      "$schema": "../schemas/skill.schema.json",
+      "slug": "designing-visual-identities",
+      "category": "brand-design",
+      "packs": [
+        "design-brand"
+      ],
+      "maturity": "beta",
+      "difficulty": "advanced",
+      "featured": false,
+      "compatibility": {
+        "surfaces": [
+          "chatgpt",
+          "codex"
+        ],
+        "operatingSystems": [
+          "linux",
+          "macos",
+          "windows"
+        ],
+        "installModes": [
+          "plugin",
+          "filesystem"
+        ]
+      },
+      "tags": [
+        "branding",
+        "visual-identity",
+        "logo",
+        "typography",
+        "color",
+        "art-direction"
+      ],
+      "dependencies": [],
+      "relatedSkills": [
+        "defining-brand-strategy",
+        "building-brand-guidelines",
+        "designing-ui-systems"
+      ],
+      "version": "1.0.0-beta.1",
+      "updatedAt": "2026-09-01",
+      "locales": {
+        "en": {
+          "displayName": "Designing Visual Identities",
+          "summary": "Turns brand strategy into a coherent recognition system across marks, typography, color, imagery, graphic language, and representative touchpoints.",
+          "primaryBenefit": "Prevents logo-only branding by evaluating the identity as a resilient visual system across real contexts.",
+          "whenToUse": "Use when an approved brand strategy needs a coherent visual identity system across multiple touchpoints, including marks, typography, color, imagery, graphic language, and responsive applications.",
+          "whenNotToUse": "Do not use for product-interface component architecture or when an approved identity only needs to be applied to one asset.",
+          "useCases": [
+            "Create a complete visual identity direction for a new brand",
+            "Refresh an identity that has a logo but lacks a coherent visual system across digital and print touchpoints"
+          ],
+          "examplePrompts": [
+            "Use designing-visual-identities to translate this approved brand strategy into distinct visual territories and test the chosen system across realistic touchpoints, accessibility constraints, and reproduction conditions."
+          ]
+        },
+        "pt-BR": {
+          "displayName": "Design de Identidades Visuais",
+          "summary": "Transforma estratégia de marca em um sistema coerente de reconhecimento por marca, tipografia, cor, imagem, linguagem gráfica e pontos de contato representativos.",
+          "primaryBenefit": "Evita branding reduzido a logotipo ao avaliar a identidade como sistema visual resiliente em contextos reais.",
+          "whenToUse": "Use quando uma estratégia de marca aprovada precisa virar um sistema coerente de identidade visual em múltiplos pontos de contato, incluindo marca, tipografia, cor, imagem, linguagem gráfica e aplicações responsivas.",
+          "whenNotToUse": "Não use para arquitetura de componentes de interface de produto nem quando uma identidade aprovada precisa apenas ser aplicada em uma peça isolada.",
+          "useCases": [
+            "Criar uma direção completa de identidade visual para uma nova marca",
+            "Renovar uma identidade que possui logotipo, mas não um sistema visual coerente entre pontos de contato digitais e impressos"
+          ],
+          "examplePrompts": [
+            "Use designing-visual-identities para traduzir esta estratégia de marca aprovada em territórios visuais distintos e testar o sistema escolhido em pontos de contato reais, restrições de acessibilidade e condições de reprodução."
           ]
         }
       }
@@ -1717,6 +1955,77 @@
           ],
           "examplePrompts": [
             "Use managing-implementation-slices para quebrar esta mudança nos menores slices seguros e revisáveis sem perder a ordem de dependências."
+          ]
+        }
+      }
+    },
+    {
+      "$schema": "../schemas/skill.schema.json",
+      "slug": "naming-brands-and-products",
+      "category": "brand-design",
+      "packs": [
+        "design-brand"
+      ],
+      "maturity": "beta",
+      "difficulty": "advanced",
+      "featured": false,
+      "compatibility": {
+        "surfaces": [
+          "chatgpt",
+          "codex"
+        ],
+        "operatingSystems": [
+          "linux",
+          "macos",
+          "windows"
+        ],
+        "installModes": [
+          "plugin",
+          "filesystem"
+        ]
+      },
+      "tags": [
+        "branding",
+        "naming",
+        "trademark",
+        "language",
+        "positioning"
+      ],
+      "dependencies": [],
+      "relatedSkills": [
+        "defining-brand-strategy",
+        "designing-visual-identities",
+        "writing-brand-voice-and-messaging"
+      ],
+      "version": "1.0.0-beta.1",
+      "updatedAt": "2026-09-01",
+      "locales": {
+        "en": {
+          "displayName": "Naming Brands and Products",
+          "summary": "Creates and evaluates naming territories and candidates against strategy, language, real-world use, and preliminary availability risk.",
+          "primaryBenefit": "Produces a defensible shortlist instead of a pile of clever names, while making unresolved linguistic and trademark risk explicit.",
+          "whenToUse": "Use when a brand, product, service, feature, or program needs a name that must fit strategic positioning, language constraints, category context, and preliminary availability checks.",
+          "whenNotToUse": "Do not use as legal trademark clearance or when the task is only to rename an internal variable, file, or technical identifier.",
+          "useCases": [
+            "Develop a shortlist for a new brand across multiple naming territories",
+            "Evaluate existing product-name candidates for strategic, linguistic, and preliminary trademark risk"
+          ],
+          "examplePrompts": [
+            "Use naming-brands-and-products to create naming territories, generate candidates, evaluate them against this strategy, and document preliminary availability risks without pretending to provide legal clearance."
+          ]
+        },
+        "pt-BR": {
+          "displayName": "Naming de Marcas e Produtos",
+          "summary": "Cria e avalia territórios e candidatos de naming contra estratégia, linguagem, uso real e risco preliminar de disponibilidade.",
+          "primaryBenefit": "Produz uma shortlist defensável em vez de uma lista de nomes espertos, deixando explícitos os riscos linguísticos e marcários ainda não resolvidos.",
+          "whenToUse": "Use quando uma marca, produto, serviço, feature ou programa precisa de um nome aderente ao posicionamento, restrições linguísticas, contexto de categoria e verificações preliminares de disponibilidade.",
+          "whenNotToUse": "Não use como clearance jurídico de marca nem quando a tarefa é apenas renomear uma variável, arquivo ou identificador técnico interno.",
+          "useCases": [
+            "Desenvolver uma shortlist para uma nova marca a partir de múltiplos territórios de naming",
+            "Avaliar nomes candidatos de produto por aderência estratégica, linguística e risco marcário preliminar"
+          ],
+          "examplePrompts": [
+            "Use naming-brands-and-products para criar territórios de naming, gerar candidatos, avaliá-los contra esta estratégia e documentar riscos preliminares de disponibilidade sem fingir que isso substitui clearance jurídico."
           ]
         }
       }
@@ -2939,6 +3248,77 @@
     },
     {
       "$schema": "../schemas/skill.schema.json",
+      "slug": "writing-brand-voice-and-messaging",
+      "category": "brand-design",
+      "packs": [
+        "design-brand"
+      ],
+      "maturity": "beta",
+      "difficulty": "intermediate",
+      "featured": false,
+      "compatibility": {
+        "surfaces": [
+          "chatgpt",
+          "codex"
+        ],
+        "operatingSystems": [
+          "linux",
+          "macos",
+          "windows"
+        ],
+        "installModes": [
+          "plugin",
+          "filesystem"
+        ]
+      },
+      "tags": [
+        "branding",
+        "brand-voice",
+        "messaging",
+        "tone",
+        "content-strategy"
+      ],
+      "dependencies": [],
+      "relatedSkills": [
+        "defining-brand-strategy",
+        "naming-brands-and-products",
+        "building-brand-guidelines"
+      ],
+      "version": "1.0.0-beta.1",
+      "updatedAt": "2026-09-01",
+      "locales": {
+        "en": {
+          "displayName": "Writing Brand Voice and Messaging",
+          "summary": "Defines durable voice, adaptive tone, message hierarchy, proof, terminology, and examples that keep a brand verbally recognizable across channels.",
+          "primaryBenefit": "Creates a reusable verbal identity without collapsing brand voice into one campaign, tagline, or conversion page.",
+          "whenToUse": "Use when a brand needs a durable verbal identity, messaging hierarchy, terminology, and tone guidance that stays recognizable across channels without becoming conversion-page copywriting.",
+          "whenNotToUse": "Do not use when the task is to optimize a specific landing page, ad, email, or CTA for conversion rather than define the underlying brand language.",
+          "useCases": [
+            "Define voice and tone for a newly positioned brand",
+            "Create a reusable messaging hierarchy and terminology system before multiple teams begin writing content"
+          ],
+          "examplePrompts": [
+            "Use writing-brand-voice-and-messaging to define this brand's core promise, message pillars, proof, voice traits, tone adaptations, terminology, and representative examples without turning it into landing-page CRO copy."
+          ]
+        },
+        "pt-BR": {
+          "displayName": "Voz de Marca e Sistema de Mensagens",
+          "summary": "Define voz durável, tom adaptável, hierarquia de mensagens, provas, terminologia e exemplos que mantêm a marca verbalmente reconhecível entre canais.",
+          "primaryBenefit": "Cria uma identidade verbal reutilizável sem reduzir voz de marca a uma campanha, tagline ou página de conversão.",
+          "whenToUse": "Use quando uma marca precisa de identidade verbal durável, hierarquia de mensagens, terminologia e orientação de tom que permaneçam reconhecíveis entre canais sem virar copywriting de página de conversão.",
+          "whenNotToUse": "Não use quando a tarefa é otimizar uma landing page, anúncio, e-mail ou CTA específico para conversão em vez de definir a linguagem de marca subjacente.",
+          "useCases": [
+            "Definir voz e tom para uma marca recém-posicionada",
+            "Criar uma hierarquia reutilizável de mensagens e terminologia antes que várias equipes comecem a produzir conteúdo"
+          ],
+          "examplePrompts": [
+            "Use writing-brand-voice-and-messaging para definir promessa central, pilares de mensagem, provas, traços de voz, adaptações de tom, terminologia e exemplos da marca sem transformar isso em copy de CRO para landing page."
+          ]
+        }
+      }
+    },
+    {
+      "$schema": "../schemas/skill.schema.json",
       "slug": "writing-effective-technical-handoffs",
       "category": "engineering-workflow",
       "packs": [
@@ -3267,6 +3647,107 @@
             "pt-BR": "Diagnostica caminhos de acesso PostgreSQL lentos ou incertos a partir de entradas representativas e evidências do plano de execução antes de alterar índices."
           },
           "difficulty": "advanced",
+          "maturity": "beta"
+        }
+      ]
+    },
+    {
+      "slug": "design-brand",
+      "status": "active",
+      "featured": false,
+      "color": "rose",
+      "version": "1.0.0-beta.1",
+      "locales": {
+        "en": {
+          "name": "Design & Brand",
+          "summary": "Brand strategy, naming, visual identity, guidelines, and verbal systems for building coherent brands rather than isolated assets.",
+          "description": "An installable brand-design workflow that moves from strategic constraints through naming and visual identity into durable visual and verbal governance, while keeping conversion copy and text humanization as separate writing responsibilities.",
+          "outcomes": [
+            "Turn audience, positioning, and product evidence into criteria that guide naming, identity, and messaging decisions",
+            "Create a coherent visual and verbal brand system with realistic applications, accessibility constraints, and guidelines that collaborators can reproduce"
+          ]
+        },
+        "pt-BR": {
+          "name": "Design & Marca",
+          "summary": "Estratégia de marca, naming, identidade visual, guidelines e sistemas verbais para construir marcas coerentes em vez de assets isolados.",
+          "description": "Um fluxo instalável de design de marca que parte de restrições estratégicas, passa por naming e identidade visual e chega à governança visual e verbal durável, mantendo copy de conversão e humanização de texto como responsabilidades de escrita separadas.",
+          "outcomes": [
+            "Transformar audiência, posicionamento e evidências do produto em critérios que orientam decisões de naming, identidade e mensagem",
+            "Criar um sistema coerente de marca visual e verbal com aplicações realistas, restrições de acessibilidade e guidelines que colaboradores consigam reproduzir"
+          ]
+        }
+      },
+      "skillSlugs": [
+        "defining-brand-strategy",
+        "naming-brands-and-products",
+        "designing-visual-identities",
+        "building-brand-guidelines",
+        "writing-brand-voice-and-messaging"
+      ],
+      "skills": [
+        {
+          "slug": "defining-brand-strategy",
+          "displayName": {
+            "en": "Defining Brand Strategy",
+            "pt-BR": "Definição de Estratégia de Marca"
+          },
+          "summary": {
+            "en": "Turns audience, category, offer, positioning, proof, and personality into explicit criteria for later brand decisions.",
+            "pt-BR": "Transforma audiência, categoria, oferta, posicionamento, provas e personalidade em critérios explícitos para as decisões posteriores de marca."
+          },
+          "difficulty": "advanced",
+          "maturity": "beta"
+        },
+        {
+          "slug": "naming-brands-and-products",
+          "displayName": {
+            "en": "Naming Brands and Products",
+            "pt-BR": "Naming de Marcas e Produtos"
+          },
+          "summary": {
+            "en": "Creates and evaluates naming territories and candidates against strategy, language, real-world use, and preliminary availability risk.",
+            "pt-BR": "Cria e avalia territórios e candidatos de naming contra estratégia, linguagem, uso real e risco preliminar de disponibilidade."
+          },
+          "difficulty": "advanced",
+          "maturity": "beta"
+        },
+        {
+          "slug": "designing-visual-identities",
+          "displayName": {
+            "en": "Designing Visual Identities",
+            "pt-BR": "Design de Identidades Visuais"
+          },
+          "summary": {
+            "en": "Turns brand strategy into a coherent recognition system across marks, typography, color, imagery, graphic language, and representative touchpoints.",
+            "pt-BR": "Transforma estratégia de marca em um sistema coerente de reconhecimento por marca, tipografia, cor, imagem, linguagem gráfica e pontos de contato representativos."
+          },
+          "difficulty": "advanced",
+          "maturity": "beta"
+        },
+        {
+          "slug": "building-brand-guidelines",
+          "displayName": {
+            "en": "Building Brand Guidelines",
+            "pt-BR": "Construção de Brand Guidelines"
+          },
+          "summary": {
+            "en": "Documents the approved identity as reproducible rules, assets, examples, accessibility constraints, and governance for real collaborators.",
+            "pt-BR": "Documenta a identidade aprovada como regras reproduzíveis, assets, exemplos, restrições de acessibilidade e governança para colaboradores reais."
+          },
+          "difficulty": "intermediate",
+          "maturity": "beta"
+        },
+        {
+          "slug": "writing-brand-voice-and-messaging",
+          "displayName": {
+            "en": "Writing Brand Voice and Messaging",
+            "pt-BR": "Voz de Marca e Sistema de Mensagens"
+          },
+          "summary": {
+            "en": "Defines durable voice, adaptive tone, message hierarchy, proof, terminology, and examples that keep a brand verbally recognizable across channels.",
+            "pt-BR": "Define voz durável, tom adaptável, hierarquia de mensagens, provas, terminologia e exemplos que mantêm a marca verbalmente reconhecível entre canais."
+          },
+          "difficulty": "intermediate",
           "maturity": "beta"
         }
       ]
