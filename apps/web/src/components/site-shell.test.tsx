@@ -222,7 +222,7 @@ describe("foundation navigation targets", () => {
 
     expect(screen.getByRole("region", { name: "Demonstração da instalação" })).toBeInTheDocument();
     expect(container.querySelector("[data-terminal-demo]")).toHaveTextContent("bash install.sh");
-    expect(screen.getByText("44 skills prontas para usar.")).toBeInTheDocument();
+    expect(screen.getByText("49 skills prontas para usar.")).toBeInTheDocument();
   });
 
   it("renders full installation commands in aligned editorial rows", async () => {
