@@ -42,7 +42,7 @@ describe("editorial site chrome", () => {
     expect(container.querySelector('[data-navigation-transition="header-reveal"]')).toBeInTheDocument();
     expect(within(dialog).getByText("54 SKILLS")).toBeInTheDocument();
     expect(within(dialog).getByText("11 PACKS")).toBeInTheDocument();
-    expect(within(dialog).getByText("1.0.0-rc.1")).toBeInTheDocument();
+    expect(within(dialog).getByText("1.0.0-rc.2")).toBeInTheDocument();
     expect(dialog.querySelectorAll(".primary-navigation__mobile-context")).toHaveLength(6);
 
     const proofLink = within(dialog).getByRole("link", { name: proofLabel });
