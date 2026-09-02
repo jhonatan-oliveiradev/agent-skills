@@ -4,7 +4,7 @@
   "status": "active",
   "featured": false,
   "color": "indigo",
-  "version": "1.0.0-rc.1",
+  "version": "1.0.0-rc.2",
   "skills": [
     "mapping-existing-codebase-structure",
     "tracing-code-execution-paths",
