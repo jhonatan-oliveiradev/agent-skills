@@ -65,3 +65,33 @@ test("root package description reflects the current Studio breadth", async () =>
   assert.match(rootPackage.description, /security/i);
   assert.match(rootPackage.description, /writing/i);
 });
+
+test("Stable promotion policy defines explicit real-use thresholds", async () => {
+  const matrix = await readJson("release/stable-readiness.json");
+
+  assert.equal(matrix.schemaVersion, 1);
+  assert.equal(matrix.candidateVersion, "1.0.0-rc.1");
+  assert.equal(matrix.targetVersion, "1.0.0");
+  assert.equal(matrix.status, "collecting-evidence");
+  assert.deepEqual(matrix.minimums, {
+    realUseCases: 3,
+    distinctProjects: 2,
+    activePacksRepresented: 3,
+  });
+});
+
+test("Stable promotion policy requires real-use evidence across every public Beta surface", async () => {
+  const matrix = await readJson("release/stable-readiness.json");
+
+  assert.deepEqual(matrix.surfaces.map((surface) => surface.id), [
+    "plugin",
+    "catalog",
+    "installers",
+    "microsite",
+  ]);
+
+  for (const surface of matrix.surfaces) {
+    assert.ok(Array.isArray(surface.realUseEvidence), `${surface.id}: realUseEvidence must be an array`);
+    assert.equal(surface.stableReady, false, `${surface.id}: cannot be Stable-ready before real-use evidence`);
+  }
+});
