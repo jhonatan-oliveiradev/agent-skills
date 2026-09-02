@@ -16,7 +16,7 @@ describe("catalog adapter", () => {
     );
 
     expect(catalog.sourceDigest).toBe(source.sourceDigest);
-    expect(catalog.skills).toHaveLength(38);
+    expect(catalog.skills).toHaveLength(39);
     expect(catalog.packs).toHaveLength(8);
     expect(getCatalogCounts()).toEqual(source.counts);
     expect(getSupportedLocales()).toEqual(["en", "pt-BR"]);
