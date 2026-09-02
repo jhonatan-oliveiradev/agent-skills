@@ -21,7 +21,7 @@ export const editorialMethodsCopy = {
     archiveLabel: "METHODS / ARCHIVE",
     archiveTitle: "Methods for agents that need to work better.",
     archiveSummary:
-      "A versioned library of working methods for design, frontend, motion, delivery, backend, data, architecture, engineering, quality, testing, application security, engineering workflow, and agent practice — organized for comparison before installation.",
+      "A versioned library of working methods for design, brand, frontend, motion, delivery, backend, data, architecture, engineering, quality, testing, application security, engineering workflow, and agent practice — organized for comparison before installation.",
     methodsMetric: "METHODS",
     packsMetric: "PACKS",
     categoriesMetric: "DOMAINS",
@@ -33,6 +33,7 @@ export const editorialMethodsCopy = {
       "quality-testing": "Quality & testing",
       "application-security": "Application security",
       "engineering-workflow": "Engineering workflow",
+      "brand-design": "Brand design",
     },
     methodLabel: "METHOD",
     onThisMethod: "On this method",
@@ -43,7 +44,7 @@ export const editorialMethodsCopy = {
     archiveLabel: "MÉTODOS / ARQUIVO",
     archiveTitle: "Métodos para agentes que precisam trabalhar melhor.",
     archiveSummary:
-      "Uma biblioteca versionada de métodos de trabalho para design, frontend, motion, delivery, backend, dados, arquitetura, engenharia, qualidade, testes, segurança de aplicações, fluxo de engenharia e prática com agentes — organizada para comparação antes da instalação.",
+      "Uma biblioteca versionada de métodos de trabalho para design, marca, frontend, motion, delivery, backend, dados, arquitetura, engenharia, qualidade, testes, segurança de aplicações, fluxo de engenharia e prática com agentes — organizada para comparação antes da instalação.",
     methodsMetric: "MÉTODOS",
     packsMetric: "PACOTES",
     categoriesMetric: "DOMÍNIOS",
@@ -55,6 +56,7 @@ export const editorialMethodsCopy = {
       "quality-testing": "Qualidade e testes",
       "application-security": "Segurança de aplicações",
       "engineering-workflow": "Fluxo de engenharia",
+      "brand-design": "Design de marca",
     },
     methodLabel: "MÉTODO",
     onThisMethod: "Neste método",
