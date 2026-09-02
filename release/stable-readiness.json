@@ -1,8 +1,12 @@
 {
-  "schemaVersion": 2,
-  "candidateVersion": "1.0.0-rc.1",
+  "schemaVersion": 3,
+  "candidateVersion": "1.0.0-rc.2",
   "targetVersion": "1.0.0",
-  "status": "ready-for-stable-review",
+  "status": "collecting-rc2-evidence",
+  "requiredRealUsePacks": [
+    "codebase-intelligence"
+  ],
+  "validatedRealUsePacks": [],
   "minimums": {
     "realUseCases": 3,
     "distinctProjects": 2,
