@@ -323,7 +323,7 @@ describe("foundation navigation targets", () => {
     expect(screen.getByRole("heading", { level: 1, name: heading })).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: proposal })).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: stable })).toBeInTheDocument();
-    expect(screen.getAllByText(empty)).toHaveLength(5);
+    expect(screen.getAllByText(empty)).toHaveLength(6);
     expect(container.querySelectorAll("[data-program-record]")).toHaveLength(5);
   });
 

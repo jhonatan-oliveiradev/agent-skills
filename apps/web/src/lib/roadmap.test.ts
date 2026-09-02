@@ -16,8 +16,20 @@ describe("public roadmap", () => {
       "stable",
       "deprecated",
     ]);
-    expect(stages.map((stage) => stage.items.length)).toEqual([0, 0, 0, 0, 4, 1, 0]);
-    expect(stages.find((stage) => stage.id === "stable")?.items[0]?.meta).toContain("18");
-    expect(stages.find((stage) => stage.id === "beta")?.items[0]?.meta).toBe("1.0.0");
+    expect(stages.map((stage) => stage.items.length)).toEqual([0, 0, 0, 0, 0, 5, 0]);
+
+    const beta = stages.find((stage) => stage.id === "beta");
+    const stable = stages.find((stage) => stage.id === "stable");
+
+    expect(beta?.items).toEqual([]);
+    expect(stable?.items.map((item) => item.id)).toEqual([
+      "plugin",
+      "catalog",
+      "installers",
+      "microsite",
+      "stable-skills",
+    ]);
+    expect(stable?.items.slice(0, 4).every((item) => item.meta === "1.0.0")).toBe(true);
+    expect(stable?.items[4]?.meta).toContain("18");
   });
 });

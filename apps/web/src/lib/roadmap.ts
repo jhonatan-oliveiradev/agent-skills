@@ -41,23 +41,26 @@ export function getRoadmapStages(locale: Locale): readonly RoadmapStage[] {
       meta: copy.itemMeta.plannedPack,
       href: `/${locale}/packs/${pack.slug}`,
     }));
-  const beta = copy.betaItems.map((item) => ({
+  const stableSurfaces = copy.betaItems.map((item) => ({
     ...item,
     meta: catalog.version,
   }));
-  const stable = [{
-    id: "stable-skills",
-    title: copy.stableItem.title,
-    summary: copy.stableItem.summary,
-    meta: copy.itemMeta.stableSkills.replace("{count}", String(stableCount)),
-    href: `/${locale}/skills`,
-  }];
+  const stable = [
+    ...stableSurfaces,
+    {
+      id: "stable-skills",
+      title: copy.stableItem.title,
+      summary: copy.stableItem.summary,
+      meta: copy.itemMeta.stableSkills.replace("{count}", String(stableCount)),
+      href: `/${locale}/skills`,
+    },
+  ];
   const items: Readonly<Record<RoadmapStageId, readonly RoadmapItem[]>> = {
     proposal: proposed,
     research: [],
     development: [],
     experimental: [],
-    beta,
+    beta: [],
     stable,
     deprecated: [],
   };
