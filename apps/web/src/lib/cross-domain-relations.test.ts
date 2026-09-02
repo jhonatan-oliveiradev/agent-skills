@@ -32,7 +32,16 @@ describe("cross-domain relations", () => {
     const frontend = packs.find((pack) => pack.slug === "frontend-product")!;
     const relations = getCasesUsingPackMethods(cases, frontend);
 
-    expect(relations).toHaveLength(3);
+    expect(relations).toHaveLength(4);
+
+    const pingRelation = relations.find(
+      (relation) => relation.case.slug === "ping-space-voice-membership-authorization",
+    );
+    expect(pingRelation).toMatchObject({
+      case: { slug: "ping-space-voice-membership-authorization" },
+      matchingSkillSlugs: ["shipping-github-vercel-changes"],
+      coversEntirePack: false,
+    });
 
     const portfolioRelation = relations.find(
       (relation) => relation.case.slug === "portfolio-translation-hardening",

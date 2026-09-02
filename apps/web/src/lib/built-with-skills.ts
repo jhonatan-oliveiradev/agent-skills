@@ -53,6 +53,8 @@ type CaseSource = Readonly<{
 }>;
 
 const repositoryUrl = "https://github.com/jhonatan-oliveiradev/agent-skills";
+const pingCaseSourcePath =
+  "docs/built-with-skills/2026-09-02-ping-space-voice-membership-authorization.md";
 const portfolioCaseSourcePath =
   "docs/built-with-skills/2026-09-02-portfolio-translation-hardening.md";
 
@@ -60,6 +62,11 @@ const agentSkillsStudioProject = {
   id: "agent-skills-studio",
   name: "Agent Skills Studio",
   repository: repositoryUrl,
+} as const satisfies CaseProject;
+
+const pingProject = {
+  id: "ping",
+  name: "PING",
 } as const satisfies CaseProject;
 
 const portfolio2025Project = {
@@ -87,6 +94,110 @@ function sourceEvidence(sourcePath: string): readonly CaseSourceEvidence[] {
 }
 
 const cases = [
+  {
+    slug: "ping-space-voice-membership-authorization",
+    date: "2026-09-02",
+    sourcePath: pingCaseSourcePath,
+    evidenceClass: "real-use",
+    project: pingProject,
+    skills: [
+      "selecting-working-methods",
+      "reviewing-api-security",
+      "building-regression-tests",
+      "testing-integration-boundaries",
+      "shipping-github-vercel-changes",
+    ],
+    evidence: [
+      {
+        type: "source",
+        href: `${repositoryUrl}/blob/main/${pingCaseSourcePath}`,
+        labels: {
+          en: "Public case record",
+          "pt-BR": "Registro público do case",
+        },
+      },
+      {
+        type: "qa",
+        href: `${repositoryUrl}/blob/main/${pingCaseSourcePath}#verification-record`,
+        labels: {
+          en: "Verification record",
+          "pt-BR": "Registro de verificação",
+        },
+      },
+    ],
+    locales: {
+      en: {
+        title: "Hardening Space voice credential authorization",
+        summary:
+          "A real PING authorization hardening pass moved active Space membership validation into the media credential trust boundary, then repaired a stale advisory-lock test double without another production change.",
+        challenge:
+          "A Space voice credential issuer was relying too heavily on an upstream join claim. Make the credential boundary independently prove that the requester is still an active member of the Space tied to the voice channel, while preserving established Server and DM behavior.",
+        decisions: [
+          {
+            title: "Put authorization at the credential boundary",
+            summary:
+              "Resolve the voice channel back to its Space and require an active SpaceMember record before issuing Space media credentials instead of treating the upstream join claim as sufficient proof.",
+          },
+          {
+            title: "Prove the unauthorized path first",
+            summary:
+              "Encode the stale or unauthorized Space membership claim as a deliberate RED regression before changing production code.",
+          },
+          {
+            title: "Diagnose the post-merge failure separately",
+            summary:
+              "When main exposed a stale advisory-lock transaction fake, keep the security fix intact and repair only the test double that no longer represented the credential boundary contract.",
+          },
+          {
+            title: "Verify the final main merge",
+            summary:
+              "Count the case only after the test-only follow-up merged and the canonical main workflow passed tests, formatting, lint, typecheck, and build on the final merge commit.",
+          },
+        ],
+        results: [
+          "Space voice credential issuance now independently verifies active membership in the Space tied to the channel.",
+          "The security regression moved from deliberate RED to GREEN while existing Server and DM credential semantics remained covered.",
+          "The only post-merge failure was isolated to a stale advisory-lock test double and repaired in a test-only follow-up with no additional production change.",
+          "The final main-branch workflow passed tests, formatting, lint, typecheck, and build before this case was recorded.",
+        ],
+      },
+      "pt-BR": {
+        title: "Hardening da autorização de credenciais de voz em Spaces",
+        summary:
+          "Um hardening real de autorização no PING moveu a validação de membership ativa do Space para o próprio trust boundary de credenciais de mídia e depois corrigiu um double legado do teste de advisory lock sem nova alteração de produção.",
+        challenge:
+          "O emissor de credenciais de voz em Spaces dependia demais de um claim upstream de entrada. Fazer a própria fronteira de credenciais comprovar que o usuário ainda é membro ativo do Space associado ao canal de voz, preservando os comportamentos já estabelecidos para Server e DM.",
+        decisions: [
+          {
+            title: "Colocar a autorização na fronteira de credenciais",
+            summary:
+              "Resolver o canal de voz até seu Space e exigir um registro SpaceMember ativo antes de emitir credenciais de mídia, em vez de tratar o claim upstream de entrada como prova suficiente.",
+          },
+          {
+            title: "Provar primeiro o caminho não autorizado",
+            summary:
+              "Codificar o claim de membership ausente ou desatualizada como uma regressão RED deliberada antes de alterar o código de produção.",
+          },
+          {
+            title: "Diagnosticar separadamente a falha pós-merge",
+            summary:
+              "Quando a main expôs um fake desatualizado da transação do advisory lock, manter o fix de segurança intacto e corrigir somente o double de teste que já não representava o contrato da fronteira de credenciais.",
+          },
+          {
+            title: "Verificar o merge final na main",
+            summary:
+              "Contar o case apenas depois do follow-up somente de testes ser integrado e o workflow canônico da main passar testes, formatação, lint, typecheck e build no commit final de merge.",
+          },
+        ],
+        results: [
+          "A emissão de credenciais de voz em Spaces agora verifica de forma independente a membership ativa no Space associado ao canal.",
+          "A regressão de segurança saiu de RED deliberado para GREEN mantendo cobertos os comportamentos existentes de credenciais para Server e DM.",
+          "A única falha pós-merge foi isolada em um double legado do teste de advisory lock e corrigida em um follow-up somente de testes, sem nova alteração de produção.",
+          "O workflow final da main passou testes, formatação, lint, typecheck e build antes deste case ser registrado.",
+        ],
+      },
+    },
+  },
   {
     slug: "portfolio-translation-hardening",
     date: "2026-09-02",
