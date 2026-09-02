@@ -86,7 +86,7 @@ All notable changes to this skill library are documented here.
 - Project-local `AGENTS.md` template for Codex repository instructions.
 - Automatic installation of reusable skills into `~/.agents/skills/`.
 - Package-manager detection for npm, pnpm, Yarn, and Bun when installing Prettier tooling.
-- Non-destructive bootstrap behavior with explicit `--force`, `--skip-deps`, `--skip-skills` controls.
+- Non-destructive bootstrap behavior with explicit `--force`, `--skip-deps`, and `--skip-skills` controls.
 - Node test coverage for Tailwind stylesheet detection and safe file generation.
 
 ### Changed
