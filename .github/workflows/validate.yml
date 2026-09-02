@@ -5,66 +5,7 @@ on:
     branches: [main, dev]
   pull_request:
 
-permissions:
-  contents: write
-
 jobs:
-  materialize-rc1-public-state:
-    if: github.event_name == 'pull_request' && github.head_ref == 'feat/release-readiness-rc1'
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          ref: ${{ github.head_ref }}
-          fetch-depth: 0
-      - name: Align current public release state
-        shell: bash
-        run: |
-          python - <<'PY'
-          from pathlib import Path
-
-          replacements = {
-              Path('README.md'): [
-                  (
-                      """## Versioning\n\nThis foundation is the unreleased v1 beta on\n[`feat/agent-skills-studio-v1`](https://github.com/jhonatan-oliveiradev/agent-skills/tree/feat/agent-skills-studio-v1),\nversioned `1.0.0-beta.1`. Its implementation follows the\n[approved design spec](docs/superpowers/specs/2026-08-25-agent-skills-studio-design.md)\nand the [foundation plan](docs/superpowers/plans/2026-08-25-agent-skills-studio-foundation.md).""",
-                      """## Versioning\n\nThe current Studio release version is owned by `VERSION` and synchronized across the root package, plugin manifest, catalog manifest, and web package. `main` is the production branch; release candidates are prepared in focused release branches and promoted only after the complete repository gate passes.\n\nThe implementation foundation follows the [approved design spec](docs/superpowers/specs/2026-08-25-agent-skills-studio-design.md) and the [foundation plan](docs/superpowers/plans/2026-08-25-agent-skills-studio-foundation.md).""",
-                  ),
-              ],
-              Path('apps/web/src/lib/messages.ts'): [
-                  (
-                      'summary: "Three installable collections organize complementary skills without hiding their individual contracts."',
-                      'summary: "Ten installable collections organize complementary skills without hiding their individual contracts."',
-                  ),
-                  ('demoSuccess: "18 skills ready to use."', 'demoSuccess: "49 skills ready to use."'),
-                  (
-                      'summary: "Três coleções instaláveis organizam skills complementares sem ocultar seus contratos individuais."',
-                      'summary: "Dez coleções instaláveis organizam skills complementares sem ocultar seus contratos individuais."',
-                  ),
-                  ('demoSuccess: "18 skills prontas para usar."', 'demoSuccess: "49 skills prontas para usar."'),
-              ],
-          }
-
-          for path, pairs in replacements.items():
-              text = path.read_text(encoding='utf-8')
-              changed = False
-              for old, new in pairs:
-                  if new in text:
-                      continue
-                  count = text.count(old)
-                  if count != 1:
-                      raise SystemExit(f'{path}: expected exactly one occurrence, found {count}: {old[:80]}')
-                  text = text.replace(old, new, 1)
-                  changed = True
-              if changed:
-                  path.write_text(text, encoding='utf-8')
-          PY
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add README.md apps/web/src/lib/messages.ts
-          git diff --cached --quiet && exit 0
-          git commit -m "docs: align RC1 current public state"
-          git push origin HEAD:${{ github.head_ref }}
-
   validate:
     strategy:
       fail-fast: false
