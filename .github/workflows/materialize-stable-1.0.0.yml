@@ -98,7 +98,8 @@ jobs:
       - name: Commit materialized Stable metadata
         shell: bash
         run: |
-          git add VERSION package.json .codex-plugin/plugin.json catalog/catalog.json catalog/skills catalog/packs catalog/generated/catalog.json apps/web/package.json apps/web/package-lock.json apps/web/src/generated/catalog.json release/stable-readiness.json apps/web/src/components/site-shell.test.tsx
+          git add VERSION package.json .codex-plugin/plugin.json catalog/catalog.json catalog/skills catalog/packs catalog/generated/catalog.json apps/web/package.json apps/web/package-lock.json release/stable-readiness.json apps/web/src/components/site-shell.test.tsx
+          git add -f apps/web/src/generated/catalog.json
           if git diff --cached --quiet; then
             echo "Stable metadata already materialized."
             exit 0
