@@ -65,9 +65,12 @@ kept.
 - `reviewing-pull-requests`
 - `writing-effective-technical-handoffs`
 
-### Delivery & knowledge capture
-- `shipping-github-vercel-changes`
+### Agent practice
+- `selecting-working-methods`
 - `turning-techniques-into-skills`
+
+### Delivery
+- `shipping-github-vercel-changes`
 
 ### Game development
 - `building-hybrid-game-assets`
@@ -111,6 +114,12 @@ The methods require authorized scope, reproducible evidence, realistic precondit
 The Engineering Workflow pack separates four concerns that should remain independently invokable: turning broad objectives into verifiable engineering plans, managing implementation as small safe slices, reviewing pull requests against intent and current evidence, and writing technical handoffs that let a cold reader resume without rediscovery.
 
 The methods prefer behavior-oriented plans over file checklists, conceptually focused batches over oversized branches, current CI and repository evidence over review assumptions, and explicit confirmed/hypothesis/planned/blocked state over chronological chat transcripts. They do not require a particular VCS host, project-management system, or agent runtime.
+
+## Selecting Working Methods
+
+`selecting-working-methods` is the catalog-wide router for tasks that could legitimately invoke more than one method. It chooses one primary owner for the core decision, adds supporting methods only for distinct responsibilities, orders them by dependency, and prefers the smallest sufficient sequence over loading an entire pack.
+
+The router treats **no skill** as a valid outcome when the collection does not materially improve the task. Once a method or sequence is selected, the router delegates and stops; it does not duplicate the specialized workflow. It is pack-agnostic, runtime-agnostic, and intentionally separate from `turning-techniques-into-skills`, which owns skill authoring rather than skill selection.
 
 ## New web-app default
 
@@ -371,7 +380,7 @@ cd agent-skills
 code ../my-next-app
 ```
 
-Inside Codex, you can then work normally. The project-local `AGENTS.md` provides repository rules, while the reusable skills provide specialized workflows such as UI fidelity, motion, visual QA, backend/data engineering, architecture, quality/testing, application security, engineering workflow, and delivery. You can let Codex select a matching skill or explicitly name one in the prompt.
+Inside Codex, you can then work normally. The project-local `AGENTS.md` provides repository rules, while the reusable skills provide specialized workflows such as UI fidelity, motion, visual QA, backend/data engineering, architecture, quality/testing, application security, engineering workflow, and delivery. When ownership is ambiguous or several methods could apply, `selecting-working-methods` can route the task to the smallest useful sequence before execution; you can also explicitly name a specialized skill in the prompt.
 
 ## Validate
 
