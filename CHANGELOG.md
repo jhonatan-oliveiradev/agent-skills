@@ -2,6 +2,20 @@
 
 All notable changes to this skill library are documented here.
 
+## [1.0.0] - 2026-09-02
+
+### Stable release
+
+- Promoted the evidence-qualified Agent Skills Studio from `1.0.0-rc.2` to Stable `1.0.0` with 54 canonical skills and 11 active packs.
+- Qualified Stable after four real-use cases across three distinct projects represented five active packs, including complete real-use validation of Codebase Intelligence.
+- Preserved canonical skill behavior and pack composition: this promotion changes release state and synchronized metadata, not method contracts.
+
+### Distribution and verification
+
+- Synchronized the plugin, catalog, installers, microsite package metadata, and web lockfile at `1.0.0`.
+- Preserved real-use evidence across ChatGPT direct Skill distribution, catalog discovery, installers, and microsite consumption.
+- Kept Linux and Windows tests, validation, typecheck, lint, production build, and platform installer smoke tests as the canonical Stable release gate.
+
 ## [1.0.0-rc.2] - 2026-09-02
 
 ### Codebase Intelligence
