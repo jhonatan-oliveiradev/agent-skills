@@ -1,8 +1,8 @@
 {
-  "schemaVersion": 3,
-  "candidateVersion": "1.0.0-rc.2",
+  "schemaVersion": 4,
+  "candidateVersion": "1.0.0",
   "targetVersion": "1.0.0",
-  "status": "ready-for-stable-review",
+  "status": "stable",
   "requiredRealUsePacks": [
     "codebase-intelligence"
   ],
@@ -53,5 +53,6 @@
         "rocket-editorial-error-boundary"
       ]
     }
-  ]
+  ],
+  "promotedFrom": "1.0.0-rc.2"
 }

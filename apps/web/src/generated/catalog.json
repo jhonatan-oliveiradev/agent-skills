@@ -1,12 +1,12 @@
 {
   "schemaVersion": 1,
-  "version": "1.0.0-rc.2",
+  "version": "1.0.0",
   "defaultLocale": "en",
   "locales": [
     "en",
     "pt-BR"
   ],
-  "sourceDigest": "747234dd27dcd153651c2df47e8b537f6e0a12ba57869a08ac6a867b70e27ae0",
+  "sourceDigest": "391c2256c25eebee23c50bb6be779e869ccc7cf648cddd153fe28285dacd2b14",
   "filters": {
     "categories": [
       "application-security",
@@ -345,7 +345,7 @@
         "planning-safe-refactors",
         "building-regression-tests"
       ],
-      "version": "1.0.0-rc.2",
+      "version": "1.0.0",
       "updatedAt": "2026-09-02",
       "locales": {
         "en": {
@@ -416,7 +416,7 @@
         "reviewing-web-security",
         "building-regression-tests"
       ],
-      "version": "1.0.0-rc.2",
+      "version": "1.0.0",
       "updatedAt": "2026-09-01",
       "locales": {
         "en": {
@@ -484,7 +484,7 @@
       "relatedSkills": [
         "implementing-reference-faithful-ui"
       ],
-      "version": "1.0.0-rc.2",
+      "version": "1.0.0",
       "updatedAt": "2026-08-26",
       "locales": {
         "en": {
@@ -553,7 +553,7 @@
       "relatedSkills": [
         "designing-ui-systems"
       ],
-      "version": "1.0.0-rc.2",
+      "version": "1.0.0",
       "updatedAt": "2026-08-26",
       "locales": {
         "en": {
@@ -624,7 +624,7 @@
         "writing-brand-voice-and-messaging",
         "designing-ui-systems"
       ],
-      "version": "1.0.0-rc.2",
+      "version": "1.0.0",
       "updatedAt": "2026-09-01",
       "locales": {
         "en": {
@@ -692,7 +692,7 @@
       "relatedSkills": [
         "building-premium-nextjs-interfaces"
       ],
-      "version": "1.0.0-rc.2",
+      "version": "1.0.0",
       "updatedAt": "2026-08-26",
       "locales": {
         "en": {
@@ -760,7 +760,7 @@
       "relatedSkills": [
         "reconstructing-images-as-threejs"
       ],
-      "version": "1.0.0-rc.2",
+      "version": "1.0.0",
       "updatedAt": "2026-08-26",
       "locales": {
         "en": {
@@ -829,7 +829,7 @@
       "relatedSkills": [
         "designing-ui-systems"
       ],
-      "version": "1.0.0-rc.2",
+      "version": "1.0.0",
       "updatedAt": "2026-08-26",
       "locales": {
         "en": {
@@ -900,7 +900,7 @@
         "testing-integration-boundaries",
         "testing-web-applications-end-to-end"
       ],
-      "version": "1.0.0-rc.2",
+      "version": "1.0.0",
       "updatedAt": "2026-09-01",
       "locales": {
         "en": {
@@ -976,7 +976,7 @@
       "relatedSkills": [
         "designing-relational-data-models"
       ],
-      "version": "1.0.0-rc.2",
+      "version": "1.0.0",
       "updatedAt": "2026-09-01",
       "locales": {
         "en": {
@@ -1046,7 +1046,7 @@
         "designing-software-boundaries",
         "documenting-architecture-decisions"
       ],
-      "version": "1.0.0-rc.2",
+      "version": "1.0.0",
       "updatedAt": "2026-09-01",
       "locales": {
         "en": {
@@ -1115,7 +1115,7 @@
       "relatedSkills": [
         "engineering-gsap-animations"
       ],
-      "version": "1.0.0-rc.2",
+      "version": "1.0.0",
       "updatedAt": "2026-08-26",
       "locales": {
         "en": {
@@ -1183,7 +1183,7 @@
       "relatedSkills": [
         "building-hybrid-game-assets"
       ],
-      "version": "1.0.0-rc.2",
+      "version": "1.0.0",
       "updatedAt": "2026-08-26",
       "locales": {
         "en": {
@@ -1254,7 +1254,7 @@
         "designing-visual-identities",
         "writing-brand-voice-and-messaging"
       ],
-      "version": "1.0.0-rc.2",
+      "version": "1.0.0",
       "updatedAt": "2026-09-01",
       "locales": {
         "en": {
@@ -1322,7 +1322,7 @@
       "relatedSkills": [
         "testing-playable-games"
       ],
-      "version": "1.0.0-rc.2",
+      "version": "1.0.0",
       "updatedAt": "2026-08-26",
       "locales": {
         "en": {
@@ -1392,7 +1392,7 @@
         "building-reliable-node-api-boundaries",
         "evolving-postgres-schemas-safely"
       ],
-      "version": "1.0.0-rc.2",
+      "version": "1.0.0",
       "updatedAt": "2026-09-01",
       "locales": {
         "en": {
@@ -1463,7 +1463,7 @@
         "building-reliable-node-api-boundaries",
         "planning-safe-refactors"
       ],
-      "version": "1.0.0-rc.2",
+      "version": "1.0.0",
       "updatedAt": "2026-09-01",
       "locales": {
         "en": {
@@ -1534,7 +1534,7 @@
         "testing-web-applications-end-to-end",
         "building-regression-tests"
       ],
-      "version": "1.0.0-rc.2",
+      "version": "1.0.0",
       "updatedAt": "2026-09-01",
       "locales": {
         "en": {
@@ -1603,7 +1603,7 @@
       "relatedSkills": [
         "building-premium-nextjs-interfaces"
       ],
-      "version": "1.0.0-rc.2",
+      "version": "1.0.0",
       "updatedAt": "2026-08-26",
       "locales": {
         "en": {
@@ -1675,7 +1675,7 @@
         "building-brand-guidelines",
         "designing-ui-systems"
       ],
-      "version": "1.0.0-rc.2",
+      "version": "1.0.0",
       "updatedAt": "2026-09-01",
       "locales": {
         "en": {
@@ -1745,7 +1745,7 @@
         "choosing-application-architecture",
         "designing-software-boundaries"
       ],
-      "version": "1.0.0-rc.2",
+      "version": "1.0.0",
       "updatedAt": "2026-09-01",
       "locales": {
         "en": {
@@ -1816,7 +1816,7 @@
         "humanizing-generated-prose",
         "writing-brand-voice-and-messaging"
       ],
-      "version": "1.0.0-rc.2",
+      "version": "1.0.0",
       "updatedAt": "2026-09-01",
       "locales": {
         "en": {
@@ -1892,7 +1892,7 @@
       "relatedSkills": [
         "craft-premium-motion"
       ],
-      "version": "1.0.0-rc.2",
+      "version": "1.0.0",
       "updatedAt": "2026-08-26",
       "locales": {
         "en": {
@@ -1969,7 +1969,7 @@
         "designing-relational-data-models",
         "profiling-postgres-query-performance"
       ],
-      "version": "1.0.0-rc.2",
+      "version": "1.0.0",
       "updatedAt": "2026-09-01",
       "locales": {
         "en": {
@@ -2040,7 +2040,7 @@
         "planning-written-communication",
         "writing-brand-voice-and-messaging"
       ],
-      "version": "1.0.0-rc.2",
+      "version": "1.0.0",
       "updatedAt": "2026-09-01",
       "locales": {
         "en": {
@@ -2108,7 +2108,7 @@
       "relatedSkills": [
         "auditing-pixel-perfect-frontend"
       ],
-      "version": "1.0.0-rc.2",
+      "version": "1.0.0",
       "updatedAt": "2026-08-26",
       "locales": {
         "en": {
@@ -2177,7 +2177,7 @@
       "relatedSkills": [
         "tracing-code-execution-paths"
       ],
-      "version": "1.0.0-rc.2",
+      "version": "1.0.0",
       "updatedAt": "2026-09-02",
       "locales": {
         "en": {
@@ -2248,7 +2248,7 @@
         "reviewing-pull-requests",
         "planning-safe-refactors"
       ],
-      "version": "1.0.0-rc.2",
+      "version": "1.0.0",
       "updatedAt": "2026-09-01",
       "locales": {
         "en": {
@@ -2318,7 +2318,7 @@
         "designing-software-boundaries",
         "choosing-application-architecture"
       ],
-      "version": "1.0.0-rc.2",
+      "version": "1.0.0",
       "updatedAt": "2026-09-02",
       "locales": {
         "en": {
@@ -2389,7 +2389,7 @@
         "designing-visual-identities",
         "writing-brand-voice-and-messaging"
       ],
-      "version": "1.0.0-rc.2",
+      "version": "1.0.0",
       "updatedAt": "2026-09-01",
       "locales": {
         "en": {
@@ -2458,7 +2458,7 @@
       "relatedSkills": [
         "craft-premium-motion"
       ],
-      "version": "1.0.0-rc.2",
+      "version": "1.0.0",
       "updatedAt": "2026-08-26",
       "locales": {
         "en": {
@@ -2527,7 +2527,7 @@
       "relatedSkills": [
         "craft-premium-motion"
       ],
-      "version": "1.0.0-rc.2",
+      "version": "1.0.0",
       "updatedAt": "2026-08-26",
       "locales": {
         "en": {
@@ -2597,7 +2597,7 @@
         "planning-engineering-work",
         "designing-test-strategies"
       ],
-      "version": "1.0.0-rc.2",
+      "version": "1.0.0",
       "updatedAt": "2026-09-02",
       "locales": {
         "en": {
@@ -2668,7 +2668,7 @@
         "documenting-architecture-decisions",
         "designing-test-strategies"
       ],
-      "version": "1.0.0-rc.2",
+      "version": "1.0.0",
       "updatedAt": "2026-09-01",
       "locales": {
         "en": {
@@ -2738,7 +2738,7 @@
         "designing-software-boundaries",
         "documenting-architecture-decisions"
       ],
-      "version": "1.0.0-rc.2",
+      "version": "1.0.0",
       "updatedAt": "2026-09-01",
       "locales": {
         "en": {
@@ -2810,7 +2810,7 @@
         "editing-for-clarity-and-tone",
         "writing-brand-voice-and-messaging"
       ],
-      "version": "1.0.0-rc.2",
+      "version": "1.0.0",
       "updatedAt": "2026-09-01",
       "locales": {
         "en": {
@@ -2887,7 +2887,7 @@
         "designing-relational-data-models",
         "evolving-postgres-schemas-safely"
       ],
-      "version": "1.0.0-rc.2",
+      "version": "1.0.0",
       "updatedAt": "2026-09-01",
       "locales": {
         "en": {
@@ -2963,7 +2963,7 @@
       "relatedSkills": [
         "building-hybrid-game-assets"
       ],
-      "version": "1.0.0-rc.2",
+      "version": "1.0.0",
       "updatedAt": "2026-08-26",
       "locales": {
         "en": {
@@ -3034,7 +3034,7 @@
         "reviewing-web-security",
         "building-reliable-node-api-boundaries"
       ],
-      "version": "1.0.0-rc.2",
+      "version": "1.0.0",
       "updatedAt": "2026-09-01",
       "locales": {
         "en": {
@@ -3105,7 +3105,7 @@
         "building-regression-tests",
         "reviewing-web-security"
       ],
-      "version": "1.0.0-rc.2",
+      "version": "1.0.0",
       "updatedAt": "2026-09-01",
       "locales": {
         "en": {
@@ -3176,7 +3176,7 @@
         "reviewing-api-security",
         "building-regression-tests"
       ],
-      "version": "1.0.0-rc.2",
+      "version": "1.0.0",
       "updatedAt": "2026-09-01",
       "locales": {
         "en": {
@@ -3245,7 +3245,7 @@
         "planning-engineering-work",
         "managing-implementation-slices"
       ],
-      "version": "1.0.0-rc.2",
+      "version": "1.0.0",
       "updatedAt": "2026-09-01",
       "locales": {
         "en": {
@@ -3326,7 +3326,7 @@
       "relatedSkills": [
         "bootstrapping-modern-web-apps"
       ],
-      "version": "1.0.0-rc.2",
+      "version": "1.0.0",
       "updatedAt": "2026-08-26",
       "locales": {
         "en": {
@@ -3397,7 +3397,7 @@
         "building-regression-tests",
         "building-reliable-node-api-boundaries"
       ],
-      "version": "1.0.0-rc.2",
+      "version": "1.0.0",
       "updatedAt": "2026-09-01",
       "locales": {
         "en": {
@@ -3465,7 +3465,7 @@
       "relatedSkills": [
         "designing-action-combat"
       ],
-      "version": "1.0.0-rc.2",
+      "version": "1.0.0",
       "updatedAt": "2026-08-26",
       "locales": {
         "en": {
@@ -3536,7 +3536,7 @@
         "building-regression-tests",
         "auditing-pixel-perfect-frontend"
       ],
-      "version": "1.0.0-rc.2",
+      "version": "1.0.0",
       "updatedAt": "2026-09-01",
       "locales": {
         "en": {
@@ -3607,7 +3607,7 @@
         "reviewing-api-security",
         "designing-software-boundaries"
       ],
-      "version": "1.0.0-rc.2",
+      "version": "1.0.0",
       "updatedAt": "2026-09-01",
       "locales": {
         "en": {
@@ -3676,7 +3676,7 @@
       "relatedSkills": [
         "investigating-codebase-semantically"
       ],
-      "version": "1.0.0-rc.2",
+      "version": "1.0.0",
       "updatedAt": "2026-09-02",
       "locales": {
         "en": {
@@ -3752,7 +3752,7 @@
       "relatedSkills": [
         "implementing-reference-faithful-ui"
       ],
-      "version": "1.0.0-rc.2",
+      "version": "1.0.0",
       "updatedAt": "2026-08-26",
       "locales": {
         "en": {
@@ -3816,7 +3816,7 @@
       ],
       "dependencies": [],
       "relatedSkills": [],
-      "version": "1.0.0-rc.2",
+      "version": "1.0.0",
       "updatedAt": "2026-08-26",
       "locales": {
         "en": {
@@ -3887,7 +3887,7 @@
         "naming-brands-and-products",
         "building-brand-guidelines"
       ],
-      "version": "1.0.0-rc.2",
+      "version": "1.0.0",
       "updatedAt": "2026-09-01",
       "locales": {
         "en": {
@@ -3959,7 +3959,7 @@
         "building-conversion-product-pages",
         "editing-for-clarity-and-tone"
       ],
-      "version": "1.0.0-rc.2",
+      "version": "1.0.0",
       "updatedAt": "2026-09-01",
       "locales": {
         "en": {
@@ -4030,7 +4030,7 @@
         "managing-implementation-slices",
         "shipping-github-vercel-changes"
       ],
-      "version": "1.0.0-rc.2",
+      "version": "1.0.0",
       "updatedAt": "2026-09-01",
       "locales": {
         "en": {
@@ -4102,7 +4102,7 @@
         "editing-for-clarity-and-tone",
         "writing-brand-voice-and-messaging"
       ],
-      "version": "1.0.0-rc.2",
+      "version": "1.0.0",
       "updatedAt": "2026-09-01",
       "locales": {
         "en": {
@@ -4142,7 +4142,7 @@
       "status": "active",
       "featured": false,
       "color": "amber",
-      "version": "1.0.0-rc.2",
+      "version": "1.0.0",
       "locales": {
         "en": {
           "name": "Application Security",
@@ -4229,7 +4229,7 @@
       "status": "active",
       "featured": false,
       "color": "cyan",
-      "version": "1.0.0-rc.2",
+      "version": "1.0.0",
       "locales": {
         "en": {
           "name": "Architecture & Engineering",
@@ -4316,7 +4316,7 @@
       "status": "active",
       "featured": false,
       "color": "violet",
-      "version": "1.0.0-rc.2",
+      "version": "1.0.0",
       "locales": {
         "en": {
           "name": "Backend & Data",
@@ -4403,7 +4403,7 @@
       "status": "active",
       "featured": false,
       "color": "indigo",
-      "version": "1.0.0-rc.2",
+      "version": "1.0.0",
       "locales": {
         "en": {
           "name": "Codebase Intelligence",
@@ -4504,7 +4504,7 @@
       "status": "active",
       "featured": false,
       "color": "rose",
-      "version": "1.0.0-rc.2",
+      "version": "1.0.0",
       "locales": {
         "en": {
           "name": "Design & Brand",
@@ -4605,7 +4605,7 @@
       "status": "active",
       "featured": false,
       "color": "teal",
-      "version": "1.0.0-rc.2",
+      "version": "1.0.0",
       "locales": {
         "en": {
           "name": "Engineering Workflow",
@@ -4692,7 +4692,7 @@
       "status": "active",
       "featured": true,
       "color": "electric-blue",
-      "version": "1.0.0-rc.2",
+      "version": "1.0.0",
       "locales": {
         "en": {
           "name": "Frontend & Product",
@@ -4835,7 +4835,7 @@
       "status": "active",
       "featured": true,
       "color": "amber",
-      "version": "1.0.0-rc.2",
+      "version": "1.0.0",
       "locales": {
         "en": {
           "name": "Game Development",
@@ -4936,7 +4936,7 @@
       "status": "active",
       "featured": true,
       "color": "violet",
-      "version": "1.0.0-rc.2",
+      "version": "1.0.0",
       "locales": {
         "en": {
           "name": "Motion",
@@ -5037,7 +5037,7 @@
       "status": "active",
       "featured": false,
       "color": "coral",
-      "version": "1.0.0-rc.2",
+      "version": "1.0.0",
       "locales": {
         "en": {
           "name": "Quality & Testing",
@@ -5124,7 +5124,7 @@
       "status": "active",
       "featured": false,
       "color": "amber",
-      "version": "1.0.0-rc.2",
+      "version": "1.0.0",
       "locales": {
         "en": {
           "name": "Writing & Communication",
