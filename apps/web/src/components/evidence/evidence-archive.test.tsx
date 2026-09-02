@@ -13,7 +13,7 @@ describe("Evidence Archive", () => {
       "SOURCE / AVAILABLE",
       "Internal evidence",
       "Real-use evidence",
-      "/en/built-with-skills/portfolio-translation-hardening",
+      "/en/built-with-skills/ping-space-voice-membership-authorization",
     ],
     [
       "pt-BR",
@@ -21,7 +21,7 @@ describe("Evidence Archive", () => {
       "FONTE / DISPONÍVEL",
       "Evidência interna",
       "Evidência de uso real",
-      "/pt-BR/built-with-skills/portfolio-translation-hardening",
+      "/pt-BR/built-with-skills/ping-space-voice-membership-authorization",
     ],
   ] as const)(
     "renders an evidence-first editorial archive for %s",
@@ -32,11 +32,11 @@ describe("Evidence Archive", () => {
 
       expect(container.querySelector("[data-evidence-archive]")).toBeInTheDocument();
       expect(screen.getByRole("heading", { level: 1, name: title })).toBeInTheDocument();
-      expect(container.querySelectorAll("[data-evidence-feature]")).toHaveLength(3);
+      expect(container.querySelectorAll("[data-evidence-feature]")).toHaveLength(4);
       expect(container.querySelector('[data-evidence-leading="true"]')).toBeInTheDocument();
-      expect(screen.getAllByText(state)).toHaveLength(3);
+      expect(screen.getAllByText(state)).toHaveLength(4);
       expect(screen.getAllByText(internalProvenance)).toHaveLength(2);
-      expect(screen.getByText(realUseProvenance)).toBeInTheDocument();
+      expect(screen.getAllByText(realUseProvenance)).toHaveLength(2);
       expect(
         container.querySelector(
           `[data-evidence-leading="true"] a[href="${leadingHref}"]`,
