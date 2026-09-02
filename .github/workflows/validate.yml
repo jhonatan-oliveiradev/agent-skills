@@ -5,7 +5,41 @@ on:
     branches: [main, dev]
   pull_request:
 
+permissions:
+  contents: write
+
 jobs:
+  materialize-writing-category:
+    if: github.event_name == 'pull_request' && github.head_ref == 'feat/writing-communication-pack-v1'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.head_ref }}
+          fetch-depth: 0
+      - name: Register writing-communication in runtime validator
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          path = Path('scripts/validate-catalog.mjs')
+          text = path.read_text(encoding='utf-8')
+          old = '"engineering-workflow", "brand-design", "delivery", "meta"'
+          new = '"engineering-workflow", "brand-design", "writing-communication", "delivery", "meta"'
+          if new in text:
+              raise SystemExit(0)
+          if old not in text:
+              raise SystemExit('expected allowedCategories sequence not found')
+          path.write_text(text.replace(old, new, 1), encoding='utf-8')
+          PY
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add scripts/validate-catalog.mjs
+          git diff --cached --quiet && exit 0
+          git commit -m "fix: register writing communication validator category"
+          git push origin HEAD:${{ github.head_ref }}
+
   validate:
     strategy:
       fail-fast: false
