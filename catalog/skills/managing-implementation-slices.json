@@ -2,19 +2,41 @@
   "$schema": "../schemas/skill.schema.json",
   "slug": "managing-implementation-slices",
   "category": "engineering-workflow",
-  "packs": ["engineering-workflow"],
+  "packs": [
+    "engineering-workflow"
+  ],
   "maturity": "beta",
   "difficulty": "intermediate",
   "featured": false,
   "compatibility": {
-    "surfaces": ["chatgpt", "codex"],
-    "operatingSystems": ["linux", "macos", "windows"],
-    "installModes": ["plugin", "filesystem"]
+    "surfaces": [
+      "chatgpt",
+      "codex"
+    ],
+    "operatingSystems": [
+      "linux",
+      "macos",
+      "windows"
+    ],
+    "installModes": [
+      "plugin",
+      "filesystem"
+    ]
   },
-  "tags": ["small-batches", "implementation", "pull-requests", "scope", "delivery"],
+  "tags": [
+    "small-batches",
+    "implementation",
+    "pull-requests",
+    "scope",
+    "delivery"
+  ],
   "dependencies": [],
-  "relatedSkills": ["planning-engineering-work", "reviewing-pull-requests", "planning-safe-refactors"],
-  "version": "1.0.0-beta.1",
+  "relatedSkills": [
+    "planning-engineering-work",
+    "reviewing-pull-requests",
+    "planning-safe-refactors"
+  ],
+  "version": "1.0.0-rc.1",
   "updatedAt": "2026-09-01",
   "locales": {
     "en": {
@@ -23,8 +45,13 @@
       "primaryBenefit": "Reduces scope creep and integration risk while preserving a clear dependency chain between implementation slices.",
       "whenToUse": "Use when an implementation is growing across multiple concerns, branches, or pull requests and needs to be decomposed into small changes that can be verified and integrated safely.",
       "whenNotToUse": "Do not use when the requested change is already one focused, independently verifiable slice.",
-      "useCases": ["Split a large feature into focused pull requests that keep the system working after each merge", "Separate refactor, migration, and behavior changes so each can be verified independently"],
-      "examplePrompts": ["Use managing-implementation-slices to break this change into the smallest safe reviewable slices without losing the dependency order."]
+      "useCases": [
+        "Split a large feature into focused pull requests that keep the system working after each merge",
+        "Separate refactor, migration, and behavior changes so each can be verified independently"
+      ],
+      "examplePrompts": [
+        "Use managing-implementation-slices to break this change into the smallest safe reviewable slices without losing the dependency order."
+      ]
     },
     "pt-BR": {
       "displayName": "Gestão de Slices de Implementação",
@@ -32,8 +59,13 @@
       "primaryBenefit": "Reduz expansão de escopo e risco de integração preservando uma cadeia clara de dependências entre slices de implementação.",
       "whenToUse": "Use quando uma implementação estiver crescendo entre várias preocupações, branches ou pull requests e precisar ser decomposta em mudanças pequenas que possam ser verificadas e integradas com segurança.",
       "whenNotToUse": "Não use quando a mudança solicitada já for um único slice focado e verificável de forma independente.",
-      "useCases": ["Dividir uma funcionalidade grande em pull requests focadas que mantêm o sistema funcionando após cada merge", "Separar refatoração, migração e mudança de comportamento para que cada parte possa ser verificada isoladamente"],
-      "examplePrompts": ["Use managing-implementation-slices para quebrar esta mudança nos menores slices seguros e revisáveis sem perder a ordem de dependências."]
+      "useCases": [
+        "Dividir uma funcionalidade grande em pull requests focadas que mantêm o sistema funcionando após cada merge",
+        "Separar refatoração, migração e mudança de comportamento para que cada parte possa ser verificada isoladamente"
+      ],
+      "examplePrompts": [
+        "Use managing-implementation-slices para quebrar esta mudança nos menores slices seguros e revisáveis sem perder a ordem de dependências."
+      ]
     }
   }
 }

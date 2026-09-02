@@ -2,19 +2,40 @@
   "$schema": "../schemas/skill.schema.json",
   "slug": "choosing-application-architecture",
   "category": "architecture-engineering",
-  "packs": ["architecture-engineering"],
+  "packs": [
+    "architecture-engineering"
+  ],
   "maturity": "beta",
   "difficulty": "advanced",
   "featured": false,
   "compatibility": {
-    "surfaces": ["chatgpt", "codex"],
-    "operatingSystems": ["linux", "macos", "windows"],
-    "installModes": ["plugin", "filesystem"]
+    "surfaces": [
+      "chatgpt",
+      "codex"
+    ],
+    "operatingSystems": [
+      "linux",
+      "macos",
+      "windows"
+    ],
+    "installModes": [
+      "plugin",
+      "filesystem"
+    ]
   },
-  "tags": ["architecture", "quality-attributes", "tradeoffs", "topology", "decision-making"],
+  "tags": [
+    "architecture",
+    "quality-attributes",
+    "tradeoffs",
+    "topology",
+    "decision-making"
+  ],
   "dependencies": [],
-  "relatedSkills": ["designing-software-boundaries", "documenting-architecture-decisions"],
-  "version": "1.0.0-beta.1",
+  "relatedSkills": [
+    "designing-software-boundaries",
+    "documenting-architecture-decisions"
+  ],
+  "version": "1.0.0-rc.1",
   "updatedAt": "2026-09-01",
   "locales": {
     "en": {
@@ -23,8 +44,13 @@
       "primaryBenefit": "Makes architectural topology a traceable trade-off decision and avoids distributed complexity that lacks a demonstrated requirement.",
       "whenToUse": "Use when starting or reshaping an application where deployment topology, scaling, reliability, ownership, coupling, or delivery constraints make the architectural shape unclear.",
       "whenNotToUse": "Do not use when the change is local to one established module and does not alter system-level quality attributes, deployment shape, or ownership boundaries.",
-      "useCases": ["Choose between a modular monolith and distributed services for a growing product", "Reassess an existing architecture after scaling, reliability, or team ownership constraints changed"],
-      "examplePrompts": ["Use choosing-application-architecture to compare realistic architecture options for this system from its quality attributes, change boundaries, deployment needs, and operational constraints."]
+      "useCases": [
+        "Choose between a modular monolith and distributed services for a growing product",
+        "Reassess an existing architecture after scaling, reliability, or team ownership constraints changed"
+      ],
+      "examplePrompts": [
+        "Use choosing-application-architecture to compare realistic architecture options for this system from its quality attributes, change boundaries, deployment needs, and operational constraints."
+      ]
     },
     "pt-BR": {
       "displayName": "Escolha de Arquitetura de Aplicação",
@@ -32,8 +58,13 @@
       "primaryBenefit": "Transforma a topologia arquitetural em uma decisão rastreável de trade-offs e evita complexidade distribuída sem requisito demonstrado.",
       "whenToUse": "Use ao iniciar ou reestruturar uma aplicação quando topologia de deploy, escala, confiabilidade, ownership, acoplamento ou restrições de entrega tornam a forma arquitetural incerta.",
       "whenNotToUse": "Não use quando a mudança é local a um módulo estabelecido e não altera atributos de qualidade sistêmicos, topologia de deploy ou limites de ownership.",
-      "useCases": ["Escolher entre um monólito modular e serviços distribuídos para um produto em crescimento", "Reavaliar uma arquitetura existente após mudanças de escala, confiabilidade ou ownership das equipes"],
-      "examplePrompts": ["Use choosing-application-architecture para comparar opções arquiteturais realistas para este sistema a partir de atributos de qualidade, limites de mudança, necessidades de deploy e restrições operacionais."]
+      "useCases": [
+        "Escolher entre um monólito modular e serviços distribuídos para um produto em crescimento",
+        "Reavaliar uma arquitetura existente após mudanças de escala, confiabilidade ou ownership das equipes"
+      ],
+      "examplePrompts": [
+        "Use choosing-application-architecture para comparar opções arquiteturais realistas para este sistema a partir de atributos de qualidade, limites de mudança, necessidades de deploy e restrições operacionais."
+      ]
     }
   }
 }

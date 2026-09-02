@@ -2,19 +2,41 @@
   "$schema": "../schemas/skill.schema.json",
   "slug": "defining-brand-strategy",
   "category": "brand-design",
-  "packs": ["design-brand"],
+  "packs": [
+    "design-brand"
+  ],
   "maturity": "beta",
   "difficulty": "advanced",
   "featured": false,
   "compatibility": {
-    "surfaces": ["chatgpt", "codex"],
-    "operatingSystems": ["linux", "macos", "windows"],
-    "installModes": ["plugin", "filesystem"]
+    "surfaces": [
+      "chatgpt",
+      "codex"
+    ],
+    "operatingSystems": [
+      "linux",
+      "macos",
+      "windows"
+    ],
+    "installModes": [
+      "plugin",
+      "filesystem"
+    ]
   },
-  "tags": ["branding", "strategy", "positioning", "audience", "differentiation"],
+  "tags": [
+    "branding",
+    "strategy",
+    "positioning",
+    "audience",
+    "differentiation"
+  ],
   "dependencies": [],
-  "relatedSkills": ["naming-brands-and-products", "designing-visual-identities", "writing-brand-voice-and-messaging"],
-  "version": "1.0.0-beta.1",
+  "relatedSkills": [
+    "naming-brands-and-products",
+    "designing-visual-identities",
+    "writing-brand-voice-and-messaging"
+  ],
+  "version": "1.0.0-rc.1",
   "updatedAt": "2026-09-01",
   "locales": {
     "en": {
@@ -23,8 +45,13 @@
       "primaryBenefit": "Creates a usable strategic filter so naming, visual identity, and messaging can be judged by fit instead of taste alone.",
       "whenToUse": "Use when a new, repositioned, or inconsistent brand needs explicit audience, positioning, differentiation, personality, and decision criteria before naming, identity, or messaging work begins.",
       "whenNotToUse": "Do not use when the brand strategy is already approved and the task is only to execute a specific naming, visual, or verbal deliverable.",
-      "useCases": ["Define the strategic foundation for a new company before naming and identity exploration", "Clarify positioning and brand principles before refreshing an inconsistent identity"],
-      "examplePrompts": ["Use defining-brand-strategy to turn this business, audience research, competitors, and product evidence into positioning and criteria that can guide the rest of the brand system."]
+      "useCases": [
+        "Define the strategic foundation for a new company before naming and identity exploration",
+        "Clarify positioning and brand principles before refreshing an inconsistent identity"
+      ],
+      "examplePrompts": [
+        "Use defining-brand-strategy to turn this business, audience research, competitors, and product evidence into positioning and criteria that can guide the rest of the brand system."
+      ]
     },
     "pt-BR": {
       "displayName": "Definição de Estratégia de Marca",
@@ -32,8 +59,13 @@
       "primaryBenefit": "Cria um filtro estratégico utilizável para que naming, identidade visual e mensagem sejam avaliados por aderência, não apenas por gosto.",
       "whenToUse": "Use quando uma marca nova, reposicionada ou inconsistente precisa explicitar audiência, posicionamento, diferenciação, personalidade e critérios de decisão antes do naming, identidade ou mensagem.",
       "whenNotToUse": "Não use quando a estratégia de marca já está aprovada e a tarefa é apenas executar um entregável específico de naming, visual ou verbal.",
-      "useCases": ["Definir a base estratégica de uma nova empresa antes de explorar naming e identidade", "Clarificar posicionamento e princípios de marca antes de renovar uma identidade inconsistente"],
-      "examplePrompts": ["Use defining-brand-strategy para transformar este negócio, pesquisa de audiência, concorrentes e evidências do produto em posicionamento e critérios que orientem todo o sistema de marca."]
+      "useCases": [
+        "Definir a base estratégica de uma nova empresa antes de explorar naming e identidade",
+        "Clarificar posicionamento e princípios de marca antes de renovar uma identidade inconsistente"
+      ],
+      "examplePrompts": [
+        "Use defining-brand-strategy para transformar este negócio, pesquisa de audiência, concorrentes e evidências do produto em posicionamento e critérios que orientem todo o sistema de marca."
+      ]
     }
   }
 }

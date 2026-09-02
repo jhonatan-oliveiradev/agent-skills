@@ -2,19 +2,46 @@
   "$schema": "../schemas/skill.schema.json",
   "slug": "building-reliable-node-api-boundaries",
   "category": "backend-data",
-  "packs": ["backend-data"],
+  "packs": [
+    "backend-data"
+  ],
   "maturity": "beta",
   "difficulty": "advanced",
   "featured": false,
   "compatibility": {
-    "surfaces": ["chatgpt", "codex"],
-    "operatingSystems": ["linux", "macos", "windows"],
-    "installModes": ["plugin", "filesystem"]
+    "surfaces": [
+      "chatgpt",
+      "codex"
+    ],
+    "operatingSystems": [
+      "linux",
+      "macos",
+      "windows"
+    ],
+    "installModes": [
+      "plugin",
+      "filesystem"
+    ]
   },
-  "tags": ["nodejs", "api-design", "authorization", "validation", "observability"],
-  "dependencies": [{"name": "Node.js", "type": "tool", "required": true, "url": "https://nodejs.org"}],
-  "relatedSkills": ["designing-relational-data-models"],
-  "version": "1.0.0-beta.1",
+  "tags": [
+    "nodejs",
+    "api-design",
+    "authorization",
+    "validation",
+    "observability"
+  ],
+  "dependencies": [
+    {
+      "name": "Node.js",
+      "type": "tool",
+      "required": true,
+      "url": "https://nodejs.org"
+    }
+  ],
+  "relatedSkills": [
+    "designing-relational-data-models"
+  ],
+  "version": "1.0.0-rc.1",
   "updatedAt": "2026-09-01",
   "locales": {
     "en": {
@@ -23,8 +50,13 @@
       "primaryBenefit": "Reduces trust-boundary mistakes and makes endpoint behavior easier to verify under retries and downstream failures.",
       "whenToUse": "Use when implementing or reviewing Node.js API or service endpoints that cross trust or data boundaries and require explicit validation, authorization, failure semantics, observability, or retry behavior.",
       "whenNotToUse": "Do not use for an internal pure function or a transport-free domain operation with no external trust boundary.",
-      "useCases": ["Design a mutation endpoint with object-level authorization", "Harden an existing Node.js handler against replay, malformed input, and downstream failure"],
-      "examplePrompts": ["Use building-reliable-node-api-boundaries to review this endpoint for validation, authorization, transaction, retry, and observability gaps."]
+      "useCases": [
+        "Design a mutation endpoint with object-level authorization",
+        "Harden an existing Node.js handler against replay, malformed input, and downstream failure"
+      ],
+      "examplePrompts": [
+        "Use building-reliable-node-api-boundaries to review this endpoint for validation, authorization, transaction, retry, and observability gaps."
+      ]
     },
     "pt-BR": {
       "displayName": "Construção de Limites Confiáveis de API em Node",
@@ -32,8 +64,13 @@
       "primaryBenefit": "Reduz falhas em limites de confiança e torna o comportamento dos endpoints mais verificável diante de retries e falhas downstream.",
       "whenToUse": "Use ao implementar ou revisar endpoints de API ou serviços Node.js que atravessem limites de confiança ou dados e exijam validação, autorização, semântica de falhas, observabilidade ou comportamento de retry explícitos.",
       "whenNotToUse": "Não use para uma função interna pura ou uma operação de domínio sem transporte e sem limite externo de confiança.",
-      "useCases": ["Projetar um endpoint de mutação com autorização em nível de objeto", "Endurecer um handler Node.js existente contra replay, entrada malformada e falha downstream"],
-      "examplePrompts": ["Use building-reliable-node-api-boundaries para revisar este endpoint em busca de lacunas de validação, autorização, transação, retry e observabilidade."]
+      "useCases": [
+        "Projetar um endpoint de mutação com autorização em nível de objeto",
+        "Endurecer um handler Node.js existente contra replay, entrada malformada e falha downstream"
+      ],
+      "examplePrompts": [
+        "Use building-reliable-node-api-boundaries para revisar este endpoint em busca de lacunas de validação, autorização, transação, retry e observabilidade."
+      ]
     }
   }
 }

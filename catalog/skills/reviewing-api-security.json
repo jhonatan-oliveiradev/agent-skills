@@ -2,19 +2,41 @@
   "$schema": "../schemas/skill.schema.json",
   "slug": "reviewing-api-security",
   "category": "application-security",
-  "packs": ["application-security"],
+  "packs": [
+    "application-security"
+  ],
   "maturity": "beta",
   "difficulty": "advanced",
   "featured": false,
   "compatibility": {
-    "surfaces": ["chatgpt", "codex"],
-    "operatingSystems": ["linux", "macos", "windows"],
-    "installModes": ["plugin", "filesystem"]
+    "surfaces": [
+      "chatgpt",
+      "codex"
+    ],
+    "operatingSystems": [
+      "linux",
+      "macos",
+      "windows"
+    ],
+    "installModes": [
+      "plugin",
+      "filesystem"
+    ]
   },
-  "tags": ["security", "api-security", "authorization", "authentication", "ssrf"],
+  "tags": [
+    "security",
+    "api-security",
+    "authorization",
+    "authentication",
+    "ssrf"
+  ],
   "dependencies": [],
-  "relatedSkills": ["threat-modeling-applications", "reviewing-web-security", "building-reliable-node-api-boundaries"],
-  "version": "1.0.0-beta.1",
+  "relatedSkills": [
+    "threat-modeling-applications",
+    "reviewing-web-security",
+    "building-reliable-node-api-boundaries"
+  ],
+  "version": "1.0.0-rc.1",
   "updatedAt": "2026-09-01",
   "locales": {
     "en": {
@@ -23,8 +45,13 @@
       "primaryBenefit": "Finds API-specific security failures that generic web review often misses, especially authorization and business-invariant violations.",
       "whenToUse": "Use when an authorized API or backend boundary needs security review for authentication, object/function/property authorization, resource abuse, business-flow abuse, SSRF, configuration, inventory, and third-party consumption.",
       "whenNotToUse": "Do not use to probe APIs outside the user's authorized scope or when the work is limited to general web-browser controls with no API boundary involved.",
-      "useCases": ["Review a multi-tenant API for object and function authorization gaps", "Assess a webhook or third-party API integration for SSRF and unsafe upstream-data handling"],
-      "examplePrompts": ["Use reviewing-api-security to audit this authorized API's identity, authorization, business-flow, resource, SSRF, and inventory risks with controlled evidence."]
+      "useCases": [
+        "Review a multi-tenant API for object and function authorization gaps",
+        "Assess a webhook or third-party API integration for SSRF and unsafe upstream-data handling"
+      ],
+      "examplePrompts": [
+        "Use reviewing-api-security to audit this authorized API's identity, authorization, business-flow, resource, SSRF, and inventory risks with controlled evidence."
+      ]
     },
     "pt-BR": {
       "displayName": "Revisão de Segurança de APIs",
@@ -32,8 +59,13 @@
       "primaryBenefit": "Encontra falhas específicas de APIs que uma revisão web genérica costuma perder, especialmente violações de autorização e invariantes de negócio.",
       "whenToUse": "Use quando uma API autorizada ou limite de backend precisa de revisão de autenticação, autorização por objeto/função/propriedade, abuso de recursos, abuso de fluxos de negócio, SSRF, configuração, inventário e consumo de terceiros.",
       "whenNotToUse": "Não use para sondar APIs fora do escopo autorizado pelo usuário nem quando o trabalho se limita a controles gerais do navegador sem um limite de API envolvido.",
-      "useCases": ["Revisar uma API multi-tenant em busca de lacunas de autorização por objeto e função", "Avaliar uma integração de webhook ou API de terceiros para SSRF e tratamento inseguro de dados externos"],
-      "examplePrompts": ["Use reviewing-api-security para auditar os riscos de identidade, autorização, fluxo de negócio, recursos, SSRF e inventário desta API autorizada com evidência controlada."]
+      "useCases": [
+        "Revisar uma API multi-tenant em busca de lacunas de autorização por objeto e função",
+        "Avaliar uma integração de webhook ou API de terceiros para SSRF e tratamento inseguro de dados externos"
+      ],
+      "examplePrompts": [
+        "Use reviewing-api-security para auditar os riscos de identidade, autorização, fluxo de negócio, recursos, SSRF e inventário desta API autorizada com evidência controlada."
+      ]
     }
   }
 }

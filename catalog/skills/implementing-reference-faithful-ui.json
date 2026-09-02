@@ -2,19 +2,38 @@
   "$schema": "../schemas/skill.schema.json",
   "slug": "implementing-reference-faithful-ui",
   "category": "frontend",
-  "packs": ["frontend-product"],
+  "packs": [
+    "frontend-product"
+  ],
   "maturity": "stable",
   "difficulty": "intermediate",
   "featured": false,
   "compatibility": {
-    "surfaces": ["chatgpt", "codex"],
-    "operatingSystems": ["linux", "macos", "windows"],
-    "installModes": ["plugin", "filesystem"]
+    "surfaces": [
+      "chatgpt",
+      "codex"
+    ],
+    "operatingSystems": [
+      "linux",
+      "macos",
+      "windows"
+    ],
+    "installModes": [
+      "plugin",
+      "filesystem"
+    ]
   },
-  "tags": ["ui-implementation", "visual-fidelity", "responsive-design", "figma"],
+  "tags": [
+    "ui-implementation",
+    "visual-fidelity",
+    "responsive-design",
+    "figma"
+  ],
   "dependencies": [],
-  "relatedSkills": ["auditing-pixel-perfect-frontend"],
-  "version": "1.0.0-beta.1",
+  "relatedSkills": [
+    "auditing-pixel-perfect-frontend"
+  ],
+  "version": "1.0.0-rc.1",
   "updatedAt": "2026-08-26",
   "locales": {
     "en": {
@@ -23,8 +42,13 @@
       "primaryBenefit": "Produces an implementation that preserves measurable reference fidelity across desktop and mobile.",
       "whenToUse": "Use when implementing a UI from Figma, screenshots, mockups, or an existing visual reference and fidelity to layout, spacing, typography, crops, and states is a primary acceptance criterion.",
       "whenNotToUse": "Do not use for open-ended visual invention or when no reference-backed fidelity criterion exists.",
-      "useCases": ["Recreate a supplied desktop and mobile design", "Correct layout, typography, and crop differences through visual comparison"],
-      "examplePrompts": ["Use implementing-reference-faithful-ui to build this interface from the supplied reference and verify the largest visual deltas first."]
+      "useCases": [
+        "Recreate a supplied desktop and mobile design",
+        "Correct layout, typography, and crop differences through visual comparison"
+      ],
+      "examplePrompts": [
+        "Use implementing-reference-faithful-ui to build this interface from the supplied reference and verify the largest visual deltas first."
+      ]
     },
     "pt-BR": {
       "displayName": "Implementação de UI Fiel à Referência",
@@ -32,8 +56,13 @@
       "primaryBenefit": "Produz uma implementação que preserva a fidelidade mensurável à referência em desktop e mobile.",
       "whenToUse": "Use ao implementar uma UI a partir de Figma, capturas de tela, mockups ou uma referência visual existente, quando a fidelidade de layout, espaçamento, tipografia, recortes e estados for um critério principal de aceite.",
       "whenNotToUse": "Não use para criação visual em aberto ou quando não houver um critério de fidelidade respaldado por uma referência.",
-      "useCases": ["Recriar um design fornecido para desktop e mobile", "Corrigir diferenças de layout, tipografia e recorte por comparação visual"],
-      "examplePrompts": ["Use implementing-reference-faithful-ui para construir esta interface a partir da referência fornecida e verificar primeiro as maiores diferenças visuais."]
+      "useCases": [
+        "Recriar um design fornecido para desktop e mobile",
+        "Corrigir diferenças de layout, tipografia e recorte por comparação visual"
+      ],
+      "examplePrompts": [
+        "Use implementing-reference-faithful-ui para construir esta interface a partir da referência fornecida e verificar primeiro as maiores diferenças visuais."
+      ]
     }
   }
 }

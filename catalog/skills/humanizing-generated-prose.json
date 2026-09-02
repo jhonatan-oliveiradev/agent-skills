@@ -2,19 +2,41 @@
   "$schema": "../schemas/skill.schema.json",
   "slug": "humanizing-generated-prose",
   "category": "writing-communication",
-  "packs": ["writing-communication"],
+  "packs": [
+    "writing-communication"
+  ],
   "maturity": "beta",
   "difficulty": "intermediate",
   "featured": false,
   "compatibility": {
-    "surfaces": ["chatgpt", "codex"],
-    "operatingSystems": ["linux", "macos", "windows"],
-    "installModes": ["plugin", "filesystem"]
+    "surfaces": [
+      "chatgpt",
+      "codex"
+    ],
+    "operatingSystems": [
+      "linux",
+      "macos",
+      "windows"
+    ],
+    "installModes": [
+      "plugin",
+      "filesystem"
+    ]
   },
-  "tags": ["editing", "humanization", "ai-writing", "voice", "rewriting"],
+  "tags": [
+    "editing",
+    "humanization",
+    "ai-writing",
+    "voice",
+    "rewriting"
+  ],
   "dependencies": [],
-  "relatedSkills": ["editing-for-clarity-and-tone", "planning-written-communication", "writing-brand-voice-and-messaging"],
-  "version": "1.0.0-beta.1",
+  "relatedSkills": [
+    "editing-for-clarity-and-tone",
+    "planning-written-communication",
+    "writing-brand-voice-and-messaging"
+  ],
+  "version": "1.0.0-rc.1",
   "updatedAt": "2026-09-01",
   "locales": {
     "en": {
@@ -23,8 +45,13 @@
       "primaryBenefit": "Makes generated drafts feel deliberate and less templated while preserving facts, citations, protected strings, uncertainty, and supplied writer voice.",
       "whenToUse": "Use when supplied prose sounds generic, formulaic, over-polished, or recognizably AI-shaped and should read more naturally without changing its factual payload.",
       "whenNotToUse": "Do not use to evade AI detectors, fabricate personal experience, claim human authorship, or replace ordinary clarity editing that does not have a generated-prose problem.",
-      "useCases": ["Rewrite an AI-assisted draft so it keeps all evidence but loses generic scaffolding and repetitive cadence", "Match generated prose to observable traits in a supplied voice sample without inventing biography or personal experience"],
-      "examplePrompts": ["Use humanizing-generated-prose to make this draft less formulaic while preserving facts, qualifications, citations, URLs, numbers, quotations, and protected text. Match the supplied voice sample only where its traits are observable; do not optimize for detector scores or invent personal details."]
+      "useCases": [
+        "Rewrite an AI-assisted draft so it keeps all evidence but loses generic scaffolding and repetitive cadence",
+        "Match generated prose to observable traits in a supplied voice sample without inventing biography or personal experience"
+      ],
+      "examplePrompts": [
+        "Use humanizing-generated-prose to make this draft less formulaic while preserving facts, qualifications, citations, URLs, numbers, quotations, and protected text. Match the supplied voice sample only where its traits are observable; do not optimize for detector scores or invent personal details."
+      ]
     },
     "pt-BR": {
       "displayName": "Humanização de Prosa Gerada",
@@ -32,8 +59,13 @@
       "primaryBenefit": "Faz rascunhos gerados parecerem mais deliberados e menos templados preservando fatos, citações, strings protegidas, incerteza e voz fornecida.",
       "whenToUse": "Use quando a prosa fornecida soa genérica, formulaica, polida em excesso ou reconhecivelmente moldada por IA e deve ficar mais natural sem alterar seu conteúdo factual.",
       "whenNotToUse": "Não use para burlar detectores de IA, fabricar experiência pessoal, alegar autoria humana ou substituir edição comum de clareza quando não há um problema específico de prosa gerada.",
-      "useCases": ["Reescrever um rascunho assistido por IA mantendo todas as evidências, mas removendo scaffolding genérico e cadência repetitiva", "Aproximar prosa gerada de traços observáveis em uma amostra de voz sem inventar biografia ou experiência pessoal"],
-      "examplePrompts": ["Use humanizing-generated-prose para deixar este rascunho menos formulaico preservando fatos, qualificações, citações, URLs, números, trechos entre aspas e texto protegido. Aproxime-se da amostra de voz apenas onde houver traços observáveis; não otimize para detectores nem invente detalhes pessoais."]
+      "useCases": [
+        "Reescrever um rascunho assistido por IA mantendo todas as evidências, mas removendo scaffolding genérico e cadência repetitiva",
+        "Aproximar prosa gerada de traços observáveis em uma amostra de voz sem inventar biografia ou experiência pessoal"
+      ],
+      "examplePrompts": [
+        "Use humanizing-generated-prose para deixar este rascunho menos formulaico preservando fatos, qualificações, citações, URLs, números, trechos entre aspas e texto protegido. Aproxime-se da amostra de voz apenas onde houver traços observáveis; não otimize para detectores nem invente detalhes pessoais."
+      ]
     }
   }
 }

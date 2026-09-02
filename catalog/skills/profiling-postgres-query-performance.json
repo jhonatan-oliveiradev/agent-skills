@@ -2,19 +2,47 @@
   "$schema": "../schemas/skill.schema.json",
   "slug": "profiling-postgres-query-performance",
   "category": "backend-data",
-  "packs": ["backend-data"],
+  "packs": [
+    "backend-data"
+  ],
   "maturity": "beta",
   "difficulty": "advanced",
   "featured": false,
   "compatibility": {
-    "surfaces": ["chatgpt", "codex"],
-    "operatingSystems": ["linux", "macos", "windows"],
-    "installModes": ["plugin", "filesystem"]
+    "surfaces": [
+      "chatgpt",
+      "codex"
+    ],
+    "operatingSystems": [
+      "linux",
+      "macos",
+      "windows"
+    ],
+    "installModes": [
+      "plugin",
+      "filesystem"
+    ]
   },
-  "tags": ["postgresql", "query-performance", "explain", "indexing", "profiling"],
-  "dependencies": [{"name": "PostgreSQL", "type": "tool", "required": true, "url": "https://www.postgresql.org"}],
-  "relatedSkills": ["designing-relational-data-models", "evolving-postgres-schemas-safely"],
-  "version": "1.0.0-beta.1",
+  "tags": [
+    "postgresql",
+    "query-performance",
+    "explain",
+    "indexing",
+    "profiling"
+  ],
+  "dependencies": [
+    {
+      "name": "PostgreSQL",
+      "type": "tool",
+      "required": true,
+      "url": "https://www.postgresql.org"
+    }
+  ],
+  "relatedSkills": [
+    "designing-relational-data-models",
+    "evolving-postgres-schemas-safely"
+  ],
+  "version": "1.0.0-rc.1",
   "updatedAt": "2026-09-01",
   "locales": {
     "en": {
@@ -23,8 +51,13 @@
       "primaryBenefit": "Replaces index guesswork with measurable before-and-after evidence across plan shape, rows, buffers, and application access patterns.",
       "whenToUse": "Use when a PostgreSQL query is slow, resource-heavy, regressed, or has uncertain index behavior and the cause needs to be measured before changing SQL, schema, or indexes.",
       "whenNotToUse": "Do not use to pre-optimize unmeasured queries or to add speculative indexes before a concrete workload exists.",
-      "useCases": ["Investigate a query latency regression with EXPLAIN evidence", "Decide whether a composite or partial index matches a real access pattern"],
-      "examplePrompts": ["Use profiling-postgres-query-performance to diagnose this slow query from the plan before recommending any index."]
+      "useCases": [
+        "Investigate a query latency regression with EXPLAIN evidence",
+        "Decide whether a composite or partial index matches a real access pattern"
+      ],
+      "examplePrompts": [
+        "Use profiling-postgres-query-performance to diagnose this slow query from the plan before recommending any index."
+      ]
     },
     "pt-BR": {
       "displayName": "Profiling de Performance de Queries PostgreSQL",
@@ -32,8 +65,13 @@
       "primaryBenefit": "Substitui suposições sobre índices por evidências mensuráveis de antes e depois em plano, linhas, buffers e padrões de acesso da aplicação.",
       "whenToUse": "Use quando uma query PostgreSQL estiver lenta, consumir muitos recursos, tiver regredido ou apresentar comportamento incerto de índices e a causa precisar ser medida antes de alterar SQL, schema ou índices.",
       "whenNotToUse": "Não use para pré-otimizar queries sem medição nem para adicionar índices especulativos antes de existir uma carga concreta.",
-      "useCases": ["Investigar uma regressão de latência com evidências do EXPLAIN", "Decidir se um índice composto ou parcial corresponde a um padrão de acesso real"],
-      "examplePrompts": ["Use profiling-postgres-query-performance para diagnosticar esta query lenta a partir do plano antes de recomendar qualquer índice."]
+      "useCases": [
+        "Investigar uma regressão de latência com evidências do EXPLAIN",
+        "Decidir se um índice composto ou parcial corresponde a um padrão de acesso real"
+      ],
+      "examplePrompts": [
+        "Use profiling-postgres-query-performance para diagnosticar esta query lenta a partir do plano antes de recomendar qualquer índice."
+      ]
     }
   }
 }

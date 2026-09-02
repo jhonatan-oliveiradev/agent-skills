@@ -2,19 +2,38 @@
   "$schema": "../schemas/skill.schema.json",
   "slug": "designing-action-combat",
   "category": "game-development",
-  "packs": ["game-development"],
+  "packs": [
+    "game-development"
+  ],
   "maturity": "stable",
   "difficulty": "advanced",
   "featured": true,
   "compatibility": {
-    "surfaces": ["chatgpt", "codex"],
-    "operatingSystems": ["linux", "macos", "windows"],
-    "installModes": ["plugin", "filesystem"]
+    "surfaces": [
+      "chatgpt",
+      "codex"
+    ],
+    "operatingSystems": [
+      "linux",
+      "macos",
+      "windows"
+    ],
+    "installModes": [
+      "plugin",
+      "filesystem"
+    ]
   },
-  "tags": ["action-combat", "game-design", "combat-animation", "playtesting"],
+  "tags": [
+    "action-combat",
+    "game-design",
+    "combat-animation",
+    "playtesting"
+  ],
   "dependencies": [],
-  "relatedSkills": ["testing-playable-games"],
-  "version": "1.0.0-beta.1",
+  "relatedSkills": [
+    "testing-playable-games"
+  ],
+  "version": "1.0.0-rc.1",
   "updatedAt": "2026-08-26",
   "locales": {
     "en": {
@@ -23,8 +42,13 @@
       "primaryBenefit": "Creates combat that feels readable, responsive, deliberate, and rewarding moment to moment.",
       "whenToUse": "Use when creating or tuning real-time game combat involving attacks, hit reactions, dodge or guard behavior, enemy telegraphs, combos, animation timing, or moment-to-moment combat readability.",
       "whenNotToUse": "Do not use for non-real-time systems or game features that do not depend on combat timing, reactions, and readability.",
-      "useCases": ["Specify timing and cancel rules for player attacks", "Tune enemy telegraphs and punish windows for a playable duel"],
-      "examplePrompts": ["Use designing-action-combat to tune this real-time duel for clearer telegraphs and more responsive controls."]
+      "useCases": [
+        "Specify timing and cancel rules for player attacks",
+        "Tune enemy telegraphs and punish windows for a playable duel"
+      ],
+      "examplePrompts": [
+        "Use designing-action-combat to tune this real-time duel for clearer telegraphs and more responsive controls."
+      ]
     },
     "pt-BR": {
       "displayName": "Design de Combate de Ação",
@@ -32,8 +56,13 @@
       "primaryBenefit": "Cria um combate legível, responsivo, intencional e recompensador a cada momento.",
       "whenToUse": "Use ao criar ou ajustar combate em tempo real com ataques, reações a golpes, esquiva ou defesa, sinalizações dos ataques inimigos, combos, timing de animação ou legibilidade momento a momento.",
       "whenNotToUse": "Não use para sistemas que não sejam em tempo real ou funcionalidades que não dependam do timing, das reações e da legibilidade do combate.",
-      "useCases": ["Especificar timing e regras de cancelamento para ataques do jogador", "Ajustar sinalizações dos ataques inimigos e janelas de punição em um duelo jogável"],
-      "examplePrompts": ["Use designing-action-combat para ajustar este duelo em tempo real com sinalizações mais claras dos ataques inimigos e controles mais responsivos."]
+      "useCases": [
+        "Especificar timing e regras de cancelamento para ataques do jogador",
+        "Ajustar sinalizações dos ataques inimigos e janelas de punição em um duelo jogável"
+      ],
+      "examplePrompts": [
+        "Use designing-action-combat para ajustar este duelo em tempo real com sinalizações mais claras dos ataques inimigos e controles mais responsivos."
+      ]
     }
   }
 }

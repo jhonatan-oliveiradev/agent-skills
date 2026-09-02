@@ -2,19 +2,41 @@
   "$schema": "../schemas/skill.schema.json",
   "slug": "reviewing-pull-requests",
   "category": "engineering-workflow",
-  "packs": ["engineering-workflow"],
+  "packs": [
+    "engineering-workflow"
+  ],
   "maturity": "beta",
   "difficulty": "advanced",
   "featured": false,
   "compatibility": {
-    "surfaces": ["chatgpt", "codex"],
-    "operatingSystems": ["linux", "macos", "windows"],
-    "installModes": ["plugin", "filesystem"]
+    "surfaces": [
+      "chatgpt",
+      "codex"
+    ],
+    "operatingSystems": [
+      "linux",
+      "macos",
+      "windows"
+    ],
+    "installModes": [
+      "plugin",
+      "filesystem"
+    ]
   },
-  "tags": ["code-review", "pull-requests", "quality", "risk", "verification"],
+  "tags": [
+    "code-review",
+    "pull-requests",
+    "quality",
+    "risk",
+    "verification"
+  ],
   "dependencies": [],
-  "relatedSkills": ["managing-implementation-slices", "building-regression-tests", "reviewing-web-security"],
-  "version": "1.0.0-beta.1",
+  "relatedSkills": [
+    "managing-implementation-slices",
+    "building-regression-tests",
+    "reviewing-web-security"
+  ],
+  "version": "1.0.0-rc.1",
   "updatedAt": "2026-09-01",
   "locales": {
     "en": {
@@ -23,8 +45,13 @@
       "primaryBenefit": "Produces prioritized, actionable review findings without confusing stylistic preference with correctness or treating CI status as an assumption.",
       "whenToUse": "Use when a pull request, patch, or proposed code change needs technical review before merge, especially when behavior, architecture, regressions, tests, or risk must be evaluated from evidence.",
       "whenNotToUse": "Do not use merely to prepare, push, or merge a change when no technical review is requested.",
-      "useCases": ["Review a feature pull request for behavioral and architectural regressions", "Evaluate a risky change using the final diff, test coverage, CI evidence, and rollout implications"],
-      "examplePrompts": ["Use reviewing-pull-requests to review this PR against its stated intent and current CI evidence, prioritizing blockers over nits."]
+      "useCases": [
+        "Review a feature pull request for behavioral and architectural regressions",
+        "Evaluate a risky change using the final diff, test coverage, CI evidence, and rollout implications"
+      ],
+      "examplePrompts": [
+        "Use reviewing-pull-requests to review this PR against its stated intent and current CI evidence, prioritizing blockers over nits."
+      ]
     },
     "pt-BR": {
       "displayName": "Revisão de Pull Requests",
@@ -32,8 +59,13 @@
       "primaryBenefit": "Produz achados de revisão priorizados e acionáveis sem confundir preferência de estilo com correção nem tratar o estado do CI como suposição.",
       "whenToUse": "Use quando uma pull request, patch ou mudança de código proposta precisar de revisão técnica antes do merge, especialmente quando comportamento, arquitetura, regressões, testes ou risco precisarem ser avaliados por evidência.",
       "whenNotToUse": "Não use apenas para preparar, enviar ou fazer merge de uma mudança quando nenhuma revisão técnica tiver sido solicitada.",
-      "useCases": ["Revisar uma pull request de funcionalidade em busca de regressões comportamentais e arquiteturais", "Avaliar uma mudança arriscada usando o diff final, cobertura de testes, evidências do CI e implicações de rollout"],
-      "examplePrompts": ["Use reviewing-pull-requests para revisar esta PR contra a intenção declarada e as evidências atuais do CI, priorizando bloqueios sobre nits."]
+      "useCases": [
+        "Revisar uma pull request de funcionalidade em busca de regressões comportamentais e arquiteturais",
+        "Avaliar uma mudança arriscada usando o diff final, cobertura de testes, evidências do CI e implicações de rollout"
+      ],
+      "examplePrompts": [
+        "Use reviewing-pull-requests para revisar esta PR contra a intenção declarada e as evidências atuais do CI, priorizando bloqueios sobre nits."
+      ]
     }
   }
 }

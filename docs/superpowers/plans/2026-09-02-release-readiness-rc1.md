@@ -359,3 +359,7 @@ Confirm no new skill/pack/category, no historical evidence rewrite, no hidden wo
 - [ ] **Step 5: Update PR description and leave PR unmerged**
 
 Document RED → GREEN evidence, final HEAD/run, counts, RC1 semantics, known non-blocking warnings, and merge policy. Wait for explicit user authorization before merge.
+
+## Execution correction — catalog version semantics
+
+CI evidence from the RC bump proved that skill and pack metadata `version` fields are release-coupled to `catalog/catalog.json`: `scripts/validate-catalog.mjs` rejects any record whose version differs from the catalog manifest. The earlier Task 4 instruction not to mass-update those record versions is therefore superseded. RC1 updates all 49 skill metadata records and all 10 pack records to `1.0.0-rc.1` without changing maturity, method content, pack membership, or category semantics.

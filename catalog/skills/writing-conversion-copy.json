@@ -2,19 +2,42 @@
   "$schema": "../schemas/skill.schema.json",
   "slug": "writing-conversion-copy",
   "category": "writing-communication",
-  "packs": ["writing-communication"],
+  "packs": [
+    "writing-communication"
+  ],
   "maturity": "beta",
   "difficulty": "intermediate",
   "featured": false,
   "compatibility": {
-    "surfaces": ["chatgpt", "codex"],
-    "operatingSystems": ["linux", "macos", "windows"],
-    "installModes": ["plugin", "filesystem"]
+    "surfaces": [
+      "chatgpt",
+      "codex"
+    ],
+    "operatingSystems": [
+      "linux",
+      "macos",
+      "windows"
+    ],
+    "installModes": [
+      "plugin",
+      "filesystem"
+    ]
   },
-  "tags": ["copywriting", "conversion", "marketing", "landing-pages", "calls-to-action"],
+  "tags": [
+    "copywriting",
+    "conversion",
+    "marketing",
+    "landing-pages",
+    "calls-to-action"
+  ],
   "dependencies": [],
-  "relatedSkills": ["planning-written-communication", "writing-brand-voice-and-messaging", "building-conversion-product-pages", "editing-for-clarity-and-tone"],
-  "version": "1.0.0-beta.1",
+  "relatedSkills": [
+    "planning-written-communication",
+    "writing-brand-voice-and-messaging",
+    "building-conversion-product-pages",
+    "editing-for-clarity-and-tone"
+  ],
+  "version": "1.0.0-rc.1",
   "updatedAt": "2026-09-01",
   "locales": {
     "en": {
@@ -23,8 +46,13 @@
       "primaryBenefit": "Improves persuasion without fabricating proof, urgency, scarcity, guarantees, or manipulative consent patterns.",
       "whenToUse": "Use when writing or revising landing pages, sales pages, promotional emails, ads, product offers, CTAs, or other marketing copy whose job is to support a specific reader decision.",
       "whenNotToUse": "Do not use for durable brand voice definition, operational interface strings, or prose editing whose primary goal is clarity rather than persuasion.",
-      "useCases": ["Rewrite a landing page around the product's real differentiators, proof, objections, and primary CTA", "Create promotional email copy for an offer without inventing urgency, customer evidence, or guaranteed outcomes"],
-      "examplePrompts": ["Use writing-conversion-copy to rewrite this offer around the audience's decision, supported proof, objections, terms, and one clear CTA. Do not invent testimonials, statistics, scarcity, urgency, guarantees, or product capabilities."]
+      "useCases": [
+        "Rewrite a landing page around the product's real differentiators, proof, objections, and primary CTA",
+        "Create promotional email copy for an offer without inventing urgency, customer evidence, or guaranteed outcomes"
+      ],
+      "examplePrompts": [
+        "Use writing-conversion-copy to rewrite this offer around the audience's decision, supported proof, objections, terms, and one clear CTA. Do not invent testimonials, statistics, scarcity, urgency, guarantees, or product capabilities."
+      ]
     },
     "pt-BR": {
       "displayName": "Copy de Conversão",
@@ -32,8 +60,13 @@
       "primaryBenefit": "Melhora persuasão sem inventar provas, urgência, escassez, garantias ou padrões manipulativos de consentimento.",
       "whenToUse": "Use ao escrever ou revisar landing pages, páginas de venda, e-mails promocionais, anúncios, ofertas, CTAs ou outros textos de marketing cuja função é apoiar uma decisão específica do leitor.",
       "whenNotToUse": "Não use para definir voz durável de marca, textos operacionais de interface ou edição de prosa cujo objetivo principal seja clareza em vez de persuasão.",
-      "useCases": ["Reescrever uma landing page em torno dos diferenciais reais do produto, provas, objeções e CTA principal", "Criar copy de e-mail promocional para uma oferta sem inventar urgência, evidência de clientes ou resultados garantidos"],
-      "examplePrompts": ["Use writing-conversion-copy para reescrever esta oferta em torno da decisão da audiência, provas sustentadas, objeções, termos e um CTA claro. Não invente depoimentos, estatísticas, escassez, urgência, garantias ou capacidades do produto."]
+      "useCases": [
+        "Reescrever uma landing page em torno dos diferenciais reais do produto, provas, objeções e CTA principal",
+        "Criar copy de e-mail promocional para uma oferta sem inventar urgência, evidência de clientes ou resultados garantidos"
+      ],
+      "examplePrompts": [
+        "Use writing-conversion-copy para reescrever esta oferta em torno da decisão da audiência, provas sustentadas, objeções, termos e um CTA claro. Não invente depoimentos, estatísticas, escassez, urgência, garantias ou capacidades do produto."
+      ]
     }
   }
 }

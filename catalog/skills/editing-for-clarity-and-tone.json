@@ -2,19 +2,41 @@
   "$schema": "../schemas/skill.schema.json",
   "slug": "editing-for-clarity-and-tone",
   "category": "writing-communication",
-  "packs": ["writing-communication"],
+  "packs": [
+    "writing-communication"
+  ],
   "maturity": "beta",
   "difficulty": "beginner",
   "featured": false,
   "compatibility": {
-    "surfaces": ["chatgpt", "codex"],
-    "operatingSystems": ["linux", "macos", "windows"],
-    "installModes": ["plugin", "filesystem"]
+    "surfaces": [
+      "chatgpt",
+      "codex"
+    ],
+    "operatingSystems": [
+      "linux",
+      "macos",
+      "windows"
+    ],
+    "installModes": [
+      "plugin",
+      "filesystem"
+    ]
   },
-  "tags": ["editing", "clarity", "tone", "plain-language", "rewriting"],
+  "tags": [
+    "editing",
+    "clarity",
+    "tone",
+    "plain-language",
+    "rewriting"
+  ],
   "dependencies": [],
-  "relatedSkills": ["planning-written-communication", "humanizing-generated-prose", "writing-brand-voice-and-messaging"],
-  "version": "1.0.0-beta.1",
+  "relatedSkills": [
+    "planning-written-communication",
+    "humanizing-generated-prose",
+    "writing-brand-voice-and-messaging"
+  ],
+  "version": "1.0.0-rc.1",
   "updatedAt": "2026-09-01",
   "locales": {
     "en": {
@@ -23,8 +45,13 @@
       "primaryBenefit": "Improves a draft without silently turning editorial cleanup into fact-changing rewriting or generic house style.",
       "whenToUse": "Use when an existing draft needs clearer structure, tighter language, better readability, or a specific tone while its factual meaning should remain stable.",
       "whenNotToUse": "Do not use when the task primarily requires new research, fact-checking, conversion strategy, interface-state writing, or generated-prose humanization.",
-      "useCases": ["Tighten a client-facing explanation while preserving claims, numbers, links, and obligations", "Adjust a technical or professional draft to a warmer, clearer tone without changing its factual certainty"],
-      "examplePrompts": ["Use editing-for-clarity-and-tone to make this draft clearer and more concise while preserving every factual claim, number, citation, URL, proper noun, and protected phrase. Keep the requested tone without changing certainty or meaning."]
+      "useCases": [
+        "Tighten a client-facing explanation while preserving claims, numbers, links, and obligations",
+        "Adjust a technical or professional draft to a warmer, clearer tone without changing its factual certainty"
+      ],
+      "examplePrompts": [
+        "Use editing-for-clarity-and-tone to make this draft clearer and more concise while preserving every factual claim, number, citation, URL, proper noun, and protected phrase. Keep the requested tone without changing certainty or meaning."
+      ]
     },
     "pt-BR": {
       "displayName": "Edição para Clareza e Tom",
@@ -32,8 +59,13 @@
       "primaryBenefit": "Melhora um rascunho sem transformar silenciosamente revisão editorial em alteração de fatos ou padronização genérica de estilo.",
       "whenToUse": "Use quando um rascunho existente precisa de estrutura mais clara, linguagem mais enxuta, melhor legibilidade ou um tom específico enquanto seu significado factual deve permanecer estável.",
       "whenNotToUse": "Não use quando a tarefa exige principalmente nova pesquisa, checagem factual, estratégia de conversão, escrita de estados de interface ou humanização de prosa gerada.",
-      "useCases": ["Enxugar uma explicação para cliente preservando afirmações, números, links e obrigações", "Ajustar um texto técnico ou profissional para um tom mais acolhedor e claro sem alterar sua certeza factual"],
-      "examplePrompts": ["Use editing-for-clarity-and-tone para deixar este rascunho mais claro e conciso preservando cada afirmação factual, número, citação, URL, nome próprio e trecho protegido. Mantenha o tom solicitado sem alterar certeza ou significado."]
+      "useCases": [
+        "Enxugar uma explicação para cliente preservando afirmações, números, links e obrigações",
+        "Ajustar um texto técnico ou profissional para um tom mais acolhedor e claro sem alterar sua certeza factual"
+      ],
+      "examplePrompts": [
+        "Use editing-for-clarity-and-tone para deixar este rascunho mais claro e conciso preservando cada afirmação factual, número, citação, URL, nome próprio e trecho protegido. Mantenha o tom solicitado sem alterar certeza ou significado."
+      ]
     }
   }
 }

@@ -2,19 +2,41 @@
   "$schema": "../schemas/skill.schema.json",
   "slug": "writing-brand-voice-and-messaging",
   "category": "brand-design",
-  "packs": ["design-brand"],
+  "packs": [
+    "design-brand"
+  ],
   "maturity": "beta",
   "difficulty": "intermediate",
   "featured": false,
   "compatibility": {
-    "surfaces": ["chatgpt", "codex"],
-    "operatingSystems": ["linux", "macos", "windows"],
-    "installModes": ["plugin", "filesystem"]
+    "surfaces": [
+      "chatgpt",
+      "codex"
+    ],
+    "operatingSystems": [
+      "linux",
+      "macos",
+      "windows"
+    ],
+    "installModes": [
+      "plugin",
+      "filesystem"
+    ]
   },
-  "tags": ["branding", "brand-voice", "messaging", "tone", "content-strategy"],
+  "tags": [
+    "branding",
+    "brand-voice",
+    "messaging",
+    "tone",
+    "content-strategy"
+  ],
   "dependencies": [],
-  "relatedSkills": ["defining-brand-strategy", "naming-brands-and-products", "building-brand-guidelines"],
-  "version": "1.0.0-beta.1",
+  "relatedSkills": [
+    "defining-brand-strategy",
+    "naming-brands-and-products",
+    "building-brand-guidelines"
+  ],
+  "version": "1.0.0-rc.1",
   "updatedAt": "2026-09-01",
   "locales": {
     "en": {
@@ -23,8 +45,13 @@
       "primaryBenefit": "Creates a reusable verbal identity without collapsing brand voice into one campaign, tagline, or conversion page.",
       "whenToUse": "Use when a brand needs a durable verbal identity, messaging hierarchy, terminology, and tone guidance that stays recognizable across channels without becoming conversion-page copywriting.",
       "whenNotToUse": "Do not use when the task is to optimize a specific landing page, ad, email, or CTA for conversion rather than define the underlying brand language.",
-      "useCases": ["Define voice and tone for a newly positioned brand", "Create a reusable messaging hierarchy and terminology system before multiple teams begin writing content"],
-      "examplePrompts": ["Use writing-brand-voice-and-messaging to define this brand's core promise, message pillars, proof, voice traits, tone adaptations, terminology, and representative examples without turning it into landing-page CRO copy."]
+      "useCases": [
+        "Define voice and tone for a newly positioned brand",
+        "Create a reusable messaging hierarchy and terminology system before multiple teams begin writing content"
+      ],
+      "examplePrompts": [
+        "Use writing-brand-voice-and-messaging to define this brand's core promise, message pillars, proof, voice traits, tone adaptations, terminology, and representative examples without turning it into landing-page CRO copy."
+      ]
     },
     "pt-BR": {
       "displayName": "Voz de Marca e Sistema de Mensagens",
@@ -32,8 +59,13 @@
       "primaryBenefit": "Cria uma identidade verbal reutilizável sem reduzir voz de marca a uma campanha, tagline ou página de conversão.",
       "whenToUse": "Use quando uma marca precisa de identidade verbal durável, hierarquia de mensagens, terminologia e orientação de tom que permaneçam reconhecíveis entre canais sem virar copywriting de página de conversão.",
       "whenNotToUse": "Não use quando a tarefa é otimizar uma landing page, anúncio, e-mail ou CTA específico para conversão em vez de definir a linguagem de marca subjacente.",
-      "useCases": ["Definir voz e tom para uma marca recém-posicionada", "Criar uma hierarquia reutilizável de mensagens e terminologia antes que várias equipes comecem a produzir conteúdo"],
-      "examplePrompts": ["Use writing-brand-voice-and-messaging para definir promessa central, pilares de mensagem, provas, traços de voz, adaptações de tom, terminologia e exemplos da marca sem transformar isso em copy de CRO para landing page."]
+      "useCases": [
+        "Definir voz e tom para uma marca recém-posicionada",
+        "Criar uma hierarquia reutilizável de mensagens e terminologia antes que várias equipes comecem a produzir conteúdo"
+      ],
+      "examplePrompts": [
+        "Use writing-brand-voice-and-messaging para definir promessa central, pilares de mensagem, provas, traços de voz, adaptações de tom, terminologia e exemplos da marca sem transformar isso em copy de CRO para landing page."
+      ]
     }
   }
 }

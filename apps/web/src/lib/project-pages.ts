@@ -80,11 +80,11 @@ const content: Readonly<Record<Locale, ProjectPageContent>> = {
       unreleased: "Unreleased",
       sourceAction: "View the source changelog",
       releases: [{
-        version: "1.0.0-beta.1",
-        date: "Unreleased",
+        version: "1.0.0-rc.1",
+        date: "2026-09-02",
         groups: [
-          { title: "Public studio", items: ["Launched the bilingual Next.js microsite with localized metadata and production deployment guidance.", "Added the searchable 18-skill catalog, skill details, six pack experiences, and pack installation guidance.", "Published Getting Started, Built with Skills case studies, the evidence-backed roadmap, and institutional project pages."] },
-          { title: "Catalog and delivery", items: ["Added bilingual metadata for all 18 canonical skills and six active or planned packs.", "Added deterministic catalog generation, validation, and pack-aware atomic installation for Bash and PowerShell.", "Added the Agent Skills Studio plugin, local marketplace manifest, and Linux/Windows CI validation."] },
+          { title: "Public studio", items: ["Launched the bilingual Next.js microsite with localized metadata and production deployment guidance.", "Added the searchable 49-skill catalog, skill details, ten active pack experiences, and pack installation guidance.", "Published Getting Started, Built with Skills case studies, the evidence-backed roadmap, and institutional project pages."] },
+          { title: "Catalog and delivery", items: ["Added bilingual metadata for all 49 canonical skills and ten active packs.", "Added deterministic catalog generation, validation, and pack-aware atomic installation for Bash and PowerShell.", "Added the Agent Skills Studio plugin, local marketplace manifest, and Linux/Windows CI validation."] },
         ],
       }],
     },
@@ -132,11 +132,11 @@ const content: Readonly<Record<Locale, ProjectPageContent>> = {
       unreleased: "Não lançada",
       sourceAction: "Ver changelog na fonte",
       releases: [{
-        version: "1.0.0-beta.1",
+        version: "1.0.0-rc.1",
         date: "Não lançada",
         groups: [
-          { title: "Studio público", items: ["Lançamento do microsite bilíngue em Next.js com metadados localizados e orientação de deploy em produção.", "Adição do catálogo com busca para 18 skills, detalhes das skills, seis experiências de pacotes e orientação de instalação.", "Publicação de Primeiros passos, estudos de caso Feito com Skills, roteiro baseado em evidências e páginas institucionais do projeto."] },
-          { title: "Catálogo e entrega", items: ["Adição de metadados bilíngues para as 18 skills canônicas e seis pacotes ativos ou planejados.", "Adição de geração determinística, validação e instalação atômica por pacote para Bash e PowerShell.", "Adição do plugin Agent Skills Studio, manifesto de marketplace local e validação CI em Linux e Windows."] },
+          { title: "Studio público", items: ["Lançamento do microsite bilíngue em Next.js com metadados localizados e orientação de deploy em produção.", "Adição do catálogo com busca para 49 skills, detalhes das skills, dez experiências de pacotes ativos e orientação de instalação.", "Publicação de Primeiros passos, estudos de caso Feito com Skills, roteiro baseado em evidências e páginas institucionais do projeto."] },
+          { title: "Catálogo e entrega", items: ["Adição de metadados bilíngues para as 49 skills canônicas e dez pacotes ativos.", "Adição de geração determinística, validação e instalação atômica por pacote para Bash e PowerShell.", "Adição do plugin Agent Skills Studio, manifesto de marketplace local e validação CI em Linux e Windows."] },
         ],
       }],
     },

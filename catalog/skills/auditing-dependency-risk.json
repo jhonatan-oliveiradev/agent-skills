@@ -2,19 +2,41 @@
   "$schema": "../schemas/skill.schema.json",
   "slug": "auditing-dependency-risk",
   "category": "application-security",
-  "packs": ["application-security"],
+  "packs": [
+    "application-security"
+  ],
   "maturity": "beta",
   "difficulty": "intermediate",
   "featured": false,
   "compatibility": {
-    "surfaces": ["chatgpt", "codex"],
-    "operatingSystems": ["linux", "macos", "windows"],
-    "installModes": ["plugin", "filesystem"]
+    "surfaces": [
+      "chatgpt",
+      "codex"
+    ],
+    "operatingSystems": [
+      "linux",
+      "macos",
+      "windows"
+    ],
+    "installModes": [
+      "plugin",
+      "filesystem"
+    ]
   },
-  "tags": ["security", "dependencies", "supply-chain", "vulnerabilities", "provenance"],
+  "tags": [
+    "security",
+    "dependencies",
+    "supply-chain",
+    "vulnerabilities",
+    "provenance"
+  ],
   "dependencies": [],
-  "relatedSkills": ["threat-modeling-applications", "reviewing-web-security", "building-regression-tests"],
-  "version": "1.0.0-beta.1",
+  "relatedSkills": [
+    "threat-modeling-applications",
+    "reviewing-web-security",
+    "building-regression-tests"
+  ],
+  "version": "1.0.0-rc.1",
   "updatedAt": "2026-09-01",
   "locales": {
     "en": {
@@ -23,8 +45,13 @@
       "primaryBenefit": "Separates actionable dependency risk from noisy advisory counts and avoids unsafe broad upgrades without application context.",
       "whenToUse": "Use when a project needs software-supply-chain or third-party dependency risk assessed from manifests, lockfiles, advisories, provenance, maintenance signals, and realistic runtime exposure before upgrades or release.",
       "whenNotToUse": "Do not use when the task is purely an application-code vulnerability review with no dependency or build-chain question.",
-      "useCases": ["Triage npm audit or equivalent findings before a production release", "Review whether the project's lockfile, registry, install, and provenance practices reduce supply-chain risk"],
-      "examplePrompts": ["Use auditing-dependency-risk to triage this project's dependency advisories by actual reachability and supply-chain exposure, then recommend the smallest safe remediation."]
+      "useCases": [
+        "Triage npm audit or equivalent findings before a production release",
+        "Review whether the project's lockfile, registry, install, and provenance practices reduce supply-chain risk"
+      ],
+      "examplePrompts": [
+        "Use auditing-dependency-risk to triage this project's dependency advisories by actual reachability and supply-chain exposure, then recommend the smallest safe remediation."
+      ]
     },
     "pt-BR": {
       "displayName": "Auditoria de Risco de Dependências",
@@ -32,8 +59,13 @@
       "primaryBenefit": "Separa risco acionável de dependências de contagens ruidosas de advisories e evita upgrades amplos e inseguros sem contexto da aplicação.",
       "whenToUse": "Use quando um projeto precisa avaliar risco da cadeia de suprimentos de software ou de dependências de terceiros a partir de manifests, lockfiles, advisories, proveniência, sinais de manutenção e exposição real em runtime antes de upgrades ou release.",
       "whenNotToUse": "Não use quando a tarefa é puramente uma revisão de vulnerabilidades no código da aplicação sem questão de dependências ou cadeia de build.",
-      "useCases": ["Triar achados do npm audit ou equivalente antes de um release de produção", "Revisar se lockfile, registry, instalação e práticas de proveniência do projeto reduzem risco de supply chain"],
-      "examplePrompts": ["Use auditing-dependency-risk para triar os advisories deste projeto por alcançabilidade real e exposição de supply chain e recomendar a menor remediação segura."]
+      "useCases": [
+        "Triar achados do npm audit ou equivalente antes de um release de produção",
+        "Revisar se lockfile, registry, instalação e práticas de proveniência do projeto reduzem risco de supply chain"
+      ],
+      "examplePrompts": [
+        "Use auditing-dependency-risk para triar os advisories deste projeto por alcançabilidade real e exposição de supply chain e recomendar a menor remediação segura."
+      ]
     }
   }
 }

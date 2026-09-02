@@ -2,19 +2,38 @@
   "$schema": "../schemas/skill.schema.json",
   "slug": "building-conversion-product-pages",
   "category": "product-design",
-  "packs": ["frontend-product"],
+  "packs": [
+    "frontend-product"
+  ],
   "maturity": "stable",
   "difficulty": "intermediate",
   "featured": true,
   "compatibility": {
-    "surfaces": ["chatgpt", "codex"],
-    "operatingSystems": ["linux", "macos", "windows"],
-    "installModes": ["plugin", "filesystem"]
+    "surfaces": [
+      "chatgpt",
+      "codex"
+    ],
+    "operatingSystems": [
+      "linux",
+      "macos",
+      "windows"
+    ],
+    "installModes": [
+      "plugin",
+      "filesystem"
+    ]
   },
-  "tags": ["conversion", "landing-pages", "product-marketing", "pricing-pages"],
+  "tags": [
+    "conversion",
+    "landing-pages",
+    "product-marketing",
+    "pricing-pages"
+  ],
   "dependencies": [],
-  "relatedSkills": ["building-premium-nextjs-interfaces"],
-  "version": "1.0.0-beta.1",
+  "relatedSkills": [
+    "building-premium-nextjs-interfaces"
+  ],
+  "version": "1.0.0-rc.1",
   "updatedAt": "2026-08-26",
   "locales": {
     "en": {
@@ -23,8 +42,13 @@
       "primaryBenefit": "Helps visitors understand the offer and make a decision with less friction.",
       "whenToUse": "Use when designing or improving a landing page, product page, digital-product storefront, pricing page, or marketing flow where visitor comprehension and conversion are primary goals.",
       "whenNotToUse": "Do not use for general interface work where visitor comprehension and conversion are not primary goals.",
-      "useCases": ["Clarify a landing page's offer and primary action", "Simplify pricing choices and answer purchase objections"],
-      "examplePrompts": ["Use building-conversion-product-pages to restructure this product page around clarity, trust, and one primary action."]
+      "useCases": [
+        "Clarify a landing page's offer and primary action",
+        "Simplify pricing choices and answer purchase objections"
+      ],
+      "examplePrompts": [
+        "Use building-conversion-product-pages to restructure this product page around clarity, trust, and one primary action."
+      ]
     },
     "pt-BR": {
       "displayName": "Criação de Páginas de Produto para Conversão",
@@ -32,8 +56,13 @@
       "primaryBenefit": "Ajuda visitantes a compreender a oferta e tomar uma decisão com menos atrito.",
       "whenToUse": "Use ao criar ou melhorar uma landing page, página de produto, vitrine de produto digital, página de preços ou fluxo de marketing em que a compreensão de visitantes e a conversão sejam objetivos principais.",
       "whenNotToUse": "Não use para trabalhos gerais de interface em que a compreensão de visitantes e a conversão não sejam objetivos principais.",
-      "useCases": ["Esclarecer a oferta e a ação principal de uma landing page", "Simplificar escolhas de preço e responder objeções de compra"],
-      "examplePrompts": ["Use building-conversion-product-pages para reorganizar esta página de produto em torno de clareza, confiança e uma única ação principal."]
+      "useCases": [
+        "Esclarecer a oferta e a ação principal de uma landing page",
+        "Simplificar escolhas de preço e responder objeções de compra"
+      ],
+      "examplePrompts": [
+        "Use building-conversion-product-pages para reorganizar esta página de produto em torno de clareza, confiança e uma única ação principal."
+      ]
     }
   }
 }

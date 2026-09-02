@@ -2,19 +2,39 @@
   "$schema": "../schemas/skill.schema.json",
   "slug": "bootstrapping-modern-web-apps",
   "category": "frontend",
-  "packs": ["frontend-product"],
+  "packs": [
+    "frontend-product"
+  ],
   "maturity": "stable",
   "difficulty": "intermediate",
   "featured": true,
   "compatibility": {
-    "surfaces": ["chatgpt", "codex"],
-    "operatingSystems": ["linux", "macos", "windows"],
-    "installModes": ["plugin", "filesystem"]
+    "surfaces": [
+      "chatgpt",
+      "codex"
+    ],
+    "operatingSystems": [
+      "linux",
+      "macos",
+      "windows"
+    ],
+    "installModes": [
+      "plugin",
+      "filesystem"
+    ]
   },
-  "tags": ["nextjs", "project-scaffolding", "typescript", "tailwind-css", "developer-tooling"],
+  "tags": [
+    "nextjs",
+    "project-scaffolding",
+    "typescript",
+    "tailwind-css",
+    "developer-tooling"
+  ],
   "dependencies": [],
-  "relatedSkills": ["designing-ui-systems"],
-  "version": "1.0.0-beta.1",
+  "relatedSkills": [
+    "designing-ui-systems"
+  ],
+  "version": "1.0.0-rc.1",
   "updatedAt": "2026-08-26",
   "locales": {
     "en": {
@@ -23,8 +43,13 @@
       "primaryBenefit": "Delivers a consistent scaffold that is ready for feature work without speculative architecture or dependencies.",
       "whenToUse": "Use when the user explicitly opts into this opinionated web-app baseline, asks to use the personal starter, or wants this repository's preferred Next.js project conventions.",
       "whenNotToUse": "Do not use without explicit opt-in or when an existing repository, requested stack, or neutral setup defines different conventions.",
-      "useCases": ["Prepare a new Next.js application with shared quality gates", "Apply the repository's preferred formatter and project conventions"],
-      "examplePrompts": ["Use bootstrapping-modern-web-apps to create an opt-in Next.js baseline for this new application."]
+      "useCases": [
+        "Prepare a new Next.js application with shared quality gates",
+        "Apply the repository's preferred formatter and project conventions"
+      ],
+      "examplePrompts": [
+        "Use bootstrapping-modern-web-apps to create an opt-in Next.js baseline for this new application."
+      ]
     },
     "pt-BR": {
       "displayName": "Estruturação de Aplicações Web Modernas",
@@ -32,8 +57,13 @@
       "primaryBenefit": "Entrega uma estrutura consistente e pronta para evoluir com funcionalidades, sem arquitetura ou dependências especulativas.",
       "whenToUse": "Use quando a pessoa optar explicitamente por esta base opinativa para aplicações web, pedir o starter pessoal ou quiser as convenções Next.js preferidas deste repositório.",
       "whenNotToUse": "Não use sem adesão explícita ou quando um repositório existente, a stack solicitada ou uma configuração neutra definir convenções diferentes.",
-      "useCases": ["Preparar uma nova aplicação Next.js com critérios de qualidade compartilhados", "Aplicar as convenções preferidas de formatação e estrutura do repositório"],
-      "examplePrompts": ["Use bootstrapping-modern-web-apps para criar uma base Next.js optativa para esta nova aplicação."]
+      "useCases": [
+        "Preparar uma nova aplicação Next.js com critérios de qualidade compartilhados",
+        "Aplicar as convenções preferidas de formatação e estrutura do repositório"
+      ],
+      "examplePrompts": [
+        "Use bootstrapping-modern-web-apps para criar uma base Next.js optativa para esta nova aplicação."
+      ]
     }
   }
 }

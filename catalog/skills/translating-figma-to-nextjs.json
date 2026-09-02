@@ -2,16 +2,34 @@
   "$schema": "../schemas/skill.schema.json",
   "slug": "translating-figma-to-nextjs",
   "category": "frontend",
-  "packs": ["frontend-product"],
+  "packs": [
+    "frontend-product"
+  ],
   "maturity": "stable",
   "difficulty": "advanced",
   "featured": false,
   "compatibility": {
-    "surfaces": ["chatgpt", "codex"],
-    "operatingSystems": ["linux", "macos", "windows"],
-    "installModes": ["plugin", "filesystem"]
+    "surfaces": [
+      "chatgpt",
+      "codex"
+    ],
+    "operatingSystems": [
+      "linux",
+      "macos",
+      "windows"
+    ],
+    "installModes": [
+      "plugin",
+      "filesystem"
+    ]
   },
-  "tags": ["figma", "nextjs", "react", "design-systems", "responsive-design"],
+  "tags": [
+    "figma",
+    "nextjs",
+    "react",
+    "design-systems",
+    "responsive-design"
+  ],
   "dependencies": [
     {
       "name": "Figma",
@@ -20,8 +38,10 @@
       "url": "https://www.figma.com"
     }
   ],
-  "relatedSkills": ["implementing-reference-faithful-ui"],
-  "version": "1.0.0-beta.1",
+  "relatedSkills": [
+    "implementing-reference-faithful-ui"
+  ],
+  "version": "1.0.0-rc.1",
   "updatedAt": "2026-08-26",
   "locales": {
     "en": {
@@ -30,8 +50,13 @@
       "primaryBenefit": "Turns designs into faithful, responsive, reusable code that respects the application's architecture.",
       "whenToUse": "Use when converting Figma designs or design-system components into production Next.js and React code while preserving fidelity, reuse, responsiveness, and maintainable component boundaries.",
       "whenNotToUse": "Do not use without a Figma design or component source, and do not export raw Figma structure or CSS as production architecture.",
-      "useCases": ["Implement a responsive Figma frame in an existing Next.js application", "Map Figma component variants to reusable React boundaries"],
-      "examplePrompts": ["Use translating-figma-to-nextjs to implement these Figma components as responsive, reusable React code in the existing architecture."]
+      "useCases": [
+        "Implement a responsive Figma frame in an existing Next.js application",
+        "Map Figma component variants to reusable React boundaries"
+      ],
+      "examplePrompts": [
+        "Use translating-figma-to-nextjs to implement these Figma components as responsive, reusable React code in the existing architecture."
+      ]
     },
     "pt-BR": {
       "displayName": "Tradução de Figma para Next.js",
@@ -39,8 +64,13 @@
       "primaryBenefit": "Transforma designs em código fiel, responsivo e reutilizável que respeita a arquitetura da aplicação.",
       "whenToUse": "Use ao converter designs ou componentes de design system do Figma em código de produção para Next.js e React, preservando fidelidade, reutilização, responsividade e limites de componentes fáceis de manter.",
       "whenNotToUse": "Não use sem um design ou componente de origem no Figma e não exporte a estrutura ou o CSS bruto do Figma como arquitetura de produção.",
-      "useCases": ["Implementar um frame responsivo do Figma em uma aplicação Next.js existente", "Mapear variantes de componentes do Figma para limites reutilizáveis em React"],
-      "examplePrompts": ["Use translating-figma-to-nextjs para implementar estes componentes do Figma como código React responsivo e reutilizável na arquitetura existente."]
+      "useCases": [
+        "Implementar um frame responsivo do Figma em uma aplicação Next.js existente",
+        "Mapear variantes de componentes do Figma para limites reutilizáveis em React"
+      ],
+      "examplePrompts": [
+        "Use translating-figma-to-nextjs para implementar estes componentes do Figma como código React responsivo e reutilizável na arquitetura existente."
+      ]
     }
   }
 }

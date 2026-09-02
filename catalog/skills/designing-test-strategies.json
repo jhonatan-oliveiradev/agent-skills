@@ -2,19 +2,41 @@
   "$schema": "../schemas/skill.schema.json",
   "slug": "designing-test-strategies",
   "category": "quality-testing",
-  "packs": ["quality-testing"],
+  "packs": [
+    "quality-testing"
+  ],
   "maturity": "beta",
   "difficulty": "advanced",
   "featured": false,
   "compatibility": {
-    "surfaces": ["chatgpt", "codex"],
-    "operatingSystems": ["linux", "macos", "windows"],
-    "installModes": ["plugin", "filesystem"]
+    "surfaces": [
+      "chatgpt",
+      "codex"
+    ],
+    "operatingSystems": [
+      "linux",
+      "macos",
+      "windows"
+    ],
+    "installModes": [
+      "plugin",
+      "filesystem"
+    ]
   },
-  "tags": ["testing", "quality", "risk", "test-strategy", "verification"],
+  "tags": [
+    "testing",
+    "quality",
+    "risk",
+    "test-strategy",
+    "verification"
+  ],
   "dependencies": [],
-  "relatedSkills": ["testing-integration-boundaries", "testing-web-applications-end-to-end", "building-regression-tests"],
-  "version": "1.0.0-beta.1",
+  "relatedSkills": [
+    "testing-integration-boundaries",
+    "testing-web-applications-end-to-end",
+    "building-regression-tests"
+  ],
+  "version": "1.0.0-rc.1",
   "updatedAt": "2026-09-01",
   "locales": {
     "en": {
@@ -23,8 +45,13 @@
       "primaryBenefit": "Prevents both under-testing critical risks and over-investing in slow, redundant broad-stack tests.",
       "whenToUse": "Use when a feature, service, or release needs a deliberate verification plan and the team is unsure which risks belong in unit, integration, end-to-end, or non-functional tests.",
       "whenNotToUse": "Do not use when one already-defined regression or boundary test is sufficient and no broader verification portfolio needs to be designed.",
-      "useCases": ["Define the verification strategy for a new product capability before implementation", "Rebalance a slow test suite around critical risks and unique evidence at each layer"],
-      "examplePrompts": ["Use designing-test-strategies to map this feature's risks to the smallest useful test layers and define the release evidence we actually need."]
+      "useCases": [
+        "Define the verification strategy for a new product capability before implementation",
+        "Rebalance a slow test suite around critical risks and unique evidence at each layer"
+      ],
+      "examplePrompts": [
+        "Use designing-test-strategies to map this feature's risks to the smallest useful test layers and define the release evidence we actually need."
+      ]
     },
     "pt-BR": {
       "displayName": "Desenho de Estratégias de Teste",
@@ -32,8 +59,13 @@
       "primaryBenefit": "Evita tanto subtestar riscos críticos quanto investir demais em testes amplos, lentos e redundantes.",
       "whenToUse": "Use quando uma feature, serviço ou release precisa de um plano deliberado de verificação e a equipe não sabe quais riscos pertencem a testes unitários, de integração, end-to-end ou não funcionais.",
       "whenNotToUse": "Não use quando um único teste de regressão ou de boundary já definido é suficiente e não há necessidade de desenhar um portfólio mais amplo de verificação.",
-      "useCases": ["Definir a estratégia de verificação de uma nova capacidade de produto antes da implementação", "Reequilibrar uma suíte lenta em torno de riscos críticos e evidências únicas em cada camada"],
-      "examplePrompts": ["Use designing-test-strategies para mapear os riscos desta feature às menores camadas úteis de teste e definir as evidências de release que realmente precisamos."]
+      "useCases": [
+        "Definir a estratégia de verificação de uma nova capacidade de produto antes da implementação",
+        "Reequilibrar uma suíte lenta em torno de riscos críticos e evidências únicas em cada camada"
+      ],
+      "examplePrompts": [
+        "Use designing-test-strategies para mapear os riscos desta feature às menores camadas úteis de teste e definir as evidências de release que realmente precisamos."
+      ]
     }
   }
 }
