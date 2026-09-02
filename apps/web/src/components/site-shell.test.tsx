@@ -328,7 +328,7 @@ describe("foundation navigation targets", () => {
 
     expect(screen.getByRole("heading", { level: 1, name: heading })).toBeInTheDocument();
     expect(container.querySelectorAll("[data-pack-dossier]")).toHaveLength(10);
-    expect(container.querySelectorAll('[data-pack-dossier][data-status="active"]')).toHaveLength(9);
+    expect(container.querySelectorAll('[data-pack-dossier][data-status="active"]')).toHaveLength(10);
     expect(container.querySelectorAll('[data-pack-dossier][data-status="planned"]')).toHaveLength(0);
     expect(container.querySelector(`[data-pack-dossier] a[href="${packHref}"]`)).toBeInTheDocument();
     expect(container.querySelector(".pack-card")).not.toBeInTheDocument();
