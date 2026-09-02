@@ -6,11 +6,12 @@ import {
 } from "./built-with-skills";
 
 describe("built with skills records", () => {
-  it.each(["en", "pt-BR"] as const)("publishes five localized cases for %s", (locale) => {
+  it.each(["en", "pt-BR"] as const)("publishes six localized cases for %s", (locale) => {
     const cases = getBuiltWithSkillsCases(locale);
 
-    expect(cases).toHaveLength(5);
+    expect(cases).toHaveLength(6);
     expect(cases.map((item) => item.slug)).toEqual([
+      "rocket-codebase-intelligence-cosmic-sdk-removal",
       "rocket-editorial-error-boundary",
       "ping-space-voice-membership-authorization",
       "portfolio-translation-hardening",
@@ -52,6 +53,37 @@ describe("built with skills records", () => {
         `https://github.com/jhonatan-oliveiradev/agent-skills/blob/main/${item.sourcePath}`,
       );
     }
+  });
+
+  it("publishes Rocket Codebase Intelligence as full-pack public-safe real-use evidence", () => {
+    const item = getBuiltWithSkillsCaseBySlug(
+      "en",
+      "rocket-codebase-intelligence-cosmic-sdk-removal",
+    );
+
+    expect(item).toBeDefined();
+    expect(item?.evidenceClass).toBe("real-use");
+    expect(item?.project).toEqual({
+      id: "rocket-unesp",
+      name: "Rocket UNESP",
+    });
+    expect(item?.skills).toEqual([
+      "mapping-existing-codebase-structure",
+      "investigating-codebase-semantically",
+      "tracing-code-execution-paths",
+      "analyzing-change-blast-radius",
+      "planning-codebase-changes-with-evidence",
+    ]);
+    expect(item?.evidence.map((entry) => entry.type)).toEqual(["source", "qa"]);
+    expect(
+      item?.evidence.every((entry) =>
+        entry.href.startsWith(
+          "https://github.com/jhonatan-oliveiradev/agent-skills/",
+        ),
+      ),
+    ).toBe(true);
+    expect(item?.evidence.some((entry) => entry.href.includes("/rocket-inst/"))).toBe(false);
+    expect(item && hasInspectableRealUseEvidence(item)).toBe(true);
   });
 
   it("publishes Rocket as inspectable public-safe real-use evidence", () => {

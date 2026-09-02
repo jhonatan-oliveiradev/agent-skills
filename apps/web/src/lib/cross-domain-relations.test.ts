@@ -75,6 +75,27 @@ describe("cross-domain relations", () => {
     });
   });
 
+  it("recognizes the Rocket Codebase Intelligence case as complete pack coverage", () => {
+    const codebase = packs.find((pack) => pack.slug === "codebase-intelligence")!;
+    const relations = getCasesUsingPackMethods(cases, codebase);
+    const rocketRelation = relations.find(
+      (relation) =>
+        relation.case.slug === "rocket-codebase-intelligence-cosmic-sdk-removal",
+    );
+
+    expect(rocketRelation).toMatchObject({
+      case: { slug: "rocket-codebase-intelligence-cosmic-sdk-removal" },
+      matchingSkillSlugs: [
+        "mapping-existing-codebase-structure",
+        "tracing-code-execution-paths",
+        "analyzing-change-blast-radius",
+        "investigating-codebase-semantically",
+        "planning-codebase-changes-with-evidence",
+      ],
+      coversEntirePack: true,
+    });
+  });
+
   it("derives related systems for an evidence report from method overlap", () => {
     const catalogCase = cases.find((item) => item.slug === "catalog-experience")!;
     const relations = getRelatedPacksForCase(packs, catalogCase);
