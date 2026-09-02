@@ -2,7 +2,7 @@
   "name": "jhonatan-agent-skills",
   "version": "1.0.0-beta.1",
   "private": true,
-  "description": "Curated Agent Skills for frontend, product design, motion, delivery, and game-development workflows.",
+  "description": "Curated Agent Skills for frontend, product design, motion, backend and data, architecture, quality, application security, engineering workflow, brand design, writing and communication, delivery, and game-development workflows.",
   "scripts": {
     "validate": "node scripts/validate-skills.mjs && node scripts/validate-catalog.mjs && node scripts/generate-catalog.mjs --check && node scripts/validate-plugin.mjs",
     "validate:skills": "node scripts/validate-skills.mjs",
