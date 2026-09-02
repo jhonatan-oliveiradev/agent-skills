@@ -38,7 +38,9 @@ The Studio-level candidate version is owned by exactly five synchronized source 
 
 The existing release-readiness test already establishes these as one synchronization boundary. RC2 changes all five together from `1.0.0-rc.1` to `1.0.0-rc.2`.
 
-Per-skill and per-pack versions are independent contract versions. They must **not** be mass-bumped solely because the Studio release candidate changes.
+The catalog validator additionally treats the `version` field in every `catalog/skills/*.json` and `catalog/packs/*.json` record as release-coupled metadata: each record must equal `catalog/catalog.json.version`. Therefore RC2 must mechanically synchronize all **54 skill catalog records + 11 pack catalog records** to `1.0.0-rc.2`.
+
+This synchronization does **not** change the canonical method implementations or behavior in `skills/*/SKILL.md`; it preserves the repository's existing catalog consistency contract rather than weakening the validator during a release tranche.
 
 Historical specs, plans, real-use records, RC1 readiness data, and the published `v1.0.0-rc.1` release remain historical evidence and must not be rewritten to say RC2.
 
@@ -89,7 +91,7 @@ The next real-use tranche may add `codebase-intelligence` to `validatedRealUsePa
 
 `catalog/generated/catalog.json` and `apps/web/src/generated/catalog.json` are generated projections, not primary release owners.
 
-They must be regenerated/synchronized from the updated source manifests through the repository's official generation/sync paths. They must not be treated as independent version authorities.
+They must be regenerated/synchronized from the updated source manifests and synchronized catalog records through the repository's official generation/sync paths. They must not be treated as independent version authorities.
 
 ## 6. TDD contract
 
@@ -103,11 +105,19 @@ RED must be established before changing release metadata:
 
 The RED commit must fail only because production/current-release metadata still represents RC1.
 
-GREEN then performs the minimum source updates and regenerates projections.
+GREEN then performs the minimum source updates, synchronizes release-coupled catalog record versions, and regenerates projections.
 
-## 7. CI and verification
+## 7. Execution ruling discovered by CI
 
-The canonical `.github/workflows/validate.yml` already runs on pull requests and is the authority for final verification. No temporary workflow is required for the standard gates.
+The first RC2 metadata promotion exposed **65 catalog validation errors**: 54 skill records and 11 pack records still carried `1.0.0-rc.1` while the catalog manifest had moved to `1.0.0-rc.2`.
+
+Inspection of `scripts/validate-catalog.mjs` confirmed that this is an intentional repository contract: every skill and pack catalog record must match the manifest version. The RC2 implementation therefore preserves the validator and synchronizes those 65 metadata records mechanically.
+
+After that synchronization, root tests reduced from 11 failures to two remaining assertions in `scripts/codebase-intelligence-pack.test.mjs` that explicitly expected `1.0.0-rc.1`. Those expectations are release-coupled tests added with PR #54 and must also move to RC2. No Codebase Intelligence behavior, routing, installer semantics, or `SKILL.md` content changes as part of this ruling.
+
+## 8. CI and verification
+
+The canonical `.github/workflows/validate.yml` already runs on pull requests and is the authority for final verification. A temporary branch-scoped materializer may be used only because the connector cannot execute repository commands directly; it must be removed before final evidence is accepted.
 
 Final RC2 HEAD must pass on both Ubuntu and Windows:
 
@@ -126,12 +136,13 @@ Final verification must also confirm:
 
 - catalog remains 54 skills / 11 active packs;
 - no canonical skill/pack/category is added or removed;
-- no mass version bump of individual skills/packs;
+- all 54 skill + 11 pack **catalog metadata** versions are synchronized to `1.0.0-rc.2` as required by the validator;
+- canonical `skills/*/SKILL.md` method content is not mass-rewritten for the release bump;
 - no historical evidence is rewritten;
 - no Stable `1.0.0` promotion occurs;
 - no GitHub `v1.0.0-rc.2` tag/release is published before the RC2 PR is explicitly approved and merged.
 
-## 8. Delivery boundary
+## 9. Delivery boundary
 
 This tranche ends with a reviewable PR to `main` titled approximately:
 
