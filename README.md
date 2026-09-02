@@ -1,6 +1,6 @@
 # Agent Skills Studio
 
-A curated Agent Skills library for production frontend, product design, motion, visual QA, delivery workflows, backend and data engineering, software architecture and engineering, quality and testing, application security, engineering workflow, brand design, writing and communication, and game-development tasks. The current catalog publishes 49 reusable skills across 10 active packs. It is inspired by useful patterns from the broader agent-skills ecosystem, but the skills in this repository are intentionally rewritten, consolidated, and kept project-agnostic.
+A curated Agent Skills library for production frontend, product design, motion, visual QA, delivery workflows, backend and data engineering, software architecture and engineering, quality and testing, application security, engineering workflow, brand design, writing and communication, and game-development tasks. The current catalog publishes 54 reusable skills across 11 active packs. It is inspired by useful patterns from the broader agent-skills ecosystem, but the skills in this repository are intentionally rewritten, consolidated, and kept project-agnostic.
 
 ## Principles
 
@@ -46,6 +46,13 @@ kept.
 - `designing-software-boundaries`
 - `documenting-architecture-decisions`
 - `planning-safe-refactors`
+
+### Codebase intelligence
+- `mapping-existing-codebase-structure`
+- `tracing-code-execution-paths`
+- `analyzing-change-blast-radius`
+- `investigating-codebase-semantically`
+- `planning-codebase-changes-with-evidence`
 
 ### Quality & testing
 - `designing-test-strategies`
@@ -110,6 +117,16 @@ The methods prefer database constraints and measured access patterns over specul
 The Architecture & Engineering pack is deliberately topology- and runtime-agnostic. It separates four concerns that should remain independently invokable: choosing application architecture from real quality attributes and constraints, designing cohesive software boundaries, documenting significant decisions with ADRs, and planning structural refactors as releasable migration slices.
 
 The methods prefer the least distributed architecture that satisfies demonstrated forces, explicit ownership and dependency direction, durable decision rationale, and incremental evolution with verification and rollback. They do not require CodeGraph or another code-intelligence runtime.
+
+## Codebase Intelligence v1
+
+The Codebase Intelligence pack separates understanding the code that exists from designing a future architecture. Its five methods map current structure, trace execution paths, estimate change blast radius, investigate semantic questions, and prepare evidence-backed change briefs without taking ownership of architecture or implementation.
+
+Each method keeps an evidence ledger that distinguishes observed, inferred, and unresolved claims with source locations, confidence, and relevance. Work begins with a narrow question, expands context only to close a named evidence gap, and stops when the available evidence is sufficient for the immediate decision.
+
+CodeGraph can optionally accelerate structural retrieval when its MCP tool and a project index are already available. The verified fallback uses targeted repository search, direct source reads, imports, references, tests, and configuration under the same evidence contract. The methods never automatically install CodeGraph, initialize or index a project, or depend on CodeGraph or another vendor runtime.
+
+See the canonical [CodeGraph integration guide](skills/mapping-existing-codebase-structure/references/codegraph.md) for the optional setup and fallback contract.
 
 ## Quality & Testing v1
 
@@ -238,13 +255,14 @@ The active, installable packs are:
 - `game-development` — Game Development (5 skills);
 - `backend-data` — Backend & Data (4 skills);
 - `architecture-engineering` — Architecture & Engineering (4 skills);
+- `codebase-intelligence` — Codebase Intelligence (5 skills);
 - `quality-testing` — Quality & Testing (4 skills);
 - `application-security` — Application Security (4 skills);
 - `engineering-workflow` — Engineering Workflow (4 skills);
 - `design-brand` — Design & Brand (5 skills).
 - `writing-communication` — Writing & Communication (5 skills).
 
-All ten published packs are active and installable.
+All eleven published packs are active and installable.
 
 Install an active pack on Bash or PowerShell:
 

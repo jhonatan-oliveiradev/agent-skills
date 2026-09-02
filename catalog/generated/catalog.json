@@ -6,13 +6,14 @@
     "en",
     "pt-BR"
   ],
-  "sourceDigest": "6ee73d0e718cdf404c46196f1b7727cf212110e43a3074d58865d2dc9297f9d1",
+  "sourceDigest": "b5acaa8018ada97d4eb9e06bb00bbdf8bcb0cb1cfe37e926dc433ab91779114b",
   "filters": {
     "categories": [
       "application-security",
       "architecture-engineering",
       "backend-data",
       "brand-design",
+      "codebase-intelligence",
       "delivery",
       "engineering-workflow",
       "frontend",
@@ -27,6 +28,7 @@
       "application-security",
       "architecture-engineering",
       "backend-data",
+      "codebase-intelligence",
       "design-brand",
       "engineering-workflow",
       "frontend-product",
@@ -56,6 +58,7 @@
       "authentication",
       "authorization",
       "backfills",
+      "behavior",
       "blast-radius",
       "boundaries",
       "brand-guidelines",
@@ -65,9 +68,12 @@
       "browser",
       "bugs",
       "calls-to-action",
+      "change-evidence",
+      "change-impact",
       "character-art",
       "clarity",
       "code-review",
+      "codebase",
       "cohesion",
       "color",
       "combat-animation",
@@ -78,6 +84,7 @@
       "content-strategy",
       "context",
       "continuity",
+      "control-flow",
       "conversion",
       "copywriting",
       "coupling",
@@ -97,6 +104,9 @@
       "editing",
       "end-to-end",
       "engineering",
+      "entrypoints",
+      "evidence",
+      "execution-trace",
       "explain",
       "external-services",
       "figma",
@@ -142,6 +152,7 @@
       "performance",
       "plain-language",
       "planning",
+      "planning-handoff",
       "playtesting",
       "positioning",
       "postgresql",
@@ -175,16 +186,20 @@
       "scroll-animation",
       "scrolltrigger",
       "security",
+      "semantic-search",
+      "service-boundaries",
       "sessions",
       "small-batches",
       "sprite-animation",
       "ssrf",
       "strategy",
+      "structure",
       "supply-chain",
       "tailwind-css",
       "tdd",
       "test-strategy",
       "testing",
+      "testing-surfaces",
       "threat-modeling",
       "threejs",
       "tone",
@@ -247,10 +262,10 @@
     ]
   },
   "counts": {
-    "skills": 49,
+    "skills": 54,
     "packs": {
-      "total": 10,
-      "active": 10,
+      "total": 11,
+      "active": 11,
       "planned": 0
     },
     "categories": {
@@ -258,6 +273,7 @@
       "architecture-engineering": 4,
       "backend-data": 4,
       "brand-design": 5,
+      "codebase-intelligence": 5,
       "delivery": 1,
       "engineering-workflow": 4,
       "frontend": 5,
@@ -269,18 +285,19 @@
       "writing-communication": 5
     },
     "maturity": {
-      "beta": 31,
+      "beta": 36,
       "stable": 18
     },
     "difficulty": {
-      "advanced": 26,
+      "advanced": 29,
       "beginner": 2,
-      "intermediate": 21
+      "intermediate": 23
     },
     "activePackMembership": {
       "application-security": 4,
       "architecture-engineering": 4,
       "backend-data": 4,
+      "codebase-intelligence": 5,
       "design-brand": 5,
       "engineering-workflow": 4,
       "frontend-product": 8,
@@ -291,6 +308,76 @@
     }
   },
   "skills": [
+    {
+      "$schema": "../schemas/skill.schema.json",
+      "slug": "analyzing-change-blast-radius",
+      "category": "codebase-intelligence",
+      "packs": [
+        "codebase-intelligence"
+      ],
+      "maturity": "beta",
+      "difficulty": "advanced",
+      "featured": false,
+      "compatibility": {
+        "surfaces": [
+          "chatgpt",
+          "codex"
+        ],
+        "operatingSystems": [
+          "linux",
+          "macos",
+          "windows"
+        ],
+        "installModes": [
+          "plugin",
+          "filesystem"
+        ]
+      },
+      "tags": [
+        "codebase",
+        "blast-radius",
+        "change-impact",
+        "dependencies",
+        "risk"
+      ],
+      "dependencies": [],
+      "relatedSkills": [
+        "planning-safe-refactors",
+        "building-regression-tests"
+      ],
+      "version": "1.0.0-rc.1",
+      "updatedAt": "2026-09-02",
+      "locales": {
+        "en": {
+          "displayName": "Analyzing Change Blast Radius",
+          "summary": "Bounds the potential impact of a proposed change across direct and inferred dependents, contracts, runtime paths, tests, and fixtures.",
+          "primaryBenefit": "Surfaces evidence-backed risk and unresolved impact before a team chooses implementation slices or protection strategy.",
+          "whenToUse": "Use when a proposed change may affect multiple consumers, contracts, runtime paths, data flows, tests, or fixtures and you need an evidence-bounded impact map before planning.",
+          "whenNotToUse": "Do not use to choose migration slices or implement protections; Planning Safe Refactors owns migration strategy and Quality & Testing owns regression-test design.",
+          "useCases": [
+            "Assess which callers, contracts, tests, and user paths may be affected by changing a shared interface",
+            "Identify direct and transitive impact evidence before replacing infrastructure, persistence, or framework behavior"
+          ],
+          "examplePrompts": [
+            "Use analyzing-change-blast-radius to bound the impact of this proposed change across dependents, contracts, runtime paths, tests, and fixtures. Mark findings as observed, inferred, or unresolved and cite the source and location for every material claim."
+          ]
+        },
+        "pt-BR": {
+          "displayName": "Análise de Blast Radius de Mudança",
+          "summary": "Delimita o impacto potencial de uma mudança proposta em dependentes diretos e inferidos, contratos, caminhos de runtime, testes e fixtures.",
+          "primaryBenefit": "Expõe risco sustentado por evidências e impacto não resolvido antes da escolha de fatias de implementação ou estratégia de proteção.",
+          "whenToUse": "Use quando uma mudança proposta puder afetar vários consumidores, contratos, caminhos de runtime, fluxos de dados, testes ou fixtures e você precisar de um mapa de impacto delimitado por evidências antes do planejamento.",
+          "whenNotToUse": "Não use para escolher fatias de migração ou implementar proteções; Planning Safe Refactors é responsável pela estratégia de migração e Qualidade e Testes pelo desenho de testes de regressão.",
+          "useCases": [
+            "Avaliar quais callers, contratos, testes e caminhos de usuário podem ser afetados pela mudança de uma interface compartilhada",
+            "Identificar evidências de impacto direto e transitivo antes de substituir comportamento de infraestrutura, persistência ou framework"
+          ],
+          "examplePrompts": [
+            "Use analyzing-change-blast-radius para delimitar o impacto desta mudança em dependentes, contratos, caminhos de runtime, testes e fixtures. Marque os achados como observados, inferidos ou não resolvidos e cite a fonte e localização de cada afirmação material."
+          ]
+        }
+      }
+    },
     {
       "$schema": "../schemas/skill.schema.json",
       "slug": "auditing-dependency-risk",
@@ -2056,6 +2143,75 @@
     },
     {
       "$schema": "../schemas/skill.schema.json",
+      "slug": "investigating-codebase-semantically",
+      "category": "codebase-intelligence",
+      "packs": [
+        "codebase-intelligence"
+      ],
+      "maturity": "beta",
+      "difficulty": "intermediate",
+      "featured": false,
+      "compatibility": {
+        "surfaces": [
+          "chatgpt",
+          "codex"
+        ],
+        "operatingSystems": [
+          "linux",
+          "macos",
+          "windows"
+        ],
+        "installModes": [
+          "plugin",
+          "filesystem"
+        ]
+      },
+      "tags": [
+        "codebase",
+        "semantic-search",
+        "behavior",
+        "ownership",
+        "evidence"
+      ],
+      "dependencies": [],
+      "relatedSkills": [
+        "tracing-code-execution-paths"
+      ],
+      "version": "1.0.0-rc.1",
+      "updatedAt": "2026-09-02",
+      "locales": {
+        "en": {
+          "displayName": "Investigating a Codebase Semantically",
+          "summary": "Finds candidate implementations by behavioral intent, validates them in code, and rejects textual matches that do not establish ownership.",
+          "primaryBenefit": "Locates the code that owns a behavior without requiring the requester to know its symbol names, filenames, or repository vocabulary in advance.",
+          "whenToUse": "Use when you know what a behavior does but not where it is implemented, and candidate results must be validated against code, call sites, tests, or configuration.",
+          "whenNotToUse": "Do not use for a broad inventory of modules and boundaries; Mapping Existing Codebase Structure owns current-state structural mapping.",
+          "useCases": [
+            "Locate where a user-visible rule is enforced when the repository uses unfamiliar names",
+            "Distinguish the real owner of a behavior from comments, adapters, tests, generated files, and other semantic false positives"
+          ],
+          "examplePrompts": [
+            "Use investigating-codebase-semantically to find and validate the implementation that owns this behavior. Report candidates and rejected false positives as observed, inferred, or unresolved, with source and location for each conclusion."
+          ]
+        },
+        "pt-BR": {
+          "displayName": "Investigação Semântica de Codebase",
+          "summary": "Encontra implementações candidatas pela intenção do comportamento, valida-as no código e rejeita correspondências textuais que não estabelecem ownership.",
+          "primaryBenefit": "Localiza o código responsável por um comportamento sem exigir conhecimento prévio de símbolos, nomes de arquivos ou vocabulário do repositório.",
+          "whenToUse": "Use quando souber o que um comportamento faz, mas não onde ele está implementado, e os resultados candidatos precisarem ser validados em código, call sites, testes ou configuração.",
+          "whenNotToUse": "Não use para um inventário amplo de módulos e limites; Mapping Existing Codebase Structure é responsável pelo mapeamento estrutural do estado atual.",
+          "useCases": [
+            "Localizar onde uma regra visível ao usuário é aplicada quando o repositório usa nomes desconhecidos",
+            "Distinguir o verdadeiro owner de um comportamento entre comentários, adaptadores, testes, arquivos gerados e outros falsos positivos semânticos"
+          ],
+          "examplePrompts": [
+            "Use investigating-codebase-semantically para encontrar e validar a implementação responsável por este comportamento. Relate candidatos e falsos positivos rejeitados como observados, inferidos ou não resolvidos, com fonte e localização para cada conclusão."
+          ]
+        }
+      }
+    },
+    {
+      "$schema": "../schemas/skill.schema.json",
       "slug": "managing-implementation-slices",
       "category": "engineering-workflow",
       "packs": [
@@ -2121,6 +2277,76 @@
           ],
           "examplePrompts": [
             "Use managing-implementation-slices para quebrar esta mudança nos menores slices seguros e revisáveis sem perder a ordem de dependências."
+          ]
+        }
+      }
+    },
+    {
+      "$schema": "../schemas/skill.schema.json",
+      "slug": "mapping-existing-codebase-structure",
+      "category": "codebase-intelligence",
+      "packs": [
+        "codebase-intelligence"
+      ],
+      "maturity": "beta",
+      "difficulty": "intermediate",
+      "featured": false,
+      "compatibility": {
+        "surfaces": [
+          "chatgpt",
+          "codex"
+        ],
+        "operatingSystems": [
+          "linux",
+          "macos",
+          "windows"
+        ],
+        "installModes": [
+          "plugin",
+          "filesystem"
+        ]
+      },
+      "tags": [
+        "codebase",
+        "structure",
+        "boundaries",
+        "entrypoints",
+        "evidence"
+      ],
+      "dependencies": [],
+      "relatedSkills": [
+        "designing-software-boundaries",
+        "choosing-application-architecture"
+      ],
+      "version": "1.0.0-rc.1",
+      "updatedAt": "2026-09-02",
+      "locales": {
+        "en": {
+          "displayName": "Mapping Existing Codebase Structure",
+          "summary": "Builds a traceable current-state map of entrypoints, modules, responsibilities, boundaries, and dependency direction without proposing a redesign.",
+          "primaryBenefit": "Replaces architectural guesswork with a scoped structural map whose claims point back to concrete code and configuration evidence.",
+          "whenToUse": "Use when you need to understand how an existing codebase is organized, where execution enters, how modules divide responsibility, or which ownership boundaries are observable before another engineering decision.",
+          "whenNotToUse": "Do not use to choose a future architecture or design new boundaries; Architecture & Engineering owns those decisions through choosing-application-architecture and designing-software-boundaries.",
+          "useCases": [
+            "Orient work in an unfamiliar repository by locating entrypoints, module responsibilities, dependency direction, and ownership signals",
+            "Document the current structural seams around a capability before handing evidence to architecture or change planning"
+          ],
+          "examplePrompts": [
+            "Use mapping-existing-codebase-structure to map the current entrypoints, modules, boundaries, dependency direction, and evidence gaps for this capability. Mark every material claim as observed, inferred, or unresolved and cite its source and location."
+          ]
+        },
+        "pt-BR": {
+          "displayName": "Mapeamento de Estrutura de Codebase Existente",
+          "summary": "Constrói um mapa rastreável do estado atual com entrypoints, módulos, responsabilidades, limites e direção de dependências sem propor um redesign.",
+          "primaryBenefit": "Substitui suposições arquiteturais por um mapa estrutural delimitado cujas afirmações apontam para evidências concretas em código e configuração.",
+          "whenToUse": "Use quando precisar compreender como uma codebase existente está organizada, onde a execução começa, como os módulos dividem responsabilidades ou quais limites de ownership são observáveis antes de outra decisão de engenharia.",
+          "whenNotToUse": "Não use para escolher uma arquitetura futura ou desenhar novos limites; Arquitetura e Engenharia é responsável por essas decisões com choosing-application-architecture e designing-software-boundaries.",
+          "useCases": [
+            "Orientar trabalho em um repositório desconhecido localizando entrypoints, responsabilidades de módulos, direção de dependências e sinais de ownership",
+            "Documentar os seams estruturais atuais de uma capacidade antes de entregar evidências para arquitetura ou planejamento de mudança"
+          ],
+          "examplePrompts": [
+            "Use mapping-existing-codebase-structure para mapear entrypoints, módulos, limites, direção de dependências e lacunas de evidência desta capacidade. Marque cada afirmação material como observada, inferida ou não resolvida e cite sua fonte e localização."
           ]
         }
       }
@@ -2330,6 +2556,76 @@
           ],
           "examplePrompts": [
             "Use orchestrating-cinematic-web-motion para coreografar esta página em Next.js com cenas de scroll contidas e estados completos de redução de movimento."
+          ]
+        }
+      }
+    },
+    {
+      "$schema": "../schemas/skill.schema.json",
+      "slug": "planning-codebase-changes-with-evidence",
+      "category": "codebase-intelligence",
+      "packs": [
+        "codebase-intelligence"
+      ],
+      "maturity": "beta",
+      "difficulty": "advanced",
+      "featured": false,
+      "compatibility": {
+        "surfaces": [
+          "chatgpt",
+          "codex"
+        ],
+        "operatingSystems": [
+          "linux",
+          "macos",
+          "windows"
+        ],
+        "installModes": [
+          "plugin",
+          "filesystem"
+        ]
+      },
+      "tags": [
+        "codebase",
+        "change-evidence",
+        "planning-handoff",
+        "risk",
+        "testing-surfaces"
+      ],
+      "dependencies": [],
+      "relatedSkills": [
+        "planning-engineering-work",
+        "designing-test-strategies"
+      ],
+      "version": "1.0.0-rc.1",
+      "updatedAt": "2026-09-02",
+      "locales": {
+        "en": {
+          "displayName": "Planning Codebase Changes with Evidence",
+          "summary": "Produces a scoped change evidence brief covering current state, affected surfaces, relevant paths, risks, open questions, candidate slices, and testing surfaces.",
+          "primaryBenefit": "Gives architecture, engineering planning, testing, or debugging a traceable handoff grounded in the codebase before executable work is designed.",
+          "whenToUse": "Use when a real codebase change needs a compact evidence brief that separates current-state facts, inferences, unresolved questions, affected surfaces, and possible implementation slices for the next owner.",
+          "whenNotToUse": "Do not use to produce or execute the implementation plan; Engineering Workflow owns executable planning through planning-engineering-work, while implementation methods own code changes.",
+          "useCases": [
+            "Prepare evidence for an engineering plan that changes behavior across several modules and contracts",
+            "Hand architecture or testing owners a bounded brief of current-state evidence, risks, gaps, and relevant verification surfaces"
+          ],
+          "examplePrompts": [
+            "Use planning-codebase-changes-with-evidence to prepare a change evidence brief with scope, current state, affected surfaces, risks, unresolved questions, suggested slices, and testing surfaces. Label claims as observed, inferred, or unresolved and cite every source and location."
+          ]
+        },
+        "pt-BR": {
+          "displayName": "Planejamento de Mudanças em Codebase com Evidências",
+          "summary": "Produz um briefing delimitado de evidências de mudança cobrindo estado atual, superfícies afetadas, caminhos relevantes, riscos, questões abertas, fatias candidatas e superfícies de teste.",
+          "primaryBenefit": "Entrega a arquitetura, planejamento de engenharia, testes ou debugging um handoff rastreável e sustentado pela codebase antes do desenho do trabalho executável.",
+          "whenToUse": "Use quando uma mudança real na codebase precisar de um briefing compacto de evidências que separe fatos do estado atual, inferências, questões não resolvidas, superfícies afetadas e possíveis fatias de implementação para o próximo owner.",
+          "whenNotToUse": "Não use para produzir ou executar o plano de implementação; Engineering Workflow é responsável pelo planejamento executável com planning-engineering-work, enquanto métodos de implementação são responsáveis pelas mudanças de código.",
+          "useCases": [
+            "Preparar evidências para um plano de engenharia que altera comportamento em vários módulos e contratos",
+            "Entregar a owners de arquitetura ou testes um briefing delimitado de evidências do estado atual, riscos, lacunas e superfícies relevantes de verificação"
+          ],
+          "examplePrompts": [
+            "Use planning-codebase-changes-with-evidence para preparar um briefing com escopo, estado atual, superfícies afetadas, riscos, questões não resolvidas, fatias sugeridas e superfícies de teste. Classifique as afirmações como observadas, inferidas ou não resolvidas e cite cada fonte e localização."
           ]
         }
       }
@@ -3346,6 +3642,75 @@
     },
     {
       "$schema": "../schemas/skill.schema.json",
+      "slug": "tracing-code-execution-paths",
+      "category": "codebase-intelligence",
+      "packs": [
+        "codebase-intelligence"
+      ],
+      "maturity": "beta",
+      "difficulty": "advanced",
+      "featured": false,
+      "compatibility": {
+        "surfaces": [
+          "chatgpt",
+          "codex"
+        ],
+        "operatingSystems": [
+          "linux",
+          "macos",
+          "windows"
+        ],
+        "installModes": [
+          "plugin",
+          "filesystem"
+        ]
+      },
+      "tags": [
+        "codebase",
+        "execution-trace",
+        "control-flow",
+        "service-boundaries",
+        "evidence"
+      ],
+      "dependencies": [],
+      "relatedSkills": [
+        "investigating-codebase-semantically"
+      ],
+      "version": "1.0.0-rc.1",
+      "updatedAt": "2026-09-02",
+      "locales": {
+        "en": {
+          "displayName": "Tracing Code Execution Paths",
+          "summary": "Reconstructs an ordered execution path from trigger to terminal behavior across code and service boundaries while separating observed transitions from inference.",
+          "primaryBenefit": "Makes runtime-relevant flow reviewable without overstating reachability, correlation, or textual matches as proven behavior.",
+          "whenToUse": "Use when you need to follow how a request, event, command, job, or user action moves through handlers, modules, integrations, and terminal behavior in an existing codebase.",
+          "whenNotToUse": "Do not use to diagnose why a failure occurs or claim root cause; Systematic Debugging owns hypothesis testing and root-cause investigation.",
+          "useCases": [
+            "Trace an API request from its route through authorization, business logic, persistence, and response construction",
+            "Reconstruct how an asynchronous event crosses producers, queues, consumers, and downstream side effects"
+          ],
+          "examplePrompts": [
+            "Use tracing-code-execution-paths to reconstruct the ordered path from this trigger to terminal behavior, including boundary crossings and unresolved jumps. Label transitions as observed, inferred, or unresolved and cite each source and location."
+          ]
+        },
+        "pt-BR": {
+          "displayName": "Rastreamento de Caminhos de Execução",
+          "summary": "Reconstrói um caminho ordenado de execução do gatilho ao comportamento terminal através de limites de código e serviços, separando transições observadas de inferências.",
+          "primaryBenefit": "Torna o fluxo relevante em runtime revisável sem tratar alcançabilidade, correlação ou correspondências textuais como comportamento comprovado.",
+          "whenToUse": "Use quando precisar acompanhar como uma requisição, evento, comando, job ou ação do usuário atravessa handlers, módulos, integrações e comportamento terminal em uma codebase existente.",
+          "whenNotToUse": "Não use para diagnosticar por que uma falha ocorre ou afirmar causa raiz; Systematic Debugging é responsável por testar hipóteses e investigar a causa raiz.",
+          "useCases": [
+            "Rastrear uma requisição de API desde a rota por autorização, lógica de negócio, persistência e construção da resposta",
+            "Reconstruir como um evento assíncrono atravessa produtores, filas, consumidores e efeitos downstream"
+          ],
+          "examplePrompts": [
+            "Use tracing-code-execution-paths para reconstruir o caminho ordenado deste gatilho ao comportamento terminal, incluindo cruzamentos de limites e saltos não resolvidos. Classifique transições como observadas, inferidas ou não resolvidas e cite cada fonte e localização."
+          ]
+        }
+      }
+    },
+    {
+      "$schema": "../schemas/skill.schema.json",
       "slug": "translating-figma-to-nextjs",
       "category": "frontend",
       "packs": [
@@ -4027,6 +4392,107 @@
           "summary": {
             "en": "Diagnoses slow or uncertain PostgreSQL access paths from representative inputs and execution-plan evidence before changing indexes.",
             "pt-BR": "Diagnostica caminhos de acesso PostgreSQL lentos ou incertos a partir de entradas representativas e evidências do plano de execução antes de alterar índices."
+          },
+          "difficulty": "advanced",
+          "maturity": "beta"
+        }
+      ]
+    },
+    {
+      "slug": "codebase-intelligence",
+      "status": "active",
+      "featured": false,
+      "color": "indigo",
+      "version": "1.0.0-rc.1",
+      "locales": {
+        "en": {
+          "name": "Codebase Intelligence",
+          "summary": "Evidence-led structure mapping, execution tracing, semantic investigation, and change-impact analysis for existing codebases.",
+          "description": "An engine-agnostic workflow for understanding code with progressive context expansion, explicit uncertainty, and optional CodeGraph acceleration.",
+          "outcomes": [
+            "Reconstruct codebase structure and behavior from traceable evidence instead of assumptions",
+            "Reduce unnecessary context expansion while preparing safer architecture, planning, testing, and debugging handoffs"
+          ]
+        },
+        "pt-BR": {
+          "name": "Inteligência de Codebase",
+          "summary": "Mapeamento estrutural, rastreamento de execução, investigação semântica e análise de impacto orientados por evidências em codebases existentes.",
+          "description": "Um fluxo agnóstico de engine para compreender código com expansão progressiva de contexto, incerteza explícita e aceleração opcional pelo CodeGraph.",
+          "outcomes": [
+            "Reconstruir estrutura e comportamento da codebase a partir de evidências rastreáveis, não de suposições",
+            "Reduzir expansão desnecessária de contexto ao preparar handoffs mais seguros para arquitetura, planejamento, testes e debugging"
+          ]
+        }
+      },
+      "skillSlugs": [
+        "mapping-existing-codebase-structure",
+        "tracing-code-execution-paths",
+        "analyzing-change-blast-radius",
+        "investigating-codebase-semantically",
+        "planning-codebase-changes-with-evidence"
+      ],
+      "skills": [
+        {
+          "slug": "mapping-existing-codebase-structure",
+          "displayName": {
+            "en": "Mapping Existing Codebase Structure",
+            "pt-BR": "Mapeamento de Estrutura de Codebase Existente"
+          },
+          "summary": {
+            "en": "Builds a traceable current-state map of entrypoints, modules, responsibilities, boundaries, and dependency direction without proposing a redesign.",
+            "pt-BR": "Constrói um mapa rastreável do estado atual com entrypoints, módulos, responsabilidades, limites e direção de dependências sem propor um redesign."
+          },
+          "difficulty": "intermediate",
+          "maturity": "beta"
+        },
+        {
+          "slug": "tracing-code-execution-paths",
+          "displayName": {
+            "en": "Tracing Code Execution Paths",
+            "pt-BR": "Rastreamento de Caminhos de Execução"
+          },
+          "summary": {
+            "en": "Reconstructs an ordered execution path from trigger to terminal behavior across code and service boundaries while separating observed transitions from inference.",
+            "pt-BR": "Reconstrói um caminho ordenado de execução do gatilho ao comportamento terminal através de limites de código e serviços, separando transições observadas de inferências."
+          },
+          "difficulty": "advanced",
+          "maturity": "beta"
+        },
+        {
+          "slug": "analyzing-change-blast-radius",
+          "displayName": {
+            "en": "Analyzing Change Blast Radius",
+            "pt-BR": "Análise de Blast Radius de Mudança"
+          },
+          "summary": {
+            "en": "Bounds the potential impact of a proposed change across direct and inferred dependents, contracts, runtime paths, tests, and fixtures.",
+            "pt-BR": "Delimita o impacto potencial de uma mudança proposta em dependentes diretos e inferidos, contratos, caminhos de runtime, testes e fixtures."
+          },
+          "difficulty": "advanced",
+          "maturity": "beta"
+        },
+        {
+          "slug": "investigating-codebase-semantically",
+          "displayName": {
+            "en": "Investigating a Codebase Semantically",
+            "pt-BR": "Investigação Semântica de Codebase"
+          },
+          "summary": {
+            "en": "Finds candidate implementations by behavioral intent, validates them in code, and rejects textual matches that do not establish ownership.",
+            "pt-BR": "Encontra implementações candidatas pela intenção do comportamento, valida-as no código e rejeita correspondências textuais que não estabelecem ownership."
+          },
+          "difficulty": "intermediate",
+          "maturity": "beta"
+        },
+        {
+          "slug": "planning-codebase-changes-with-evidence",
+          "displayName": {
+            "en": "Planning Codebase Changes with Evidence",
+            "pt-BR": "Planejamento de Mudanças em Codebase com Evidências"
+          },
+          "summary": {
+            "en": "Produces a scoped change evidence brief covering current state, affected surfaces, relevant paths, risks, open questions, candidate slices, and testing surfaces.",
+            "pt-BR": "Produz um briefing delimitado de evidências de mudança cobrindo estado atual, superfícies afetadas, caminhos relevantes, riscos, questões abertas, fatias candidatas e superfícies de teste."
           },
           "difficulty": "advanced",
           "maturity": "beta"

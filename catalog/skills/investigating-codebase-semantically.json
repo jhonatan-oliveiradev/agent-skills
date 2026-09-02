@@ -1,0 +1,69 @@
+{
+  "$schema": "../schemas/skill.schema.json",
+  "slug": "investigating-codebase-semantically",
+  "category": "codebase-intelligence",
+  "packs": [
+    "codebase-intelligence"
+  ],
+  "maturity": "beta",
+  "difficulty": "intermediate",
+  "featured": false,
+  "compatibility": {
+    "surfaces": [
+      "chatgpt",
+      "codex"
+    ],
+    "operatingSystems": [
+      "linux",
+      "macos",
+      "windows"
+    ],
+    "installModes": [
+      "plugin",
+      "filesystem"
+    ]
+  },
+  "tags": [
+    "codebase",
+    "semantic-search",
+    "behavior",
+    "ownership",
+    "evidence"
+  ],
+  "dependencies": [],
+  "relatedSkills": [
+    "tracing-code-execution-paths"
+  ],
+  "version": "1.0.0-rc.1",
+  "updatedAt": "2026-09-02",
+  "locales": {
+    "en": {
+      "displayName": "Investigating a Codebase Semantically",
+      "summary": "Finds candidate implementations by behavioral intent, validates them in code, and rejects textual matches that do not establish ownership.",
+      "primaryBenefit": "Locates the code that owns a behavior without requiring the requester to know its symbol names, filenames, or repository vocabulary in advance.",
+      "whenToUse": "Use when you know what a behavior does but not where it is implemented, and candidate results must be validated against code, call sites, tests, or configuration.",
+      "whenNotToUse": "Do not use for a broad inventory of modules and boundaries; Mapping Existing Codebase Structure owns current-state structural mapping.",
+      "useCases": [
+        "Locate where a user-visible rule is enforced when the repository uses unfamiliar names",
+        "Distinguish the real owner of a behavior from comments, adapters, tests, generated files, and other semantic false positives"
+      ],
+      "examplePrompts": [
+        "Use investigating-codebase-semantically to find and validate the implementation that owns this behavior. Report candidates and rejected false positives as observed, inferred, or unresolved, with source and location for each conclusion."
+      ]
+    },
+    "pt-BR": {
+      "displayName": "Investigação Semântica de Codebase",
+      "summary": "Encontra implementações candidatas pela intenção do comportamento, valida-as no código e rejeita correspondências textuais que não estabelecem ownership.",
+      "primaryBenefit": "Localiza o código responsável por um comportamento sem exigir conhecimento prévio de símbolos, nomes de arquivos ou vocabulário do repositório.",
+      "whenToUse": "Use quando souber o que um comportamento faz, mas não onde ele está implementado, e os resultados candidatos precisarem ser validados em código, call sites, testes ou configuração.",
+      "whenNotToUse": "Não use para um inventário amplo de módulos e limites; Mapping Existing Codebase Structure é responsável pelo mapeamento estrutural do estado atual.",
+      "useCases": [
+        "Localizar onde uma regra visível ao usuário é aplicada quando o repositório usa nomes desconhecidos",
+        "Distinguir o verdadeiro owner de um comportamento entre comentários, adaptadores, testes, arquivos gerados e outros falsos positivos semânticos"
+      ],
+      "examplePrompts": [
+        "Use investigating-codebase-semantically para encontrar e validar a implementação responsável por este comportamento. Relate candidatos e falsos positivos rejeitados como observados, inferidos ou não resolvidos, com fonte e localização para cada conclusão."
+      ]
+    }
+  }
+}

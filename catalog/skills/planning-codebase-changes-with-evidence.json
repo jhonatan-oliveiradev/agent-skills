@@ -1,0 +1,70 @@
+{
+  "$schema": "../schemas/skill.schema.json",
+  "slug": "planning-codebase-changes-with-evidence",
+  "category": "codebase-intelligence",
+  "packs": [
+    "codebase-intelligence"
+  ],
+  "maturity": "beta",
+  "difficulty": "advanced",
+  "featured": false,
+  "compatibility": {
+    "surfaces": [
+      "chatgpt",
+      "codex"
+    ],
+    "operatingSystems": [
+      "linux",
+      "macos",
+      "windows"
+    ],
+    "installModes": [
+      "plugin",
+      "filesystem"
+    ]
+  },
+  "tags": [
+    "codebase",
+    "change-evidence",
+    "planning-handoff",
+    "risk",
+    "testing-surfaces"
+  ],
+  "dependencies": [],
+  "relatedSkills": [
+    "planning-engineering-work",
+    "designing-test-strategies"
+  ],
+  "version": "1.0.0-rc.1",
+  "updatedAt": "2026-09-02",
+  "locales": {
+    "en": {
+      "displayName": "Planning Codebase Changes with Evidence",
+      "summary": "Produces a scoped change evidence brief covering current state, affected surfaces, relevant paths, risks, open questions, candidate slices, and testing surfaces.",
+      "primaryBenefit": "Gives architecture, engineering planning, testing, or debugging a traceable handoff grounded in the codebase before executable work is designed.",
+      "whenToUse": "Use when a real codebase change needs a compact evidence brief that separates current-state facts, inferences, unresolved questions, affected surfaces, and possible implementation slices for the next owner.",
+      "whenNotToUse": "Do not use to produce or execute the implementation plan; Engineering Workflow owns executable planning through planning-engineering-work, while implementation methods own code changes.",
+      "useCases": [
+        "Prepare evidence for an engineering plan that changes behavior across several modules and contracts",
+        "Hand architecture or testing owners a bounded brief of current-state evidence, risks, gaps, and relevant verification surfaces"
+      ],
+      "examplePrompts": [
+        "Use planning-codebase-changes-with-evidence to prepare a change evidence brief with scope, current state, affected surfaces, risks, unresolved questions, suggested slices, and testing surfaces. Label claims as observed, inferred, or unresolved and cite every source and location."
+      ]
+    },
+    "pt-BR": {
+      "displayName": "Planejamento de Mudanças em Codebase com Evidências",
+      "summary": "Produz um briefing delimitado de evidências de mudança cobrindo estado atual, superfícies afetadas, caminhos relevantes, riscos, questões abertas, fatias candidatas e superfícies de teste.",
+      "primaryBenefit": "Entrega a arquitetura, planejamento de engenharia, testes ou debugging um handoff rastreável e sustentado pela codebase antes do desenho do trabalho executável.",
+      "whenToUse": "Use quando uma mudança real na codebase precisar de um briefing compacto de evidências que separe fatos do estado atual, inferências, questões não resolvidas, superfícies afetadas e possíveis fatias de implementação para o próximo owner.",
+      "whenNotToUse": "Não use para produzir ou executar o plano de implementação; Engineering Workflow é responsável pelo planejamento executável com planning-engineering-work, enquanto métodos de implementação são responsáveis pelas mudanças de código.",
+      "useCases": [
+        "Preparar evidências para um plano de engenharia que altera comportamento em vários módulos e contratos",
+        "Entregar a owners de arquitetura ou testes um briefing delimitado de evidências do estado atual, riscos, lacunas e superfícies relevantes de verificação"
+      ],
+      "examplePrompts": [
+        "Use planning-codebase-changes-with-evidence para preparar um briefing com escopo, estado atual, superfícies afetadas, riscos, questões não resolvidas, fatias sugeridas e superfícies de teste. Classifique as afirmações como observadas, inferidas ou não resolvidas e cite cada fonte e localização."
+      ]
+    }
+  }
+}

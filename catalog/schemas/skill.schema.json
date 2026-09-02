@@ -24,7 +24,7 @@
     "$schema": { "const": "../schemas/skill.schema.json" },
     "slug": { "$ref": "#/$defs/slug" },
     "category": {
-      "enum": ["frontend", "product-design", "motion", "game-development", "backend-data", "architecture-engineering", "quality-testing", "application-security", "engineering-workflow", "brand-design", "writing-communication", "delivery", "meta"]
+      "enum": ["frontend", "product-design", "motion", "game-development", "backend-data", "architecture-engineering", "codebase-intelligence", "quality-testing", "application-security", "engineering-workflow", "brand-design", "writing-communication", "delivery", "meta"]
     },
     "packs": {
       "type": "array",

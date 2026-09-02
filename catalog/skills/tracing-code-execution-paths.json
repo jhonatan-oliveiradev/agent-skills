@@ -1,0 +1,69 @@
+{
+  "$schema": "../schemas/skill.schema.json",
+  "slug": "tracing-code-execution-paths",
+  "category": "codebase-intelligence",
+  "packs": [
+    "codebase-intelligence"
+  ],
+  "maturity": "beta",
+  "difficulty": "advanced",
+  "featured": false,
+  "compatibility": {
+    "surfaces": [
+      "chatgpt",
+      "codex"
+    ],
+    "operatingSystems": [
+      "linux",
+      "macos",
+      "windows"
+    ],
+    "installModes": [
+      "plugin",
+      "filesystem"
+    ]
+  },
+  "tags": [
+    "codebase",
+    "execution-trace",
+    "control-flow",
+    "service-boundaries",
+    "evidence"
+  ],
+  "dependencies": [],
+  "relatedSkills": [
+    "investigating-codebase-semantically"
+  ],
+  "version": "1.0.0-rc.1",
+  "updatedAt": "2026-09-02",
+  "locales": {
+    "en": {
+      "displayName": "Tracing Code Execution Paths",
+      "summary": "Reconstructs an ordered execution path from trigger to terminal behavior across code and service boundaries while separating observed transitions from inference.",
+      "primaryBenefit": "Makes runtime-relevant flow reviewable without overstating reachability, correlation, or textual matches as proven behavior.",
+      "whenToUse": "Use when you need to follow how a request, event, command, job, or user action moves through handlers, modules, integrations, and terminal behavior in an existing codebase.",
+      "whenNotToUse": "Do not use to diagnose why a failure occurs or claim root cause; Systematic Debugging owns hypothesis testing and root-cause investigation.",
+      "useCases": [
+        "Trace an API request from its route through authorization, business logic, persistence, and response construction",
+        "Reconstruct how an asynchronous event crosses producers, queues, consumers, and downstream side effects"
+      ],
+      "examplePrompts": [
+        "Use tracing-code-execution-paths to reconstruct the ordered path from this trigger to terminal behavior, including boundary crossings and unresolved jumps. Label transitions as observed, inferred, or unresolved and cite each source and location."
+      ]
+    },
+    "pt-BR": {
+      "displayName": "Rastreamento de Caminhos de Execução",
+      "summary": "Reconstrói um caminho ordenado de execução do gatilho ao comportamento terminal através de limites de código e serviços, separando transições observadas de inferências.",
+      "primaryBenefit": "Torna o fluxo relevante em runtime revisável sem tratar alcançabilidade, correlação ou correspondências textuais como comportamento comprovado.",
+      "whenToUse": "Use quando precisar acompanhar como uma requisição, evento, comando, job ou ação do usuário atravessa handlers, módulos, integrações e comportamento terminal em uma codebase existente.",
+      "whenNotToUse": "Não use para diagnosticar por que uma falha ocorre ou afirmar causa raiz; Systematic Debugging é responsável por testar hipóteses e investigar a causa raiz.",
+      "useCases": [
+        "Rastrear uma requisição de API desde a rota por autorização, lógica de negócio, persistência e construção da resposta",
+        "Reconstruir como um evento assíncrono atravessa produtores, filas, consumidores e efeitos downstream"
+      ],
+      "examplePrompts": [
+        "Use tracing-code-execution-paths para reconstruir o caminho ordenado deste gatilho ao comportamento terminal, incluindo cruzamentos de limites e saltos não resolvidos. Classifique transições como observadas, inferidas ou não resolvidas e cite cada fonte e localização."
+      ]
+    }
+  }
+}

@@ -33,8 +33,13 @@ Do not use a supporting method to redo the primary method. If two candidates cla
 - Review and then ship a pull request: `reviewing-pull-requests` evaluates the change; `shipping-github-vercel-changes` enters only when repository or deployment delivery is requested.
 - Turn a recurring method into a new skill: `turning-techniques-into-skills`; do not use this router as an authoring substitute.
 
+## Codebase evidence routing
+Route by intent, not by runtime. Use Codebase Intelligence to understand an existing implementation; Architecture & Engineering to decide future structure; Engineering Workflow to turn approved direction into executable work; Quality & Testing to define proof; and systematic debugging to establish root cause. An available graph runtime changes evidence acquisition, not method ownership.
+
 ## Guardrails
 - Do not treat tags, categories, or pack membership as proof that a method applies.
 - Do not select two methods to perform the same responsibility.
 - Do not preload future-stage methods before their inputs exist.
 - Re-route if evidence changes the nature of the task during execution.
+- Runtime does not determine method ownership.
+- Use Codebase Intelligence to understand an existing codebase or current structure before future design.

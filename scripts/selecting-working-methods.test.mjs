@@ -63,3 +63,13 @@ test("installs selecting-working-methods independently through the real CLI", as
   assert.deepEqual(await readdir(destination), [slug]);
   assert.match(await readFile(path.join(destination, slug, "SKILL.md"), "utf8"), new RegExp(`name: ${slug}`));
 });
+
+
+test("routes codebase understanding by intent rather than runtime availability", async () => {
+  const source = await readFile(skillPath, "utf8");
+  assert.match(source, /existing codebase|current structure/i);
+  assert.match(source, /Architecture & Engineering/i);
+  assert.match(source, /Engineering Workflow/i);
+  assert.match(source, /Quality & Testing/i);
+  assert.match(source, /runtime.*does not|does not.*runtime/i);
+});
