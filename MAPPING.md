@@ -175,6 +175,9 @@ Added for technical review that evaluates intent, behavior, design, safety, main
 ### `writing-effective-technical-handoffs`
 Added for preserving verified engineering state, decisions, constraints, hypotheses, evidence, and the exact restart point when work moves between people, agents, or sessions.
 
+### `selecting-working-methods`
+Added as a catalog-wide meta router that identifies one primary method, adds only independently owned supporting responsibilities, orders methods by dependency, permits a no-skill outcome, and delegates rather than executing specialized workflows itself.
+
 ## Why the 81 web-design skills were not installed individually
 
 The upstream collection contains many excellent micro-techniques and art-direction presets. Keeping all of them globally installed would create poor skill discovery: several skills could trigger on the same frontend request and push the agent toward visual effects before understanding product intent. The curated pack keeps broad operating procedures global and leaves effect-specific skills as on-demand upstream references.
@@ -265,3 +268,9 @@ Application Security v1 does not mirror OWASP checklists or require a security s
 | GitHub stacked pull request guidance | Referenced | `skills/managing-implementation-slices` |
 
 Engineering Workflow v1 does not require GitHub, a project-management system, or a specific agent runtime. The local methods turn stable small-batch, review, and continuity practices into tool-agnostic operating procedures while `shipping-github-vercel-changes` remains the separate delivery method for repository and deployment execution.
+
+## Meta routing design — 2026-09-01
+
+`selecting-working-methods` is derived from the Studio's existing trigger-specific skill model, pack taxonomy, ownership boundaries, and the authoring rules already captured in `turning-techniques-into-skills`. It is a local orchestration method rather than an adaptation of an upstream router or a dependency on a runtime framework.
+
+The design deliberately avoids embedding a static decision tree for every skill. Selection is based on the real responsibility in the task, chooses the smallest sufficient set, preserves one primary owner, allows no match, and re-routes when evidence changes the nature of the work.
