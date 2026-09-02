@@ -44,7 +44,8 @@ jobs:
           node apps/web/scripts/sync-catalog.mjs
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add apps/web/src/components/site-shell.test.tsx apps/web/src/generated/catalog.json
+          git add apps/web/src/components/site-shell.test.tsx
+          git add -f apps/web/src/generated/catalog.json
           git diff --cached --quiet && exit 0
           git commit -m "test: align Writing & Communication web shell"
           git push origin HEAD:${{ github.head_ref }}
