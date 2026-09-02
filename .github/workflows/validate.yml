@@ -1,50 +1,77 @@
-name: Validate skills
+name: Materialize Design & Brand documentation
 
 on:
-  push:
-    branches: [main, dev]
   pull_request:
 
+permissions:
+  contents: write
+
 jobs:
-  validate:
-    strategy:
-      fail-fast: false
-      matrix:
-        os: [ubuntu-latest, windows-latest]
-    runs-on: ${{ matrix.os }}
+  materialize:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.ref }}
+          fetch-depth: 0
       - uses: actions/setup-node@v4
         with:
           node-version: 22
-      - run: npm test
-      - run: npm run validate
-      - run: npm ci --prefix apps/web
-      - run: npm run web:test
-      - run: npm run web:typecheck
-      - run: npm run web:lint
-      - run: npm run web:build
-        env:
-          NEXT_PUBLIC_SITE_URL: https://skills.jhonatanoliveira.com
-      - name: Smoke test Bash installer
-        if: runner.os == 'Linux'
-        shell: bash
+      - name: Update README and mapping
         run: |
-          target="$(mktemp -d)"
-          pack_target="$(mktemp -d)"
-          ./install.sh --destination "$target"
-          ./install.sh --destination "$pack_target" --pack motion
-          test -f "$target/craft-premium-motion/SKILL.md"
-          test -f "$pack_target/craft-premium-motion/SKILL.md"
-          test ! -e "$pack_target/designing-action-combat/SKILL.md"
-      - name: Smoke test PowerShell installer
-        if: runner.os == 'Windows'
-        shell: pwsh
+          node --input-type=module <<'NODE'
+          import { readFile, writeFile } from 'node:fs/promises';
+
+          async function replaceExact(file, before, after) {
+            const source = await readFile(file, 'utf8');
+            if (!source.includes(before)) throw new Error(`${file}: anchor not found: ${before.slice(0, 100)}`);
+            await writeFile(file, source.replace(before, after));
+          }
+
+          const readme = 'README.md';
+          await replaceExact(
+            readme,
+            'application security, engineering workflow, and game-development tasks.',
+            'application security, engineering workflow, brand design, and game-development tasks.',
+          );
+          await replaceExact(
+            readme,
+            '### Agent practice\n- `selecting-working-methods`',
+            '### Brand design\n- `defining-brand-strategy`\n- `naming-brands-and-products`\n- `designing-visual-identities`\n- `building-brand-guidelines`\n- `writing-brand-voice-and-messaging`\n\n### Agent practice\n- `selecting-working-methods`',
+          );
+          await replaceExact(
+            readme,
+            'The methods prefer behavior-oriented plans over file checklists, conceptually focused batches over oversized branches, current CI and repository evidence over review assumptions, and explicit confirmed/hypothesis/planned/blocked state over chronological chat transcripts. They do not require a particular VCS host, project-management system, or agent runtime.\n\n## Selecting Working Methods',
+            'The methods prefer behavior-oriented plans over file checklists, conceptually focused batches over oversized branches, current CI and repository evidence over review assumptions, and explicit confirmed/hypothesis/planned/blocked state over chronological chat transcripts. They do not require a particular VCS host, project-management system, or agent runtime.\n\n## Design & Brand v1\n\nThe Design & Brand pack separates five responsibilities that should remain independently invokable: defining the strategic decision system for the brand, developing and screening names, translating strategy into a visual identity system, documenting reproducible brand guidelines, and defining durable voice and messaging.\n\nThe methods treat identity as a system rather than a logo deliverable, keep preliminary trademark searching distinct from legal clearance, make accessibility a design constraint, and separate durable brand voice from conversion copy. Conversion-copy and text-humanization methods are intentionally deferred to the separate Writing & Communication tranche.\n\n## Selecting Working Methods',
+          );
+          await replaceExact(
+            readme,
+            '- `engineering-workflow` — Engineering Workflow (4 skills).\n\nAll eight published packs are active and installable.',
+            '- `engineering-workflow` — Engineering Workflow (4 skills);\n- `design-brand` — Design & Brand (5 skills).\n\nAll nine published packs are active and installable.',
+          );
+
+          const mapping = 'MAPPING.md';
+          await replaceExact(
+            mapping,
+            '| Engineering Workflow (`engineering-workflow`) | Active | 4 engineering-planning, implementation-slicing, pull-request-review, and technical-handoff skills |\n',
+            '| Engineering Workflow (`engineering-workflow`) | Active | 4 engineering-planning, implementation-slicing, pull-request-review, and technical-handoff skills |\n| Design & Brand (`design-brand`) | Active | 5 brand-strategy, naming, visual-identity, guidelines, and brand-voice skills |\n',
+          );
+          await replaceExact(
+            mapping,
+            '### `selecting-working-methods`\nAdded as a catalog-wide meta router that identifies one primary method, adds only independently owned supporting responsibilities, orders methods by dependency, permits a no-skill outcome, and delegates rather than executing specialized workflows itself.\n\n## Why the 81 web-design skills were not installed individually',
+            '### `selecting-working-methods`\nAdded as a catalog-wide meta router that identifies one primary method, adds only independently owned supporting responsibilities, orders methods by dependency, permits a no-skill outcome, and delegates rather than executing specialized workflows itself.\n\n### `defining-brand-strategy`\nAdded for converting audience, category, offer, proof, positioning, and personality evidence into explicit criteria that downstream brand work can use instead of relying on taste.\n\n### `naming-brands-and-products`\nAdded for generating and screening naming territories against strategy, language, real-world use, and preliminary availability while keeping legal trademark clearance explicitly outside the skill.\n\n### `designing-visual-identities`\nAdded for translating strategy into a coherent recognition system across marks, typography, color, imagery, graphic language, applications, and accessibility constraints rather than treating a logo as the entire identity.\n\n### `building-brand-guidelines`\nAdded for turning an approved identity into a reproducible operating manual with assets, rules, examples, accessibility constraints, ownership, and governance.\n\n### `writing-brand-voice-and-messaging`\nAdded for defining durable verbal identity, messaging hierarchy, terminology, and adaptive tone while keeping conversion-page optimization as a separate future writing responsibility.\n\n## Why the 81 web-design skills were not installed individually',
+          );
+          await replaceExact(
+            mapping,
+            'The design deliberately avoids embedding a static decision tree for every skill. Selection is based on the real responsibility in the task, chooses the smallest sufficient set, preserves one primary owner, allows no match, and re-routes when evidence changes the nature of the work.',
+            'The design deliberately avoids embedding a static decision tree for every skill. Selection is based on the real responsibility in the task, chooses the smallest sufficient set, preserves one primary owner, allows no match, and re-routes when evidence changes the nature of the work.\n\n## Design & Brand research — 2026-09-01\n\n| Source | Decision | Local destination |\n|---|---|---|\n| Design Council, Double Diamond | Referenced | `skills/defining-brand-strategy` |\n| WIPO Global Brand Database and trademark-availability guidance | Referenced | `skills/naming-brands-and-products` |\n| Design Council public brand guidance | Referenced | `skills/designing-visual-identities` + `skills/building-brand-guidelines` |\n| W3C WCAG guidance for use of color and non-text contrast | Referenced | `skills/designing-visual-identities` + `skills/building-brand-guidelines` |\n| Mailchimp Content Style Guide, Voice and Tone / Writing Principles | Referenced | `skills/writing-brand-voice-and-messaging` |\n\nDesign & Brand v1 does not mirror a branding framework or require a design tool. The local methods combine strategic, visual, verbal, accessibility, and governance practices while keeping trademark database searches explicitly preliminary and keeping conversion copy / text humanization outside this pack.',
+          );
+          NODE
+      - name: Commit documentation
         run: |
-          $target = Join-Path $env:RUNNER_TEMP "agent-skills-install"
-          ./install.ps1 --destination $target
-          if (-not (Test-Path (Join-Path $target "craft-premium-motion/SKILL.md"))) { exit 1 }
-          $packTarget = Join-Path $env:RUNNER_TEMP "agent-skills-motion-pack"
-          ./install.ps1 --destination $packTarget --pack motion
-          if (-not (Test-Path (Join-Path $packTarget "craft-premium-motion/SKILL.md"))) { exit 1 }
-          if (Test-Path (Join-Path $packTarget "designing-action-combat/SKILL.md")) { exit 1 }
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add README.md MAPPING.md
+          git commit -m "docs: document Design & Brand v1"
+          git push origin HEAD:${{ github.event.pull_request.head.ref }}
