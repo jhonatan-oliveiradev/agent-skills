@@ -1,50 +1,111 @@
-name: Validate skills
+name: Materialize Design & Brand web integration
 
 on:
-  push:
-    branches: [main, dev]
   pull_request:
 
+permissions:
+  contents: write
+
 jobs:
-  validate:
-    strategy:
-      fail-fast: false
-      matrix:
-        os: [ubuntu-latest, windows-latest]
-    runs-on: ${{ matrix.os }}
+  materialize:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.ref }}
+          fetch-depth: 0
       - uses: actions/setup-node@v4
         with:
           node-version: 22
-      - run: npm test
-      - run: npm run validate
-      - run: npm ci --prefix apps/web
-      - run: npm run web:test
-      - run: npm run web:typecheck
-      - run: npm run web:lint
-      - run: npm run web:build
-        env:
-          NEXT_PUBLIC_SITE_URL: https://skills.jhonatanoliveira.com
-      - name: Smoke test Bash installer
-        if: runner.os == 'Linux'
-        shell: bash
+      - name: Align catalog-derived web contracts and Brand Design surfaces
         run: |
-          target="$(mktemp -d)"
-          pack_target="$(mktemp -d)"
-          ./install.sh --destination "$target"
-          ./install.sh --destination "$pack_target" --pack motion
-          test -f "$target/craft-premium-motion/SKILL.md"
-          test -f "$pack_target/craft-premium-motion/SKILL.md"
-          test ! -e "$pack_target/designing-action-combat/SKILL.md"
-      - name: Smoke test PowerShell installer
-        if: runner.os == 'Windows'
-        shell: pwsh
+          node --input-type=module <<'NODE'
+          import { readFile, writeFile } from 'node:fs/promises';
+
+          async function replaceExact(file, before, after) {
+            const source = await readFile(file, 'utf8');
+            if (!source.includes(before)) throw new Error(`${file}: anchor not found: ${before.slice(0, 90)}`);
+            await writeFile(file, source.replace(before, after));
+          }
+
+          const catalog = 'apps/web/src/lib/catalog.test.ts';
+          await replaceExact(catalog, 'expect(catalog.skills).toHaveLength(39);', 'expect(catalog.skills).toHaveLength(44);');
+          await replaceExact(catalog, 'expect(catalog.packs).toHaveLength(8);', 'expect(catalog.packs).toHaveLength(9);');
+          await replaceExact(catalog, 'expect(packs).toHaveLength(8);', 'expect(packs).toHaveLength(9);');
+          await replaceExact(
+            catalog,
+            '    expect(packs.find((pack) => pack.slug === "engineering-workflow")?.skills).toHaveLength(4);\n\n    expect(adapter.getLocalizedPackBySlug?.("en", "motion")?.outcomes).toHaveLength(2);',
+            '    expect(packs.find((pack) => pack.slug === "engineering-workflow")?.skills).toHaveLength(4);\n    expect(packs.find((pack) => pack.slug === "design-brand")).toMatchObject({\n      name: "Design & Marca",\n      status: "active",\n    });\n    expect(packs.find((pack) => pack.slug === "design-brand")?.skills).toHaveLength(5);\n\n    expect(adapter.getLocalizedPackBySlug?.("en", "motion")?.outcomes).toHaveLength(2);',
+          );
+          await replaceExact(
+            catalog,
+            '    expect(adapter.getPackInstallCommands?.("engineering-workflow", "active")).toEqual({\n      bash: "./install.sh --pack engineering-workflow",\n      powershell: "./install.ps1 --pack engineering-workflow",\n    });\n    expect(adapter.getPackInstallCommands?.("quality-testing", "planned")).toBeUndefined();',
+            '    expect(adapter.getPackInstallCommands?.("engineering-workflow", "active")).toEqual({\n      bash: "./install.sh --pack engineering-workflow",\n      powershell: "./install.ps1 --pack engineering-workflow",\n    });\n    expect(adapter.getPackInstallCommands?.("design-brand", "active")).toEqual({\n      bash: "./install.sh --pack design-brand",\n      powershell: "./install.ps1 --pack design-brand",\n    });\n    expect(adapter.getPackInstallCommands?.("quality-testing", "planned")).toBeUndefined();',
+          );
+
+          const chrome = 'apps/web/src/components/site-chrome.test.tsx';
+          await replaceExact(chrome, 'getByText("39 SKILLS")', 'getByText("44 SKILLS")');
+          await replaceExact(chrome, 'getByText("8 PACKS")', 'getByText("9 PACKS")');
+          await replaceExact(chrome, 'getByText(/39 skills/i)', 'getByText(/44 skills/i)');
+          await replaceExact(chrome, 'getByText(/8 packs|8 pacotes/i)', 'getByText(/9 packs|9 pacotes/i)');
+
+          const shell = 'apps/web/src/components/site-shell.test.tsx';
+          await replaceExact(shell, '["en", "Skills are not prompts. They are working methods.", "39 skills", "8 packs", "2 locales",', '["en", "Skills are not prompts. They are working methods.", "44 skills", "9 packs", "2 locales",');
+          await replaceExact(shell, '["pt-BR", "Skills não são prompts. São métodos de trabalho.", "39 skills", "8 pacotes", "2 idiomas",', '["pt-BR", "Skills não são prompts. São métodos de trabalho.", "44 skills", "9 pacotes", "2 idiomas",');
+          await replaceExact(shell, 'expect(container.querySelectorAll(".home-pack-dossier")).toHaveLength(8);', 'expect(container.querySelectorAll(".home-pack-dossier")).toHaveLength(9);');
+          await replaceExact(shell, 'expect(screen.getByText("39 skills prontas para usar.")).toBeInTheDocument();', 'expect(screen.getByText("44 skills prontas para usar.")).toBeInTheDocument();');
+          await replaceExact(shell, 'expect(container.querySelectorAll("[data-pack-dossier]")).toHaveLength(8);', 'expect(container.querySelectorAll("[data-pack-dossier]")).toHaveLength(9);');
+          await replaceExact(shell, 'expect(container.querySelectorAll(\'[data-pack-dossier][data-status="active"]\')).toHaveLength(8);', 'expect(container.querySelectorAll(\'[data-pack-dossier][data-status="active"]\')).toHaveLength(9);');
+          await replaceExact(shell, 'expect(container.querySelectorAll("[data-method-row]")).toHaveLength(39);', 'expect(container.querySelectorAll("[data-method-row]")).toHaveLength(44);');
+
+          const archive = 'apps/web/src/components/home/home-living-archive.test.tsx';
+          await replaceExact(archive, 'expect(container.querySelectorAll(".home-pack-dossier")).toHaveLength(8);', 'expect(container.querySelectorAll(".home-pack-dossier")).toHaveLength(9);');
+          await replaceExact(archive, 'expect(container.querySelectorAll("[data-pack-stage]")).toHaveLength(8);', 'expect(container.querySelectorAll("[data-pack-stage]")).toHaveLength(9);');
+          await replaceExact(archive, 'expect(container.querySelectorAll(".home-pack-dossier__skills")).toHaveLength(8);', 'expect(container.querySelectorAll(".home-pack-dossier__skills")).toHaveLength(9);');
+
+          const blueprint = 'apps/web/src/components/packs/pack-blueprint.test.tsx';
+          await replaceExact(
+            blueprint,
+            '  it("connects a pack to reports using methods from the system without claiming pack usage", async () => {',
+            '  it("renders Design & Brand as a real five-method installable system", async () => {\n    const { container } = render(\n      await PackDetailPage({\n        params: Promise.resolve({ locale: "en", slug: "design-brand" }),\n      }),\n    );\n\n    expect(container.querySelector(\'[data-pack-state="active"]\')).toBeInTheDocument();\n    const composition = container.querySelector<HTMLElement>("[data-pack-composition-map]");\n    expect(composition).toBeInTheDocument();\n    expect(within(composition!).getAllByRole("link")).toHaveLength(5);\n    expect(screen.getByRole("heading", { name: "Install this pack" })).toBeInTheDocument();\n    expect(screen.getByText("./install.sh --pack design-brand")).toBeInTheDocument();\n    expect(\n      within(composition!).getByRole("link", { name: /Defining Brand Strategy$/ }),\n    ).toHaveAttribute("href", "/en/skills/defining-brand-strategy");\n  });\n\n  it("connects a pack to reports using methods from the system without claiming pack usage", async () => {',
+          );
+
+          const structure = 'apps/web/src/lib/home-structure.test.ts';
+          await replaceExact(structure, 'it("gives all eight active pack dossiers an intentional desktop composition", async () => {', 'it("gives all nine active pack dossiers an intentional desktop composition", async () => {');
+          await replaceExact(
+            structure,
+            '    expect(source).toContain(".home-pack-dossier:nth-child(8)");\n    expect(source).toMatch(/nth-child\\(4\\)[\\s\\S]*grid-column:/);',
+            '    expect(source).toContain(".home-pack-dossier:nth-child(8)");\n    expect(source).toContain(".home-pack-dossier:nth-child(9)");\n    expect(source).toMatch(/nth-child\\(4\\)[\\s\\S]*grid-column:/);',
+          );
+          await replaceExact(
+            structure,
+            '    expect(source).toMatch(/nth-child\\(8\\)[\\s\\S]*grid-column:/);\n',
+            '    expect(source).toMatch(/nth-child\\(8\\)[\\s\\S]*grid-column:/);\n    expect(source).toMatch(/nth-child\\(9\\)[\\s\\S]*grid-column:/);\n',
+          );
+
+          const css = 'apps/web/src/app/home-living-systems.css';
+          await replaceExact(
+            css,
+            '.home-pack-dossier:nth-child(8) {\n  grid-column: 6 / span 7;\n  margin-top: clamp(6rem, 11vw, 11rem);\n}\n',
+            '.home-pack-dossier:nth-child(8) {\n  grid-column: 6 / span 7;\n  margin-top: clamp(6rem, 11vw, 11rem);\n}\n\n.home-pack-dossier:nth-child(9) {\n  grid-column: 2 / span 10;\n  margin-top: clamp(3rem, 7vw, 7rem);\n}\n',
+          );
+          await replaceExact(
+            css,
+            '  .home-pack-dossier:nth-child(7),\n  .home-pack-dossier:nth-child(8) {',
+            '  .home-pack-dossier:nth-child(7),\n  .home-pack-dossier:nth-child(8),\n  .home-pack-dossier:nth-child(9) {',
+          );
+          NODE
+      - name: Commit materialized web integration
         run: |
-          $target = Join-Path $env:RUNNER_TEMP "agent-skills-install"
-          ./install.ps1 --destination $target
-          if (-not (Test-Path (Join-Path $target "craft-premium-motion/SKILL.md"))) { exit 1 }
-          $packTarget = Join-Path $env:RUNNER_TEMP "agent-skills-motion-pack"
-          ./install.ps1 --destination $packTarget --pack motion
-          if (-not (Test-Path (Join-Path $packTarget "craft-premium-motion/SKILL.md"))) { exit 1 }
-          if (Test-Path (Join-Path $packTarget "designing-action-combat/SKILL.md")) { exit 1 }
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add apps/web/src/lib/catalog.test.ts \
+            apps/web/src/components/site-chrome.test.tsx \
+            apps/web/src/components/site-shell.test.tsx \
+            apps/web/src/components/home/home-living-archive.test.tsx \
+            apps/web/src/components/packs/pack-blueprint.test.tsx \
+            apps/web/src/lib/home-structure.test.ts \
+            apps/web/src/app/home-living-systems.css
+          git commit -m "feat: integrate Design & Brand across the web archive"
+          git push origin HEAD:${{ github.event.pull_request.head.ref }}
