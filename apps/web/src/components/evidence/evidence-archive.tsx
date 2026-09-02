@@ -44,6 +44,8 @@ export function EvidenceArchive({
               leading: copy.leading,
               report: copy.report,
               methodsApplied: copy.methodsApplied,
+              internalEvidence: copy.internalEvidence,
+              realUseEvidence: copy.realUseEvidence,
               sourceAvailable: copy.sourceAvailable,
               inspect: copy.inspect,
               evidenceRecord: copy.evidenceRecord,
