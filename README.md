@@ -1,6 +1,6 @@
 # Agent Skills Studio
 
-A curated Agent Skills library for production frontend, product design, motion, visual QA, delivery workflows, backend and data engineering, software architecture and engineering, quality and testing, application security, engineering workflow, brand design, and game-development tasks. It is inspired by useful patterns from the broader agent-skills ecosystem, but the skills in this repository are intentionally rewritten, consolidated, and kept project-agnostic.
+A curated Agent Skills library for production frontend, product design, motion, visual QA, delivery workflows, backend and data engineering, software architecture and engineering, quality and testing, application security, engineering workflow, brand design, writing and communication, and game-development tasks. The current catalog publishes 49 reusable skills across 10 active packs. It is inspired by useful patterns from the broader agent-skills ecosystem, but the skills in this repository are intentionally rewritten, consolidated, and kept project-agnostic.
 
 ## Principles
 
@@ -72,6 +72,13 @@ kept.
 - `building-brand-guidelines`
 - `writing-brand-voice-and-messaging`
 
+### Writing & communication
+- `planning-written-communication`
+- `writing-conversion-copy`
+- `writing-product-and-ux-copy`
+- `editing-for-clarity-and-tone`
+- `humanizing-generated-prose`
+
 ### Agent practice
 - `selecting-working-methods`
 - `turning-techniques-into-skills`
@@ -127,6 +134,12 @@ The methods prefer behavior-oriented plans over file checklists, conceptually fo
 The Design & Brand pack separates five responsibilities that should remain independently invokable: defining the strategic decision system for the brand, developing and screening names, translating strategy into a visual identity system, documenting reproducible brand guidelines, and defining durable voice and messaging.
 
 The methods treat identity as a system rather than a logo deliverable, keep preliminary trademark searching distinct from legal clearance, make accessibility a design constraint, and separate durable brand voice from conversion copy. Conversion-copy and text-humanization methods are intentionally deferred to the separate Writing & Communication tranche.
+
+## Writing & Communication v1
+
+The Writing & Communication pack separates five responsibilities that should remain independently invokable: planning complex written communication, writing credible conversion copy, writing product and UX copy from real interface state, editing existing prose for clarity and tone, and humanizing generated prose without changing its factual payload.
+
+The methods preserve supplied facts, evidence, citations, protected spans, and uncertainty; reject fabricated proof, urgency, scarcity, personal experience, and deceptive interaction patterns; and keep durable brand voice in Design & Brand. Humanization is a source-faithful editorial method, not AI-detector evasion.
 
 ## Selecting Working Methods
 
@@ -229,8 +242,9 @@ The active, installable packs are:
 - `application-security` — Application Security (4 skills);
 - `engineering-workflow` — Engineering Workflow (4 skills);
 - `design-brand` — Design & Brand (5 skills).
+- `writing-communication` — Writing & Communication (5 skills).
 
-All nine published packs are active and installable.
+All ten published packs are active and installable.
 
 Install an active pack on Bash or PowerShell:
 
@@ -293,8 +307,10 @@ Os pacotes ativos e instaláveis são:
 - `quality-testing` — Qualidade e Testes (4 skills);
 - `application-security` — Segurança de Aplicações (4 skills);
 - `engineering-workflow` — Fluxo de Engenharia (4 skills).
+- `design-brand` — Design & Marca (5 skills).
+- `writing-communication` — Escrita & Comunicação (5 skills).
 
-Todos os oito pacotes publicados estão ativos e são instaláveis.
+Todos os dez pacotes publicados estão ativos e são instaláveis.
 
 Instale um pacote ativo com Bash ou PowerShell:
 
