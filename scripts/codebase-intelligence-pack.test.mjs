@@ -35,12 +35,12 @@ function isWithin(parent, candidate) {
   return relative === "" || (!relative.startsWith(`..${path.sep}`) && relative !== ".." && !path.isAbsolute(relative));
 }
 
-test("publishes Codebase Intelligence as an ordered active RC pack", async () => {
+test("publishes Codebase Intelligence as an ordered active Stable pack", async () => {
   const pack = await readJson(packPath);
 
   assert.equal(pack.slug, "codebase-intelligence");
   assert.equal(pack.status, "active");
-  assert.equal(pack.version, "1.0.0-rc.2");
+  assert.equal(pack.version, "1.0.0");
   assert.deepEqual(pack.skills, codebaseIntelligenceSkills);
 });
 
@@ -57,7 +57,7 @@ test("publishes complete bilingual metadata for every pack skill", async () => {
     assert.equal(metadata.category, "codebase-intelligence");
     assert.deepEqual(metadata.packs, ["codebase-intelligence"]);
     assert.equal(metadata.maturity, "beta");
-    assert.equal(metadata.version, "1.0.0-rc.2");
+    assert.equal(metadata.version, "1.0.0");
     for (const locale of ["en", "pt-BR"]) {
       const localized = metadata.locales[locale];
       assert.ok(localized.displayName);
