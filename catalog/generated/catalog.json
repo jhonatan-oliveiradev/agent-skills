@@ -6,7 +6,7 @@
     "en",
     "pt-BR"
   ],
-  "sourceDigest": "b2b4c9fb2dea09ee84db287fe9b4ec8b1fc1c02d0d1dade0400ded8a85bc053e",
+  "sourceDigest": "e699fe517e717534b3dc19ead6773e0783271a6e4c91241a4ba932dd23d9fea2",
   "filters": {
     "categories": [
       "application-security",
@@ -20,7 +20,8 @@
       "meta",
       "motion",
       "product-design",
-      "quality-testing"
+      "quality-testing",
+      "writing-communication"
     ],
     "packs": [
       "application-security",
@@ -31,7 +32,8 @@
       "frontend-product",
       "game-development",
       "motion",
-      "quality-testing"
+      "quality-testing",
+      "writing-communication"
     ],
     "tags": [
       "abuse-cases",
@@ -41,6 +43,7 @@
       "adr",
       "agent-skills",
       "agents",
+      "ai-writing",
       "animation-lifecycle",
       "animation-performance",
       "animation-pipeline",
@@ -58,19 +61,25 @@
       "brand-guidelines",
       "brand-voice",
       "branding",
+      "briefing",
       "browser",
       "bugs",
+      "calls-to-action",
       "character-art",
+      "clarity",
       "code-review",
       "cohesion",
       "color",
       "combat-animation",
+      "communication",
       "component-apis",
       "constraints",
+      "content-design",
       "content-strategy",
       "context",
       "continuity",
       "conversion",
+      "copywriting",
       "coupling",
       "data-modeling",
       "databases",
@@ -85,6 +94,7 @@
       "developer-tooling",
       "differentiation",
       "documentation",
+      "editing",
       "end-to-end",
       "engineering",
       "explain",
@@ -100,6 +110,7 @@
       "governance",
       "gsap",
       "handoff",
+      "humanization",
       "image-reconstruction",
       "implementation",
       "incremental-delivery",
@@ -107,13 +118,16 @@
       "indexing",
       "integration",
       "interaction-design",
+      "interface",
       "interface-design",
       "landing-pages",
       "language",
       "logo",
+      "marketing",
       "memory-leaks",
       "messaging",
       "method-selection",
+      "microcopy",
       "migration",
       "migrations",
       "motion-design",
@@ -126,12 +140,14 @@
       "owasp",
       "ownership",
       "performance",
+      "plain-language",
       "planning",
       "playtesting",
       "positioning",
       "postgresql",
       "pricing-pages",
       "procedural-3d",
+      "product",
       "product-marketing",
       "profiling",
       "project-scaffolding",
@@ -149,6 +165,7 @@
       "release-workflow",
       "responsive-design",
       "reusable-processes",
+      "rewriting",
       "risk",
       "routing",
       "runtime-performance",
@@ -178,6 +195,7 @@
       "typography",
       "ui-implementation",
       "user-journeys",
+      "ux-writing",
       "validation",
       "vercel",
       "verification",
@@ -185,6 +203,7 @@
       "visual-consistency",
       "visual-fidelity",
       "visual-identity",
+      "voice",
       "vulnerabilities",
       "web",
       "web-motion",
@@ -192,6 +211,7 @@
       "webgl",
       "workflow",
       "workflow-design",
+      "writing",
       "zero-downtime"
     ],
     "maturity": [
@@ -200,6 +220,7 @@
     ],
     "difficulty": [
       "advanced",
+      "beginner",
       "intermediate"
     ],
     "surfaces": [
@@ -226,10 +247,10 @@
     ]
   },
   "counts": {
-    "skills": 44,
+    "skills": 49,
     "packs": {
-      "total": 9,
-      "active": 9,
+      "total": 10,
+      "active": 10,
       "planned": 0
     },
     "categories": {
@@ -244,15 +265,17 @@
       "meta": 2,
       "motion": 4,
       "product-design": 2,
-      "quality-testing": 4
+      "quality-testing": 4,
+      "writing-communication": 5
     },
     "maturity": {
-      "beta": 26,
+      "beta": 31,
       "stable": 18
     },
     "difficulty": {
       "advanced": 26,
-      "intermediate": 18
+      "beginner": 2,
+      "intermediate": 21
     },
     "activePackMembership": {
       "application-security": 4,
@@ -263,7 +286,8 @@
       "frontend-product": 8,
       "game-development": 5,
       "motion": 5,
-      "quality-testing": 4
+      "quality-testing": 4,
+      "writing-communication": 5
     }
   },
   "skills": [
@@ -1669,6 +1693,77 @@
     },
     {
       "$schema": "../schemas/skill.schema.json",
+      "slug": "editing-for-clarity-and-tone",
+      "category": "writing-communication",
+      "packs": [
+        "writing-communication"
+      ],
+      "maturity": "beta",
+      "difficulty": "beginner",
+      "featured": false,
+      "compatibility": {
+        "surfaces": [
+          "chatgpt",
+          "codex"
+        ],
+        "operatingSystems": [
+          "linux",
+          "macos",
+          "windows"
+        ],
+        "installModes": [
+          "plugin",
+          "filesystem"
+        ]
+      },
+      "tags": [
+        "editing",
+        "clarity",
+        "tone",
+        "plain-language",
+        "rewriting"
+      ],
+      "dependencies": [],
+      "relatedSkills": [
+        "planning-written-communication",
+        "humanizing-generated-prose",
+        "writing-brand-voice-and-messaging"
+      ],
+      "version": "1.0.0-beta.1",
+      "updatedAt": "2026-09-01",
+      "locales": {
+        "en": {
+          "displayName": "Editing for Clarity and Tone",
+          "summary": "Revises existing prose for clarity, concision, structure, readability, and requested tone while protecting meaning, evidence, and exact spans.",
+          "primaryBenefit": "Improves a draft without silently turning editorial cleanup into fact-changing rewriting or generic house style.",
+          "whenToUse": "Use when an existing draft needs clearer structure, tighter language, better readability, or a specific tone while its factual meaning should remain stable.",
+          "whenNotToUse": "Do not use when the task primarily requires new research, fact-checking, conversion strategy, interface-state writing, or generated-prose humanization.",
+          "useCases": [
+            "Tighten a client-facing explanation while preserving claims, numbers, links, and obligations",
+            "Adjust a technical or professional draft to a warmer, clearer tone without changing its factual certainty"
+          ],
+          "examplePrompts": [
+            "Use editing-for-clarity-and-tone to make this draft clearer and more concise while preserving every factual claim, number, citation, URL, proper noun, and protected phrase. Keep the requested tone without changing certainty or meaning."
+          ]
+        },
+        "pt-BR": {
+          "displayName": "Edição para Clareza e Tom",
+          "summary": "Revisa prosa existente para clareza, concisão, estrutura, legibilidade e tom solicitado preservando significado, evidências e trechos exatos.",
+          "primaryBenefit": "Melhora um rascunho sem transformar silenciosamente revisão editorial em alteração de fatos ou padronização genérica de estilo.",
+          "whenToUse": "Use quando um rascunho existente precisa de estrutura mais clara, linguagem mais enxuta, melhor legibilidade ou um tom específico enquanto seu significado factual deve permanecer estável.",
+          "whenNotToUse": "Não use quando a tarefa exige principalmente nova pesquisa, checagem factual, estratégia de conversão, escrita de estados de interface ou humanização de prosa gerada.",
+          "useCases": [
+            "Enxugar uma explicação para cliente preservando afirmações, números, links e obrigações",
+            "Ajustar um texto técnico ou profissional para um tom mais acolhedor e claro sem alterar sua certeza factual"
+          ],
+          "examplePrompts": [
+            "Use editing-for-clarity-and-tone para deixar este rascunho mais claro e conciso preservando cada afirmação factual, número, citação, URL, nome próprio e trecho protegido. Mantenha o tom solicitado sem alterar certeza ou significado."
+          ]
+        }
+      }
+    },
+    {
+      "$schema": "../schemas/skill.schema.json",
       "slug": "engineering-gsap-animations",
       "category": "motion",
       "packs": [
@@ -1816,6 +1911,77 @@
           ],
           "examplePrompts": [
             "Use evolving-postgres-schemas-safely para desenhar um plano expand-migrate-contract para esta migration de produção."
+          ]
+        }
+      }
+    },
+    {
+      "$schema": "../schemas/skill.schema.json",
+      "slug": "humanizing-generated-prose",
+      "category": "writing-communication",
+      "packs": [
+        "writing-communication"
+      ],
+      "maturity": "beta",
+      "difficulty": "intermediate",
+      "featured": false,
+      "compatibility": {
+        "surfaces": [
+          "chatgpt",
+          "codex"
+        ],
+        "operatingSystems": [
+          "linux",
+          "macos",
+          "windows"
+        ],
+        "installModes": [
+          "plugin",
+          "filesystem"
+        ]
+      },
+      "tags": [
+        "editing",
+        "humanization",
+        "ai-writing",
+        "voice",
+        "rewriting"
+      ],
+      "dependencies": [],
+      "relatedSkills": [
+        "editing-for-clarity-and-tone",
+        "planning-written-communication",
+        "writing-brand-voice-and-messaging"
+      ],
+      "version": "1.0.0-beta.1",
+      "updatedAt": "2026-09-01",
+      "locales": {
+        "en": {
+          "displayName": "Humanizing Generated Prose",
+          "summary": "Naturalizes generic or AI-shaped prose through source-faithful edits to specificity, rhythm, syntax, and structure instead of detector-oriented tricks.",
+          "primaryBenefit": "Makes generated drafts feel deliberate and less templated while preserving facts, citations, protected strings, uncertainty, and supplied writer voice.",
+          "whenToUse": "Use when supplied prose sounds generic, formulaic, over-polished, or recognizably AI-shaped and should read more naturally without changing its factual payload.",
+          "whenNotToUse": "Do not use to evade AI detectors, fabricate personal experience, claim human authorship, or replace ordinary clarity editing that does not have a generated-prose problem.",
+          "useCases": [
+            "Rewrite an AI-assisted draft so it keeps all evidence but loses generic scaffolding and repetitive cadence",
+            "Match generated prose to observable traits in a supplied voice sample without inventing biography or personal experience"
+          ],
+          "examplePrompts": [
+            "Use humanizing-generated-prose to make this draft less formulaic while preserving facts, qualifications, citations, URLs, numbers, quotations, and protected text. Match the supplied voice sample only where its traits are observable; do not optimize for detector scores or invent personal details."
+          ]
+        },
+        "pt-BR": {
+          "displayName": "Humanização de Prosa Gerada",
+          "summary": "Naturaliza prosa genérica ou com padrões de IA por meio de edições fiéis à fonte em especificidade, ritmo, sintaxe e estrutura, sem truques orientados a detectores.",
+          "primaryBenefit": "Faz rascunhos gerados parecerem mais deliberados e menos templados preservando fatos, citações, strings protegidas, incerteza e voz fornecida.",
+          "whenToUse": "Use quando a prosa fornecida soa genérica, formulaica, polida em excesso ou reconhecivelmente moldada por IA e deve ficar mais natural sem alterar seu conteúdo factual.",
+          "whenNotToUse": "Não use para burlar detectores de IA, fabricar experiência pessoal, alegar autoria humana ou substituir edição comum de clareza quando não há um problema específico de prosa gerada.",
+          "useCases": [
+            "Reescrever um rascunho assistido por IA mantendo todas as evidências, mas removendo scaffolding genérico e cadência repetitiva",
+            "Aproximar prosa gerada de traços observáveis em uma amostra de voz sem inventar biografia ou experiência pessoal"
+          ],
+          "examplePrompts": [
+            "Use humanizing-generated-prose para deixar este rascunho menos formulaico preservando fatos, qualificações, citações, URLs, números, trechos entre aspas e texto protegido. Aproxime-se da amostra de voz apenas onde houver traços observáveis; não otimize para detectores nem invente detalhes pessoais."
           ]
         }
       }
@@ -2305,6 +2471,78 @@
           ],
           "examplePrompts": [
             "Use planning-safe-refactors para mapear o blast radius desta mudança estrutural e produzir fatias incrementais com seams, evidência de regressão, rollback e condições de limpeza."
+          ]
+        }
+      }
+    },
+    {
+      "$schema": "../schemas/skill.schema.json",
+      "slug": "planning-written-communication",
+      "category": "writing-communication",
+      "packs": [
+        "writing-communication"
+      ],
+      "maturity": "beta",
+      "difficulty": "beginner",
+      "featured": false,
+      "compatibility": {
+        "surfaces": [
+          "chatgpt",
+          "codex"
+        ],
+        "operatingSystems": [
+          "linux",
+          "macos",
+          "windows"
+        ],
+        "installModes": [
+          "plugin",
+          "filesystem"
+        ]
+      },
+      "tags": [
+        "writing",
+        "communication",
+        "content-strategy",
+        "audience",
+        "briefing"
+      ],
+      "dependencies": [],
+      "relatedSkills": [
+        "writing-conversion-copy",
+        "writing-product-and-ux-copy",
+        "editing-for-clarity-and-tone",
+        "writing-brand-voice-and-messaging"
+      ],
+      "version": "1.0.0-beta.1",
+      "updatedAt": "2026-09-01",
+      "locales": {
+        "en": {
+          "displayName": "Planning Written Communication",
+          "summary": "Frames audience, objective, evidence, channel, voice constraints, protected material, and success criteria before complex writing begins.",
+          "primaryBenefit": "Prevents ambiguous or high-stakes writing from turning missing facts and unstated assumptions into polished but incorrect prose.",
+          "whenToUse": "Use when communication is high-stakes, multi-stakeholder, source-grounded, or ambiguous enough that audience, objective, evidence, channel, and constraints should be resolved before drafting.",
+          "whenNotToUse": "Do not use for a simple rewrite or short message whose audience, purpose, evidence, and format are already explicit.",
+          "useCases": [
+            "Prepare a communication brief before drafting a sensitive customer announcement",
+            "Resolve audiences, evidence, protected wording, and channel constraints before a multi-stakeholder proposal"
+          ],
+          "examplePrompts": [
+            "Use planning-written-communication to turn these notes and source materials into a concise writing brief with audience, objective, verified facts, unresolved assumptions, protected spans, channel constraints, and completion criteria before we draft anything."
+          ]
+        },
+        "pt-BR": {
+          "displayName": "Planejamento de Comunicação Escrita",
+          "summary": "Estrutura audiência, objetivo, evidências, canal, restrições de voz, material protegido e critérios de sucesso antes de uma escrita complexa começar.",
+          "primaryBenefit": "Evita que textos ambíguos ou de alto impacto transformem fatos ausentes e premissas não declaradas em prosa polida, porém incorreta.",
+          "whenToUse": "Use quando a comunicação é de alto impacto, envolve múltiplos stakeholders, depende de fontes ou é ambígua o bastante para exigir definição de audiência, objetivo, evidências, canal e restrições antes da redação.",
+          "whenNotToUse": "Não use para uma reescrita simples ou mensagem curta cuja audiência, finalidade, evidências e formato já estejam explícitos.",
+          "useCases": [
+            "Preparar um brief de comunicação antes de redigir um comunicado sensível para clientes",
+            "Resolver audiências, evidências, trechos protegidos e restrições de canal antes de uma proposta com vários stakeholders"
+          ],
+          "examplePrompts": [
+            "Use planning-written-communication para transformar estas notas e fontes em um brief conciso com audiência, objetivo, fatos verificados, premissas em aberto, trechos protegidos, restrições de canal e critérios de conclusão antes de redigirmos o texto final."
           ]
         }
       }
@@ -3319,6 +3557,78 @@
     },
     {
       "$schema": "../schemas/skill.schema.json",
+      "slug": "writing-conversion-copy",
+      "category": "writing-communication",
+      "packs": [
+        "writing-communication"
+      ],
+      "maturity": "beta",
+      "difficulty": "intermediate",
+      "featured": false,
+      "compatibility": {
+        "surfaces": [
+          "chatgpt",
+          "codex"
+        ],
+        "operatingSystems": [
+          "linux",
+          "macos",
+          "windows"
+        ],
+        "installModes": [
+          "plugin",
+          "filesystem"
+        ]
+      },
+      "tags": [
+        "copywriting",
+        "conversion",
+        "marketing",
+        "landing-pages",
+        "calls-to-action"
+      ],
+      "dependencies": [],
+      "relatedSkills": [
+        "planning-written-communication",
+        "writing-brand-voice-and-messaging",
+        "building-conversion-product-pages",
+        "editing-for-clarity-and-tone"
+      ],
+      "version": "1.0.0-beta.1",
+      "updatedAt": "2026-09-01",
+      "locales": {
+        "en": {
+          "displayName": "Writing Conversion Copy",
+          "summary": "Creates credible decision-oriented marketing copy around a real offer, real audience need, supported proof, objections, and a clear next action.",
+          "primaryBenefit": "Improves persuasion without fabricating proof, urgency, scarcity, guarantees, or manipulative consent patterns.",
+          "whenToUse": "Use when writing or revising landing pages, sales pages, promotional emails, ads, product offers, CTAs, or other marketing copy whose job is to support a specific reader decision.",
+          "whenNotToUse": "Do not use for durable brand voice definition, operational interface strings, or prose editing whose primary goal is clarity rather than persuasion.",
+          "useCases": [
+            "Rewrite a landing page around the product's real differentiators, proof, objections, and primary CTA",
+            "Create promotional email copy for an offer without inventing urgency, customer evidence, or guaranteed outcomes"
+          ],
+          "examplePrompts": [
+            "Use writing-conversion-copy to rewrite this offer around the audience's decision, supported proof, objections, terms, and one clear CTA. Do not invent testimonials, statistics, scarcity, urgency, guarantees, or product capabilities."
+          ]
+        },
+        "pt-BR": {
+          "displayName": "Copy de Conversão",
+          "summary": "Cria copy de marketing orientada à decisão com base em oferta real, necessidade real da audiência, provas sustentadas, objeções e próximo passo claro.",
+          "primaryBenefit": "Melhora persuasão sem inventar provas, urgência, escassez, garantias ou padrões manipulativos de consentimento.",
+          "whenToUse": "Use ao escrever ou revisar landing pages, páginas de venda, e-mails promocionais, anúncios, ofertas, CTAs ou outros textos de marketing cuja função é apoiar uma decisão específica do leitor.",
+          "whenNotToUse": "Não use para definir voz durável de marca, textos operacionais de interface ou edição de prosa cujo objetivo principal seja clareza em vez de persuasão.",
+          "useCases": [
+            "Reescrever uma landing page em torno dos diferenciais reais do produto, provas, objeções e CTA principal",
+            "Criar copy de e-mail promocional para uma oferta sem inventar urgência, evidência de clientes ou resultados garantidos"
+          ],
+          "examplePrompts": [
+            "Use writing-conversion-copy para reescrever esta oferta em torno da decisão da audiência, provas sustentadas, objeções, termos e um CTA claro. Não invente depoimentos, estatísticas, escassez, urgência, garantias ou capacidades do produto."
+          ]
+        }
+      }
+    },
+    {
+      "$schema": "../schemas/skill.schema.json",
       "slug": "writing-effective-technical-handoffs",
       "category": "engineering-workflow",
       "packs": [
@@ -3384,6 +3694,78 @@
           ],
           "examplePrompts": [
             "Use writing-effective-technical-handoffs para registrar o estado verificado deste trabalho para que uma sessão sem contexto possa continuar do próximo passo exato."
+          ]
+        }
+      }
+    },
+    {
+      "$schema": "../schemas/skill.schema.json",
+      "slug": "writing-product-and-ux-copy",
+      "category": "writing-communication",
+      "packs": [
+        "writing-communication"
+      ],
+      "maturity": "beta",
+      "difficulty": "intermediate",
+      "featured": false,
+      "compatibility": {
+        "surfaces": [
+          "chatgpt",
+          "codex"
+        ],
+        "operatingSystems": [
+          "linux",
+          "macos",
+          "windows"
+        ],
+        "installModes": [
+          "plugin",
+          "filesystem"
+        ]
+      },
+      "tags": [
+        "ux-writing",
+        "microcopy",
+        "product",
+        "interface",
+        "content-design"
+      ],
+      "dependencies": [],
+      "relatedSkills": [
+        "planning-written-communication",
+        "designing-ui-systems",
+        "editing-for-clarity-and-tone",
+        "writing-brand-voice-and-messaging"
+      ],
+      "version": "1.0.0-beta.1",
+      "updatedAt": "2026-09-01",
+      "locales": {
+        "en": {
+          "displayName": "Writing Product and UX Copy",
+          "summary": "Treats interface text as product behavior across actions, forms, onboarding, permissions, errors, confirmations, empty states, and destructive flows.",
+          "primaryBenefit": "Makes product states and consequences understandable without inventing behavior or hiding operational meaning behind marketing language.",
+          "whenToUse": "Use when writing interface labels, buttons, onboarding, forms, permissions, empty or loading states, errors, confirmations, notifications, or other text tied to product state and user action.",
+          "whenNotToUse": "Do not use for marketing surfaces whose primary job is persuasion or for defining the durable brand voice that interface copy may inherit.",
+          "useCases": [
+            "Rewrite form validation and recovery copy so users understand what failed and how to continue",
+            "Design labels, permission text, confirmations, and destructive-action copy for a product flow"
+          ],
+          "examplePrompts": [
+            "Use writing-product-and-ux-copy to review this flow state by state. Make every label predict the real action, make errors recoverable, explain consequential permissions, and keep terminology consistent without inventing product behavior."
+          ]
+        },
+        "pt-BR": {
+          "displayName": "Copy de Produto e UX",
+          "summary": "Trata texto de interface como comportamento de produto em ações, formulários, onboarding, permissões, erros, confirmações, estados vazios e fluxos destrutivos.",
+          "primaryBenefit": "Torna estados e consequências do produto compreensíveis sem inventar comportamento nem esconder significado operacional atrás de linguagem de marketing.",
+          "whenToUse": "Use ao escrever labels de interface, botões, onboarding, formulários, permissões, estados vazios ou de carregamento, erros, confirmações, notificações ou outros textos ligados ao estado do produto e à ação do usuário.",
+          "whenNotToUse": "Não use para superfícies de marketing cuja função principal é persuadir ou para definir a voz durável de marca que a interface pode herdar.",
+          "useCases": [
+            "Reescrever validação de formulário e mensagens de recuperação para que usuários entendam a falha e como continuar",
+            "Definir labels, permissões, confirmações e copy de ações destrutivas para um fluxo de produto"
+          ],
+          "examplePrompts": [
+            "Use writing-product-and-ux-copy para revisar este fluxo estado por estado. Faça cada label prever a ação real, torne erros recuperáveis, explique permissões relevantes e mantenha terminologia consistente sem inventar comportamento do produto."
           ]
         }
       }
@@ -4265,6 +4647,109 @@
           "summary": {
             "en": "Turns a reproduced defect into a deterministic automated guard that fails before the fix and protects the violated behavior afterward.",
             "pt-BR": "Transforma um defeito reproduzido em uma proteção automatizada determinística que falha antes da correção e preserva o comportamento violado depois dela."
+          },
+          "difficulty": "intermediate",
+          "maturity": "beta"
+        }
+      ]
+    },
+    {
+      "slug": "writing-communication",
+      "status": "active",
+      "featured": false,
+      "color": "amber",
+      "version": "1.0.0-beta.1",
+      "locales": {
+        "en": {
+          "name": "Writing & Communication",
+          "summary": "Communication planning, conversion copy, product microcopy, editing, and high-fidelity humanization as distinct reusable writing methods.",
+          "description": "An installable writing workflow that separates strategic preparation from conversion, interface writing, editorial revision, and generated-prose humanization so each task keeps a clear objective and fidelity contract.",
+          "outcomes": [
+            "Frame audience, objective, evidence, channel, and constraints before drafting when communication risk or complexity justifies planning",
+            "Produce decision-oriented marketing copy and usable interface text without fabricated proof, manipulative patterns, or responsibility overlap",
+            "Revise existing prose for clarity, tone, and naturalness while preserving facts, citations, protected spans, and supplied voice"
+          ]
+        },
+        "pt-BR": {
+          "name": "Escrita & Comunicação",
+          "summary": "Planejamento de comunicação, copy de conversão, microcopy de produto, edição e humanização de alta fidelidade como métodos de escrita distintos e reutilizáveis.",
+          "description": "Um fluxo instalável de escrita que separa preparação estratégica, conversão, texto de interface, revisão editorial e humanização de prosa gerada para manter objetivo e contrato de fidelidade claros em cada tarefa.",
+          "outcomes": [
+            "Definir audiência, objetivo, evidências, canal e restrições antes de redigir quando o risco ou a complexidade da comunicação justificar planejamento",
+            "Produzir copy de marketing orientada à decisão e texto de interface utilizável sem provas inventadas, padrões manipulativos ou sobreposição de responsabilidade",
+            "Revisar prosa existente para clareza, tom e naturalidade preservando fatos, citações, trechos protegidos e voz fornecida"
+          ]
+        }
+      },
+      "skillSlugs": [
+        "planning-written-communication",
+        "writing-conversion-copy",
+        "writing-product-and-ux-copy",
+        "editing-for-clarity-and-tone",
+        "humanizing-generated-prose"
+      ],
+      "skills": [
+        {
+          "slug": "planning-written-communication",
+          "displayName": {
+            "en": "Planning Written Communication",
+            "pt-BR": "Planejamento de Comunicação Escrita"
+          },
+          "summary": {
+            "en": "Frames audience, objective, evidence, channel, voice constraints, protected material, and success criteria before complex writing begins.",
+            "pt-BR": "Estrutura audiência, objetivo, evidências, canal, restrições de voz, material protegido e critérios de sucesso antes de uma escrita complexa começar."
+          },
+          "difficulty": "beginner",
+          "maturity": "beta"
+        },
+        {
+          "slug": "writing-conversion-copy",
+          "displayName": {
+            "en": "Writing Conversion Copy",
+            "pt-BR": "Copy de Conversão"
+          },
+          "summary": {
+            "en": "Creates credible decision-oriented marketing copy around a real offer, real audience need, supported proof, objections, and a clear next action.",
+            "pt-BR": "Cria copy de marketing orientada à decisão com base em oferta real, necessidade real da audiência, provas sustentadas, objeções e próximo passo claro."
+          },
+          "difficulty": "intermediate",
+          "maturity": "beta"
+        },
+        {
+          "slug": "writing-product-and-ux-copy",
+          "displayName": {
+            "en": "Writing Product and UX Copy",
+            "pt-BR": "Copy de Produto e UX"
+          },
+          "summary": {
+            "en": "Treats interface text as product behavior across actions, forms, onboarding, permissions, errors, confirmations, empty states, and destructive flows.",
+            "pt-BR": "Trata texto de interface como comportamento de produto em ações, formulários, onboarding, permissões, erros, confirmações, estados vazios e fluxos destrutivos."
+          },
+          "difficulty": "intermediate",
+          "maturity": "beta"
+        },
+        {
+          "slug": "editing-for-clarity-and-tone",
+          "displayName": {
+            "en": "Editing for Clarity and Tone",
+            "pt-BR": "Edição para Clareza e Tom"
+          },
+          "summary": {
+            "en": "Revises existing prose for clarity, concision, structure, readability, and requested tone while protecting meaning, evidence, and exact spans.",
+            "pt-BR": "Revisa prosa existente para clareza, concisão, estrutura, legibilidade e tom solicitado preservando significado, evidências e trechos exatos."
+          },
+          "difficulty": "beginner",
+          "maturity": "beta"
+        },
+        {
+          "slug": "humanizing-generated-prose",
+          "displayName": {
+            "en": "Humanizing Generated Prose",
+            "pt-BR": "Humanização de Prosa Gerada"
+          },
+          "summary": {
+            "en": "Naturalizes generic or AI-shaped prose through source-faithful edits to specificity, rhythm, syntax, and structure instead of detector-oriented tricks.",
+            "pt-BR": "Naturaliza prosa genérica ou com padrões de IA por meio de edições fiéis à fonte em especificidade, ritmo, sintaxe e estrutura, sem truques orientados a detectores."
           },
           "difficulty": "intermediate",
           "maturity": "beta"
