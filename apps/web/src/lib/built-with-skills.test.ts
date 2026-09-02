@@ -6,11 +6,12 @@ import {
 } from "./built-with-skills";
 
 describe("built with skills records", () => {
-  it.each(["en", "pt-BR"] as const)("publishes three localized cases for %s", (locale) => {
+  it.each(["en", "pt-BR"] as const)("publishes four localized cases for %s", (locale) => {
     const cases = getBuiltWithSkillsCases(locale);
 
-    expect(cases).toHaveLength(3);
+    expect(cases).toHaveLength(4);
     expect(cases.map((item) => item.slug)).toEqual([
+      "ping-space-voice-membership-authorization",
       "portfolio-translation-hardening",
       "catalog-experience",
       "pack-experience",
@@ -52,6 +53,37 @@ describe("built with skills records", () => {
     }
   });
 
+  it("publishes PING as inspectable public-safe real-use evidence", () => {
+    const item = getBuiltWithSkillsCaseBySlug(
+      "en",
+      "ping-space-voice-membership-authorization",
+    );
+
+    expect(item).toBeDefined();
+    expect(item?.evidenceClass).toBe("real-use");
+    expect(item?.project).toEqual({
+      id: "ping",
+      name: "PING",
+    });
+    expect(item?.skills).toEqual([
+      "selecting-working-methods",
+      "reviewing-api-security",
+      "building-regression-tests",
+      "testing-integration-boundaries",
+      "shipping-github-vercel-changes",
+    ]);
+    expect(item?.evidence.map((entry) => entry.type)).toEqual(["source", "qa"]);
+    expect(
+      item?.evidence.every((entry) =>
+        entry.href.startsWith(
+          "https://github.com/jhonatan-oliveiradev/agent-skills/",
+        ),
+      ),
+    ).toBe(true);
+    expect(item?.evidence.some((entry) => entry.href.includes("/ping/"))).toBe(false);
+    expect(item && hasInspectableRealUseEvidence(item)).toBe(true);
+  });
+
   it("publishes Portfolio 2025 as inspectable public-safe real-use evidence", () => {
     const item = getBuiltWithSkillsCaseBySlug("en", "portfolio-translation-hardening");
 
@@ -68,9 +100,13 @@ describe("built with skills records", () => {
       "shipping-github-vercel-changes",
     ]);
     expect(item?.evidence.map((entry) => entry.type)).toEqual(["source", "qa"]);
-    expect(item?.evidence.every((entry) =>
-      entry.href.startsWith("https://github.com/jhonatan-oliveiradev/agent-skills/"),
-    )).toBe(true);
+    expect(
+      item?.evidence.every((entry) =>
+        entry.href.startsWith(
+          "https://github.com/jhonatan-oliveiradev/agent-skills/",
+        ),
+      ),
+    ).toBe(true);
     expect(item && hasInspectableRealUseEvidence(item)).toBe(true);
   });
 
@@ -86,17 +122,19 @@ describe("built with skills records", () => {
 
     expect(hasInspectableRealUseEvidence(internalCase)).toBe(true);
     expect(hasInspectableRealUseEvidence(sourceOnlyRealUse)).toBe(false);
-    expect(hasInspectableRealUseEvidence({
-      ...sourceOnlyRealUse,
-      evidence: [
-        ...sourceOnlyRealUse.evidence,
-        {
-          type: "commit" as const,
-          label: "Implementation commit",
-          href: "https://github.com/example/project/commit/abc123",
-        },
-      ],
-    })).toBe(true);
+    expect(
+      hasInspectableRealUseEvidence({
+        ...sourceOnlyRealUse,
+        evidence: [
+          ...sourceOnlyRealUse.evidence,
+          {
+            type: "commit" as const,
+            label: "Implementation commit",
+            href: "https://github.com/example/project/commit/abc123",
+          },
+        ],
+      }),
+    ).toBe(true);
   });
 
   it("resolves a case by slug and rejects unknown slugs", () => {
