@@ -66,24 +66,24 @@ test("root package description reflects the current Studio breadth", async () =>
   assert.match(rootPackage.description, /writing/i);
 });
 
-test("Stable promotion is frozen while RC2 collects Codebase Intelligence real-use evidence", async () => {
+test("RC2 returns to Stable review after Codebase Intelligence real-use evidence", async () => {
   const matrix = await readJson("release/stable-readiness.json");
 
   assert.equal(matrix.schemaVersion, 3);
   assert.equal(matrix.candidateVersion, "1.0.0-rc.2");
   assert.equal(matrix.targetVersion, "1.0.0");
-  assert.equal(matrix.status, "collecting-rc2-evidence");
+  assert.equal(matrix.status, "ready-for-stable-review");
   assert.deepEqual(matrix.requiredRealUsePacks, ["codebase-intelligence"]);
-  assert.deepEqual(matrix.validatedRealUsePacks, []);
+  assert.deepEqual(matrix.validatedRealUsePacks, ["codebase-intelligence"]);
   assert.deepEqual(matrix.minimums, {
     realUseCases: 3,
     distinctProjects: 2,
     activePacksRepresented: 3,
   });
   assert.deepEqual(matrix.observed, {
-    realUseCases: 3,
+    realUseCases: 4,
     distinctProjects: 3,
-    activePacksRepresented: 4,
+    activePacksRepresented: 5,
   });
 });
 
