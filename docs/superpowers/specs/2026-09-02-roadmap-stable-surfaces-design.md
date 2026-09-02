@@ -22,9 +22,9 @@ The promotion is descriptive, not a new readiness decision. It relies on the exi
 ## Design
 
 1. Preserve all seven roadmap stages and their order.
-2. Rename localized `betaItems` to `stableSurfaceItems` so the data model no longer encodes obsolete maturity.
+2. Keep the existing localized release-surface copy unchanged to minimize blast radius; the current internal `betaItems` key is not user-visible and is outside this maintenance slice.
 3. Keep the Beta stage present but empty.
-4. Render the four qualified release surfaces in Stable, followed by the existing Stable skill-collection record.
+4. Reclassify the four existing release-surface records into Stable, followed by the existing Stable skill-collection record.
 5. Give each release-surface record `1.0.0` metadata from `catalog.version`; keep the skill-collection metadata derived from the stable-skill count.
 6. Preserve current localized titles and summaries; only maturity placement changes.
 
@@ -40,6 +40,7 @@ for Proposal, Research, Development, Experimental, Beta, Stable, Deprecated.
 - no changes to `release/stable-readiness.json`
 - no changes to canonical skills or pack metadata
 - no catalog regeneration
+- no localized copy rewrite or schema refactor
 - no styling or layout changes
 - no release/tag changes
 
