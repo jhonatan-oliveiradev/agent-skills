@@ -1,50 +1,88 @@
-name: Validate skills
+name: Materialize Engineering Workflow documentation
 
 on:
-  push:
-    branches: [main, dev]
   pull_request:
 
+permissions:
+  contents: write
+
 jobs:
-  validate:
-    strategy:
-      fail-fast: false
-      matrix:
-        os: [ubuntu-latest, windows-latest]
-    runs-on: ${{ matrix.os }}
+  materialize:
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
         with:
-          node-version: 22
-      - run: npm test
-      - run: npm run validate
-      - run: npm ci --prefix apps/web
-      - run: npm run web:test
-      - run: npm run web:typecheck
-      - run: npm run web:lint
-      - run: npm run web:build
-        env:
-          NEXT_PUBLIC_SITE_URL: https://skills.jhonatanoliveira.com
-      - name: Smoke test Bash installer
-        if: runner.os == 'Linux'
+          ref: ${{ github.event.pull_request.head.ref }}
+      - name: Update README and provenance mapping
         shell: bash
         run: |
-          target="$(mktemp -d)"
-          pack_target="$(mktemp -d)"
-          ./install.sh --destination "$target"
-          ./install.sh --destination "$pack_target" --pack motion
-          test -f "$target/craft-premium-motion/SKILL.md"
-          test -f "$pack_target/craft-premium-motion/SKILL.md"
-          test ! -e "$pack_target/designing-action-combat/SKILL.md"
-      - name: Smoke test PowerShell installer
-        if: runner.os == 'Windows'
-        shell: pwsh
+          node <<'NODE'
+          const fs = require('node:fs');
+
+          function replace(file, before, after) {
+            let source = fs.readFileSync(file, 'utf8');
+            if (!source.includes(before)) throw new Error(`Expected text not found in ${file}: ${before}`);
+            source = source.replace(before, after);
+            fs.writeFileSync(file, source);
+          }
+
+          replace('README.md',
+            'A curated Agent Skills library for production frontend, product design, motion, visual QA, delivery workflows, backend and data engineering, software architecture and engineering, quality and testing, application security, and game-development tasks.',
+            'A curated Agent Skills library for production frontend, product design, motion, visual QA, delivery workflows, backend and data engineering, software architecture and engineering, quality and testing, application security, engineering workflow, and game-development tasks.'
+          );
+
+          replace('README.md',
+            '### Application security\n- `threat-modeling-applications`\n- `reviewing-web-security`\n- `reviewing-api-security`\n- `auditing-dependency-risk`\n',
+            '### Application security\n- `threat-modeling-applications`\n- `reviewing-web-security`\n- `reviewing-api-security`\n- `auditing-dependency-risk`\n\n### Engineering workflow\n- `planning-engineering-work`\n- `managing-implementation-slices`\n- `reviewing-pull-requests`\n- `writing-effective-technical-handoffs`\n'
+          );
+
+          replace('README.md',
+            'The methods require authorized scope, reproducible evidence, realistic preconditions, controls at the enforcing boundary, and explicit post-remediation verification. Scanners and security tools can provide evidence, but no scanner, framework, or vendor is a dependency of the pack.\n',
+            'The methods require authorized scope, reproducible evidence, realistic preconditions, controls at the enforcing boundary, and explicit post-remediation verification. Scanners and security tools can provide evidence, but no scanner, framework, or vendor is a dependency of the pack.\n\n## Engineering Workflow v1\n\nThe Engineering Workflow pack separates four concerns that should remain independently invokable: turning broad objectives into verifiable engineering plans, managing implementation as small safe slices, reviewing pull requests against intent and current evidence, and writing technical handoffs that let a cold reader resume without rediscovery.\n\nThe methods prefer behavior-oriented plans over file checklists, conceptually focused batches over oversized branches, current CI and repository evidence over review assumptions, and explicit confirmed/hypothesis/planned/blocked state over chronological chat transcripts. They do not require a particular VCS host, project-management system, or agent runtime.\n'
+          );
+
+          replace('README.md',
+            '- `application-security` — Application Security (4 skills).\n\nAll seven published packs are active and installable.',
+            '- `application-security` — Application Security (4 skills);\n- `engineering-workflow` — Engineering Workflow (4 skills).\n\nAll eight published packs are active and installable.'
+          );
+
+          replace('README.md',
+            '- `application-security` — Segurança de Aplicações (4 skills).\n\nTodos os sete pacotes publicados estão ativos e são instaláveis.',
+            '- `application-security` — Segurança de Aplicações (4 skills);\n- `engineering-workflow` — Fluxo de Engenharia (4 skills).\n\nTodos os oito pacotes publicados estão ativos e são instaláveis.'
+          );
+
+          replace('README.md',
+            'architecture, quality/testing, application security, and delivery.',
+            'architecture, quality/testing, application security, engineering workflow, and delivery.'
+          );
+
+          replace('README.md',
+            'Martin Fowler engineering and testing guidance, Playwright best practices, Google Testing Blog guidance, and Microsoft testing strategy references used for the engineering, quality, and application-security methods.',
+            'Martin Fowler engineering and testing guidance, Playwright best practices, Google Testing Blog guidance, Microsoft testing strategy references, DORA small-batch guidance, Google Engineering Practices, and GitHub pull-request documentation used for the engineering, quality, application-security, and engineering-workflow methods.'
+          );
+
+          replace('MAPPING.md',
+            '| Application Security (`application-security`) | Active | 4 threat-modeling, web-security, API-security, and dependency-risk skills |',
+            '| Application Security (`application-security`) | Active | 4 threat-modeling, web-security, API-security, and dependency-risk skills |\n| Engineering Workflow (`engineering-workflow`) | Active | 4 engineering-planning, implementation-slicing, pull-request-review, and technical-handoff skills |'
+          );
+
+          replace('MAPPING.md',
+            '### `auditing-dependency-risk`\nAdded for contextual software-supply-chain triage using manifests, lockfiles, advisories, runtime reachability, provenance, integrity controls, and the smallest safe remediation.\n',
+            '### `auditing-dependency-risk`\nAdded for contextual software-supply-chain triage using manifests, lockfiles, advisories, runtime reachability, provenance, integrity controls, and the smallest safe remediation.\n\n### `planning-engineering-work`\nAdded for turning broad engineering objectives into ordered behavioral outcomes with explicit constraints, assumptions, dependencies, risks, and verification evidence before implementation begins.\n\n### `managing-implementation-slices`\nAdded for keeping implementation in conceptually focused batches that remain independently safe, reviewable, verifiable, and explicit about dependencies and follow-up scope.\n\n### `reviewing-pull-requests`\nAdded for technical review that evaluates intent, behavior, design, safety, maintainability, and current verification evidence without conflating review with branch or release delivery.\n\n### `writing-effective-technical-handoffs`\nAdded for preserving verified engineering state, decisions, constraints, hypotheses, evidence, and the exact restart point when work moves between people, agents, or sessions.\n'
+          );
+
+          let mapping = fs.readFileSync('MAPPING.md', 'utf8');
+          const research = '\n\n## Engineering Workflow research — 2026-09-01\n\n| Source | Decision | Local destination |\n|---|---|---|\n| DORA, Working in small batches | Referenced | `skills/planning-engineering-work` + `skills/managing-implementation-slices` |\n| Google Engineering Practices, Small CLs | Referenced | `skills/planning-engineering-work` + `skills/managing-implementation-slices` + `skills/writing-effective-technical-handoffs` |\n| Google Engineering Practices, What to look for in a code review | Referenced | `skills/reviewing-pull-requests` |\n| Google Engineering Practices, The Standard of Code Review | Referenced | `skills/reviewing-pull-requests` |\n| Google Engineering Practices, Writing good CL descriptions | Referenced | `skills/writing-effective-technical-handoffs` |\n| GitHub pull-request review and reviewer-context documentation | Referenced | `skills/reviewing-pull-requests` + `skills/writing-effective-technical-handoffs` |\n| GitHub stacked pull request guidance | Referenced | `skills/managing-implementation-slices` |\n\nEngineering Workflow v1 does not require GitHub, a project-management system, or a specific agent runtime. The local methods turn stable small-batch, review, and continuity practices into tool-agnostic operating procedures while `shipping-github-vercel-changes` remains the separate delivery method for repository and deployment execution.\n';
+          if (!mapping.includes('## Engineering Workflow research — 2026-09-01')) {
+            mapping = `${mapping.trimEnd()}${research}`;
+            fs.writeFileSync('MAPPING.md', mapping);
+          }
+          NODE
+      - name: Commit documentation
+        shell: bash
         run: |
-          $target = Join-Path $env:RUNNER_TEMP "agent-skills-install"
-          ./install.ps1 --destination $target
-          if (-not (Test-Path (Join-Path $target "craft-premium-motion/SKILL.md"))) { exit 1 }
-          $packTarget = Join-Path $env:RUNNER_TEMP "agent-skills-motion-pack"
-          ./install.ps1 --destination $packTarget --pack motion
-          if (-not (Test-Path (Join-Path $packTarget "craft-premium-motion/SKILL.md"))) { exit 1 }
-          if (Test-Path (Join-Path $packTarget "designing-action-combat/SKILL.md")) { exit 1 }
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add README.md MAPPING.md
+          git commit -m "docs: document Engineering Workflow v1"
+          git push origin HEAD:${{ github.event.pull_request.head.ref }}
