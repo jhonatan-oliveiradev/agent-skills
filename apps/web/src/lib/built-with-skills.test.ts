@@ -6,11 +6,12 @@ import {
 } from "./built-with-skills";
 
 describe("built with skills records", () => {
-  it.each(["en", "pt-BR"] as const)("publishes four localized cases for %s", (locale) => {
+  it.each(["en", "pt-BR"] as const)("publishes five localized cases for %s", (locale) => {
     const cases = getBuiltWithSkillsCases(locale);
 
-    expect(cases).toHaveLength(4);
+    expect(cases).toHaveLength(5);
     expect(cases.map((item) => item.slug)).toEqual([
+      "rocket-editorial-error-boundary",
       "ping-space-voice-membership-authorization",
       "portfolio-translation-hardening",
       "catalog-experience",
@@ -51,6 +52,31 @@ describe("built with skills records", () => {
         `https://github.com/jhonatan-oliveiradev/agent-skills/blob/main/${item.sourcePath}`,
       );
     }
+  });
+
+  it("publishes Rocket as inspectable public-safe real-use evidence", () => {
+    const item = getBuiltWithSkillsCaseBySlug("en", "rocket-editorial-error-boundary");
+
+    expect(item).toBeDefined();
+    expect(item?.evidenceClass).toBe("real-use");
+    expect(item?.project).toEqual({
+      id: "rocket-unesp",
+      name: "Rocket UNESP",
+    });
+    expect(item?.skills).toEqual([
+      "building-premium-nextjs-interfaces",
+      "writing-product-and-ux-copy",
+    ]);
+    expect(item?.evidence.map((entry) => entry.type)).toEqual(["source", "qa"]);
+    expect(
+      item?.evidence.every((entry) =>
+        entry.href.startsWith(
+          "https://github.com/jhonatan-oliveiradev/agent-skills/",
+        ),
+      ),
+    ).toBe(true);
+    expect(item?.evidence.some((entry) => entry.href.includes("/rocket-inst/"))).toBe(false);
+    expect(item && hasInspectableRealUseEvidence(item)).toBe(true);
   });
 
   it("publishes PING as inspectable public-safe real-use evidence", () => {
