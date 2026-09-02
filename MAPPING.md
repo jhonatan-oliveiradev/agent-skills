@@ -28,6 +28,7 @@ publish roadmap categories without claiming members.
 | Application Security (`application-security`) | Active | 4 threat-modeling, web-security, API-security, and dependency-risk skills |
 | Engineering Workflow (`engineering-workflow`) | Active | 4 engineering-planning, implementation-slicing, pull-request-review, and technical-handoff skills |
 | Design & Brand (`design-brand`) | Active | 5 brand-strategy, naming, visual-identity, guidelines, and brand-voice skills |
+| Writing & Communication (`writing-communication`) | Active | 5 communication-planning, conversion-copy, product/UX-copy, editing, and humanization skills |
 
 `reconstructing-images-as-threejs` intentionally appears in both Motion and
 Game Development. This cross-pack placement clarifies distribution only; its
@@ -194,6 +195,21 @@ Added for turning an approved identity into a reproducible operating manual with
 ### `writing-brand-voice-and-messaging`
 Added for defining durable verbal identity, messaging hierarchy, terminology, and adaptive tone while keeping conversion-page optimization as a separate future writing responsibility.
 
+### `planning-written-communication`
+Added for high-stakes, multi-stakeholder, source-grounded, or ambiguous writing tasks that need audience, objective, evidence, channel, protected material, and completion criteria resolved before drafting.
+
+### `writing-conversion-copy`
+Added for decision-oriented landing-page, offer, promotional-email, ad, and CTA copy grounded in real product evidence and explicit objections while rejecting fabricated proof, false urgency, deceptive patterns, and guaranteed conversion claims.
+
+### `writing-product-and-ux-copy`
+Added for interface labels, forms, onboarding, permissions, errors, confirmations, empty states, and destructive flows where wording must reflect actual product state, consequences, recovery paths, accessibility, and localization constraints.
+
+### `editing-for-clarity-and-tone`
+Added for source-faithful revision of existing prose where clarity, structure, concision, readability, or requested tone should improve without silently changing claims, certainty, citations, protected strings, or meaning.
+
+### `humanizing-generated-prose`
+Added for naturalizing generic or AI-shaped drafts through evidence-preserving changes to specificity, rhythm, syntax, and structure. It explicitly rejects detector evasion, fake human authorship, fabricated anecdotes, and arbitrary punctuation bans.
+
 ## Why the 81 web-design skills were not installed individually
 
 The upstream collection contains many excellent micro-techniques and art-direction presets. Keeping all of them globally installed would create poor skill discovery: several skills could trigger on the same frontend request and push the agent toward visual effects before understanding product intent. The curated pack keeps broad operating procedures global and leaves effect-specific skills as on-demand upstream references.
@@ -302,3 +318,15 @@ The design deliberately avoids embedding a static decision tree for every skill.
 | Mailchimp Content Style Guide, Voice and Tone / Writing Principles | Referenced | `skills/writing-brand-voice-and-messaging` |
 
 Design & Brand v1 does not mirror a branding framework or require a design tool. The local methods combine strategic, visual, verbal, accessibility, and governance practices while keeping trademark database searches explicitly preliminary and keeping conversion copy / text humanization outside this pack.
+## Writing & Communication research — 2026-09-01
+
+| Source | Decision | Local destination |
+|---|---|---|
+| GOV.UK / Government Digital Service content-design and plain-language guidance | Referenced | `skills/planning-written-communication` + `skills/writing-conversion-copy` + `skills/editing-for-clarity-and-tone` |
+| Office for National Statistics content-design guidance | Referenced | `skills/planning-written-communication` + `skills/editing-for-clarity-and-tone` |
+| Microsoft Writing Style Guide and Windows interface-writing guidance | Referenced | `skills/writing-product-and-ux-copy` + `skills/editing-for-clarity-and-tone` |
+| Google developer documentation style guidance | Referenced | `skills/planning-written-communication` + `skills/writing-product-and-ux-copy` + `skills/editing-for-clarity-and-tone` |
+| U.S. Federal Trade Commission guidance and enforcement material on deceptive interface patterns | Referenced | `skills/writing-conversion-copy` |
+| Public Agent Skills copywriting and humanization implementations | Competitive review only | Responsibility boundaries across the Writing & Communication pack; no prose mirrored |
+
+Writing & Communication v1 deliberately separates planning, persuasion, interaction text, general editing, and generated-prose humanization instead of publishing one broad copywriting skill. Durable brand voice remains in Design & Brand; conversion copy must not fabricate evidence or manipulate consent; product/UX copy must describe real system behavior; editing and humanization preserve facts, citations, protected spans, and source uncertainty; humanization is not optimized for AI-detector scores.

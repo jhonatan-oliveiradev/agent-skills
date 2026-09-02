@@ -1,0 +1,37 @@
+{
+  "$schema": "../schemas/pack.schema.json",
+  "slug": "writing-communication",
+  "status": "active",
+  "featured": false,
+  "color": "amber",
+  "version": "1.0.0-beta.1",
+  "skills": [
+    "planning-written-communication",
+    "writing-conversion-copy",
+    "writing-product-and-ux-copy",
+    "editing-for-clarity-and-tone",
+    "humanizing-generated-prose"
+  ],
+  "locales": {
+    "en": {
+      "name": "Writing & Communication",
+      "summary": "Communication planning, conversion copy, product microcopy, editing, and high-fidelity humanization as distinct reusable writing methods.",
+      "description": "An installable writing workflow that separates strategic preparation from conversion, interface writing, editorial revision, and generated-prose humanization so each task keeps a clear objective and fidelity contract.",
+      "outcomes": [
+        "Frame audience, objective, evidence, channel, and constraints before drafting when communication risk or complexity justifies planning",
+        "Produce decision-oriented marketing copy and usable interface text without fabricated proof, manipulative patterns, or responsibility overlap",
+        "Revise existing prose for clarity, tone, and naturalness while preserving facts, citations, protected spans, and supplied voice"
+      ]
+    },
+    "pt-BR": {
+      "name": "Escrita & Comunicação",
+      "summary": "Planejamento de comunicação, copy de conversão, microcopy de produto, edição e humanização de alta fidelidade como métodos de escrita distintos e reutilizáveis.",
+      "description": "Um fluxo instalável de escrita que separa preparação estratégica, conversão, texto de interface, revisão editorial e humanização de prosa gerada para manter objetivo e contrato de fidelidade claros em cada tarefa.",
+      "outcomes": [
+        "Definir audiência, objetivo, evidências, canal e restrições antes de redigir quando o risco ou a complexidade da comunicação justificar planejamento",
+        "Produzir copy de marketing orientada à decisão e texto de interface utilizável sem provas inventadas, padrões manipulativos ou sobreposição de responsabilidade",
+        "Revisar prosa existente para clareza, tom e naturalidade preservando fatos, citações, trechos protegidos e voz fornecida"
+      ]
+    }
+  }
+}
