@@ -1,0 +1,35 @@
+{
+  "$schema": "../schemas/pack.schema.json",
+  "slug": "design-brand",
+  "status": "active",
+  "featured": false,
+  "color": "rose",
+  "version": "1.0.0-beta.1",
+  "skills": [
+    "defining-brand-strategy",
+    "naming-brands-and-products",
+    "designing-visual-identities",
+    "building-brand-guidelines",
+    "writing-brand-voice-and-messaging"
+  ],
+  "locales": {
+    "en": {
+      "name": "Design & Brand",
+      "summary": "Brand strategy, naming, visual identity, guidelines, and verbal systems for building coherent brands rather than isolated assets.",
+      "description": "An installable brand-design workflow that moves from strategic constraints through naming and visual identity into durable visual and verbal governance, while keeping conversion copy and text humanization as separate writing responsibilities.",
+      "outcomes": [
+        "Turn audience, positioning, and product evidence into criteria that guide naming, identity, and messaging decisions",
+        "Create a coherent visual and verbal brand system with realistic applications, accessibility constraints, and guidelines that collaborators can reproduce"
+      ]
+    },
+    "pt-BR": {
+      "name": "Design & Marca",
+      "summary": "Estratégia de marca, naming, identidade visual, guidelines e sistemas verbais para construir marcas coerentes em vez de assets isolados.",
+      "description": "Um fluxo instalável de design de marca que parte de restrições estratégicas, passa por naming e identidade visual e chega à governança visual e verbal durável, mantendo copy de conversão e humanização de texto como responsabilidades de escrita separadas.",
+      "outcomes": [
+        "Transformar audiência, posicionamento e evidências do produto em critérios que orientam decisões de naming, identidade e mensagem",
+        "Criar um sistema coerente de marca visual e verbal com aplicações realistas, restrições de acessibilidade e guidelines que colaboradores consigam reproduzir"
+      ]
+    }
+  }
+}

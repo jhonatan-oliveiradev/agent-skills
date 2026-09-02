@@ -1,0 +1,39 @@
+{
+  "$schema": "../schemas/skill.schema.json",
+  "slug": "naming-brands-and-products",
+  "category": "brand-design",
+  "packs": ["design-brand"],
+  "maturity": "beta",
+  "difficulty": "advanced",
+  "featured": false,
+  "compatibility": {
+    "surfaces": ["chatgpt", "codex"],
+    "operatingSystems": ["linux", "macos", "windows"],
+    "installModes": ["plugin", "filesystem"]
+  },
+  "tags": ["branding", "naming", "trademark", "language", "positioning"],
+  "dependencies": [],
+  "relatedSkills": ["defining-brand-strategy", "designing-visual-identities", "writing-brand-voice-and-messaging"],
+  "version": "1.0.0-beta.1",
+  "updatedAt": "2026-09-01",
+  "locales": {
+    "en": {
+      "displayName": "Naming Brands and Products",
+      "summary": "Creates and evaluates naming territories and candidates against strategy, language, real-world use, and preliminary availability risk.",
+      "primaryBenefit": "Produces a defensible shortlist instead of a pile of clever names, while making unresolved linguistic and trademark risk explicit.",
+      "whenToUse": "Use when a brand, product, service, feature, or program needs a name that must fit strategic positioning, language constraints, category context, and preliminary availability checks.",
+      "whenNotToUse": "Do not use as legal trademark clearance or when the task is only to rename an internal variable, file, or technical identifier.",
+      "useCases": ["Develop a shortlist for a new brand across multiple naming territories", "Evaluate existing product-name candidates for strategic, linguistic, and preliminary trademark risk"],
+      "examplePrompts": ["Use naming-brands-and-products to create naming territories, generate candidates, evaluate them against this strategy, and document preliminary availability risks without pretending to provide legal clearance."]
+    },
+    "pt-BR": {
+      "displayName": "Naming de Marcas e Produtos",
+      "summary": "Cria e avalia territórios e candidatos de naming contra estratégia, linguagem, uso real e risco preliminar de disponibilidade.",
+      "primaryBenefit": "Produz uma shortlist defensável em vez de uma lista de nomes espertos, deixando explícitos os riscos linguísticos e marcários ainda não resolvidos.",
+      "whenToUse": "Use quando uma marca, produto, serviço, feature ou programa precisa de um nome aderente ao posicionamento, restrições linguísticas, contexto de categoria e verificações preliminares de disponibilidade.",
+      "whenNotToUse": "Não use como clearance jurídico de marca nem quando a tarefa é apenas renomear uma variável, arquivo ou identificador técnico interno.",
+      "useCases": ["Desenvolver uma shortlist para uma nova marca a partir de múltiplos territórios de naming", "Avaliar nomes candidatos de produto por aderência estratégica, linguística e risco marcário preliminar"],
+      "examplePrompts": ["Use naming-brands-and-products para criar territórios de naming, gerar candidatos, avaliá-los contra esta estratégia e documentar riscos preliminares de disponibilidade sem fingir que isso substitui clearance jurídico."]
+    }
+  }
+}
