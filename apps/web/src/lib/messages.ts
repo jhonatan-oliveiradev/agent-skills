@@ -115,7 +115,7 @@ export interface Messages {
       readonly description: string;
       readonly empty: string;
     }[];
-    readonly betaItems: readonly { readonly id: string; readonly title: string; readonly summary: string }[];
+    readonly stableSurfaceItems: readonly { readonly id: string; readonly title: string; readonly summary: string }[];
     readonly stableItem: { readonly title: string; readonly summary: string };
     readonly itemMeta: { readonly plannedPack: string; readonly stableSkills: string };
     readonly viewItem: string;
@@ -406,7 +406,7 @@ export const messages = {
         { id: "stable", title: "Stable", description: "The contract is validated, documented, installable, and protected by project gates.", empty: "No initiatives in this stage." },
         { id: "deprecated", title: "Deprecated", description: "The capability is being retired with a documented replacement or migration path.", empty: "No initiatives in this stage." },
       ],
-      betaItems: [
+      stableSurfaceItems: [
         { id: "plugin", title: "Agent Skills Studio plugin", summary: "Skills-only plugin and marketplace manifest with synchronized versioning and validation." },
         { id: "catalog", title: "Catalog and packs", summary: "Bilingual metadata, deterministic generation, active collections, and transparent planned packs." },
         { id: "installers", title: "Cross-platform installers", summary: "Atomic Bash and PowerShell installation for the collection, individual skills, and active packs." },
@@ -701,7 +701,7 @@ export const messages = {
         { id: "stable", title: "Estável", description: "O contrato foi validado, documentado, é instalável e está protegido pelos gates do projeto.", empty: "Nenhuma iniciativa nesta etapa." },
         { id: "deprecated", title: "Descontinuado", description: "A capacidade está sendo retirada com substituição ou caminho de migração documentado.", empty: "Nenhuma iniciativa nesta etapa." },
       ],
-      betaItems: [
+      stableSurfaceItems: [
         { id: "plugin", title: "Plugin Agent Skills Studio", summary: "Plugin exclusivo de skills e manifesto de marketplace com versão sincronizada e validação." },
         { id: "catalog", title: "Catálogo e pacotes", summary: "Metadados bilíngues, geração determinística, coleções ativas e pacotes planejados transparentes." },
         { id: "installers", title: "Instaladores multiplataforma", summary: "Instalação atômica em Bash e PowerShell para coleção, skills individuais e pacotes ativos." },
