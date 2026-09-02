@@ -141,7 +141,12 @@ describe("System Blueprint", () => {
     );
 
     expect(container.querySelector("[data-pack-evidence]")).toBeInTheDocument();
-    expect(container.querySelectorAll("[data-pack-evidence-relation]")).toHaveLength(4);
+    expect(container.querySelectorAll("[data-pack-evidence-relation]")).toHaveLength(5);
+    expect(
+      screen.getByRole("link", {
+        name: "Shipping a recoverable Rocket error state through real Studio consumption",
+      }),
+    ).toHaveAttribute("href", "/en/built-with-skills/rocket-editorial-error-boundary");
     expect(
       screen.getByRole("link", {
         name: "Hardening Space voice credential authorization",
@@ -160,7 +165,7 @@ describe("System Blueprint", () => {
       "/en/built-with-skills/catalog-experience",
     );
     expect(screen.getAllByText("3 / 8 methods represented")).toHaveLength(2);
-    expect(screen.getAllByText("1 / 8 methods represented")).toHaveLength(2);
+    expect(screen.getAllByText("1 / 8 methods represented")).toHaveLength(3);
     expect(screen.queryByText(/pack used/i)).not.toBeInTheDocument();
   });
 });
