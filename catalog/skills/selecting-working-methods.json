@@ -1,0 +1,49 @@
+{
+  "$schema": "../schemas/skill.schema.json",
+  "slug": "selecting-working-methods",
+  "category": "meta",
+  "packs": [],
+  "maturity": "beta",
+  "difficulty": "intermediate",
+  "featured": true,
+  "compatibility": {
+    "surfaces": ["chatgpt", "codex"],
+    "operatingSystems": ["linux", "macos", "windows"],
+    "installModes": ["plugin", "filesystem"]
+  },
+  "tags": ["agent-skills", "routing", "method-selection", "workflow", "orchestration"],
+  "dependencies": [],
+  "relatedSkills": ["turning-techniques-into-skills", "planning-engineering-work", "managing-implementation-slices"],
+  "version": "1.0.0-beta.1",
+  "updatedAt": "2026-09-01",
+  "locales": {
+    "en": {
+      "displayName": "Selecting Working Methods",
+      "summary": "Routes ambiguous or multi-method tasks to the smallest ordered set of Agent Skills that owns the actual work.",
+      "primaryBenefit": "Prevents skill overload and overlap while preserving clear ownership between discovery, implementation, verification, review, and delivery.",
+      "whenToUse": "Use when a task could match multiple Agent Skills, the owning method is unclear, or a minimal ordered set of working methods must be chosen before execution.",
+      "whenNotToUse": "Do not use when one clearly identified specialized skill already owns the task or when normal reasoning is sufficient without a reusable method.",
+      "useCases": [
+        "Choose one primary method and only the necessary supporting methods for a complex engineering task",
+        "Resolve overlap between architecture, implementation, testing, review, and delivery skills"
+      ],
+      "examplePrompts": [
+        "Use selecting-working-methods to choose the smallest useful sequence of skills for this task before executing it."
+      ]
+    },
+    "pt-BR": {
+      "displayName": "Seleção de Métodos de Trabalho",
+      "summary": "Roteia tarefas ambíguas ou multidisciplinares para o menor conjunto ordenado de Agent Skills que realmente possui o trabalho.",
+      "primaryBenefit": "Evita excesso e sobreposição de skills, preservando ownership claro entre descoberta, implementação, verificação, revisão e entrega.",
+      "whenToUse": "Use quando uma tarefa puder corresponder a várias Agent Skills, o método responsável não estiver claro ou for necessário escolher um conjunto mínimo e ordenado de métodos antes da execução.",
+      "whenNotToUse": "Não use quando uma única skill especializada já possuir claramente a tarefa ou quando raciocínio normal for suficiente sem um método reutilizável.",
+      "useCases": [
+        "Escolher um método primário e apenas os métodos auxiliares necessários para uma tarefa complexa de engenharia",
+        "Resolver sobreposição entre skills de arquitetura, implementação, testes, revisão e entrega"
+      ],
+      "examplePrompts": [
+        "Use selecting-working-methods para escolher a menor sequência útil de skills para esta tarefa antes de executá-la."
+      ]
+    }
+  }
+}
