@@ -36,13 +36,14 @@ test("RC1 readiness freezes the current catalog at 49 skills and 10 active packs
   assert.deepEqual(catalog.counts.packs, { total: 10, active: 10, planned: 0 });
 });
 
-test("project-level version owners stay synchronized before RC promotion", async () => {
+test("project-level version owners are synchronized at the RC1 candidate", async () => {
   const version = (await readText("VERSION")).trim();
   const rootPackage = await readJson("package.json");
   const plugin = await readJson(".codex-plugin/plugin.json");
   const catalogManifest = await readJson("catalog/catalog.json");
   const webPackage = await readJson("apps/web/package.json");
 
+  assert.equal(version, "1.0.0-rc.1");
   assert.equal(rootPackage.version, version);
   assert.equal(plugin.version, version);
   assert.equal(catalogManifest.version, version);
