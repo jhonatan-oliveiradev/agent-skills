@@ -36,14 +36,14 @@ test("current catalog exposes 54 skills and 11 active packs", async () => {
   assert.deepEqual(catalog.counts.packs, { total: 11, active: 11, planned: 0 });
 });
 
-test("project-level version owners are synchronized at the RC1 candidate", async () => {
+test("project-level version owners are synchronized at the RC2 candidate", async () => {
   const version = (await readText("VERSION")).trim();
   const rootPackage = await readJson("package.json");
   const plugin = await readJson(".codex-plugin/plugin.json");
   const catalogManifest = await readJson("catalog/catalog.json");
   const webPackage = await readJson("apps/web/package.json");
 
-  assert.equal(version, "1.0.0-rc.1");
+  assert.equal(version, "1.0.0-rc.2");
   assert.equal(rootPackage.version, version);
   assert.equal(plugin.version, version);
   assert.equal(catalogManifest.version, version);
@@ -66,13 +66,15 @@ test("root package description reflects the current Studio breadth", async () =>
   assert.match(rootPackage.description, /writing/i);
 });
 
-test("Stable promotion policy records satisfied real-use thresholds", async () => {
+test("Stable promotion is frozen while RC2 collects Codebase Intelligence real-use evidence", async () => {
   const matrix = await readJson("release/stable-readiness.json");
 
-  assert.equal(matrix.schemaVersion, 2);
-  assert.equal(matrix.candidateVersion, "1.0.0-rc.1");
+  assert.equal(matrix.schemaVersion, 3);
+  assert.equal(matrix.candidateVersion, "1.0.0-rc.2");
   assert.equal(matrix.targetVersion, "1.0.0");
-  assert.equal(matrix.status, "ready-for-stable-review");
+  assert.equal(matrix.status, "collecting-rc2-evidence");
+  assert.deepEqual(matrix.requiredRealUsePacks, ["codebase-intelligence"]);
+  assert.deepEqual(matrix.validatedRealUsePacks, []);
   assert.deepEqual(matrix.minimums, {
     realUseCases: 3,
     distinctProjects: 2,
