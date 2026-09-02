@@ -79,14 +79,24 @@ const content: Readonly<Record<Locale, ProjectPageContent>> = {
       releasesLabel: "Published and upcoming releases",
       unreleased: "Unreleased",
       sourceAction: "View the source changelog",
-      releases: [{
-        version: "1.0.0-rc.1",
-        date: "2026-09-02",
-        groups: [
-          { title: "Public studio", items: ["Launched the bilingual Next.js microsite with localized metadata and production deployment guidance.", "Added the searchable 49-skill catalog, skill details, ten active pack experiences, and pack installation guidance.", "Published Getting Started, Built with Skills case studies, the evidence-backed roadmap, and institutional project pages."] },
-          { title: "Catalog and delivery", items: ["Added bilingual metadata for all 49 canonical skills and ten active packs.", "Added deterministic catalog generation, validation, and pack-aware atomic installation for Bash and PowerShell.", "Added the Agent Skills Studio plugin, local marketplace manifest, and Linux/Windows CI validation."] },
-        ],
-      }],
+      releases: [
+        {
+          version: "1.0.0-rc.2",
+          date: "2026-09-02",
+          groups: [
+            { title: "Codebase Intelligence", items: ["Expanded the searchable catalog to 54 canonical skills across 11 active packs with Codebase Intelligence v1.", "Added five evidence-led methods for mapping structure, tracing execution, analyzing blast radius, semantic investigation, and evidence-backed change planning.", "Documented CodeGraph as an official optional integration while preserving a verified repository-inspection fallback when no code-intelligence runtime is callable.", "Standardized progressive, evidence-led context expansion to avoid unnecessary broad repository reads."] },
+            { title: "Release readiness", items: ["Promoted synchronized Studio release surfaces and catalog metadata to 1.0.0-rc.2.", "Kept catalog generation, installers, plugin validation, and Linux/Windows CI aligned with the 54-skill / 11-pack collection.", "Reopened the Stable gate until real-use and CI evidence validates the Codebase Intelligence pack."] },
+          ],
+        },
+        {
+          version: "1.0.0-rc.1",
+          date: "2026-09-02",
+          groups: [
+            { title: "Public studio", items: ["Launched the bilingual Next.js microsite with localized metadata and production deployment guidance.", "Added the searchable 49-skill catalog, skill details, ten active pack experiences, and pack installation guidance.", "Published Getting Started, Built with Skills case studies, the evidence-backed roadmap, and institutional project pages."] },
+            { title: "Catalog and delivery", items: ["Added bilingual metadata for all 49 canonical skills and ten active packs.", "Added deterministic catalog generation, validation, and pack-aware atomic installation for Bash and PowerShell.", "Added the Agent Skills Studio plugin, local marketplace manifest, and Linux/Windows CI validation."] },
+          ],
+        },
+      ],
     },
   },
   "pt-BR": {
@@ -131,14 +141,24 @@ const content: Readonly<Record<Locale, ProjectPageContent>> = {
       releasesLabel: "Versões publicadas e futuras",
       unreleased: "Não lançada",
       sourceAction: "Ver changelog na fonte",
-      releases: [{
-        version: "1.0.0-rc.1",
-        date: "Não lançada",
-        groups: [
-          { title: "Studio público", items: ["Lançamento do microsite bilíngue em Next.js com metadados localizados e orientação de deploy em produção.", "Adição do catálogo com busca para 49 skills, detalhes das skills, dez experiências de pacotes ativos e orientação de instalação.", "Publicação de Primeiros passos, estudos de caso Feito com Skills, roteiro baseado em evidências e páginas institucionais do projeto."] },
-          { title: "Catálogo e entrega", items: ["Adição de metadados bilíngues para as 49 skills canônicas e dez pacotes ativos.", "Adição de geração determinística, validação e instalação atômica por pacote para Bash e PowerShell.", "Adição do plugin Agent Skills Studio, manifesto de marketplace local e validação CI em Linux e Windows."] },
-        ],
-      }],
+      releases: [
+        {
+          version: "1.0.0-rc.2",
+          date: "2026-09-02",
+          groups: [
+            { title: "Codebase Intelligence", items: ["Expansão do catálogo pesquisável para 54 skills canônicas em 11 pacotes ativos com o Codebase Intelligence v1.", "Adição de cinco métodos orientados por evidências para mapear estrutura, rastrear execução, analisar raio de impacto, investigar semanticamente e planejar mudanças com evidências.", "Documentação do CodeGraph como integração opcional oficial, preservando um fallback verificável por inspeção do repositório quando nenhum runtime de inteligência de código estiver disponível.", "Padronização da expansão progressiva de contexto orientada por evidências para evitar leituras amplas e desnecessárias do repositório."] },
+            { title: "Prontidão da release", items: ["Promoção das superfícies sincronizadas do Studio e dos metadados do catálogo para 1.0.0-rc.2.", "Manutenção da geração do catálogo, instaladores, validação do plugin e CI Linux/Windows alinhados à coleção de 54 skills / 11 pacotes.", "Reabertura do gate de Stable até que evidências de uso real e CI validem o pacote Codebase Intelligence."] },
+          ],
+        },
+        {
+          version: "1.0.0-rc.1",
+          date: "Não lançada",
+          groups: [
+            { title: "Studio público", items: ["Lançamento do microsite bilíngue em Next.js com metadados localizados e orientação de deploy em produção.", "Adição do catálogo com busca para 49 skills, detalhes das skills, dez experiências de pacotes ativos e orientação de instalação.", "Publicação de Primeiros passos, estudos de caso Feito com Skills, roteiro baseado em evidências e páginas institucionais do projeto."] },
+            { title: "Catálogo e entrega", items: ["Adição de metadados bilíngues para as 49 skills canônicas e dez pacotes ativos.", "Adição de geração determinística, validação e instalação atômica por pacote para Bash e PowerShell.", "Adição do plugin Agent Skills Studio, manifesto de marketplace local e validação CI em Linux e Windows."] },
+          ],
+        },
+      ],
     },
   },
 };

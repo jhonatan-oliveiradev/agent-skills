@@ -1,0 +1,47 @@
+name: Fix RC2 release test scope
+
+on:
+  push:
+    branches: [release/1.0.0-rc.2]
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: release/1.0.0-rc.2
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Scope current release assertion to RC2
+        shell: bash
+        run: |
+          node --input-type=module <<'NODE'
+          import { readFile, writeFile } from "node:fs/promises";
+
+          const file = "apps/web/src/components/site-shell.test.tsx";
+          const source = await readFile(file, "utf8");
+          const before = `    render(await ChangelogPage({ params: Promise.resolve({ locale: "en" }) }));\n    expect(screen.getByRole("heading", { name: "1.0.0-rc.2" })).toBeInTheDocument();\n    expect(screen.getByText(/searchable.*catalog/i)).toBeInTheDocument();`;
+          const after = `    render(await ChangelogPage({ params: Promise.resolve({ locale: "en" }) }));\n    const currentReleaseHeading = screen.getByRole("heading", { name: "1.0.0-rc.2" });\n    expect(currentReleaseHeading).toBeInTheDocument();\n    const currentRelease = currentReleaseHeading.closest("article");\n    expect(currentRelease).not.toBeNull();\n    expect(currentRelease).toHaveTextContent(/searchable.*catalog/i);`;
+
+          if (!source.includes(before)) throw new Error("Expected RC2 changelog assertion block was not found");
+          const updated = source.replace(before, after);
+          await writeFile(file, updated, "utf8");
+          NODE
+      - name: Verify web suite
+        run: |
+          npm ci --prefix apps/web
+          npm run web:test
+      - name: Commit scoped test
+        shell: bash
+        run: |
+          git add apps/web/src/components/site-shell.test.tsx
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -m "test(web): scope RC2 changelog assertion"
+          git push origin HEAD:release/1.0.0-rc.2

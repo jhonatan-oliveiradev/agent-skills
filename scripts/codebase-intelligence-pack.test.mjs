@@ -40,7 +40,7 @@ test("publishes Codebase Intelligence as an ordered active RC pack", async () =>
 
   assert.equal(pack.slug, "codebase-intelligence");
   assert.equal(pack.status, "active");
-  assert.equal(pack.version, "1.0.0-rc.1");
+  assert.equal(pack.version, "1.0.0-rc.2");
   assert.deepEqual(pack.skills, codebaseIntelligenceSkills);
 });
 
@@ -57,7 +57,7 @@ test("publishes complete bilingual metadata for every pack skill", async () => {
     assert.equal(metadata.category, "codebase-intelligence");
     assert.deepEqual(metadata.packs, ["codebase-intelligence"]);
     assert.equal(metadata.maturity, "beta");
-    assert.equal(metadata.version, "1.0.0-rc.1");
+    assert.equal(metadata.version, "1.0.0-rc.2");
     for (const locale of ["en", "pt-BR"]) {
       const localized = metadata.locales[locale];
       assert.ok(localized.displayName);
