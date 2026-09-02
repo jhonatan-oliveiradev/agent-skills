@@ -32,7 +32,9 @@ describe("Roadmap Living Program", () => {
       ]);
 
       expect(container.querySelector("[data-program-index]")).toBeInTheDocument();
-      expect(container.querySelectorAll("[data-program-stage][data-empty='true']")).toHaveLength(5);
+      expect(container.querySelectorAll("[data-program-stage][data-empty='true']")).toHaveLength(6);
+      expect(container.querySelector('[data-program-stage="beta"]')).toHaveAttribute("data-empty", "true");
+      expect(container.querySelector('[data-program-stage="stable"]')).toHaveAttribute("data-empty", "false");
 
       const relatedLinks = container.querySelectorAll(
         '[data-program-record] a[data-interaction="connect"]',
