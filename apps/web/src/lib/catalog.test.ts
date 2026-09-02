@@ -16,8 +16,8 @@ describe("catalog adapter", () => {
     );
 
     expect(catalog.sourceDigest).toBe(source.sourceDigest);
-    expect(catalog.skills).toHaveLength(34);
-    expect(catalog.packs).toHaveLength(7);
+    expect(catalog.skills).toHaveLength(38);
+    expect(catalog.packs).toHaveLength(8);
     expect(getCatalogCounts()).toEqual(source.counts);
     expect(getSupportedLocales()).toEqual(["en", "pt-BR"]);
   });
@@ -83,7 +83,7 @@ describe("catalog adapter", () => {
 
     expect(adapter.getLocalizedPacks).toBeTypeOf("function");
     const packs = adapter.getLocalizedPacks?.("pt-BR") ?? [];
-    expect(packs).toHaveLength(7);
+    expect(packs).toHaveLength(8);
     expect(packs.every((pack) => pack.status === "active")).toBe(true);
     expect(packs.find((pack) => pack.slug === "frontend-product")).toMatchObject({
       name: "Frontend e Produto",
@@ -109,6 +109,11 @@ describe("catalog adapter", () => {
       status: "active",
     });
     expect(packs.find((pack) => pack.slug === "application-security")?.skills).toHaveLength(4);
+    expect(packs.find((pack) => pack.slug === "engineering-workflow")).toMatchObject({
+      name: "Fluxo de Engenharia",
+      status: "active",
+    });
+    expect(packs.find((pack) => pack.slug === "engineering-workflow")?.skills).toHaveLength(4);
 
     expect(adapter.getLocalizedPackBySlug?.("en", "motion")?.outcomes).toHaveLength(2);
     expect(adapter.getLocalizedPackBySlug?.("en", "missing-pack")).toBeUndefined();
@@ -141,6 +146,10 @@ describe("catalog adapter", () => {
     expect(adapter.getPackInstallCommands?.("application-security", "active")).toEqual({
       bash: "./install.sh --pack application-security",
       powershell: "./install.ps1 --pack application-security",
+    });
+    expect(adapter.getPackInstallCommands?.("engineering-workflow", "active")).toEqual({
+      bash: "./install.sh --pack engineering-workflow",
+      powershell: "./install.ps1 --pack engineering-workflow",
     });
     expect(adapter.getPackInstallCommands?.("quality-testing", "planned")).toBeUndefined();
   });
