@@ -1,0 +1,34 @@
+{
+  "schemaVersion": 1,
+  "targetVersion": "1.0.0-rc.1",
+  "frozenCounts": {
+    "skills": 49,
+    "packs": 10
+  },
+  "surfaces": [
+    {
+      "id": "plugin",
+      "blockingGates": ["validate-plugin", "version-sync", "gitguardian"],
+      "evidence": [".codex-plugin/plugin.json", ".agents/plugins/marketplace.json", "scripts/validate-plugin.mjs"],
+      "knownLimitations": []
+    },
+    {
+      "id": "catalog",
+      "blockingGates": ["validate-skills", "validate-catalog", "generated-catalog-current", "routing-benchmark"],
+      "evidence": ["catalog/generated/catalog.json", "catalog/routing-scenarios.json"],
+      "knownLimitations": []
+    },
+    {
+      "id": "installers",
+      "blockingGates": ["root-tests", "bash-smoke", "powershell-smoke"],
+      "evidence": ["install.sh", "install.ps1", "scripts/install-skills.mjs", "docs/chatgpt.md", "docs/claude-code.md"],
+      "knownLimitations": []
+    },
+    {
+      "id": "microsite",
+      "blockingGates": ["web-test", "web-typecheck", "web-lint", "web-build"],
+      "evidence": ["apps/web", "catalog/generated/catalog.json"],
+      "knownLimitations": []
+    }
+  ]
+}
