@@ -1,33 +1,51 @@
 {
-  "schemaVersion": 1,
+  "schemaVersion": 2,
   "candidateVersion": "1.0.0-rc.1",
   "targetVersion": "1.0.0",
-  "status": "collecting-evidence",
+  "status": "ready-for-stable-review",
   "minimums": {
     "realUseCases": 3,
     "distinctProjects": 2,
     "activePacksRepresented": 3
   },
+  "observed": {
+    "realUseCases": 3,
+    "distinctProjects": 3,
+    "activePacksRepresented": 4
+  },
   "surfaces": [
     {
-      "id": "plugin",
-      "stableReady": false,
-      "realUseEvidence": []
+      "id": "chatgpt-distribution",
+      "acceptedModes": [
+        "direct-skill-upload",
+        "marketplace-plugin"
+      ],
+      "validatedMode": "direct-skill-upload",
+      "stableReady": true,
+      "realUseEvidence": [
+        "rocket-editorial-error-boundary"
+      ]
     },
     {
       "id": "catalog",
-      "stableReady": false,
-      "realUseEvidence": []
+      "stableReady": true,
+      "realUseEvidence": [
+        "rocket-editorial-error-boundary"
+      ]
     },
     {
       "id": "installers",
-      "stableReady": false,
-      "realUseEvidence": []
+      "stableReady": true,
+      "realUseEvidence": [
+        "rocket-editorial-error-boundary"
+      ]
     },
     {
       "id": "microsite",
-      "stableReady": false,
-      "realUseEvidence": []
+      "stableReady": true,
+      "realUseEvidence": [
+        "rocket-editorial-error-boundary"
+      ]
     }
   ]
 }
