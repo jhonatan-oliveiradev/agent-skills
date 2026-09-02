@@ -1,6 +1,6 @@
 # Agent Skills Studio
 
-A curated Agent Skills library for production frontend, product design, motion, visual QA, delivery workflows, backend and data engineering, software architecture and engineering, quality and testing, application security, and game-development tasks. It is inspired by useful patterns from the broader agent-skills ecosystem, but the skills in this repository are intentionally rewritten, consolidated, and kept project-agnostic.
+A curated Agent Skills library for production frontend, product design, motion, visual QA, delivery workflows, backend and data engineering, software architecture and engineering, quality and testing, application security, engineering workflow, and game-development tasks. It is inspired by useful patterns from the broader agent-skills ecosystem, but the skills in this repository are intentionally rewritten, consolidated, and kept project-agnostic.
 
 ## Principles
 
@@ -59,6 +59,12 @@ kept.
 - `reviewing-api-security`
 - `auditing-dependency-risk`
 
+### Engineering workflow
+- `planning-engineering-work`
+- `managing-implementation-slices`
+- `reviewing-pull-requests`
+- `writing-effective-technical-handoffs`
+
 ### Delivery & knowledge capture
 - `shipping-github-vercel-changes`
 - `turning-techniques-into-skills`
@@ -99,6 +105,12 @@ The methods prefer the smallest test scope that can provide trustworthy evidence
 The Application Security pack separates four concerns that should remain independently invokable: threat modeling from real architecture and trust boundaries, structured web-application security review, API-specific authorization and business-invariant review, and dependency/supply-chain risk triage.
 
 The methods require authorized scope, reproducible evidence, realistic preconditions, controls at the enforcing boundary, and explicit post-remediation verification. Scanners and security tools can provide evidence, but no scanner, framework, or vendor is a dependency of the pack.
+
+## Engineering Workflow v1
+
+The Engineering Workflow pack separates four concerns that should remain independently invokable: turning broad objectives into verifiable engineering plans, managing implementation as small safe slices, reviewing pull requests against intent and current evidence, and writing technical handoffs that let a cold reader resume without rediscovery.
+
+The methods prefer behavior-oriented plans over file checklists, conceptually focused batches over oversized branches, current CI and repository evidence over review assumptions, and explicit confirmed/hypothesis/planned/blocked state over chronological chat transcripts. They do not require a particular VCS host, project-management system, or agent runtime.
 
 ## New web-app default
 
@@ -192,9 +204,10 @@ The active, installable packs are:
 - `backend-data` — Backend & Data (4 skills);
 - `architecture-engineering` — Architecture & Engineering (4 skills);
 - `quality-testing` — Quality & Testing (4 skills);
-- `application-security` — Application Security (4 skills).
+- `application-security` — Application Security (4 skills);
+- `engineering-workflow` — Engineering Workflow (4 skills).
 
-All seven published packs are active and installable.
+All eight published packs are active and installable.
 
 Install an active pack on Bash or PowerShell:
 
@@ -255,9 +268,10 @@ Os pacotes ativos e instaláveis são:
 - `backend-data` — Backend e Dados (4 skills);
 - `architecture-engineering` — Arquitetura e Engenharia (4 skills);
 - `quality-testing` — Qualidade e Testes (4 skills);
-- `application-security` — Segurança de Aplicações (4 skills).
+- `application-security` — Segurança de Aplicações (4 skills);
+- `engineering-workflow` — Fluxo de Engenharia (4 skills).
 
-Todos os sete pacotes publicados estão ativos e são instaláveis.
+Todos os oito pacotes publicados estão ativos e são instaláveis.
 
 Instale um pacote ativo com Bash ou PowerShell:
 
@@ -357,7 +371,7 @@ cd agent-skills
 code ../my-next-app
 ```
 
-Inside Codex, you can then work normally. The project-local `AGENTS.md` provides repository rules, while the reusable skills provide specialized workflows such as UI fidelity, motion, visual QA, backend/data engineering, architecture, quality/testing, application security, and delivery. You can let Codex select a matching skill or explicitly name one in the prompt.
+Inside Codex, you can then work normally. The project-local `AGENTS.md` provides repository rules, while the reusable skills provide specialized workflows such as UI fidelity, motion, visual QA, backend/data engineering, architecture, quality/testing, application security, engineering workflow, and delivery. You can let Codex select a matching skill or explicitly name one in the prompt.
 
 ## Validate
 
@@ -394,4 +408,4 @@ See `CHANGELOG.md` for release notes.
 
 ## Attribution
 
-Research sources include the MIT-licensed `MengTo/Skills`, GreenSock's MIT-licensed official GSAP skills, LottieFiles' MIT-licensed motion-design skill, and Apache-2.0 `img2threejs`, plus official PostgreSQL and Node.js documentation, the OWASP Top 10:2025, OWASP ASVS 5.0.0, OWASP API Security Top 10:2023, OWASP Web Security Testing Guide and Software Supply Chain Security guidance, SEI and Microsoft architecture guidance, AWS architectural decision records, Martin Fowler engineering and testing guidance, Playwright best practices, Google Testing Blog guidance, and Microsoft testing strategy references used for the engineering, quality, and application-security methods. `MAPPING.md` records whether each source was adapted, merged, referenced, or deliberately kept separate. Local skill text is maintained independently rather than mirrored wholesale.
+Research sources include the MIT-licensed `MengTo/Skills`, GreenSock's MIT-licensed official GSAP skills, LottieFiles' MIT-licensed motion-design skill, and Apache-2.0 `img2threejs`, plus official PostgreSQL and Node.js documentation, the OWASP Top 10:2025, OWASP ASVS 5.0.0, OWASP API Security Top 10:2023, OWASP Web Security Testing Guide and Software Supply Chain Security guidance, SEI and Microsoft architecture guidance, AWS architectural decision records, Martin Fowler engineering and testing guidance, Playwright best practices, Google Testing Blog guidance, Microsoft testing strategy references, DORA small-batch guidance, Google Engineering Practices, and GitHub pull-request documentation used for the engineering, quality, application-security, and engineering-workflow methods. `MAPPING.md` records whether each source was adapted, merged, referenced, or deliberately kept separate. Local skill text is maintained independently rather than mirrored wholesale.

@@ -1,0 +1,34 @@
+{
+  "$schema": "../schemas/pack.schema.json",
+  "slug": "engineering-workflow",
+  "status": "active",
+  "featured": false,
+  "color": "teal",
+  "version": "1.0.0-beta.1",
+  "skills": [
+    "planning-engineering-work",
+    "managing-implementation-slices",
+    "reviewing-pull-requests",
+    "writing-effective-technical-handoffs"
+  ],
+  "locales": {
+    "en": {
+      "name": "Engineering Workflow",
+      "summary": "Planning, small implementation batches, evidence-led pull-request review, and technical handoffs for engineering work that must stay reviewable and resumable.",
+      "description": "An installable engineering-workflow system for turning objectives into verifiable work, keeping implementation in safe slices, reviewing proposed changes against current evidence, and preserving enough context for another person or agent to continue accurately.",
+      "outcomes": [
+        "Turn broad engineering work into ordered, independently verifiable slices with explicit dependencies and scope boundaries",
+        "Keep implementation, review, and handoff state grounded in current evidence so work can move between branches, pull requests, people, agents, and sessions without losing causality"
+      ]
+    },
+    "pt-BR": {
+      "name": "Fluxo de Engenharia",
+      "summary": "Planejamento, pequenos lotes de implementação, revisão de pull requests orientada por evidências e handoffs técnicos para trabalho de engenharia que precisa continuar revisável e retomável.",
+      "description": "Um sistema instalável de fluxo de engenharia para transformar objetivos em trabalho verificável, manter a implementação em slices seguros, revisar mudanças propostas contra evidências atuais e preservar contexto suficiente para outra pessoa ou agente continuar com precisão.",
+      "outcomes": [
+        "Transformar trabalho amplo de engenharia em slices ordenados e verificáveis de forma independente, com dependências e limites de escopo explícitos",
+        "Manter estado de implementação, revisão e handoff fundamentado em evidências atuais para que o trabalho transite entre branches, pull requests, pessoas, agentes e sessões sem perder causalidade"
+      ]
+    }
+  }
+}

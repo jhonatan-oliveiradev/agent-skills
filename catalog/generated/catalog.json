@@ -6,13 +6,14 @@
     "en",
     "pt-BR"
   ],
-  "sourceDigest": "45cac9bee8fe3558806e334df74da02571d136b1dbf3efda8878c448375c9fee",
+  "sourceDigest": "ed49664f41385caa6c4eac7b4b5a18bc306b049f492e9377dff534dffab9a155",
   "filters": {
     "categories": [
       "application-security",
       "architecture-engineering",
       "backend-data",
       "delivery",
+      "engineering-workflow",
       "frontend",
       "game-development",
       "meta",
@@ -24,6 +25,7 @@
       "application-security",
       "architecture-engineering",
       "backend-data",
+      "engineering-workflow",
       "frontend-product",
       "game-development",
       "motion",
@@ -36,6 +38,7 @@
       "action-combat",
       "adr",
       "agent-skills",
+      "agents",
       "animation-lifecycle",
       "animation-performance",
       "animation-pipeline",
@@ -51,10 +54,13 @@
       "browser",
       "bugs",
       "character-art",
+      "code-review",
       "cohesion",
       "combat-animation",
       "component-apis",
       "constraints",
+      "context",
+      "continuity",
       "conversion",
       "coupling",
       "data-modeling",
@@ -62,12 +68,14 @@
       "debugging",
       "decision-making",
       "decision-records",
+      "delivery",
       "dependencies",
       "design-systems",
       "design-tokens",
       "developer-tooling",
       "documentation",
       "end-to-end",
+      "engineering",
       "explain",
       "external-services",
       "figma",
@@ -79,7 +87,9 @@
       "git",
       "github",
       "gsap",
+      "handoff",
       "image-reconstruction",
+      "implementation",
       "incremental-delivery",
       "indexes",
       "indexing",
@@ -98,6 +108,7 @@
       "owasp",
       "ownership",
       "performance",
+      "planning",
       "playtesting",
       "postgresql",
       "pricing-pages",
@@ -106,6 +117,7 @@
       "profiling",
       "project-scaffolding",
       "provenance",
+      "pull-requests",
       "quality",
       "quality-attributes",
       "query-performance",
@@ -122,10 +134,12 @@
       "runtime-performance",
       "runtime-validation",
       "schema-evolution",
+      "scope",
       "scroll-animation",
       "scrolltrigger",
       "security",
       "sessions",
+      "small-batches",
       "sprite-animation",
       "ssrf",
       "supply-chain",
@@ -186,10 +200,10 @@
     ]
   },
   "counts": {
-    "skills": 34,
+    "skills": 38,
     "packs": {
-      "total": 7,
-      "active": 7,
+      "total": 8,
+      "active": 8,
       "planned": 0
     },
     "categories": {
@@ -197,6 +211,7 @@
       "architecture-engineering": 4,
       "backend-data": 4,
       "delivery": 1,
+      "engineering-workflow": 4,
       "frontend": 5,
       "game-development": 5,
       "meta": 1,
@@ -205,17 +220,18 @@
       "quality-testing": 4
     },
     "maturity": {
-      "beta": 16,
+      "beta": 20,
       "stable": 18
     },
     "difficulty": {
-      "advanced": 22,
-      "intermediate": 12
+      "advanced": 23,
+      "intermediate": 15
     },
     "activePackMembership": {
       "application-security": 4,
       "architecture-engineering": 4,
       "backend-data": 4,
+      "engineering-workflow": 4,
       "frontend-product": 8,
       "game-development": 5,
       "motion": 5,
@@ -1632,6 +1648,77 @@
     },
     {
       "$schema": "../schemas/skill.schema.json",
+      "slug": "managing-implementation-slices",
+      "category": "engineering-workflow",
+      "packs": [
+        "engineering-workflow"
+      ],
+      "maturity": "beta",
+      "difficulty": "intermediate",
+      "featured": false,
+      "compatibility": {
+        "surfaces": [
+          "chatgpt",
+          "codex"
+        ],
+        "operatingSystems": [
+          "linux",
+          "macos",
+          "windows"
+        ],
+        "installModes": [
+          "plugin",
+          "filesystem"
+        ]
+      },
+      "tags": [
+        "small-batches",
+        "implementation",
+        "pull-requests",
+        "scope",
+        "delivery"
+      ],
+      "dependencies": [],
+      "relatedSkills": [
+        "planning-engineering-work",
+        "reviewing-pull-requests",
+        "planning-safe-refactors"
+      ],
+      "version": "1.0.0-beta.1",
+      "updatedAt": "2026-09-01",
+      "locales": {
+        "en": {
+          "displayName": "Managing Implementation Slices",
+          "summary": "Keeps large engineering changes in small, coherent batches that remain reviewable, verifiable, and safe to integrate independently.",
+          "primaryBenefit": "Reduces scope creep and integration risk while preserving a clear dependency chain between implementation slices.",
+          "whenToUse": "Use when an implementation is growing across multiple concerns, branches, or pull requests and needs to be decomposed into small changes that can be verified and integrated safely.",
+          "whenNotToUse": "Do not use when the requested change is already one focused, independently verifiable slice.",
+          "useCases": [
+            "Split a large feature into focused pull requests that keep the system working after each merge",
+            "Separate refactor, migration, and behavior changes so each can be verified independently"
+          ],
+          "examplePrompts": [
+            "Use managing-implementation-slices to break this change into the smallest safe reviewable slices without losing the dependency order."
+          ]
+        },
+        "pt-BR": {
+          "displayName": "Gestão de Slices de Implementação",
+          "summary": "Mantém mudanças grandes de engenharia em lotes pequenos e coerentes que continuam revisáveis, verificáveis e seguros para integração independente.",
+          "primaryBenefit": "Reduz expansão de escopo e risco de integração preservando uma cadeia clara de dependências entre slices de implementação.",
+          "whenToUse": "Use quando uma implementação estiver crescendo entre várias preocupações, branches ou pull requests e precisar ser decomposta em mudanças pequenas que possam ser verificadas e integradas com segurança.",
+          "whenNotToUse": "Não use quando a mudança solicitada já for um único slice focado e verificável de forma independente.",
+          "useCases": [
+            "Dividir uma funcionalidade grande em pull requests focadas que mantêm o sistema funcionando após cada merge",
+            "Separar refatoração, migração e mudança de comportamento para que cada parte possa ser verificada isoladamente"
+          ],
+          "examplePrompts": [
+            "Use managing-implementation-slices para quebrar esta mudança nos menores slices seguros e revisáveis sem perder a ordem de dependências."
+          ]
+        }
+      }
+    },
+    {
+      "$schema": "../schemas/skill.schema.json",
       "slug": "optimizing-frontend-motion-performance",
       "category": "motion",
       "packs": [
@@ -1764,6 +1851,77 @@
           ],
           "examplePrompts": [
             "Use orchestrating-cinematic-web-motion para coreografar esta página em Next.js com cenas de scroll contidas e estados completos de redução de movimento."
+          ]
+        }
+      }
+    },
+    {
+      "$schema": "../schemas/skill.schema.json",
+      "slug": "planning-engineering-work",
+      "category": "engineering-workflow",
+      "packs": [
+        "engineering-workflow"
+      ],
+      "maturity": "beta",
+      "difficulty": "intermediate",
+      "featured": false,
+      "compatibility": {
+        "surfaces": [
+          "chatgpt",
+          "codex"
+        ],
+        "operatingSystems": [
+          "linux",
+          "macos",
+          "windows"
+        ],
+        "installModes": [
+          "plugin",
+          "filesystem"
+        ]
+      },
+      "tags": [
+        "planning",
+        "engineering",
+        "scope",
+        "risk",
+        "verification"
+      ],
+      "dependencies": [],
+      "relatedSkills": [
+        "managing-implementation-slices",
+        "documenting-architecture-decisions",
+        "designing-test-strategies"
+      ],
+      "version": "1.0.0-beta.1",
+      "updatedAt": "2026-09-01",
+      "locales": {
+        "en": {
+          "displayName": "Planning Engineering Work",
+          "summary": "Turns broad engineering objectives into ordered, independently verifiable implementation outcomes without reducing the plan to a file checklist.",
+          "primaryBenefit": "Makes the next engineering step explicit while preserving constraints, risks, dependencies, assumptions, and the evidence required for completion.",
+          "whenToUse": "Use when an engineering objective is broad, ambiguous, risky, or spans multiple changes and needs a concrete implementation sequence before coding begins.",
+          "whenNotToUse": "Do not use for a trivial one-step change whose scope, behavior, and verification are already explicit.",
+          "useCases": [
+            "Decompose a multi-part feature into an ordered implementation sequence",
+            "Plan a risky migration with explicit assumptions, dependencies, and verification gates"
+          ],
+          "examplePrompts": [
+            "Use planning-engineering-work to turn this objective into the smallest ordered set of verifiable implementation outcomes."
+          ]
+        },
+        "pt-BR": {
+          "displayName": "Planejamento de Trabalho de Engenharia",
+          "summary": "Transforma objetivos amplos de engenharia em resultados de implementação ordenados e verificáveis de forma independente, sem reduzir o plano a uma lista de arquivos.",
+          "primaryBenefit": "Torna explícito o próximo passo de engenharia preservando restrições, riscos, dependências, suposições e as evidências exigidas para conclusão.",
+          "whenToUse": "Use quando um objetivo de engenharia for amplo, ambíguo, arriscado ou envolver várias mudanças e precisar de uma sequência concreta de implementação antes do código.",
+          "whenNotToUse": "Não use para uma mudança trivial de um único passo cujo escopo, comportamento e verificação já estejam explícitos.",
+          "useCases": [
+            "Decompor uma funcionalidade de várias partes em uma sequência ordenada de implementação",
+            "Planejar uma migração arriscada com suposições, dependências e gates de verificação explícitos"
+          ],
+          "examplePrompts": [
+            "Use planning-engineering-work para transformar este objetivo no menor conjunto ordenado de resultados de implementação verificáveis."
           ]
         }
       }
@@ -2058,6 +2216,77 @@
           ],
           "examplePrompts": [
             "Use reviewing-api-security para auditar os riscos de identidade, autorização, fluxo de negócio, recursos, SSRF e inventário desta API autorizada com evidência controlada."
+          ]
+        }
+      }
+    },
+    {
+      "$schema": "../schemas/skill.schema.json",
+      "slug": "reviewing-pull-requests",
+      "category": "engineering-workflow",
+      "packs": [
+        "engineering-workflow"
+      ],
+      "maturity": "beta",
+      "difficulty": "advanced",
+      "featured": false,
+      "compatibility": {
+        "surfaces": [
+          "chatgpt",
+          "codex"
+        ],
+        "operatingSystems": [
+          "linux",
+          "macos",
+          "windows"
+        ],
+        "installModes": [
+          "plugin",
+          "filesystem"
+        ]
+      },
+      "tags": [
+        "code-review",
+        "pull-requests",
+        "quality",
+        "risk",
+        "verification"
+      ],
+      "dependencies": [],
+      "relatedSkills": [
+        "managing-implementation-slices",
+        "building-regression-tests",
+        "reviewing-web-security"
+      ],
+      "version": "1.0.0-beta.1",
+      "updatedAt": "2026-09-01",
+      "locales": {
+        "en": {
+          "displayName": "Reviewing Pull Requests",
+          "summary": "Reviews proposed changes against intent, system behavior, design, risk, tests, and fresh verification evidence before merge decisions are made.",
+          "primaryBenefit": "Produces prioritized, actionable review findings without confusing stylistic preference with correctness or treating CI status as an assumption.",
+          "whenToUse": "Use when a pull request, patch, or proposed code change needs technical review before merge, especially when behavior, architecture, regressions, tests, or risk must be evaluated from evidence.",
+          "whenNotToUse": "Do not use merely to prepare, push, or merge a change when no technical review is requested.",
+          "useCases": [
+            "Review a feature pull request for behavioral and architectural regressions",
+            "Evaluate a risky change using the final diff, test coverage, CI evidence, and rollout implications"
+          ],
+          "examplePrompts": [
+            "Use reviewing-pull-requests to review this PR against its stated intent and current CI evidence, prioritizing blockers over nits."
+          ]
+        },
+        "pt-BR": {
+          "displayName": "Revisão de Pull Requests",
+          "summary": "Revisa mudanças propostas contra intenção, comportamento do sistema, design, risco, testes e evidências atuais de verificação antes de decisões de merge.",
+          "primaryBenefit": "Produz achados de revisão priorizados e acionáveis sem confundir preferência de estilo com correção nem tratar o estado do CI como suposição.",
+          "whenToUse": "Use quando uma pull request, patch ou mudança de código proposta precisar de revisão técnica antes do merge, especialmente quando comportamento, arquitetura, regressões, testes ou risco precisarem ser avaliados por evidência.",
+          "whenNotToUse": "Não use apenas para preparar, enviar ou fazer merge de uma mudança quando nenhuma revisão técnica tiver sido solicitada.",
+          "useCases": [
+            "Revisar uma pull request de funcionalidade em busca de regressões comportamentais e arquiteturais",
+            "Avaliar uma mudança arriscada usando o diff final, cobertura de testes, evidências do CI e implicações de rollout"
+          ],
+          "examplePrompts": [
+            "Use reviewing-pull-requests para revisar esta PR contra a intenção declarada e as evidências atuais do CI, priorizando bloqueios sobre nits."
           ]
         }
       }
@@ -2634,6 +2863,77 @@
           ]
         }
       }
+    },
+    {
+      "$schema": "../schemas/skill.schema.json",
+      "slug": "writing-effective-technical-handoffs",
+      "category": "engineering-workflow",
+      "packs": [
+        "engineering-workflow"
+      ],
+      "maturity": "beta",
+      "difficulty": "intermediate",
+      "featured": false,
+      "compatibility": {
+        "surfaces": [
+          "chatgpt",
+          "codex"
+        ],
+        "operatingSystems": [
+          "linux",
+          "macos",
+          "windows"
+        ],
+        "installModes": [
+          "plugin",
+          "filesystem"
+        ]
+      },
+      "tags": [
+        "handoff",
+        "context",
+        "continuity",
+        "documentation",
+        "agents"
+      ],
+      "dependencies": [],
+      "relatedSkills": [
+        "planning-engineering-work",
+        "managing-implementation-slices",
+        "shipping-github-vercel-changes"
+      ],
+      "version": "1.0.0-beta.1",
+      "updatedAt": "2026-09-01",
+      "locales": {
+        "en": {
+          "displayName": "Writing Effective Technical Handoffs",
+          "summary": "Captures verified engineering state, decisions, evidence, constraints, unresolved questions, and the next action for a cold reader taking over the work.",
+          "primaryBenefit": "Preserves continuity across people, agents, and sessions without forcing the next worker to reconstruct the project from chat history or guesses.",
+          "whenToUse": "Use when engineering work is being paused, delegated, moved to another session or agent, or transferred to another person and the next worker needs enough verified context to continue without rediscovery.",
+          "whenNotToUse": "Do not use as a general meeting summary or chronological transcript when no continuation of engineering work is expected.",
+          "useCases": [
+            "Hand a partially completed implementation to another agent with exact branch, PR, CI, and next-step state",
+            "Pause a debugging session while preserving confirmed facts, failed hypotheses, constraints, and the restart point"
+          ],
+          "examplePrompts": [
+            "Use writing-effective-technical-handoffs to capture the verified state of this work so a cold session can continue from the exact next step."
+          ]
+        },
+        "pt-BR": {
+          "displayName": "Redação de Handoffs Técnicos Eficazes",
+          "summary": "Registra estado verificado de engenharia, decisões, evidências, restrições, questões abertas e a próxima ação para quem assumir o trabalho sem contexto ativo.",
+          "primaryBenefit": "Preserva continuidade entre pessoas, agentes e sessões sem obrigar o próximo responsável a reconstruir o projeto a partir do histórico da conversa ou de suposições.",
+          "whenToUse": "Use quando um trabalho de engenharia for pausado, delegado, movido para outra sessão ou agente, ou transferido para outra pessoa e o próximo responsável precisar de contexto verificado suficiente para continuar sem redescoberta.",
+          "whenNotToUse": "Não use como resumo geral de reunião ou transcrição cronológica quando não houver continuidade de trabalho de engenharia esperada.",
+          "useCases": [
+            "Transferir uma implementação parcial para outro agente com estado exato de branch, PR, CI e próximo passo",
+            "Pausar uma sessão de debugging preservando fatos confirmados, hipóteses falhas, restrições e ponto de retomada"
+          ],
+          "examplePrompts": [
+            "Use writing-effective-technical-handoffs para registrar o estado verificado deste trabalho para que uma sessão sem contexto possa continuar do próximo passo exato."
+          ]
+        }
+      }
     }
   ],
   "packs": [
@@ -2894,6 +3194,93 @@
             "pt-BR": "Diagnostica caminhos de acesso PostgreSQL lentos ou incertos a partir de entradas representativas e evidências do plano de execução antes de alterar índices."
           },
           "difficulty": "advanced",
+          "maturity": "beta"
+        }
+      ]
+    },
+    {
+      "slug": "engineering-workflow",
+      "status": "active",
+      "featured": false,
+      "color": "teal",
+      "version": "1.0.0-beta.1",
+      "locales": {
+        "en": {
+          "name": "Engineering Workflow",
+          "summary": "Planning, small implementation batches, evidence-led pull-request review, and technical handoffs for engineering work that must stay reviewable and resumable.",
+          "description": "An installable engineering-workflow system for turning objectives into verifiable work, keeping implementation in safe slices, reviewing proposed changes against current evidence, and preserving enough context for another person or agent to continue accurately.",
+          "outcomes": [
+            "Turn broad engineering work into ordered, independently verifiable slices with explicit dependencies and scope boundaries",
+            "Keep implementation, review, and handoff state grounded in current evidence so work can move between branches, pull requests, people, agents, and sessions without losing causality"
+          ]
+        },
+        "pt-BR": {
+          "name": "Fluxo de Engenharia",
+          "summary": "Planejamento, pequenos lotes de implementação, revisão de pull requests orientada por evidências e handoffs técnicos para trabalho de engenharia que precisa continuar revisável e retomável.",
+          "description": "Um sistema instalável de fluxo de engenharia para transformar objetivos em trabalho verificável, manter a implementação em slices seguros, revisar mudanças propostas contra evidências atuais e preservar contexto suficiente para outra pessoa ou agente continuar com precisão.",
+          "outcomes": [
+            "Transformar trabalho amplo de engenharia em slices ordenados e verificáveis de forma independente, com dependências e limites de escopo explícitos",
+            "Manter estado de implementação, revisão e handoff fundamentado em evidências atuais para que o trabalho transite entre branches, pull requests, pessoas, agentes e sessões sem perder causalidade"
+          ]
+        }
+      },
+      "skillSlugs": [
+        "planning-engineering-work",
+        "managing-implementation-slices",
+        "reviewing-pull-requests",
+        "writing-effective-technical-handoffs"
+      ],
+      "skills": [
+        {
+          "slug": "planning-engineering-work",
+          "displayName": {
+            "en": "Planning Engineering Work",
+            "pt-BR": "Planejamento de Trabalho de Engenharia"
+          },
+          "summary": {
+            "en": "Turns broad engineering objectives into ordered, independently verifiable implementation outcomes without reducing the plan to a file checklist.",
+            "pt-BR": "Transforma objetivos amplos de engenharia em resultados de implementação ordenados e verificáveis de forma independente, sem reduzir o plano a uma lista de arquivos."
+          },
+          "difficulty": "intermediate",
+          "maturity": "beta"
+        },
+        {
+          "slug": "managing-implementation-slices",
+          "displayName": {
+            "en": "Managing Implementation Slices",
+            "pt-BR": "Gestão de Slices de Implementação"
+          },
+          "summary": {
+            "en": "Keeps large engineering changes in small, coherent batches that remain reviewable, verifiable, and safe to integrate independently.",
+            "pt-BR": "Mantém mudanças grandes de engenharia em lotes pequenos e coerentes que continuam revisáveis, verificáveis e seguros para integração independente."
+          },
+          "difficulty": "intermediate",
+          "maturity": "beta"
+        },
+        {
+          "slug": "reviewing-pull-requests",
+          "displayName": {
+            "en": "Reviewing Pull Requests",
+            "pt-BR": "Revisão de Pull Requests"
+          },
+          "summary": {
+            "en": "Reviews proposed changes against intent, system behavior, design, risk, tests, and fresh verification evidence before merge decisions are made.",
+            "pt-BR": "Revisa mudanças propostas contra intenção, comportamento do sistema, design, risco, testes e evidências atuais de verificação antes de decisões de merge."
+          },
+          "difficulty": "advanced",
+          "maturity": "beta"
+        },
+        {
+          "slug": "writing-effective-technical-handoffs",
+          "displayName": {
+            "en": "Writing Effective Technical Handoffs",
+            "pt-BR": "Redação de Handoffs Técnicos Eficazes"
+          },
+          "summary": {
+            "en": "Captures verified engineering state, decisions, evidence, constraints, unresolved questions, and the next action for a cold reader taking over the work.",
+            "pt-BR": "Registra estado verificado de engenharia, decisões, evidências, restrições, questões abertas e a próxima ação para quem assumir o trabalho sem contexto ativo."
+          },
+          "difficulty": "intermediate",
           "maturity": "beta"
         }
       ]

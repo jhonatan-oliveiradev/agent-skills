@@ -1,0 +1,39 @@
+{
+  "$schema": "../schemas/skill.schema.json",
+  "slug": "planning-engineering-work",
+  "category": "engineering-workflow",
+  "packs": ["engineering-workflow"],
+  "maturity": "beta",
+  "difficulty": "intermediate",
+  "featured": false,
+  "compatibility": {
+    "surfaces": ["chatgpt", "codex"],
+    "operatingSystems": ["linux", "macos", "windows"],
+    "installModes": ["plugin", "filesystem"]
+  },
+  "tags": ["planning", "engineering", "scope", "risk", "verification"],
+  "dependencies": [],
+  "relatedSkills": ["managing-implementation-slices", "documenting-architecture-decisions", "designing-test-strategies"],
+  "version": "1.0.0-beta.1",
+  "updatedAt": "2026-09-01",
+  "locales": {
+    "en": {
+      "displayName": "Planning Engineering Work",
+      "summary": "Turns broad engineering objectives into ordered, independently verifiable implementation outcomes without reducing the plan to a file checklist.",
+      "primaryBenefit": "Makes the next engineering step explicit while preserving constraints, risks, dependencies, assumptions, and the evidence required for completion.",
+      "whenToUse": "Use when an engineering objective is broad, ambiguous, risky, or spans multiple changes and needs a concrete implementation sequence before coding begins.",
+      "whenNotToUse": "Do not use for a trivial one-step change whose scope, behavior, and verification are already explicit.",
+      "useCases": ["Decompose a multi-part feature into an ordered implementation sequence", "Plan a risky migration with explicit assumptions, dependencies, and verification gates"],
+      "examplePrompts": ["Use planning-engineering-work to turn this objective into the smallest ordered set of verifiable implementation outcomes."]
+    },
+    "pt-BR": {
+      "displayName": "Planejamento de Trabalho de Engenharia",
+      "summary": "Transforma objetivos amplos de engenharia em resultados de implementação ordenados e verificáveis de forma independente, sem reduzir o plano a uma lista de arquivos.",
+      "primaryBenefit": "Torna explícito o próximo passo de engenharia preservando restrições, riscos, dependências, suposições e as evidências exigidas para conclusão.",
+      "whenToUse": "Use quando um objetivo de engenharia for amplo, ambíguo, arriscado ou envolver várias mudanças e precisar de uma sequência concreta de implementação antes do código.",
+      "whenNotToUse": "Não use para uma mudança trivial de um único passo cujo escopo, comportamento e verificação já estejam explícitos.",
+      "useCases": ["Decompor uma funcionalidade de várias partes em uma sequência ordenada de implementação", "Planejar uma migração arriscada com suposições, dependências e gates de verificação explícitos"],
+      "examplePrompts": ["Use planning-engineering-work para transformar este objetivo no menor conjunto ordenado de resultados de implementação verificáveis."]
+    }
+  }
+}
