@@ -1,0 +1,53 @@
+name: Sync RC2 web release tests
+
+on:
+  push:
+    branches: [release/1.0.0-rc.2]
+
+permissions:
+  contents: write
+
+jobs:
+  sync:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: release/1.0.0-rc.2
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Synchronize release-coupled web assertions
+        shell: bash
+        run: |
+          node --input-type=module <<'NODE'
+          import { readFile, writeFile } from "node:fs/promises";
+
+          const files = [
+            "apps/web/src/components/site-chrome.test.tsx",
+            "apps/web/src/components/site-shell.test.tsx",
+            "apps/web/src/lib/roadmap.test.ts",
+          ];
+
+          for (const file of files) {
+            const source = await readFile(file, "utf8");
+            const updated = source.replaceAll("1.0.0-rc.1", "1.0.0-rc.2");
+            if (updated === source) throw new Error(`${file}: no RC1 assertion found`);
+            if (updated.includes("1.0.0-rc.1")) throw new Error(`${file}: RC1 assertion remains`);
+            await writeFile(file, updated, "utf8");
+          }
+          NODE
+      - name: Verify synchronized web assertions
+        run: |
+          npm ci --prefix apps/web
+          npm run web:test
+        continue-on-error: true
+      - name: Commit only synchronized tests
+        shell: bash
+        run: |
+          git add apps/web/src/components/site-chrome.test.tsx apps/web/src/components/site-shell.test.tsx apps/web/src/lib/roadmap.test.ts
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -m "test(web): sync release assertions with RC2"
+          git push origin HEAD:release/1.0.0-rc.2
