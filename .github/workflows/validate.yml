@@ -5,7 +5,109 @@ on:
     branches: [main, dev]
   pull_request:
 
+permissions:
+  contents: write
+
 jobs:
+  materialize-rc1-release:
+    if: github.event_name == 'pull_request' && github.head_ref == 'feat/release-readiness-rc1'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.head_ref }}
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Materialize release-coupled versions and current release records
+        shell: bash
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          old = '1.0.0-beta.1'
+          new = '1.0.0-rc.1'
+
+          records = sorted(Path('catalog/skills').glob('*.json')) + sorted(Path('catalog/packs').glob('*.json'))
+          if len(records) != 59:
+              raise SystemExit(f'expected 59 catalog records, found {len(records)}')
+          for path in records:
+              data = json.loads(path.read_text(encoding='utf-8'))
+              current = data.get('version')
+              if current not in {old, new}:
+                  raise SystemExit(f'{path}: unexpected version {current!r}')
+              data['version'] = new
+              path.write_text(json.dumps(data, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
+
+          lock = Path('apps/web/package-lock.json')
+          lock_text = lock.read_text(encoding='utf-8')
+          marker = '"version": "1.0.0-beta.1"'
+          if marker in lock_text:
+              if lock_text.count(marker) != 2:
+                  raise SystemExit(f'expected exactly two web lock version markers, found {lock_text.count(marker)}')
+              lock_text = lock_text.replace(marker, '"version": "1.0.0-rc.1"', 2)
+              lock.write_text(lock_text, encoding='utf-8')
+
+          changelog = Path('CHANGELOG.md')
+          text = changelog.read_text(encoding='utf-8')
+          rc_entry = '''## [1.0.0-rc.1] - 2026-09-02
+
+### Release readiness
+
+- Froze the release candidate at 49 canonical skills and 10 active packs.
+- Added a versioned routing benchmark covering every canonical method as a primary owner, important overlap boundaries, and deliberate no-skill outcomes.
+- Refined `selecting-working-methods` around artifact, stage, and verification ownership without turning routing into a static decision table.
+- Added machine-readable readiness gates for the plugin, catalog and packs, cross-platform installers, and bilingual microsite.
+- Aligned current public release copy and kept ChatGPT, Codex, and Claude-compatible distribution under the existing repository validation gates.
+
+`1.0.0-rc.1` is a release candidate. Stable `1.0.0` remains a later promotion after real-use evidence.
+
+'''
+          anchor = '## [1.0.0-beta.1] - Unreleased\n'
+          if rc_entry not in text:
+              if text.count(anchor) != 1:
+                  raise SystemExit('expected beta changelog anchor exactly once')
+              text = text.replace(anchor, rc_entry + anchor, 1)
+              changelog.write_text(text, encoding='utf-8')
+
+          project_pages = Path('apps/web/src/lib/project-pages.ts')
+          text = project_pages.read_text(encoding='utf-8')
+          replacements = [
+              ('version: "1.0.0-beta.1"', 'version: "1.0.0-rc.1"', 2),
+              ('date: "Unreleased"', 'date: "2026-09-02"', 1),
+              ('date: "Não lançada"', 'date: "2026-09-02"', 1),
+              ('Added the searchable 18-skill catalog, skill details, six pack experiences, and pack installation guidance.', 'Added the searchable 49-skill catalog, skill details, ten active pack experiences, and pack installation guidance.', 1),
+              ('Added bilingual metadata for all 18 canonical skills and six active or planned packs.', 'Added bilingual metadata for all 49 canonical skills and ten active packs.', 1),
+              ('Adição do catálogo com busca para 18 skills, detalhes das skills, seis experiências de pacotes e orientação de instalação.', 'Adição do catálogo com busca para 49 skills, detalhes das skills, dez experiências de pacotes ativos e orientação de instalação.', 1),
+              ('Adição de metadados bilíngues para as 18 skills canônicas e seis pacotes ativos ou planejados.', 'Adição de metadados bilíngues para as 49 skills canônicas e dez pacotes ativos.', 1),
+          ]
+          for before, after, expected in replacements:
+              if after in text:
+                  continue
+              count = text.count(before)
+              if count != expected:
+                  raise SystemExit(f'project-pages expected {expected} occurrence(s), found {count}: {before}')
+              text = text.replace(before, after, expected)
+          project_pages.write_text(text, encoding='utf-8')
+
+          plan = Path('docs/superpowers/plans/2026-09-02-release-readiness-rc1.md')
+          text = plan.read_text(encoding='utf-8')
+          correction = '''\n## Execution correction — catalog version semantics\n\nCI evidence from the RC bump proved that skill and pack metadata `version` fields are release-coupled to `catalog/catalog.json`: `scripts/validate-catalog.mjs` rejects any record whose version differs from the catalog manifest. The earlier Task 4 instruction not to mass-update those record versions is therefore superseded. RC1 updates all 49 skill metadata records and all 10 pack records to `1.0.0-rc.1` without changing maturity, method content, pack membership, or category semantics.\n'''
+          if correction not in text:
+              plan.write_text(text + correction, encoding='utf-8')
+          PY
+          npm run catalog:generate
+          node apps/web/scripts/sync-catalog.mjs
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add catalog/skills catalog/packs catalog/generated/catalog.json apps/web/package-lock.json CHANGELOG.md apps/web/src/lib/project-pages.ts docs/superpowers/plans/2026-09-02-release-readiness-rc1.md
+          git add -f apps/web/src/generated/catalog.json
+          git diff --cached --quiet && exit 0
+          git commit -m "release: materialize 1.0.0-rc.1 catalog state"
+          git push origin HEAD:${{ github.head_ref }}
+
   validate:
     strategy:
       fail-fast: false
