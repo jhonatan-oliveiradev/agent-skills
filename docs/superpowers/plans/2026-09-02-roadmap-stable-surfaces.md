@@ -4,7 +4,7 @@
 
 **Goal:** Move the four already-qualified release surfaces from Beta to Stable in the public roadmap without changing release state or product behavior.
 
-**Architecture:** Keep the existing seven-stage roadmap model and localized copy source. Replace the maturity-specific `betaItems` field with `stableSurfaceItems`, leave Beta empty, and compose Stable from those four surface records plus the existing stable-skill collection record.
+**Architecture:** Keep the existing seven-stage roadmap model and localized copy source unchanged. Reclassify the four existing localized surface records inside `roadmap.ts`, leave Beta empty, and compose Stable from those records plus the existing stable-skill collection record.
 
 **Tech Stack:** TypeScript, Next.js 16, Vitest, Testing Library.
 
@@ -16,7 +16,7 @@
 - Do not bump `1.0.0` or modify release readiness metadata.
 - Do not change canonical skill or pack records.
 - Do not regenerate catalog artifacts.
-- Keep the existing localized surface titles and summaries.
+- Keep localized surface titles, summaries, and message schema unchanged.
 - Require RED→GREEN evidence and canonical Ubuntu + Windows CI.
 
 ---
@@ -31,18 +31,18 @@
 - Consumes: `getRoadmapStages(locale)` and the existing rendered roadmap page.
 - Produces: regression coverage for Stable surface placement.
 
-- [ ] **Step 1: Write the failing library test**
+- [x] **Step 1: Write the failing library test**
 
-Update the expected stage counts to:
+Require stage counts:
 
 ```ts
 expect(stages.map((stage) => stage.items.length)).toEqual([0, 0, 0, 0, 0, 5, 0]);
 ```
 
-Assert Stable IDs are deterministic:
+Require deterministic Stable IDs:
 
 ```ts
-expect(stages.find((stage) => stage.id === "stable")?.items.map((item) => item.id)).toEqual([
+expect(stable?.items.map((item) => item.id)).toEqual([
   "plugin",
   "catalog",
   "installers",
@@ -51,54 +51,43 @@ expect(stages.find((stage) => stage.id === "stable")?.items.map((item) => item.i
 ]);
 ```
 
-Assert the four surface entries report `1.0.0`, while the skill collection retains the stable-skill count metadata.
+The four surface entries must report `1.0.0`; the skill collection keeps its stable-skill count metadata.
 
-- [ ] **Step 2: Update the rendered-program expectation**
+- [x] **Step 2: Update the rendered-program expectation**
 
-Change the expected empty-stage count from five to six and assert Beta is empty while Stable is populated.
+Require six empty stages and assert Beta is empty while Stable is populated.
 
-- [ ] **Step 3: Run the web tests and capture RED**
+- [x] **Step 3: Run the web tests and capture RED**
 
-Run through the canonical CI workflow. Expected failure: roadmap assertions show four Beta records and only one Stable record.
+Canonical run `33690446991` failed only in the four new EN/PT-BR roadmap assertions. The implementation still returned `[0, 0, 0, 0, 4, 1, 0]`.
 
 ---
 
-### Task 2: Promote the localized release surfaces to Stable
+### Task 2: Reclassify the existing release-surface records
 
 **Files:**
-- Modify: `apps/web/src/lib/messages.ts`
 - Modify: `apps/web/src/lib/roadmap.ts`
 
 **Interfaces:**
-- Consumes: localized roadmap copy and `catalog.version`.
+- Consumes: existing localized `copy.betaItems` records and `catalog.version`.
 - Produces: `getRoadmapStages(locale)` with an empty Beta stage and five Stable records.
 
-- [ ] **Step 1: Rename the copy contract**
+- [ ] **Step 1: Build versioned surface records**
 
-Replace:
-
-```ts
-readonly betaItems: readonly { readonly id: string; readonly title: string; readonly summary: string }[];
-```
-
-with:
+Create a maturity-neutral local alias without changing the messages schema:
 
 ```ts
-readonly stableSurfaceItems: readonly { readonly id: string; readonly title: string; readonly summary: string }[];
-```
-
-Rename both EN and PT-BR data keys without altering titles or summaries.
-
-- [ ] **Step 2: Compose Stable records**
-
-Replace the Beta mapping with an empty array and build Stable as:
-
-```ts
-const stableSurfaces = copy.stableSurfaceItems.map((item) => ({
+const stableSurfaces = copy.betaItems.map((item) => ({
   ...item,
   meta: catalog.version,
 }));
+```
 
+- [ ] **Step 2: Compose Stable records and empty Beta**
+
+Build Stable as:
+
+```ts
 const stable = [
   ...stableSurfaces,
   {
@@ -130,7 +119,7 @@ Expected: roadmap library and rendered-program tests pass in both locales.
 
 - [ ] **Step 1: Review the final diff**
 
-Expected changed files are limited to the spec, plan, two roadmap tests, `messages.ts`, and `roadmap.ts`.
+Expected changed files are limited to the spec, plan, two roadmap tests, and `roadmap.ts`.
 
 - [ ] **Step 2: Run canonical Ubuntu + Windows CI**
 
