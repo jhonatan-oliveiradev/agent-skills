@@ -27,9 +27,9 @@ describe("Selecting Working Methods product integration", () => {
   });
 
   it.each([
-    ["en", "Selecting Working Methods"],
-    ["pt-BR", "Seleção de Métodos de Trabalho"],
-  ] as const)("renders the localized meta-router dossier for %s", async (locale, displayName) => {
+    ["en", "Selecting Working Methods", "Turning Techniques into Skills"],
+    ["pt-BR", "Seleção de Métodos de Trabalho", "Transformação de Técnicas em Skills"],
+  ] as const)("renders the localized meta-router dossier for %s", async (locale, displayName, relatedSkill) => {
     const { container } = render(
       await SkillDetailPage({
         params: Promise.resolve({ locale, slug: "selecting-working-methods" }),
@@ -38,6 +38,9 @@ describe("Selecting Working Methods product integration", () => {
 
     expect(screen.getByRole("heading", { level: 1, name: displayName })).toBeInTheDocument();
     expect(container).toHaveTextContent("./install.sh --skill selecting-working-methods");
-    expect(container).toHaveTextContent("turning-techniques-into-skills");
+    expect(screen.getByRole("link", { name: relatedSkill })).toHaveAttribute(
+      "href",
+      `/${locale}/skills/turning-techniques-into-skills`,
+    );
   });
 });
