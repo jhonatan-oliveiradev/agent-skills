@@ -5,44 +5,7 @@ on:
     branches: [main, dev]
   pull_request:
 
-permissions:
-  contents: write
-
 jobs:
-  materialize-writing-counts:
-    if: github.event_name == 'pull_request' && github.head_ref == 'feat/writing-communication-pack-v1'
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          ref: ${{ github.head_ref }}
-          fetch-depth: 0
-      - name: Align repository catalog count contract
-        shell: bash
-        run: |
-          python - <<'PY'
-          from pathlib import Path
-
-          path = Path('scripts/validate-catalog.test.mjs')
-          text = path.read_text(encoding='utf-8')
-          replacements = {
-              'skillCount: 44': 'skillCount: 49',
-              'packCount: 9': 'packCount: 10',
-              'activePackCount: 9': 'activePackCount: 10',
-          }
-          for old, new in replacements.items():
-              if old not in text:
-                  raise SystemExit(f'expected count contract not found: {old}')
-              text = text.replace(old, new, 1)
-          path.write_text(text, encoding='utf-8')
-          PY
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add scripts/validate-catalog.test.mjs
-          git diff --cached --quiet && exit 0
-          git commit -m "test: align Writing & Communication catalog counts"
-          git push origin HEAD:${{ github.head_ref }}
-
   validate:
     strategy:
       fail-fast: false
