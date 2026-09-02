@@ -2,6 +2,23 @@
 
 All notable changes to this skill library are documented here.
 
+## [1.0.0-rc.2] - 2026-09-02
+
+### Codebase Intelligence
+
+- Expanded the collection to 54 canonical skills and 11 active packs with Codebase Intelligence v1.
+- Added five evidence-led methods for mapping existing structure, tracing execution paths, analyzing blast radius, semantic investigation, and evidence-backed change planning.
+- Documented CodeGraph as an official optional integration while preserving a verified repository-inspection fallback when no code-intelligence runtime is callable.
+- Standardized progressive, evidence-led context expansion to avoid unnecessary broad repository reads.
+
+### Release readiness
+
+- Synchronized Studio release surfaces and catalog metadata at `1.0.0-rc.2` while preserving the 54-skill / 11-pack collection.
+- Kept generated catalogs, installers, plugin validation, and Linux/Windows CI under the existing repository gates.
+- Reopened the Stable gate until real-use and CI evidence validates the Codebase Intelligence pack.
+
+`1.0.0-rc.2` remains a release candidate. Stable `1.0.0` is still frozen pending the new real-use evidence gate.
+
 ## [1.0.0-rc.1] - 2026-09-02
 
 ### Release readiness
@@ -69,7 +86,7 @@ All notable changes to this skill library are documented here.
 - Project-local `AGENTS.md` template for Codex repository instructions.
 - Automatic installation of reusable skills into `~/.agents/skills/`.
 - Package-manager detection for npm, pnpm, Yarn, and Bun when installing Prettier tooling.
-- Non-destructive bootstrap behavior with explicit `--force`, `--skip-deps`, and `--skip-skills` controls.
+- Non-destructive bootstrap behavior with explicit `--force`, `--skip-deps`, `--skip-skills` controls.
 - Node test coverage for Tailwind stylesheet detection and safe file generation.
 
 ### Changed
