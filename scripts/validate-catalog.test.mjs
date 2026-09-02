@@ -83,7 +83,6 @@ test("rejects version drift, private data, and catalog symlinks", async (context
 test("rejects private data in nested non-JSON catalog files", async () => {
   const root = await catalogFixture();
   const notesDirectory = path.join(root, "catalog", "packs", "debug");
-  await mkdir(path.dirname(notesDirectory), { recursive: true });
   await mkdir(notesDirectory, { recursive: true });
   await writeFile(path.join(notesDirectory, "notes.md"), "ghp_abcdefghijklmnopqrstuvwxyz");
 
