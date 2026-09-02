@@ -9,7 +9,7 @@ permissions:
   contents: write
 
 jobs:
-  materialize-writing-web:
+  materialize-writing-terminal-count:
     if: github.event_name == 'pull_request' && github.head_ref == 'feat/writing-communication-pack-v1'
     runs-on: ubuntu-latest
     steps:
@@ -17,10 +17,7 @@ jobs:
         with:
           ref: ${{ github.head_ref }}
           fetch-depth: 0
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 22
-      - name: Align shell counts and sync committed web catalog
+      - name: Align terminal demo count
         shell: bash
         run: |
           python - <<'PY'
@@ -28,26 +25,19 @@ jobs:
 
           path = Path('apps/web/src/components/site-shell.test.tsx')
           text = path.read_text(encoding='utf-8')
-          replacements = {
-              '"44 skills"': '"49 skills"',
-              '"9 packs"': '"10 packs"',
-              '"9 pacotes"': '"10 pacotes"',
-              '.home-pack-dossier")).toHaveLength(9)': '.home-pack-dossier")).toHaveLength(10)',
-              '[data-pack-dossier]")).toHaveLength(9)': '[data-pack-dossier]")).toHaveLength(10)',
-              '[data-method-row]")).toHaveLength(44)': '[data-method-row]")).toHaveLength(49)',
-          }
-          for old, new in replacements.items():
-              if old in text:
-                  text = text.replace(old, new)
-          path.write_text(text, encoding='utf-8')
+          old = '"44 skills prontas para usar."'
+          new = '"49 skills prontas para usar."'
+          if new in text:
+              raise SystemExit(0)
+          if old not in text:
+              raise SystemExit('expected terminal count contract not found')
+          path.write_text(text.replace(old, new, 1), encoding='utf-8')
           PY
-          node apps/web/scripts/sync-catalog.mjs
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add apps/web/src/components/site-shell.test.tsx
-          git add -f apps/web/src/generated/catalog.json
           git diff --cached --quiet && exit 0
-          git commit -m "test: align Writing & Communication web shell"
+          git commit -m "test: align Writing & Communication terminal count"
           git push origin HEAD:${{ github.head_ref }}
 
   validate:
