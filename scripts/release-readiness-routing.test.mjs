@@ -67,6 +67,14 @@ test("routing benchmark includes deliberate no-skill and overlap-boundary scenar
     "frontend-fidelity-chain",
     "review-vs-shipping",
     "method-selection-vs-skill-authoring",
+    "codebase-current-vs-future-architecture",
+    "codebase-evidence-vs-engineering-plan",
+    "codebase-test-impact-vs-test-strategy",
+    "execution-trace-vs-root-cause",
+    "semantic-search-vs-text-match",
+    "codegraph-optional-runtime",
+    "codegraph-explicit-setup",
+    "codebase-context-sufficiency",
   ]) {
     assert.ok(ids.has(id), `missing routing boundary scenario: ${id}`);
   }
