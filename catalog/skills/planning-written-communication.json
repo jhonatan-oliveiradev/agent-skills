@@ -1,0 +1,39 @@
+{
+  "$schema": "../schemas/skill.schema.json",
+  "slug": "planning-written-communication",
+  "category": "writing-communication",
+  "packs": ["writing-communication"],
+  "maturity": "beta",
+  "difficulty": "beginner",
+  "featured": false,
+  "compatibility": {
+    "surfaces": ["chatgpt", "codex"],
+    "operatingSystems": ["linux", "macos", "windows"],
+    "installModes": ["plugin", "filesystem"]
+  },
+  "tags": ["writing", "communication", "content-strategy", "audience", "briefing"],
+  "dependencies": [],
+  "relatedSkills": ["writing-conversion-copy", "writing-product-and-ux-copy", "editing-for-clarity-and-tone", "writing-brand-voice-and-messaging"],
+  "version": "1.0.0-beta.1",
+  "updatedAt": "2026-09-01",
+  "locales": {
+    "en": {
+      "displayName": "Planning Written Communication",
+      "summary": "Frames audience, objective, evidence, channel, voice constraints, protected material, and success criteria before complex writing begins.",
+      "primaryBenefit": "Prevents ambiguous or high-stakes writing from turning missing facts and unstated assumptions into polished but incorrect prose.",
+      "whenToUse": "Use when communication is high-stakes, multi-stakeholder, source-grounded, or ambiguous enough that audience, objective, evidence, channel, and constraints should be resolved before drafting.",
+      "whenNotToUse": "Do not use for a simple rewrite or short message whose audience, purpose, evidence, and format are already explicit.",
+      "useCases": ["Prepare a communication brief before drafting a sensitive customer announcement", "Resolve audiences, evidence, protected wording, and channel constraints before a multi-stakeholder proposal"],
+      "examplePrompts": ["Use planning-written-communication to turn these notes and source materials into a concise writing brief with audience, objective, verified facts, unresolved assumptions, protected spans, channel constraints, and completion criteria before we draft anything."]
+    },
+    "pt-BR": {
+      "displayName": "Planejamento de Comunicação Escrita",
+      "summary": "Estrutura audiência, objetivo, evidências, canal, restrições de voz, material protegido e critérios de sucesso antes de uma escrita complexa começar.",
+      "primaryBenefit": "Evita que textos ambíguos ou de alto impacto transformem fatos ausentes e premissas não declaradas em prosa polida, porém incorreta.",
+      "whenToUse": "Use quando a comunicação é de alto impacto, envolve múltiplos stakeholders, depende de fontes ou é ambígua o bastante para exigir definição de audiência, objetivo, evidências, canal e restrições antes da redação.",
+      "whenNotToUse": "Não use para uma reescrita simples ou mensagem curta cuja audiência, finalidade, evidências e formato já estejam explícitos.",
+      "useCases": ["Preparar um brief de comunicação antes de redigir um comunicado sensível para clientes", "Resolver audiências, evidências, trechos protegidos e restrições de canal antes de uma proposta com vários stakeholders"],
+      "examplePrompts": ["Use planning-written-communication para transformar estas notas e fontes em um brief conciso com audiência, objetivo, fatos verificados, premissas em aberto, trechos protegidos, restrições de canal e critérios de conclusão antes de redigirmos o texto final."]
+    }
+  }
+}
