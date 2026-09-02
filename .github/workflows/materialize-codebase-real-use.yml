@@ -1,0 +1,171 @@
+name: Materialize Codebase Intelligence real-use case
+
+on:
+  push:
+    branches: [evidence/codebase-intelligence-real-use]
+
+permissions:
+  contents: write
+
+jobs:
+  materialize:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: evidence/codebase-intelligence-real-use
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Insert public-safe Rocket case
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+
+          path = Path("apps/web/src/lib/built-with-skills.ts")
+          source = path.read_text()
+
+          const_marker = '''const rocketCaseSourcePath =
+            "docs/built-with-skills/2026-09-02-rocket-editorial-error-boundary.md";
+'''
+          const_insert = '''const rocketCodebaseCaseSourcePath =
+            "docs/built-with-skills/2026-09-02-rocket-codebase-intelligence-cosmic-sdk-removal.md";
+'''
+          if "rocketCodebaseCaseSourcePath" not in source:
+              if const_marker not in source:
+                  raise SystemExit("rocket source-path marker not found")
+              source = source.replace(const_marker, const_insert + const_marker, 1)
+
+          case_marker = "const cases = [\n"
+          case_insert = r'''  {
+    slug: "rocket-codebase-intelligence-cosmic-sdk-removal",
+    date: "2026-09-02",
+    sourcePath: rocketCodebaseCaseSourcePath,
+    evidenceClass: "real-use",
+    project: rocketProject,
+    skills: [
+      "mapping-existing-codebase-structure",
+      "investigating-codebase-semantically",
+      "tracing-code-execution-paths",
+      "analyzing-change-blast-radius",
+      "planning-codebase-changes-with-evidence",
+    ],
+    evidence: [
+      {
+        type: "source",
+        href: `${repositoryUrl}/blob/main/${rocketCodebaseCaseSourcePath}`,
+        labels: {
+          en: "Public case record",
+          "pt-BR": "Registro público do case",
+        },
+      },
+      {
+        type: "qa",
+        href: `${repositoryUrl}/blob/main/${rocketCodebaseCaseSourcePath}#verification-record`,
+        labels: {
+          en: "Verification record",
+          "pt-BR": "Registro de verificação",
+        },
+      },
+    ],
+    locales: {
+      en: {
+        title: "Removing a deprecated Cosmic SDK through evidence-led codebase analysis",
+        summary:
+          "A real Rocket maintenance pass used the complete Codebase Intelligence pack to separate live Payload runtime ownership from historical Cosmic compatibility and safely remove one obsolete SDK write path.",
+        challenge:
+          "Determine whether Cosmic references still represented a live public-runtime dependency after the Payload cutover, then remove only what repository evidence proved obsolete without breaking migration compatibility, local fallbacks, database behavior, or UI.",
+        decisions: [
+          {
+            title: "Map ownership before deleting legacy references",
+            summary:
+              "Trace Home and Publications through Payload and their local fallbacks before treating repository-wide Cosmic search hits as one dependency surface.",
+          },
+          {
+            title: "Separate compatibility from package dependency",
+            summary:
+              "Keep the historical migration path because it reads Cosmic through native fetch, while rejecting migration and CDN configuration hits as proof that the deprecated SDK is still required.",
+          },
+          {
+            title: "Bound the blast radius to the observed writer",
+            summary:
+              "Remove only the cosmicjs dependency, populate npm entrypoint, obsolete population writer, and derived lockfile records; leave runtime loaders, migration semantics, schema, database, and visual code untouched.",
+          },
+          {
+            title: "Prove the boundary with RED→GREEN CI",
+            summary:
+              "Start with a regression contract that fails on the existing SDK, regenerate the lockfile through npm, and accept the cleanup only after the canonical Rocket pipeline passes on the final evidence HEAD.",
+          },
+        ],
+        results: [
+          "The deprecated cosmicjs SDK and obsolete Cosmic write-only population path were removed.",
+          "Historical Cosmic-to-Payload migration remains available through native fetch.",
+          "Public Home and Publications remain Payload-first with their local fallback behavior intact.",
+          "The final Rocket CI passed dependency install, Payload type drift, full tests, lint, typecheck, and production build.",
+          "All five Codebase Intelligence methods contributed to the decision, blast-radius boundary, implementation plan, or verification evidence.",
+        ],
+      },
+      "pt-BR": {
+        title: "Remoção de um SDK Cosmic obsoleto com análise de codebase orientada por evidências",
+        summary:
+          "Uma manutenção real no Rocket usou o pack completo de Codebase Intelligence para separar a ownership atual do runtime Payload da compatibilidade histórica com Cosmic e remover com segurança um único caminho legado de escrita.",
+        challenge:
+          "Determinar se referências a Cosmic ainda representavam uma dependência viva do runtime público após o cutover para Payload e remover apenas o que as evidências do repositório comprovassem obsoleto, sem quebrar migração, fallbacks locais, banco ou UI.",
+        decisions: [
+          {
+            title: "Mapear ownership antes de apagar referências legadas",
+            summary:
+              "Rastrear Home e Publications pelo Payload e seus fallbacks locais antes de tratar todos os resultados de busca por Cosmic como uma única superfície de dependência.",
+          },
+          {
+            title: "Separar compatibilidade de dependência de pacote",
+            summary:
+              "Preservar a migração histórica porque ela lê Cosmic com fetch nativo e rejeitar hits de migração e configuração de CDN como prova de que o SDK depreciado ainda era necessário.",
+          },
+          {
+            title: "Limitar o blast radius ao writer observado",
+            summary:
+              "Remover apenas a dependência cosmicjs, o script npm populate, o writer legado e os registros derivados do lockfile, mantendo loaders, semântica de migração, schema, banco e código visual intactos.",
+          },
+          {
+            title: "Provar a fronteira com CI RED→GREEN",
+            summary:
+              "Começar com um contrato de regressão que falha com o SDK existente, regenerar o lockfile pelo npm e aceitar o cleanup apenas depois do pipeline canônico do Rocket passar no HEAD final de evidência.",
+          },
+        ],
+        results: [
+          "O SDK cosmicjs depreciado e o caminho legado de escrita/população do Cosmic foram removidos.",
+          "A migração histórica Cosmic→Payload permanece disponível por fetch nativo.",
+          "Home e Publications públicos continuam Payload-first com seus fallbacks locais preservados.",
+          "O CI final do Rocket passou instalação, drift de tipos do Payload, suíte completa de testes, lint, typecheck e build de produção.",
+          "Os cinco métodos de Codebase Intelligence contribuíram para a decisão, fronteira de blast radius, plano de implementação ou evidência de verificação.",
+        ],
+      },
+    },
+  },
+'''
+          if 'slug: "rocket-codebase-intelligence-cosmic-sdk-removal"' not in source:
+              if case_marker not in source:
+                  raise SystemExit("cases marker not found")
+              source = source.replace(case_marker, case_marker + case_insert, 1)
+
+          path.write_text(source)
+          PY
+      - name: Verify web evidence contracts
+        run: |
+          npm ci --prefix apps/web
+          npm run web:test
+      - name: Commit materialized case only
+        shell: bash
+        run: |
+          git add apps/web/src/lib/built-with-skills.ts
+          if git diff --cached --quiet; then
+            echo "Case is already materialized."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -m "evidence(web): publish Rocket Codebase Intelligence case"
+          git push origin HEAD:evidence/codebase-intelligence-real-use
