@@ -1,9 +1,17 @@
 import { describe, expect, it, vi } from "vitest";
 
 vi.mock("server-only", () => ({}));
+import { messages } from "./messages";
 import { getRoadmapStages } from "./roadmap";
 
 describe("public roadmap", () => {
+  it.each(["en", "pt-BR"] as const)("uses the Stable surface message contract for %s", (locale) => {
+    const copy = messages[locale].roadmap as Record<string, unknown>;
+
+    expect(copy).toHaveProperty("stableSurfaceItems");
+    expect(copy).not.toHaveProperty("betaItems");
+  });
+
   it.each(["en", "pt-BR"] as const)("derives honest roadmap stages for %s", (locale) => {
     const stages = getRoadmapStages(locale);
 

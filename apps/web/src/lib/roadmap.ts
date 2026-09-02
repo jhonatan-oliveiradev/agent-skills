@@ -41,7 +41,7 @@ export function getRoadmapStages(locale: Locale): readonly RoadmapStage[] {
       meta: copy.itemMeta.plannedPack,
       href: `/${locale}/packs/${pack.slug}`,
     }));
-  const stableSurfaces = copy.betaItems.map((item) => ({
+  const stableSurfaces = copy.stableSurfaceItems.map((item) => ({
     ...item,
     meta: catalog.version,
   }));
