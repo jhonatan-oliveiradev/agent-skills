@@ -26,6 +26,7 @@ publish roadmap categories without claiming members.
 | Architecture & Engineering (`architecture-engineering`) | Active | 4 architecture-selection, software-boundary, ADR, and safe-refactoring skills |
 | Quality & Testing (`quality-testing`) | Active | 4 test-strategy, integration-boundary, web-E2E, and regression-testing skills |
 | Application Security (`application-security`) | Active | 4 threat-modeling, web-security, API-security, and dependency-risk skills |
+| Engineering Workflow (`engineering-workflow`) | Active | 4 engineering-planning, implementation-slicing, pull-request-review, and technical-handoff skills |
 
 `reconstructing-images-as-threejs` intentionally appears in both Motion and
 Game Development. This cross-pack placement clarifies distribution only; its
@@ -162,6 +163,18 @@ Added for API-specific review of identity, object/property/function authorizatio
 ### `auditing-dependency-risk`
 Added for contextual software-supply-chain triage using manifests, lockfiles, advisories, runtime reachability, provenance, integrity controls, and the smallest safe remediation.
 
+### `planning-engineering-work`
+Added for turning broad engineering objectives into ordered behavioral outcomes with explicit constraints, assumptions, dependencies, risks, and verification evidence before implementation begins.
+
+### `managing-implementation-slices`
+Added for keeping implementation in conceptually focused batches that remain independently safe, reviewable, verifiable, and explicit about dependencies and follow-up scope.
+
+### `reviewing-pull-requests`
+Added for technical review that evaluates intent, behavior, design, safety, maintainability, and current verification evidence without conflating review with branch or release delivery.
+
+### `writing-effective-technical-handoffs`
+Added for preserving verified engineering state, decisions, constraints, hypotheses, evidence, and the exact restart point when work moves between people, agents, or sessions.
+
 ## Why the 81 web-design skills were not installed individually
 
 The upstream collection contains many excellent micro-techniques and art-direction presets. Keeping all of them globally installed would create poor skill discovery: several skills could trigger on the same frontend request and push the agent toward visual effects before understanding product intent. The curated pack keeps broad operating procedures global and leaves effect-specific skills as on-demand upstream references.
@@ -238,3 +251,17 @@ Quality & Testing v1 does not mirror a test framework or mandate a runner. The l
 | OWASP Software Supply Chain Security Cheat Sheet | Referenced | `skills/auditing-dependency-risk` |
 
 Application Security v1 does not mirror OWASP checklists or require a security scanner. The local methods turn those references into scoped operating procedures that require authorization, application context, reproducible evidence, realistic impact, remediation guidance, and verification.
+
+## Engineering Workflow research — 2026-09-01
+
+| Source | Decision | Local destination |
+|---|---|---|
+| DORA, Working in small batches | Referenced | `skills/planning-engineering-work` + `skills/managing-implementation-slices` |
+| Google Engineering Practices, Small CLs | Referenced | `skills/planning-engineering-work` + `skills/managing-implementation-slices` + `skills/writing-effective-technical-handoffs` |
+| Google Engineering Practices, What to look for in a code review | Referenced | `skills/reviewing-pull-requests` |
+| Google Engineering Practices, The Standard of Code Review | Referenced | `skills/reviewing-pull-requests` |
+| Google Engineering Practices, Writing good CL descriptions | Referenced | `skills/writing-effective-technical-handoffs` |
+| GitHub pull-request review and reviewer-context documentation | Referenced | `skills/reviewing-pull-requests` + `skills/writing-effective-technical-handoffs` |
+| GitHub stacked pull request guidance | Referenced | `skills/managing-implementation-slices` |
+
+Engineering Workflow v1 does not require GitHub, a project-management system, or a specific agent runtime. The local methods turn stable small-batch, review, and continuity practices into tool-agnostic operating procedures while `shipping-github-vercel-changes` remains the separate delivery method for repository and deployment execution.
