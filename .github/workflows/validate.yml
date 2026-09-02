@@ -52,19 +52,21 @@ jobs:
 
           changelog = Path('CHANGELOG.md')
           text = changelog.read_text(encoding='utf-8')
-          rc_entry = '''## [1.0.0-rc.1] - 2026-09-02
-
-### Release readiness
-
-- Froze the release candidate at 49 canonical skills and 10 active packs.
-- Added a versioned routing benchmark covering every canonical method as a primary owner, important overlap boundaries, and deliberate no-skill outcomes.
-- Refined `selecting-working-methods` around artifact, stage, and verification ownership without turning routing into a static decision table.
-- Added machine-readable readiness gates for the plugin, catalog and packs, cross-platform installers, and bilingual microsite.
-- Aligned current public release copy and kept ChatGPT, Codex, and Claude-compatible distribution under the existing repository validation gates.
-
-`1.0.0-rc.1` is a release candidate. Stable `1.0.0` remains a later promotion after real-use evidence.
-
-'''
+          rc_entry = '\n'.join([
+              '## [1.0.0-rc.1] - 2026-09-02',
+              '',
+              '### Release readiness',
+              '',
+              '- Froze the release candidate at 49 canonical skills and 10 active packs.',
+              '- Added a versioned routing benchmark covering every canonical method as a primary owner, important overlap boundaries, and deliberate no-skill outcomes.',
+              '- Refined `selecting-working-methods` around artifact, stage, and verification ownership without turning routing into a static decision table.',
+              '- Added machine-readable readiness gates for the plugin, catalog and packs, cross-platform installers, and bilingual microsite.',
+              '- Aligned current public release copy and kept ChatGPT, Codex, and Claude-compatible distribution under the existing repository validation gates.',
+              '',
+              '`1.0.0-rc.1` is a release candidate. Stable `1.0.0` remains a later promotion after real-use evidence.',
+              '',
+              '',
+          ])
           anchor = '## [1.0.0-beta.1] - Unreleased\n'
           if rc_entry not in text:
               if text.count(anchor) != 1:
@@ -94,7 +96,13 @@ jobs:
 
           plan = Path('docs/superpowers/plans/2026-09-02-release-readiness-rc1.md')
           text = plan.read_text(encoding='utf-8')
-          correction = '''\n## Execution correction — catalog version semantics\n\nCI evidence from the RC bump proved that skill and pack metadata `version` fields are release-coupled to `catalog/catalog.json`: `scripts/validate-catalog.mjs` rejects any record whose version differs from the catalog manifest. The earlier Task 4 instruction not to mass-update those record versions is therefore superseded. RC1 updates all 49 skill metadata records and all 10 pack records to `1.0.0-rc.1` without changing maturity, method content, pack membership, or category semantics.\n'''
+          correction = '\n'.join([
+              '',
+              '## Execution correction — catalog version semantics',
+              '',
+              'CI evidence from the RC bump proved that skill and pack metadata `version` fields are release-coupled to `catalog/catalog.json`: `scripts/validate-catalog.mjs` rejects any record whose version differs from the catalog manifest. The earlier Task 4 instruction not to mass-update those record versions is therefore superseded. RC1 updates all 49 skill metadata records and all 10 pack records to `1.0.0-rc.1` without changing maturity, method content, pack membership, or category semantics.',
+              '',
+          ])
           if correction not in text:
               plan.write_text(text + correction, encoding='utf-8')
           PY
