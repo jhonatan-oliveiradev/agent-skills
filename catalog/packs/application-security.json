@@ -1,0 +1,34 @@
+{
+  "$schema": "../schemas/pack.schema.json",
+  "slug": "application-security",
+  "status": "active",
+  "featured": false,
+  "color": "amber",
+  "version": "1.0.0-beta.1",
+  "skills": [
+    "threat-modeling-applications",
+    "reviewing-web-security",
+    "reviewing-api-security",
+    "auditing-dependency-risk"
+  ],
+  "locales": {
+    "en": {
+      "name": "Application Security",
+      "summary": "Threat modeling, web and API security review, and dependency-risk analysis for teams that need security evidence before release.",
+      "description": "An installable application-security workflow for finding design threats early, reviewing web and API trust boundaries, and evaluating software-supply-chain risk without turning one scanner or checklist into the security strategy.",
+      "outcomes": [
+        "Turn application architecture and attack surface into prioritized security risks, controls, and verification evidence",
+        "Review web, API, and dependency risk with explicit scope, reproducible findings, remediation guidance, and residual-risk tracking"
+      ]
+    },
+    "pt-BR": {
+      "name": "Segurança de Aplicações",
+      "summary": "Modelagem de ameaças, revisão de segurança web e de APIs e análise de risco de dependências para equipes que precisam de evidências de segurança antes do release.",
+      "description": "Um fluxo instalável de segurança de aplicações para encontrar ameaças de design cedo, revisar limites de confiança web e de APIs e avaliar risco da cadeia de suprimentos de software sem transformar um scanner ou checklist na estratégia de segurança.",
+      "outcomes": [
+        "Transformar arquitetura e superfície de ataque em riscos de segurança priorizados, controles e evidências de verificação",
+        "Revisar riscos web, de APIs e dependências com escopo explícito, achados reproduzíveis, orientação de remediação e acompanhamento do risco residual"
+      ]
+    }
+  }
+}

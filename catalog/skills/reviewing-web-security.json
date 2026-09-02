@@ -1,0 +1,39 @@
+{
+  "$schema": "../schemas/skill.schema.json",
+  "slug": "reviewing-web-security",
+  "category": "application-security",
+  "packs": ["application-security"],
+  "maturity": "beta",
+  "difficulty": "advanced",
+  "featured": false,
+  "compatibility": {
+    "surfaces": ["chatgpt", "codex"],
+    "operatingSystems": ["linux", "macos", "windows"],
+    "installModes": ["plugin", "filesystem"]
+  },
+  "tags": ["security", "web-security", "access-control", "sessions", "owasp"],
+  "dependencies": [],
+  "relatedSkills": ["threat-modeling-applications", "reviewing-api-security", "building-regression-tests"],
+  "version": "1.0.0-beta.1",
+  "updatedAt": "2026-09-01",
+  "locales": {
+    "en": {
+      "displayName": "Reviewing Web Security",
+      "summary": "Reviews an authorized web application across access control, sessions, input/output boundaries, browser controls, deployment configuration, cryptography, and security telemetry.",
+      "primaryBenefit": "Turns broad web-security checklists and scanner output into scoped, reproducible findings tied to actual application controls.",
+      "whenToUse": "Use when an authorized web application needs a structured security review across access control, sessions, browser-facing controls, input handling, configuration, cryptography, errors, and observability.",
+      "whenNotToUse": "Do not use to probe systems outside the user's authorized scope or when the task is only an API-specific authorization review.",
+      "useCases": ["Review a web application before a production release", "Validate whether a scanner finding is reachable and materially relevant in the application"],
+      "examplePrompts": ["Use reviewing-web-security to inspect this authorized web app, prioritize material findings, and give me reproducible evidence plus remediation verification steps."]
+    },
+    "pt-BR": {
+      "displayName": "Revisão de Segurança Web",
+      "summary": "Revisa uma aplicação web autorizada em controle de acesso, sessões, limites de entrada/saída, controles do navegador, configuração de deploy, criptografia e telemetria de segurança.",
+      "primaryBenefit": "Transforma checklists amplos e resultados de scanners em achados reproduzíveis e contextualizados nos controles reais da aplicação.",
+      "whenToUse": "Use quando uma aplicação web autorizada precisa de uma revisão estruturada de controle de acesso, sessões, controles voltados ao navegador, tratamento de entrada, configuração, criptografia, erros e observabilidade.",
+      "whenNotToUse": "Não use para sondar sistemas fora do escopo autorizado pelo usuário nem quando a tarefa é apenas uma revisão específica de autorização de API.",
+      "useCases": ["Revisar uma aplicação web antes de um release de produção", "Validar se um achado de scanner é alcançável e materialmente relevante na aplicação"],
+      "examplePrompts": ["Use reviewing-web-security para revisar esta aplicação web autorizada, priorizar achados materiais e trazer evidência reproduzível com passos de verificação da correção."]
+    }
+  }
+}

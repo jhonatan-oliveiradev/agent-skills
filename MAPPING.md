@@ -25,6 +25,7 @@ publish roadmap categories without claiming members.
 | Backend & Data (`backend-data`) | Active | 4 relational-modeling, Node API, PostgreSQL migration, and query-profiling skills |
 | Architecture & Engineering (`architecture-engineering`) | Active | 4 architecture-selection, software-boundary, ADR, and safe-refactoring skills |
 | Quality & Testing (`quality-testing`) | Active | 4 test-strategy, integration-boundary, web-E2E, and regression-testing skills |
+| Application Security (`application-security`) | Active | 4 threat-modeling, web-security, API-security, and dependency-risk skills |
 
 `reconstructing-images-as-threejs` intentionally appears in both Motion and
 Game Development. This cross-pack placement clarifies distribution only; its
@@ -149,6 +150,18 @@ Added for critical browser journeys using user-facing interactions plus UI, URL,
 ### `building-regression-tests`
 Added for turning reproduced defects into deterministic guards that demonstrate RED before the fix, GREEN after it, and remain at the narrowest layer that proves the broken contract.
 
+### `threat-modeling-applications`
+Added for design-time security analysis that maps assets, actors, trust boundaries, abuse cases, controls, verification evidence, and residual risk before implementation or release.
+
+### `reviewing-web-security`
+Added for authorized web-application review across access control, sessions, browser-facing controls, input/output boundaries, deployment configuration, cryptography, errors, and security telemetry.
+
+### `reviewing-api-security`
+Added for API-specific review of identity, object/property/function authorization, business-flow and resource abuse, SSRF, inventory, configuration, and third-party consumption.
+
+### `auditing-dependency-risk`
+Added for contextual software-supply-chain triage using manifests, lockfiles, advisories, runtime reachability, provenance, integrity controls, and the smallest safe remediation.
+
 ## Why the 81 web-design skills were not installed individually
 
 The upstream collection contains many excellent micro-techniques and art-direction presets. Keeping all of them globally installed would create poor skill discovery: several skills could trigger on the same frontend request and push the agent toward visual effects before understanding product intent. The curated pack keeps broad operating procedures global and leaves effect-specific skills as on-demand upstream references.
@@ -212,3 +225,16 @@ Architecture & Engineering v1 does not mirror those sources or require a graph-a
 | Google Testing Blog, flaky test guidance | Referenced | `skills/building-regression-tests` |
 
 Quality & Testing v1 does not mirror a test framework or mandate a runner. The local methods define verification strategy and evidence boundaries while remaining usable with the testing tools already present in a project.
+
+## Application Security research — 2026-09-01
+
+| Source | Decision | Local destination |
+|---|---|---|
+| OWASP Threat Modeling guidance | Referenced | `skills/threat-modeling-applications` |
+| OWASP Application Security Verification Standard 5.0.0 | Referenced | `skills/threat-modeling-applications` + `skills/reviewing-web-security` + `skills/reviewing-api-security` |
+| OWASP Top 10:2025 | Referenced | `skills/threat-modeling-applications` + `skills/reviewing-web-security` + `skills/auditing-dependency-risk` |
+| OWASP Web Security Testing Guide | Referenced | `skills/reviewing-web-security` |
+| OWASP API Security Top 10:2023 | Referenced | `skills/reviewing-api-security` |
+| OWASP Software Supply Chain Security Cheat Sheet | Referenced | `skills/auditing-dependency-risk` |
+
+Application Security v1 does not mirror OWASP checklists or require a security scanner. The local methods turn those references into scoped operating procedures that require authorization, application context, reproducible evidence, realistic impact, remediation guidance, and verification.
