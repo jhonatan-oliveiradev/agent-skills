@@ -192,8 +192,8 @@ test("rejects duplicate dependency names", async () => {
 test("validates all real catalog records and packs", async () => {
   assert.deepEqual(await validateCatalog(repositoryRoot), {
     errors: [],
-    skillCount: 39,
-    packCount: 8,
-    activePackCount: 8,
+    skillCount: 44,
+    packCount: 9,
+    activePackCount: 9,
   });
 });
