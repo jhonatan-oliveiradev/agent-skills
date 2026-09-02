@@ -7,7 +7,7 @@ description: Use when you need to reconstruct how execution moves from a trigger
 
 Reconstruct an execution path without turning correlation or reachability into a root-cause claim.
 
-Use the shared [evidence contract](../mapping-existing-codebase-structure/references/evidence-contract.md).
+The workflow below implements the shared Codebase Intelligence evidence contract.
 
 ## Workflow
 

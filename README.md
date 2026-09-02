@@ -126,6 +126,8 @@ Each method keeps an evidence ledger that distinguishes observed, inferred, and 
 
 CodeGraph can optionally accelerate structural retrieval when its MCP tool and a project index are already available. The verified fallback uses targeted repository search, direct source reads, imports, references, tests, and configuration under the same evidence contract. The methods never automatically install CodeGraph, initialize or index a project, or depend on CodeGraph or another vendor runtime.
 
+See the canonical [CodeGraph integration guide](skills/mapping-existing-codebase-structure/references/codegraph.md) for the optional setup and fallback contract.
+
 ## Quality & Testing v1
 
 The Quality & Testing pack separates four concerns that should remain independently invokable: designing a risk-based verification strategy, testing real integration boundaries, exercising a small set of critical web journeys end to end, and turning reproduced defects into durable regression guards.

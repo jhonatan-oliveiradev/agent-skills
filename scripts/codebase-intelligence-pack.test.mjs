@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import { execFile } from "node:child_process";
-import { mkdtemp, readFile, readdir } from "node:fs/promises";
+import { access, mkdtemp, readFile, readdir } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import path from "node:path";
 import test from "node:test";
@@ -22,6 +22,17 @@ const codebaseIntelligenceSkills = [
 
 async function readJson(filePath) {
   return JSON.parse(await readFile(filePath, "utf8"));
+}
+
+function localMarkdownTargets(source) {
+  return [...source.matchAll(/\[[^\]]+\]\(([^)]+)\)/g)]
+    .map((match) => match[1].split("#", 1)[0])
+    .filter((target) => target && !target.startsWith("#") && !/^[a-z][a-z\d+.-]*:/i.test(target));
+}
+
+function isWithin(parent, candidate) {
+  const relative = path.relative(parent, candidate);
+  return relative === "" || (!relative.startsWith(`..${path.sep}`) && relative !== ".." && !path.isAbsolute(relative));
 }
 
 test("publishes Codebase Intelligence as an ordered active RC pack", async () => {
@@ -80,3 +91,34 @@ test("installs exactly the five Codebase Intelligence methods through the real C
   }
 });
 
+test("each Codebase Intelligence skill installs alone with self-contained Markdown targets", async () => {
+  const brokenTargets = [];
+
+  for (const slug of codebaseIntelligenceSkills) {
+    const destination = await mkdtemp(path.join(tmpdir(), `agent-skills-${slug}-`));
+    await execFileAsync(process.execPath, [
+      path.join(repositoryRoot, "scripts", "install-skills.mjs"),
+      "--destination",
+      destination,
+      "--skill",
+      slug,
+    ]);
+
+    const installedSkill = path.join(destination, slug);
+    const source = await readFile(path.join(installedSkill, "SKILL.md"), "utf8");
+    for (const target of localMarkdownTargets(source)) {
+      const resolved = path.resolve(installedSkill, target);
+      if (!isWithin(installedSkill, resolved)) {
+        brokenTargets.push(`${slug}: ${target} escapes the installed skill directory`);
+        continue;
+      }
+      try {
+        await access(resolved);
+      } catch {
+        brokenTargets.push(`${slug}: ${target} is missing from the installed skill directory`);
+      }
+    }
+  }
+
+  assert.deepEqual(brokenTargets, []);
+});

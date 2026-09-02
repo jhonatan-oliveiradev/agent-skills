@@ -7,7 +7,7 @@ description: Use when you need to locate the implementation of a behavior by int
 
 Find behavior by intent, then validate candidates in code instead of treating a textual match as ownership.
 
-Use the shared [evidence contract](../mapping-existing-codebase-structure/references/evidence-contract.md).
+The workflow below implements the shared Codebase Intelligence evidence contract.
 
 ## Workflow
 

@@ -7,7 +7,7 @@ description: Use when you need a change evidence brief to inform another method'
 
 Produce a change evidence brief for another planning method; do not execute the implementation plan.
 
-Use the shared [evidence contract](../mapping-existing-codebase-structure/references/evidence-contract.md).
+The workflow below implements the shared Codebase Intelligence evidence contract.
 
 ## Workflow
 

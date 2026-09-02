@@ -7,7 +7,7 @@ description: Use when you need evidence-bounded potential impact for a proposed 
 
 Bound potential impact from evidence without deciding or implementing the change.
 
-Use the shared [evidence contract](../mapping-existing-codebase-structure/references/evidence-contract.md).
+The workflow below implements the shared Codebase Intelligence evidence contract.
 
 ## Workflow
 

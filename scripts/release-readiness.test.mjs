@@ -29,7 +29,7 @@ test("RC1 readiness matrix covers the four public Beta surfaces", async () => {
   }
 });
 
-test("RC1 readiness freezes the current catalog at 54 skills and 11 active packs", async () => {
+test("current catalog exposes 54 skills and 11 active packs", async () => {
   const catalog = await readJson("catalog/generated/catalog.json");
 
   assert.equal(catalog.counts.skills, 54);

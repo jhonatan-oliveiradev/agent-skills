@@ -1,6 +1,6 @@
 # Agent Skills Studio — Codebase Intelligence v1 Design
 
-**Status:** Conversational design approved; written spec pending user review
+**Status:** Approved and implemented on branch `docs/codebase-intelligence-v1-design`
 
 **Date:** 2026-09-02
 

@@ -75,8 +75,97 @@ test("routing benchmark includes deliberate no-skill and overlap-boundary scenar
     "codegraph-optional-runtime",
     "codegraph-explicit-setup",
     "codebase-context-sufficiency",
+    "codegraph-runtime-present",
+    "codegraph-runtime-inconclusive",
+    "codegraph-no-mutation-authorization",
+    "codebase-text-match-is-not-structure",
   ]) {
     assert.ok(ids.has(id), `missing routing boundary scenario: ${id}`);
+  }
+});
+
+test("Codebase Intelligence boundaries have exact routing contracts", async () => {
+  const benchmark = await readBenchmark();
+  const scenarios = new Map(benchmark.scenarios.map((scenario) => [scenario.id, scenario]));
+  const expected = {
+    "codebase-current-vs-future-architecture": {
+      primary: "mapping-existing-codebase-structure",
+      supporting: [],
+      excluded: ["designing-software-boundaries"],
+    },
+    "codebase-evidence-vs-engineering-plan": {
+      primary: "planning-codebase-changes-with-evidence",
+      supporting: [],
+      excluded: ["planning-engineering-work"],
+    },
+    "codebase-test-impact-vs-test-strategy": {
+      primary: "analyzing-change-blast-radius",
+      supporting: [],
+      excluded: ["designing-test-strategies"],
+    },
+    "execution-trace-vs-root-cause": {
+      primary: "tracing-code-execution-paths",
+      supporting: [],
+      excluded: ["investigating-codebase-semantically"],
+    },
+    "semantic-search-vs-text-match": {
+      primary: "investigating-codebase-semantically",
+      supporting: [],
+      excluded: ["mapping-existing-codebase-structure"],
+    },
+    "codegraph-optional-runtime": {
+      primary: "mapping-existing-codebase-structure",
+      supporting: [],
+      excluded: [],
+    },
+    "codegraph-explicit-setup": {
+      primary: null,
+      supporting: [],
+      excluded: [],
+    },
+    "codebase-context-sufficiency": {
+      primary: "planning-codebase-changes-with-evidence",
+      supporting: [],
+      excluded: [],
+    },
+    "codegraph-runtime-present": {
+      primary: "tracing-code-execution-paths",
+      supporting: [],
+      excluded: ["investigating-codebase-semantically"],
+    },
+    "codegraph-runtime-inconclusive": {
+      primary: "tracing-code-execution-paths",
+      supporting: [],
+      excluded: ["investigating-codebase-semantically"],
+    },
+    "codegraph-no-mutation-authorization": {
+      primary: "mapping-existing-codebase-structure",
+      supporting: [],
+      excluded: [],
+    },
+    "codebase-text-match-is-not-structure": {
+      primary: "investigating-codebase-semantically",
+      supporting: [],
+      excluded: [
+        "mapping-existing-codebase-structure",
+        "tracing-code-execution-paths",
+        "analyzing-change-blast-radius",
+      ],
+    },
+  };
+
+  for (const [id, contract] of Object.entries(expected)) {
+    assert.deepEqual(
+      scenarios.has(id)
+        ? {
+            primary: scenarios.get(id).primary,
+            supporting: scenarios.get(id).supporting,
+            excluded: scenarios.get(id).excluded,
+          }
+        : undefined,
+      contract,
+      `${id}: unexpected routing contract`,
+    );
   }
 });
 

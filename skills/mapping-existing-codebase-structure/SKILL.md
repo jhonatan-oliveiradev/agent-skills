@@ -9,6 +9,8 @@ Observe the structure that exists; do not design the structure that should repla
 
 Use the shared [evidence contract](references/evidence-contract.md).
 
+Read the optional [CodeGraph guide](references/codegraph.md) only when CodeGraph tools are callable or the user explicitly asks to install, initialize, or configure CodeGraph.
+
 ## Workflow
 
 1. Ask one narrow structural question, define its scope, and state the decision it supports.
