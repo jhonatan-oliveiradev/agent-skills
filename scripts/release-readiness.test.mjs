@@ -66,32 +66,47 @@ test("root package description reflects the current Studio breadth", async () =>
   assert.match(rootPackage.description, /writing/i);
 });
 
-test("Stable promotion policy defines explicit real-use thresholds", async () => {
+test("Stable promotion policy records satisfied real-use thresholds", async () => {
   const matrix = await readJson("release/stable-readiness.json");
 
-  assert.equal(matrix.schemaVersion, 1);
+  assert.equal(matrix.schemaVersion, 2);
   assert.equal(matrix.candidateVersion, "1.0.0-rc.1");
   assert.equal(matrix.targetVersion, "1.0.0");
-  assert.equal(matrix.status, "collecting-evidence");
+  assert.equal(matrix.status, "ready-for-stable-review");
   assert.deepEqual(matrix.minimums, {
     realUseCases: 3,
     distinctProjects: 2,
     activePacksRepresented: 3,
   });
+  assert.deepEqual(matrix.observed, {
+    realUseCases: 3,
+    distinctProjects: 3,
+    activePacksRepresented: 4,
+  });
 });
 
-test("Stable promotion policy requires real-use evidence across every public Beta surface", async () => {
+test("Stable promotion policy accepts real ChatGPT distribution and has evidence for every public surface", async () => {
   const matrix = await readJson("release/stable-readiness.json");
 
   assert.deepEqual(matrix.surfaces.map((surface) => surface.id), [
-    "plugin",
+    "chatgpt-distribution",
     "catalog",
     "installers",
     "microsite",
   ]);
 
+  const chatgptDistribution = matrix.surfaces.find(
+    (surface) => surface.id === "chatgpt-distribution",
+  );
+  assert.deepEqual(chatgptDistribution.acceptedModes, [
+    "direct-skill-upload",
+    "marketplace-plugin",
+  ]);
+  assert.equal(chatgptDistribution.validatedMode, "direct-skill-upload");
+
   for (const surface of matrix.surfaces) {
     assert.ok(Array.isArray(surface.realUseEvidence), `${surface.id}: realUseEvidence must be an array`);
-    assert.equal(surface.stableReady, false, `${surface.id}: cannot be Stable-ready before real-use evidence`);
+    assert.ok(surface.realUseEvidence.includes("rocket-editorial-error-boundary"), `${surface.id}: missing Rocket real-use evidence`);
+    assert.equal(surface.stableReady, true, `${surface.id}: evidence should satisfy Stable readiness`);
   }
 });
