@@ -2,20 +2,22 @@
   "schemaVersion": 3,
   "candidateVersion": "1.0.0-rc.2",
   "targetVersion": "1.0.0",
-  "status": "collecting-rc2-evidence",
+  "status": "ready-for-stable-review",
   "requiredRealUsePacks": [
     "codebase-intelligence"
   ],
-  "validatedRealUsePacks": [],
+  "validatedRealUsePacks": [
+    "codebase-intelligence"
+  ],
   "minimums": {
     "realUseCases": 3,
     "distinctProjects": 2,
     "activePacksRepresented": 3
   },
   "observed": {
-    "realUseCases": 3,
+    "realUseCases": 4,
     "distinctProjects": 3,
-    "activePacksRepresented": 4
+    "activePacksRepresented": 5
   },
   "surfaces": [
     {
