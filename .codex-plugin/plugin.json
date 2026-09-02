@@ -1,6 +1,6 @@
 {
   "name": "agent-skills-studio",
-  "version": "1.0.0-beta.1",
+  "version": "1.0.0-rc.1",
   "description": "Production-ready workflows for ChatGPT and Codex.",
   "author": { "name": "Jhonatan Oliveira", "url": "https://jhonatanoliveira.com" },
   "homepage": "https://skills.jhonatanoliveira.com",
