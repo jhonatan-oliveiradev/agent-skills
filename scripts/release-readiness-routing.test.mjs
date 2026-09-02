@@ -77,6 +77,6 @@ test("routing benchmark represents every active pack through at least one primar
   const primarySlugs = new Set(benchmark.scenarios.map((scenario) => scenario.primary).filter(Boolean));
 
   for (const pack of catalog.packs.filter((entry) => entry.status === "active")) {
-    assert.ok(pack.skills.some((slug) => primarySlugs.has(slug)), `active pack has no primary routing scenario: ${pack.slug}`);
+    assert.ok(pack.skillSlugs.some((slug) => primarySlugs.has(slug)), `active pack has no primary routing scenario: ${pack.slug}`);
   }
 });
