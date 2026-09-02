@@ -129,8 +129,8 @@ describe("SiteHeader", () => {
 
 describe("SiteFooter", () => {
   it.each([
-    ["en", "Source on GitHub", "Contribute on GitHub", "Version 1.0.0-rc.2"],
-    ["pt-BR", "Código-fonte no GitHub", "Contribuir no GitHub", "Versão 1.0.0-rc.2"],
+    ["en", "Source on GitHub", "Contribute on GitHub", "Version 1.0.0"],
+    ["pt-BR", "Código-fonte no GitHub", "Contribuir no GitHub", "Versão 1.0.0"],
   ] as const)("renders equivalent project links and catalog version for %s", (locale, source, contribute, version) => {
     render(<SiteFooter locale={locale} />);
 
@@ -303,11 +303,11 @@ describe("foundation navigation targets", () => {
     unmount();
 
     render(await ChangelogPage({ params: Promise.resolve({ locale: "en" }) }));
-    const currentReleaseHeading = screen.getByRole("heading", { name: "1.0.0-rc.2" });
+    const currentReleaseHeading = screen.getByRole("heading", { name: "1.0.0" });
     expect(currentReleaseHeading).toBeInTheDocument();
     const currentRelease = currentReleaseHeading.closest("article");
     expect(currentRelease).not.toBeNull();
-    expect(currentRelease).toHaveTextContent(/searchable.*catalog/i);
+    expect(currentRelease).toHaveTextContent(/evidence-qualified.*Stable 1.0.0/i);
     expect(screen.getByRole("link", { name: /source changelog/i })).toHaveAttribute(
       "href",
       expect.stringContaining("CHANGELOG.md"),

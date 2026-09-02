@@ -10,6 +10,10 @@ describe("project page content", () => {
     expect(content.about.principles).toHaveLength(5);
     expect(content.contribute.paths).toHaveLength(4);
     expect(content.changelog.releases[0]).toMatchObject({
+      version: "1.0.0",
+      date: "2026-09-02",
+    });
+    expect(content.changelog.releases[1]).toMatchObject({
       version: "1.0.0-rc.2",
       date: "2026-09-02",
     });
@@ -21,5 +25,6 @@ describe("project page content", () => {
     expect(releaseText).toMatch(/54/);
     expect(releaseText).toMatch(/11/);
     expect(releaseText).toMatch(/Codebase Intelligence/i);
+    expect(releaseText).toMatch(/stable|estável/i);
   });
 });

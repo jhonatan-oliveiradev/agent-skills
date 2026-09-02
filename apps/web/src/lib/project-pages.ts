@@ -81,6 +81,14 @@ const content: Readonly<Record<Locale, ProjectPageContent>> = {
       sourceAction: "View the source changelog",
       releases: [
         {
+          version: "1.0.0",
+          date: "2026-09-02",
+          groups: [
+            { title: "Stable release", items: ["Promoted the evidence-qualified Agent Skills Studio from 1.0.0-rc.2 to Stable 1.0.0 with 54 canonical skills and 11 active packs.", "Qualified Stable after four real-use cases across three distinct projects represented five active packs, including complete real-use validation of Codebase Intelligence.", "Preserved canonical skill behavior and pack composition: the Stable promotion changes release state and synchronized metadata, not method contracts."] },
+            { title: "Distribution and verification", items: ["Synchronized plugin, catalog, installer, microsite package metadata, and the web lockfile at 1.0.0.", "Preserved inspectable evidence across ChatGPT direct Skill distribution, catalog discovery, installers, and microsite consumption.", "Kept Linux and Windows tests, validation, typecheck, lint, production build, and platform installer smoke tests as the canonical Stable release gate."] },
+          ],
+        },
+        {
           version: "1.0.0-rc.2",
           date: "2026-09-02",
           groups: [
@@ -142,6 +150,14 @@ const content: Readonly<Record<Locale, ProjectPageContent>> = {
       unreleased: "Não lançada",
       sourceAction: "Ver changelog na fonte",
       releases: [
+        {
+          version: "1.0.0",
+          date: "2026-09-02",
+          groups: [
+            { title: "Release Stable", items: ["Promoção do Agent Skills Studio qualificado por evidências de 1.0.0-rc.2 para Stable 1.0.0, com 54 skills canônicas e 11 pacotes ativos.", "Qualificação de Stable após quatro casos de uso real em três projetos distintos representarem cinco pacotes ativos, incluindo validação completa de uso real do Codebase Intelligence.", "Preservação do comportamento das skills canônicas e da composição dos pacotes: a promoção Stable altera estado de release e metadados sincronizados, não os contratos dos métodos."] },
+            { title: "Distribuição e verificação", items: ["Sincronização do plugin, catálogo, instaladores, metadados do pacote do microsite e lockfile web em 1.0.0.", "Preservação de evidências inspecionáveis em distribuição direta de Skill no ChatGPT, descoberta pelo catálogo, instaladores e consumo do microsite.", "Manutenção de testes, validação, typecheck, lint, build de produção e smoke tests de instaladores em Linux e Windows como gate canônico da release Stable."] },
+          ],
+        },
         {
           version: "1.0.0-rc.2",
           date: "2026-09-02",
