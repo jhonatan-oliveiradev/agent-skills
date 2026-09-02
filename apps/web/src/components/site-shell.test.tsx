@@ -171,8 +171,8 @@ describe("localized layout", () => {
 
 describe("definitive home", () => {
   it.each([
-    ["en", "Skills are not prompts. They are working methods.", "38 skills", "8 packs", "2 locales", "This Home was built with Skills.", "Open the method. Inspect the evidence. Judge the result."],
-    ["pt-BR", "Skills não são prompts. São métodos de trabalho.", "38 skills", "8 pacotes", "2 idiomas", "Esta Home foi construída com Skills.", "Abra o método. Inspecione a evidência. Julgue o resultado."],
+    ["en", "Skills are not prompts. They are working methods.", "39 skills", "8 packs", "2 locales", "This Home was built with Skills.", "Open the method. Inspect the evidence. Judge the result."],
+    ["pt-BR", "Skills não são prompts. São métodos de trabalho.", "39 skills", "8 pacotes", "2 idiomas", "Esta Home foi construída com Skills.", "Abra o método. Inspecione a evidência. Julgue o resultado."],
   ] as const)("renders the definitive catalog-backed home for %s", async (locale, title, skills, packs, locales, startingPoint, proof) => {
     const { container } = render(await HomePage({ params: Promise.resolve({ locale }) }));
 
@@ -222,7 +222,7 @@ describe("foundation navigation targets", () => {
 
     expect(screen.getByRole("region", { name: "Demonstração da instalação" })).toBeInTheDocument();
     expect(container.querySelector("[data-terminal-demo]")).toHaveTextContent("bash install.sh");
-    expect(screen.getByText("38 skills prontas para usar.")).toBeInTheDocument();
+    expect(screen.getByText("39 skills prontas para usar.")).toBeInTheDocument();
   });
 
   it("renders full installation commands in aligned editorial rows", async () => {
@@ -371,7 +371,7 @@ describe("foundation navigation targets", () => {
 
     expect(screen.getByRole("heading", { level: 1, name: heading })).toBeInTheDocument();
     expect(screen.getByRole("searchbox", { name: searchLabel })).toBeInTheDocument();
-    expect(container.querySelectorAll("[data-method-row]")).toHaveLength(38);
+    expect(container.querySelectorAll("[data-method-row]")).toHaveLength(39);
     expect(container.querySelector(`[data-method-row] a[href="${methodHref}"]`)).toBeInTheDocument();
     expect(container.querySelector(".skill-card")).not.toBeInTheDocument();
   });
