@@ -1,6 +1,7 @@
 import { readFile } from "node:fs/promises";
 import { resolve } from "node:path";
 import { describe, expect, it } from "vitest";
+import { editorialMethodsCopy } from "./editorial-methods-copy";
 
 const appRoot = resolve(process.cwd(), "src");
 
@@ -40,5 +41,19 @@ describe("editorial methods system", () => {
     expect(selectRule).toContain("color: var(--text);");
     expect(optionRule).toContain("background-color: var(--surface);");
     expect(optionRule).toContain("color: var(--text);");
+  });
+
+  it("frames the archive around finding a skill for a concrete task", () => {
+    expect(editorialMethodsCopy.en.archiveTitle).toBe("Find a method for the work in front of you.");
+    expect(editorialMethodsCopy.en.filterLabel).toBe("Filter skills");
+    expect(editorialMethodsCopy.en.archiveSummary).toContain("Open a skill to inspect its trigger");
+
+    expect(editorialMethodsCopy["pt-BR"].archiveTitle).toBe(
+      "Encontre um método para o trabalho que você precisa resolver.",
+    );
+    expect(editorialMethodsCopy["pt-BR"].filterLabel).toBe("Filtrar skills");
+    expect(editorialMethodsCopy["pt-BR"].archiveSummary).toContain(
+      "Abra uma skill para inspecionar seu gatilho",
+    );
   });
 });

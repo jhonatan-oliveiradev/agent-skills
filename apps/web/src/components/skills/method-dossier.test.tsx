@@ -21,7 +21,7 @@ describe("Method Dossier", () => {
     expect(container.querySelector('[data-method-dossier="hero"]')).toBeInTheDocument();
     expect(container.querySelector('[data-method-dossier="benefit"]')).toBeInTheDocument();
 
-    const navigation = screen.getByRole("navigation", { name: "On this method" });
+    const navigation = screen.getByRole("navigation", { name: "In this skill" });
     expect(navigation).toBeInTheDocument();
 
     for (const link of navigation.querySelectorAll("a")) {

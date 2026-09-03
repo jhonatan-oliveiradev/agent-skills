@@ -9,23 +9,25 @@ describe("Evidence Archive", () => {
   it.each([
     [
       "en",
-      "Don't trust the description. Inspect the result.",
+      "Inspect the work behind the claims.",
       "SOURCE / AVAILABLE",
       "Internal evidence",
       "Real-use evidence",
+      "Inspect case evidence",
       "/en/built-with-skills/rocket-codebase-intelligence-cosmic-sdk-removal",
     ],
     [
       "pt-BR",
-      "Não confie na descrição. Inspecione o resultado.",
+      "Inspecione o trabalho por trás das afirmações.",
       "FONTE / DISPONÍVEL",
       "Evidência interna",
       "Evidência de uso real",
+      "Inspecionar evidências do case",
       "/pt-BR/built-with-skills/rocket-codebase-intelligence-cosmic-sdk-removal",
     ],
   ] as const)(
     "renders an evidence-first editorial archive for %s",
-    async (locale, title, state, internalProvenance, realUseProvenance, leadingHref) => {
+    async (locale, title, state, internalProvenance, realUseProvenance, inspectAction, leadingHref) => {
       const { container } = render(
         await BuiltWithSkillsPage({ params: Promise.resolve({ locale }) }),
       );
@@ -37,6 +39,7 @@ describe("Evidence Archive", () => {
       expect(screen.getAllByText(state)).toHaveLength(9);
       expect(screen.getAllByText(internalProvenance)).toHaveLength(2);
       expect(screen.getAllByText(realUseProvenance)).toHaveLength(7);
+      expect(screen.getAllByText(inspectAction)).toHaveLength(9);
       expect(
         container.querySelector(
           `[data-evidence-leading="true"] a[href="${leadingHref}"]`,

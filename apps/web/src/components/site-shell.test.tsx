@@ -108,15 +108,10 @@ describe("SiteHeader", () => {
       "true",
     );
     const dialog = screen.getByRole("dialog", { name: "Primary navigation" });
-    expect(within(dialog).getByRole("link", { name: "Explore skills" })).toHaveAttribute(
-      "href",
-      "/en/skills",
-    );
+    const skillLinks = within(dialog).getAllByRole("link", { name: "Explore skills" });
+    expect(skillLinks).toHaveLength(2);
+    skillLinks.forEach((link) => expect(link).toHaveAttribute("href", "/en/skills"));
     expect(within(dialog).getByText("01")).toBeInTheDocument();
-    expect(within(dialog).getByRole("link", { name: "Start exploring" })).toHaveAttribute(
-      "href",
-      "/en/skills",
-    );
 
     fireEvent.keyDown(document, { key: "Escape" });
     expect(screen.getByRole("button", { name: "Open navigation" })).toHaveAttribute(
@@ -171,8 +166,8 @@ describe("localized layout", () => {
 
 describe("definitive home", () => {
   it.each([
-    ["en", "Skills are not prompts. They are working methods.", "54 skills", "11 packs", "2 locales", "This Home was built with Skills.", "Open the method. Inspect the evidence. Judge the result."],
-    ["pt-BR", "Skills não são prompts. São métodos de trabalho.", "54 skills", "11 pacotes", "2 idiomas", "Esta Home foi construída com Skills.", "Abra o método. Inspecione a evidência. Julgue o resultado."],
+    ["en", "Skills are not prompts. They are working methods.", "54 skills", "11 packs", "2 locales", "This Home was built with Skills.", "Inspect the method. Then inspect what it changed."],
+    ["pt-BR", "Skills não são prompts. São métodos de trabalho.", "54 skills", "11 pacotes", "2 idiomas", "Esta Home foi construída com Skills.", "Inspecione o método. Depois, inspecione o que ele mudou."],
   ] as const)("renders the definitive catalog-backed home for %s", async (locale, title, skills, packs, locales, startingPoint, proof) => {
     const { container } = render(await HomePage({ params: Promise.resolve({ locale }) }));
 
@@ -187,17 +182,20 @@ describe("definitive home", () => {
     expect(container.querySelectorAll(".home-pack-dossier")).toHaveLength(11);
     expect(container.querySelectorAll(".home-method-index li")).toHaveLength(3);
     expect(container.querySelectorAll(".home-workflow-rail li")).toHaveLength(4);
-    expect(screen.getByRole("link", { name: locale === "en" ? "Explore the collection" : "Explorar a coleção" })).toHaveAttribute(
+    expect(screen.getByRole("link", { name: locale === "en" ? "Explore skills" : "Explorar skills" })).toHaveAttribute(
       "href",
       `/${locale}/skills`,
     );
-    expect(screen.getByRole("link", { name: locale === "en" ? "Read the roadmap" : "Ver o roteiro" })).toHaveAttribute("href", `/${locale}/roadmap`);
+    expect(screen.getByRole("link", { name: locale === "en" ? "Inspect real-use evidence" : "Inspecionar evidências reais" })).toHaveAttribute(
+      "href",
+      `/${locale}/built-with-skills`,
+    );
     expect(screen.queryByText(locale === "en" ? /foundation delivery/i : /entrega de fundação/i)).not.toBeInTheDocument();
   });
 
   it.each([
-    ["en", "Composable agent skills", "Build capable agents with production-ready, composable workflows.", "/en"],
-    ["pt-BR", "Skills combináveis para agentes", "Crie agentes capazes com fluxos combináveis e prontos para produção.", "/pt-BR"],
+    ["en", "Agent Skills Studio — Working methods for agents", "Explore an open, installable collection of agent skills: reusable working methods with explicit constraints and inspectable real-use evidence.", "/en"],
+    ["pt-BR", "Agent Skills Studio — Métodos de trabalho para agentes", "Explore uma coleção aberta e instalável de skills para agentes: métodos de trabalho reutilizáveis, com restrições explícitas e evidências reais inspecionáveis.", "/pt-BR"],
   ] as const)("publishes canonical localized metadata for %s", async (locale, title, description, canonical) => {
     await expect(generateMetadata({ params: Promise.resolve({ locale }) })).resolves.toMatchObject({
       title,
@@ -242,8 +240,8 @@ describe("foundation navigation targets", () => {
   });
 
   it.each([
-    ["en", "Don't trust the description. Inspect the result.", "Removing a deprecated Cosmic SDK through evidence-led codebase analysis", "Shipping a recoverable Rocket error state through real Studio consumption", "Hardening Space voice credential authorization", "Hardening a translation provider after a production incident", "Moving project details to runtime ISR through a bounded engineering workflow", "Tightening Contracts boundaries without distributing the architecture", "Hardening a cinematic WebGL experience for motion, accessibility, and reference fidelity", "Catalog experience", "Pack experience"],
-    ["pt-BR", "Não confie na descrição. Inspecione o resultado.", "Remoção de um SDK Cosmic obsoleto com análise de codebase orientada por evidências", "Entrega de um estado de erro recuperável no Rocket com consumo real do Studio", "Hardening da autorização de credenciais de voz em Spaces", "Hardening de um provider de tradução após um incidente em produção", "Migração dos detalhes de projeto para ISR runtime com um fluxo de engenharia delimitado", "Ajuste das fronteiras de Contracts sem distribuir a arquitetura", "Hardening de uma experiência WebGL cinematográfica para motion, acessibilidade e fidelidade à referência", "Experiência do catálogo", "Experiência dos pacotes"],
+    ["en", "Inspect the work behind the claims.", "Removing a deprecated Cosmic SDK through evidence-led codebase analysis", "Shipping a recoverable Rocket error state through real Studio consumption", "Hardening Space voice credential authorization", "Hardening a translation provider after a production incident", "Moving project details to runtime ISR through a bounded engineering workflow", "Tightening Contracts boundaries without distributing the architecture", "Hardening a cinematic WebGL experience for motion, accessibility, and reference fidelity", "Catalog experience", "Pack experience"],
+    ["pt-BR", "Inspecione o trabalho por trás das afirmações.", "Remoção de um SDK Cosmic obsoleto com análise de codebase orientada por evidências", "Entrega de um estado de erro recuperável no Rocket com consumo real do Studio", "Hardening da autorização de credenciais de voz em Spaces", "Hardening de um provider de tradução após um incidente em produção", "Migração dos detalhes de projeto para ISR runtime com um fluxo de engenharia delimitado", "Ajuste das fronteiras de Contracts sem distribuir a arquitetura", "Hardening de uma experiência WebGL cinematográfica para motion, acessibilidade e fidelidade à referência", "Experiência do catálogo", "Experiência dos pacotes"],
   ] as const)("renders the evidence archive for %s", async (locale, heading, codebase, rocket, ping, portfolio, engineeringWorkflow, architectureEngineering, motion, catalog, packs) => {
     const { container } = render(
       await BuiltWithSkillsPage({ params: Promise.resolve({ locale }) }),
@@ -331,8 +329,8 @@ describe("foundation navigation targets", () => {
   });
 
   it.each([
-    ["en", "Methods that become stronger together.", "/en/packs/frontend-product"],
-    ["pt-BR", "Métodos que ficam melhores juntos.", "/pt-BR/packs/frontend-product"],
+    ["en", "Use a pack when one method is not enough.", "/en/packs/frontend-product"],
+    ["pt-BR", "Use um pack quando um único método não for suficiente.", "/pt-BR/packs/frontend-product"],
   ] as const)("renders the curated systems archive for %s", async (locale, heading, packHref) => {
     const { container } = render(await PacksPage({ params: Promise.resolve({ locale }) }));
 
@@ -362,13 +360,13 @@ describe("foundation navigation targets", () => {
   it.each([
     [
       "en",
-      "Methods for agents that need to work better.",
+      "Find a method for the work in front of you.",
       "Search skills",
       "/en/skills/designing-ui-systems",
     ],
     [
       "pt-BR",
-      "Métodos para agentes que precisam trabalhar melhor.",
+      "Encontre um método para o trabalho que você precisa resolver.",
       "Buscar skills",
       "/pt-BR/skills/designing-ui-systems",
     ],

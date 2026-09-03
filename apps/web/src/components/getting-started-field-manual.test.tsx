@@ -13,7 +13,7 @@ describe("Getting Started Field Manual", () => {
       "en",
       "FIELD MANUAL",
       "05 stages",
-      "First setup",
+      "First installation",
       "Explore skills",
       "View packs",
       "Claude Code · personal",
@@ -21,12 +21,13 @@ describe("Getting Started Field Manual", () => {
       "Open any Skill → Download Skill ZIP",
       "Plugins → Skills → Create → Upload from computer",
       "Workspace settings → Plugins → Add → Import marketplace",
+      "Choose next",
     ],
     [
       "pt-BR",
       "MANUAL DE CAMPO",
       "05 etapas",
-      "Primeira configuração",
+      "Primeira instalação",
       "Explorar skills",
       "Ver pacotes",
       "Claude Code · pessoal",
@@ -34,6 +35,7 @@ describe("Getting Started Field Manual", () => {
       "Abra qualquer skill → Baixar ZIP da skill",
       "Plugins → Habilidades → Criar → Carregar do computador",
       "Configurações do workspace → Plugins → Adicionar → Importar marketplace",
+      "Próximo passo",
     ],
   ] as const)(
     "renders the localized five-stage manual architecture for %s",
@@ -49,6 +51,7 @@ describe("Getting Started Field Manual", () => {
       skillDownloadPath,
       skillUploadPath,
       marketplacePath,
+      finalStage,
     ) => {
       const { container } = render(
         await GettingStartedPage({ params: Promise.resolve({ locale }) }),
@@ -60,6 +63,7 @@ describe("Getting Started Field Manual", () => {
       expect(screen.getByText(stagesLabel)).toBeInTheDocument();
       expect(screen.getByText("Bash + PowerShell")).toBeInTheDocument();
       expect(screen.getByText(setupLabel)).toBeInTheDocument();
+      expect(screen.getByText(finalStage)).toBeInTheDocument();
 
       const stages = Array.from(container.querySelectorAll("[data-field-manual-stage]")).map(
         (stage) => stage.getAttribute("data-field-manual-stage"),

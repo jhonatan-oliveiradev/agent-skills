@@ -31,4 +31,23 @@ describe("project page content", () => {
     expect(releaseText).toMatch(/Codebase Intelligence/i);
     expect(releaseText).toMatch(/stable|estável/i);
   });
+
+  it.each(["en", "pt-BR"] as const)("keeps About, Contribute, and Changelog on distinct editorial jobs for %s", (locale) => {
+    const content = getProjectPages(locale);
+
+    expect(content.about.purpose.length).toBeGreaterThan(40);
+    expect(content.about.principles.length).toBeGreaterThan(0);
+    expect(content.contribute.paths.some((path) => path.href.endsWith("/issues/new"))).toBe(true);
+    expect(content.contribute.paths.some((path) => path.href.endsWith("/compare"))).toBe(true);
+    expect(content.contribute.expectations.length).toBeGreaterThan(0);
+    expect(content.changelog.releases.every((release) => release.groups.length > 0)).toBe(true);
+
+    const institutionalSummaries = [
+      content.about.summary,
+      content.contribute.summary,
+      content.changelog.summary,
+    ];
+    expect(new Set(institutionalSummaries).size).toBe(3);
+    expect(institutionalSummaries.join(" ")).not.toMatch(/Skills are not prompts|Skills não são prompts/);
+  });
 });
