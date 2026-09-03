@@ -32,11 +32,11 @@ describe("Evidence Archive", () => {
 
       expect(container.querySelector("[data-evidence-archive]")).toBeInTheDocument();
       expect(screen.getByRole("heading", { level: 1, name: title })).toBeInTheDocument();
-      expect(container.querySelectorAll("[data-evidence-feature]")).toHaveLength(8);
+      expect(container.querySelectorAll("[data-evidence-feature]")).toHaveLength(9);
       expect(container.querySelector('[data-evidence-leading="true"]')).toBeInTheDocument();
-      expect(screen.getAllByText(state)).toHaveLength(8);
+      expect(screen.getAllByText(state)).toHaveLength(9);
       expect(screen.getAllByText(internalProvenance)).toHaveLength(2);
-      expect(screen.getAllByText(realUseProvenance)).toHaveLength(6);
+      expect(screen.getAllByText(realUseProvenance)).toHaveLength(7);
       expect(
         container.querySelector(
           `[data-evidence-leading="true"] a[href="${leadingHref}"]`,
