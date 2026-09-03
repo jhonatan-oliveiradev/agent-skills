@@ -166,8 +166,8 @@ describe("localized layout", () => {
 
 describe("definitive home", () => {
   it.each([
-    ["en", "Skills are not prompts. They are working methods.", "54 skills", "11 packs", "2 locales", "See what the method changed.", "Trace the method to real work."],
-    ["pt-BR", "Skills não são prompts. São métodos de trabalho.", "54 skills", "11 pacotes", "2 idiomas", "Veja o que o método mudou.", "Rastreie o método até trabalho real."],
+    ["en", "Skills are not prompts. They are working methods.", "54 skills", "11 packs", "2 locales", "This Home was built with Skills.", "Inspect the method. Then inspect what it changed."],
+    ["pt-BR", "Skills não são prompts. São métodos de trabalho.", "54 skills", "11 pacotes", "2 idiomas", "Esta Home foi construída com Skills.", "Inspecione o método. Depois, inspecione o que ele mudou."],
   ] as const)("renders the definitive catalog-backed home for %s", async (locale, title, skills, packs, locales, startingPoint, proof) => {
     const { container } = render(await HomePage({ params: Promise.resolve({ locale }) }));
 
@@ -329,8 +329,8 @@ describe("foundation navigation targets", () => {
   });
 
   it.each([
-    ["en", "Packs group related skills for broader work.", "/en/packs/frontend-product"],
-    ["pt-BR", "Packs reúnem skills relacionadas para trabalhos mais amplos.", "/pt-BR/packs/frontend-product"],
+    ["en", "Use a pack when one method is not enough.", "/en/packs/frontend-product"],
+    ["pt-BR", "Use um pack quando um único método não for suficiente.", "/pt-BR/packs/frontend-product"],
   ] as const)("renders the curated systems archive for %s", async (locale, heading, packHref) => {
     const { container } = render(await PacksPage({ params: Promise.resolve({ locale }) }));
 
@@ -360,13 +360,13 @@ describe("foundation navigation targets", () => {
   it.each([
     [
       "en",
-      "Find the working method for the task in front of you.",
+      "Find a method for the work in front of you.",
       "Search skills",
       "/en/skills/designing-ui-systems",
     ],
     [
       "pt-BR",
-      "Encontre o método de trabalho para a tarefa que você precisa resolver.",
+      "Encontre um método para o trabalho que você precisa resolver.",
       "Buscar skills",
       "/pt-BR/skills/designing-ui-systems",
     ],
