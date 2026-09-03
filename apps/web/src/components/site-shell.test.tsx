@@ -108,15 +108,10 @@ describe("SiteHeader", () => {
       "true",
     );
     const dialog = screen.getByRole("dialog", { name: "Primary navigation" });
-    expect(within(dialog).getByRole("link", { name: "Explore skills" })).toHaveAttribute(
-      "href",
-      "/en/skills",
-    );
+    const skillLinks = within(dialog).getAllByRole("link", { name: "Explore skills" });
+    expect(skillLinks).toHaveLength(2);
+    skillLinks.forEach((link) => expect(link).toHaveAttribute("href", "/en/skills"));
     expect(within(dialog).getByText("01")).toBeInTheDocument();
-    expect(within(dialog).getByRole("link", { name: "Start exploring" })).toHaveAttribute(
-      "href",
-      "/en/skills",
-    );
 
     fireEvent.keyDown(document, { key: "Escape" });
     expect(screen.getByRole("button", { name: "Open navigation" })).toHaveAttribute(
