@@ -9,9 +9,11 @@ import {
   getSkillInstallCommands,
 } from "@/lib/catalog";
 import { getCasesUsingSkill, getPacksContainingSkill } from "@/lib/cross-domain-relations";
+import { skillDistributionCopy } from "@/lib/distribution-copy";
 import { editorialMethodsCopy } from "@/lib/editorial-methods-copy";
 import { editorialRelationsCopy } from "@/lib/editorial-relations-copy";
 import { isLocale } from "@/lib/i18n";
+import { getChatgptSkillDownload } from "@/lib/installation";
 import { messages } from "@/lib/messages";
 
 const repositoryUrl = "https://github.com/jhonatan-oliveiradev/agent-skills";
@@ -65,6 +67,7 @@ export default async function SkillDetailPage({ params }: SkillPageProps) {
   const detail = copy.skillDetail;
   const categoryNames: Readonly<Record<string, string>> = copy.skillsCatalog.categories;
   const commands = getSkillInstallCommands(skill.slug);
+  const chatgptDownload = getChatgptSkillDownload(skill.slug, skill.version);
   const relatedPacks = getPacksContainingSkill(getLocalizedPacks(locale), skill.slug);
   const evidenceCases = getCasesUsingSkill(getBuiltWithSkillsCases(locale), skill.slug);
   const category = categoryNames[skill.category] ?? skill.category;
@@ -103,6 +106,8 @@ export default async function SkillDetailPage({ params }: SkillPageProps) {
         relatedPacks={relatedPacks}
         evidenceCases={evidenceCases}
         commands={commands}
+        chatgptDownload={chatgptDownload}
+        chatgptDownloadCopy={skillDistributionCopy[locale]}
         sourceUrl={sourceUrl}
         detail={detail}
         catalogCopy={copy.skillsCatalog}
