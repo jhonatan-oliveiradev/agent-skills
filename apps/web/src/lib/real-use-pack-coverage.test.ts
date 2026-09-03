@@ -14,6 +14,7 @@ describe("real-use pack coverage", () => {
       coveredPackSlugs: [
         "application-security",
         "codebase-intelligence",
+        "engineering-workflow",
         "frontend-product",
         "quality-testing",
         "writing-communication",
@@ -22,22 +23,23 @@ describe("real-use pack coverage", () => {
         "architecture-engineering",
         "backend-data",
         "design-brand",
-        "engineering-workflow",
         "game-development",
         "motion",
       ],
-      coveredCount: 5,
+      coveredCount: 6,
       totalActivePacks: 11,
     });
   });
 
-  it("keeps the Stable readiness observed pack count aligned with derived evidence", async () => {
+  it("keeps current evidence from regressing below the Stable 1.0.0 snapshot", async () => {
     const readiness = JSON.parse(
       await readFile(resolve(repositoryRoot, "release/stable-readiness.json"), "utf8"),
     );
+    const currentCoverage = getRealUsePackCoverage();
 
-    expect(readiness.observed.activePacksRepresented).toBe(
-      getRealUsePackCoverage().coveredCount,
+    expect(readiness.observed.activePacksRepresented).toBe(5);
+    expect(currentCoverage.coveredCount).toBeGreaterThanOrEqual(
+      readiness.observed.activePacksRepresented,
     );
   });
 });
