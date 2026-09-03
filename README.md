@@ -322,13 +322,14 @@ Os pacotes ativos e instaláveis são:
 - `game-development` — Desenvolvimento de Jogos (5 skills);
 - `backend-data` — Backend e Dados (4 skills);
 - `architecture-engineering` — Arquitetura e Engenharia (4 skills);
+- `codebase-intelligence` — Inteligência de Codebase (5 skills);
 - `quality-testing` — Qualidade e Testes (4 skills);
 - `application-security` — Segurança de Aplicações (4 skills);
 - `engineering-workflow` — Fluxo de Engenharia (4 skills).
 - `design-brand` — Design & Marca (5 skills).
 - `writing-communication` — Escrita & Comunicação (5 skills).
 
-Todos os dez pacotes publicados estão ativos e são instaláveis.
+Todos os onze pacotes publicados estão ativos e são instaláveis.
 
 Instale um pacote ativo com Bash ou PowerShell:
 
