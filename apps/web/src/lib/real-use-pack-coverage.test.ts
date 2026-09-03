@@ -13,6 +13,7 @@ describe("real-use pack coverage", () => {
     expect(getRealUsePackCoverage()).toEqual({
       coveredPackSlugs: [
         "application-security",
+        "architecture-engineering",
         "codebase-intelligence",
         "engineering-workflow",
         "frontend-product",
@@ -20,13 +21,12 @@ describe("real-use pack coverage", () => {
         "writing-communication",
       ],
       uncoveredPackSlugs: [
-        "architecture-engineering",
         "backend-data",
         "design-brand",
         "game-development",
         "motion",
       ],
-      coveredCount: 6,
+      coveredCount: 7,
       totalActivePacks: 11,
     });
   });
