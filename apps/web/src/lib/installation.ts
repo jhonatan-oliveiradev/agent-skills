@@ -21,3 +21,11 @@ export const installationCommands = {
 export const chatgptDistribution = {
   repositoryUrl: "https://github.com/jhonatan-oliveiradev/agent-skills",
 } as const;
+
+export function getChatgptSkillDownload(slug: string, version: string) {
+  const filename = `${slug}-${version}.zip`;
+  return {
+    filename,
+    href: `/downloads/skills/${filename}`,
+  } as const;
+}
