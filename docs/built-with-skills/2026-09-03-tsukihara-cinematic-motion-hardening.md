@@ -94,6 +94,8 @@ Tsukihara PR #77 was merged on 2026-09-03.
 - Post-merge Quality: `33801190546` — SUCCESS
 - Main-branch gate passed hero/motion regression, REMEMBER regression, formatting, lint, and production build.
 
+This Studio record is based on the verified merged external state above; it does not promote pre-merge candidate checks into post-merge evidence.
+
 ## Outcome
 
 The real Tsukihara codebase now has a reduced-motion-aware persistent WebGL world, a tighter GSAP lifecycle on the hero path, preserved cinematic ownership, lower rendering work for accessibility-constrained sessions, and a reference-grounded procedural eclipse moon that does not overclaim unseen geometry.
