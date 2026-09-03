@@ -28,7 +28,7 @@ export function HomeManifestoHero({ locale, copy, metrics }: HomeManifestoHeroPr
         }
         engine={<MethodEngine copy={copy.engine} metrics={metrics} />}
       >
-        <div className="flex flex-wrap gap-3">
+        <div className="home-manifesto-actions flex flex-wrap gap-3">
           <Link className="button button--primary" href={localizePath("/skills", locale) as Route}>
             {copy.primaryAction}
           </Link>
