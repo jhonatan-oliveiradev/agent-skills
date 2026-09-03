@@ -40,6 +40,8 @@ The persistent R3F world now observes `prefers-reduced-motion`, uses an on-deman
 
 A supplied Tsukihara eclipse reference showed a dark frontal lunar disc with a luminous crimson rim against a black field. The implementation used that evidence to create a deterministic single-view procedural reconstruction contract: front disc/shadow plus a dedicated `RingGeometry` rim/halo. It deliberately does not claim backside geometry, crater topology, or 360-degree fidelity that a single reference cannot support.
 
+This method is intentionally distributed in both the Motion and Game Development packs. Under the Studio's existing coverage contract, a real-use case represents every active pack that contains at least one listed skill, so this Motion case also makes Game Development represented in the derived public metric. That representation is not a claim that the complete Game Development pack was exercised; a dedicated full-pack game case remains a separate future evidence goal.
+
 ## Verification record
 
 ### External RED — lifecycle and reduced motion
