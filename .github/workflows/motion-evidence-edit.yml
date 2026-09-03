@@ -19,8 +19,6 @@ jobs:
         with:
           node-version: 22
       - run: node scripts/apply-motion-evidence.mjs
-      - run: npm ci --prefix apps/web
-      - run: npm exec --prefix apps/web -- prettier --write src/lib/built-with-skills.ts src/lib/built-with-skills.test.ts src/lib/real-use-pack-coverage.test.ts src/lib/roadmap.test.ts src/components/evidence/evidence-archive.test.tsx src/components/site-shell.test.tsx
       - run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
