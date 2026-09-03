@@ -46,8 +46,9 @@ test("lists every active pack in both README catalog sections", async () => {
   );
 
   for (const slug of activePacks) {
-    assert.match(english, new RegExp(`- \\`${slug}\\``), `English README is missing ${slug}`);
-    assert.match(portuguese, new RegExp(`- \\`${slug}\\``), `PT-BR README is missing ${slug}`);
+    const marker = `- \`${slug}\``;
+    assert.ok(english.includes(marker), `English README is missing ${slug}`);
+    assert.ok(portuguese.includes(marker), `PT-BR README is missing ${slug}`);
   }
 
   assert.match(english, /All eleven published packs are active and installable\./);
