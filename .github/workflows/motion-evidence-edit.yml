@@ -10,7 +10,6 @@ permissions:
 
 jobs:
   edit:
-    if: ${{ github.event.head_commit.message != 'chore: apply Motion evidence registry' }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -19,16 +18,13 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 22
-      - name: Apply anchored evidence edits
-        run: node scripts/apply-motion-evidence.mjs
-      - name: Install web dependencies
-        run: npm ci --prefix apps/web
-      - name: Format touched web files
-        run: ./apps/web/node_modules/.bin/prettier --write apps/web/src/lib/built-with-skills.ts apps/web/src/lib/built-with-skills.test.ts apps/web/src/lib/real-use-pack-coverage.test.ts apps/web/src/lib/roadmap.test.ts apps/web/src/components/evidence/evidence-archive.test.tsx apps/web/src/components/site-shell.test.tsx
-      - name: Commit registry changes
-        run: |
+      - run: node scripts/apply-motion-evidence.mjs
+      - run: npm ci --prefix apps/web
+      - run: ./apps/web/node_modules/.bin/prettier --write apps/web/src/lib/built-with-skills.ts apps/web/src/lib/built-with-skills.test.ts apps/web/src/lib/real-use-pack-coverage.test.ts apps/web/src/lib/roadmap.test.ts apps/web/src/components/evidence/evidence-archive.test.tsx apps/web/src/components/site-shell.test.tsx
+      - run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git rm .github/workflows/motion-evidence-edit.yml scripts/apply-motion-evidence.mjs
           git add apps/web/src/lib/built-with-skills.ts apps/web/src/lib/built-with-skills.test.ts apps/web/src/lib/real-use-pack-coverage.test.ts apps/web/src/lib/roadmap.test.ts apps/web/src/components/evidence/evidence-archive.test.tsx apps/web/src/components/site-shell.test.tsx
-          git commit -m "chore: apply Motion evidence registry"
+          git commit -m "feat: register Tsukihara Motion evidence"
           git push origin HEAD:feat/motion-real-use
