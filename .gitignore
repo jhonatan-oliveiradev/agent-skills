@@ -10,5 +10,6 @@ node_modules/
 apps/web/.next/
 apps/web/node_modules/
 apps/web/coverage/
+apps/web/public/downloads/skills/
 apps/web/src/generated/
 apps/web/tsconfig.tsbuildinfo
