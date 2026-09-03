@@ -6,15 +6,16 @@ import {
 } from "./built-with-skills";
 
 describe("built with skills records", () => {
-  it.each(["en", "pt-BR"] as const)("publishes six localized cases for %s", (locale) => {
+  it.each(["en", "pt-BR"] as const)("publishes seven localized cases for %s", (locale) => {
     const cases = getBuiltWithSkillsCases(locale);
 
-    expect(cases).toHaveLength(6);
+    expect(cases).toHaveLength(7);
     expect(cases.map((item) => item.slug)).toEqual([
       "rocket-codebase-intelligence-cosmic-sdk-removal",
       "rocket-editorial-error-boundary",
       "ping-space-voice-membership-authorization",
       "portfolio-translation-hardening",
+      "portfolio-project-isr-engineering-workflow",
       "catalog-experience",
       "pack-experience",
     ]);
@@ -142,7 +143,7 @@ describe("built with skills records", () => {
     expect(item && hasInspectableRealUseEvidence(item)).toBe(true);
   });
 
-  it("publishes Portfolio 2025 as inspectable public-safe real-use evidence", () => {
+  it("publishes Portfolio 2025 translation hardening as inspectable public-safe real-use evidence", () => {
     const item = getBuiltWithSkillsCaseBySlug("en", "portfolio-translation-hardening");
 
     expect(item).toBeDefined();
@@ -165,6 +166,36 @@ describe("built with skills records", () => {
         ),
       ),
     ).toBe(true);
+    expect(item && hasInspectableRealUseEvidence(item)).toBe(true);
+  });
+
+  it("publishes Portfolio 2025 Engineering Workflow as full-pack public-safe real-use evidence", () => {
+    const item = getBuiltWithSkillsCaseBySlug(
+      "en",
+      "portfolio-project-isr-engineering-workflow",
+    );
+
+    expect(item).toBeDefined();
+    expect(item?.evidenceClass).toBe("real-use");
+    expect(item?.project).toEqual({
+      id: "portfolio-2025",
+      name: "Portfolio 2025",
+    });
+    expect(item?.skills).toEqual([
+      "planning-engineering-work",
+      "managing-implementation-slices",
+      "reviewing-pull-requests",
+      "writing-effective-technical-handoffs",
+    ]);
+    expect(item?.evidence.map((entry) => entry.type)).toEqual(["source", "qa"]);
+    expect(
+      item?.evidence.every((entry) =>
+        entry.href.startsWith(
+          "https://github.com/jhonatan-oliveiradev/agent-skills/",
+        ),
+      ),
+    ).toBe(true);
+    expect(item?.evidence.some((entry) => entry.href.includes("/portfolio-2025/"))).toBe(false);
     expect(item && hasInspectableRealUseEvidence(item)).toBe(true);
   });
 

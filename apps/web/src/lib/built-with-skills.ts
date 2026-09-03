@@ -61,6 +61,8 @@ const pingCaseSourcePath =
   "docs/built-with-skills/2026-09-02-ping-space-voice-membership-authorization.md";
 const portfolioCaseSourcePath =
   "docs/built-with-skills/2026-09-02-portfolio-translation-hardening.md";
+const portfolioEngineeringWorkflowCaseSourcePath =
+  "docs/built-with-skills/2026-09-03-portfolio-project-isr-engineering-workflow.md";
 
 const agentSkillsStudioProject = {
   id: "agent-skills-studio",
@@ -515,6 +517,109 @@ const cases = [
           "Lint dos arquivos alterados e typecheck de CI passaram após o merge.",
           "O override aposentado agora resolve para openai/gpt-oss-20b enquanto outros overrides explícitos continuam configuráveis.",
           "Nenhum Preview da Vercel foi emitido para o merge em desenvolvimento; portanto, este case não afirma verificação de runtime em produção.",
+        ],
+      },
+    },
+  },
+  {
+    slug: "portfolio-project-isr-engineering-workflow",
+    date: "2026-09-03",
+    sourcePath: portfolioEngineeringWorkflowCaseSourcePath,
+    evidenceClass: "real-use",
+    project: portfolio2025Project,
+    skills: [
+      "planning-engineering-work",
+      "managing-implementation-slices",
+      "reviewing-pull-requests",
+      "writing-effective-technical-handoffs",
+    ],
+    evidence: [
+      {
+        type: "source",
+        href: `${repositoryUrl}/blob/main/${portfolioEngineeringWorkflowCaseSourcePath}`,
+        labels: {
+          en: "Public case record",
+          "pt-BR": "Registro público do case",
+        },
+      },
+      {
+        type: "qa",
+        href: `${repositoryUrl}/blob/main/${portfolioEngineeringWorkflowCaseSourcePath}#verification-record`,
+        labels: {
+          en: "Verification record",
+          "pt-BR": "Registro de verificação",
+        },
+      },
+    ],
+    locales: {
+      en: {
+        title: "Moving project details to runtime ISR through a bounded engineering workflow",
+        summary:
+          "A real Portfolio 2025 performance gate used the complete Engineering Workflow pack to plan, slice, review, verify, and hand off a server-owned runtime ISR transition without widening scope to legitimately dynamic routes.",
+        challenge:
+          "Move PT and EN project details from client-owned request-time loading to server-owned runtime ISR while preserving URLs, localization, editorial UI, metadata semantics, cache safety, and intentionally dynamic public routes.",
+        decisions: [
+          {
+            title: "Plan behavior and verification before implementation",
+            summary:
+              "Define RED contracts, server ownership, ISR, cache invalidation, route assertions, QA, and explicit non-goals before changing production code.",
+          },
+          {
+            title: "Keep the performance initiative in dependent slices",
+            summary:
+              "Treat project-detail ownership as Gate C after locale-root work, and keep unrelated font delivery, upgrades, migrations, and legitimately dynamic routes outside the slice.",
+          },
+          {
+            title: "Review risk instead of polishing the diff",
+            summary:
+              "Review ownership, localization, metadata/JSON-LD reuse, mutation invalidation, route classification, current CI, and scope boundaries before accepting the candidate.",
+          },
+          {
+            title: "Hand off an exact restart point",
+            summary:
+              "Preserve candidate SHA, run IDs, route rulings, QA, constraints, and the explicit no-merge-without-authorization next action in the final PR description.",
+          },
+        ],
+        results: [
+          "The project-detail PT/EN route patterns moved from request-time dynamic rendering to runtime ISR while preserving the editorial interface.",
+          "The final candidate passed static-rendering, performance, SEO, validation, integrations, typecheck, lint, production build, route assertion, and localhost QA.",
+          "The subsequent main merge passed the canonical Validate workflow.",
+          "All four Engineering Workflow methods contributed to planning, slice boundaries, review, or technical handoff.",
+        ],
+      },
+      "pt-BR": {
+        title: "Migração dos detalhes de projeto para ISR runtime com um fluxo de engenharia delimitado",
+        summary:
+          "Um gate real de performance do Portfolio 2025 usou o pack completo de Engineering Workflow para planejar, fatiar, revisar, verificar e entregar o handoff de uma transição para ISR runtime com ownership no servidor sem ampliar o escopo para rotas legitimamente dinâmicas.",
+        challenge:
+          "Mover os detalhes de projeto em PT e EN do carregamento request-time controlado pelo cliente para ISR runtime com ownership no servidor, preservando URLs, localização, UI editorial, semântica de metadata, segurança de cache e rotas públicas intencionalmente dinâmicas.",
+        decisions: [
+          {
+            title: "Planejar comportamento e verificação antes da implementação",
+            summary:
+              "Definir contratos RED, ownership no servidor, ISR, invalidação de cache, assertions de rota, QA e non-goals explícitos antes de alterar código de produção.",
+          },
+          {
+            title: "Manter a iniciativa de performance em slices dependentes",
+            summary:
+              "Tratar ownership de project detail como Gate C após o trabalho de locale roots e manter font delivery, upgrades, migrations e rotas legitimamente dinâmicas fora da slice.",
+          },
+          {
+            title: "Revisar risco em vez de polir o diff",
+            summary:
+              "Revisar ownership, localização, reutilização de metadata/JSON-LD, invalidação após mutações, classificação de rotas, CI atual e limites de escopo antes de aceitar o candidato.",
+          },
+          {
+            title: "Entregar um ponto exato de retomada",
+            summary:
+              "Preservar SHA do candidato, IDs dos runs, decisões de rota, QA, restrições e a próxima ação explícita de não fazer merge sem autorização na descrição final da PR.",
+          },
+        ],
+        results: [
+          "Os padrões PT/EN de detalhes de projeto saíram de renderização dinâmica por request para ISR runtime preservando a interface editorial.",
+          "O candidato final passou contratos de static rendering, performance, SEO, validação, integrações, typecheck, lint, build de produção, assertion de rotas e QA localhost.",
+          "O merge subsequente na main passou o workflow canônico Validate.",
+          "Os quatro métodos de Engineering Workflow contribuíram para planejamento, limites de slice, revisão ou handoff técnico.",
         ],
       },
     },

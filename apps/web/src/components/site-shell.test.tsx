@@ -242,9 +242,9 @@ describe("foundation navigation targets", () => {
   });
 
   it.each([
-    ["en", "Don't trust the description. Inspect the result.", "Removing a deprecated Cosmic SDK through evidence-led codebase analysis", "Shipping a recoverable Rocket error state through real Studio consumption", "Hardening Space voice credential authorization", "Hardening a translation provider after a production incident", "Catalog experience", "Pack experience"],
-    ["pt-BR", "Não confie na descrição. Inspecione o resultado.", "Remoção de um SDK Cosmic obsoleto com análise de codebase orientada por evidências", "Entrega de um estado de erro recuperável no Rocket com consumo real do Studio", "Hardening da autorização de credenciais de voz em Spaces", "Hardening de um provider de tradução após um incidente em produção", "Experiência do catálogo", "Experiência dos pacotes"],
-  ] as const)("renders the evidence archive for %s", async (locale, heading, codebase, rocket, ping, portfolio, catalog, packs) => {
+    ["en", "Don't trust the description. Inspect the result.", "Removing a deprecated Cosmic SDK through evidence-led codebase analysis", "Shipping a recoverable Rocket error state through real Studio consumption", "Hardening Space voice credential authorization", "Hardening a translation provider after a production incident", "Moving project details to runtime ISR through a bounded engineering workflow", "Catalog experience", "Pack experience"],
+    ["pt-BR", "Não confie na descrição. Inspecione o resultado.", "Remoção de um SDK Cosmic obsoleto com análise de codebase orientada por evidências", "Entrega de um estado de erro recuperável no Rocket com consumo real do Studio", "Hardening da autorização de credenciais de voz em Spaces", "Hardening de um provider de tradução após um incidente em produção", "Migração dos detalhes de projeto para ISR runtime com um fluxo de engenharia delimitado", "Experiência do catálogo", "Experiência dos pacotes"],
+  ] as const)("renders the evidence archive for %s", async (locale, heading, codebase, rocket, ping, portfolio, engineeringWorkflow, catalog, packs) => {
     const { container } = render(
       await BuiltWithSkillsPage({ params: Promise.resolve({ locale }) }),
     );
@@ -254,9 +254,10 @@ describe("foundation navigation targets", () => {
     expect(screen.getByRole("heading", { name: rocket })).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: ping })).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: portfolio })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: engineeringWorkflow })).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: catalog })).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: packs })).toBeInTheDocument();
-    expect(container.querySelectorAll("[data-evidence-feature]")).toHaveLength(6);
+    expect(container.querySelectorAll("[data-evidence-feature]")).toHaveLength(7);
     expect(container.querySelector(".built-case-card")).not.toBeInTheDocument();
   });
 

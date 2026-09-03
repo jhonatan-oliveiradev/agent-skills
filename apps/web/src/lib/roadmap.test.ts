@@ -40,9 +40,9 @@ describe("public roadmap", () => {
     ]);
     expect(stable?.items.slice(0, 4).every((item) => item.meta === "1.0.0")).toBe(true);
     expect(stableSkills?.meta).toContain("18");
-    expect(stableSkills?.meta).toContain("5/11");
+    expect(stableSkills?.meta).toContain("6/11");
     expect(stableSkills?.summary).toContain("18");
-    expect(stableSkills?.summary).toContain("5");
+    expect(stableSkills?.summary).toContain("6");
     expect(stableSkills?.summary).toContain("11");
     expect(stableSkills?.summary).not.toMatch(/every canonical skill|todas as skills canônicas/i);
   });
