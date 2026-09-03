@@ -61,28 +61,28 @@ A case contributes a pack only when at least one of its listed skills belongs to
 
 ### 2. Release-evidence parity guard
 
-The focused coverage test must read `release/stable-readiness.json` and require its historical `observed.activePacksRepresented` value to equal the currently derived coverage count. This prevents future real-use case additions from silently drifting away from the release evidence record.
+The focused coverage test reads `release/stable-readiness.json` and requires its historical `observed.activePacksRepresented` value to equal the currently derived coverage count. This prevents future real-use case additions from silently drifting away from the release evidence record.
 
 This tranche does not change `release/stable-readiness.json` because the current value already matches the derived truth.
 
 ### 3. Public roadmap evidence
 
-Keep the existing `stable-skills` roadmap item and its current meaning. Extend only its localized summary/meta so readers can see both dimensions:
+Keep the existing `stable-skills` roadmap item, its title, and its current Stable-skill copy contract. Append a narrow localized evidence fragment in the roadmap domain so readers can see both dimensions without widening the global messages contract:
 
-- individual skill maturity: 18 Stable skills;
-- real-use pack coverage: 5 of 11 active packs.
+- individual skill maturity: derived Stable-skill count;
+- real-use pack coverage: derived covered/total active-pack count.
 
-English copy contract:
+English evidence fragment:
 
-- summary preserves the current Stable-skill statement and adds: `Real-use evidence currently represents {covered} of {total} active packs.`
-- meta: `{count} stable skills · {covered}/{total} packs with real-use evidence`
+- summary: `Real-use evidence currently represents {covered} of {total} active packs.`
+- meta: `{covered}/{total} packs with real-use evidence`
 
-PT-BR copy contract:
+PT-BR evidence fragment:
 
-- summary preserves the current Stable-skill statement and adds: `Evidências de uso real representam atualmente {covered} de {total} pacotes ativos.`
-- meta: `{count} skills Stable · {covered}/{total} pacotes com evidência de uso real`
+- summary: `Evidências de uso real representam atualmente {covered} de {total} pacotes ativos.`
+- meta: `{covered}/{total} pacotes com evidência de uso real`
 
-All numeric placeholders are derived at runtime from catalog/evidence state; no literal `18`, `5`, or `11` is added to localized messages.
+The existing localized Stable-skill strings remain the source for the maturity portion. All numeric values are derived at runtime; no literal `18`, `5`, or `11` is embedded in production copy.
 
 ## Non-goals
 
@@ -93,14 +93,23 @@ All numeric placeholders are derived at runtime from catalog/evidence state; no 
 - Do not alter installers, plugin metadata, catalog manifests, generated catalog sources, workflows, or deployment configuration.
 - Do not create a new release-readiness system or duplicate Built with Skills case data.
 - Do not redesign the roadmap or change its seven-stage structure.
+- Do not rewrite the broader localized messages surface for this bounded addition.
 
 ## Verification contract
 
-### RED
+### RED 1 — coverage domain
 
-Before implementation, focused tests must fail because `getRealUsePackCoverage()` does not exist and the roadmap does not expose pack-coverage values.
+The first focused test fails because `getRealUsePackCoverage()` does not exist.
 
-### GREEN
+### GREEN 1
+
+The helper derives the exact current covered/uncovered active-pack sets and reconciles the current `5` with Stable readiness evidence.
+
+### RED 2 — roadmap exposure
+
+With the helper green, focused bilingual roadmap assertions fail because the existing Stable item does not yet expose `5/11`.
+
+### GREEN 2 / final
 
 The final candidate must prove:
 
@@ -109,6 +118,7 @@ The final candidate must prove:
 - counts are `5 / 11` from derived data;
 - `release/stable-readiness.json` observed coverage equals the derived count;
 - EN and PT-BR roadmap summaries/meta include derived `18`, `5`, and `11` values while preserving the distinction between Stable release status and individual skill maturity;
+- stage IDs, ordering, links, and the four release-surface `1.0.0` metas remain unchanged;
 - all canonical root/web gates pass on Ubuntu and Windows.
 
 ## Merge policy
