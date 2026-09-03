@@ -26,6 +26,11 @@ interface RelationsCopy {
   readonly inspectReport: string;
 }
 
+interface ChatgptDownloadCopy {
+  readonly chatgptLabel: string;
+  readonly chatgptDownload: string;
+}
+
 const surfaceLabels: Readonly<Record<string, string>> = {
   chatgpt: "ChatGPT",
   codex: "Codex",
@@ -41,6 +46,8 @@ export function MethodDossier({
   relatedPacks,
   evidenceCases,
   commands,
+  chatgptDownload,
+  chatgptDownloadCopy,
   sourceUrl,
   detail,
   catalogCopy,
@@ -56,6 +63,8 @@ export function MethodDossier({
   relatedPacks: readonly LocalizedPack[];
   evidenceCases: readonly BuiltWithSkillsCase[];
   commands: Readonly<{ bash: string; powershell: string }>;
+  chatgptDownload: Readonly<{ href: string; filename: string }>;
+  chatgptDownloadCopy: ChatgptDownloadCopy;
   sourceUrl: string;
   detail: Messages["skillDetail"];
   catalogCopy: Messages["skillsCatalog"];
@@ -189,6 +198,16 @@ export function MethodDossier({
                 label={detail.copy}
                 copiedLabel={detail.copied}
               />
+            </div>
+            <div>
+              <p>{chatgptDownloadCopy.chatgptLabel}</p>
+              <a
+                className="button button--secondary"
+                href={chatgptDownload.href}
+                download={chatgptDownload.filename}
+              >
+                {chatgptDownloadCopy.chatgptDownload}
+              </a>
             </div>
           </div>
         </section>
