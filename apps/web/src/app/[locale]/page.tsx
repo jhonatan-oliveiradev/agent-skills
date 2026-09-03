@@ -17,13 +17,26 @@ import { messages } from "@/lib/messages";
 
 type HomePageProps = Readonly<{ params: Promise<{ locale: string }> }>;
 
+const homeMetadata = {
+  en: {
+    title: "Agent Skills Studio — Working methods for agents",
+    description:
+      "Explore an open, installable collection of agent skills: reusable working methods with explicit constraints and inspectable real-use evidence.",
+  },
+  "pt-BR": {
+    title: "Agent Skills Studio — Métodos de trabalho para agentes",
+    description:
+      "Explore uma coleção aberta e instalável de skills para agentes: métodos de trabalho reutilizáveis, com restrições explícitas e evidências reais inspecionáveis.",
+  },
+} as const;
+
 export async function generateMetadata({ params }: HomePageProps): Promise<Metadata> {
   const locale = await resolveLocale(params);
-  const copy = messages[locale].metadata;
+  const metadata = homeMetadata[locale];
 
   return {
-    title: copy.title,
-    description: copy.description,
+    title: metadata.title,
+    description: metadata.description,
     alternates: {
       canonical: `/${locale}`,
       languages: {
