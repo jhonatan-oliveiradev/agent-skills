@@ -8,15 +8,18 @@ ChatGPT currently supports two relevant distribution paths for this repository.
 
 Eligible ChatGPT Business, Enterprise, Healthcare, and Edu users can manage Skills from the ChatGPT plugin directory, subject to workspace settings, role, surface, region, and rollout availability.
 
-In ChatGPT:
+Each published Skill page exposes a versioned `.zip` bundle such as `craft-premium-motion-1.0.0.zip`. The bundle is generated deterministically from the canonical `skills/<slug>/` directory: `SKILL.md` stays at the archive root and supporting files keep their relative paths. The ZIP is a distribution artifact, not a second maintained copy of the Skill.
 
-1. Open **Plugins**.
-2. Open the **Skills** tab.
-3. Select **Create**.
-4. Select **Upload from computer**.
-5. Review the Skill before installing it. Uploaded Skills can contain instructions, supporting files, and code, and ChatGPT performs a safety check before making them available.
+To install one Skill in ChatGPT:
 
-Use the canonical Skill source from this repository. Do not create a ChatGPT-specific fork of `SKILL.md`.
+1. Open the Skill in Agent Skills Studio and select **Download Skill ZIP**.
+2. In ChatGPT, open **Plugins**.
+3. Open the **Skills** tab.
+4. Select **Create**.
+5. Select **Upload from computer** and choose the downloaded `.zip` file.
+6. Review the Skill before installing it. Uploaded Skills can contain instructions, supporting files, and code, and ChatGPT performs a safety check before making them available.
+
+The generated ZIP always comes from the canonical Skill source in this repository. Do not create or maintain a ChatGPT-specific fork of `SKILL.md`.
 
 ## Import the Agent Skills Studio plugin from GitHub
 
