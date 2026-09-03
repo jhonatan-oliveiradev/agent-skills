@@ -61,7 +61,7 @@ describe("web package contract", () => {
     expect(pkg.dependencies["react-dom"]).toBe("19.2.8");
   });
 
-  it("prepares the catalog and generated route types before consuming gates", () => {
+  it("prepares generated Skill ZIPs, the catalog, and route types before consuming gates", () => {
     const pkg = JSON.parse(readFileSync(resolve(webRoot, "package.json"), "utf8"));
 
     expect(pkg.scripts.pretest).toBe("node scripts/sync-catalog.mjs");
@@ -69,7 +69,9 @@ describe("web package contract", () => {
       "node scripts/sync-catalog.mjs && next typegen",
     );
     expect(pkg.scripts.typecheck).toBe("tsc --noEmit");
-    expect(pkg.scripts.prebuild).toBe("node scripts/sync-catalog.mjs");
+    expect(pkg.scripts.prebuild).toBe(
+      "node ../../scripts/generate-skill-zips.mjs && node scripts/sync-catalog.mjs",
+    );
   });
 
   it("gives bordered controls at least 3:1 contrast in light and dark themes", () => {

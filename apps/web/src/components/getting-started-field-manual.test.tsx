@@ -18,6 +18,7 @@ describe("Getting Started Field Manual", () => {
       "View packs",
       "Claude Code · personal",
       "ChatGPT · plugin marketplace",
+      "Open any Skill → Download Skill ZIP",
       "Plugins → Skills → Create → Upload from computer",
       "Workspace settings → Plugins → Add → Import marketplace",
     ],
@@ -30,6 +31,7 @@ describe("Getting Started Field Manual", () => {
       "Ver pacotes",
       "Claude Code · pessoal",
       "ChatGPT · marketplace de plugins",
+      "Abra qualquer skill → Baixar ZIP da skill",
       "Plugins → Habilidades → Criar → Carregar do computador",
       "Configurações do workspace → Plugins → Adicionar → Importar marketplace",
     ],
@@ -44,6 +46,7 @@ describe("Getting Started Field Manual", () => {
       packsAction,
       claudeLabel,
       chatgptLabel,
+      skillDownloadPath,
       skillUploadPath,
       marketplacePath,
     ) => {
@@ -72,6 +75,7 @@ describe("Getting Started Field Manual", () => {
       const chatgpt = container.querySelector("[data-chatgpt-distribution]");
       expect(chatgpt).toBeInTheDocument();
       expect(screen.getByText(chatgptLabel)).toBeInTheDocument();
+      expect(screen.getByText(skillDownloadPath)).toBeInTheDocument();
       expect(screen.getByText(skillUploadPath)).toBeInTheDocument();
       expect(screen.getByText(marketplacePath)).toBeInTheDocument();
       expect(screen.getByText(repositoryUrl)).toBeInTheDocument();

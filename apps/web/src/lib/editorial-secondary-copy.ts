@@ -9,6 +9,8 @@ interface FieldManualCopy {
   readonly claudeCodeLabel: string;
   readonly chatgptLabel: string;
   readonly chatgptSummary: string;
+  readonly chatgptSkillDownloadLabel: string;
+  readonly chatgptSkillDownloadPath: string;
   readonly chatgptSkillUploadLabel: string;
   readonly chatgptSkillUploadPath: string;
   readonly chatgptMarketplaceLabel: string;
@@ -46,8 +48,10 @@ export const fieldManualCopy = {
     claudeCodeLabel: "Claude Code · personal",
     chatgptLabel: "ChatGPT · plugin marketplace",
     chatgptSummary:
-      "Upload one Skill in ChatGPT or import the complete skills-only plugin from GitHub in an eligible workspace.",
-    chatgptSkillUploadLabel: "One Skill",
+      "Download one Skill ZIP for direct ChatGPT upload or import the complete skills-only plugin from GitHub in an eligible workspace.",
+    chatgptSkillDownloadLabel: "Download",
+    chatgptSkillDownloadPath: "Open any Skill → Download Skill ZIP",
+    chatgptSkillUploadLabel: "Upload",
     chatgptSkillUploadPath: "Plugins → Skills → Create → Upload from computer",
     chatgptMarketplaceLabel: "Complete collection",
     chatgptMarketplacePath: "Workspace settings → Plugins → Add → Import marketplace",
@@ -74,8 +78,10 @@ export const fieldManualCopy = {
     claudeCodeLabel: "Claude Code · pessoal",
     chatgptLabel: "ChatGPT · marketplace de plugins",
     chatgptSummary:
-      "Carregue uma Skill no ChatGPT ou importe o plugin completo, somente de skills, pelo GitHub em um workspace elegível.",
-    chatgptSkillUploadLabel: "Uma Skill",
+      "Baixe o ZIP de uma skill para envio direto ao ChatGPT ou importe o plugin completo, somente de skills, pelo GitHub em um workspace elegível.",
+    chatgptSkillDownloadLabel: "Baixar",
+    chatgptSkillDownloadPath: "Abra qualquer skill → Baixar ZIP da skill",
+    chatgptSkillUploadLabel: "Enviar",
     chatgptSkillUploadPath: "Plugins → Habilidades → Criar → Carregar do computador",
     chatgptMarketplaceLabel: "Coleção completa",
     chatgptMarketplacePath: "Configurações do workspace → Plugins → Adicionar → Importar marketplace",

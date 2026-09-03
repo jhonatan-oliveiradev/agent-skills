@@ -42,6 +42,24 @@ describe("Method Dossier", () => {
     });
   });
 
+  it.each([
+    ["en", "Download Skill ZIP"],
+    ["pt-BR", "Baixar ZIP da skill"],
+  ] as const)("offers a versioned ChatGPT-ready ZIP download for %s", async (locale, label) => {
+    await SkillDetailPage({
+      params: Promise.resolve({ locale, slug: "designing-ui-systems" }),
+    }).then((page) => render(page));
+
+    expect(screen.getByRole("link", { name: label })).toHaveAttribute(
+      "href",
+      "/downloads/skills/designing-ui-systems-1.0.0.zip",
+    );
+    expect(screen.getByRole("link", { name: label })).toHaveAttribute(
+      "download",
+      "designing-ui-systems-1.0.0.zip",
+    );
+  });
+
   it("presents OpenAI compatibility as product names rather than raw catalog slugs", async () => {
     await SkillDetailPage({
       params: Promise.resolve({ locale: "en", slug: "designing-ui-systems" }),

@@ -7,6 +7,7 @@ test('repository exposes complete web gates and Vercel policy', () => {
   const web = JSON.parse(readFileSync('apps/web/package.json', 'utf8'));
   const workflow = readFileSync('.github/workflows/validate.yml', 'utf8');
   const readme = readFileSync('README.md', 'utf8');
+  const gitignore = readFileSync('.gitignore', 'utf8');
 
   for (const [script, command] of [
     ['web:test', 'npm --prefix apps/web test'],
@@ -23,7 +24,15 @@ test('repository exposes complete web gates and Vercel policy', () => {
     'node scripts/sync-catalog.mjs && next typegen',
   );
   assert.equal(web.scripts.typecheck, 'tsc --noEmit');
-  assert.equal(web.scripts.prebuild, 'node scripts/sync-catalog.mjs');
+  assert.equal(
+    web.scripts.predev,
+    'node ../../scripts/generate-skill-zips.mjs && node scripts/sync-catalog.mjs',
+  );
+  assert.equal(
+    web.scripts.prebuild,
+    'node ../../scripts/generate-skill-zips.mjs && node scripts/sync-catalog.mjs',
+  );
+  assert.match(gitignore, /^apps\/web\/public\/downloads\/skills\/$/m);
 
   let previousIndex = -1;
   for (const command of [
