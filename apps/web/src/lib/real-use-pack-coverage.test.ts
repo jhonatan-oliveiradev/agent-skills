@@ -17,6 +17,7 @@ describe("real-use pack coverage", () => {
         "codebase-intelligence",
         "engineering-workflow",
         "frontend-product",
+        "motion",
         "quality-testing",
         "writing-communication",
       ],
@@ -24,9 +25,8 @@ describe("real-use pack coverage", () => {
         "backend-data",
         "design-brand",
         "game-development",
-        "motion",
       ],
-      coveredCount: 7,
+      coveredCount: 8,
       totalActivePacks: 11,
     });
   });
