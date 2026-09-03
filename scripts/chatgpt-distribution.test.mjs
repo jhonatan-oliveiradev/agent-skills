@@ -7,7 +7,7 @@ import { fileURLToPath } from "node:url";
 const repositoryRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const repositoryUrl = "https://github.com/jhonatan-oliveiradev/agent-skills";
 
-test("documents ChatGPT skill upload and GitHub marketplace distribution", async () => {
+test("documents ChatGPT skill ZIP upload and GitHub marketplace distribution", async () => {
   let source = "";
   try {
     source = await readFile(path.join(repositoryRoot, "docs", "chatgpt.md"), "utf8");
@@ -17,6 +17,8 @@ test("documents ChatGPT skill upload and GitHub marketplace distribution", async
 
   assert.match(source, /Plugins/i);
   assert.match(source, /Skills/i);
+  assert.match(source, /\.zip/i);
+  assert.match(source, /SKILL\.md/i);
   assert.match(source, /Upload from computer|Carregar do computador/i);
   assert.match(source, /Import marketplace/i);
   assert.match(source, new RegExp(repositoryUrl.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")));
