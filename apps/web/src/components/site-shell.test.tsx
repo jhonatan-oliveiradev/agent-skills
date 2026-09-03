@@ -256,9 +256,10 @@ describe("foundation navigation targets", () => {
     expect(screen.getByRole("heading", { name: portfolio })).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: engineeringWorkflow })).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: architectureEngineering })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: motion })).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: catalog })).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: packs })).toBeInTheDocument();
-    expect(container.querySelectorAll("[data-evidence-feature]")).toHaveLength(8);
+    expect(container.querySelectorAll("[data-evidence-feature]")).toHaveLength(9);
     expect(container.querySelector(".built-case-card")).not.toBeInTheDocument();
   });
 
