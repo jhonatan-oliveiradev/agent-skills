@@ -6,10 +6,10 @@ import {
 } from "./built-with-skills";
 
 describe("built with skills records", () => {
-  it.each(["en", "pt-BR"] as const)("publishes eight localized cases for %s", (locale) => {
+  it.each(["en", "pt-BR"] as const)("publishes nine localized cases for %s", (locale) => {
     const cases = getBuiltWithSkillsCases(locale);
 
-    expect(cases).toHaveLength(8);
+    expect(cases).toHaveLength(9);
     expect(cases.map((item) => item.slug)).toEqual([
       "rocket-codebase-intelligence-cosmic-sdk-removal",
       "rocket-editorial-error-boundary",
@@ -17,6 +17,7 @@ describe("built with skills records", () => {
       "portfolio-translation-hardening",
       "portfolio-project-isr-engineering-workflow",
       "strata-contracts-architecture-boundaries",
+      "tsukihara-cinematic-motion-hardening",
       "catalog-experience",
       "pack-experience",
     ]);
@@ -156,6 +157,23 @@ describe("built with skills records", () => {
     expect(item?.evidence.map((entry) => entry.type)).toEqual(["source", "qa"]);
     expect(item?.evidence.every((entry) => entry.href.startsWith("https://github.com/jhonatan-oliveiradev/agent-skills/"))).toBe(true);
     expect(item?.evidence.some((entry) => entry.href.includes("/jo-micro-saas-003/"))).toBe(false);
+    expect(item && hasInspectableRealUseEvidence(item)).toBe(true);
+  });
+
+  it("publishes Tsukihara Motion as full-pack public-safe real-use evidence", () => {
+    const item = getBuiltWithSkillsCaseBySlug("en", "tsukihara-cinematic-motion-hardening");
+    expect(item).toBeDefined();
+    expect(item?.evidenceClass).toBe("real-use");
+    expect(item?.project).toEqual({ id: "tsukihara", name: "Tsukihara" });
+    expect(item?.skills).toEqual([
+      "craft-premium-motion",
+      "engineering-gsap-animations",
+      "orchestrating-cinematic-web-motion",
+      "optimizing-frontend-motion-performance",
+      "reconstructing-images-as-threejs",
+    ]);
+    expect(item?.evidence.map((entry) => entry.type)).toEqual(["source", "qa"]);
+    expect(item?.evidence.every((entry) => entry.href.startsWith("https://github.com/jhonatan-oliveiradev/agent-skills/"))).toBe(true);
     expect(item && hasInspectableRealUseEvidence(item)).toBe(true);
   });
 
