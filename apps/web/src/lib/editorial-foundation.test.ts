@@ -1,6 +1,7 @@
 import { readFile } from "node:fs/promises";
 import { resolve } from "node:path";
 import { describe, expect, it } from "vitest";
+import { messages } from "./messages";
 
 const appRoot = resolve(process.cwd(), "src");
 
@@ -90,5 +91,24 @@ describe("editorial design foundation", () => {
       expect(route).not.toContain("SiteHeader");
       expect(route).not.toContain("SiteFooter");
     }
+  });
+
+  it("uses specific shared product actions in both locales", () => {
+    expect(messages.en.brandLabel).toBe("Agent Skills Studio");
+    expect(messages["pt-BR"].brandLabel).toBe("Agent Skills Studio");
+    expect(messages.en.navigation.cta).toBe("Explore skills");
+    expect(messages["pt-BR"].navigation.cta).toBe("Explorar skills");
+
+    const genericActions = new Set([
+      "Learn more",
+      "Get started",
+      "Continue",
+      "Saiba mais",
+      "Começar",
+      "Continuar",
+    ]);
+
+    expect(genericActions.has(messages.en.navigation.cta)).toBe(false);
+    expect(genericActions.has(messages["pt-BR"].navigation.cta)).toBe(false);
   });
 });
