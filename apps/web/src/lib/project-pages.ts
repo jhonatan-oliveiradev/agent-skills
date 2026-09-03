@@ -81,6 +81,15 @@ const content: Readonly<Record<Locale, ProjectPageContent>> = {
       sourceAction: "View the source changelog",
       releases: [
         {
+          version: "Unreleased",
+          date: "Unreleased",
+          groups: [
+            { title: "Distribution", items: ["Added deterministic ChatGPT-ready skill ZIP downloads for every canonical skill, keeping SKILL.md at the archive root and preserving supporting files with stable relative paths.", "Added localized Skill download actions plus EN/PT-BR Getting Started guidance for ChatGPT's Upload from computer flow while keeping skills/<slug>/ as the single source of truth."] },
+            { title: "Studio and roadmap", items: ["Promoted the release-qualified plugin, catalog, installers, and microsite surfaces to Stable in the public roadmap while keeping individual skill maturity distinct from Stable release status.", "Kept current README/catalog documentation aligned with 54 canonical skills and 11 active packs, and removed only confirmed orphaned localized Home/Getting Started copy."] },
+            { title: "Reliability and maintenance", items: ["Removed superseded post-Stable workflow helpers so validate.yml remains the canonical workflow.", "Hardened Windows CI around the live Next integration fixture and teardown contention without raising test timeouts or serializing the entire suite.", "Restored native Method Archive select/option contrast with existing surface/text theme tokens while preserving native select semantics and keyboard behavior."] },
+          ],
+        },
+        {
           version: "1.0.0",
           date: "2026-09-02",
           groups: [
@@ -150,6 +159,15 @@ const content: Readonly<Record<Locale, ProjectPageContent>> = {
       unreleased: "Não lançada",
       sourceAction: "Ver changelog na fonte",
       releases: [
+        {
+          version: "Não lançada",
+          date: "Não lançada",
+          groups: [
+            { title: "Distribuição", items: ["Adição de downloads ZIP determinísticos e prontos para ChatGPT para cada skill canônica, mantendo SKILL.md na raiz do arquivo e preservando arquivos auxiliares com caminhos relativos estáveis.", "Adição de ações localizadas de download de Skill e orientação EN/PT-BR em Primeiros passos para o fluxo Upload from computer do ChatGPT, mantendo skills/<slug>/ como única fonte de verdade."] },
+            { title: "Studio e roteiro", items: ["Promoção das superfícies qualificadas de plugin, catálogo, instaladores e microsite para Stable no roteiro público, mantendo a maturidade individual das skills distinta do estado Stable da release.", "Manutenção da documentação atual de README/catálogo alinhada a 54 skills canônicas e 11 pacotes ativos, com remoção apenas de textos localizados comprovadamente órfãos da Home/Primeiros passos."] },
+            { title: "Confiabilidade e manutenção", items: ["Remoção dos helpers de workflow pós-Stable já substituídos, mantendo validate.yml como workflow canônico.", "Reforço do CI no Windows para isolar a integração Next real e tolerar contenção na limpeza do fixture sem elevar timeouts nem serializar toda a suíte.", "Restauração do contraste dos selects e opções nativos do Method Archive com tokens existentes de superfície e texto, preservando semântica nativa e navegação por teclado."] },
+          ],
+        },
         {
           version: "1.0.0",
           date: "2026-09-02",

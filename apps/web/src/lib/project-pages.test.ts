@@ -10,15 +10,19 @@ describe("project page content", () => {
     expect(content.about.principles).toHaveLength(5);
     expect(content.contribute.paths).toHaveLength(4);
     expect(content.changelog.releases[0]).toMatchObject({
+      version: content.changelog.unreleased,
+      date: content.changelog.unreleased,
+    });
+    expect(content.changelog.releases[1]).toMatchObject({
       version: "1.0.0",
       date: "2026-09-02",
     });
-    expect(content.changelog.releases[1]).toMatchObject({
+    expect(content.changelog.releases[2]).toMatchObject({
       version: "1.0.0-rc.2",
       date: "2026-09-02",
     });
 
-    const releaseItems = content.changelog.releases[0].groups.flatMap((group) => group.items);
+    const releaseItems = content.changelog.releases[1].groups.flatMap((group) => group.items);
     const releaseText = releaseItems.join(" ");
 
     expect(releaseItems.length).toBeGreaterThanOrEqual(6);
