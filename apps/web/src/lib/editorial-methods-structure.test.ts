@@ -23,4 +23,15 @@ describe("editorial methods system", () => {
     expect(page).not.toContain("SiteHeader");
     expect(page).not.toContain("SiteFooter");
   });
+
+  it("keeps native Method Archive select menus readable on themed surfaces", async () => {
+    const css = await read("app/editorial-methods.css");
+
+    expect(css).toMatch(
+      /\.method-archive__select select\s*\{[^}]*background-color:\s*var\(--surface\)[^}]*color:\s*var\(--text\)/s,
+    );
+    expect(css).toMatch(
+      /\.method-archive__select option\s*\{[^}]*background-color:\s*var\(--surface\)[^}]*color:\s*var\(--text\)/s,
+    );
+  });
 });
