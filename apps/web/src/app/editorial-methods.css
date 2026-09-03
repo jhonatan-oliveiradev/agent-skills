@@ -165,11 +165,16 @@
   border: 0;
   border-bottom: 1px solid var(--border);
   border-radius: 0;
-  background: transparent;
+  background-color: var(--surface);
   color: var(--text);
   font-size: 0.78rem;
   font-weight: 650;
   transition: border-color 220ms var(--ease-editorial);
+}
+
+.method-archive__select option {
+  background-color: var(--surface);
+  color: var(--text);
 }
 
 .method-archive__select select:hover,
