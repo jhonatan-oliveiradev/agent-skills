@@ -102,31 +102,36 @@ export const homeEvidenceContent = {
     caseStudy: {
       eyebrow: "Built with Skills / Case 001",
       title: "This Home was built with Skills.",
-      summary: "The thesis should survive contact with the product. This interface is the first proof: method in, verifiable outcome out.",
+      summary:
+        "We used the collection on the Studio itself: diagnose the hierarchy, choose the methods, implement the redesign, then verify what changed.",
       stages: [
         {
           id: "problem",
           eyebrow: "01 / Problem",
-          title: "The interface worked. The authorship did not.",
-          summary: "The hierarchy felt compressed and the product did not yet look as deliberate as the methods it publishes.",
+          title: "The interface worked. The hierarchy did not.",
+          summary:
+            "Content was compressed into the hero, visual priority was weak, and the product looked less deliberate than the methods it publishes.",
         },
         {
           id: "method",
           eyebrow: "02 / Method",
-          title: "The method changed the process.",
-          summary: "Research, design approval, implementation, visual QA and accessibility constraints shaped the work instead of decoration-first iteration.",
+          title: "The methods set the order of work.",
+          summary:
+            "Research and design approval came before implementation; responsive, visual, motion, and accessibility checks defined what counted as done.",
         },
         {
           id: "transformation",
           eyebrow: "03 / Transformation",
-          title: "Structure before spectacle.",
-          summary: "Typography, spacing, grid and the Dark Veil atmosphere were recomposed around a clearer editorial hierarchy and responsive behavior.",
+          title: "Hierarchy before effects.",
+          summary:
+            "Typography, spacing, grid, and the Dark Veil atmosphere were rebuilt around clearer reading order instead of adding decoration to the old composition.",
         },
         {
           id: "evidence",
           eyebrow: "04 / Evidence",
-          title: "The result can be inspected.",
-          summary: "The redesigned hero shipped with reduced-motion support, responsive QA and repository evidence instead of an unverifiable marketing claim.",
+          title: "The result is inspectable.",
+          summary:
+            "The redesign shipped with reduced-motion support, responsive checks, tests, and repository history that can be inspected independently of this page.",
         },
       ],
       evidence: ["PR #22", "3 production files changed", "Tests passed", "390 / 1440 / 1920 visual QA"],
@@ -137,12 +142,15 @@ export const homeEvidenceContent = {
     proof: {
       eyebrow: "Built with Skills / Case 001",
       title: "This Home was built with Skills.",
-      summary: "The thesis should survive contact with the product. This interface is the first proof: method in, verifiable outcome out.",
+      summary:
+        "The collection is more credible when the same methods used to describe good work can be inspected in the work behind this site.",
       challengeLabel: "Challenge",
-      challenge: "The Home worked, but its hierarchy felt compressed and the product did not yet look as deliberate as the methods it publishes.",
+      challenge:
+        "The Home was functional, but compressed hierarchy and weak differentiation made the product harder to read and easier to mistake for a generic catalog.",
       skillsLabel: "Skills used",
       outcomeLabel: "Outcome",
-      outcome: "An editorial, responsive hero with React Bits Dark Veil, clearer composition, reduced-motion support and visual QA.",
+      outcome:
+        "An editorial, responsive hero with React Bits Dark Veil, clearer composition, reduced-motion support, and visual QA.",
       evidenceLabel: "Evidence",
       evidence: ["PR #22", "3 production files changed", "Tests passed", "390 / 1440 / 1920 visual QA"],
       beforeLabel: "Before",
@@ -151,19 +159,33 @@ export const homeEvidenceContent = {
     },
     transformation: {
       eyebrow: "Method in action",
-      title: "From a problem to an outcome.",
-      summary: "The value is not the instruction file. The value is the decision process it makes repeatable.",
+      title: "The file is not the value. The process is.",
+      summary:
+        "A skill matters when it changes how the agent frames the problem, makes decisions, and verifies the result.",
       stages: [
-        { title: "Problem identified", summary: "The layout was usable, but cramped hierarchy and weak differentiation made the result feel generic." },
-        { title: "Skills applied", summary: "Research, design approval, implementation, visual QA and accessibility constraints shaped the work." },
-        { title: "Verifiable result", summary: "A stronger editorial hero shipped with responsive behavior, reduced-motion support and reproducible QA." },
+        {
+          title: "Name the problem",
+          summary:
+            "The layout was usable, but cramped hierarchy and weak differentiation made the result feel generic.",
+        },
+        {
+          title: "Apply the method",
+          summary:
+            "Research, design approval, implementation, visual QA, and accessibility constraints gave the work an explicit sequence.",
+        },
+        {
+          title: "Verify the result",
+          summary:
+            "The revised hero shipped with responsive behavior, reduced-motion support, tests, and reproducible visual QA.",
+        },
       ],
     },
     methods: {
       eyebrow: "Open methods",
-      title: "Explore the collection of methods.",
-      summary: "Open the method, inspect the constraints and decide whether it belongs in your agent workflow.",
-      viewAll: "View all skills",
+      title: "Choose the method that matches the work.",
+      summary:
+        "Each skill is open to inspection. Read its trigger, constraints, process, and boundaries before deciding whether it belongs in your agent workflow.",
+      viewAll: "Explore all skills",
       featured: [
         { slug: "designing-ui-systems", discipline: "Interface systems · hierarchy · composition" },
         { slug: "building-premium-nextjs-interfaces", discipline: "Next.js · React · architecture · frontend craft" },
@@ -172,27 +194,42 @@ export const homeEvidenceContent = {
     },
     packs: {
       eyebrow: "Featured packs",
-      title: "Methods that work better together.",
-      summary: "Installable collections organized around outcomes instead of arbitrary bundles.",
+      title: "Use a pack when the work crosses methods.",
+      summary:
+        "Packs group related, independently invokable skills so you can install a useful discipline without turning it into one oversized workflow.",
       skills: "{count} skills",
-      view: "Explore pack",
-      viewAll: "View all packs",
+      view: "Inspect pack",
+      viewAll: "Explore all packs",
     },
     workflow: {
       eyebrow: "How it works",
-      title: "One method. Four movements.",
-      summary: "The agent does not receive more decoration. It receives a better way to move from intent to evidence.",
+      title: "Ask normally. Work with a method.",
+      summary:
+        "You describe the job in natural language. The skill gives the agent an explicit way to approach it instead of improvising the process from scratch.",
       movements: [
-        { title: "You ask", summary: "Describe the goal in natural language, with the context you already have." },
-        { title: "The agent invokes", summary: "The agent selects the method that matches the work instead of improvising a process." },
-        { title: "The method guides", summary: "Research, decisions, implementation and QA happen under explicit constraints." },
-        { title: "You receive", summary: "You get an outcome that can be inspected, tested and reused." },
+        {
+          title: "Describe the job",
+          summary: "State the goal and the context you already have. You do not need to rewrite the skill as a prompt.",
+        },
+        {
+          title: "Match a method",
+          summary: "The agent selects the skill whose trigger and boundaries fit the work.",
+        },
+        {
+          title: "Follow the constraints",
+          summary: "The method structures research, decisions, implementation, and verification where they are relevant.",
+        },
+        {
+          title: "Inspect the outcome",
+          summary: "The result should come with enough evidence to review what changed and how it was checked.",
+        },
       ],
     },
     ledger: {
       eyebrow: "Evidence ledger",
-      title: "Open the method. Inspect the evidence. Judge the result.",
-      summary: "Trust should not depend on marketing copy. Every method becomes more useful when its use can be traced to real work.",
+      title: "Inspect the method. Then inspect what it changed.",
+      summary:
+        "Real-use records connect a skill to a project, the decisions it affected, and the evidence available after the work shipped.",
       methodLabel: "Method",
       usedInLabel: "Used in",
       evidenceLabel: "Evidence",
@@ -208,31 +245,36 @@ export const homeEvidenceContent = {
     caseStudy: {
       eyebrow: "Built with Skills / Case 001",
       title: "Esta Home foi construída com Skills.",
-      summary: "A tese precisa sobreviver ao contato com o produto. Esta interface é a primeira prova: entra método, sai resultado verificável.",
+      summary:
+        "Usamos a coleção no próprio Studio: diagnosticar a hierarquia, escolher os métodos, implementar o redesign e verificar o que realmente mudou.",
       stages: [
         {
           id: "problem",
           eyebrow: "01 / Problema",
-          title: "A interface funcionava. A autoria ainda não.",
-          summary: "A hierarquia estava comprimida e o produto ainda não parecia tão deliberado quanto os métodos que publica.",
+          title: "A interface funcionava. A hierarquia, não.",
+          summary:
+            "O conteúdo estava comprimido na hero, a prioridade visual era fraca e o produto parecia menos deliberado que os métodos que publica.",
         },
         {
           id: "method",
           eyebrow: "02 / Método",
-          title: "O método mudou o processo.",
-          summary: "Pesquisa, aprovação de design, implementação, QA visual e acessibilidade passaram a orientar o trabalho em vez de uma iteração centrada em decoração.",
+          title: "Os métodos definiram a ordem do trabalho.",
+          summary:
+            "Pesquisa e aprovação de design vieram antes da implementação; checks responsivos, visuais, de motion e acessibilidade definiram o que significava terminar.",
         },
         {
           id: "transformation",
           eyebrow: "03 / Transformação",
-          title: "Estrutura antes do espetáculo.",
-          summary: "Tipografia, espaçamento, grid e a atmosfera do Dark Veil foram recompostos em torno de uma hierarquia editorial mais clara e responsiva.",
+          title: "Hierarquia antes dos efeitos.",
+          summary:
+            "Tipografia, espaçamento, grid e a atmosfera do Dark Veil foram refeitos em torno de uma ordem de leitura mais clara, em vez de decorar a composição antiga.",
         },
         {
           id: "evidence",
           eyebrow: "04 / Evidência",
           title: "O resultado pode ser inspecionado.",
-          summary: "A hero redesenhada foi entregue com reduced motion, QA responsivo e evidência no repositório em vez de uma promessa de marketing não verificável.",
+          summary:
+            "O redesign foi entregue com suporte a reduced motion, checks responsivos, testes e histórico no repositório que podem ser verificados sem depender desta página.",
         },
       ],
       evidence: ["PR #22", "3 arquivos de produção alterados", "Testes aprovados", "QA visual em 390 / 1440 / 1920"],
@@ -243,12 +285,15 @@ export const homeEvidenceContent = {
     proof: {
       eyebrow: "Built with Skills / Case 001",
       title: "Esta Home foi construída com Skills.",
-      summary: "A tese precisa sobreviver ao contato com o produto. Esta interface é a primeira prova: entra método, sai resultado verificável.",
+      summary:
+        "A coleção ganha credibilidade quando os mesmos métodos usados para descrever um bom trabalho podem ser inspecionados no trabalho por trás deste site.",
       challengeLabel: "Desafio",
-      challenge: "A Home funcionava, mas a hierarquia estava comprimida e o produto ainda não parecia tão deliberado quanto os métodos que publica.",
+      challenge:
+        "A Home era funcional, mas a hierarquia comprimida e a pouca diferenciação tornavam o produto mais difícil de ler e fácil de confundir com um catálogo genérico.",
       skillsLabel: "Skills usadas",
       outcomeLabel: "Resultado",
-      outcome: "Uma hero editorial e responsiva com Dark Veil do React Bits, composição mais clara, reduced motion e QA visual.",
+      outcome:
+        "Uma hero editorial e responsiva com Dark Veil do React Bits, composição mais clara, reduced motion e QA visual.",
       evidenceLabel: "Evidência",
       evidence: ["PR #22", "3 arquivos de produção alterados", "Testes aprovados", "QA visual em 390 / 1440 / 1920"],
       beforeLabel: "Antes",
@@ -257,19 +302,33 @@ export const homeEvidenceContent = {
     },
     transformation: {
       eyebrow: "Método em ação",
-      title: "Do problema ao resultado.",
-      summary: "O valor não está no arquivo de instruções. Está no processo de decisão que ele torna repetível.",
+      title: "O valor não está no arquivo. Está no processo.",
+      summary:
+        "Uma skill importa quando muda a forma como o agente enquadra o problema, toma decisões e verifica o resultado.",
       stages: [
-        { title: "Problema identificado", summary: "O layout era utilizável, mas a hierarquia apertada e a pouca diferenciação visual deixavam o resultado genérico." },
-        { title: "Skills aplicadas", summary: "Pesquisa, aprovação de design, implementação, QA visual e acessibilidade passaram a orientar o trabalho." },
-        { title: "Evidência verificável", summary: "Uma hero editorial mais forte foi entregue com responsividade, reduced motion e QA reproduzível." },
+        {
+          title: "Nomeie o problema",
+          summary:
+            "O layout era utilizável, mas a hierarquia apertada e a pouca diferenciação faziam o resultado parecer genérico.",
+        },
+        {
+          title: "Aplique o método",
+          summary:
+            "Pesquisa, aprovação de design, implementação, QA visual e acessibilidade deram ao trabalho uma sequência explícita.",
+        },
+        {
+          title: "Verifique o resultado",
+          summary:
+            "A hero revisada foi entregue com comportamento responsivo, reduced motion, testes e QA visual reproduzível.",
+        },
       ],
     },
     methods: {
       eyebrow: "Métodos abertos",
-      title: "Explore a coleção de métodos.",
-      summary: "Abra o método, inspecione as restrições e decida se ele merece fazer parte do fluxo do seu agente.",
-      viewAll: "Ver todas as skills",
+      title: "Escolha o método que corresponde ao trabalho.",
+      summary:
+        "Cada skill está aberta para inspeção. Leia seu gatilho, restrições, processo e limites antes de decidir se ela faz sentido no fluxo do seu agente.",
+      viewAll: "Explorar todas as skills",
       featured: [
         { slug: "designing-ui-systems", discipline: "Sistemas de interface · hierarquia · composição" },
         { slug: "building-premium-nextjs-interfaces", discipline: "Next.js · React · arquitetura · frontend craft" },
@@ -278,27 +337,42 @@ export const homeEvidenceContent = {
     },
     packs: {
       eyebrow: "Packs em destaque",
-      title: "Métodos que trabalham melhor juntos.",
-      summary: "Coleções instaláveis organizadas em torno de resultados, não de agrupamentos arbitrários.",
+      title: "Use um pack quando o trabalho atravessa vários métodos.",
+      summary:
+        "Packs agrupam skills relacionadas e invocáveis de forma independente para você instalar uma disciplina útil sem transformá-la em um único workflow gigante.",
       skills: "{count} skills",
-      view: "Explorar pack",
-      viewAll: "Ver todos os packs",
+      view: "Inspecionar pack",
+      viewAll: "Explorar todos os packs",
     },
     workflow: {
       eyebrow: "Como funciona",
-      title: "Um método. Quatro movimentos.",
-      summary: "O agente não recebe mais decoração. Recebe uma forma melhor de sair da intenção e chegar à evidência.",
+      title: "Peça normalmente. Trabalhe com um método.",
+      summary:
+        "Você descreve o trabalho em linguagem natural. A skill dá ao agente uma forma explícita de abordá-lo em vez de improvisar o processo do zero.",
       movements: [
-        { title: "Você pede", summary: "Descreva o objetivo em linguagem natural, com o contexto que você já possui." },
-        { title: "O agente invoca", summary: "O agente escolhe o método adequado ao trabalho em vez de improvisar um processo." },
-        { title: "O método guia", summary: "Pesquisa, decisões, implementação e QA acontecem sob restrições explícitas." },
-        { title: "Você recebe", summary: "Você recebe um resultado que pode ser inspecionado, testado e reutilizado." },
+        {
+          title: "Descreva o trabalho",
+          summary: "Informe o objetivo e o contexto que você já tem. Não é preciso reescrever a skill como um prompt.",
+        },
+        {
+          title: "Encontre o método",
+          summary: "O agente seleciona a skill cujo gatilho e limites correspondem ao trabalho.",
+        },
+        {
+          title: "Siga as restrições",
+          summary: "O método estrutura pesquisa, decisões, implementação e verificação onde cada etapa for relevante.",
+        },
+        {
+          title: "Inspecione o resultado",
+          summary: "O resultado deve trazer evidência suficiente para revisar o que mudou e como foi verificado.",
+        },
       ],
     },
     ledger: {
-      eyebrow: "Evidence ledger",
-      title: "Abra o método. Inspecione a evidência. Julgue o resultado.",
-      summary: "Confiança não deve depender da copy de marketing. Cada método fica mais valioso quando seu uso pode ser rastreado até trabalho real.",
+      eyebrow: "Registro de evidências",
+      title: "Inspecione o método. Depois, inspecione o que ele mudou.",
+      summary:
+        "Os registros de uso real conectam uma skill ao projeto, às decisões que ela afetou e às evidências disponíveis depois da entrega.",
       methodLabel: "Método",
       usedInLabel: "Usado em",
       evidenceLabel: "Evidência",
