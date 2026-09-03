@@ -1,0 +1,56 @@
+name: architecture-evidence-shell-sync
+
+on:
+  push:
+    branches: [feat/architecture-engineering-real-use]
+
+permissions:
+  contents: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: feat/architecture-engineering-real-use
+      - name: Synchronize evidence shell test
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          path = Path('apps/web/src/components/site-shell.test.tsx')
+          source = path.read_text()
+          source = source.replace(
+            '"Moving project details to runtime ISR through a bounded engineering workflow", "Catalog experience", "Pack experience"],',
+            '"Moving project details to runtime ISR through a bounded engineering workflow", "Tightening Contracts boundaries without distributing the architecture", "Catalog experience", "Pack experience"],',
+          )
+          source = source.replace(
+            '"Migração dos detalhes de projeto para ISR runtime com um fluxo de engenharia delimitado", "Experiência do catálogo", "Experiência dos pacotes"],',
+            '"Migração dos detalhes de projeto para ISR runtime com um fluxo de engenharia delimitado", "Ajuste das fronteiras de Contracts sem distribuir a arquitetura", "Experiência do catálogo", "Experiência dos pacotes"],',
+          )
+          source = source.replace(
+            'async (locale, heading, codebase, rocket, ping, portfolio, engineeringWorkflow, catalog, packs) => {',
+            'async (locale, heading, codebase, rocket, ping, portfolio, engineeringWorkflow, architectureEngineering, catalog, packs) => {',
+          )
+          source = source.replace(
+            'expect(screen.getByRole("heading", { name: engineeringWorkflow })).toBeInTheDocument();\n    expect(screen.getByRole("heading", { name: catalog })).toBeInTheDocument();',
+            'expect(screen.getByRole("heading", { name: engineeringWorkflow })).toBeInTheDocument();\n    expect(screen.getByRole("heading", { name: architectureEngineering })).toBeInTheDocument();\n    expect(screen.getByRole("heading", { name: catalog })).toBeInTheDocument();',
+          )
+          source = source.replace(
+            'expect(container.querySelectorAll("[data-evidence-feature]")).toHaveLength(7);',
+            'expect(container.querySelectorAll("[data-evidence-feature]")).toHaveLength(8);',
+            1,
+          )
+          path.write_text(source)
+          PY
+      - name: Commit synchronized test
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add apps/web/src/components/site-shell.test.tsx
+          if git diff --cached --quiet; then
+            echo "No sync required"
+            exit 0
+          fi
+          git commit -m "test: synchronize Architecture evidence shell"
+          git push origin HEAD:feat/architecture-engineering-real-use
