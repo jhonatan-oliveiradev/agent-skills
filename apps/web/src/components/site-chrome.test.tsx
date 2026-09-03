@@ -27,8 +27,8 @@ describe("editorial site chrome", () => {
   });
 
   it.each([
-    ["en", "Open navigation", "Built with skills", "Real product work, decisions, and evidence created with the collection.", "Roadmap", "Status follows evidence, from proposal to stable."],
-    ["pt-BR", "Abrir navegação", "Feito com habilidades", "Trabalho real, decisões e evidências criadas com a coleção.", "Roteiro", "O status segue evidências, da proposta ao estável."],
+    ["en", "Open navigation", "Built with skills", "Inspect real projects, the skills applied, and the evidence recorded for the result.", "Roadmap", "See what is Stable, what is still maturing, and where real-use evidence exists."],
+    ["pt-BR", "Abrir navegação", "Feito com habilidades", "Inspecione projetos reais, as skills aplicadas e as evidências registradas para o resultado.", "Roteiro", "Veja o que está Stable, o que ainda amadurece e onde já existe evidência de uso real."],
   ] as const)("turns the %s header into a contextual studio index", async (locale, openLabel, proofLabel, proofContext, roadmapLabel, roadmapContext) => {
     const { container } = renderHeader(locale);
 
