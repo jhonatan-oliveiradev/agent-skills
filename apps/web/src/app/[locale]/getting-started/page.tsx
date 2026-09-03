@@ -146,6 +146,10 @@ export default async function GettingStartedPage({ params }: PageProps) {
             <p>{manual.chatgptAvailability}</p>
           </div>
           <div className="command-entry">
+            <p>{manual.chatgptSkillDownloadLabel}</p>
+            <code>{manual.chatgptSkillDownloadPath}</code>
+          </div>
+          <div className="command-entry">
             <p>{manual.chatgptSkillUploadLabel}</p>
             <code>{manual.chatgptSkillUploadPath}</code>
           </div>
