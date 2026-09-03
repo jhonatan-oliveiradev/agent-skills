@@ -1,6 +1,7 @@
 import { fileURLToPath } from "node:url";
 import { defineConfig } from "vitest/config";
 
+const appTests = "src/**/*.test.{ts,tsx}";
 const legacyLocaleRedirectTest = "src/lib/legacy-locale-redirect.test.ts";
 
 export default defineConfig({
@@ -13,6 +14,7 @@ export default defineConfig({
         extends: true,
         test: {
           name: "parallel",
+          include: [appTests],
           exclude: [legacyLocaleRedirectTest],
           sequence: { groupOrder: 0 },
         },
