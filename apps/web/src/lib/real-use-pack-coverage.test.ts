@@ -17,16 +17,13 @@ describe("real-use pack coverage", () => {
         "codebase-intelligence",
         "engineering-workflow",
         "frontend-product",
+        "game-development",
         "motion",
         "quality-testing",
         "writing-communication",
       ],
-      uncoveredPackSlugs: [
-        "backend-data",
-        "design-brand",
-        "game-development",
-      ],
-      coveredCount: 8,
+      uncoveredPackSlugs: ["backend-data", "design-brand"],
+      coveredCount: 9,
       totalActivePacks: 11,
     });
   });
