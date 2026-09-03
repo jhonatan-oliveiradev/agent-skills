@@ -36,40 +36,40 @@ export const siteChromeCopy: Readonly<Record<Locale, SiteChromeCopy>> = {
     header: {
       index: "INDEX",
       indexTitle: "Index of the Studio",
-      indexSummary: "Navigate methods, proof, installation, and the public development of the collection.",
+      indexSummary: "Move between skills, packs, installation, real-use evidence, and the public state of the project.",
       collectionLabel: "COLLECTION",
       versionLabel: "VERSION",
       contexts: {
         skills: {
           kicker: "METHOD LIBRARY",
-          summary: "Versioned methods for design, frontend, motion, delivery, and agent work.",
+          summary: "Find a skill by the kind of work you need the agent to perform.",
         },
         packs: {
-          kicker: "COMPOSED WORKFLOWS",
-          summary: "Curated sets of complementary skills organized around a practical outcome.",
+          kicker: "RELATED METHODS",
+          summary: "Install related skills together while keeping each method independently invokable.",
         },
         gettingStarted: {
           kicker: "INSTALLATION",
-          summary: "Install one method, one pack, or the complete collection and verify what your agent can discover.",
+          summary: "Install one skill, one pack, or the collection, then verify what your runtime can discover.",
         },
         builtWithSkills: {
-          kicker: "PROOF IN PRACTICE",
-          summary: "Real product work, decisions, and evidence created with the collection.",
+          kicker: "REAL-USE EVIDENCE",
+          summary: "Inspect real projects, the skills used, and the evidence left after the work shipped.",
         },
         roadmap: {
           kicker: "OPEN DEVELOPMENT",
-          summary: "Status follows evidence, from proposal to stable.",
+          summary: "See what is shipped, what is still maturing, and what evidence is missing next.",
         },
         about: {
           kicker: "STUDIO NOTES",
-          summary: "The principles, provenance, and intent behind an open library of working methods.",
+          summary: "Why the collection exists, how methods are scoped, and what the project treats as evidence.",
         },
       },
     },
     footer: {
       eyebrow: "END MATTER / OPEN METHODS",
       manifesto: "Methods only matter when they change the work.",
-      summary: "Agent Skills Studio is an open, versioned collection of working methods for capable agents.",
+      summary: "Agent Skills Studio is an open, versioned, installable collection of working methods for agents.",
       explore: "Explore",
       project: "Project",
       source: "Source",
@@ -80,40 +80,40 @@ export const siteChromeCopy: Readonly<Record<Locale, SiteChromeCopy>> = {
     header: {
       index: "INDEX",
       indexTitle: "Índice do Studio",
-      indexSummary: "Navegue por métodos, evidências, instalação e pelo desenvolvimento público da coleção.",
+      indexSummary: "Navegue entre skills, packs, instalação, evidências de uso real e o estado público do projeto.",
       collectionLabel: "COLEÇÃO",
       versionLabel: "VERSÃO",
       contexts: {
         skills: {
           kicker: "BIBLIOTECA DE MÉTODOS",
-          summary: "Métodos versionados para design, frontend, motion, delivery e trabalho com agentes.",
+          summary: "Encontre uma skill pelo tipo de trabalho que você precisa que o agente execute.",
         },
         packs: {
-          kicker: "FLUXOS COMPOSTOS",
-          summary: "Conjuntos curados de skills complementares organizados em torno de um resultado prático.",
+          kicker: "MÉTODOS RELACIONADOS",
+          summary: "Instale skills relacionadas em conjunto sem deixar de invocar cada método de forma independente.",
         },
         gettingStarted: {
           kicker: "INSTALAÇÃO",
-          summary: "Instale um método, um pacote ou a coleção completa e valide o que seu agente consegue descobrir.",
+          summary: "Instale uma skill, um pack ou a coleção e depois verifique o que seu runtime consegue descobrir.",
         },
         builtWithSkills: {
-          kicker: "PROVA NA PRÁTICA",
-          summary: "Trabalho real, decisões e evidências criadas com a coleção.",
+          kicker: "EVIDÊNCIA DE USO REAL",
+          summary: "Inspecione projetos reais, as skills usadas e as evidências que ficaram depois da entrega.",
         },
         roadmap: {
           kicker: "DESENVOLVIMENTO ABERTO",
-          summary: "O status segue evidências, da proposta ao estável.",
+          summary: "Veja o que já foi entregue, o que ainda está amadurecendo e qual evidência falta a seguir.",
         },
         about: {
           kicker: "NOTAS DO STUDIO",
-          summary: "Os princípios, a origem e a intenção por trás de uma biblioteca aberta de métodos de trabalho.",
+          summary: "Por que a coleção existe, como os métodos são delimitados e o que o projeto trata como evidência.",
         },
       },
     },
     footer: {
       eyebrow: "END MATTER / MÉTODOS ABERTOS",
       manifesto: "Métodos só têm valor quando mudam o trabalho.",
-      summary: "Agent Skills Studio é uma coleção aberta e versionada de métodos de trabalho para agentes capazes.",
+      summary: "Agent Skills Studio é uma coleção aberta, versionada e instalável de métodos de trabalho para agentes.",
       explore: "Explorar",
       project: "Projeto",
       source: "Origem",
