@@ -50,7 +50,7 @@ export function getRoadmapStages(locale: Locale): readonly RoadmapStage[] {
     {
       id: "stable-skills",
       title: copy.stableItem.title,
-      summary: copy.stableItem.summary,
+      summary: copy.stableItem.summary.replace("{count}", String(stableCount)),
       meta: copy.itemMeta.stableSkills.replace("{count}", String(stableCount)),
       href: `/${locale}/skills`,
     },
