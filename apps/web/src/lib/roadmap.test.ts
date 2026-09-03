@@ -28,6 +28,7 @@ describe("public roadmap", () => {
 
     const beta = stages.find((stage) => stage.id === "beta");
     const stable = stages.find((stage) => stage.id === "stable");
+    const stableSkills = stable?.items[4];
 
     expect(beta?.items).toEqual([]);
     expect(stable?.items.map((item) => item.id)).toEqual([
@@ -38,6 +39,8 @@ describe("public roadmap", () => {
       "stable-skills",
     ]);
     expect(stable?.items.slice(0, 4).every((item) => item.meta === "1.0.0")).toBe(true);
-    expect(stable?.items[4]?.meta).toContain("18");
+    expect(stableSkills?.meta).toContain("18");
+    expect(stableSkills?.summary).toContain("18");
+    expect(stableSkills?.summary).not.toMatch(/every canonical skill|todas as skills canônicas/i);
   });
 });
