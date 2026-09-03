@@ -2,6 +2,24 @@
 
 All notable changes to this skill library are documented here.
 
+## [Unreleased]
+
+### Distribution
+
+- Added deterministic ChatGPT-ready skill ZIP downloads for every canonical skill, keeping `SKILL.md` at the archive root and preserving supporting files with stable relative paths.
+- Added localized Skill download actions plus EN/PT-BR Getting Started guidance for ChatGPT's `Upload from computer` flow while keeping `skills/<slug>/` as the single source of truth.
+
+### Studio and roadmap
+
+- Promoted the release-qualified plugin, catalog, installers, and microsite surfaces to Stable in the public roadmap while keeping individual skill maturity distinct from Stable release status.
+- Kept current README/catalog documentation aligned with 54 canonical skills and 11 active packs, and removed only confirmed orphaned localized Home/Getting Started copy.
+
+### Reliability and maintenance
+
+- Removed superseded post-Stable workflow helpers so `validate.yml` remains the canonical workflow.
+- Hardened Windows CI around the live Next integration fixture and teardown contention without raising test timeouts or serializing the entire suite.
+- Restored native Method Archive select/option contrast with existing surface/text theme tokens while preserving native select semantics and keyboard behavior.
+
 ## [1.0.0] - 2026-09-02
 
 ### Stable release
