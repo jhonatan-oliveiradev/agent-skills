@@ -60,13 +60,13 @@ describe("Method Dossier", () => {
     );
   });
 
-  it("presents OpenAI compatibility as product names rather than raw catalog slugs", async () => {
+  it("presents supported agent surfaces as product names rather than raw catalog slugs", async () => {
     await SkillDetailPage({
       params: Promise.resolve({ locale: "en", slug: "designing-ui-systems" }),
     }).then((page) => render(page));
 
-    expect(screen.getByText("ChatGPT · Codex")).toBeInTheDocument();
-    expect(screen.queryByText("chatgpt, codex")).not.toBeInTheDocument();
+    expect(screen.getByText("ChatGPT · Codex · Claude Code")).toBeInTheDocument();
+    expect(screen.queryByText("chatgpt, codex, claude-code")).not.toBeInTheDocument();
   });
 
   it("connects a method to its canonical system and explicit evidence reports", async () => {
