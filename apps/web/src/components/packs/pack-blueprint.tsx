@@ -21,6 +21,7 @@ interface RelationsCopy {
   readonly relatedEvidenceSummary: string;
   readonly inspectReport: string;
   readonly methodOverlap: string;
+  readonly overlapDisclaimer: string;
 }
 
 export interface PackBlueprintProps {
@@ -35,6 +36,8 @@ export interface PackBlueprintProps {
   readonly systemLabel: string;
   readonly intentLabel: string;
   readonly statusLabel: string;
+  readonly usageTitle: string;
+  readonly usageSummary: string;
 }
 
 export function PackBlueprint(props: Readonly<PackBlueprintProps>) {
@@ -50,10 +53,13 @@ export function PackBlueprint(props: Readonly<PackBlueprintProps>) {
     systemLabel,
     intentLabel,
     statusLabel,
+    usageTitle,
+    usageSummary,
   } = props;
   const active = pack.status === "active";
   const status = active ? detail.active : detail.planned;
   const readerItems = [
+    { id: "usage", label: usageTitle },
     { id: "outcomes", label: detail.outcomes },
     ...(!active ? [{ id: "roadmap-status", label: detail.plannedTitle }] : []),
     { id: "composition", label: detail.composition },
@@ -96,6 +102,11 @@ export function PackBlueprint(props: Readonly<PackBlueprintProps>) {
         </aside>
 
         <div className="pack-blueprint__reader-content">
+          <section id="usage" className="pack-blueprint__usage pack-blueprint__planned-note" data-pack-usage>
+            <h2>{usageTitle}</h2>
+            <p>{usageSummary}</p>
+          </section>
+
           <section id="outcomes" className="pack-blueprint__outcomes">
             <EditorialSectionHeading title={detail.outcomes} />
             <ol>
@@ -162,6 +173,7 @@ export function PackBlueprint(props: Readonly<PackBlueprintProps>) {
                   </li>
                 ))}
               </ul>
+              <p className="editorial-relations__disclaimer">{relationsCopy.overlapDisclaimer}</p>
             </section>
           ) : null}
 
