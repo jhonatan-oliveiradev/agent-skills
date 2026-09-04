@@ -48,4 +48,31 @@ describe("Evidence Archive", () => {
       expect(container.querySelector(".built-case-card")).not.toBeInTheDocument();
     },
   );
+
+  it.each([
+    [
+      "en",
+      "How to read the evidence",
+      "Real-use evidence documents work applied to a project outside Agent Skills Studio.",
+      "Internal evidence documents work applied to Agent Skills Studio itself.",
+    ],
+    [
+      "pt-BR",
+      "Como ler as evidências",
+      "Evidência de uso real documenta trabalho aplicado a um projeto fora do Agent Skills Studio.",
+      "Evidência interna documenta trabalho aplicado ao próprio Agent Skills Studio.",
+    ],
+  ] as const)(
+    "explains the evidence classes instead of presenting them as portfolio labels for %s",
+    async (locale, title, realUseSummary, internalSummary) => {
+      const { container } = render(
+        await BuiltWithSkillsPage({ params: Promise.resolve({ locale }) }),
+      );
+
+      expect(container.querySelector("[data-evidence-classification-guide]")).toBeInTheDocument();
+      expect(screen.getByRole("heading", { name: title })).toBeInTheDocument();
+      expect(screen.getByText(realUseSummary)).toBeInTheDocument();
+      expect(screen.getByText(internalSummary)).toBeInTheDocument();
+    },
+  );
 });
