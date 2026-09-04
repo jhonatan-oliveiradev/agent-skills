@@ -63,9 +63,11 @@ describe("editorial site chrome", () => {
     fireEvent.click(screen.getByRole("button", { name: openLabel }));
     const dialog = screen.getByRole("dialog");
     const currentLink = within(dialog).getByRole("link", { name: currentLabel });
+    const contextualAside = dialog.querySelector<HTMLElement>(".primary-navigation__context");
 
     expect(currentLink).toHaveAttribute("aria-current", "page");
-    expect(within(dialog).getByText(context)).toBeInTheDocument();
+    expect(contextualAside).not.toBeNull();
+    expect(within(contextualAside!).getByText(context)).toBeInTheDocument();
   });
 
   it.each([
