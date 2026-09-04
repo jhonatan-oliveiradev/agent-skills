@@ -80,10 +80,30 @@ describe("sitewide UI hardening", () => {
     ]);
 
     expect(loading).toContain('data-global-state="loading"');
+    expect(loading).toContain("global-preloader__mark");
+    expect(loading).toContain("agent-skills-monogram.svg");
     expect(error).toContain('data-global-state="error"');
     expect(error).toContain("reset");
     expect(notFound).toContain('data-global-state="not-found"');
     expect(notFound).toContain("/skills");
+  });
+
+  it("provides document-level recovery for unmatched routes and root-layout failures", async () => {
+    const [config, globalNotFound, globalError] = await Promise.all([
+      readFile(resolve(process.cwd(), "next.config.ts"), "utf8"),
+      readSource("app/global-not-found.tsx"),
+      readSource("app/global-error.tsx"),
+    ]);
+
+    expect(config).toMatch(/experimental:\s*\{[\s\S]*globalNotFound:\s*true/);
+    expect(globalNotFound).toContain('data-global-state="not-found"');
+    expect(globalNotFound).toContain("<html");
+    expect(globalNotFound).toContain("<body");
+    expect(globalNotFound).toContain("localeFromPathname");
+    expect(globalError).toContain('data-global-state="error"');
+    expect(globalError).toContain("reset");
+    expect(globalError).toContain("<html");
+    expect(globalError).toContain("<body");
   });
 
   it("styles recovery states as editorial reading surfaces instead of generic dashed cards", async () => {
@@ -92,6 +112,8 @@ describe("sitewide UI hardening", () => {
     expect(source).toMatch(/\.global-state\s*\{[\s\S]*min-height:/);
     expect(source).toMatch(/\.global-state__actions\s*\{[\s\S]*display:\s*flex/);
     expect(source).toMatch(/\.global-state__status\s*\{[\s\S]*font-family:\s*var\(--font-mono\)/);
+    expect(source).toMatch(/\.global-preloader__mark\s*\{/);
+    expect(source).toMatch(/@keyframes\s+global-preloader-scan/);
     expect(source).not.toMatch(/\.global-state\s*\{[\s\S]*border:\s*1px dashed/);
   });
 
