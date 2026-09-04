@@ -26,7 +26,15 @@ export default async function SkillsPage({ params }: PageProps) {
     ...skillCopy.categories,
     ...editorialCopy.categoryLabels,
   };
-  const archiveCopy = { ...skillCopy, categories: categoryNames };
+  const archiveCopy = {
+    ...skillCopy,
+    searchLabel: editorialCopy.searchLabel,
+    searchPlaceholder: editorialCopy.searchPlaceholder,
+    noResultsTitle: editorialCopy.noResultsTitle,
+    noResultsSummary: editorialCopy.noResultsSummary,
+    clear: editorialCopy.clearFilters,
+    categories: categoryNames,
+  };
   const localizedSkills = getLocalizedSkills(locale);
   const activePacks = new Set(localizedSkills.flatMap((skill) => skill.packs));
   const metadata = [
