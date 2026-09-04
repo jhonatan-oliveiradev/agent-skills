@@ -30,7 +30,7 @@ describe("sitewide UI hardening", () => {
       /@container\s*\(max-width:\s*46rem\)[\s\S]*\.home-pack-archive \.home-pack-dossier__body\s*\{[\s\S]*grid-template-columns:\s*1fr/,
     );
     expect(source).toMatch(
-      /@container\s*\(max-width:\s*46rem\)[\s\S]*\.home-pack-archive \.home-pack-dossier h3\s*\{[\s\S]*max-width:\s*100%/,
+      /@container\s*\(max-width:\s*46rem\)[\s\S]*\.home-pack-archive \.home-pack-dossier h3[\s\S]*max-width:\s*100%/,
     );
     expect(source).toMatch(/\.home-pack-dossier__body > \*[\s\S]*min-width:\s*0/);
   });
@@ -48,6 +48,16 @@ describe("sitewide UI hardening", () => {
     expect(source).toMatch(
       /\.home-pack-dossier:nth-child\(11\)[\s\S]*grid-column:/,
     );
+  });
+
+  it("uses the design system tokens that actually exist for interaction feedback", async () => {
+    const source = await readCss("ui-hardening.css");
+
+    expect(source).not.toMatch(/var\(--(?:primary|secondary|input|foreground)\)/);
+    expect(source).toContain("var(--brand)");
+    expect(source).toContain("var(--surface)");
+    expect(source).toContain("var(--control-border)");
+    expect(source).toContain("var(--text)");
   });
 
   it("gives shared buttons explicit hover, focus-visible and active feedback", async () => {
