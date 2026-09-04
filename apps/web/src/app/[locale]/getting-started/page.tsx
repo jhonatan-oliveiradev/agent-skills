@@ -383,7 +383,7 @@ function VerificationOption({
   commands: Readonly<{ bash: string; powershell: string }>;
 }>) {
   return (
-    <article>
+    <article className="installation-command-row field-manual__verification-option">
       <p className="eyebrow">03</p>
       <h3>{label}</h3>
       <div className="field-manual__verification-commands">
