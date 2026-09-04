@@ -34,6 +34,7 @@ interface ChatgptDownloadCopy {
 const surfaceLabels: Readonly<Record<string, string>> = {
   chatgpt: "ChatGPT",
   codex: "Codex",
+  "claude-code": "Claude Code",
 };
 
 export function MethodDossier({
@@ -221,7 +222,7 @@ export function MethodDossier({
           <dl className="method-dossier__technical-list">
             <div>
               <dt>{detail.surfaces}</dt>
-              <dd>{formatSurfaceNames(skill.compatibility.surfaces)}</dd>
+              <dd>{formatSurfaceNames(skill.compatibility.surfaces, skill.compatibility.installModes)}</dd>
             </div>
             <div>
               <dt>{detail.operatingSystems}</dt>
@@ -343,6 +344,10 @@ export function MethodDossier({
   );
 }
 
-function formatSurfaceNames(surfaces: readonly string[]) {
-  return surfaces.map((surface) => surfaceLabels[surface] ?? surface).join(" · ");
+function formatSurfaceNames(surfaces: readonly string[], installModes: readonly string[]) {
+  const effectiveSurfaces = installModes.includes("filesystem")
+    ? [...new Set([...surfaces, "claude-code"])]
+    : surfaces;
+
+  return effectiveSurfaces.map((surface) => surfaceLabels[surface] ?? surface).join(" · ");
 }
