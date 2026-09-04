@@ -10,7 +10,7 @@ import { messages } from "@/lib/messages";
 
 type PageProps = Readonly<{ params: Promise<{ locale: string }> }>;
 type GettingStartedCopy = typeof messages.en.gettingStarted;
-type FieldManual = typeof fieldManualCopy.en;
+type FieldManual = (typeof fieldManualCopy)[keyof typeof fieldManualCopy];
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const locale = await resolveLocale(params);
