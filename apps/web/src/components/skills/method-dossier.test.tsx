@@ -61,8 +61,8 @@ describe("Method Dossier", () => {
   });
 
   it.each([
-    ["en", "Install this skill", "Inspect source", "Skill maturity", "Version"],
-    ["pt-BR", "Instalar esta skill", "Inspecionar código-fonte", "Maturidade da skill", "Versão"],
+    ["en", "Install this skill", "Inspect source", "Maturity", "Version"],
+    ["pt-BR", "Instalar esta skill", "Inspecionar código-fonte", "Maturidade", "Versão"],
   ] as const)(
     "uses specific install/source actions and keeps skill maturity distinct from release version for %s",
     async (locale, installAction, sourceAction, maturityLabel, versionLabel) => {
@@ -75,6 +75,7 @@ describe("Method Dossier", () => {
         "href",
         "https://github.com/jhonatan-oliveiradev/agent-skills/tree/main/skills/designing-ui-systems",
       );
+      expect(maturityLabel).not.toBe(versionLabel);
       expect(screen.getByText(maturityLabel)).toBeInTheDocument();
       expect(screen.getByText(versionLabel)).toBeInTheDocument();
     },

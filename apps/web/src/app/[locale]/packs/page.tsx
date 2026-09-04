@@ -38,6 +38,8 @@ export default async function PacksPage({ params }: PageProps) {
       <PackArchive
         packs={packs}
         locale={locale}
+        selectionTitle={copy.selectionTitle}
+        selectionSummary={copy.selectionSummary}
         labels={{
           active: copy.active,
           planned: copy.planned,

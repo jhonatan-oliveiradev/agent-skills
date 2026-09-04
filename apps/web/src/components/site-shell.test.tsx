@@ -361,13 +361,13 @@ describe("foundation navigation targets", () => {
     [
       "en",
       "Find a method for the work in front of you.",
-      "Search skills",
+      "Describe the work",
       "/en/skills/designing-ui-systems",
     ],
     [
       "pt-BR",
       "Encontre um método para o trabalho que você precisa resolver.",
-      "Buscar skills",
+      "Descreva o trabalho",
       "/pt-BR/skills/designing-ui-systems",
     ],
   ] as const)("renders the localized method archive for %s", async (locale, heading, searchLabel, methodHref) => {

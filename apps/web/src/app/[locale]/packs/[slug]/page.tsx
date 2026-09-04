@@ -88,6 +88,8 @@ export default async function PackDetailPage({ params }: PackPageProps) {
         systemLabel={editorialCopy.systemLabel}
         intentLabel={editorialCopy.intentLabel}
         statusLabel={editorialCopy.statusMetric}
+        usageTitle={editorialCopy.usageTitle}
+        usageSummary={editorialCopy.usageSummary}
       />
     </>
   );
