@@ -280,7 +280,7 @@ describe("foundation navigation targets", () => {
 
   it.each([
     ["about", AboutPage, "About the studio", "Sobre o studio"],
-    ["contribute", ContributePage, "Build the collection with us", "Construa a coleção com a gente"],
+    ["contribute", ContributePage, "Contribute a focused improvement.", "Contribua com uma melhoria focada."],
     ["changelog", ChangelogPage, "Changelog", "Histórico de mudanças"],
   ] as const)("renders real localized content for /%s", async (_section, Page, enHeading, ptHeading) => {
     const { unmount } = render(await Page({ params: Promise.resolve({ locale: "en" }) }));
@@ -293,11 +293,11 @@ describe("foundation navigation targets", () => {
 
   it("publishes real contribution paths and readable release notes", async () => {
     const { unmount } = render(await ContributePage({ params: Promise.resolve({ locale: "en" }) }));
-    expect(screen.getByRole("link", { name: /open an issue/i })).toHaveAttribute(
+    expect(screen.getByRole("link", { name: /open a focused issue/i })).toHaveAttribute(
       "href",
       "https://github.com/jhonatan-oliveiradev/agent-skills/issues/new",
     );
-    expect(screen.getByRole("link", { name: /open a pull request/i })).toHaveAttribute(
+    expect(screen.getByRole("link", { name: /prepare a pull request/i })).toHaveAttribute(
       "href",
       "https://github.com/jhonatan-oliveiradev/agent-skills/compare",
     );
