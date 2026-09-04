@@ -308,9 +308,13 @@ The evaluator observes evidence in structured form. Final proficiency state is d
 
 ### Lab-native assessment boundary
 
-Because V1 has no first-party model API, the Career Lab may only award proficiency from evidence it can verify deterministically or from a valid imported assessment artifact produced under the same blueprint contract.
+Because V1 has no first-party model API, the Career Lab may award proficiency only from evidence it can verify deterministically or from imported evidence whose provenance and verification status are represented explicitly.
 
-For V1, browser-native assessment execution should prioritize challenge types that can be safely checked locally. Complex open-ended reasoning or environment-specific coding that cannot be verified locally should be completed through the corresponding Skill and imported as a signed/validated structured artifact once an artifact trust model exists. Until then, imported artifacts are user-owned evidence with explicit provenance, not cryptographic certification.
+For V1, browser-native assessment execution should prioritize challenge types that can be checked safely and deterministically on-device. Complex open-ended reasoning or environment-specific coding that cannot be verified locally should be completed through the corresponding Skill and imported as a schema-valid structured artifact.
+
+Imported agent artifacts are **not cryptographic certification** in V1. They must carry a provenance/trust state such as `external-unverified` unless the Career Lab can reproduce or independently verify the supporting evidence. An `external-unverified` artifact may inform the profile and recommend a follow-up assessment, but it must not by itself create `high confidence` proficiency.
+
+A future artifact-signing/trust model is a separate design problem and is not required for V1.
 
 The product must not claim official certification in V1. Use language such as **Skill Assessment**, **Proficiency Report**, or **Readiness Report**.
 
@@ -406,11 +410,19 @@ The Career Lab is an analysis workspace, not a first-party job board or scraper 
 
 Supported inputs:
 
-1. posting URL;
-2. pasted job description;
+1. posting URL as source identity/pointer;
+2. pasted job description/snapshot;
 3. imported `market-analysis.json` or normalized job artifact produced by a Skill/runtime with web access.
 
 All inputs normalize into a canonical `JobPosting` representation while preserving the original snapshot and provenance.
+
+### URL ingestion boundary
+
+V1 must **not** promise that an arbitrary job URL can be fetched directly from the browser. CORS, authentication, anti-bot controls, and site policies make that unreliable without introducing a backend/proxy that this design explicitly excludes.
+
+When the browser can safely retrieve the URL, the Lab may ingest it locally. Otherwise the URL remains provenance metadata and the UI must ask the user to paste the posting text or use `analyzing-developer-career-opportunities` in a web-capable agent runtime and import the normalized artifact.
+
+A failed URL fetch must never cause the Lab to infer requirements from the title or URL alone.
 
 ### Provenance
 
@@ -580,7 +592,7 @@ Required test layers:
 - required dimensions/gates;
 - deterministic browser-checkable challenge scoring;
 - no average-based promotion through failed blocking dimensions;
-- evidence provenance.
+- evidence provenance/trust states.
 
 ### UI tests
 
@@ -588,6 +600,7 @@ Required test layers:
 - local persistence hydration;
 - export/import/reset;
 - overview/roadmap/assessment/evidence/market states;
+- URL-ingestion fallback to paste/import when direct retrieval is unavailable;
 - localized copy;
 - keyboard/focus/reduced-motion behavior;
 - loading/error/empty/invalid-import states.
