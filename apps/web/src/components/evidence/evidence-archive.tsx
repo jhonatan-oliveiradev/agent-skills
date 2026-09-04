@@ -1,4 +1,6 @@
+import { EditorialMetadata } from "@/components/editorial/editorial-metadata";
 import { EditorialPageHero } from "@/components/editorial/editorial-page-hero";
+import { EditorialSectionHeading } from "@/components/editorial/editorial-section-heading";
 import type { BuiltWithSkillsCase } from "@/lib/built-with-skills";
 import { editorialEvidenceCopy } from "@/lib/editorial-evidence-copy";
 import type { Locale } from "@/lib/locales";
@@ -30,6 +32,23 @@ export function EvidenceArchive({
           { label: copy.methodsMetric, value: String(uniqueMethods.size).padStart(2, "0") },
         ]}
       />
+
+      <section
+        className="evidence-archive__classification-guide grid items-end gap-10 border-b border-[var(--border)] py-16 md:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] md:gap-16 md:py-24"
+        data-evidence-classification-guide
+        aria-labelledby="evidence-classification-guide-title"
+      >
+        <EditorialSectionHeading
+          eyebrow={copy.evidenceClass}
+          title={copy.classificationGuideTitle}
+        />
+        <EditorialMetadata
+          items={[
+            { label: "01", value: copy.realUseSummary },
+            { label: "02", value: copy.internalSummary },
+          ]}
+        />
+      </section>
 
       <section className="evidence-archive__index" aria-label={copy.archiveLabel}>
         {cases.map((item, index) => (
