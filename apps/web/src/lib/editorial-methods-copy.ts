@@ -9,11 +9,18 @@ interface EditorialMethodsCopy {
   readonly categoriesMetric: string;
   readonly versionMetric: string;
   readonly filterLabel: string;
+  readonly searchLabel: string;
+  readonly searchPlaceholder: string;
+  readonly noResultsTitle: string;
+  readonly noResultsSummary: string;
+  readonly clearFilters: string;
   readonly categoryLabels: Readonly<Record<string, string>>;
   readonly methodLabel: string;
   readonly onThisMethod: string;
   readonly promptLabel: string;
   readonly technicalNotes: string;
+  readonly installAction: string;
+  readonly inspectSource: string;
 }
 
 export const editorialMethodsCopy = {
@@ -26,7 +33,13 @@ export const editorialMethodsCopy = {
     packsMetric: "PACKS",
     categoriesMetric: "DOMAINS",
     versionMetric: "VERSION",
-    filterLabel: "Filter skills",
+    filterLabel: "Find a method by task",
+    searchLabel: "Describe the work",
+    searchPlaceholder: "e.g. audit motion, review auth, trace a regression",
+    noResultsTitle: "No method matches this selection.",
+    noResultsSummary:
+      "Broaden the task description or clear a filter to return to the full method archive.",
+    clearFilters: "Show all methods",
     categoryLabels: {
       "backend-data": "Backend & data",
       "architecture-engineering": "Architecture & engineering",
@@ -40,6 +53,8 @@ export const editorialMethodsCopy = {
     onThisMethod: "In this skill",
     promptLabel: "EXAMPLE REQUEST",
     technicalNotes: "TECHNICAL NOTES",
+    installAction: "Install this skill",
+    inspectSource: "Inspect source",
   },
   "pt-BR": {
     archiveLabel: "SKILLS / BIBLIOTECA DE MÉTODOS",
@@ -50,7 +65,13 @@ export const editorialMethodsCopy = {
     packsMetric: "PACKS",
     categoriesMetric: "DOMÍNIOS",
     versionMetric: "VERSÃO",
-    filterLabel: "Filtrar skills",
+    filterLabel: "Encontre um método pela tarefa",
+    searchLabel: "Descreva o trabalho",
+    searchPlaceholder: "ex.: auditar motion, revisar auth, rastrear uma regressão",
+    noResultsTitle: "Nenhum método corresponde a esta seleção.",
+    noResultsSummary:
+      "Amplie a descrição da tarefa ou limpe um filtro para voltar ao arquivo completo de métodos.",
+    clearFilters: "Ver todos os métodos",
     categoryLabels: {
       "backend-data": "Backend e dados",
       "architecture-engineering": "Arquitetura e engenharia",
@@ -64,5 +85,7 @@ export const editorialMethodsCopy = {
     onThisMethod: "Nesta skill",
     promptLabel: "PEDIDO DE EXEMPLO",
     technicalNotes: "NOTAS TÉCNICAS",
+    installAction: "Instalar esta skill",
+    inspectSource: "Inspecionar código-fonte",
   },
 } as const satisfies Readonly<Record<Locale, EditorialMethodsCopy>>;

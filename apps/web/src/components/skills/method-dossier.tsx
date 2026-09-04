@@ -1,5 +1,6 @@
 import type { Route } from "next";
 import Link from "next/link";
+import { Fragment } from "react";
 import { CopyCommand } from "@/components/copy-command";
 import { EditorialMetadata } from "@/components/editorial/editorial-metadata";
 import { EditorialSectionHeading } from "@/components/editorial/editorial-section-heading";
@@ -16,6 +17,8 @@ interface DossierEditorialCopy {
   readonly onThisMethod: string;
   readonly promptLabel: string;
   readonly technicalNotes: string;
+  readonly installAction: string;
+  readonly inspectSource: string;
 }
 
 interface RelationsCopy {
@@ -35,6 +38,23 @@ const surfaceLabels: Readonly<Record<string, string>> = {
   chatgpt: "ChatGPT",
   codex: "Codex",
   "claude-code": "Claude Code",
+};
+
+const installModeLabels: Readonly<Record<Locale, Readonly<Record<string, string>>>> = {
+  en: {
+    plugin: "Plugin",
+    filesystem: "Filesystem",
+  },
+  "pt-BR": {
+    plugin: "Plugin",
+    filesystem: "Sistema de arquivos",
+  },
+};
+
+const operatingSystemLabels: Readonly<Record<string, string>> = {
+  linux: "Linux",
+  macos: "macOS",
+  windows: "Windows",
 };
 
 export function MethodDossier({
@@ -78,7 +98,7 @@ export function MethodDossier({
     { id: "when-not-to-use", label: detail.whenNotToUse },
     { id: "use-cases", label: detail.useCases },
     { id: "example-prompts", label: detail.examplePrompts },
-    { id: "installation", label: detail.installation },
+    { id: "installation", label: editorialCopy.installAction },
     { id: "compatibility", label: detail.compatibility },
     { id: "dependencies", label: detail.dependencies },
     ...(relatedPacks.length ? [{ id: "packs", label: relationsCopy.partOfSystems }] : []),
@@ -186,7 +206,10 @@ export function MethodDossier({
           data-editorial-section
           id="installation"
         >
-          <EditorialSectionHeading title={detail.installation} summary={detail.installationSummary} />
+          <EditorialSectionHeading
+            title={editorialCopy.installAction}
+            summary={detail.installationSummary}
+          />
           <div className="method-dossier__commands">
             <div>
               <p>{detail.bash}</p>
@@ -226,11 +249,18 @@ export function MethodDossier({
             </div>
             <div>
               <dt>{detail.operatingSystems}</dt>
-              <dd>{skill.compatibility.operatingSystems.join(", ")}</dd>
+              <dd>{formatOperatingSystemNames(skill.compatibility.operatingSystems)}</dd>
             </div>
             <div>
               <dt>{detail.installModes}</dt>
-              <dd>{skill.compatibility.installModes.join(", ")}</dd>
+              <dd>
+                {skill.compatibility.installModes.map((mode, modeIndex) => (
+                  <Fragment key={mode}>
+                    {modeIndex ? <span aria-hidden="true"> · </span> : null}
+                    <span>{formatInstallModeName(mode, locale)}</span>
+                  </Fragment>
+                ))}
+              </dd>
             </div>
           </dl>
         </section>
@@ -336,7 +366,7 @@ export function MethodDossier({
       <footer className="method-dossier__source">
         <span>{editorialCopy.methodLabel} / {ordinal}</span>
         <a href={sourceUrl} rel="noreferrer noopener" target="_blank">
-          {detail.source}
+          {editorialCopy.inspectSource}
           <span aria-hidden="true">↗</span>
         </a>
       </footer>
@@ -350,4 +380,14 @@ function formatSurfaceNames(surfaces: readonly string[], installModes: readonly 
     : surfaces;
 
   return effectiveSurfaces.map((surface) => surfaceLabels[surface] ?? surface).join(" · ");
+}
+
+function formatInstallModeName(mode: string, locale: Locale) {
+  return installModeLabels[locale][mode] ?? mode.replaceAll("-", " ");
+}
+
+function formatOperatingSystemNames(operatingSystems: readonly string[]) {
+  return operatingSystems
+    .map((operatingSystem) => operatingSystemLabels[operatingSystem] ?? operatingSystem)
+    .join(" · ");
 }
