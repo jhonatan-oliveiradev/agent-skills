@@ -137,7 +137,7 @@ describe("legacy Portuguese locale redirect", () => {
   });
 
   it(
-    "redirects only legacy casing and serves the canonical request without another redirect",
+    "redirects only legacy casing, serves canonical routes, and uses the Studio 404 for unmatched localized routes",
     async () => {
       const fixtureRoot = createNextRequestFixture();
       const port = await reservePort();
@@ -189,6 +189,17 @@ describe("legacy Portuguese locale redirect", () => {
           `canonical response body:\n${canonicalBody}\nNext.js logs:\n${logs}`,
         ).toBe(200);
         expect(canonicalResponse.headers.get("location")).toBeNull();
+
+        const missingResponse = await fetch(`${origin}/pt-BR/pakcsdf`, {
+          redirect: "manual",
+        });
+        const missingBody = await missingResponse.text();
+        expect(
+          missingResponse.status,
+          `missing response body:\n${missingBody}\nNext.js logs:\n${logs}`,
+        ).toBe(404);
+        expect(missingBody).toContain("Esta rota não existe no Studio.");
+        expect(missingBody).toContain('data-global-state="not-found"');
       } finally {
         await stopServer(child);
         rmSync(fixtureRoot, {

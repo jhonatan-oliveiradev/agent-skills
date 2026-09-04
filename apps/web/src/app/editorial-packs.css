@@ -24,6 +24,7 @@
 
 .pack-dossier {
   position: relative;
+  padding-inline: clamp(0.75rem, 2vw, 2rem);
   border-bottom: 1px solid color-mix(in srgb, var(--border) 86%, var(--brand));
 }
 
@@ -31,9 +32,9 @@
   position: relative;
   display: grid;
   min-height: clamp(18rem, 30vw, 30rem);
-  grid-template-columns: clamp(4rem, 8vw, 8rem) minmax(0, 1.1fr) minmax(15rem, 0.65fr);
+  grid-template-columns: clamp(4rem, 7vw, 7rem) minmax(0, 1fr) minmax(17rem, 0.72fr);
   grid-template-rows: 1fr auto;
-  gap: clamp(1.25rem, 3vw, 3.5rem);
+  gap: clamp(1.25rem, 2.5vw, 3rem);
   overflow: clip;
   box-sizing: border-box;
   padding: clamp(2rem, 4vw, 4.5rem) 0 clamp(1.5rem, 3vw, 2.75rem);
@@ -99,6 +100,7 @@
 .pack-dossier__identity {
   min-width: 0;
   align-self: start;
+  padding-right: clamp(1rem, 2.5vw, 2.5rem);
 }
 
 .pack-dossier__status {
@@ -119,12 +121,15 @@
 }
 
 .pack-dossier__identity h2 {
-  max-width: 13ch;
+  max-width: 100%;
   margin: 0;
-  font-size: clamp(2.9rem, 6.4vw, 6.5rem);
+  font-size: clamp(2.8rem, 5vw, 5.6rem);
   font-weight: 510;
   letter-spacing: -0.065em;
-  line-height: 0.88;
+  line-height: 0.9;
+  overflow-wrap: normal;
+  word-break: normal;
+  hyphens: none;
   text-wrap: balance;
   transition: transform 360ms var(--ease-editorial), color 260ms var(--ease-editorial);
 }
@@ -138,8 +143,9 @@
 }
 
 .pack-dossier__composition {
+  min-width: 0;
   align-self: stretch;
-  padding-left: clamp(1rem, 2vw, 2rem);
+  padding-left: clamp(1.25rem, 2.5vw, 2.5rem);
   border-left: 1px solid color-mix(in srgb, var(--border) 88%, var(--brand));
 }
 
@@ -172,6 +178,7 @@
   font-size: 0.82rem;
   font-weight: 630;
   line-height: 1.35;
+  overflow-wrap: anywhere;
   transition: color 260ms var(--ease-editorial), transform 320ms var(--ease-editorial), border-color 260ms var(--ease-editorial);
 }
 
@@ -215,19 +222,19 @@
 .pack-dossier__link:hover .pack-dossier__ordinal,
 .pack-dossier__link:focus-visible .pack-dossier__ordinal {
   color: var(--text);
-  transform: translate(-0.22rem, -0.2rem);
+  transform: translate(-0.14rem, -0.16rem);
 }
 
 .pack-dossier__link:hover .pack-dossier__identity h2,
 .pack-dossier__link:focus-visible .pack-dossier__identity h2 {
-  transform: translateX(0.45rem);
+  transform: translateX(0.25rem);
 }
 
 .pack-dossier__link:hover .pack-dossier__composition li,
 .pack-dossier__link:focus-visible .pack-dossier__composition li {
   color: var(--text);
   border-bottom-color: color-mix(in srgb, var(--brand) 22%, var(--border));
-  transform: translateX(0.2rem);
+  transform: translateX(0.12rem);
 }
 
 .pack-dossier__link:hover .pack-dossier__action,
@@ -239,7 +246,7 @@
 .pack-dossier__link:hover .pack-dossier__action span:last-child,
 .pack-dossier__link:focus-visible .pack-dossier__action span:last-child {
   color: var(--text);
-  transform: translate(0.25rem, -0.25rem);
+  transform: translate(0.2rem, -0.2rem);
 }
 
 .pack-dossier[data-status="planned"] .pack-dossier__link::before {
@@ -260,6 +267,10 @@
   .pack-dossier__link {
     grid-template-columns: 4rem minmax(0, 1fr);
     grid-template-rows: auto auto auto;
+  }
+
+  .pack-dossier__identity {
+    padding-right: 0;
   }
 
   .pack-dossier__composition {
@@ -286,6 +297,10 @@
 
   .pack-archive {
     margin-top: 1.5rem;
+  }
+
+  .pack-dossier {
+    padding-inline: clamp(0.5rem, 2vw, 0.8rem);
   }
 
   .pack-dossier__link {
