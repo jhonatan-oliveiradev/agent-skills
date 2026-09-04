@@ -72,6 +72,29 @@ describe("sitewide UI hardening", () => {
     expect(source).toMatch(/focus-visible[\s\S]*outline:\s*2px solid var\(--focus\)/);
   });
 
+  it("provides launch-critical localized loading, error, and not-found route states", async () => {
+    const [loading, error, notFound] = await Promise.all([
+      readSource("app/[locale]/loading.tsx"),
+      readSource("app/[locale]/error.tsx"),
+      readSource("app/[locale]/not-found.tsx"),
+    ]);
+
+    expect(loading).toContain('data-global-state="loading"');
+    expect(error).toContain('data-global-state="error"');
+    expect(error).toContain("reset");
+    expect(notFound).toContain('data-global-state="not-found"');
+    expect(notFound).toContain("/skills");
+  });
+
+  it("styles recovery states as editorial reading surfaces instead of generic dashed cards", async () => {
+    const source = await readCss("ui-hardening.css");
+
+    expect(source).toMatch(/\.global-state\s*\{[\s\S]*min-height:/);
+    expect(source).toMatch(/\.global-state__actions\s*\{[\s\S]*display:\s*flex/);
+    expect(source).toMatch(/\.global-state__status\s*\{[\s\S]*font-family:\s*var\(--font-mono\)/);
+    expect(source).not.toMatch(/\.global-state\s*\{[\s\S]*border:\s*1px dashed/);
+  });
+
   it("keeps stacked action groups equal width", async () => {
     const source = await readCss("ui-hardening.css");
     const hero = await readSource("components/home/home-manifesto-hero.tsx");
