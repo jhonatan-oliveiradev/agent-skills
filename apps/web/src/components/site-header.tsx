@@ -47,11 +47,11 @@ export function SiteHeader({ locale }: Readonly<{ locale: Locale }>) {
             >
               <Image
                 className="brand-logo"
-                height={58}
+                height={36}
                 priority
-                src="/brand/agent-skills-logo-horizontal.svg"
-                style={{ height: "auto", width: "7.8rem" }}
-                width={149}
+                src="/brand/agent-skills-monogram.svg"
+                style={{ height: "2rem", width: "2rem" }}
+                width={36}
                 alt=""
               />
             </span>
