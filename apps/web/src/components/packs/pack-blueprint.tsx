@@ -198,7 +198,7 @@ export function PackBlueprint(props: Readonly<PackBlueprintProps>) {
                 <div className="pack-blueprint__bundle-copy">
                   <p>{distributionCopy.bundleLabel}</p>
                   <strong>{distributionCopy.bundleSummary}</strong>
-                  <span>{pack.skills.length} {detail.skills} · ZIP</span>
+                  <span>{pack.skills.length} skills · ZIP</span>
                 </div>
                 <a
                   className="pack-blueprint__bundle-action"
