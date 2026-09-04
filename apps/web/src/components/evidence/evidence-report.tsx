@@ -38,11 +38,10 @@ export function EvidenceReport({
   relationsCopy: RelationsCopy;
 }>) {
   const readerItems = [
-    { id: "challenge", label: copy.challenge },
-    { id: "methods", label: copy.skillsApplied },
-    { id: "decisions", label: copy.decisions },
-    { id: "outcomes", label: copy.results },
-    { id: "evidence", label: copy.evidence },
+    { id: "problem", label: editorialCopy.problem },
+    { id: "methods", label: editorialCopy.methods },
+    { id: "verification", label: editorialCopy.verification },
+    { id: "result", label: editorialCopy.result },
   ];
   const provenanceLabel =
     item.evidenceClass === "internal"
@@ -79,7 +78,7 @@ export function EvidenceReport({
       </header>
 
       <div className="evidence-report__intent" aria-hidden="true">
-        <span>01—05</span>
+        <span>01—04</span>
         <p>{editorialCopy.reportIntent}</p>
       </div>
 
@@ -89,13 +88,13 @@ export function EvidenceReport({
         </aside>
 
         <div className="evidence-report__reader-content">
-          <section id="challenge" className="evidence-report__challenge">
-            <EditorialSectionHeading eyebrow="01" title={copy.challenge} />
+          <section id="problem" className="evidence-report__challenge">
+            <EditorialSectionHeading eyebrow="01" title={editorialCopy.problem} />
             <p className="evidence-report__challenge-statement">{item.challenge}</p>
           </section>
 
           <section id="methods" className="evidence-report__methods">
-            <EditorialSectionHeading eyebrow="02" title={copy.workflowsTitle} />
+            <EditorialSectionHeading eyebrow="02" title={editorialCopy.methods} />
             <ol className="evidence-report__method-list">
               {skills.map((skill, index) => (
                 <li key={skill.slug}>
@@ -116,6 +115,24 @@ export function EvidenceReport({
                 </li>
               ))}
             </ol>
+
+            <div
+              className="evidence-report__decisions evidence-report__decision-record"
+              data-evidence-decision-record
+            >
+              <EditorialSectionHeading title={editorialCopy.decisionRecord} />
+              <ol>
+                {item.decisions.map((decision, index) => (
+                  <li key={decision.title}>
+                    <span>{String(index + 1).padStart(2, "0")}</span>
+                    <div>
+                      <h3>{decision.title}</h3>
+                      <p>{decision.summary}</p>
+                    </div>
+                  </li>
+                ))}
+              </ol>
+            </div>
 
             {relatedSystems.length ? (
               <div className="editorial-relations evidence-report__related-systems" data-related-systems>
@@ -153,35 +170,8 @@ export function EvidenceReport({
             ) : null}
           </section>
 
-          <section id="decisions" className="evidence-report__decisions">
-            <EditorialSectionHeading eyebrow="03" title={copy.decisionsTitle} />
-            <ol>
-              {item.decisions.map((decision, index) => (
-                <li key={decision.title}>
-                  <span>{String(index + 1).padStart(2, "0")}</span>
-                  <div>
-                    <h3>{decision.title}</h3>
-                    <p>{decision.summary}</p>
-                  </div>
-                </li>
-              ))}
-            </ol>
-          </section>
-
-          <section id="outcomes" className="evidence-report__outcomes">
-            <EditorialSectionHeading eyebrow="04" title={copy.resultsTitle} />
-            <ol>
-              {item.results.map((result, index) => (
-                <li key={result}>
-                  <span>{String(index + 1).padStart(2, "0")}</span>
-                  <p>{result}</p>
-                </li>
-              ))}
-            </ol>
-          </section>
-
-          <section id="evidence" className="evidence-report__evidence">
-            <EditorialSectionHeading eyebrow="05" title={copy.evidence} />
+          <section id="verification" className="evidence-report__evidence">
+            <EditorialSectionHeading eyebrow="03" title={editorialCopy.verification} />
             <div className="evidence-report__evidence-state">
               <span>{editorialCopy.evidenceState}</span>
               <strong>{editorialCopy.sourceAvailable}</strong>
@@ -203,6 +193,21 @@ export function EvidenceReport({
                 </a>
               ))}
             </div>
+            <p className="evidence-report__scope-note" data-evidence-scope-note>
+              {editorialCopy.scopeNote}
+            </p>
+          </section>
+
+          <section id="result" className="evidence-report__outcomes">
+            <EditorialSectionHeading eyebrow="04" title={editorialCopy.result} />
+            <ol>
+              {item.results.map((result, index) => (
+                <li key={result}>
+                  <span>{String(index + 1).padStart(2, "0")}</span>
+                  <p>{result}</p>
+                </li>
+              ))}
+            </ol>
           </section>
         </div>
       </div>
