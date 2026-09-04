@@ -65,10 +65,6 @@ export function EditorialNavigation({
   const visible = open || closing;
 
   useEffect(() => {
-    if (!visible) setActiveIndex(routeIndex);
-  }, [routeIndex, visible]);
-
-  useEffect(() => {
     if (!visible) return;
     const previousOverflow = document.body.style.overflow;
     document.body.style.overflow = "hidden";
