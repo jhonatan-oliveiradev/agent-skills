@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { NuqsAdapter } from "nuqs/adapters/next/app";
 import "../globals.css";
+import "../editorial-foundation.css";
 import "../home-evidence.css";
 import "../home-living-archive.css";
 import "../home-living-systems.css";
@@ -38,6 +39,16 @@ export const metadata: Metadata = {
   title: {
     default: "Agent Skills Studio",
     template: "%s | Agent Skills Studio",
+  },
+  manifest: "/site.webmanifest",
+  icons: {
+    icon: [
+      { url: "/favicon-32x32.png", sizes: "32x32", type: "image/png" },
+      { url: "/favicon-16x16.png", sizes: "16x16", type: "image/png" },
+    ],
+    apple: [
+      { url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" },
+    ],
   },
 };
 

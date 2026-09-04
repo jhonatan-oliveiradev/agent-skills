@@ -66,9 +66,11 @@ describe("editorial site chrome", () => {
     expect(screen.getByText(explore)).toBeInTheDocument();
     expect(screen.getByText(project)).toBeInTheDocument();
     expect(screen.getByText(source)).toBeInTheDocument();
-    const wordmark = screen.getByText("AGENT SKILLS STUDIO");
+
+    const wordmark = footer?.querySelector<HTMLImageElement>(".site-footer__brand-logo");
     expect(wordmark).toBeInTheDocument();
-    expect(wordmark).toHaveAttribute("data-wordmark-scale", "restrained");
+    expect(wordmark).toHaveAttribute("src", "/brand/agent-skills-logo-horizontal.svg");
+    expect(wordmark).toHaveAttribute("alt", "");
 
     const collection = footer?.querySelector<HTMLElement>(".site-footer__collection");
     expect(collection).toBeInTheDocument();

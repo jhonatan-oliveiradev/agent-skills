@@ -2,6 +2,7 @@ import { readFile } from "node:fs/promises";
 import { resolve } from "node:path";
 import { describe, expect, it } from "vitest";
 import { messages } from "./messages";
+import { siteChromeCopy } from "./site-chrome-copy";
 
 const appRoot = resolve(process.cwd(), "src");
 
@@ -83,7 +84,13 @@ describe("editorial design foundation", () => {
       read("app/[locale]/skills/[slug]/page.tsx"),
     ]);
 
-    expect(layout).toContain('import "../editorial-pages.css"');
+    expect(layout).toContain('import "../editorial-foundation.css"');
+    expect(layout.indexOf('import "../editorial-foundation.css"')).toBeGreaterThan(
+      layout.indexOf('import "../globals.css"'),
+    );
+    expect(layout.indexOf('import "../editorial-foundation.css"')).toBeLessThan(
+      layout.indexOf('import "../editorial-pages.css"'),
+    );
     expect(layout).toContain("<SiteHeader locale={locale} />");
     expect(layout).toContain("<SiteFooter locale={locale} />");
 
@@ -110,5 +117,45 @@ describe("editorial design foundation", () => {
 
     expect(genericActions.has(messages.en.navigation.cta)).toBe(false);
     expect(genericActions.has(messages["pt-BR"].navigation.cta)).toBe(false);
+  });
+
+  it("defines shared product language as reusable and independently invokable methods", () => {
+    expect(siteChromeCopy.en.header.contexts.skills.summary).toContain(
+      "reusable working method",
+    );
+    expect(siteChromeCopy["pt-BR"].header.contexts.skills.summary).toContain(
+      "método de trabalho reutilizável",
+    );
+    expect(siteChromeCopy.en.header.contexts.packs.summary).toContain(
+      "independently invokable",
+    );
+    expect(siteChromeCopy["pt-BR"].header.contexts.packs.summary).toContain(
+      "forma independente",
+    );
+    expect(siteChromeCopy.en.header.contexts.roadmap.summary).toContain(
+      "skill maturity",
+    );
+    expect(siteChromeCopy["pt-BR"].header.contexts.roadmap.summary).toContain(
+      "maturidade das skills",
+    );
+
+    for (const locale of ["en", "pt-BR"] as const) {
+      expect("paths" in messages[locale].home).toBe(false);
+      expect("packs" in messages[locale].home).toBe(false);
+      expect("proof" in messages[locale].home).toBe(false);
+    }
+  });
+
+  it("owns shell and reading measures in one bounded foundation layer", async () => {
+    const css = await read("app/editorial-foundation.css");
+
+    expect(css).toContain("--content-max: 72rem;");
+    expect(css).toContain("--reading-measure: 42rem;");
+    expect(css).toContain("--page-gutter:");
+    expect(css).toMatch(/\.shell\s*\{[\s\S]*max-width:\s*var\(--content-max\)/);
+    expect(css).toMatch(/\.shell\s*\{[\s\S]*padding-inline:\s*var\(--page-gutter\)/);
+    expect(css).toMatch(
+      /\.hero-section__summary,[\s\S]*\.foundation-route__summary\s*\{[\s\S]*max-width:\s*var\(--reading-measure\)/,
+    );
   });
 });

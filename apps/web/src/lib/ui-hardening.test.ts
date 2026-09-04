@@ -60,13 +60,24 @@ describe("sitewide UI hardening", () => {
     expect(source).toContain("var(--text)");
   });
 
-  it("gives shared buttons explicit hover, focus-visible and active feedback", async () => {
+  it("gives shared buttons explicit hover, focus-visible, active and disabled feedback", async () => {
     const source = await readCss("ui-hardening.css");
 
     expect(source).toMatch(/\.button\s*\{[\s\S]*transition:/);
     expect(source).toContain(".button:hover");
     expect(source).toContain(".button:focus-visible");
     expect(source).toContain(".button:active");
+    expect(source).toContain(".button:disabled");
+    expect(source).toMatch(/\.button:disabled[\s\S]*cursor:\s*not-allowed/);
+  });
+
+  it("gives every shared site-chrome control a visible keyboard focus state", async () => {
+    const source = await readCss("ui-hardening.css");
+
+    expect(source).toContain(".locale-switcher:focus-visible");
+    expect(source).toContain(".site-theme-toggle:focus-visible");
+    expect(source).toContain(".navigation-trigger:focus-visible");
+    expect(source).toMatch(/focus-visible[\s\S]*outline:\s*2px solid var\(--focus\)/);
   });
 
   it("keeps stacked action groups equal width", async () => {

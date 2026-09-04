@@ -1,4 +1,5 @@
 import type { Route } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import { getCatalog } from "@/lib/catalog";
 import { localizePath } from "@/lib/i18n";
@@ -98,8 +99,25 @@ export function SiteFooter({ locale }: Readonly<{ locale: Locale }>) {
         </nav>
       </div>
 
-      <div className="site-footer__wordmark-wrap" aria-hidden="true">
-        <p className="site-footer__wordmark" data-wordmark-scale="restrained">AGENT SKILLS STUDIO</p>
+      <div
+        className="site-footer__wordmark-wrap"
+        aria-hidden="true"
+        style={{
+          alignItems: "center",
+          background: "#0b0810",
+          display: "flex",
+          justifyContent: "center",
+          padding: "clamp(2.5rem, 7vw, 6rem) clamp(1.25rem, 5vw, 4rem)",
+        }}
+      >
+        <Image
+          className="site-footer__brand-logo"
+          height={290}
+          src="/brand/agent-skills-logo-horizontal.svg"
+          style={{ height: "auto", width: "min(86vw, 58rem)" }}
+          width={745}
+          alt=""
+        />
       </div>
 
       <div className="shell site-footer__signature">
