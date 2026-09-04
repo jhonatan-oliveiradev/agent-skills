@@ -25,6 +25,21 @@ describe("System Blueprint", () => {
     expect(screen.getByText("./install.sh --pack frontend-product")).toBeInTheDocument();
   });
 
+  it("explains that a pack coordinates related responsibilities without becoming a fixed workflow", async () => {
+    render(
+      await PackDetailPage({
+        params: Promise.resolve({ locale: "en", slug: "frontend-product" }),
+      }),
+    );
+
+    expect(screen.getByRole("heading", { name: "How to use this pack" })).toBeInTheDocument();
+    expect(screen.getByText(/not a fixed workflow/i)).toBeInTheDocument();
+    expect(screen.getByText(/responsibility stays with each member skill/i)).toBeInTheDocument();
+    expect(
+      screen.getByText("Method overlap only — not proof that the pack was used as a unit."),
+    ).toBeInTheDocument();
+  });
+
   it("renders Backend & Data as a real four-method installable system", async () => {
     const { container } = render(
       await PackDetailPage({

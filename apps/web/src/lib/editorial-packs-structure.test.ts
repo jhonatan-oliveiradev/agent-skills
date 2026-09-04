@@ -40,4 +40,25 @@ describe("editorial packs system", () => {
     expect(editorialPacksCopy["pt-BR"].systemLabel).toBe("PACK");
     expect(editorialPacksCopy["pt-BR"].explore).toBe("Inspecionar pack");
   });
+
+  it("gives a concrete skill-versus-pack decision rule and archive recovery action", async () => {
+    const en = editorialPacksCopy.en as Readonly<Record<string, string>>;
+    const pt = editorialPacksCopy["pt-BR"] as Readonly<Record<string, string>>;
+    const [page, notFound] = await Promise.all([
+      read("app/[locale]/packs/page.tsx"),
+      read("app/[locale]/packs/[slug]/not-found.tsx"),
+    ]);
+
+    expect(en.selectionTitle).toBe("Skill or pack?");
+    expect(en.selectionSummary).toContain("one bounded method");
+    expect(en.selectionSummary).toContain("several related methods");
+    expect(pt.selectionTitle).toBe("Skill ou pack?");
+    expect(pt.selectionSummary).toContain("um método bem delimitado");
+    expect(pt.selectionSummary).toContain("vários métodos relacionados");
+
+    expect(page).toContain("selectionTitle={copy.selectionTitle}");
+    expect(page).toContain("selectionSummary={copy.selectionSummary}");
+    expect(notFound).toContain("editorialPacksCopy");
+    expect(notFound).toContain("notFoundAction");
+  });
 });
