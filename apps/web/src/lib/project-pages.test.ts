@@ -50,4 +50,39 @@ describe("project page content", () => {
     expect(new Set(institutionalSummaries).size).toBe(3);
     expect(institutionalSummaries.join(" ")).not.toMatch(/Skills are not prompts|Skills não são prompts/);
   });
+
+  it.each([
+    [
+      "en",
+      "working methods",
+      "Prepare a pull request",
+      "Published releases and unreleased changes",
+      "Inspect source changelog",
+    ],
+    [
+      "pt-BR",
+      "métodos de trabalho",
+      "Preparar um pull request",
+      "Releases publicadas e mudanças não lançadas",
+      "Inspecionar changelog na fonte",
+    ],
+  ] as const)(
+    "keeps institutional language factual and action-specific for %s",
+    (locale, methodTerm, pullRequestAction, releasesLabel, sourceAction) => {
+      const content = getProjectPages(locale);
+
+      expect(content.about.summary).toContain(methodTerm);
+      expect(`${content.about.summary} ${content.about.purpose}`).not.toMatch(
+        /proven working practices|práticas comprovadas/i,
+      );
+      expect(content.contribute.summary).toMatch(/reproducible|reproduzível/i);
+      expect(content.contribute.paths[2].action).toBe(pullRequestAction);
+      expect(content.changelog.releasesLabel).toBe(releasesLabel);
+      expect(content.changelog.sourceAction).toBe(sourceAction);
+      expect(content.changelog.releases[0]).toMatchObject({
+        version: content.changelog.unreleased,
+        date: content.changelog.unreleased,
+      });
+    },
+  );
 });

@@ -4,6 +4,7 @@ import {
   createFoundationMetadata,
   resolveLocale,
 } from "@/components/foundation-route";
+import { getCatalog } from "@/lib/catalog";
 import { livingProgramCopy } from "@/lib/editorial-secondary-copy";
 import { messages } from "@/lib/messages";
 import { getRoadmapStages } from "@/lib/roadmap";
@@ -18,6 +19,7 @@ export default async function RoadmapPage({ params }: PageProps) {
   const locale = await resolveLocale(params);
   const copy = messages[locale];
   const program = livingProgramCopy[locale];
+  const catalog = getCatalog();
   const stages = getRoadmapStages(locale);
   const entryCount = stages.reduce((total, stage) => total + stage.items.length, 0);
   const emptyStageCount = stages.filter((stage) => stage.items.length === 0).length;
@@ -33,7 +35,7 @@ export default async function RoadmapPage({ params }: PageProps) {
         <div className="living-program__hero-grid">
           <div className="living-program__hero-copy">
             <h1>{copy.foundation.roadmap.title}</h1>
-            <p>{copy.foundation.roadmap.summary}</p>
+            <p>{program.summary}</p>
           </div>
 
           <dl className="living-program__metrics">
@@ -43,6 +45,17 @@ export default async function RoadmapPage({ params }: PageProps) {
           </dl>
         </div>
       </header>
+
+      <section className="living-program__release-state" data-release-state>
+        <div>
+          <p className="eyebrow">{program.releaseStateLabel}</p>
+          <strong>{`Stable ${catalog.version}`}</strong>
+        </div>
+        <div>
+          <p className="eyebrow">{program.postStableLabel}</p>
+          <p>{program.postStableSummary}</p>
+        </div>
+      </section>
 
       <nav
         className="living-program__index"
@@ -69,7 +82,7 @@ export default async function RoadmapPage({ params }: PageProps) {
 
       <aside className="living-program__principle">
         <p className="eyebrow">{copy.roadmap.principleLabel}</p>
-        <p>{copy.roadmap.principle}</p>
+        <p>{program.principle}</p>
       </aside>
 
       <div className="living-program__chapters">

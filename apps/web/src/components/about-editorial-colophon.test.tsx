@@ -7,8 +7,8 @@ import AboutPage from "@/app/[locale]/about/page";
 
 describe("About editorial manifesto and colophon", () => {
   it.each([
-    ["en", "Skills are not prompts. They are working methods.", "Explore the source on GitHub"],
-    ["pt-BR", "Skills não são prompts. São métodos de trabalho.", "Explorar o código no GitHub"],
+    ["en", "Skills are not prompts. They are working methods.", "Inspect the repository on GitHub"],
+    ["pt-BR", "Skills não são prompts. São métodos de trabalho.", "Inspecionar o repositório no GitHub"],
   ] as const)("renders the localized authorial About architecture for %s", async (locale, thesis, sourceAction) => {
     const { container } = render(await AboutPage({ params: Promise.resolve({ locale }) }));
 
@@ -17,6 +17,9 @@ describe("About editorial manifesto and colophon", () => {
     expect(container.querySelectorAll("[data-principle-chapter]")).toHaveLength(5);
     expect(container.querySelector("[data-colophon]")).toBeInTheDocument();
     expect(container.querySelector(".project-page")).not.toBeInTheDocument();
+    expect(container.querySelector("[data-editorial-colophon]")?.textContent).not.toMatch(
+      /proven working practices|práticas comprovadas/i,
+    );
 
     expect(screen.getByRole("link", { name: sourceAction })).toHaveAttribute(
       "data-interaction",

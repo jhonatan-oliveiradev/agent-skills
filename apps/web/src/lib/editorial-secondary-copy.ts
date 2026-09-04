@@ -56,6 +56,11 @@ interface FieldManualCopy {
 interface LivingProgramCopy {
   readonly publicationLabel: string;
   readonly indexLabel: string;
+  readonly summary: string;
+  readonly principle: string;
+  readonly releaseStateLabel: string;
+  readonly postStableLabel: string;
+  readonly postStableSummary: string;
   readonly metrics: Readonly<{
     stages: string;
     entries: string;
@@ -233,6 +238,14 @@ export const livingProgramCopy = {
   en: {
     publicationLabel: "LIVING PROGRAM",
     indexLabel: "Program index",
+    summary:
+      "Stable 1.0.0 is the current release. This program separates release status from skill maturity and tracks post-Stable work without implying a new release.",
+    principle:
+      "Release status, skill maturity, and roadmap stage are separate signals. Entries move only when their purpose, implementation, and verification support the next stage.",
+    releaseStateLabel: "Current release",
+    postStableLabel: "Post-Stable work",
+    postStableSummary:
+      "Unreleased changes are tracked separately from the current Stable release; they do not create a new release state on their own.",
     metrics: {
       stages: "Stages",
       entries: "Published entries",
@@ -245,6 +258,14 @@ export const livingProgramCopy = {
   "pt-BR": {
     publicationLabel: "PROGRAMA VIVO",
     indexLabel: "Índice do programa",
+    summary:
+      "Stable 1.0.0 é a release atual. Este programa separa o status da release da maturidade das skills e acompanha o trabalho pós-Stable sem sugerir uma nova release.",
+    principle:
+      "Status da release, maturidade das skills e etapa do roadmap são sinais separados. As entradas só avançam quando propósito, implementação e verificação sustentam a próxima etapa.",
+    releaseStateLabel: "Release atual",
+    postStableLabel: "Trabalho pós-Stable",
+    postStableSummary:
+      "Mudanças não lançadas são acompanhadas separadamente da release Stable atual; por si só, elas não criam um novo estado de release.",
     metrics: {
       stages: "Etapas",
       entries: "Entradas publicadas",

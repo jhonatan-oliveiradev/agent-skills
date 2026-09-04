@@ -1,6 +1,7 @@
 import { describe, expect, it, vi } from "vitest";
 
 vi.mock("server-only", () => ({}));
+import { livingProgramCopy } from "./editorial-secondary-copy";
 import { messages } from "./messages";
 import { getRoadmapStages } from "./roadmap";
 
@@ -46,4 +47,19 @@ describe("public roadmap", () => {
     expect(stableSkills?.summary).toContain("11");
     expect(stableSkills?.summary).not.toMatch(/every canonical skill|todas as skills canônicas/i);
   });
+
+  it.each([
+    ["en", "post-Stable", "skill maturity"],
+    ["pt-BR", "pós-Stable", "maturidade das skills"],
+  ] as const)(
+    "keeps Stable 1.0.0 distinct from later work and skill maturity for %s",
+    (locale, postStableTerm, maturityTerm) => {
+      const program = livingProgramCopy[locale];
+
+      expect(program.summary).toContain("Stable 1.0.0");
+      expect(program.summary).toContain(postStableTerm);
+      expect(program.principle).toContain(maturityTerm);
+      expect(program.principle).toMatch(/release/i);
+    },
+  );
 });
