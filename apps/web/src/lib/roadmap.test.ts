@@ -46,4 +46,20 @@ describe("public roadmap", () => {
     expect(stableSkills?.summary).toContain("11");
     expect(stableSkills?.summary).not.toMatch(/every canonical skill|todas as skills canônicas/i);
   });
+
+  it.each([
+    ["en", "post-Stable", "skill maturity"],
+    ["pt-BR", "pós-Stable", "maturidade das skills"],
+  ] as const)(
+    "keeps Stable 1.0.0 distinct from later work and skill maturity for %s",
+    (locale, postStableTerm, maturityTerm) => {
+      const foundationSummary = messages[locale].foundation.roadmap.summary;
+      const principle = messages[locale].roadmap.principle;
+
+      expect(foundationSummary).toContain("Stable 1.0.0");
+      expect(foundationSummary).toContain(postStableTerm);
+      expect(principle).toContain(maturityTerm);
+      expect(principle).toMatch(/release/i);
+    },
+  );
 });
