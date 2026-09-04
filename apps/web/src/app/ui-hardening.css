@@ -14,21 +14,6 @@
 }
 
 /*
- * The editorial pack choreography originally described nine cards. Stable now
- * ships eleven active packs, so the final two need explicit placement instead
- * of falling into CSS Grid auto-placement and inheriting residual narrow cells.
- */
-.home-pack-archive .home-pack-dossier:nth-child(10) {
-  grid-column: 1 / span 6;
-  margin-top: clamp(2rem, 6vw, 6rem);
-}
-
-.home-pack-archive .home-pack-dossier:nth-child(11) {
-  grid-column: 7 / span 6;
-  margin-top: clamp(6rem, 12vw, 12rem);
-}
-
-/*
  * Match or exceed the specificity of the older archive rules. Merely loading
  * this file later is not enough when an earlier selector is more specific.
  */
@@ -65,14 +50,6 @@
   .home-pack-archive .home-pack-dossier h3,
   .home-pack-archive .home-pack-dossier:nth-child(2) h3 {
     font-size: clamp(2.65rem, 14cqi, 4.4rem);
-  }
-}
-
-@media (max-width: 960px) {
-  .home-pack-archive .home-pack-dossier:nth-child(10),
-  .home-pack-archive .home-pack-dossier:nth-child(11) {
-    grid-column: 1 / -1;
-    margin-top: 0;
   }
 }
 

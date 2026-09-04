@@ -146,6 +146,13 @@ export default async function HomePage({ params }: HomePageProps) {
       </section>
 
       <section aria-label={evidence.acts[1].label} data-home-act="methods-systems">
+        <HomeMethodWorkflow
+          eyebrow={evidence.workflow.eyebrow}
+          title={evidence.workflow.title}
+          summary={evidence.workflow.summary}
+          movements={evidence.workflow.movements}
+        />
+
         <HomeMethodIndex
           eyebrow={evidence.methods.eyebrow}
           title={evidence.methods.title}
@@ -164,13 +171,6 @@ export default async function HomePage({ params }: HomePageProps) {
           viewAllLabel={evidence.packs.viewAll}
           viewAllHref={localizePath("/packs", locale) as Route}
           packs={packDossiers}
-        />
-
-        <HomeMethodWorkflow
-          eyebrow={evidence.workflow.eyebrow}
-          title={evidence.workflow.title}
-          summary={evidence.workflow.summary}
-          movements={evidence.workflow.movements}
         />
       </section>
 
