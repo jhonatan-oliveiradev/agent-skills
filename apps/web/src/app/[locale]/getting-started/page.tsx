@@ -10,6 +10,7 @@ import { messages } from "@/lib/messages";
 
 type PageProps = Readonly<{ params: Promise<{ locale: string }> }>;
 type GettingStartedCopy = typeof messages.en.gettingStarted;
+type FieldManual = typeof fieldManualCopy.en;
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const locale = await resolveLocale(params);
@@ -33,6 +34,14 @@ export default async function GettingStartedPage({ params }: PageProps) {
   const copy = messages[locale].gettingStarted;
   const manual = fieldManualCopy[locale];
   const catalog = getCatalog();
+  const claudeProjectCommands = {
+    bash: `${installationCommands.claudeCode.bash} --scope project`,
+    powershell: `${installationCommands.claudeCode.powershell} --scope project`,
+  } as const;
+  const claudeVerifyCommands = {
+    bash: "ls ~/.claude/skills",
+    powershell: 'Get-ChildItem "$HOME\\.claude\\skills"',
+  } as const;
 
   return (
     <article className="shell getting-started-page field-manual" data-field-manual>
@@ -85,18 +94,39 @@ export default async function GettingStartedPage({ params }: PageProps) {
         id="orientation"
         aria-labelledby="requirements-title"
       >
-        <div className="field-manual__stage-heading">
-          <p className="eyebrow">01</p>
-          <h2 id="requirements-title">{copy.requirements.title}</h2>
+        <div className="field-manual__orientation-copy">
+          <div className="field-manual__stage-heading">
+            <p className="eyebrow">01</p>
+            <h2 id="requirements-title">{copy.requirements.title}</h2>
+          </div>
+          <ul>
+            {copy.requirements.items.map((item, index) => (
+              <li key={item}>
+                <span aria-hidden="true">{String(index + 1).padStart(2, "0")}</span>
+                <span>{item}</span>
+              </li>
+            ))}
+          </ul>
         </div>
-        <ul>
-          {copy.requirements.items.map((item, index) => (
-            <li key={item}>
-              <span aria-hidden="true">{String(index + 1).padStart(2, "0")}</span>
-              <span>{item}</span>
-            </li>
-          ))}
-        </ul>
+
+        <div className="field-manual__target-guide" data-install-target-guide>
+          <div className="field-manual__target-guide-heading">
+            <p className="eyebrow">01A</p>
+            <h2>{manual.targetGuideTitle}</h2>
+          </div>
+          <div className="maintenance-grid field-manual__target-grid">
+            {manual.targets.map((target, index) => (
+              <TargetOption
+                key={target.id}
+                index={index}
+                target={target}
+                claudeScopeSummary={
+                  target.id === "claude-code" ? manual.claudeScopeSummary : undefined
+                }
+              />
+            ))}
+          </div>
+        </div>
       </section>
 
       <section
@@ -117,28 +147,45 @@ export default async function GettingStartedPage({ params }: PageProps) {
           label={copy.install.demoLabel}
           success={`${catalog.skills.length} ${manual.installationSuccessSuffix}`}
         />
+
+        <div className="field-manual__install-context">
+          <p className="eyebrow">02A / {manual.defaultTargetLabel}</p>
+          <p>{manual.defaultTargetSummary}</p>
+        </div>
         <div className="install-command-matrix">
           <InstallOption
             copy={copy}
             title={copy.install.complete}
+            summary={manual.installOptions.complete}
             commands={installationCommands.complete}
           />
           <InstallOption
             copy={copy}
             title={copy.install.skill}
+            summary={manual.installOptions.skill}
             commands={installationCommands.skill}
           />
           <InstallOption
             copy={copy}
             title={copy.install.pack}
+            summary={manual.installOptions.pack}
             commands={installationCommands.pack}
           />
         </div>
+
         <InstallOption
           copy={copy}
           title={manual.claudeCodeLabel}
+          summary={manual.claudeCodeSummary}
           commands={installationCommands.claudeCode}
         />
+        <InstallOption
+          copy={copy}
+          title={manual.claudeCodeProjectLabel}
+          summary={manual.claudeCodeProjectSummary}
+          commands={claudeProjectCommands}
+        />
+
         <article className="installation-command-row" data-chatgpt-distribution>
           <div className="installation-command-row__label">
             <h3>{manual.chatgptLabel}</h3>
@@ -178,18 +225,23 @@ export default async function GettingStartedPage({ params }: PageProps) {
           title={copy.verify.title}
           summary={copy.verify.summary}
         />
-        <article className="installation-command-row installation-command-row--verify">
-          <div className="installation-command-row__label">
-            <span className="eyebrow">03A</span>
-            <h3>{copy.verify.commands}</h3>
-          </div>
-          <Command copy={copy} label={copy.bash} command={installationCommands.verify.bash} />
-          <Command
+        <div className="maintenance-grid field-manual__verification-grid" data-verify-targets>
+          <VerificationOption
             copy={copy}
-            label={copy.powershell}
-            command={installationCommands.verify.powershell}
+            label={manual.verifyAgentsLabel}
+            commands={installationCommands.verify}
           />
-        </article>
+          <VerificationOption
+            copy={copy}
+            label={manual.verifyClaudeLabel}
+            commands={claudeVerifyCommands}
+          />
+          <article>
+            <p className="eyebrow">03C</p>
+            <h3>{manual.verifyChatgptLabel}</h3>
+            <p>{manual.verifyChatgptSummary}</p>
+          </article>
+        </div>
       </section>
 
       <section
@@ -204,13 +256,18 @@ export default async function GettingStartedPage({ params }: PageProps) {
           <h2 id="maintain-title">{copy.maintenanceLabel}</h2>
         </div>
         <div className="maintenance-grid" aria-label={copy.maintenanceLabel}>
-          <article>
+          <article data-install-recovery>
             <p className="eyebrow">04A</p>
+            <h3>{manual.recoveryTitle}</h3>
+            <p>{manual.recoverySummary}</p>
+          </article>
+          <article>
+            <p className="eyebrow">04B</p>
             <h3>{copy.update.title}</h3>
             <p>{copy.update.summary}</p>
           </article>
           <article>
-            <p className="eyebrow">04B</p>
+            <p className="eyebrow">04C</p>
             <h3>{copy.remove.title}</h3>
             <p>{copy.remove.summary}</p>
           </article>
@@ -267,22 +324,72 @@ function SectionHeading({
   );
 }
 
+function TargetOption({
+  index,
+  target,
+  claudeScopeSummary,
+}: Readonly<{
+  index: number;
+  target: FieldManual["targets"][number];
+  claudeScopeSummary?: string;
+}>) {
+  return (
+    <article>
+      <p className="eyebrow">{String(index + 1).padStart(2, "0")} / {target.mode}</p>
+      <h3>{target.label}</h3>
+      <div className="field-manual__target-details">
+        <p>{target.summary}</p>
+        <div className="field-manual__destinations">
+          {target.destinations.map((destination) => (
+            <code key={destination}>{destination}</code>
+          ))}
+        </div>
+        {claudeScopeSummary ? <p>{claudeScopeSummary}</p> : null}
+      </div>
+    </article>
+  );
+}
+
 function InstallOption({
   copy,
   title,
+  summary,
   commands,
 }: Readonly<{
   copy: GettingStartedCopy;
   title: string;
+  summary?: string;
   commands: Readonly<{ bash: string; powershell: string }>;
 }>) {
   return (
     <article className="installation-command-row">
       <div className="installation-command-row__label">
         <h3>{title}</h3>
+        {summary ? <p>{summary}</p> : null}
       </div>
       <Command copy={copy} label={copy.bash} command={commands.bash} />
       <Command copy={copy} label={copy.powershell} command={commands.powershell} />
+    </article>
+  );
+}
+
+function VerificationOption({
+  copy,
+  label,
+  commands,
+}: Readonly<{
+  copy: GettingStartedCopy;
+  label: string;
+  commands: Readonly<{ bash: string; powershell: string }>;
+}>) {
+  return (
+    <article>
+      <p className="eyebrow">03</p>
+      <h3>{label}</h3>
+      <div className="field-manual__verification-commands">
+        <Command copy={copy} label={copy.bash} command={commands.bash} />
+        <Command copy={copy} label={copy.powershell} command={commands.powershell} />
+      </div>
     </article>
   );
 }
