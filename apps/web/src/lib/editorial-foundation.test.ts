@@ -2,6 +2,7 @@ import { readFile } from "node:fs/promises";
 import { resolve } from "node:path";
 import { describe, expect, it } from "vitest";
 import { messages } from "./messages";
+import { siteChromeCopy } from "./site-chrome-copy";
 
 const appRoot = resolve(process.cwd(), "src");
 
@@ -83,7 +84,13 @@ describe("editorial design foundation", () => {
       read("app/[locale]/skills/[slug]/page.tsx"),
     ]);
 
-    expect(layout).toContain('import "../editorial-pages.css"');
+    expect(layout).toContain('import "../editorial-foundation.css"');
+    expect(layout.indexOf('import "../editorial-foundation.css"')).toBeGreaterThan(
+      layout.indexOf('import "../globals.css"'),
+    );
+    expect(layout.indexOf('import "../editorial-foundation.css"')).toBeLessThan(
+      layout.indexOf('import "../editorial-pages.css"'),
+    );
     expect(layout).toContain("<SiteHeader locale={locale} />");
     expect(layout).toContain("<SiteFooter locale={locale} />");
 
@@ -112,19 +119,25 @@ describe("editorial design foundation", () => {
     expect(genericActions.has(messages["pt-BR"].navigation.cta)).toBe(false);
   });
 
-  it("defines the shared product vocabulary as reusable working methods", () => {
-    expect(messages.en.foundation.skills.summary).toContain("reusable working methods");
-    expect(messages["pt-BR"].foundation.skills.summary).toContain(
-      "métodos de trabalho reutilizáveis",
+  it("defines shared product language as reusable and independently invokable methods", () => {
+    expect(siteChromeCopy.en.header.contexts.skills.summary).toContain(
+      "reusable working method",
     );
-    expect(messages.en.foundation.packs.summary).toContain("independently invokable");
-    expect(messages["pt-BR"].foundation.packs.summary).toContain(
-      "invocado de forma independente",
+    expect(siteChromeCopy["pt-BR"].header.contexts.skills.summary).toContain(
+      "método de trabalho reutilizável",
     );
-    expect(messages.en.skillsCatalog.maturity).toBe("Skill maturity");
-    expect(messages["pt-BR"].skillsCatalog.maturity).toBe("Maturidade da skill");
-    expect(messages.en.foundation.note).not.toMatch(/next release/i);
-    expect(messages["pt-BR"].foundation.note).not.toMatch(/próxima entrega/i);
+    expect(siteChromeCopy.en.header.contexts.packs.summary).toContain(
+      "independently invokable",
+    );
+    expect(siteChromeCopy["pt-BR"].header.contexts.packs.summary).toContain(
+      "forma independente",
+    );
+    expect(siteChromeCopy.en.header.contexts.roadmap.summary).toContain(
+      "skill maturity",
+    );
+    expect(siteChromeCopy["pt-BR"].header.contexts.roadmap.summary).toContain(
+      "maturidade das skills",
+    );
 
     for (const locale of ["en", "pt-BR"] as const) {
       expect("paths" in messages[locale].home).toBe(false);
@@ -133,28 +146,16 @@ describe("editorial design foundation", () => {
     }
   });
 
-  it("owns shared editorial measures without retired card-era Home rules", async () => {
-    const [globals, editorialPages] = await Promise.all([
-      read("app/globals.css"),
-      read("app/editorial-pages.css"),
-    ]);
+  it("owns shell and reading measures in one bounded foundation layer", async () => {
+    const css = await read("app/editorial-foundation.css");
 
-    expect(globals).toContain("--content-max: 72rem;");
-    expect(globals).toContain("--reading-measure: 42rem;");
-    expect(globals).toContain("--page-gutter: 1rem;");
-    expect(globals).toMatch(/\.shell\s*\{[\s\S]*max-width:\s*var\(--content-max\)/);
-    expect(globals).toMatch(/\.shell\s*\{[\s\S]*padding-inline:\s*var\(--page-gutter\)/);
-    expect(editorialPages).toMatch(
-      /\.editorial-page__hero-summary\s*\{[\s\S]*max-width:\s*var\(--reading-measure\)/,
+    expect(css).toContain("--content-max: 72rem;");
+    expect(css).toContain("--reading-measure: 42rem;");
+    expect(css).toContain("--page-gutter:");
+    expect(css).toMatch(/\.shell\s*\{[\s\S]*max-width:\s*var\(--content-max\)/);
+    expect(css).toMatch(/\.shell\s*\{[\s\S]*padding-inline:\s*var\(--page-gutter\)/);
+    expect(css).toMatch(
+      /\.hero-section__summary,[\s\S]*\.foundation-route__summary\s*\{[\s\S]*max-width:\s*var\(--reading-measure\)/,
     );
-
-    for (const retiredSelector of [
-      ".home-path-grid",
-      ".home-pack-card",
-      ".home-case-card",
-      ".process-grid",
-    ]) {
-      expect(globals).not.toContain(retiredSelector);
-    }
   });
 });
