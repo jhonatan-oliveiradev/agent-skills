@@ -1,4 +1,5 @@
 import type { Route } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import { getCatalog } from "@/lib/catalog";
 import { localizePath } from "@/lib/i18n";
@@ -34,8 +35,17 @@ export function SiteHeader({ locale }: Readonly<{ locale: Locale }>) {
       <div className="shell site-header__inner">
         <div className="site-identity">
           <Link className="brand-link" href={`/${locale}` as Route}>
-            <span aria-hidden="true" className="brand-mark">AS</span>
-            <span>{copy.brandLabel}</span>
+            <span aria-hidden="true" className="brand-lockup">
+              <Image
+                className="brand-logo"
+                height={58}
+                priority
+                src="/brand/agent-skills-logo-horizontal.svg"
+                width={149}
+                alt=""
+              />
+            </span>
+            <span className="sr-only">{copy.brandLabel}</span>
           </Link>
         </div>
         <div className="site-publication-context" aria-hidden="true">
