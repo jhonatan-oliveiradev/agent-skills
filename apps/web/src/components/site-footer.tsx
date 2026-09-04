@@ -1,4 +1,5 @@
 import type { Route } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import { getCatalog } from "@/lib/catalog";
 import { localizePath } from "@/lib/i18n";
@@ -99,7 +100,13 @@ export function SiteFooter({ locale }: Readonly<{ locale: Locale }>) {
       </div>
 
       <div className="site-footer__wordmark-wrap" aria-hidden="true">
-        <p className="site-footer__wordmark" data-wordmark-scale="restrained">AGENT SKILLS STUDIO</p>
+        <Image
+          className="site-footer__brand-logo"
+          height={290}
+          src="/brand/agent-skills-logo-horizontal.svg"
+          width={745}
+          alt=""
+        />
       </div>
 
       <div className="shell site-footer__signature">
