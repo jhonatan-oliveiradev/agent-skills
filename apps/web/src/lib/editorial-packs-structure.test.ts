@@ -61,4 +61,14 @@ describe("editorial packs system", () => {
     expect(notFound).toContain("editorialPacksCopy");
     expect(notFound).toContain("notFoundAction");
   });
+
+  it("keeps long pack titles inside the identity column and gives hover surfaces lateral breathing room", async () => {
+    const css = await read("app/editorial-packs.css");
+
+    expect(css).toMatch(/\.pack-dossier\s*\{[\s\S]*padding-inline:\s*clamp\(/);
+    expect(css).toMatch(/\.pack-dossier__identity\s*\{[\s\S]*padding-right:\s*clamp\(/);
+    expect(css).toMatch(/\.pack-dossier__identity h2\s*\{[\s\S]*max-width:\s*100%/);
+    expect(css).toMatch(/\.pack-dossier__identity h2\s*\{[\s\S]*font-size:\s*clamp\(2\.8rem,\s*5vw,\s*5\.6rem\)/);
+    expect(css).toMatch(/\.pack-dossier__composition\s*\{[\s\S]*min-width:\s*0/);
+  });
 });
