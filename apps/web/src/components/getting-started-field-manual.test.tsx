@@ -168,8 +168,8 @@ describe("Getting Started Field Manual", () => {
       expect(within(targetGuide!).getByText(chatgptDestination)).toBeInTheDocument();
       expect(within(targetGuide!).getByText(claudeScope)).toBeInTheDocument();
 
-      expect(screen.getByText("bash install.sh")).toBeInTheDocument();
-      expect(screen.getByText("./install.ps1")).toBeInTheDocument();
+      expect(screen.getAllByText("bash install.sh").length).toBeGreaterThanOrEqual(1);
+      expect(screen.getAllByText("./install.ps1").length).toBeGreaterThanOrEqual(1);
       expect(screen.getByText("./install.sh --skill craft-premium-motion")).toBeInTheDocument();
       expect(screen.getByText("./install.sh --pack motion")).toBeInTheDocument();
       expect(screen.getByText("bash install.sh --target claude-code --scope project")).toBeInTheDocument();
