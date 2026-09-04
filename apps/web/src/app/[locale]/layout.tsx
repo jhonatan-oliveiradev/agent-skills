@@ -15,6 +15,7 @@ import "../editorial-pages.css";
 import "../editorial-secondary.css";
 import "../editorial-living-program.css";
 import "../editorial-colophon.css";
+import "../editorial-institutional.css";
 import "../editorial-methods.css";
 import "../editorial-method-dossier.css";
 import "../editorial-packs.css";

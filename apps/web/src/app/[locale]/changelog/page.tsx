@@ -10,11 +10,64 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
 export default async function ChangelogPage({ params }: PageProps) {
   const copy = getProjectPages(await resolveLocale(params)).changelog;
+
   return (
-    <article className="shell project-page">
-      <header className="project-page__hero"><p className="eyebrow">{copy.eyebrow}</p><h1>{copy.title}</h1><p>{copy.summary}</p></header>
-      <section className="project-page__section" aria-label={copy.releasesLabel}>{copy.releases.map((release) => <article className="release" key={release.version}><header><div><p className="eyebrow">{release.date}</p><h2>{release.version}</h2></div><span>{release.date}</span></header><div className="release__groups">{release.groups.map((group) => <section key={group.title}><h3>{group.title}</h3><ul>{group.items.map((item) => <li key={item}>{item}</li>)}</ul></section>)}</div></article>)}</section>
-      <a className="project-page__source" href={`${repositoryUrl}/blob/main/CHANGELOG.md`} rel="noreferrer noopener" target="_blank">{copy.sourceAction} ↗</a>
+    <article className="shell institutional-page institutional-changelog" data-institutional-changelog>
+      <header className="institutional-page__hero">
+        <div className="institutional-page__publication">
+          <span>{copy.eyebrow}</span>
+          <span>{copy.releasesLabel}</span>
+        </div>
+        <div className="institutional-page__hero-grid">
+          <div>
+            <p className="eyebrow">{copy.eyebrow}</p>
+            <h1>{copy.title}</h1>
+          </div>
+          <p>{copy.summary}</p>
+        </div>
+      </header>
+
+      <section className="institutional-page__section" aria-label={copy.releasesLabel}>
+        <header className="institutional-page__section-heading">
+          <span aria-hidden="true">01</span>
+          <h2>{copy.releasesLabel}</h2>
+        </header>
+        <div className="institutional-changelog__releases">
+          {copy.releases.map((release, releaseIndex) => (
+            <article className="institutional-changelog__release" data-release-record key={`${release.version}-${release.date}`}>
+              <header>
+                <span>{String(releaseIndex + 1).padStart(2, "0")}</span>
+                <div>
+                  <p>{release.date}</p>
+                  <h3>{release.version}</h3>
+                </div>
+              </header>
+              <div className="institutional-changelog__groups">
+                {release.groups.map((group) => (
+                  <section key={group.title}>
+                    <h4>{group.title}</h4>
+                    <ul>
+                      {group.items.map((item) => (
+                        <li key={item}>{item}</li>
+                      ))}
+                    </ul>
+                  </section>
+                ))}
+              </div>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <a
+        className="institutional-page__source-action"
+        data-interaction="navigate"
+        href={`${repositoryUrl}/blob/main/CHANGELOG.md`}
+        rel="noreferrer noopener"
+        target="_blank"
+      >
+        {copy.sourceAction} ↗
+      </a>
     </article>
   );
 }

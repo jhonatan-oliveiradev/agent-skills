@@ -1,0 +1,369 @@
+.institutional-page {
+  position: relative;
+  isolation: isolate;
+  padding-bottom: clamp(6rem, 11vw, 10rem);
+}
+
+.institutional-page__hero {
+  min-height: clamp(30rem, 66dvh, 46rem);
+  box-sizing: border-box;
+  padding-block: clamp(4.5rem, 10dvh, 7rem) clamp(3.5rem, 8dvh, 5.5rem);
+  border-bottom: 1px solid color-mix(in srgb, var(--border) 78%, var(--brand));
+}
+
+.institutional-page__publication {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+  margin-bottom: clamp(3rem, 7vw, 5.5rem);
+  padding-block: 0.8rem;
+  border-top: 1px solid color-mix(in srgb, var(--brand) 52%, var(--border));
+  border-bottom: 1px solid var(--border);
+  font-family: var(--font-mono);
+  font-size: 0.67rem;
+  font-weight: 750;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.institutional-page__publication span:first-child {
+  color: var(--brand);
+}
+
+.institutional-page__publication span:last-child {
+  color: var(--text-muted);
+  text-align: right;
+}
+
+.institutional-page__hero-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.18fr) minmax(18rem, 0.82fr);
+  gap: clamp(3rem, 8vw, 7rem);
+  align-items: end;
+}
+
+.institutional-page__hero-grid .eyebrow {
+  margin: 0 0 1rem;
+}
+
+.institutional-page__hero-grid h1 {
+  max-width: 12ch;
+  margin: 0;
+  font-size: clamp(3.8rem, min(7.5vw, 10dvh), 7.4rem);
+  font-weight: 500;
+  letter-spacing: -0.065em;
+  line-height: 0.9;
+  text-wrap: balance;
+}
+
+.institutional-page__hero-grid > p {
+  max-width: 42rem;
+  margin: 0;
+  color: var(--text-muted);
+  font-size: clamp(1.05rem, 1.7vw, 1.3rem);
+  line-height: 1.62;
+}
+
+.institutional-page__section,
+.institutional-page__expectations {
+  padding-block: clamp(4.5rem, 9vw, 8rem);
+  border-bottom: 1px solid color-mix(in srgb, var(--border) 82%, var(--brand));
+}
+
+.institutional-page__section-heading {
+  display: grid;
+  grid-template-columns: minmax(4rem, 0.16fr) minmax(0, 1fr);
+  gap: clamp(1.5rem, 5vw, 5rem);
+  align-items: start;
+  margin-bottom: clamp(2.5rem, 6vw, 5rem);
+}
+
+.institutional-page__section-heading > span {
+  color: var(--brand);
+  font-family: var(--font-mono);
+  font-size: clamp(1.15rem, 2.3vw, 1.8rem);
+  letter-spacing: -0.035em;
+}
+
+.institutional-page__section-heading .eyebrow {
+  margin: 0 0 0.8rem;
+}
+
+.institutional-page__section-heading h2 {
+  max-width: 16ch;
+  margin: 0;
+  font-size: clamp(2.4rem, 5vw, 5rem);
+  font-weight: 500;
+  letter-spacing: -0.058em;
+  line-height: 0.95;
+  text-wrap: balance;
+}
+
+.institutional-page__records {
+  margin: 0 0 0 clamp(4rem, 14vw, 12rem);
+  padding: 0;
+  border-top: 1px solid var(--border);
+  list-style: none;
+}
+
+.institutional-page__record {
+  display: grid;
+  grid-template-columns: minmax(3.5rem, 0.12fr) minmax(0, 1fr) auto;
+  gap: clamp(1rem, 3vw, 3rem);
+  align-items: start;
+  padding-block: clamp(1.6rem, 3vw, 2.35rem);
+  border-bottom: 1px solid var(--border);
+}
+
+.institutional-page__record-index,
+.institutional-page__record-action,
+.institutional-page__expectations li > span,
+.institutional-changelog__release > header > span,
+.institutional-changelog__release > header p {
+  font-family: var(--font-mono);
+  font-size: 0.66rem;
+  font-weight: 700;
+  letter-spacing: 0.075em;
+  text-transform: uppercase;
+}
+
+.institutional-page__record-index {
+  color: color-mix(in srgb, var(--brand) 72%, var(--text-muted));
+}
+
+.institutional-page__record-body h3 {
+  margin: 0;
+  font-size: clamp(1.2rem, 2vw, 1.65rem);
+  font-weight: 600;
+  letter-spacing: -0.03em;
+}
+
+.institutional-page__record-body p {
+  max-width: 46rem;
+  margin: 0.7rem 0 0;
+  color: var(--text-muted);
+  line-height: 1.62;
+}
+
+.institutional-page__record-action,
+.institutional-page__source-action {
+  color: var(--text-muted);
+  text-decoration: none;
+  transition:
+    color 220ms var(--ease-editorial),
+    transform 280ms var(--ease-editorial);
+}
+
+.institutional-page__record-action:hover,
+.institutional-page__record-action:focus-visible,
+.institutional-page__source-action:hover,
+.institutional-page__source-action:focus-visible {
+  color: var(--text);
+  transform: translateY(-0.1rem);
+}
+
+.institutional-page__record-action:focus-visible,
+.institutional-page__source-action:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 0.3rem;
+}
+
+.institutional-page__expectations {
+  display: grid;
+  grid-template-columns: minmax(0, 0.58fr) minmax(0, 1.42fr);
+  gap: clamp(2.5rem, 7vw, 7rem);
+}
+
+.institutional-page__expectations .institutional-page__section-heading {
+  display: grid;
+  grid-template-columns: minmax(3.5rem, 0.2fr) minmax(0, 1fr);
+  gap: 1rem;
+  margin: 0;
+}
+
+.institutional-page__expectations .institutional-page__section-heading h2 {
+  max-width: 11ch;
+  font-size: clamp(2rem, 4vw, 4rem);
+}
+
+.institutional-page__expectations > ol {
+  margin: 0;
+  padding: 0;
+  border-top: 1px solid var(--border);
+  list-style: none;
+}
+
+.institutional-page__expectations li {
+  display: grid;
+  grid-template-columns: 3rem minmax(0, 1fr);
+  gap: 1rem;
+  padding-block: 1.15rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.institutional-page__expectations li > span {
+  color: var(--brand);
+}
+
+.institutional-page__expectations li p {
+  margin: 0;
+  color: var(--text-muted);
+  line-height: 1.55;
+}
+
+.institutional-changelog__releases {
+  margin-left: clamp(4rem, 14vw, 12rem);
+  border-top: 1px solid var(--border);
+}
+
+.institutional-changelog__release {
+  display: grid;
+  grid-template-columns: minmax(10rem, 0.3fr) minmax(0, 1fr);
+  gap: clamp(2rem, 6vw, 6rem);
+  padding-block: clamp(2.6rem, 5vw, 4.6rem);
+  border-bottom: 1px solid var(--border);
+}
+
+.institutional-changelog__release > header {
+  display: grid;
+  grid-template-columns: 2.5rem minmax(0, 1fr);
+  gap: 1rem;
+  align-content: start;
+}
+
+.institutional-changelog__release > header > span {
+  color: var(--brand);
+}
+
+.institutional-changelog__release > header p {
+  margin: 0 0 0.6rem;
+  color: var(--text-muted);
+}
+
+.institutional-changelog__release > header h3 {
+  margin: 0;
+  font-size: clamp(1.6rem, 3vw, 2.7rem);
+  font-weight: 540;
+  letter-spacing: -0.045em;
+  line-height: 1;
+}
+
+.institutional-changelog__groups {
+  display: grid;
+  gap: clamp(2rem, 4vw, 3.2rem);
+}
+
+.institutional-changelog__groups section {
+  display: grid;
+  grid-template-columns: minmax(10rem, 0.3fr) minmax(0, 1fr);
+  gap: clamp(1.5rem, 4vw, 4rem);
+  padding-top: 1rem;
+  border-top: 1px solid color-mix(in srgb, var(--border) 80%, transparent);
+}
+
+.institutional-changelog__groups h4 {
+  margin: 0;
+  color: var(--text);
+  font-size: 0.9rem;
+  font-weight: 650;
+}
+
+.institutional-changelog__groups ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.institutional-changelog__groups li {
+  padding-block: 0.75rem;
+  border-bottom: 1px solid color-mix(in srgb, var(--border) 72%, transparent);
+  color: var(--text-muted);
+  line-height: 1.62;
+}
+
+.institutional-page__source-action {
+  display: inline-flex;
+  margin: clamp(3rem, 6vw, 5rem) 0 0 clamp(4rem, 14vw, 12rem);
+  font-size: 0.82rem;
+  font-weight: 650;
+}
+
+.living-program__release-state {
+  display: grid;
+  grid-template-columns: minmax(12rem, 0.42fr) minmax(0, 1fr);
+  gap: clamp(2rem, 7vw, 7rem);
+  align-items: end;
+  padding-block: clamp(2.3rem, 5vw, 4rem);
+  border-top: 1px solid color-mix(in srgb, var(--brand) 46%, var(--border));
+  border-bottom: 1px solid var(--border);
+}
+
+.living-program__release-state > div {
+  min-width: 0;
+}
+
+.living-program__release-state .eyebrow {
+  margin: 0 0 0.85rem;
+}
+
+.living-program__release-state strong {
+  display: block;
+  font-size: clamp(2rem, 4vw, 4.3rem);
+  font-weight: 520;
+  letter-spacing: -0.055em;
+  line-height: 0.95;
+}
+
+.living-program__release-state > div:last-child > p:last-child {
+  max-width: 48rem;
+  margin: 0;
+  color: var(--text-muted);
+  font-size: clamp(1rem, 1.6vw, 1.2rem);
+  line-height: 1.62;
+}
+
+@media (max-width: 60rem) {
+  .institutional-page__hero-grid,
+  .institutional-page__expectations,
+  .institutional-changelog__release,
+  .living-program__release-state {
+    grid-template-columns: 1fr;
+  }
+
+  .institutional-page__hero {
+    min-height: auto;
+  }
+
+  .institutional-page__records,
+  .institutional-changelog__releases,
+  .institutional-page__source-action {
+    margin-left: 0;
+  }
+}
+
+@media (max-width: 42rem) {
+  .institutional-page__publication {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 0.45rem;
+  }
+
+  .institutional-page__publication span:last-child {
+    text-align: left;
+  }
+
+  .institutional-page__record {
+    grid-template-columns: 2.5rem minmax(0, 1fr);
+  }
+
+  .institutional-page__record-action {
+    grid-column: 2;
+    justify-self: start;
+  }
+
+  .institutional-changelog__groups section {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+}

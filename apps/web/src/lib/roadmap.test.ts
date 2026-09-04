@@ -1,6 +1,7 @@
 import { describe, expect, it, vi } from "vitest";
 
 vi.mock("server-only", () => ({}));
+import { livingProgramCopy } from "./editorial-secondary-copy";
 import { messages } from "./messages";
 import { getRoadmapStages } from "./roadmap";
 
@@ -53,13 +54,12 @@ describe("public roadmap", () => {
   ] as const)(
     "keeps Stable 1.0.0 distinct from later work and skill maturity for %s",
     (locale, postStableTerm, maturityTerm) => {
-      const foundationSummary = messages[locale].foundation.roadmap.summary;
-      const principle = messages[locale].roadmap.principle;
+      const program = livingProgramCopy[locale];
 
-      expect(foundationSummary).toContain("Stable 1.0.0");
-      expect(foundationSummary).toContain(postStableTerm);
-      expect(principle).toContain(maturityTerm);
-      expect(principle).toMatch(/release/i);
+      expect(program.summary).toContain("Stable 1.0.0");
+      expect(program.summary).toContain(postStableTerm);
+      expect(program.principle).toContain(maturityTerm);
+      expect(program.principle).toMatch(/release/i);
     },
   );
 });

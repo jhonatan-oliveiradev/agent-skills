@@ -55,7 +55,6 @@ describe("project page content", () => {
     [
       "en",
       "working methods",
-      "Contribute a focused improvement.",
       "Prepare a pull request",
       "Published releases and unreleased changes",
       "Inspect source changelog",
@@ -63,21 +62,20 @@ describe("project page content", () => {
     [
       "pt-BR",
       "métodos de trabalho",
-      "Contribua com uma melhoria focada.",
       "Preparar um pull request",
       "Releases publicadas e mudanças não lançadas",
       "Inspecionar changelog na fonte",
     ],
   ] as const)(
     "keeps institutional language factual and action-specific for %s",
-    (locale, methodTerm, contributeTitle, pullRequestAction, releasesLabel, sourceAction) => {
+    (locale, methodTerm, pullRequestAction, releasesLabel, sourceAction) => {
       const content = getProjectPages(locale);
 
       expect(content.about.summary).toContain(methodTerm);
       expect(`${content.about.summary} ${content.about.purpose}`).not.toMatch(
         /proven working practices|práticas comprovadas/i,
       );
-      expect(content.contribute.title).toBe(contributeTitle);
+      expect(content.contribute.summary).toMatch(/reproducible|reproduzível/i);
       expect(content.contribute.paths[2].action).toBe(pullRequestAction);
       expect(content.changelog.releasesLabel).toBe(releasesLabel);
       expect(content.changelog.sourceAction).toBe(sourceAction);
