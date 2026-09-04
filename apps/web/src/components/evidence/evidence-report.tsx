@@ -193,7 +193,10 @@ export function EvidenceReport({
                 </a>
               ))}
             </div>
-            <p className="evidence-report__scope-note" data-evidence-scope-note>
+            <p
+              className="evidence-report__scope-note mt-8 max-w-[46rem] border-l border-[var(--brand)] pl-5 text-sm leading-6 text-[var(--text-muted)]"
+              data-evidence-scope-note
+            >
               {editorialCopy.scopeNote}
             </p>
           </section>

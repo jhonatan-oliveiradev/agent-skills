@@ -34,7 +34,7 @@ export function EvidenceArchive({
       />
 
       <section
-        className="evidence-archive__classification-guide"
+        className="evidence-archive__classification-guide grid items-end gap-10 border-b border-[var(--border)] py-16 md:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] md:gap-16 md:py-24"
         data-evidence-classification-guide
         aria-labelledby="evidence-classification-guide-title"
       >
