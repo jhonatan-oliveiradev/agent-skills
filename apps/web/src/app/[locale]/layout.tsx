@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { NuqsAdapter } from "nuqs/adapters/next/app";
 import "../globals.css";
+import "../editorial-foundation.css";
 import "../home-evidence.css";
 import "../home-living-archive.css";
 import "../home-living-systems.css";

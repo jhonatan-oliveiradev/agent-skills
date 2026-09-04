@@ -42,11 +42,11 @@ export const siteChromeCopy: Readonly<Record<Locale, SiteChromeCopy>> = {
       contexts: {
         skills: {
           kicker: "METHOD LIBRARY",
-          summary: "Find a skill by the kind of work you need the agent to perform.",
+          summary: "A skill is a reusable working method an agent can apply to a specific kind of work.",
         },
         packs: {
           kicker: "RELATED METHODS",
-          summary: "Install related skills together while keeping each method independently invokable.",
+          summary: "A pack groups related skills without turning them into one workflow; every method remains independently invokable.",
         },
         gettingStarted: {
           kicker: "INSTALLATION",
@@ -58,7 +58,7 @@ export const siteChromeCopy: Readonly<Record<Locale, SiteChromeCopy>> = {
         },
         roadmap: {
           kicker: "OPEN DEVELOPMENT",
-          summary: "See what is shipped, what is still maturing, and what evidence is missing next.",
+          summary: "Release status and individual skill maturity are tracked separately and advance only with evidence.",
         },
         about: {
           kicker: "STUDIO NOTES",
@@ -86,11 +86,11 @@ export const siteChromeCopy: Readonly<Record<Locale, SiteChromeCopy>> = {
       contexts: {
         skills: {
           kicker: "BIBLIOTECA DE MÉTODOS",
-          summary: "Encontre uma skill pelo tipo de trabalho que você precisa que o agente execute.",
+          summary: "Uma skill é um método de trabalho reutilizável que um agente pode aplicar a um tipo específico de trabalho.",
         },
         packs: {
           kicker: "MÉTODOS RELACIONADOS",
-          summary: "Instale skills relacionadas em conjunto sem deixar de invocar cada método de forma independente.",
+          summary: "Um pack agrupa skills relacionadas sem transformá-las em um fluxo único; cada método continua invocável de forma independente.",
         },
         gettingStarted: {
           kicker: "INSTALAÇÃO",
@@ -102,7 +102,7 @@ export const siteChromeCopy: Readonly<Record<Locale, SiteChromeCopy>> = {
         },
         roadmap: {
           kicker: "DESENVOLVIMENTO ABERTO",
-          summary: "Veja o que já foi entregue, o que ainda está amadurecendo e qual evidência falta a seguir.",
+          summary: "O status da release e a maturidade das skills são acompanhados separadamente e só avançam com evidência.",
         },
         about: {
           kicker: "NOTAS DO STUDIO",
