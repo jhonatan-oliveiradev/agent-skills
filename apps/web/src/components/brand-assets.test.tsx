@@ -12,7 +12,7 @@ import { SiteHeader } from "./site-header";
 import { ThemeProvider } from "./theme-provider";
 
 describe("Agent Skills Studio brand assets", () => {
-  it("uses the supplied horizontal logo in the shared header", () => {
+  it("uses the supplied monogram in the shared header", () => {
     render(
       <ThemeProvider attribute="class">
         <SiteHeader locale="en" />
@@ -23,7 +23,7 @@ describe("Agent Skills Studio brand assets", () => {
     expect(brandLink).toHaveAttribute("href", "/en");
     expect(brandLink.querySelector("img")).toHaveAttribute(
       "src",
-      "/brand/agent-skills-logo-horizontal.svg",
+      "/brand/agent-skills-monogram.svg",
     );
   });
 
