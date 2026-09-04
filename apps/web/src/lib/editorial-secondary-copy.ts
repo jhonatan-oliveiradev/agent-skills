@@ -1,12 +1,32 @@
 import type { Locale } from "./locales";
 
 type FieldManualStageId = "orientation" | "install" | "verify" | "maintain" | "continue";
+type InstallTargetId = "agents" | "claude-code" | "chatgpt";
 
 interface FieldManualCopy {
   readonly publicationLabel: string;
   readonly editionLabel: string;
   readonly indexLabel: string;
+  readonly targetGuideTitle: string;
+  readonly targets: readonly {
+    readonly id: InstallTargetId;
+    readonly label: string;
+    readonly mode: string;
+    readonly summary: string;
+    readonly destinations: readonly string[];
+  }[];
+  readonly claudeScopeSummary: string;
+  readonly defaultTargetLabel: string;
+  readonly defaultTargetSummary: string;
+  readonly installOptions: Readonly<{
+    complete: string;
+    skill: string;
+    pack: string;
+  }>;
   readonly claudeCodeLabel: string;
+  readonly claudeCodeSummary: string;
+  readonly claudeCodeProjectLabel: string;
+  readonly claudeCodeProjectSummary: string;
   readonly chatgptLabel: string;
   readonly chatgptSummary: string;
   readonly chatgptSkillDownloadLabel: string;
@@ -16,6 +36,12 @@ interface FieldManualCopy {
   readonly chatgptMarketplaceLabel: string;
   readonly chatgptMarketplacePath: string;
   readonly chatgptAvailability: string;
+  readonly verifyAgentsLabel: string;
+  readonly verifyClaudeLabel: string;
+  readonly verifyChatgptLabel: string;
+  readonly verifyChatgptSummary: string;
+  readonly recoveryTitle: string;
+  readonly recoverySummary: string;
   readonly installationSuccessSuffix: string;
   readonly metrics: readonly {
     readonly label: string;
@@ -45,7 +71,49 @@ export const fieldManualCopy = {
     publicationLabel: "FIELD MANUAL",
     editionLabel: "01 / INSTALL AND VERIFY",
     indexLabel: "Installation steps",
+    targetGuideTitle: "Choose the environment first",
+    targets: [
+      {
+        id: "agents",
+        label: "Codex / Agent Skills",
+        mode: "Filesystem · personal",
+        summary:
+          "Use the default installer when Codex or another Agent Skills-compatible runtime should discover these methods.",
+        destinations: ["~/.agents/skills/"],
+      },
+      {
+        id: "claude-code",
+        label: "Claude Code",
+        mode: "Filesystem · personal or project",
+        summary:
+          "Use the Claude Code target when the methods should be discovered from Claude Code's native skill locations.",
+        destinations: ["~/.claude/skills/", "<project>/.claude/skills/"],
+      },
+      {
+        id: "chatgpt",
+        label: "ChatGPT",
+        mode: "Upload or plugin marketplace",
+        summary:
+          "Install one Skill ZIP directly or import the complete skills-only marketplace in an eligible workspace.",
+        destinations: ["No filesystem installer"],
+      },
+    ],
+    claudeScopeSummary:
+      "Personal is the default. Add --scope project when the current project should own the installed skills.",
+    defaultTargetLabel: "Codex / Agent Skills · default target",
+    defaultTargetSummary:
+      "These commands use the default personal target and write to ~/.agents/skills/.",
+    installOptions: {
+      complete: "Installs the complete canonical collection into the selected personal filesystem target.",
+      skill: "Installs only the named canonical skill; replace the example slug with the method you need.",
+      pack: "Installs the members of one active pack while each member remains independently invokable.",
+    },
     claudeCodeLabel: "Claude Code · personal",
+    claudeCodeSummary:
+      "Installs the complete collection into ~/.claude/skills/ so it is available across local Claude Code projects.",
+    claudeCodeProjectLabel: "Claude Code · project",
+    claudeCodeProjectSummary:
+      "Run from the project that should own the skills. The project scope writes to <project>/.claude/skills/.",
     chatgptLabel: "ChatGPT · plugin marketplace",
     chatgptSummary:
       "For one skill, download its ZIP and upload it directly. For the complete collection, import the skills-only plugin from GitHub in an eligible workspace.",
@@ -57,6 +125,14 @@ export const fieldManualCopy = {
     chatgptMarketplacePath: "Workspace settings → Plugins → Add → Import marketplace",
     chatgptAvailability:
       "These options may vary by plan, workspace settings, role, region, and surface.",
+    verifyAgentsLabel: "Verify Codex / Agent Skills",
+    verifyClaudeLabel: "Verify Claude Code",
+    verifyChatgptLabel: "Verify ChatGPT",
+    verifyChatgptSummary:
+      "Confirm the uploaded skill or imported plugin is visible in the eligible ChatGPT workspace.",
+    recoveryTitle: "If the path is wrong",
+    recoverySummary:
+      "The default installer targets ~/.agents/skills/. Use --target claude-code when Claude Code should discover the skills instead.",
     installationSuccessSuffix: "skills ready to use.",
     metrics: [
       { label: "STAGES", value: "05 stages" },
@@ -64,10 +140,10 @@ export const fieldManualCopy = {
       { label: "MODE", value: "First installation" },
     ],
     stages: [
-      { id: "orientation", label: "Choose a path" },
-      { id: "install", label: "Install" },
-      { id: "verify", label: "Verify" },
-      { id: "maintain", label: "Maintain" },
+      { id: "orientation", label: "Choose environment" },
+      { id: "install", label: "Choose what to install" },
+      { id: "verify", label: "Verify destination" },
+      { id: "maintain", label: "Recover / maintain" },
       { id: "continue", label: "Choose next" },
     ],
   },
@@ -75,7 +151,49 @@ export const fieldManualCopy = {
     publicationLabel: "MANUAL DE CAMPO",
     editionLabel: "01 / INSTALAR E VERIFICAR",
     indexLabel: "Etapas da instalação",
+    targetGuideTitle: "Escolha primeiro o ambiente",
+    targets: [
+      {
+        id: "agents",
+        label: "Codex / Agent Skills",
+        mode: "Filesystem · pessoal",
+        summary:
+          "Use o instalador padrão quando o Codex ou outro runtime compatível com Agent Skills deve descobrir estes métodos.",
+        destinations: ["~/.agents/skills/"],
+      },
+      {
+        id: "claude-code",
+        label: "Claude Code",
+        mode: "Filesystem · pessoal ou projeto",
+        summary:
+          "Use o alvo do Claude Code quando os métodos devem ser descobertos pelos diretórios nativos de skills do Claude Code.",
+        destinations: ["~/.claude/skills/", "<projeto>/.claude/skills/"],
+      },
+      {
+        id: "chatgpt",
+        label: "ChatGPT",
+        mode: "Upload ou marketplace de plugins",
+        summary:
+          "Instale o ZIP de uma skill diretamente ou importe o marketplace completo composto somente por skills em um workspace elegível.",
+        destinations: ["Sem instalador de filesystem"],
+      },
+    ],
+    claudeScopeSummary:
+      "Pessoal é o padrão. Adicione --scope project quando o projeto atual deve ser o dono das skills instaladas.",
+    defaultTargetLabel: "Codex / Agent Skills · alvo padrão",
+    defaultTargetSummary:
+      "Estes comandos usam o alvo pessoal padrão e gravam em ~/.agents/skills/.",
+    installOptions: {
+      complete: "Instala a coleção canônica completa no alvo pessoal de filesystem selecionado.",
+      skill: "Instala somente a skill canônica informada; troque o slug do exemplo pelo método necessário.",
+      pack: "Instala os membros de um pack ativo, mantendo cada membro invocável de forma independente.",
+    },
     claudeCodeLabel: "Claude Code · pessoal",
+    claudeCodeSummary:
+      "Instala a coleção completa em ~/.claude/skills/ para ficar disponível nos projetos locais do Claude Code.",
+    claudeCodeProjectLabel: "Claude Code · projeto",
+    claudeCodeProjectSummary:
+      "Execute a partir do projeto que deve ser o dono das skills. O escopo de projeto grava em <projeto>/.claude/skills/.",
     chatgptLabel: "ChatGPT · marketplace de plugins",
     chatgptSummary:
       "Para uma skill, baixe o ZIP e faça o upload diretamente. Para a coleção completa, importe pelo GitHub o plugin composto somente por skills em um workspace elegível.",
@@ -87,6 +205,14 @@ export const fieldManualCopy = {
     chatgptMarketplacePath: "Configurações do workspace → Plugins → Adicionar → Importar marketplace",
     chatgptAvailability:
       "Essas opções podem variar conforme plano, configurações do workspace, função, região e superfície.",
+    verifyAgentsLabel: "Verificar Codex / Agent Skills",
+    verifyClaudeLabel: "Verificar Claude Code",
+    verifyChatgptLabel: "Verificar ChatGPT",
+    verifyChatgptSummary:
+      "Confirme que a skill enviada ou o plugin importado aparece no workspace elegível do ChatGPT.",
+    recoveryTitle: "Se o caminho estiver errado",
+    recoverySummary:
+      "O instalador padrão aponta para ~/.agents/skills/. Use --target claude-code quando o Claude Code deve descobrir as skills.",
     installationSuccessSuffix: "skills prontas para usar.",
     metrics: [
       { label: "ETAPAS", value: "05 etapas" },
@@ -94,10 +220,10 @@ export const fieldManualCopy = {
       { label: "MODO", value: "Primeira instalação" },
     ],
     stages: [
-      { id: "orientation", label: "Escolha um caminho" },
-      { id: "install", label: "Instalar" },
-      { id: "verify", label: "Verificar" },
-      { id: "maintain", label: "Manter" },
+      { id: "orientation", label: "Escolha o ambiente" },
+      { id: "install", label: "Escolha o que instalar" },
+      { id: "verify", label: "Verifique o destino" },
+      { id: "maintain", label: "Corrija / mantenha" },
       { id: "continue", label: "Próximo passo" },
     ],
   },
