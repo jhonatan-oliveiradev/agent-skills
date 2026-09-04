@@ -111,4 +111,50 @@ describe("editorial design foundation", () => {
     expect(genericActions.has(messages.en.navigation.cta)).toBe(false);
     expect(genericActions.has(messages["pt-BR"].navigation.cta)).toBe(false);
   });
+
+  it("defines the shared product vocabulary as reusable working methods", () => {
+    expect(messages.en.foundation.skills.summary).toContain("reusable working methods");
+    expect(messages["pt-BR"].foundation.skills.summary).toContain(
+      "métodos de trabalho reutilizáveis",
+    );
+    expect(messages.en.foundation.packs.summary).toContain("independently invokable");
+    expect(messages["pt-BR"].foundation.packs.summary).toContain(
+      "invocado de forma independente",
+    );
+    expect(messages.en.skillsCatalog.maturity).toBe("Skill maturity");
+    expect(messages["pt-BR"].skillsCatalog.maturity).toBe("Maturidade da skill");
+    expect(messages.en.foundation.note).not.toMatch(/next release/i);
+    expect(messages["pt-BR"].foundation.note).not.toMatch(/próxima entrega/i);
+
+    for (const locale of ["en", "pt-BR"] as const) {
+      expect("paths" in messages[locale].home).toBe(false);
+      expect("packs" in messages[locale].home).toBe(false);
+      expect("proof" in messages[locale].home).toBe(false);
+    }
+  });
+
+  it("owns shared editorial measures without retired card-era Home rules", async () => {
+    const [globals, editorialPages] = await Promise.all([
+      read("app/globals.css"),
+      read("app/editorial-pages.css"),
+    ]);
+
+    expect(globals).toContain("--content-max: 72rem;");
+    expect(globals).toContain("--reading-measure: 42rem;");
+    expect(globals).toContain("--page-gutter: 1rem;");
+    expect(globals).toMatch(/\.shell\s*\{[\s\S]*max-width:\s*var\(--content-max\)/);
+    expect(globals).toMatch(/\.shell\s*\{[\s\S]*padding-inline:\s*var\(--page-gutter\)/);
+    expect(editorialPages).toMatch(
+      /\.editorial-page__hero-summary\s*\{[\s\S]*max-width:\s*var\(--reading-measure\)/,
+    );
+
+    for (const retiredSelector of [
+      ".home-path-grid",
+      ".home-pack-card",
+      ".home-case-card",
+      ".process-grid",
+    ]) {
+      expect(globals).not.toContain(retiredSelector);
+    }
+  });
 });
