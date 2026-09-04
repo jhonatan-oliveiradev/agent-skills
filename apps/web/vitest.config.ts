@@ -28,8 +28,8 @@ export default defineConfig({
         test: {
           name: "home-render",
           include: heavyHomeRenderTests,
-          testTimeout: 10_000,
-          sequence: { groupOrder: 0 },
+          fileParallelism: false,
+          sequence: { groupOrder: 1 },
         },
       },
       {
@@ -39,7 +39,7 @@ export default defineConfig({
           include: [legacyLocaleRedirectTest],
           environment: "node",
           fileParallelism: false,
-          sequence: { groupOrder: 1 },
+          sequence: { groupOrder: 2 },
         },
       },
     ],
