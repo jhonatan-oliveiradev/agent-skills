@@ -35,19 +35,11 @@ describe("sitewide UI hardening", () => {
     expect(source).toMatch(/\.home-pack-dossier__body > \*[\s\S]*min-width:\s*0/);
   });
 
-  it("defines deliberate placement for every one of the 11 active packs", async () => {
+  it("keeps Home pack sequence choreography out of the global hardening layer", async () => {
     const source = await readCss("ui-hardening.css");
-    const catalog = JSON.parse(await readSource("generated/catalog.json")) as {
-      filters: { packs: string[] };
-    };
 
-    expect(catalog.filters.packs).toHaveLength(11);
-    expect(source).toMatch(
-      /\.home-pack-dossier:nth-child\(10\)[\s\S]*grid-column:/,
-    );
-    expect(source).toMatch(
-      /\.home-pack-dossier:nth-child\(11\)[\s\S]*grid-column:/,
-    );
+    expect(source).not.toContain(".home-pack-archive .home-pack-dossier:nth-child(10)");
+    expect(source).not.toContain(".home-pack-archive .home-pack-dossier:nth-child(11)");
   });
 
   it("uses the design system tokens that actually exist for interaction feedback", async () => {

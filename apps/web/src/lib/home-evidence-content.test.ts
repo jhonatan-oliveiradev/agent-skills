@@ -25,26 +25,32 @@ describe("homeEvidenceContent", () => {
   });
 
   it("defines the Home for an unfamiliar agent user before builder depth", () => {
-    expect(homeManifesto.en.titleLead).toBe("Skills are not prompts.");
-    expect(homeManifesto.en.titleClose).toBe("They are working methods.");
-    expect(homeManifesto.en.summary).toBe(
-      "A curated, installable collection of working methods that gives agents a clearer way to investigate, decide, build, and verify real work.",
-    );
-    expect(homeManifesto.en.primaryAction).toBe("Explore skills");
-    expect(homeManifesto.en.secondaryAction).toBe("Inspect real-use evidence");
-    expect(homeManifesto.en.secondaryHref).toBe("/built-with-skills");
-    expect(homeManifesto.en.engine.prompt).not.toMatch(/premium/i);
+    const copy = homeManifesto.en;
+
+    expect(copy.titleLead).toBe("Skills are not prompts.");
+    expect(copy.titleClose).toBe("They are working methods.");
+    expect(copy.summary).toContain("installable");
+    expect(copy.summary).toContain("inspectable");
+    expect(copy.summary).toContain("working methods");
+    expect(copy.primaryAction).toBe("Explore skills");
+    expect(copy.secondaryAction).toBe("Inspect real-use evidence");
+    expect(copy.secondaryHref).toBe("/built-with-skills");
+    expect(copy.engine.stages).toEqual(["Request", "Method", "Evidence"]);
+    expect(copy.engine.prompt).not.toMatch(/premium/i);
   });
 
   it("gives PT-BR the same product contract in native language", () => {
-    expect(homeManifesto["pt-BR"].titleLead).toBe("Skills não são prompts.");
-    expect(homeManifesto["pt-BR"].titleClose).toBe("São métodos de trabalho.");
-    expect(homeManifesto["pt-BR"].summary).toBe(
-      "Uma coleção curada e instalável de métodos de trabalho que dá aos agentes um caminho mais claro para investigar, decidir, construir e verificar trabalho real.",
-    );
-    expect(homeManifesto["pt-BR"].primaryAction).toBe("Explorar skills");
-    expect(homeManifesto["pt-BR"].secondaryAction).toBe("Inspecionar evidências reais");
-    expect(homeManifesto["pt-BR"].secondaryHref).toBe("/built-with-skills");
-    expect(homeManifesto["pt-BR"].engine.prompt).not.toMatch(/premium/i);
+    const copy = homeManifesto["pt-BR"];
+
+    expect(copy.titleLead).toBe("Skills não são prompts.");
+    expect(copy.titleClose).toBe("São métodos de trabalho.");
+    expect(copy.summary).toContain("instalável");
+    expect(copy.summary).toContain("inspecionável");
+    expect(copy.summary).toContain("métodos de trabalho");
+    expect(copy.primaryAction).toBe("Explorar skills");
+    expect(copy.secondaryAction).toBe("Inspecionar evidências reais");
+    expect(copy.secondaryHref).toBe("/built-with-skills");
+    expect(copy.engine.stages).toEqual(["Pedido", "Método", "Evidência"]);
+    expect(copy.engine.prompt).not.toMatch(/premium/i);
   });
 });

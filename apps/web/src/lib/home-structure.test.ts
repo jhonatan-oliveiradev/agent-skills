@@ -8,8 +8,8 @@ async function readHome() {
   return readFile(resolve(appRoot, "app/[locale]/page.tsx"), "utf8");
 }
 
-async function readHomeLivingSystems() {
-  return readFile(resolve(appRoot, "app/home-living-systems.css"), "utf8");
+async function readCss(path: string) {
+  return readFile(resolve(appRoot, "app", path), "utf8");
 }
 
 describe("Home Living Research Archive composition", () => {
@@ -37,20 +37,36 @@ describe("Home Living Research Archive composition", () => {
     expect(source).toContain("home-evidence-ledger");
   });
 
-  it("gives all nine active pack dossiers an intentional desktop composition", async () => {
-    const source = await readHomeLivingSystems();
+  it("places the operational walkthrough before the representative method and pack archives", async () => {
+    const source = await readHome();
 
-    expect(source).toContain(".home-pack-dossier:nth-child(4)");
-    expect(source).toContain(".home-pack-dossier:nth-child(5)");
-    expect(source).toContain(".home-pack-dossier:nth-child(6)");
-    expect(source).toContain(".home-pack-dossier:nth-child(7)");
-    expect(source).toContain(".home-pack-dossier:nth-child(8)");
-    expect(source).toContain(".home-pack-dossier:nth-child(9)");
-    expect(source).toMatch(/nth-child\(4\)[\s\S]*grid-column:/);
-    expect(source).toMatch(/nth-child\(5\)[\s\S]*grid-column:/);
-    expect(source).toMatch(/nth-child\(6\)[\s\S]*grid-column:/);
-    expect(source).toMatch(/nth-child\(7\)[\s\S]*grid-column:/);
-    expect(source).toMatch(/nth-child\(8\)[\s\S]*grid-column:/);
-    expect(source).toMatch(/nth-child\(9\)[\s\S]*grid-column:/);
+    const workflow = source.indexOf("<HomeMethodWorkflow");
+    const methods = source.indexOf("<HomeMethodIndex");
+    const packs = source.indexOf("<HomePackDossiers");
+    const evidence = source.indexOf("<HomeEvidenceLedger");
+
+    expect(workflow).toBeGreaterThan(-1);
+    expect(methods).toBeGreaterThan(-1);
+    expect(packs).toBeGreaterThan(-1);
+    expect(evidence).toBeGreaterThan(-1);
+    expect(workflow).toBeLessThan(methods);
+    expect(methods).toBeLessThan(packs);
+    expect(packs).toBeLessThan(evidence);
+  });
+
+  it("owns the deliberate placement of all 11 active packs in the Home composition layer", async () => {
+    const [homeSystems, hardening] = await Promise.all([
+      readCss("home-living-systems.css"),
+      readCss("ui-hardening.css"),
+    ]);
+
+    for (let index = 1; index <= 11; index += 1) {
+      expect(homeSystems).toMatch(
+        new RegExp(`\\.home-pack-dossier:nth-child\\(${index}\\)[\\s\\S]*grid-column:`),
+      );
+    }
+
+    expect(hardening).not.toContain(".home-pack-archive .home-pack-dossier:nth-child(10)");
+    expect(hardening).not.toContain(".home-pack-archive .home-pack-dossier:nth-child(11)");
   });
 });
