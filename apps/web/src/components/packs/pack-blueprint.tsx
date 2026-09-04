@@ -16,6 +16,13 @@ interface PackInstallCommands {
   readonly powershell: string;
 }
 
+interface PackDistributionCopy {
+  readonly bundleLabel: string;
+  readonly bundleSummary: string;
+  readonly bundleDownload: string;
+  readonly bundleNote: string;
+}
+
 interface RelationsCopy {
   readonly relatedEvidence: string;
   readonly relatedEvidenceSummary: string;
@@ -30,6 +37,7 @@ export interface PackBlueprintProps {
   readonly detail: Messages["packDetail"];
   readonly skillsCopy: Messages["skillsCatalog"];
   readonly commands: PackInstallCommands | undefined;
+  readonly distributionCopy: PackDistributionCopy;
   readonly evidenceRelations: readonly PackEvidenceRelation[];
   readonly relationsCopy: RelationsCopy;
   readonly compositionPending: string;
@@ -47,6 +55,7 @@ export function PackBlueprint(props: Readonly<PackBlueprintProps>) {
     detail,
     skillsCopy,
     commands,
+    distributionCopy,
     evidenceRelations,
     relationsCopy,
     compositionPending,
@@ -183,6 +192,23 @@ export function PackBlueprint(props: Readonly<PackBlueprintProps>) {
               <div className="pack-blueprint__commands">
                 <div><p>{detail.bash}</p><CopyCommand command={commands.bash} label={detail.copy} copiedLabel={detail.copied} /></div>
                 <div><p>{detail.powershell}</p><CopyCommand command={commands.powershell} label={detail.copy} copiedLabel={detail.copied} /></div>
+              </div>
+
+              <div className="pack-blueprint__bundle" data-pack-download>
+                <div className="pack-blueprint__bundle-copy">
+                  <p>{distributionCopy.bundleLabel}</p>
+                  <strong>{distributionCopy.bundleSummary}</strong>
+                  <span>{pack.skills.length} {detail.skills} · ZIP</span>
+                </div>
+                <a
+                  className="pack-blueprint__bundle-action"
+                  download
+                  href={`/downloads/packs/agent-skills-${pack.slug}-${pack.version}.zip`}
+                >
+                  <span>{distributionCopy.bundleDownload}</span>
+                  <span aria-hidden="true">↓</span>
+                </a>
+                <p className="pack-blueprint__bundle-note">{distributionCopy.bundleNote}</p>
               </div>
             </section>
           ) : null}
