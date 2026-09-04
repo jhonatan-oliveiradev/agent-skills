@@ -60,13 +60,35 @@ describe("Method Dossier", () => {
     );
   });
 
-  it("presents supported agent surfaces as product names rather than raw catalog slugs", async () => {
+  it.each([
+    ["en", "Install this skill", "Inspect source", "Skill maturity", "Version"],
+    ["pt-BR", "Instalar esta skill", "Inspecionar código-fonte", "Maturidade da skill", "Versão"],
+  ] as const)(
+    "uses specific install/source actions and keeps skill maturity distinct from release version for %s",
+    async (locale, installAction, sourceAction, maturityLabel, versionLabel) => {
+      await SkillDetailPage({
+        params: Promise.resolve({ locale, slug: "designing-ui-systems" }),
+      }).then((page) => render(page));
+
+      expect(screen.getByRole("heading", { name: installAction })).toBeInTheDocument();
+      expect(screen.getByRole("link", { name: sourceAction })).toHaveAttribute(
+        "href",
+        "https://github.com/jhonatan-oliveiradev/agent-skills/tree/main/skills/designing-ui-systems",
+      );
+      expect(screen.getByText(maturityLabel)).toBeInTheDocument();
+      expect(screen.getByText(versionLabel)).toBeInTheDocument();
+    },
+  );
+
+  it("presents supported environments as product names rather than compatibility slugs", async () => {
     await SkillDetailPage({
       params: Promise.resolve({ locale: "en", slug: "designing-ui-systems" }),
     }).then((page) => render(page));
 
     expect(screen.getByText("ChatGPT · Codex · Claude Code")).toBeInTheDocument();
+    expect(screen.getByText("Filesystem")).toBeInTheDocument();
     expect(screen.queryByText("chatgpt, codex, claude-code")).not.toBeInTheDocument();
+    expect(screen.queryByText("filesystem")).not.toBeInTheDocument();
   });
 
   it("connects a method to its canonical system and explicit evidence reports", async () => {
