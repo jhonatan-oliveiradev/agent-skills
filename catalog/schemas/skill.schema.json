@@ -74,7 +74,7 @@
       "properties": {
         "surfaces": {
           "type": "array",
-          "items": { "enum": ["chatgpt", "codex"] },
+          "items": { "enum": ["chatgpt", "codex", "claude-code"] },
           "minItems": 1,
           "uniqueItems": true
         },
