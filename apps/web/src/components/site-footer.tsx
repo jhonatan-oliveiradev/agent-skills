@@ -14,6 +14,9 @@ export function SiteFooter({ locale }: Readonly<{ locale: Locale }>) {
   const copy = messages[locale];
   const chrome = siteChromeCopy[locale].footer;
   const catalog = getCatalog();
+  const provenance = chrome.provenance
+    .replace("{skills}", String(catalog.skills.length))
+    .replace("{packs}", String(catalog.packs.length));
 
   const exploreLinks = [
     ["/skills", copy.navigation.skills],
@@ -83,16 +86,16 @@ export function SiteFooter({ locale }: Readonly<{ locale: Locale }>) {
             <h3>{chrome.collection}</h3>
             <dl>
               <div>
-                <dt>Release</dt>
+                <dt>{chrome.releaseLabel}</dt>
                 <dd>{copy.footer.version.replace("{version}", catalog.version)}</dd>
               </div>
               <div>
-                <dt>Methods</dt>
+                <dt>{chrome.methodsLabel}</dt>
                 <dd>{catalog.skills.length} skills</dd>
               </div>
               <div>
-                <dt>Packs</dt>
-                <dd>{catalog.packs.length} {locale === "pt-BR" ? "pacotes" : "packs"}</dd>
+                <dt>{chrome.packsLabel}</dt>
+                <dd>{catalog.packs.length} packs</dd>
               </div>
             </dl>
           </div>
@@ -122,9 +125,7 @@ export function SiteFooter({ locale }: Readonly<{ locale: Locale }>) {
 
       <div className="shell site-footer__signature">
         <p>© {new Date().getFullYear()} Agent Skills Studio</p>
-        <p className="site-footer__provenance">
-          OPEN METHODS · {catalog.skills.length} SKILLS · {catalog.packs.length} PACKS
-        </p>
+        <p className="site-footer__provenance">{provenance}</p>
         <a href={portfolioUrl} rel="author noreferrer" target="_blank">
           {copy.footer.signature}<span aria-hidden="true">↗</span>
         </a>

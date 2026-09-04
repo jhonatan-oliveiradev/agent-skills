@@ -2,6 +2,7 @@
 
 import type { Route } from "next";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { Menu, X } from "lucide";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { MorphIcon } from "morphicons/react";
@@ -48,14 +49,24 @@ export function EditorialNavigation({
   openLabel,
   versionLabel,
 }: EditorialNavigationProps) {
+  const pathname = usePathname();
+  const currentIndex = links.findIndex((link) => {
+    const href = String(link.href);
+    return pathname === href || pathname.startsWith(`${href}/`);
+  });
+  const routeIndex = currentIndex >= 0 ? currentIndex : 0;
   const [open, setOpen] = useState(false);
   const [closing, setClosing] = useState(false);
-  const [activeIndex, setActiveIndex] = useState(0);
+  const [activeIndex, setActiveIndex] = useState(routeIndex);
   const reducedMotion = useReducedMotion();
   const triggerRef = useRef<HTMLButtonElement>(null);
   const panelRef = useRef<HTMLDivElement>(null);
-  const activeLink = links[activeIndex] ?? links[0]!;
+  const activeLink = links[activeIndex] ?? links[routeIndex] ?? links[0]!;
   const visible = open || closing;
+
+  useEffect(() => {
+    if (!visible) setActiveIndex(routeIndex);
+  }, [routeIndex, visible]);
 
   useEffect(() => {
     if (!visible) return;
@@ -63,7 +74,9 @@ export function EditorialNavigation({
     document.body.style.overflow = "hidden";
 
     if (open) {
-      panelRef.current?.querySelector<HTMLElement>("a")?.focus();
+      const currentLink = panelRef.current?.querySelector<HTMLElement>('[aria-current="page"]');
+      const firstLink = panelRef.current?.querySelector<HTMLElement>("a");
+      (currentLink ?? firstLink)?.focus();
     }
 
     function onKeyDown(event: KeyboardEvent) {
@@ -96,6 +109,7 @@ export function EditorialNavigation({
   }, [open, reducedMotion, visible]);
 
   function openNavigation() {
+    setActiveIndex(routeIndex);
     setClosing(false);
     setOpen(true);
   }
@@ -183,33 +197,37 @@ export function EditorialNavigation({
               <div className="primary-navigation__layout">
                 <nav aria-label={label} className="primary-navigation__list">
                   <ol>
-                    {links.map((link, index) => (
-                      <motion.li
-                        animate={{ opacity: 1, y: 0 }}
-                        data-active={activeIndex === index ? "true" : "false"}
-                        initial={reducedMotion ? false : { opacity: 0, y: 14 }}
-                        key={link.href}
-                        transition={
-                          reducedMotion
-                            ? { duration: 0 }
-                            : { delay: 0.1 + index * 0.04, duration: 0.32 }
-                        }
-                      >
-                        <span aria-hidden="true">{String(index + 1).padStart(2, "0")}</span>
-                        <Link
-                          href={link.href}
-                          onClick={close}
-                          onFocus={() => setActiveIndex(index)}
-                          onMouseEnter={() => setActiveIndex(index)}
+                    {links.map((link, index) => {
+                      const isCurrent = currentIndex === index;
+                      return (
+                        <motion.li
+                          animate={{ opacity: 1, y: 0 }}
+                          data-active={activeIndex === index ? "true" : "false"}
+                          initial={reducedMotion ? false : { opacity: 0, y: 14 }}
+                          key={link.href}
+                          transition={
+                            reducedMotion
+                              ? { duration: 0 }
+                              : { delay: 0.1 + index * 0.04, duration: 0.32 }
+                          }
                         >
-                          <span className="sr-only">{link.label}</span>
-                          <TextRoll>{link.label}</TextRoll>
-                        </Link>
-                        <p className="primary-navigation__mobile-context" data-mobile-context="inline">
-                          {link.summary}
-                        </p>
-                      </motion.li>
-                    ))}
+                          <span aria-hidden="true">{String(index + 1).padStart(2, "0")}</span>
+                          <Link
+                            aria-current={isCurrent ? "page" : undefined}
+                            href={link.href}
+                            onClick={close}
+                            onFocus={() => setActiveIndex(index)}
+                            onMouseEnter={() => setActiveIndex(index)}
+                          >
+                            <span className="sr-only">{link.label}</span>
+                            <TextRoll>{link.label}</TextRoll>
+                          </Link>
+                          <p className="primary-navigation__mobile-context" data-mobile-context="inline">
+                            {link.summary}
+                          </p>
+                        </motion.li>
+                      );
+                    })}
                   </ol>
                 </nav>
 

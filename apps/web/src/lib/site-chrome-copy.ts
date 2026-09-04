@@ -28,6 +28,10 @@ type SiteChromeCopy = Readonly<{
     project: string;
     source: string;
     collection: string;
+    releaseLabel: string;
+    methodsLabel: string;
+    packsLabel: string;
+    provenance: string;
   }>;
 }>;
 
@@ -74,6 +78,10 @@ export const siteChromeCopy: Readonly<Record<Locale, SiteChromeCopy>> = {
       project: "Project",
       source: "Source",
       collection: "Collection",
+      releaseLabel: "Release",
+      methodsLabel: "Methods",
+      packsLabel: "Packs",
+      provenance: "OPEN METHODS · {skills} SKILLS · {packs} PACKS",
     },
   },
   "pt-BR": {
@@ -118,6 +126,10 @@ export const siteChromeCopy: Readonly<Record<Locale, SiteChromeCopy>> = {
       project: "Projeto",
       source: "Origem",
       collection: "Coleção",
+      releaseLabel: "Release",
+      methodsLabel: "Métodos",
+      packsLabel: "Packs",
+      provenance: "MÉTODOS ABERTOS · {skills} SKILLS · {packs} PACKS",
     },
   },
 };

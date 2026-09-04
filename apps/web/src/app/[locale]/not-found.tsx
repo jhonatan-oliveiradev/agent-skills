@@ -3,25 +3,28 @@
 import type { Route } from "next";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { globalStateCopy } from "@/lib/global-state-copy";
 import { localeFromPathname } from "@/lib/locale-from-pathname";
-import { messages } from "@/lib/messages";
 
-export default function SkillNotFound() {
+export default function NotFound() {
   const locale = localeFromPathname(usePathname());
-  const copy = messages[locale];
+  const copy = globalStateCopy[locale].notFound;
 
   return (
-    <section className="shell global-state global-state--not-found global-state--detail">
+    <section className="shell global-state global-state--not-found" data-global-state="not-found">
       <div className="global-state__rail" aria-hidden="true">
         <span>404</span>
       </div>
       <div className="global-state__body">
-        <p className="global-state__status">404 / SKILL</p>
-        <h1>{copy.skillDetail.notFoundTitle}</h1>
-        <p className="global-state__summary">{copy.skillDetail.notFoundSummary}</p>
+        <p className="global-state__status">{copy.status}</p>
+        <h1>{copy.title}</h1>
+        <p className="global-state__summary">{copy.summary}</p>
         <div className="global-state__actions">
           <Link className="button button--primary" href={`/${locale}/skills` as Route}>
-            {copy.skillDetail.back}
+            {copy.skills}
+          </Link>
+          <Link className="button button--secondary" href={`/${locale}` as Route}>
+            {copy.home}
           </Link>
         </div>
       </div>
