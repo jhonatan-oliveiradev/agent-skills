@@ -11,8 +11,7 @@
   "compatibility": {
     "surfaces": [
       "chatgpt",
-      "codex",
-      "claude-code"
+      "codex"
     ],
     "operatingSystems": [
       "linux",
