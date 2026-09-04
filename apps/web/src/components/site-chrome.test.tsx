@@ -12,8 +12,8 @@ import { SiteFooter } from "./site-footer";
 import { SiteHeader } from "./site-header";
 import { ThemeProvider } from "./theme-provider";
 
-function renderHeader(locale: "en" | "pt-BR") {
-  navigation.pathname = `/${locale}`;
+function renderHeader(locale: "en" | "pt-BR", pathname = `/${locale}`) {
+  navigation.pathname = pathname;
   return render(
     <ThemeProvider attribute="class">
       <SiteHeader locale={locale} />
@@ -55,9 +55,23 @@ describe("editorial site chrome", () => {
   });
 
   it.each([
-    ["en", "Methods only matter when they change the work.", "Explore", "Project", "Source"],
-    ["pt-BR", "Métodos só têm valor quando mudam o trabalho.", "Explorar", "Projeto", "Origem"],
-  ] as const)("turns the %s footer into end matter and a colophon", (locale, manifesto, explore, project, source) => {
+    ["en", "/en/roadmap", "Open navigation", "Roadmap", "Release status and individual skill maturity are tracked separately and advance only with evidence."],
+    ["pt-BR", "/pt-BR/roadmap", "Abrir navegação", "Roteiro", "O status da release e a maturidade das skills são acompanhados separadamente e só avançam com evidência."],
+  ] as const)("marks the current %s navigation destination without requiring hover", (locale, pathname, openLabel, currentLabel, context) => {
+    renderHeader(locale, pathname);
+
+    fireEvent.click(screen.getByRole("button", { name: openLabel }));
+    const dialog = screen.getByRole("dialog");
+    const currentLink = within(dialog).getByRole("link", { name: currentLabel });
+
+    expect(currentLink).toHaveAttribute("aria-current", "page");
+    expect(within(dialog).getByText(context)).toBeInTheDocument();
+  });
+
+  it.each([
+    ["en", "Methods only matter when they change the work.", "Explore", "Project", "Source", "Methods", "OPEN METHODS · 54 SKILLS · 11 PACKS"],
+    ["pt-BR", "Métodos só têm valor quando mudam o trabalho.", "Explorar", "Projeto", "Origem", "Métodos", "MÉTODOS ABERTOS · 54 SKILLS · 11 PACKS"],
+  ] as const)("turns the %s footer into end matter and a colophon", (locale, manifesto, explore, project, source, methodsLabel, provenance) => {
     const { container } = render(<SiteFooter locale={locale} />);
 
     const footer = container.querySelector<HTMLElement>('[data-footer-mode="end-matter"]');
@@ -74,7 +88,9 @@ describe("editorial site chrome", () => {
 
     const collection = footer?.querySelector<HTMLElement>(".site-footer__collection");
     expect(collection).toBeInTheDocument();
+    expect(within(collection!).getByText(methodsLabel)).toBeInTheDocument();
     expect(within(collection!).getByText(/54 skills/i)).toBeInTheDocument();
     expect(within(collection!).getByText(/11 packs|11 pacotes/i)).toBeInTheDocument();
+    expect(footer).toHaveTextContent(provenance);
   });
 });
