@@ -72,7 +72,7 @@ describe("sitewide UI hardening", () => {
   });
 
   it("gives every shared site-chrome control a visible keyboard focus state", async () => {
-    const source = await readCss("site-chrome.css");
+    const source = await readCss("ui-hardening.css");
 
     expect(source).toContain(".locale-switcher:focus-visible");
     expect(source).toContain(".site-theme-toggle:focus-visible");
