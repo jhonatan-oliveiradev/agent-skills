@@ -1,4 +1,4 @@
-import { render, screen } from "@testing-library/react";
+import { render, screen, within } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 
 vi.mock("server-only", () => ({}));
@@ -92,6 +92,102 @@ describe("Getting Started Field Manual", () => {
         "data-interaction",
         "navigate",
       );
+    },
+  );
+
+  it.each([
+    [
+      "en",
+      "Choose the environment first",
+      "Codex / Agent Skills",
+      "Claude Code",
+      "ChatGPT",
+      "~/.agents/skills/",
+      "~/.claude/skills/",
+      "<project>/.claude/skills/",
+      "No filesystem installer",
+      "Personal is the default. Add --scope project when the current project should own the installed skills.",
+      "Verify Codex / Agent Skills",
+      "Verify Claude Code",
+      "Verify ChatGPT",
+      "Confirm the uploaded skill or imported plugin is visible in the eligible ChatGPT workspace.",
+      "If the path is wrong",
+      "The default installer targets ~/.agents/skills/. Use --target claude-code when Claude Code should discover the skills instead.",
+    ],
+    [
+      "pt-BR",
+      "Escolha primeiro o ambiente",
+      "Codex / Agent Skills",
+      "Claude Code",
+      "ChatGPT",
+      "~/.agents/skills/",
+      "~/.claude/skills/",
+      "<projeto>/.claude/skills/",
+      "Sem instalador de filesystem",
+      "Pessoal é o padrão. Adicione --scope project quando o projeto atual deve ser o dono das skills instaladas.",
+      "Verificar Codex / Agent Skills",
+      "Verificar Claude Code",
+      "Verificar ChatGPT",
+      "Confirme que a skill enviada ou o plugin importado aparece no workspace elegível do ChatGPT.",
+      "Se o caminho estiver errado",
+      "O instalador padrão aponta para ~/.agents/skills/. Use --target claude-code quando o Claude Code deve descobrir as skills.",
+    ],
+  ] as const)(
+    "explains target, destination, scope, verification, and recovery for %s",
+    async (
+      locale,
+      chooserTitle,
+      codexLabel,
+      claudeLabel,
+      chatgptLabel,
+      agentsDestination,
+      claudePersonalDestination,
+      claudeProjectDestination,
+      chatgptDestination,
+      claudeScope,
+      verifyAgents,
+      verifyClaude,
+      verifyChatgpt,
+      chatgptVerification,
+      recoveryTitle,
+      recoverySummary,
+    ) => {
+      const { container } = render(
+        await GettingStartedPage({ params: Promise.resolve({ locale }) }),
+      );
+
+      const targetGuide = container.querySelector<HTMLElement>("[data-install-target-guide]");
+      expect(targetGuide).toBeInTheDocument();
+      expect(within(targetGuide!).getByRole("heading", { name: chooserTitle })).toBeInTheDocument();
+      expect(within(targetGuide!).getByRole("heading", { name: codexLabel })).toBeInTheDocument();
+      expect(within(targetGuide!).getByRole("heading", { name: claudeLabel })).toBeInTheDocument();
+      expect(within(targetGuide!).getByRole("heading", { name: chatgptLabel })).toBeInTheDocument();
+      expect(within(targetGuide!).getByText(agentsDestination)).toBeInTheDocument();
+      expect(within(targetGuide!).getByText(claudePersonalDestination)).toBeInTheDocument();
+      expect(within(targetGuide!).getByText(claudeProjectDestination)).toBeInTheDocument();
+      expect(within(targetGuide!).getByText(chatgptDestination)).toBeInTheDocument();
+      expect(within(targetGuide!).getByText(claudeScope)).toBeInTheDocument();
+
+      expect(screen.getByText("bash install.sh")).toBeInTheDocument();
+      expect(screen.getByText("./install.ps1")).toBeInTheDocument();
+      expect(screen.getByText("./install.sh --skill craft-premium-motion")).toBeInTheDocument();
+      expect(screen.getByText("./install.sh --pack motion")).toBeInTheDocument();
+      expect(screen.getByText("bash install.sh --target claude-code --scope project")).toBeInTheDocument();
+      expect(screen.getByText("./install.ps1 --target claude-code --scope project")).toBeInTheDocument();
+
+      const verifyTargets = container.querySelector<HTMLElement>("[data-verify-targets]");
+      expect(verifyTargets).toBeInTheDocument();
+      expect(within(verifyTargets!).getByRole("heading", { name: verifyAgents })).toBeInTheDocument();
+      expect(within(verifyTargets!).getByRole("heading", { name: verifyClaude })).toBeInTheDocument();
+      expect(within(verifyTargets!).getByRole("heading", { name: verifyChatgpt })).toBeInTheDocument();
+      expect(within(verifyTargets!).getByText("ls ~/.agents/skills")).toBeInTheDocument();
+      expect(within(verifyTargets!).getByText("ls ~/.claude/skills")).toBeInTheDocument();
+      expect(within(verifyTargets!).getByText(chatgptVerification)).toBeInTheDocument();
+
+      const recovery = container.querySelector<HTMLElement>("[data-install-recovery]");
+      expect(recovery).toBeInTheDocument();
+      expect(within(recovery!).getByRole("heading", { name: recoveryTitle })).toBeInTheDocument();
+      expect(within(recovery!).getByText(recoverySummary)).toBeInTheDocument();
     },
   );
 });
