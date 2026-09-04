@@ -61,7 +61,7 @@ describe("web package contract", () => {
     expect(pkg.dependencies["react-dom"]).toBe("19.2.8");
   });
 
-  it("prepares generated Skill ZIPs, the catalog, and route types before consuming gates", () => {
+  it("prepares generated Skill and Pack ZIPs, the catalog, and route types before consuming gates", () => {
     const pkg = JSON.parse(readFileSync(resolve(webRoot, "package.json"), "utf8"));
 
     expect(pkg.scripts.pretest).toBe("node scripts/sync-catalog.mjs");
@@ -70,7 +70,7 @@ describe("web package contract", () => {
     );
     expect(pkg.scripts.typecheck).toBe("tsc --noEmit");
     expect(pkg.scripts.prebuild).toBe(
-      "node ../../scripts/generate-skill-zips.mjs && node scripts/sync-catalog.mjs",
+      "node ../../scripts/generate-skill-zips.mjs && node ../../scripts/generate-pack-zips.mjs && node scripts/sync-catalog.mjs",
     );
   });
 

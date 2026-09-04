@@ -55,7 +55,7 @@ async function collectSkillFiles(skillRoot, current = skillRoot) {
   return files;
 }
 
-function createStoredZip(files) {
+export function createStoredZip(files) {
   const localParts = [];
   const centralParts = [];
   let localOffset = 0;
@@ -117,6 +117,16 @@ function createStoredZip(files) {
   return Buffer.concat([...localParts, centralDirectory, end]);
 }
 
+export async function createSkillZipBuffer(skillRoot) {
+  const files = await collectSkillFiles(skillRoot);
+
+  if (!files.some((file) => file.name === "SKILL.md")) {
+    throw new Error(`Cannot package ${path.basename(skillRoot)}: SKILL.md is missing`);
+  }
+
+  return createStoredZip(files);
+}
+
 export async function generateSkillZips({ repoRoot = repositoryRoot, output = defaultOutput } = {}) {
   const skillsRoot = path.join(repoRoot, "skills");
   const version = (await readFile(path.join(repoRoot, "VERSION"), "utf8")).trim();
@@ -129,14 +139,7 @@ export async function generateSkillZips({ repoRoot = repositoryRoot, output = de
   await mkdir(output, { recursive: true });
 
   for (const skillName of skillNames) {
-    const skillRoot = path.join(skillsRoot, skillName);
-    const files = await collectSkillFiles(skillRoot);
-
-    if (!files.some((file) => file.name === "SKILL.md")) {
-      throw new Error(`Cannot package ${skillName}: SKILL.md is missing`);
-    }
-
-    const archive = createStoredZip(files);
+    const archive = await createSkillZipBuffer(path.join(skillsRoot, skillName));
     await writeFile(path.join(output, `${skillName}-${version}.zip`), archive);
   }
 

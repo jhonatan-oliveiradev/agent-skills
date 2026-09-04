@@ -8,6 +8,7 @@ import {
   getPackInstallCommands,
 } from "@/lib/catalog";
 import { getCasesUsingPackMethods } from "@/lib/cross-domain-relations";
+import { packDistributionCopy } from "@/lib/distribution-copy";
 import { editorialPacksCopy } from "@/lib/editorial-packs-copy";
 import { editorialRelationsCopy } from "@/lib/editorial-relations-copy";
 import { isLocale } from "@/lib/i18n";
@@ -82,6 +83,7 @@ export default async function PackDetailPage({ params }: PackPageProps) {
         detail={copy.packDetail}
         skillsCopy={copy.skillsCatalog}
         commands={commands}
+        distributionCopy={packDistributionCopy[locale]}
         evidenceRelations={evidenceRelations}
         relationsCopy={editorialRelationsCopy[locale]}
         compositionPending={editorialCopy.compositionPending}

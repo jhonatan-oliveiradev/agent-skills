@@ -26,13 +26,14 @@ test('repository exposes complete web gates and Vercel policy', () => {
   assert.equal(web.scripts.typecheck, 'tsc --noEmit');
   assert.equal(
     web.scripts.predev,
-    'node ../../scripts/generate-skill-zips.mjs && node scripts/sync-catalog.mjs',
+    'node ../../scripts/generate-skill-zips.mjs && node ../../scripts/generate-pack-zips.mjs && node scripts/sync-catalog.mjs',
   );
   assert.equal(
     web.scripts.prebuild,
-    'node ../../scripts/generate-skill-zips.mjs && node scripts/sync-catalog.mjs',
+    'node ../../scripts/generate-skill-zips.mjs && node ../../scripts/generate-pack-zips.mjs && node scripts/sync-catalog.mjs',
   );
   assert.match(gitignore, /^apps\/web\/public\/downloads\/skills\/$/m);
+  assert.match(gitignore, /^apps\/web\/public\/downloads\/packs\/$/m);
 
   let previousIndex = -1;
   for (const command of [

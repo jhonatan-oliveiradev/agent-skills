@@ -4,9 +4,9 @@
   "type": "module",
   "private": true,
   "scripts": {
-    "predev": "node ../../scripts/generate-skill-zips.mjs && node scripts/sync-catalog.mjs",
+    "predev": "node ../../scripts/generate-skill-zips.mjs && node ../../scripts/generate-pack-zips.mjs && node scripts/sync-catalog.mjs",
     "dev": "next dev",
-    "prebuild": "node ../../scripts/generate-skill-zips.mjs && node scripts/sync-catalog.mjs",
+    "prebuild": "node ../../scripts/generate-skill-zips.mjs && node ../../scripts/generate-pack-zips.mjs && node scripts/sync-catalog.mjs",
     "build": "next build",
     "start": "next start",
     "lint": "eslint . --max-warnings=0",
