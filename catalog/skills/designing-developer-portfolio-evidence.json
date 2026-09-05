@@ -1,0 +1,35 @@
+{
+  "$schema": "../schemas/skill.schema.json",
+  "slug": "designing-developer-portfolio-evidence",
+  "category": "developer-career",
+  "packs": ["developer-career"],
+  "maturity": "beta",
+  "difficulty": "intermediate",
+  "featured": false,
+  "compatibility": { "surfaces": ["chatgpt", "codex"], "operatingSystems": ["linux", "macos", "windows"], "installModes": ["plugin", "filesystem"] },
+  "tags": ["career", "portfolio", "projects", "evidence", "capabilities"],
+  "dependencies": [],
+  "relatedSkills": ["building-developer-career-roadmaps", "evaluating-developer-proficiency"],
+  "version": "1.1.0",
+  "updatedAt": "2026-09-04",
+  "locales": {
+    "en": {
+      "displayName": "Designing Developer Portfolio Evidence",
+      "summary": "Turns capability gaps into portfolio project briefs with explicit proof contracts that define what a completed artifact must actually demonstrate.",
+      "primaryBenefit": "Makes portfolio work evidence-bearing and inspectable instead of assuming that project existence proves proficiency.",
+      "whenToUse": "Use when one or more roadmap gaps should be demonstrated through a realistic project or professional artifact.",
+      "whenNotToUse": "Do not use to grant proficiency from project existence alone or to replace formal evaluation where a criterion requires it.",
+      "useCases": ["Design a project that demonstrates several related target-role capabilities", "Define proof requirements for an existing portfolio project before claiming it as evidence"],
+      "examplePrompts": ["Use designing-developer-portfolio-evidence to turn these roadmap gaps into one project brief with explicit evidence contracts for each capability."]
+    },
+    "pt-BR": {
+      "displayName": "Design de Evidências para Portfólio Dev",
+      "summary": "Transforma gaps de capacidade em briefs de projeto com contratos explícitos de prova que definem o que o artefato concluído deve demonstrar.",
+      "primaryBenefit": "Faz o trabalho de portfólio gerar evidência inspecionável em vez de assumir que a existência do projeto prova proficiência.",
+      "whenToUse": "Use quando um ou mais gaps do roadmap devem ser demonstrados por um projeto realista ou artefato profissional.",
+      "whenNotToUse": "Não use para conceder proficiência apenas pela existência do projeto nem substituir avaliação formal quando um critério a exige.",
+      "useCases": ["Projetar um projeto que demonstre várias capacidades relacionadas à função-alvo", "Definir requisitos de prova para um projeto existente antes de usá-lo como evidência"],
+      "examplePrompts": ["Use designing-developer-portfolio-evidence para transformar estes gaps em um brief de projeto com contratos explícitos de evidência por capacidade."]
+    }
+  }
+}
