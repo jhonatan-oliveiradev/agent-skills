@@ -81,7 +81,7 @@ const result = {
 } as const satisfies AssessmentResultArtifact;
 
 describe("Assessment surfaces", () => {
-  it("announces progress, preserves answers, supports keyboard events, and completes with collected responses", () => {
+  it("uses native, accessible, focusable controls while preserving answers and completing with collected responses", () => {
     const onComplete = vi.fn();
     render(<AssessmentRunner blueprint={runnerBlueprint} onComplete={onComplete} />);
 
@@ -92,35 +92,48 @@ describe("Assessment surfaces", () => {
     const firstAnswer = screen.getByRole("radio", {
       name: /the component that owns the interaction/i,
     });
+    expect(firstAnswer.tagName).toBe("INPUT");
+    expect(firstAnswer).toHaveAttribute("type", "radio");
+    expect(firstAnswer).not.toHaveAttribute("tabindex", "-1");
     firstAnswer.focus();
     expect(document.activeElement).toBe(firstAnswer);
-    fireEvent.keyDown(firstAnswer, { key: " ", code: "Space" });
-    fireEvent.keyUp(firstAnswer, { key: " ", code: "Space" });
-    expect(firstAnswer).toBeChecked();
+    fireEvent.click(firstAnswer);
 
     const next = screen.getByRole("button", { name: /next challenge/i });
+    expect(next.tagName).toBe("BUTTON");
+    expect(next).toHaveAttribute("type", "button");
+    expect(next).not.toBeDisabled();
+    expect(next).not.toHaveAttribute("tabindex", "-1");
     next.focus();
     expect(document.activeElement).toBe(next);
-    fireEvent.keyDown(next, { key: "Enter", code: "Enter" });
-    fireEvent.keyUp(next, { key: "Enter", code: "Enter" });
+    fireEvent.click(next);
     expect(screen.getByRole("status")).toHaveTextContent("Challenge 2 of 2");
 
     const secondAnswer = screen.getByRole("radio", {
       name: /an explicit empty result/i,
     });
+    expect(secondAnswer.tagName).toBe("INPUT");
+    expect(secondAnswer).toHaveAttribute("type", "radio");
     secondAnswer.focus();
     expect(document.activeElement).toBe(secondAnswer);
-    fireEvent.keyDown(secondAnswer, { key: " ", code: "Space" });
-    fireEvent.keyUp(secondAnswer, { key: " ", code: "Space" });
+    fireEvent.click(secondAnswer);
 
-    fireEvent.click(screen.getByRole("button", { name: /previous challenge/i }));
+    const previous = screen.getByRole("button", { name: /previous challenge/i });
+    expect(previous.tagName).toBe("BUTTON");
+    expect(previous).toHaveAttribute("type", "button");
+    expect(previous).not.toBeDisabled();
+    fireEvent.click(previous);
     const returnedFirstAnswer = screen.getByRole("radio", {
       name: /the component that owns the interaction/i,
     });
     expect(returnedFirstAnswer).toBeChecked();
 
     fireEvent.click(screen.getByRole("button", { name: /next challenge/i }));
-    fireEvent.click(screen.getByRole("button", { name: /complete assessment/i }));
+    const complete = screen.getByRole("button", { name: /complete assessment/i });
+    expect(complete.tagName).toBe("BUTTON");
+    expect(complete).toHaveAttribute("type", "button");
+    expect(complete).not.toBeDisabled();
+    fireEvent.click(complete);
 
     expect(onComplete).toHaveBeenCalledWith(
       expect.objectContaining({
