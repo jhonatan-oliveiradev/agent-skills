@@ -3,7 +3,11 @@ import { describe, expect, it, vi } from "vitest";
 import { createEmptyCareerProfile } from "@/lib/career/profile";
 import type { CareerStorage } from "@/lib/career/storage";
 import { CareerProfileProvider } from "./career-profile-provider";
-import { CareerDataControls, serializeCareerProfile } from "./career-data-controls";
+import {
+  CareerDataControls,
+  getCareerProfileExportFilename,
+  serializeCareerProfile,
+} from "./career-data-controls";
 
 function makeProfile() {
   return createEmptyCareerProfile({
@@ -27,6 +31,9 @@ describe("Career Lab data controls", () => {
   it("serializes the exact current Career Profile contract for export", () => {
     const profile = makeProfile();
     expect(serializeCareerProfile(profile)).toBe(`${JSON.stringify(profile, null, 2)}\n`);
+    expect(getCareerProfileExportFilename(new Date("2026-09-05T12:00:00.000Z"))).toBe(
+      "agent-skills-career-profile-2026-09-05.json",
+    );
   });
 
   it("rejects invalid imports without replacing the hydrated profile", async () => {
