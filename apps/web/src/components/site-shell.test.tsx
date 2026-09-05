@@ -304,11 +304,11 @@ describe("foundation navigation targets", () => {
     unmount();
 
     render(await ChangelogPage({ params: Promise.resolve({ locale: "en" }) }));
-    const currentReleaseHeading = screen.getByRole("heading", { name: "1.1.0" });
+    const currentReleaseHeading = screen.getByRole("heading", { name: "1.0.0" });
     expect(currentReleaseHeading).toBeInTheDocument();
     const currentRelease = currentReleaseHeading.closest("article");
     expect(currentRelease).not.toBeNull();
-    expect(currentRelease).toHaveTextContent(/evidence-qualified.*Stable 1.1.0/i);
+    expect(currentRelease).toHaveTextContent(/evidence-qualified.*Stable 1.0.0/i);
     expect(screen.getByRole("link", { name: /source changelog/i })).toHaveAttribute(
       "href",
       expect.stringContaining("CHANGELOG.md"),
