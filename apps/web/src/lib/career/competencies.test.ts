@@ -130,6 +130,28 @@ describe("competency evidence gates", () => {
     expect(deriveEvidenceConfidence(records)).not.toBe("high");
   });
 
+  it("lowers confidence when recent performance evidence contradicts by one level", () => {
+    const criterionIds = ["programming-javascript.proficient"] as const;
+    const records = [
+      observation({
+        id: "performance-proficient",
+        competencyId: "programming-javascript",
+        evidenceClass: "E3",
+        demonstratedLevel: "proficient",
+        criterionIds,
+      }),
+      observation({
+        id: "authentic-developing",
+        competencyId: "programming-javascript",
+        evidenceClass: "E4",
+        demonstratedLevel: "developing",
+        criterionIds,
+      }),
+    ] as const;
+
+    expect(deriveEvidenceConfidence(records)).not.toBe("high");
+  });
+
   it("uses evidence classes only as a cap, not as an averaging score", () => {
     expect(
       maxLevelAllowedByEvidence([
