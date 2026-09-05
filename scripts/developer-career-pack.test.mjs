@@ -1,11 +1,11 @@
 import assert from "node:assert/strict";
 import { execFile } from "node:child_process";
-import { mkdtemp, readFile, readdir } from "node:fs/promises";
+import { mkdir, mkdtemp, readFile, readdir, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import path from "node:path";
 import test from "node:test";
 import { promisify } from "node:util";
-import { fileURLToPath } from "node:url";
+import { fileURLToPath, pathToFileURL } from "node:url";
 
 const execFileAsync = promisify(execFile);
 const repositoryRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
@@ -103,4 +103,31 @@ test("each Developer Career method installs independently through the real CLI",
       new RegExp(`name: ${slug}`),
     );
   }
+});
+
+test("syncs the current 60-skill and 12-pack catalog into the web projection", async () => {
+  const fixtureRoot = await mkdtemp(path.join(tmpdir(), "agent-skills-catalog-sync-"));
+  const fixtureWebRoot = path.join(fixtureRoot, "web");
+  const generatedDirectory = path.join(fixtureRoot, "catalog", "generated");
+  await mkdir(generatedDirectory, { recursive: true });
+  await mkdir(fixtureWebRoot, { recursive: true });
+
+  const catalog = {
+    version: "1.1.0",
+    locales: ["en", "pt-BR"],
+    skills: Array.from({ length: 60 }, (_, index) => ({ slug: `skill-${index}` })),
+    packs: Array.from({ length: 12 }, (_, index) => ({ slug: `pack-${index}` })),
+  };
+  await writeFile(path.join(fixtureRoot, "VERSION"), "1.1.0\n");
+  await writeFile(path.join(generatedDirectory, "catalog.json"), `${JSON.stringify(catalog, null, 2)}\n`);
+
+  const syncModuleUrl = `${pathToFileURL(path.join(repositoryRoot, "apps", "web", "scripts", "sync-catalog.mjs")).href}?test=${Date.now()}`;
+  const { syncCatalog } = await import(syncModuleUrl);
+  const result = syncCatalog({ repoRoot: fixtureRoot, webRoot: fixtureWebRoot, runValidation: false });
+
+  assert.equal(result.bytes, Buffer.byteLength(`${JSON.stringify(catalog, null, 2)}\n`));
+  assert.deepEqual(
+    await readJson(path.join(fixtureWebRoot, "src", "generated", "catalog.json")),
+    catalog,
+  );
 });
