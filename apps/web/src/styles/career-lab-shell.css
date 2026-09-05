@@ -219,7 +219,32 @@
   }
 
   .career-lab-rail .career-data-controls {
+    display: block;
+    min-width: 0;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  .career-lab-rail .career-data-controls::-webkit-scrollbar {
     display: none;
+  }
+
+  .career-lab-rail .career-data-controls__actions {
+    justify-content: flex-start;
+    width: max-content;
+    min-width: 100%;
+  }
+
+  .career-lab-rail .career-data-controls__confirm,
+  .career-lab-rail .career-data-controls__status {
+    position: fixed;
+    z-index: 40;
+    top: auto;
+    right: 1rem;
+    bottom: 1rem;
+    left: 1rem;
+    width: auto;
+    max-width: none;
   }
 
   .career-lab-content {
