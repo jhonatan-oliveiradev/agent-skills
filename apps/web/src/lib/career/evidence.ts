@@ -46,7 +46,7 @@ function hasContradictoryObservations(records: readonly EvidenceRecord[]): boole
   return [...observedLevels.values()].some((levels) => {
     if (levels.length < 2) return false;
     const ranks = levels.map((level) => proficiencyRank[level]);
-    return Math.max(...ranks) - Math.min(...ranks) >= 2;
+    return Math.max(...ranks) - Math.min(...ranks) > 0;
   });
 }
 
