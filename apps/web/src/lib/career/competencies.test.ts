@@ -138,6 +138,20 @@ describe("competency evidence gates", () => {
       ]),
     ).toBe("developing");
   });
+
+  it("lets performance evidence unlock the advanced cap while criteria remain authoritative", () => {
+    expect(
+      maxLevelAllowedByEvidence([
+        observation({
+          id: "performance-cap",
+          competencyId: "programming-javascript",
+          evidenceClass: "E3",
+          demonstratedLevel: "proficient",
+          criterionIds: criterionIdsAtOrBelowEvidenceClass(programmingJavaScript, "E3"),
+        }),
+      ]),
+    ).toBe("advanced");
+  });
 });
 
 describe("canonical competency and role-map contracts", () => {
