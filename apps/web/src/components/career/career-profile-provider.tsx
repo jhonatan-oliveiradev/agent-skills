@@ -22,7 +22,6 @@ type CareerProfileUpdater = (profile: CareerProfile) => CareerProfile;
 interface CareerProfileContextValue {
   readonly profile: CareerProfile | null;
   readonly status: CareerProfileStatus;
-  readonly saveProfile: (profile: CareerProfile) => Promise<void>;
   readonly replaceProfile: (profile: CareerProfile) => Promise<void>;
   readonly updateProfile: (updater: CareerProfileUpdater) => Promise<void>;
   readonly resetProfile: () => Promise<void>;
@@ -79,15 +78,6 @@ export function CareerProfileProvider({
     return storageRef.current;
   }, []);
 
-  const saveProfile = useCallback(
-    async (nextProfile: CareerProfile) => {
-      await requireStorage().save(nextProfile);
-      setProfile(nextProfile);
-      setStatus("ready");
-    },
-    [requireStorage],
-  );
-
   const replaceProfile = useCallback(
     async (nextProfile: CareerProfile) => {
       await requireStorage().save(nextProfile);
@@ -117,8 +107,8 @@ export function CareerProfileProvider({
   }, [requireStorage]);
 
   const value = useMemo<CareerProfileContextValue>(
-    () => ({ profile, status, saveProfile, replaceProfile, updateProfile, resetProfile }),
-    [profile, status, saveProfile, replaceProfile, updateProfile, resetProfile],
+    () => ({ profile, status, replaceProfile, updateProfile, resetProfile }),
+    [profile, status, replaceProfile, updateProfile, resetProfile],
   );
 
   return <CareerProfileContext.Provider value={value}>{children}</CareerProfileContext.Provider>;

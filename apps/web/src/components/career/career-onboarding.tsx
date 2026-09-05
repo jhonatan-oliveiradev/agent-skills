@@ -159,13 +159,13 @@ export function CareerOnboarding({ locale, onComplete }: CareerOnboardingProps) 
 
 export function CareerOnboardingFlow({ locale }: Readonly<{ locale: Locale }>) {
   const router = useRouter();
-  const { saveProfile } = useCareerProfile();
+  const { replaceProfile } = useCareerProfile();
 
   return (
     <CareerOnboarding
       locale={locale}
       onComplete={async (profile) => {
-        await saveProfile(profile);
+        await replaceProfile(profile);
         router.push(`/${locale}/career-lab` as Route);
       }}
     />

@@ -46,7 +46,6 @@ export function CareerOverview({ locale }: Readonly<{ locale: Locale }>) {
         <article className="career-card">
           <p className="career-card__label">{copy.roadmapProgress}</p>
           <strong>{copy.milestoneProgress(completedMilestones, totalMilestones)}</strong>
-          <p>{profile.roadmap.currentFocusMilestoneId ?? copy.noCurrentFocus}</p>
         </article>
 
         <article className="career-card">
