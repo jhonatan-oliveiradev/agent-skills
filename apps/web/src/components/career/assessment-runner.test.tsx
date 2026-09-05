@@ -7,8 +7,10 @@ import type {
 import { AssessmentResult } from "./assessment-result";
 import { AssessmentRunner } from "./assessment-runner";
 
+const completedAt = "2026-09-05T16:30:00.000Z";
+
 const runnerBlueprint = {
-  id: "javascript-baseline",
+  id: "baseline-javascript",
   version: "1",
   competencyId: "programming-javascript",
   targetLevel: "developing",
@@ -25,6 +27,11 @@ const runnerBlueprint = {
       ],
       correctOptionIds: ["answer-one-correct"],
       evidenceClass: "E2",
+      demonstratedLevel: "developing",
+      criterionIds: [
+        "programming-javascript.foundation",
+        "programming-javascript.developing",
+      ],
     },
     {
       id: "challenge-two",
@@ -37,10 +44,15 @@ const runnerBlueprint = {
       ],
       correctOptionIds: ["answer-two-correct"],
       evidenceClass: "E2",
+      demonstratedLevel: "developing",
+      criterionIds: [
+        "programming-javascript.foundation",
+        "programming-javascript.developing",
+      ],
     },
   ],
   gates: [],
-} as AssessmentBlueprint;
+} as const satisfies AssessmentBlueprint;
 
 const result = {
   schemaVersion: "1",
@@ -48,12 +60,15 @@ const result = {
   blueprintId: runnerBlueprint.id,
   blueprintVersion: "1",
   competencyId: "programming-javascript",
+  completedAt,
   level: "developing",
   confidence: "low",
   dimensions: [
     {
       dimensionId: "reasoning",
       passed: true,
+      passedChallengeIds: ["challenge-one"],
+      failedChallengeIds: ["challenge-two"],
       observedSignals: ["Identified a local ownership boundary"],
     },
   ],
@@ -63,11 +78,12 @@ const result = {
   weakSignals: ["No performance evidence yet"],
   recommendedNextEvidence: "Complete a deterministic debugging challenge.",
   provenance: { trust: "local-deterministic" },
-} as AssessmentResultArtifact;
+} as const satisfies AssessmentResultArtifact;
 
 describe("Assessment surfaces", () => {
-  it("announces progress semantically, preserves answers between challenges, and uses keyboard-reachable controls", () => {
-    render(<AssessmentRunner blueprint={runnerBlueprint} onComplete={vi.fn()} />);
+  it("announces progress, preserves answers, supports keyboard events, and completes with collected responses", () => {
+    const onComplete = vi.fn();
+    render(<AssessmentRunner blueprint={runnerBlueprint} onComplete={onComplete} />);
 
     const progress = screen.getByRole("status");
     expect(progress).toHaveAttribute("aria-live", "polite");
@@ -76,27 +92,55 @@ describe("Assessment surfaces", () => {
     const firstAnswer = screen.getByRole("radio", {
       name: /the component that owns the interaction/i,
     });
-    expect(firstAnswer).toHaveAttribute("type", "radio");
     firstAnswer.focus();
     expect(document.activeElement).toBe(firstAnswer);
-    fireEvent.click(firstAnswer);
+    fireEvent.keyDown(firstAnswer, { key: " ", code: "Space" });
+    fireEvent.keyUp(firstAnswer, { key: " ", code: "Space" });
+    expect(firstAnswer).toBeChecked();
 
-    fireEvent.click(screen.getByRole("button", { name: /next challenge/i }));
+    const next = screen.getByRole("button", { name: /next challenge/i });
+    next.focus();
+    fireEvent.keyDown(next, { key: "Enter", code: "Enter" });
+    fireEvent.keyUp(next, { key: "Enter", code: "Enter" });
     expect(screen.getByRole("status")).toHaveTextContent("Challenge 2 of 2");
 
-    fireEvent.click(
-      screen.getByRole("radio", { name: /an explicit empty result/i }),
-    );
-    fireEvent.click(screen.getByRole("button", { name: /previous challenge/i }));
+    const secondAnswer = screen.getByRole("radio", {
+      name: /an explicit empty result/i,
+    });
+    fireEvent.keyDown(secondAnswer, { key: " ", code: "Space" });
+    fireEvent.keyUp(secondAnswer, { key: " ", code: "Space" });
 
-    expect(firstAnswer).toBeChecked();
+    fireEvent.click(screen.getByRole("button", { name: /previous challenge/i }));
+    const returnedFirstAnswer = screen.getByRole("radio", {
+      name: /the component that owns the interaction/i,
+    });
+    expect(returnedFirstAnswer).toBeChecked();
+
+    fireEvent.click(screen.getByRole("button", { name: /next challenge/i }));
+    fireEvent.click(screen.getByRole("button", { name: /complete assessment/i }));
+
+    expect(onComplete).toHaveBeenCalledWith(
+      expect.objectContaining({
+        blueprintId: runnerBlueprint.id,
+        blueprintVersion: "1",
+        answers: {
+          "challenge-one": ["answer-one-correct"],
+          "challenge-two": ["answer-two-correct"],
+        },
+      }),
+    );
   });
 
-  it("never renders hidden scoring keys or correct-answer identifiers", () => {
-    render(<AssessmentRunner blueprint={runnerBlueprint} onComplete={vi.fn()} />);
+  it("never serializes scoring keys or correct answer identifiers into the runner DOM", () => {
+    const { container } = render(
+      <AssessmentRunner blueprint={runnerBlueprint} onComplete={vi.fn()} />,
+    );
 
-    expect(screen.queryByText(/answer-one-correct|answer-two-correct/i)).not.toBeInTheDocument();
-    expect(screen.queryByText(/correctOptionIds|evidenceClass/i)).not.toBeInTheDocument();
+    expect(container.innerHTML).not.toMatch(
+      /correctOptionIds|answer-one-correct|answer-two-correct|evidenceClass/i,
+    );
+    expect(container.querySelector("[data-correct-option-ids]")).toBeNull();
+    expect(container.querySelector("[data-answer-id]")).toBeNull();
   });
 
   it("presents level, confidence, signals, and next evidence without a celebratory percentage", () => {
