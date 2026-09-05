@@ -1,4 +1,5 @@
 import { describe, expect, it } from "vitest";
+import { deriveEvidenceConfidence } from "./evidence";
 import { createEmptyCareerProfile } from "./profile";
 import type {
   AssessmentRecord,
@@ -145,6 +146,13 @@ const passingAnswers = {
   ],
 } as const;
 
+function dimensionFor(
+  result: ReturnType<typeof evaluateAssessment>,
+  dimensionId: string,
+) {
+  return result.dimensions.find((dimension) => dimension.dimensionId === dimensionId);
+}
+
 describe("evidence-gated assessment evaluation", () => {
   it("requires the performance gate: the complete blueprint reaches proficient only when it passes", () => {
     const passing = evaluateAssessment(blueprint, responses(passingAnswers));
@@ -158,14 +166,11 @@ describe("evidence-gated assessment evaluation", () => {
 
     expect(passing.level).toBe("proficient");
     expect(failedPerformance.level).toBe("developing");
-    expect(failedPerformance.dimensions).toEqual(
-      expect.arrayContaining([
-        expect.objectContaining({
-          dimensionId: "performance",
-          passed: false,
-          failedChallengeIds: ["performance-debugging"],
-        }),
-      ]),
+    expect(dimensionFor(failedPerformance, "performance")).toEqual(
+      expect.objectContaining({
+        passed: false,
+        failedChallengeIds: ["performance-debugging"],
+      }),
     );
   });
 
@@ -187,7 +192,7 @@ describe("evidence-gated assessment evaluation", () => {
     expect(result.confidence).toBe("low");
   });
 
-  it("produces the complete local deterministic Assessment Result Artifact shape", () => {
+  it("produces a complete, traceable local deterministic Assessment Result Artifact", () => {
     const result = evaluateAssessment(blueprint, responses(passingAnswers));
 
     expect(result).toEqual(
@@ -197,6 +202,7 @@ describe("evidence-gated assessment evaluation", () => {
         blueprintId: blueprint.id,
         blueprintVersion: blueprint.version,
         competencyId: blueprint.competencyId,
+        completedAt,
         level: "proficient",
         confidence: expect.any(String),
         dimensions: expect.any(Array),
@@ -216,6 +222,53 @@ describe("evidence-gated assessment evaluation", () => {
       "E3",
       "E2",
     ]);
+    for (const record of result.evidence) {
+      expect(record).toEqual(
+        expect.objectContaining({
+          id: expect.any(String),
+          competencyId: blueprint.competencyId,
+          sourceType: "assessment",
+          trust: "local-deterministic",
+          observedAt: completedAt,
+          summary: expect.any(String),
+          demonstratedLevel: expect.any(String),
+          criterionIds: expect.any(Array),
+        }),
+      );
+      expect(record.criterionIds).not.toHaveLength(0);
+    }
+  });
+
+  it("accepts multi-select answers in a different order but keeps structured ordering order-sensitive", () => {
+    const reorderedMultiSelect = evaluateAssessment(
+      blueprint,
+      responses({
+        ...passingAnswers,
+        "theory-multi-select": ["multi-second-correct", "multi-first-correct"],
+      }),
+    );
+    const reorderedSteps = evaluateAssessment(
+      blueprint,
+      responses({
+        ...passingAnswers,
+        "reasoning-structured-ordering": [
+          "ordering-second",
+          "ordering-first",
+          "ordering-third",
+        ],
+      }),
+    );
+
+    expect(dimensionFor(reorderedMultiSelect, "theory")).toEqual(
+      expect.objectContaining({
+        passedChallengeIds: expect.arrayContaining(["theory-multi-select"]),
+      }),
+    );
+    expect(dimensionFor(reorderedSteps, "reasoning")).toEqual(
+      expect.objectContaining({
+        failedChallengeIds: expect.arrayContaining(["reasoning-structured-ordering"]),
+      }),
+    );
   });
 
   it.each([
@@ -242,16 +295,22 @@ describe("evidence-gated assessment evaluation", () => {
     },
   );
 
-  it("rejects missing and invalid responses instead of inventing evidence", () => {
+  it("rejects an omitted response, then separately rejects an empty or invalid response", () => {
+    const {
+      "performance-debugging": _missingPerformance,
+      ...withoutPerformance
+    } = passingAnswers;
+
+    expect(() =>
+      evaluateAssessment(blueprint, responses(withoutPerformance)),
+    ).toThrow(/missing response.*performance-debugging/i);
+
     expect(() =>
       evaluateAssessment(
         blueprint,
-        responses({
-          ...passingAnswers,
-          "performance-debugging": [],
-        }),
+        responses({ ...passingAnswers, "performance-debugging": [] }),
       ),
-    ).toThrow(/missing response.*performance-debugging/i);
+    ).toThrow(/empty response.*performance-debugging/i);
 
     expect(() =>
       evaluateAssessment(
@@ -264,16 +323,56 @@ describe("evidence-gated assessment evaluation", () => {
     ).toThrow(/invalid response.*theory-single-choice/i);
   });
 
-  it("rejects a semantically invalid blueprint and a response for another blueprint version", () => {
+  it("fails closed for invalid blueprint relationships and evidence requirements", () => {
+    const invalidChallengeDimension = {
+      ...blueprint,
+      challenges: [
+        { ...blueprint.challenges[0], dimensionId: "missing-dimension" },
+        ...blueprint.challenges.slice(1),
+      ],
+    } as const satisfies AssessmentBlueprint;
+    const invalidGateDimension = {
+      ...blueprint,
+      gates: [{ ...blueprint.gates[0], dimensionId: "missing-dimension" }],
+    } as const satisfies AssessmentBlueprint;
+    const invalidCorrectOption = {
+      ...blueprint,
+      challenges: [
+        { ...blueprint.challenges[0], correctOptionIds: ["outside-options"] },
+        ...blueprint.challenges.slice(1),
+      ],
+    } as const satisfies AssessmentBlueprint;
+    const invalidEvidenceRequirement = {
+      ...blueprint,
+      challenges: [
+        { ...blueprint.challenges[0], criterionIds: [] },
+        ...blueprint.challenges.slice(1),
+      ],
+    } as const satisfies AssessmentBlueprint;
+
+    expect(() => validateAssessmentBlueprint(invalidChallengeDimension)).toThrow(
+      /dimension.*missing|unknown dimension/i,
+    );
+    expect(() => validateAssessmentBlueprint(invalidGateDimension)).toThrow(
+      /gate.*dimension|unknown dimension/i,
+    );
+    expect(() => validateAssessmentBlueprint(invalidCorrectOption)).toThrow(
+      /correct option.*outside|option.*not found/i,
+    );
+    expect(() => validateAssessmentBlueprint(invalidEvidenceRequirement)).toThrow(
+      /criterion.*non-empty|evidence requirement/i,
+    );
+  });
+
+  it("rejects duplicate challenge IDs and response submissions for another blueprint version", () => {
     const duplicateChallengeBlueprint = {
       ...blueprint,
       challenges: [...blueprint.challenges, blueprint.challenges[0]],
     } as const satisfies AssessmentBlueprint;
 
-    expect(() =>
-      evaluateAssessment(duplicateChallengeBlueprint, responses(passingAnswers)),
-    ).toThrow(/duplicate challenge id/i);
-
+    expect(() => validateAssessmentBlueprint(duplicateChallengeBlueprint)).toThrow(
+      /duplicate challenge id/i,
+    );
     expect(() =>
       evaluateAssessment(blueprint, responses(passingAnswers, "99")),
     ).toThrow(/blueprint version mismatch/i);
@@ -303,7 +402,7 @@ describe("evidence-gated assessment evaluation", () => {
     }
   });
 
-  it("applies a local result immutably, appends history, and re-derives competency state from evidence", () => {
+  it("applies result evidence append-only and derives state/confidence from that evidence", () => {
     const historicEvidence = {
       id: "evidence-existing",
       competencyId: "programming-typescript",
@@ -343,20 +442,45 @@ describe("evidence-gated assessment evaluation", () => {
       evidence: [historicEvidence],
       assessments: [historicAssessment],
     } satisfies CareerProfile;
+    const historicEvidenceSnapshot = structuredClone(profile.evidence);
+    const historicAssessmentSnapshot = structuredClone(profile.assessments);
+    const historicCompetencySnapshot = structuredClone(profile.competencies);
     const result = evaluateAssessment(blueprint, responses(passingAnswers));
+    const resultWithCopiedConfidence = {
+      ...result,
+      confidence: "high",
+    } satisfies typeof result;
 
-    const updated = applyAssessmentResult(profile, result);
+    const updated = applyAssessmentResult(profile, resultWithCopiedConfidence);
+    const appendedEvidence = updated.evidence.slice(profile.evidence.length);
+    const appendedEvidenceIds = result.evidence.map((record) => record.id);
+    const expectedConfidence = deriveEvidenceConfidence(
+      [...profile.evidence, ...result.evidence],
+      new Date(completedAt),
+    );
 
-    expect(updated).not.toBe(profile);
+    expect(profile.evidence).toEqual(historicEvidenceSnapshot);
+    expect(profile.assessments).toEqual(historicAssessmentSnapshot);
+    expect(profile.competencies).toEqual(historicCompetencySnapshot);
     expect(updated.evidence).not.toBe(profile.evidence);
     expect(updated.evidence[0]).toBe(historicEvidence);
     expect(updated.assessments).not.toBe(profile.assessments);
     expect(updated.assessments[0]).toBe(historicAssessment);
-    expect(profile.evidence).toEqual([historicEvidence]);
-    expect(profile.assessments).toEqual([historicAssessment]);
 
-    expect(updated.assessments).toHaveLength(2);
-    expect(updated.evidence).toHaveLength(6);
+    expect(appendedEvidence).toEqual(result.evidence);
+    for (const record of appendedEvidence) {
+      expect(record).toEqual(
+        expect.objectContaining({
+          id: expect.any(String),
+          class: expect.any(String),
+          trust: "local-deterministic",
+          sourceType: "assessment",
+          summary: expect.any(String),
+          demonstratedLevel: expect.any(String),
+          criterionIds: expect.any(Array),
+        }),
+      );
+    }
     expect(updated.assessments[1]).toEqual(
       expect.objectContaining({
         blueprintId: blueprint.id,
@@ -365,6 +489,7 @@ describe("evidence-gated assessment evaluation", () => {
         level: "proficient",
         completedAt,
         trust: "local-deterministic",
+        evidenceIds: appendedEvidenceIds,
       }),
     );
     expect(updated.updatedAt).toBe(completedAt);
@@ -375,9 +500,12 @@ describe("evidence-gated assessment evaluation", () => {
     expect(competency).toEqual(
       expect.objectContaining({
         level: "proficient",
+        confidence: expectedConfidence,
+        evidenceIds: ["evidence-existing", ...appendedEvidenceIds],
         lastAssessedAt: completedAt,
       }),
     );
+    expect(competency?.confidence).not.toBe(resultWithCopiedConfidence.confidence);
     expect(competency).not.toBe(profile.competencies[0]);
   });
 });

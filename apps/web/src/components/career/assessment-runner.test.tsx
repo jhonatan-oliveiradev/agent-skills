@@ -100,6 +100,7 @@ describe("Assessment surfaces", () => {
 
     const next = screen.getByRole("button", { name: /next challenge/i });
     next.focus();
+    expect(document.activeElement).toBe(next);
     fireEvent.keyDown(next, { key: "Enter", code: "Enter" });
     fireEvent.keyUp(next, { key: "Enter", code: "Enter" });
     expect(screen.getByRole("status")).toHaveTextContent("Challenge 2 of 2");
@@ -107,6 +108,8 @@ describe("Assessment surfaces", () => {
     const secondAnswer = screen.getByRole("radio", {
       name: /an explicit empty result/i,
     });
+    secondAnswer.focus();
+    expect(document.activeElement).toBe(secondAnswer);
     fireEvent.keyDown(secondAnswer, { key: " ", code: "Space" });
     fireEvent.keyUp(secondAnswer, { key: " ", code: "Space" });
 

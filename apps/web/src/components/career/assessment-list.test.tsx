@@ -1,8 +1,13 @@
 import { fireEvent, render, screen } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 import type { AssessmentBlueprint } from "@/lib/career/assessment";
+import {
+  AssessmentDetailRoute,
+} from "@/app/[locale]/career-lab/assessments/[id]/page";
+import {
+  AssessmentListPage,
+} from "@/app/[locale]/career-lab/assessments/page";
 import { CareerOnboarding } from "./career-onboarding";
-import { AssessmentList } from "./assessment-list";
 
 const baselineBlueprint = {
   id: "baseline-javascript",
@@ -32,9 +37,9 @@ const baselineBlueprint = {
   gates: [],
 } as const satisfies AssessmentBlueprint;
 
-describe("Assessment discovery and baseline handoff", () => {
-  it("lists the baseline assessment and links to its detail route", () => {
-    render(<AssessmentList locale="en" blueprints={[baselineBlueprint]} />);
+describe("Assessment discovery, routes, and baseline handoff", () => {
+  it("renders the list route with blueprint links", () => {
+    render(<AssessmentListPage locale="en" blueprints={[baselineBlueprint]} />);
 
     expect(
       screen.getByRole("heading", { name: /baseline assessment/i }),
@@ -47,14 +52,17 @@ describe("Assessment discovery and baseline handoff", () => {
     );
   });
 
-  it("keeps list and detail assessment route modules available", async () => {
-    const [listRoute, detailRoute] = await Promise.all([
-      import("@/app/[locale]/career-lab/assessments/page"),
-      import("@/app/[locale]/career-lab/assessments/[id]/page"),
-    ]);
+  it("renders the detail route with its blueprint runner and a result after completion", () => {
+    render(<AssessmentDetailRoute locale="en" blueprint={baselineBlueprint} />);
 
-    expect(listRoute.default).toBeTypeOf("function");
-    expect(detailRoute.default).toBeTypeOf("function");
+    fireEvent.click(
+      screen.getByRole("radio", { name: /the explicit branch/i }),
+    );
+    fireEvent.click(screen.getByRole("button", { name: /complete assessment/i }));
+
+    expect(screen.getByText(/developing/i)).toBeInTheDocument();
+    expect(screen.getByText(/confidence/i)).toBeInTheDocument();
+    expect(screen.getByText(/next evidence/i)).toBeInTheDocument();
   });
 
   it("hands the final onboarding stage to the baseline assessment route", () => {
