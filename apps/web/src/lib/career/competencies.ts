@@ -329,6 +329,7 @@ function clampToEvidenceCap(
 export function deriveCompetencyState(
   definition: CompetencyDefinition,
   evidence: readonly EvidenceRecord[],
+  now = new Date(),
 ): CompetencyState {
   const relevant = evidence.filter((record) => record.competencyId === definition.id);
   let demonstrated: ProficiencyLevel | null = null;
@@ -353,7 +354,7 @@ export function deriveCompetencyState(
   return {
     competencyId: definition.id,
     level,
-    confidence: deriveEvidenceConfidence(relevant),
+    confidence: deriveEvidenceConfidence(relevant, now),
     evidenceIds: relevant.map((record) => record.id),
     lastAssessedAt: assessmentDates[0] ?? null,
   };

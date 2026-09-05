@@ -56,6 +56,7 @@ export const careerLabCopy = {
     openGaps: (count: number) => `${count} open`,
     evidence: "Evidence records",
     assessments: "assessments",
+    baselineIncomplete: "Baseline assessment still incomplete.",
     latestMarket: "Latest market sample",
     noMarketSample: "No market sample yet",
     postings: "postings",
@@ -91,6 +92,7 @@ export const careerLabCopy = {
       back: "Back",
       create: "Create Career Profile",
       reviewBody: "Career Lab will create an evidence-neutral baseline: every required capability starts unknown with low confidence until real evidence is added.",
+      startBaselineAssessment: "Start baseline assessment",
     },
   },
   "pt-BR": {
@@ -115,6 +117,7 @@ export const careerLabCopy = {
     openGaps: (count: number) => `${count} em aberto`,
     evidence: "Registros de evidência",
     assessments: "avaliações",
+    baselineIncomplete: "A avaliação de baseline ainda está incompleta.",
     latestMarket: "Amostra de mercado mais recente",
     noMarketSample: "Nenhuma amostra de mercado ainda",
     postings: "vagas",
@@ -150,6 +153,7 @@ export const careerLabCopy = {
       back: "Voltar",
       create: "Criar Career Profile",
       reviewBody: "O Career Lab criará um baseline neutro em evidências: cada capacidade necessária começa desconhecida e com baixa confiança até surgirem evidências reais.",
+      startBaselineAssessment: "Iniciar avaliação de baseline",
     },
   },
 } as const;

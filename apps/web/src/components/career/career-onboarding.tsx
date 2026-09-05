@@ -1,6 +1,7 @@
 "use client";
 
 import type { Route } from "next";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { careerLabCopy, careerLabRoleLabels } from "@/lib/career/copy";
@@ -135,6 +136,9 @@ export function CareerOnboarding({ locale, onComplete }: CareerOnboardingProps) 
         <div className="career-onboarding__step career-onboarding__review">
           <h2>{copy.reviewTitle}</h2>
           <p>{copy.reviewBody}</p>
+          <Link href={(`/${locale}/career-lab/assessments/baseline-javascript` as Route)}>
+            {copy.startBaselineAssessment}
+          </Link>
           {role !== "undecided" ? (
             <dl>
               <div><dt>{copy.roleTitle}</dt><dd>{careerLabRoleLabels[locale][role]}</dd></div>

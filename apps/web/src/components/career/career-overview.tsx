@@ -67,6 +67,10 @@ export function CareerOverview({ locale }: Readonly<{ locale: Locale }>) {
         </article>
       </div>
 
+      {profile.assessments.length === 0 ? (
+        <p className="career-overview__baseline">{copy.baselineIncomplete}</p>
+      ) : null}
+
       <section className="career-overview__competencies" aria-labelledby="career-competencies-title">
         <div className="career-overview__section-heading">
           <p className="career-lab__eyebrow">{copy.competencyStates}</p>
