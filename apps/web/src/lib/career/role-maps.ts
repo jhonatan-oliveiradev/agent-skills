@@ -1,7 +1,7 @@
 import type { CompetencyId } from "./competencies";
 import type { ProficiencyLevel, TargetRoleId } from "./types";
 
-export interface RoleCapabilityRequirement {
+export interface RoleRequirement {
   readonly competencyId: CompetencyId;
   readonly requiredLevel: ProficiencyLevel;
   readonly required: boolean;
@@ -9,7 +9,7 @@ export interface RoleCapabilityRequirement {
 
 export interface RoleCapabilityMap {
   readonly roleId: TargetRoleId;
-  readonly requirements: readonly RoleCapabilityRequirement[];
+  readonly requirements: readonly RoleRequirement[];
 }
 
 const frontendRoleMap: RoleCapabilityMap = {
