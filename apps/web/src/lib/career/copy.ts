@@ -1,5 +1,5 @@
 import type { Locale } from "@/lib/locales";
-import type { TargetRoleId } from "./types";
+import type { ConfidenceLevel, ProficiencyLevel, TargetRoleId } from "./types";
 
 export const careerLabRoleLabels: Readonly<Record<Locale, Readonly<Record<TargetRoleId, string>>>> = {
   en: {
@@ -14,6 +14,25 @@ export const careerLabRoleLabels: Readonly<Record<Locale, Readonly<Record<Target
   },
 };
 
+function englishCompetencyState(level: ProficiencyLevel | null, confidence: ConfidenceLevel): string {
+  return `${level ?? "unknown"} · ${confidence} confidence`;
+}
+
+function portugueseCompetencyState(level: ProficiencyLevel | null, confidence: ConfidenceLevel): string {
+  const levels: Record<ProficiencyLevel, string> = {
+    foundation: "fundamentos",
+    developing: "em desenvolvimento",
+    proficient: "proficiente",
+    advanced: "avançado",
+  };
+  const confidences: Record<ConfidenceLevel, string> = {
+    low: "baixa confiança",
+    medium: "confiança média",
+    high: "alta confiança",
+  };
+  return `${level ? levels[level] : "desconhecido"} · ${confidences[confidence]}`;
+}
+
 export const careerLabCopy = {
   en: {
     navigation: ["Overview", "Roadmap", "Assessments", "Evidence", "Market"],
@@ -26,8 +45,13 @@ export const careerLabCopy = {
     noProfileTitle: "Create your local Career Profile",
     noProfileBody: "Choose a target role, market and weekly capacity. Career Lab will begin with unknown capability states rather than assuming weakness.",
     readiness: "Role readiness",
+    targetMarket: (market: string) => `Target market: ${market}`,
     currentFocus: "Current focus",
     noCurrentFocus: "No current focus yet",
+    roadmapProgress: "Roadmap progress",
+    milestoneProgress: (completed: number, total: number) => `${completed} / ${total} milestones`,
+    competencyStates: "Competency states",
+    competencyState: englishCompetencyState,
     blockingGaps: "Blocking gaps",
     openGaps: (count: number) => `${count} open`,
     evidence: "Evidence records",
@@ -80,8 +104,13 @@ export const careerLabCopy = {
     noProfileTitle: "Crie seu Career Profile local",
     noProfileBody: "Escolha função-alvo, mercado e capacidade semanal. O Career Lab começa com capacidades desconhecidas em vez de assumir fraqueza.",
     readiness: "Readiness para a função",
+    targetMarket: (market: string) => `Mercado-alvo: ${market}`,
     currentFocus: "Foco atual",
     noCurrentFocus: "Nenhum foco atual ainda",
+    roadmapProgress: "Progresso do roadmap",
+    milestoneProgress: (completed: number, total: number) => `${completed} / ${total} marcos`,
+    competencyStates: "Estados de competência",
+    competencyState: portugueseCompetencyState,
     blockingGaps: "Gaps bloqueadores",
     openGaps: (count: number) => `${count} em aberto`,
     evidence: "Registros de evidência",

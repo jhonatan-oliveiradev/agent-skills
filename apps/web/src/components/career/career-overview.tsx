@@ -15,6 +15,9 @@ export function CareerOverview({ locale }: Readonly<{ locale: Locale }>) {
 
   const copy = careerLabCopy[locale];
   const readiness = calculateRoleReadiness(profile, getRoleMap(roleId));
+  const targetMarket = profile.targetMarkets[0] ?? "—";
+  const totalMilestones = profile.roadmap.milestoneIds.length;
+  const completedMilestones = 0;
   const latestMarket = [...profile.marketSamples].sort((a, b) =>
     b.capturedAt.localeCompare(a.capturedAt),
   )[0];
@@ -25,6 +28,7 @@ export function CareerOverview({ locale }: Readonly<{ locale: Locale }>) {
         <div>
           <p className="career-lab__eyebrow">{copy.readiness}</p>
           <h1 id="career-overview-title">{careerLabRoleLabels[locale][roleId]}</h1>
+          <p className="career-overview__market">{copy.targetMarket(targetMarket)}</p>
         </div>
         <div className="career-overview__score" aria-label={`${copy.readiness}: ${readiness.percentage}%`}>
           <strong>{readiness.percentage}%</strong>
@@ -37,6 +41,12 @@ export function CareerOverview({ locale }: Readonly<{ locale: Locale }>) {
           <p className="career-card__label">{copy.currentFocus}</p>
           <strong>{profile.roadmap.currentFocusMilestoneId ?? copy.noCurrentFocus}</strong>
           <p>{profile.weeklyStudyHours ? copy.weeklyCapacity(profile.weeklyStudyHours) : "—"}</p>
+        </article>
+
+        <article className="career-card">
+          <p className="career-card__label">{copy.roadmapProgress}</p>
+          <strong>{copy.milestoneProgress(completedMilestones, totalMilestones)}</strong>
+          <p>{profile.roadmap.currentFocusMilestoneId ?? copy.noCurrentFocus}</p>
         </article>
 
         <article className="career-card">
@@ -57,6 +67,21 @@ export function CareerOverview({ locale }: Readonly<{ locale: Locale }>) {
           )}
         </article>
       </div>
+
+      <section className="career-overview__competencies" aria-labelledby="career-competencies-title">
+        <div className="career-overview__section-heading">
+          <p className="career-lab__eyebrow">{copy.competencyStates}</p>
+          <h2 id="career-competencies-title">{profile.competencies.length}</h2>
+        </div>
+        <ul>
+          {profile.competencies.map((competency) => (
+            <li key={competency.competencyId}>
+              <code>{competency.competencyId}</code>
+              <span>{copy.competencyState(competency.level, competency.confidence)}</span>
+            </li>
+          ))}
+        </ul>
+      </section>
 
       <section className="career-overview__gaps" aria-labelledby="career-gaps-title">
         <div className="career-overview__section-heading">

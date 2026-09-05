@@ -11,6 +11,10 @@ export function serializeCareerProfile(profile: CareerProfile): string {
   return `${JSON.stringify(profile, null, 2)}\n`;
 }
 
+export function getCareerProfileExportFilename(now = new Date()): string {
+  return `agent-skills-career-profile-${now.toISOString().slice(0, 10)}.json`;
+}
+
 export function CareerDataControls({ locale }: Readonly<{ locale: Locale }>) {
   const copy = careerLabCopy[locale];
   const { profile, replaceProfile, resetProfile } = useCareerProfile();
@@ -24,7 +28,7 @@ export function CareerDataControls({ locale }: Readonly<{ locale: Locale }>) {
     const url = URL.createObjectURL(blob);
     const link = document.createElement("a");
     link.href = url;
-    link.download = `career-profile-v${profile.schemaVersion}.json`;
+    link.download = getCareerProfileExportFilename();
     link.click();
     URL.revokeObjectURL(url);
   }

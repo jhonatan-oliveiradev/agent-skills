@@ -19,7 +19,7 @@ export function CareerLabShell({
   const { profile, status } = useCareerProfile();
   const hasRouteContent = children !== undefined && children !== null;
 
-  if (status === "loading") {
+  if (status === "hydrating") {
     return (
       <main className="career-lab-shell career-lab-shell--state">
         <p role="status">{copy.loading}</p>
@@ -50,7 +50,7 @@ export function CareerLabShell({
 
   return (
     <main className="career-lab-shell">
-      <aside className="career-lab-rail">
+      <header className="career-lab-rail">
         <div className="career-lab-rail__brand">
           <span>Agent Skills Studio</span>
           <strong>Career Lab</strong>
@@ -74,7 +74,7 @@ export function CareerLabShell({
           </ol>
         </nav>
         {profile ? <CareerDataControls locale={locale} /> : null}
-      </aside>
+      </header>
 
       <div className="career-lab-content">
         <header className="career-lab-content__masthead">

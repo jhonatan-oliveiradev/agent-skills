@@ -16,13 +16,15 @@ import {
 } from "@/lib/career/storage";
 import type { CareerProfile } from "@/lib/career/types";
 
-type CareerProfileStatus = "loading" | "ready" | "error";
+type CareerProfileStatus = "hydrating" | "ready" | "error";
+type CareerProfileUpdater = (profile: CareerProfile) => CareerProfile;
 
 interface CareerProfileContextValue {
   readonly profile: CareerProfile | null;
   readonly status: CareerProfileStatus;
   readonly saveProfile: (profile: CareerProfile) => Promise<void>;
   readonly replaceProfile: (profile: CareerProfile) => Promise<void>;
+  readonly updateProfile: (updater: CareerProfileUpdater) => Promise<void>;
   readonly resetProfile: () => Promise<void>;
 }
 
@@ -34,7 +36,7 @@ export function CareerProfileProvider({
 }: Readonly<{ children: ReactNode; storage?: CareerStorage }>) {
   const storageRef = useRef<CareerStorage | null>(storage ?? null);
   const [profile, setProfile] = useState<CareerProfile | null>(null);
-  const [status, setStatus] = useState<CareerProfileStatus>("loading");
+  const [status, setStatus] = useState<CareerProfileStatus>("hydrating");
 
   useEffect(() => {
     let active = true;
@@ -51,7 +53,7 @@ export function CareerProfileProvider({
       };
     }
 
-    setStatus("loading");
+    setStatus("hydrating");
     void resolvedStorage
       .load()
       .then((storedProfile) => {
@@ -95,6 +97,19 @@ export function CareerProfileProvider({
     [requireStorage],
   );
 
+  const updateProfile = useCallback(
+    async (updater: CareerProfileUpdater) => {
+      if (!profile) {
+        throw new Error("Career Lab cannot update a profile before hydration completes.");
+      }
+      const nextProfile = updater(profile);
+      await requireStorage().save(nextProfile);
+      setProfile(nextProfile);
+      setStatus("ready");
+    },
+    [profile, requireStorage],
+  );
+
   const resetProfile = useCallback(async () => {
     await requireStorage().clear();
     setProfile(null);
@@ -102,8 +117,8 @@ export function CareerProfileProvider({
   }, [requireStorage]);
 
   const value = useMemo<CareerProfileContextValue>(
-    () => ({ profile, status, saveProfile, replaceProfile, resetProfile }),
-    [profile, status, saveProfile, replaceProfile, resetProfile],
+    () => ({ profile, status, saveProfile, replaceProfile, updateProfile, resetProfile }),
+    [profile, status, saveProfile, replaceProfile, updateProfile, resetProfile],
   );
 
   return <CareerProfileContext.Provider value={value}>{children}</CareerProfileContext.Provider>;
