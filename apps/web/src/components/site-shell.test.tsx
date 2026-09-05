@@ -124,8 +124,8 @@ describe("SiteHeader", () => {
 
 describe("SiteFooter", () => {
   it.each([
-    ["en", "Source on GitHub", "Contribute on GitHub", "Version 1.0.0"],
-    ["pt-BR", "Código-fonte no GitHub", "Contribuir no GitHub", "Versão 1.0.0"],
+    ["en", "Source on GitHub", "Contribute on GitHub", "Version 1.1.0"],
+    ["pt-BR", "Código-fonte no GitHub", "Contribuir no GitHub", "Versão 1.1.0"],
   ] as const)("renders equivalent project links and catalog version for %s", (locale, source, contribute, version) => {
     render(<SiteFooter locale={locale} />);
 
@@ -166,8 +166,8 @@ describe("localized layout", () => {
 
 describe("definitive home", () => {
   it.each([
-    ["en", "Skills are not prompts. They are working methods.", "54 skills", "11 packs", "2 locales", "This Home was built with Skills.", "Inspect the method. Then inspect what it changed."],
-    ["pt-BR", "Skills não são prompts. São métodos de trabalho.", "54 skills", "11 pacotes", "2 idiomas", "Esta Home foi construída com Skills.", "Inspecione o método. Depois, inspecione o que ele mudou."],
+    ["en", "Skills are not prompts. They are working methods.", "60 skills", "12 packs", "2 locales", "This Home was built with Skills.", "Inspect the method. Then inspect what it changed."],
+    ["pt-BR", "Skills não são prompts. São métodos de trabalho.", "60 skills", "12 pacotes", "2 idiomas", "Esta Home foi construída com Skills.", "Inspecione o método. Depois, inspecione o que ele mudou."],
   ] as const)("renders the definitive catalog-backed home for %s", async (locale, title, skills, packs, locales, startingPoint, proof) => {
     const { container } = render(await HomePage({ params: Promise.resolve({ locale }) }));
 
@@ -179,7 +179,7 @@ describe("definitive home", () => {
     expect(container.querySelector("canvas")).not.toBeInTheDocument();
     expect(screen.getByRole("heading", { name: startingPoint })).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: proof })).toBeInTheDocument();
-    expect(container.querySelectorAll(".home-pack-dossier")).toHaveLength(11);
+    expect(container.querySelectorAll(".home-pack-dossier")).toHaveLength(12);
     expect(container.querySelectorAll(".home-method-index li")).toHaveLength(3);
     expect(container.querySelectorAll(".home-workflow-rail li")).toHaveLength(4);
     expect(screen.getByRole("link", { name: locale === "en" ? "Explore skills" : "Explorar skills" })).toHaveAttribute(
@@ -220,7 +220,7 @@ describe("foundation navigation targets", () => {
 
     expect(screen.getByRole("region", { name: "Demonstração da instalação" })).toBeInTheDocument();
     expect(container.querySelector("[data-terminal-demo]")).toHaveTextContent("bash install.sh");
-    expect(screen.getByText("54 skills prontas para usar.")).toBeInTheDocument();
+    expect(screen.getByText("60 skills prontas para usar.")).toBeInTheDocument();
   });
 
   it("renders full installation commands in aligned editorial rows", async () => {
@@ -304,11 +304,11 @@ describe("foundation navigation targets", () => {
     unmount();
 
     render(await ChangelogPage({ params: Promise.resolve({ locale: "en" }) }));
-    const currentReleaseHeading = screen.getByRole("heading", { name: "1.0.0" });
+    const currentReleaseHeading = screen.getByRole("heading", { name: "1.1.0" });
     expect(currentReleaseHeading).toBeInTheDocument();
     const currentRelease = currentReleaseHeading.closest("article");
     expect(currentRelease).not.toBeNull();
-    expect(currentRelease).toHaveTextContent(/evidence-qualified.*Stable 1.0.0/i);
+    expect(currentRelease).toHaveTextContent(/evidence-qualified.*Stable 1.1.0/i);
     expect(screen.getByRole("link", { name: /source changelog/i })).toHaveAttribute(
       "href",
       expect.stringContaining("CHANGELOG.md"),
@@ -335,8 +335,8 @@ describe("foundation navigation targets", () => {
     const { container } = render(await PacksPage({ params: Promise.resolve({ locale }) }));
 
     expect(screen.getByRole("heading", { level: 1, name: heading })).toBeInTheDocument();
-    expect(container.querySelectorAll("[data-pack-dossier]")).toHaveLength(11);
-    expect(container.querySelectorAll('[data-pack-dossier][data-status="active"]')).toHaveLength(11);
+    expect(container.querySelectorAll("[data-pack-dossier]")).toHaveLength(12);
+    expect(container.querySelectorAll('[data-pack-dossier][data-status="active"]')).toHaveLength(12);
     expect(container.querySelectorAll('[data-pack-dossier][data-status="planned"]')).toHaveLength(0);
     expect(container.querySelector(`[data-pack-dossier] a[href="${packHref}"]`)).toBeInTheDocument();
     expect(container.querySelector(".pack-card")).not.toBeInTheDocument();
@@ -379,7 +379,7 @@ describe("foundation navigation targets", () => {
 
     expect(screen.getByRole("heading", { level: 1, name: heading })).toBeInTheDocument();
     expect(screen.getByRole("searchbox", { name: searchLabel })).toBeInTheDocument();
-    expect(container.querySelectorAll("[data-method-row]")).toHaveLength(54);
+    expect(container.querySelectorAll("[data-method-row]")).toHaveLength(60);
     expect(container.querySelector(`[data-method-row] a[href="${methodHref}"]`)).toBeInTheDocument();
     expect(container.querySelector(".skill-card")).not.toBeInTheDocument();
   });

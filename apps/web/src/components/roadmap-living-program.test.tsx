@@ -35,7 +35,7 @@ describe("Roadmap Living Program", () => {
       const releaseState = container.querySelector<HTMLElement>("[data-release-state]");
       expect(releaseState).toBeInTheDocument();
       expect(within(releaseState!).getByText(releaseLabel)).toBeInTheDocument();
-      expect(within(releaseState!).getByText("Stable 1.0.0")).toBeInTheDocument();
+      expect(within(releaseState!).getByText("Stable 1.1.0")).toBeInTheDocument();
       expect(within(releaseState!).getByText(postStableLabel)).toBeInTheDocument();
 
       const stages = Array.from(container.querySelectorAll("[data-program-stage]")).map((stage) =>
