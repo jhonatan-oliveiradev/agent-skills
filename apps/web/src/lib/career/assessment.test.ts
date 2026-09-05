@@ -296,10 +296,10 @@ describe("evidence-gated assessment evaluation", () => {
   );
 
   it("rejects an omitted response, then separately rejects an empty or invalid response", () => {
-    const {
-      "performance-debugging": _missingPerformance,
-      ...withoutPerformance
-    } = passingAnswers;
+    const withoutPerformance: Record<string, readonly string[]> = {
+      ...passingAnswers,
+    };
+    delete withoutPerformance["performance-debugging"];
 
     expect(() =>
       evaluateAssessment(blueprint, responses(withoutPerformance)),
