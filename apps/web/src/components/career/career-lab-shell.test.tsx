@@ -1,4 +1,4 @@
-import { render, screen, waitFor } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 import { createEmptyCareerProfile } from "@/lib/career/profile";
 import type { CareerStorage } from "@/lib/career/storage";
