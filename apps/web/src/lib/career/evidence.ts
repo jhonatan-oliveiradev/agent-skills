@@ -54,16 +54,9 @@ export function maxLevelAllowedByEvidence(
   records: readonly EvidenceRecord[],
 ): ProficiencyLevel | null {
   if (records.length === 0) return null;
-
-  const strongestClass = records.reduce<EvidenceClass>(
-    (strongest, record) =>
-      evidenceClassRank[record.class] > evidenceClassRank[strongest] ? record.class : strongest,
-    "E0",
-  );
-
-  if (strongestClass === "E4") return "advanced";
-  if (strongestClass === "E3") return "proficient";
-  return "developing";
+  if (records.every((record) => record.class === "E0")) return "developing";
+  if (!records.some(isPerformanceEvidence)) return "developing";
+  return "advanced";
 }
 
 export function deriveEvidenceConfidence(
