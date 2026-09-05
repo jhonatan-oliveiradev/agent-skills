@@ -1,5 +1,5 @@
 import type { CompetencyId } from "./competencies";
-import type { RoleCapabilityMap, RoleCapabilityRequirement } from "./role-maps";
+import type { RoleCapabilityMap, RoleRequirement } from "./role-maps";
 import type { CareerProfile, EvidenceRecord, ProficiencyLevel, TargetRoleId } from "./types";
 
 export interface RoleReadiness {
@@ -27,7 +27,7 @@ function levelMeets(
 
 function evidenceForRequirement(
   profile: CareerProfile,
-  requirement: RoleCapabilityRequirement,
+  requirement: RoleRequirement,
   evidenceIds: readonly string[],
 ): readonly EvidenceRecord[] {
   const ids = new Set(evidenceIds);
@@ -37,7 +37,7 @@ function evidenceForRequirement(
 }
 
 function evidenceIsSufficient(
-  requirement: RoleCapabilityRequirement,
+  requirement: RoleRequirement,
   records: readonly EvidenceRecord[],
   confidence: "low" | "medium" | "high",
 ): boolean {
