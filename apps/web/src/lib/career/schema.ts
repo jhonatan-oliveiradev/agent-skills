@@ -144,7 +144,18 @@ function parseEvidenceRecord(value: unknown, label: string): EvidenceRecord {
   assertRecord(value, label);
   assertOnlyKeys(
     value,
-    ["id", "competencyId", "class", "sourceType", "trust", "observedAt", "summary", "sourceUrl"],
+    [
+      "id",
+      "competencyId",
+      "class",
+      "sourceType",
+      "trust",
+      "observedAt",
+      "summary",
+      "sourceUrl",
+      "demonstratedLevel",
+      "criterionIds",
+    ],
     label,
   );
   assertString(value.id, `${label}.id`);
@@ -158,6 +169,23 @@ function parseEvidenceRecord(value: unknown, label: string): EvidenceRecord {
     assertString(value.sourceUrl, `${label}.sourceUrl`);
   }
 
+  let demonstratedLevel: ProficiencyLevel | undefined;
+  if (value.demonstratedLevel !== undefined) {
+    assertOneOf(value.demonstratedLevel, proficiencyLevels, `${label}.demonstratedLevel`);
+    demonstratedLevel = value.demonstratedLevel;
+  }
+
+  const criterionIds =
+    value.criterionIds === undefined
+      ? undefined
+      : parseStringArray(value.criterionIds, `${label}.criterionIds`, false);
+
+  if ((demonstratedLevel === undefined) !== (criterionIds === undefined)) {
+    throw new Error(
+      `${label}: demonstratedLevel and criterionIds must be supplied together`,
+    );
+  }
+
   return {
     id: value.id,
     competencyId: value.competencyId,
@@ -167,6 +195,8 @@ function parseEvidenceRecord(value: unknown, label: string): EvidenceRecord {
     observedAt: value.observedAt,
     summary: value.summary,
     ...(value.sourceUrl === undefined ? {} : { sourceUrl: value.sourceUrl }),
+    ...(demonstratedLevel === undefined ? {} : { demonstratedLevel }),
+    ...(criterionIds === undefined ? {} : { criterionIds }),
   };
 }
 

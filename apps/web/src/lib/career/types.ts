@@ -33,6 +33,8 @@ export interface EvidenceRecord {
   readonly observedAt: string;
   readonly summary: string;
   readonly sourceUrl?: string;
+  readonly demonstratedLevel?: ProficiencyLevel;
+  readonly criterionIds?: readonly string[];
 }
 
 export interface AssessmentRecord {
