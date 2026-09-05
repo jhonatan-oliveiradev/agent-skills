@@ -1,0 +1,35 @@
+{
+  "$schema": "../schemas/skill.schema.json",
+  "slug": "teaching-developer-concepts",
+  "category": "developer-career",
+  "packs": ["developer-career"],
+  "maturity": "beta",
+  "difficulty": "beginner",
+  "featured": false,
+  "compatibility": { "surfaces": ["chatgpt", "codex"], "operatingSystems": ["linux", "macos", "windows"], "installModes": ["plugin", "filesystem"] },
+  "tags": ["career", "learning", "teaching", "practice", "capabilities"],
+  "dependencies": [],
+  "relatedSkills": ["building-developer-career-roadmaps", "evaluating-developer-proficiency"],
+  "version": "1.1.0",
+  "updatedAt": "2026-09-04",
+  "locales": {
+    "en": {
+      "displayName": "Teaching Developer Concepts",
+      "summary": "Teaches only the concepts needed for a known capability gap and moves quickly from explanation into targeted practice and demonstration.",
+      "primaryBenefit": "Reduces passive course consumption by tying explanations, examples, and exercises to one observable capability criterion.",
+      "whenToUse": "Use when the current gap is known and the learner needs a concise mental model, examples, practice, or selective resources before demonstrating it.",
+      "whenNotToUse": "Do not use as a generic long-form curriculum, career diagnosis, roadmap engine, or formal proficiency evaluator.",
+      "useCases": ["Explain a misconception discovered in an assessment", "Create a short practice progression for one blocking capability gap"],
+      "examplePrompts": ["Use teaching-developer-concepts to teach only what I need for this capability gap, then move me into practice that can produce evidence."]
+    },
+    "pt-BR": {
+      "displayName": "Ensino de Conceitos para Desenvolvedores",
+      "summary": "Ensina apenas os conceitos necessários para um gap conhecido e avança rapidamente da explicação para prática direcionada e demonstração.",
+      "primaryBenefit": "Reduz consumo passivo de cursos ao ligar explicações, exemplos e exercícios a um critério observável de capacidade.",
+      "whenToUse": "Use quando o gap atual é conhecido e a pessoa precisa de um modelo mental conciso, exemplos, prática ou recursos seletivos antes de demonstrá-lo.",
+      "whenNotToUse": "Não use como currículo genérico de longo prazo, diagnóstico de carreira, motor de roadmap ou avaliador formal de proficiência.",
+      "useCases": ["Explicar uma concepção equivocada encontrada em um assessment", "Criar uma progressão curta de prática para um gap bloqueador"],
+      "examplePrompts": ["Use teaching-developer-concepts para ensinar apenas o necessário para este gap e depois me levar a uma prática que gere evidência."]
+    }
+  }
+}
