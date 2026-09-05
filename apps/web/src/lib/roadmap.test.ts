@@ -39,12 +39,12 @@ describe("public roadmap", () => {
       "microsite",
       "stable-skills",
     ]);
-    expect(stable?.items.slice(0, 4).every((item) => item.meta === "1.0.0")).toBe(true);
+    expect(stable?.items.slice(0, 4).every((item) => item.meta === "1.1.0")).toBe(true);
     expect(stableSkills?.meta).toContain("18");
-    expect(stableSkills?.meta).toContain("9/11");
+    expect(stableSkills?.meta).toContain("9/12");
     expect(stableSkills?.summary).toContain("18");
     expect(stableSkills?.summary).toContain("9");
-    expect(stableSkills?.summary).toContain("11");
+    expect(stableSkills?.summary).toContain("12");
     expect(stableSkills?.summary).not.toMatch(/every canonical skill|todas as skills canônicas/i);
   });
 
