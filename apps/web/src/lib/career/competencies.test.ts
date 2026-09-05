@@ -33,7 +33,12 @@ function observation(input: {
 }
 
 function criterionIdsAtOrBelowEvidenceClass(
-  definition: { readonly criteria: readonly { readonly id: string; readonly minimumEvidenceClass: EvidenceClass }[] },
+  definition: {
+    readonly criteria: readonly {
+      readonly id: string;
+      readonly minimumEvidenceClass: EvidenceClass;
+    }[];
+  },
   maximumClass: EvidenceClass,
 ): readonly string[] {
   const rank: Record<EvidenceClass, number> = { E0: 0, E1: 1, E2: 2, E3: 3, E4: 4 };
@@ -203,7 +208,9 @@ describe("canonical competency and role-map contracts", () => {
   });
 
   it("keeps competency prerequisites acyclic", () => {
-    const definitions = new Map(competencyDefinitions.map((definition) => [definition.id, definition]));
+    const definitions = new Map<string, (typeof competencyDefinitions)[number]>(
+      competencyDefinitions.map((definition) => [definition.id, definition]),
+    );
     const visiting = new Set<string>();
     const visited = new Set<string>();
 
@@ -232,7 +239,7 @@ describe("canonical competency and role-map contracts", () => {
     if (!frontend || !backend || !fullstack) throw new Error("missing V1 role map");
 
     const ids = (role: (typeof roleMaps)[number]) =>
-      new Set(role.requirements.map((requirement) => requirement.competencyId));
+      new Set<string>(role.requirements.map((requirement) => requirement.competencyId));
 
     for (const competencyId of ["ui-component-modeling", "state-data-flow", "web-accessibility"]) {
       expect(ids(frontend).has(competencyId)).toBe(true);
