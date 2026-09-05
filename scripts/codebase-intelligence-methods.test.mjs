@@ -100,8 +100,8 @@ test("progressively discloses the local CodeGraph guide and preserves mapping re
 test("positions the public Codebase Intelligence catalog", async () => {
   const source = await readFile(path.join(root, "README.md"), "utf8");
   assert.match(source, /Codebase Intelligence v1/);
-  assert.match(source, /54 reusable skills/);
-  assert.match(source, /11 active packs/);
+  assert.match(source, /60 reusable skills/);
+  assert.match(source, /12 active packs/);
   assert.match(source, /CodeGraph/);
   assert.match(source, /\]\(skills\/mapping-existing-codebase-structure\/references\/codegraph\.md\)/);
 });

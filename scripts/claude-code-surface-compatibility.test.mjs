@@ -10,7 +10,7 @@ test("every canonical skill supports the filesystem path used by Claude Code", a
   const skillsDirectory = path.join(repoRoot, "catalog/skills");
   const skillFiles = (await readdir(skillsDirectory)).filter((file) => file.endsWith(".json")).sort();
 
-  assert.equal(skillFiles.length, 54);
+  assert.equal(skillFiles.length, 60);
 
   for (const file of skillFiles) {
     const skill = JSON.parse(await readFile(path.join(skillsDirectory, file), "utf8"));
