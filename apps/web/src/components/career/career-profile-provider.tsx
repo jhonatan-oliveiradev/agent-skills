@@ -39,32 +39,27 @@ export function CareerProfileProvider({
 
   useEffect(() => {
     let active = true;
-    let resolvedStorage: CareerStorage;
 
-    try {
-      resolvedStorage = storage ?? storageRef.current ?? createIndexedDbCareerStorage();
-      storageRef.current = resolvedStorage;
-    } catch {
-      setProfile(null);
-      setStatus("error");
-      return () => {
-        active = false;
-      };
-    }
+    async function hydrate() {
+      await Promise.resolve();
 
-    setStatus("hydrating");
-    void resolvedStorage
-      .load()
-      .then((storedProfile) => {
+      try {
+        const resolvedStorage =
+          storage ?? storageRef.current ?? createIndexedDbCareerStorage();
+        storageRef.current = resolvedStorage;
+        const storedProfile = await resolvedStorage.load();
+
         if (!active) return;
         setProfile(storedProfile);
         setStatus("ready");
-      })
-      .catch(() => {
+      } catch {
         if (!active) return;
         setProfile(null);
         setStatus("error");
-      });
+      }
+    }
+
+    void hydrate();
 
     return () => {
       active = false;
