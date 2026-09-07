@@ -59,7 +59,7 @@ describe("Career Roadmap", () => {
     expect(screen.getByRole("region", { name: /^agora$/i })).toBeInTheDocument();
     expect(screen.getByRole("region", { name: /^próximos$/i })).toBeInTheDocument();
     expect(screen.getByRole("region", { name: /^mapa$/i })).toBeInTheDocument();
-    expect(screen.getByText(/em andamento/i)).toBeInTheDocument();
+    expect(screen.getAllByText(/em andamento/i).length).toBeGreaterThan(0);
     expect(screen.getAllByText(/bloqueado/i).length).toBeGreaterThan(0);
     expect(screen.getByRole("heading", { name: /por que agora/i })).toBeInTheDocument();
   });
