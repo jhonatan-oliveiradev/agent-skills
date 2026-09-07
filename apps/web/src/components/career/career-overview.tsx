@@ -1,5 +1,6 @@
 "use client";
 
+import { baselineAssessmentBlueprints } from "@/lib/career/assessment-blueprints";
 import { careerLabCopy, careerLabRoleLabels } from "@/lib/career/copy";
 import { calculateRoleReadiness } from "@/lib/career/readiness";
 import { getRoleMap } from "@/lib/career/role-maps";
@@ -21,6 +22,13 @@ export function CareerOverview({ locale }: Readonly<{ locale: Locale }>) {
   const latestMarket = [...profile.marketSamples].sort((a, b) =>
     b.capturedAt.localeCompare(a.capturedAt),
   )[0];
+  const baselineIncomplete = baselineAssessmentBlueprints.some((blueprint) =>
+    !profile.assessments.some(
+      (assessment) =>
+        assessment.blueprintId === blueprint.id &&
+        assessment.blueprintVersion === blueprint.version,
+    ),
+  );
 
   return (
     <section className="career-overview" aria-labelledby="career-overview-title">
@@ -66,6 +74,10 @@ export function CareerOverview({ locale }: Readonly<{ locale: Locale }>) {
           )}
         </article>
       </div>
+
+      {baselineIncomplete ? (
+        <p className="career-overview__baseline">{copy.baselineIncomplete}</p>
+      ) : null}
 
       <section className="career-overview__competencies" aria-labelledby="career-competencies-title">
         <div className="career-overview__section-heading">

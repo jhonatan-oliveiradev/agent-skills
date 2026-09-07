@@ -33,6 +33,63 @@ function portugueseCompetencyState(level: ProficiencyLevel | null, confidence: C
   return `${level ? levels[level] : "desconhecido"} · ${confidences[confidence]}`;
 }
 
+function englishAssessmentLevel(level: ProficiencyLevel): string {
+  return {
+    foundation: "Foundation",
+    developing: "Developing",
+    proficient: "Proficient",
+    advanced: "Advanced",
+  }[level];
+}
+
+function portugueseAssessmentLevel(level: ProficiencyLevel): string {
+  return {
+    foundation: "Fundamentos",
+    developing: "Em desenvolvimento",
+    proficient: "Proficiente",
+    advanced: "Avançado",
+  }[level];
+}
+
+function englishAssessmentConfidence(confidence: ConfidenceLevel): string {
+  return `${confidence} confidence`;
+}
+
+function portugueseAssessmentConfidence(confidence: ConfidenceLevel): string {
+  return {
+    low: "baixa confiança",
+    medium: "confiança média",
+    high: "alta confiança",
+  }[confidence];
+}
+
+function portugueseAssessmentSignal(signal: string): string {
+  const passed = /^Passed (.+) observation$/.exec(signal);
+  if (passed) {
+    const kinds: Record<string, string> = {
+      "single-choice": "escolha única",
+      "multi-select": "múltipla seleção",
+      "code-reading-choice": "leitura de código",
+      "debugging-choice": "depuração",
+      "structured-ordering": "ordenação estruturada",
+    };
+    return `Observação de ${kinds[passed[1]] ?? passed[1]} aprovada.`;
+  }
+  const reassess = /^Reassess (.+) with a deterministic challenge$/.exec(signal);
+  if (reassess) {
+    const dimensions: Record<string, string> = {
+      reasoning: "raciocínio",
+      performance: "desempenho",
+      authentic: "evidência autêntica",
+    };
+    return `Reavalie ${dimensions[reassess[1]] ?? reassess[1]} com um desafio determinístico.`;
+  }
+  if (signal === "Add another deterministic performance observation.") {
+    return "Adicione outra observação determinística de desempenho.";
+  }
+  return signal;
+}
+
 export const careerLabCopy = {
   en: {
     navigation: ["Overview", "Roadmap", "Assessments", "Evidence", "Market"],
@@ -56,6 +113,7 @@ export const careerLabCopy = {
     openGaps: (count: number) => `${count} open`,
     evidence: "Evidence records",
     assessments: "assessments",
+    baselineIncomplete: "Baseline assessment still incomplete.",
     latestMarket: "Latest market sample",
     noMarketSample: "No market sample yet",
     postings: "postings",
@@ -74,6 +132,28 @@ export const careerLabCopy = {
     cancel: "Cancel",
     resetWarning: "This removes the Career Profile stored in this browser.",
     resetComplete: "Local Career Profile reset",
+    assessment: {
+      eyebrow: "Skill assessment",
+      listTitle: "Baseline assessments",
+      listBody: "Short, deterministic probes establish an evidence-aware baseline.",
+      itemSuffix: "baseline assessment",
+      progress: (current: number, total: number) => `Challenge ${current} of ${total}`,
+      arrange: "Arrange the steps in order",
+      chooseResponse: "Choose a response before completing the assessment.",
+      previous: "Previous challenge",
+      next: "Next challenge",
+      complete: "Complete assessment",
+      notFound: "Assessment not found.",
+      resultEyebrow: "Proficiency report",
+      levelLabel: englishAssessmentLevel,
+      confidenceLabel: englishAssessmentConfidence,
+      strongSignals: "Strong signals",
+      weakSignals: "Weak signals",
+      noStrongSignals: "No strong signals recorded yet.",
+      noWeakSignals: "No weak signals recorded.",
+      nextEvidence: "Next evidence",
+      signal: (signal: string) => signal,
+    },
     onboarding: {
       title: "Set up your Career Profile",
       contextTitle: "Current context",
@@ -91,6 +171,7 @@ export const careerLabCopy = {
       back: "Back",
       create: "Create Career Profile",
       reviewBody: "Career Lab will create an evidence-neutral baseline: every required capability starts unknown with low confidence until real evidence is added.",
+      startBaselineAssessment: "Start baseline assessment",
     },
   },
   "pt-BR": {
@@ -115,6 +196,7 @@ export const careerLabCopy = {
     openGaps: (count: number) => `${count} em aberto`,
     evidence: "Registros de evidência",
     assessments: "avaliações",
+    baselineIncomplete: "A avaliação de baseline ainda está incompleta.",
     latestMarket: "Amostra de mercado mais recente",
     noMarketSample: "Nenhuma amostra de mercado ainda",
     postings: "vagas",
@@ -133,6 +215,28 @@ export const careerLabCopy = {
     cancel: "Cancelar",
     resetWarning: "Isso remove o Career Profile armazenado neste navegador.",
     resetComplete: "Career Profile local resetado",
+    assessment: {
+      eyebrow: "Avaliação de competências",
+      listTitle: "Avaliações de baseline",
+      listBody: "Sondagens curtas e determinísticas estabelecem um baseline orientado por evidências.",
+      itemSuffix: "avaliação de baseline",
+      progress: (current: number, total: number) => `Desafio ${current} de ${total}`,
+      arrange: "Organize as etapas na ordem correta",
+      chooseResponse: "Escolha uma resposta antes de concluir a avaliação.",
+      previous: "Desafio anterior",
+      next: "Próximo desafio",
+      complete: "Concluir avaliação",
+      notFound: "Avaliação não encontrada.",
+      resultEyebrow: "Relatório de proficiência",
+      levelLabel: portugueseAssessmentLevel,
+      confidenceLabel: portugueseAssessmentConfidence,
+      strongSignals: "Sinais fortes",
+      weakSignals: "Sinais fracos",
+      noStrongSignals: "Nenhum sinal forte registrado ainda.",
+      noWeakSignals: "Nenhum sinal fraco registrado.",
+      nextEvidence: "Próxima evidência",
+      signal: portugueseAssessmentSignal,
+    },
     onboarding: {
       title: "Configure seu Career Profile",
       contextTitle: "Contexto atual",
@@ -150,6 +254,7 @@ export const careerLabCopy = {
       back: "Voltar",
       create: "Criar Career Profile",
       reviewBody: "O Career Lab criará um baseline neutro em evidências: cada capacidade necessária começa desconhecida e com baixa confiança até surgirem evidências reais.",
+      startBaselineAssessment: "Iniciar avaliação de baseline",
     },
   },
 } as const;
