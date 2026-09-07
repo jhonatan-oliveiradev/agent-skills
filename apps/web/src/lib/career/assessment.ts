@@ -104,6 +104,23 @@ export interface AssessmentResultArtifact {
   readonly provenance: Readonly<{ trust: "local-deterministic" }>;
 }
 
+const proficiencyLevels = [
+  "foundation",
+  "developing",
+  "proficient",
+  "advanced",
+] as const satisfies readonly ProficiencyLevel[];
+
+const supportedChallengeKinds: readonly AssessmentChallengeKind[] = [
+  "single-choice",
+  "multi-select",
+  "code-reading-choice",
+  "debugging-choice",
+  "structured-ordering",
+];
+
+const supportedEvidenceClasses: readonly EvidenceClass[] = ["E0", "E1", "E2", "E3", "E4"];
+
 const levelRank: Readonly<Record<ProficiencyLevel, number>> = {
   foundation: 0,
   developing: 1,
@@ -127,14 +144,25 @@ function assertUnique(values: readonly string[], label: string): void {
   }
 }
 
+function previousLevel(level: ProficiencyLevel): ProficiencyLevel {
+  const index = proficiencyLevels.indexOf(level);
+  return proficiencyLevels[Math.max(0, index - 1)];
+}
+
 export function validateAssessmentBlueprint(
   blueprint: AssessmentBlueprint,
 ): AssessmentBlueprint {
   assertNonEmpty(blueprint.id, "blueprint.id");
   if (blueprint.version !== "1") throw new Error("blueprint.version: unsupported");
   assertNonEmpty(blueprint.competencyId, "blueprint.competencyId");
-  if (!competencyDefinitions.some((definition) => definition.id === blueprint.competencyId)) {
+  const competency = competencyDefinitions.find(
+    (definition) => definition.id === blueprint.competencyId,
+  );
+  if (!competency) {
     throw new Error("blueprint.competencyId: unknown competency");
+  }
+  if (!proficiencyLevels.includes(blueprint.targetLevel)) {
+    throw new Error("blueprint.targetLevel: unsupported proficiency level");
   }
   if (blueprint.dimensions.length === 0) throw new Error("blueprint.dimensions: expected non-empty");
   if (blueprint.challenges.length === 0) throw new Error("blueprint.challenges: expected non-empty");
@@ -144,18 +172,31 @@ export function validateAssessmentBlueprint(
   for (const dimension of blueprint.dimensions) {
     assertNonEmpty(dimension.id, "dimension.id");
     assertNonEmpty(dimension.label, "dimension.label");
+    if (typeof dimension.required !== "boolean") {
+      throw new Error("dimension.required: expected boolean");
+    }
   }
 
   const challengeIds = blueprint.challenges.map((challenge) => challenge.id);
   if (new Set(challengeIds).size !== challengeIds.length) {
     throw new Error("blueprint: duplicate challenge id");
   }
+  const criterionIds = new Set(competency.criteria.map((criterion) => criterion.id));
 
   for (const challenge of blueprint.challenges) {
     assertNonEmpty(challenge.id, "challenge.id");
     assertNonEmpty(challenge.prompt, "challenge.prompt");
     if (!dimensionIds.includes(challenge.dimensionId)) {
       throw new Error("challenge.dimensionId: unknown dimension");
+    }
+    if (!supportedChallengeKinds.includes(challenge.kind)) {
+      throw new Error("challenge.kind: unsupported challenge kind");
+    }
+    if (!supportedEvidenceClasses.includes(challenge.evidenceClass)) {
+      throw new Error("challenge.evidenceClass: unsupported evidence class");
+    }
+    if (!proficiencyLevels.includes(challenge.demonstratedLevel)) {
+      throw new Error("challenge.demonstratedLevel: unsupported proficiency level");
     }
     if (challenge.options.length < 2) {
       throw new Error("challenge.options: expected at least two options");
@@ -173,13 +214,29 @@ export function validateAssessmentBlueprint(
     if (challenge.correctOptionIds.some((id) => !optionIds.includes(id))) {
       throw new Error("challenge.correct option: option not found");
     }
-    if (challenge.kind !== "multi-select" && challenge.correctOptionIds.length !== 1 && challenge.kind !== "structured-ordering") {
+    if (
+      challenge.kind !== "multi-select" &&
+      challenge.kind !== "structured-ordering" &&
+      challenge.correctOptionIds.length !== 1
+    ) {
       throw new Error("challenge.correctOptionIds: invalid evidence requirement");
     }
     if (challenge.criterionIds.length === 0) {
       throw new Error("challenge.criterionIds: expected non-empty evidence requirement");
     }
     assertUnique(challenge.criterionIds, "challenge.criterionIds");
+    if (challenge.criterionIds.some((id) => !criterionIds.has(id))) {
+      throw new Error("challenge.criterionIds: unknown criterion for competency");
+    }
+  }
+
+  for (const dimension of blueprint.dimensions) {
+    if (
+      dimension.required &&
+      !blueprint.challenges.some((challenge) => challenge.dimensionId === dimension.id)
+    ) {
+      throw new Error("required dimension: expected at least one challenge");
+    }
   }
 
   for (const gate of blueprint.gates) {
@@ -188,6 +245,12 @@ export function validateAssessmentBlueprint(
     }
     if (!Number.isInteger(gate.minimumPassedChallenges) || gate.minimumPassedChallenges < 1) {
       throw new Error("gate.minimumPassedChallenges: expected positive integer");
+    }
+    if (!proficiencyLevels.includes(gate.requiredForLevel)) {
+      throw new Error("gate.requiredForLevel: unsupported proficiency level");
+    }
+    if (levelRank[gate.requiredForLevel] > levelRank[blueprint.targetLevel]) {
+      throw new Error("gate.requiredForLevel: exceeds blueprint target level");
     }
     const challengesInDimension = blueprint.challenges.filter(
       (challenge) => challenge.dimensionId === gate.dimensionId,
@@ -218,18 +281,36 @@ function responsePasses(
   return answer.length === 1 && answer[0] === challenge.correctOptionIds[0];
 }
 
+function lowerCap(
+  current: ProficiencyLevel,
+  candidate: ProficiencyLevel,
+): ProficiencyLevel {
+  return levelRank[candidate] < levelRank[current] ? candidate : current;
+}
+
 function gateLevel(
   blueprint: AssessmentBlueprint,
   observations: readonly ObservedDimension[],
 ): ProficiencyLevel {
-  const gatesPass = blueprint.gates.every((gate) => {
+  let level = blueprint.targetLevel;
+
+  for (const dimension of blueprint.dimensions) {
+    if (!dimension.required) continue;
+    const observed = observations.find((candidate) => candidate.dimensionId === dimension.id);
+    if (!observed?.passed) {
+      level = lowerCap(level, previousLevel(blueprint.targetLevel));
+    }
+  }
+
+  for (const gate of blueprint.gates) {
     const observed = observations.find((dimension) => dimension.dimensionId === gate.dimensionId);
-    return (observed?.passedChallengeIds.length ?? 0) >= gate.minimumPassedChallenges;
-  });
-  if (gatesPass) return blueprint.targetLevel;
-  return levelRank[blueprint.targetLevel] > levelRank.developing
-    ? "developing"
-    : "foundation";
+    const passed = (observed?.passedChallengeIds.length ?? 0) >= gate.minimumPassedChallenges;
+    if (!passed) {
+      level = lowerCap(level, previousLevel(gate.requiredForLevel));
+    }
+  }
+
+  return level;
 }
 
 function evidenceId(
@@ -253,6 +334,13 @@ export function evaluateAssessment(
   }
   assertIsoDate(responses.completedAt, "responses.completedAt");
 
+  const challengeIds = new Set(blueprint.challenges.map((challenge) => challenge.id));
+  for (const responseChallengeId of Object.keys(responses.answers)) {
+    if (!challengeIds.has(responseChallengeId)) {
+      throw new Error("unknown response challenge not in blueprint: " + responseChallengeId);
+    }
+  }
+
   const dimensions = blueprint.dimensions.map((dimension): ObservedDimension => {
     const challenges = blueprint.challenges.filter(
       (challenge) => challenge.dimensionId === dimension.id,
@@ -266,7 +354,7 @@ export function evaluateAssessment(
       if (answer === undefined) {
         throw new Error("missing response for " + challenge.id);
       }
-      if (answer.length === 0) {
+      if (!Array.isArray(answer) || answer.length === 0) {
         throw new Error("empty response for " + challenge.id);
       }
       if (answer.some((optionId) => !challenge.options.some((option) => option.id === optionId))) {
@@ -292,21 +380,23 @@ export function evaluateAssessment(
     };
   });
 
-  const evidence = blueprint.challenges.flatMap((challenge) => {
+  const evidence = blueprint.challenges.map((challenge): EvidenceRecord => {
     const observed = dimensions.find((dimension) => dimension.dimensionId === challenge.dimensionId);
-    if (!observed?.passedChallengeIds.includes(challenge.id)) return [];
+    const passed = observed?.passedChallengeIds.includes(challenge.id) === true;
 
-    return [{
+    return {
       id: evidenceId(blueprint, responses.completedAt, challenge),
       competencyId: blueprint.competencyId,
       class: challenge.evidenceClass,
-      sourceType: "assessment" as const,
-      trust: "local-deterministic" as const,
+      sourceType: "assessment",
+      trust: "local-deterministic",
       observedAt: responses.completedAt,
-      summary: "Passed " + challenge.kind + " challenge " + challenge.id,
-      demonstratedLevel: challenge.demonstratedLevel,
+      summary: (passed ? "Passed " : "Failed ") + challenge.kind + " challenge " + challenge.id,
+      demonstratedLevel: passed
+        ? challenge.demonstratedLevel
+        : previousLevel(challenge.demonstratedLevel),
       criterionIds: challenge.criterionIds,
-    } satisfies EvidenceRecord];
+    };
   });
 
   const level = gateLevel(blueprint, dimensions);
