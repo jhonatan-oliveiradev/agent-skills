@@ -154,8 +154,12 @@ describe("adaptive roadmap engine", () => {
       "E0",
     );
     const roadmap = buildRoadmap(profile, getRoleMap("frontend-developer"));
+    const profileWithActivity: CareerProfile = {
+      ...profile,
+      roadmap: { ...roadmap, supportingActivityId: "learning:programming-foundations" },
+    };
     const next = completeMilestoneIfEligible(
-      { ...profile, roadmap, roadmap: { ...roadmap, supportingActivityId: "learning:programming-foundations" } },
+      profileWithActivity,
       "programming-foundations",
     );
 
