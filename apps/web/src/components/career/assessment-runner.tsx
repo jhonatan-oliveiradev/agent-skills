@@ -4,41 +4,41 @@ import { useMemo, useState } from "react";
 import {
   applyAssessmentResult,
   evaluateAssessment,
-  toPublicAssessmentBlueprint,
   type AssessmentResponses,
   type PublicAssessmentBlueprint,
 } from "@/lib/career/assessment";
+import {
+  getAssessmentBlueprint,
+  getPublicAssessmentBlueprintForLocale,
+} from "@/lib/career/assessment-blueprints";
+import { careerLabCopy } from "@/lib/career/copy";
 import type { Locale } from "@/lib/locales";
 import { AssessmentResult } from "./assessment-result";
 import { useCareerProfile } from "./career-profile-provider";
-import { getAssessmentBlueprint } from "@/lib/career/assessment-blueprints";
 
 export function AssessmentRunner({
   blueprint,
   onComplete,
+  locale = "en",
 }: Readonly<{
   blueprint: PublicAssessmentBlueprint;
   onComplete: (responses: AssessmentResponses) => void;
+  locale?: Locale;
 }>) {
   const [index, setIndex] = useState(0);
   const [answers, setAnswers] = useState<Record<string, readonly string[]>>({});
   const [error, setError] = useState<string | null>(null);
   const challenge = blueprint.challenges[index];
+  const copy = careerLabCopy[locale].assessment;
 
-  const progress = "Challenge " + (index + 1) + " of " + blueprint.challenges.length;
+  const progress = copy.progress(index + 1, blueprint.challenges.length);
 
   function selectOption(optionId: string) {
     if (!challenge) return;
     setError(null);
     setAnswers((current) => {
       const prior = current[challenge.id] ?? [];
-      if (challenge.kind === "multi-select") {
-        const next = prior.includes(optionId)
-          ? prior.filter((id) => id !== optionId)
-          : [...prior, optionId];
-        return { ...current, [challenge.id]: next };
-      }
-      if (challenge.kind === "structured-ordering") {
+      if (challenge.kind === "multi-select" || challenge.kind === "structured-ordering") {
         const next = prior.includes(optionId)
           ? prior.filter((id) => id !== optionId)
           : [...prior, optionId];
@@ -53,7 +53,7 @@ export function AssessmentRunner({
       (candidate) => (answers[candidate.id] ?? []).length === 0,
     );
     if (missing) {
-      setError("Choose a response before completing the assessment.");
+      setError(copy.chooseResponse);
       return;
     }
     onComplete({
@@ -73,7 +73,7 @@ export function AssessmentRunner({
       <p role="status" aria-live="polite">{progress}</p>
       <h1 id="assessment-runner-title">{challenge.prompt}</h1>
       {challenge.kind === "structured-ordering" ? (
-        <div aria-label="Arrange the steps in order">
+        <div role="group" aria-label={copy.arrange}>
           {challenge.options.map((option) => (
             <button
               key={option.id}
@@ -107,15 +107,15 @@ export function AssessmentRunner({
       <footer>
         {index > 0 ? (
           <button type="button" onClick={() => setIndex((value) => value - 1)}>
-            Previous challenge
+            {copy.previous}
           </button>
         ) : <span />}
         {index < blueprint.challenges.length - 1 ? (
           <button type="button" onClick={() => setIndex((value) => value + 1)}>
-            Next challenge
+            {copy.next}
           </button>
         ) : (
-          <button type="button" onClick={finish}>Complete assessment</button>
+          <button type="button" onClick={finish}>{copy.complete}</button>
         )}
       </footer>
     </section>
@@ -129,20 +129,22 @@ export function AssessmentDetailSurface({
   const { profile, updateProfile } = useCareerProfile();
   const [result, setResult] = useState<ReturnType<typeof evaluateAssessment> | null>(null);
   const blueprint = useMemo(() => getAssessmentBlueprint(blueprintId), [blueprintId]);
+  const copy = careerLabCopy[locale].assessment;
 
-  if (!blueprint) return <p role="alert">Assessment not found.</p>;
-  if (result) return <AssessmentResult result={result} />;
+  if (!blueprint) return <p role="alert">{copy.notFound}</p>;
+  if (result) return <AssessmentResult result={result} locale={locale} />;
 
   return (
     <div data-locale={locale}>
       <AssessmentRunner
-        blueprint={toPublicAssessmentBlueprint(blueprint)}
+        locale={locale}
+        blueprint={getPublicAssessmentBlueprintForLocale(blueprint, locale)}
         onComplete={(responses) => {
-        const next = evaluateAssessment(blueprint, responses);
-        setResult(next);
-        if (profile) {
-          void updateProfile((current) => applyAssessmentResult(current, next));
-        }
+          const next = evaluateAssessment(blueprint, responses);
+          setResult(next);
+          if (profile) {
+            void updateProfile((current) => applyAssessmentResult(current, next));
+          }
         }}
       />
     </div>

@@ -16,6 +16,7 @@ type RoleChoice = TargetRoleId | "undecided";
 interface CareerOnboardingProps {
   readonly locale: Locale;
   readonly onComplete: (profile: CareerProfile) => void | Promise<void>;
+  readonly onStartBaseline?: (profile: CareerProfile) => void | Promise<void>;
 }
 
 const roleIds = [
@@ -24,7 +25,11 @@ const roleIds = [
   "fullstack-developer",
 ] as const satisfies readonly TargetRoleId[];
 
-export function CareerOnboarding({ locale, onComplete }: CareerOnboardingProps) {
+export function CareerOnboarding({
+  locale,
+  onComplete,
+  onStartBaseline,
+}: CareerOnboardingProps) {
   const copy = careerLabCopy[locale].onboarding;
   const [step, setStep] = useState(0);
   const [context, setContext] = useState("");
@@ -41,15 +46,17 @@ export function CareerOnboarding({ locale, onComplete }: CareerOnboardingProps) 
           ? market.trim().length > 0 && Number(weeklyHours) > 0
           : true;
 
-  function createProfile() {
-    if (role === "undecided") return;
+  function buildProfile(): CareerProfile | null {
+    if (role === "undecided") return null;
     const base = createEmptyCareerProfile({
       targetRole: role,
       targetMarket: market,
       weeklyStudyHours: Number(weeklyHours),
     });
-    const competencyIds = [...new Set(getRoleMap(role).requirements.map(({ competencyId }) => competencyId))];
-    const profile: CareerProfile = {
+    const competencyIds = [...new Set(
+      getRoleMap(role).requirements.map(({ competencyId }) => competencyId),
+    )];
+    return {
       ...base,
       competencies: competencyIds.map((competencyId) => ({
         competencyId,
@@ -59,7 +66,11 @@ export function CareerOnboarding({ locale, onComplete }: CareerOnboardingProps) 
         lastAssessedAt: null,
       })),
     };
-    void onComplete(profile);
+  }
+
+  function createProfile() {
+    const profile = buildProfile();
+    if (profile) void onComplete(profile);
   }
 
   return (
@@ -118,7 +129,9 @@ export function CareerOnboarding({ locale, onComplete }: CareerOnboardingProps) 
           <h2>{copy.marketTitle}</h2>
           <label htmlFor="career-market">{copy.marketLabel}</label>
           <select id="career-market" value={market} onChange={(event) => setMarket(event.target.value)}>
-            {Object.entries(copy.markets).map(([value, label]) => <option key={value} value={value}>{label}</option>)}
+            {Object.entries(copy.markets).map(([value, label]) => (
+              <option key={value} value={value}>{label}</option>
+            ))}
           </select>
           <label htmlFor="career-weekly-hours">{copy.weeklyHoursLabel}</label>
           <input
@@ -136,7 +149,16 @@ export function CareerOnboarding({ locale, onComplete }: CareerOnboardingProps) 
         <div className="career-onboarding__step career-onboarding__review">
           <h2>{copy.reviewTitle}</h2>
           <p>{copy.reviewBody}</p>
-          <Link href={(`/${locale}/career-lab/assessments/baseline-javascript` as Route)}>
+          <Link
+            href={(`/${locale}/career-lab/assessments/baseline-javascript` as Route)}
+            onClick={(event) => {
+              if (!onStartBaseline) return;
+              const profile = buildProfile();
+              if (!profile) return;
+              event.preventDefault();
+              void onStartBaseline(profile);
+            }}
+          >
             {copy.startBaselineAssessment}
           </Link>
           {role !== "undecided" ? (
@@ -150,11 +172,21 @@ export function CareerOnboarding({ locale, onComplete }: CareerOnboardingProps) 
       ) : null}
 
       <footer className="career-onboarding__actions">
-        {step > 0 ? <button type="button" onClick={() => setStep((value) => value - 1)}>{copy.back}</button> : <span />}
+        {step > 0 ? (
+          <button type="button" onClick={() => setStep((value) => value - 1)}>{copy.back}</button>
+        ) : <span />}
         {step < 3 ? (
-          <button type="button" disabled={!canContinue} onClick={() => setStep((value) => value + 1)}>{copy.continue}</button>
+          <button
+            type="button"
+            disabled={!canContinue}
+            onClick={() => setStep((value) => value + 1)}
+          >
+            {copy.continue}
+          </button>
         ) : (
-          <button type="button" disabled={role === "undecided"} onClick={createProfile}>{copy.create}</button>
+          <button type="button" disabled={role === "undecided"} onClick={createProfile}>
+            {copy.create}
+          </button>
         )}
       </footer>
     </section>
@@ -171,6 +203,10 @@ export function CareerOnboardingFlow({ locale }: Readonly<{ locale: Locale }>) {
       onComplete={async (profile) => {
         await replaceProfile(profile);
         router.push(`/${locale}/career-lab` as Route);
+      }}
+      onStartBaseline={async (profile) => {
+        await replaceProfile(profile);
+        router.push(`/${locale}/career-lab/assessments/baseline-javascript` as Route);
       }}
     />
   );
