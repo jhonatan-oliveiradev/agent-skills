@@ -40,7 +40,7 @@ const backendRoles = [
   "fullstack-developer",
 ] as const satisfies readonly TargetRoleId[];
 
-export const roadmapMilestoneCatalog = [
+export const roadmapMilestoneCatalog: readonly RoadmapMilestoneDefinition[] = [
   {
     id: "programming-foundations",
     title: { en: "Programming foundations", "pt-BR": "Fundamentos de programação" },
@@ -275,7 +275,7 @@ export const roadmapMilestoneCatalog = [
     estimatedEffortHours: { min: 8, max: 16 },
     applicableRoles: allRoles,
   },
-] as const satisfies readonly RoadmapMilestoneDefinition[];
+];
 
 const milestoneById = new Map(
   roadmapMilestoneCatalog.map((milestone) => [milestone.id, milestone] as const),
