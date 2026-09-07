@@ -1,12 +1,14 @@
 import { describe, expect, it } from "vitest";
 import { deriveEvidenceConfidence } from "./evidence";
 import {
+  applyAssessmentResult,
   evaluateAssessment,
   validateAssessmentBlueprint,
   type AssessmentBlueprint,
   type AssessmentResponses,
 } from "./assessment";
 import { baselineAssessmentBlueprints } from "./assessment-blueprints";
+import { createEmptyCareerProfile } from "./profile";
 import type { EvidenceRecord } from "./types";
 
 const completedAt = "2026-09-07T12:00:00.000Z";
@@ -104,6 +106,26 @@ describe("assessment review regressions", () => {
 
     expect(passing.level).toBe("developing");
     expect(failing.level).toBe("foundation");
+  });
+
+  it("does not let a failed baseline observation satisfy canonical competency criteria", () => {
+    const baseline = baselineAssessmentBlueprints[0];
+    const challenge = baseline.challenges[0];
+    const failed = evaluate(baseline, {
+      [challenge.id]: ["unsound"],
+    });
+    const profile = createEmptyCareerProfile({
+      targetRole: "frontend-developer",
+      targetMarket: "br",
+      now: "2026-09-07T11:00:00.000Z",
+    });
+
+    const updated = applyAssessmentResult(profile, failed);
+    const state = updated.competencies.find(
+      (candidate) => candidate.competencyId === "programming-javascript",
+    );
+
+    expect(state?.level).toBeNull();
   });
 
   it("uses gate.requiredForLevel to cap only the level protected by a failed gate", () => {
