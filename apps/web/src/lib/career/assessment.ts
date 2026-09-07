@@ -321,6 +321,25 @@ function evidenceId(
   return "assessment:" + blueprint.id + ":" + completedAt + ":" + challenge.id;
 }
 
+function failedObservationCriteria(
+  blueprint: AssessmentBlueprint,
+  challenge: AssessmentChallenge,
+  demonstratedLevel: ProficiencyLevel,
+): readonly string[] {
+  const definition = competencyDefinitions.find(
+    (candidate) => candidate.id === blueprint.competencyId,
+  );
+  if (!definition) return [];
+
+  return definition.criteria
+    .filter(
+      (criterion) =>
+        challenge.criterionIds.includes(criterion.id) &&
+        levelRank[criterion.level] > levelRank[demonstratedLevel],
+    )
+    .map((criterion) => criterion.id);
+}
+
 export function evaluateAssessment(
   blueprint: AssessmentBlueprint,
   responses: AssessmentResponses,
@@ -383,20 +402,29 @@ export function evaluateAssessment(
   const evidence = blueprint.challenges.map((challenge): EvidenceRecord => {
     const observed = dimensions.find((dimension) => dimension.dimensionId === challenge.dimensionId);
     const passed = observed?.passedChallengeIds.includes(challenge.id) === true;
-
-    return {
+    const base = {
       id: evidenceId(blueprint, responses.completedAt, challenge),
       competencyId: blueprint.competencyId,
       class: challenge.evidenceClass,
-      sourceType: "assessment",
-      trust: "local-deterministic",
+      sourceType: "assessment" as const,
+      trust: "local-deterministic" as const,
       observedAt: responses.completedAt,
       summary: (passed ? "Passed " : "Failed ") + challenge.kind + " challenge " + challenge.id,
-      demonstratedLevel: passed
-        ? challenge.demonstratedLevel
-        : previousLevel(challenge.demonstratedLevel),
-      criterionIds: challenge.criterionIds,
     };
+
+    if (passed) {
+      return {
+        ...base,
+        demonstratedLevel: challenge.demonstratedLevel,
+        criterionIds: challenge.criterionIds,
+      };
+    }
+
+    const demonstratedLevel = previousLevel(challenge.demonstratedLevel);
+    const criterionIds = failedObservationCriteria(blueprint, challenge, demonstratedLevel);
+    return criterionIds.length === 0
+      ? base
+      : { ...base, demonstratedLevel, criterionIds };
   });
 
   const level = gateLevel(blueprint, dimensions);
