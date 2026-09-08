@@ -10,7 +10,7 @@ export function GET() {
   return new Response(script, {
     status: 200,
     headers: {
-      "Cache-Control": "public, max-age=0, s-maxage=300",
+      "Cache-Control": "no-store",
       "Content-Type": "text/x-shellscript; charset=utf-8",
       "X-Content-Type-Options": "nosniff",
     },
