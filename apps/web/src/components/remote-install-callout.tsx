@@ -30,13 +30,13 @@ export function RemoteInstallCallout({
 
   return (
     <aside
-      className="shell installation-command-row remote-install-callout"
+      className="installation-command-row remote-install-callout"
       data-remote-install
       aria-labelledby="remote-install-title"
     >
       <div className="installation-command-row__label">
         <p className="eyebrow">{localized.eyebrow}</p>
-        <h2 id="remote-install-title">{localized.title}</h2>
+        <h3 id="remote-install-title">{localized.title}</h3>
         <p>{localized.summary}</p>
       </div>
       <div className="command-entry">

@@ -1,0 +1,55 @@
+.method-dossier,
+.pack-blueprint {
+  max-width: 92rem;
+}
+
+.method-reader,
+.pack-blueprint__reader {
+  grid-template-columns: minmax(10rem, 13rem) minmax(0, 1fr);
+  gap: clamp(2rem, 4vw, 5rem);
+}
+
+.method-dossier__installation .remote-install-callout,
+.pack-blueprint__installation .remote-install-callout {
+  grid-template-columns: minmax(12rem, 0.58fr) minmax(0, 1.42fr);
+  align-items: start;
+  gap: clamp(1.25rem, 3vw, 3rem);
+  margin-block: clamp(1.75rem, 3vw, 2.5rem) clamp(2rem, 4vw, 3rem);
+  padding-block: clamp(1.4rem, 3vw, 2rem);
+  border-block: 1px solid color-mix(in srgb, var(--brand) 32%, var(--border));
+}
+
+.method-dossier__installation .remote-install-callout .installation-command-row__label,
+.pack-blueprint__installation .remote-install-callout .installation-command-row__label {
+  padding-right: 0;
+}
+
+.method-dossier__installation .remote-install-callout .installation-command-row__label > p:last-child,
+.pack-blueprint__installation .remote-install-callout .installation-command-row__label > p:last-child {
+  max-width: 32rem;
+  margin: 0.85rem 0 0;
+  color: var(--text-muted);
+  line-height: 1.55;
+}
+
+.method-dossier__installation .remote-install-callout .command-entry,
+.pack-blueprint__installation .remote-install-callout .command-entry {
+  min-width: 0;
+}
+
+@media (max-width: 64rem) {
+  .method-reader,
+  .pack-blueprint__reader {
+    grid-template-columns: 1fr;
+    gap: clamp(2rem, 5vw, 4rem);
+  }
+
+  .method-dossier__installation .remote-install-callout,
+  .pack-blueprint__installation .remote-install-callout {
+    grid-template-columns: 1fr;
+  }
+
+  .remote-install-callout .command-entry:last-child {
+    grid-column: 1;
+  }
+}
