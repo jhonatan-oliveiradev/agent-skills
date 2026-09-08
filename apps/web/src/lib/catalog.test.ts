@@ -7,6 +7,7 @@ vi.mock("server-only", () => ({}));
 import * as catalogAdapter from "./catalog";
 
 const { getCatalog, getCatalogCounts, getSupportedLocales } = catalogAdapter;
+const remote = "curl -fsSL https://skills.jhonatanoliveira.com/install | bash -s --";
 
 describe("catalog adapter", () => {
   it("exposes the complete committed catalog without redefining facts", () => {
@@ -62,7 +63,7 @@ describe("catalog adapter", () => {
 
     expect(adapter.getSkillInstallCommands).toBeTypeOf("function");
     expect(adapter.getSkillInstallCommands?.("craft-premium-motion")).toEqual({
-      bash: "./install.sh --skill craft-premium-motion",
+      bash: `${remote} --skill craft-premium-motion`,
       powershell: "./install.ps1 --skill craft-premium-motion",
     });
   });
@@ -85,49 +86,22 @@ describe("catalog adapter", () => {
     const packs = adapter.getLocalizedPacks?.("pt-BR") ?? [];
     expect(packs).toHaveLength(12);
     expect(packs.every((pack) => pack.status === "active")).toBe(true);
-    expect(packs.find((pack) => pack.slug === "frontend-product")).toMatchObject({
-      name: "Frontend e Produto",
-      status: "active",
-    });
-    expect(packs.find((pack) => pack.slug === "backend-data")).toMatchObject({
-      name: "Backend e Dados",
-      status: "active",
-    });
+    expect(packs.find((pack) => pack.slug === "frontend-product")).toMatchObject({ name: "Frontend e Produto", status: "active" });
+    expect(packs.find((pack) => pack.slug === "backend-data")).toMatchObject({ name: "Backend e Dados", status: "active" });
     expect(packs.find((pack) => pack.slug === "backend-data")?.skills).toHaveLength(4);
-    expect(packs.find((pack) => pack.slug === "architecture-engineering")).toMatchObject({
-      name: "Arquitetura e Engenharia",
-      status: "active",
-    });
+    expect(packs.find((pack) => pack.slug === "architecture-engineering")).toMatchObject({ name: "Arquitetura e Engenharia", status: "active" });
     expect(packs.find((pack) => pack.slug === "architecture-engineering")?.skills).toHaveLength(4);
-    expect(packs.find((pack) => pack.slug === "quality-testing")).toMatchObject({
-      name: "Qualidade e Testes",
-      status: "active",
-    });
+    expect(packs.find((pack) => pack.slug === "quality-testing")).toMatchObject({ name: "Qualidade e Testes", status: "active" });
     expect(packs.find((pack) => pack.slug === "quality-testing")?.skills).toHaveLength(4);
-    expect(packs.find((pack) => pack.slug === "application-security")).toMatchObject({
-      name: "Segurança de Aplicações",
-      status: "active",
-    });
+    expect(packs.find((pack) => pack.slug === "application-security")).toMatchObject({ name: "Segurança de Aplicações", status: "active" });
     expect(packs.find((pack) => pack.slug === "application-security")?.skills).toHaveLength(4);
-    expect(packs.find((pack) => pack.slug === "engineering-workflow")).toMatchObject({
-      name: "Fluxo de Engenharia",
-      status: "active",
-    });
+    expect(packs.find((pack) => pack.slug === "engineering-workflow")).toMatchObject({ name: "Fluxo de Engenharia", status: "active" });
     expect(packs.find((pack) => pack.slug === "engineering-workflow")?.skills).toHaveLength(4);
-    expect(packs.find((pack) => pack.slug === "design-brand")).toMatchObject({
-      name: "Design & Marca",
-      status: "active",
-    });
+    expect(packs.find((pack) => pack.slug === "design-brand")).toMatchObject({ name: "Design & Marca", status: "active" });
     expect(packs.find((pack) => pack.slug === "design-brand")?.skills).toHaveLength(5);
-    expect(packs.find((pack) => pack.slug === "writing-communication")).toMatchObject({
-      name: "Escrita & Comunicação",
-      status: "active",
-    });
+    expect(packs.find((pack) => pack.slug === "writing-communication")).toMatchObject({ name: "Escrita & Comunicação", status: "active" });
     expect(packs.find((pack) => pack.slug === "writing-communication")?.skills).toHaveLength(5);
-    expect(packs.find((pack) => pack.slug === "codebase-intelligence")).toMatchObject({
-      name: "Inteligência de Codebase",
-      status: "active",
-    });
+    expect(packs.find((pack) => pack.slug === "codebase-intelligence")).toMatchObject({ name: "Inteligência de Codebase", status: "active" });
     expect(packs.find((pack) => pack.slug === "codebase-intelligence")?.skills).toHaveLength(5);
 
     expect(adapter.getLocalizedPackBySlug?.("en", "motion")?.outcomes).toHaveLength(2);
@@ -143,42 +117,22 @@ describe("catalog adapter", () => {
     };
 
     expect(adapter.getPackInstallCommands).toBeTypeOf("function");
-    expect(adapter.getPackInstallCommands?.("motion", "active")).toEqual({
-      bash: "./install.sh --pack motion",
-      powershell: "./install.ps1 --pack motion",
-    });
-    expect(adapter.getPackInstallCommands?.("backend-data", "active")).toEqual({
-      bash: "./install.sh --pack backend-data",
-      powershell: "./install.ps1 --pack backend-data",
-    });
-    expect(adapter.getPackInstallCommands?.("architecture-engineering", "active")).toEqual({
-      bash: "./install.sh --pack architecture-engineering",
-      powershell: "./install.ps1 --pack architecture-engineering",
-    });
-    expect(adapter.getPackInstallCommands?.("quality-testing", "active")).toEqual({
-      bash: "./install.sh --pack quality-testing",
-      powershell: "./install.ps1 --pack quality-testing",
-    });
-    expect(adapter.getPackInstallCommands?.("application-security", "active")).toEqual({
-      bash: "./install.sh --pack application-security",
-      powershell: "./install.ps1 --pack application-security",
-    });
-    expect(adapter.getPackInstallCommands?.("engineering-workflow", "active")).toEqual({
-      bash: "./install.sh --pack engineering-workflow",
-      powershell: "./install.ps1 --pack engineering-workflow",
-    });
-    expect(adapter.getPackInstallCommands?.("design-brand", "active")).toEqual({
-      bash: "./install.sh --pack design-brand",
-      powershell: "./install.ps1 --pack design-brand",
-    });
-    expect(adapter.getPackInstallCommands?.("writing-communication", "active")).toEqual({
-      bash: "./install.sh --pack writing-communication",
-      powershell: "./install.ps1 --pack writing-communication",
-    });
-    expect(adapter.getPackInstallCommands?.("codebase-intelligence", "active")).toEqual({
-      bash: "./install.sh --pack codebase-intelligence",
-      powershell: "./install.ps1 --pack codebase-intelligence",
-    });
+    for (const slug of [
+      "motion",
+      "backend-data",
+      "architecture-engineering",
+      "quality-testing",
+      "application-security",
+      "engineering-workflow",
+      "design-brand",
+      "writing-communication",
+      "codebase-intelligence",
+    ]) {
+      expect(adapter.getPackInstallCommands?.(slug, "active")).toEqual({
+        bash: `${remote} --pack ${slug}`,
+        powershell: `./install.ps1 --pack ${slug}`,
+      });
+    }
     expect(adapter.getPackInstallCommands?.("quality-testing", "planned")).toBeUndefined();
   });
 });
