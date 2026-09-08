@@ -1,4 +1,4 @@
-import { render, screen, within } from "@testing-library/react";
+import { render, within } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 
 vi.mock("server-only", () => ({}));
@@ -26,31 +26,55 @@ describe("remote installation surfaces", () => {
     expect(terminal).toHaveTextContent("bash install.sh");
   });
 
-  it("shows a remote pack command and retains the canonical local Bash and PowerShell commands", async () => {
+  it("keeps pack installation in one canonical section with remote install first-class", async () => {
     const { container } = render(
       await PackDetailPage({
         params: Promise.resolve({ locale: "en", slug: "application-security" }),
       }),
     );
 
-    const callout = container.querySelector<HTMLElement>("[data-remote-install]");
-    expect(callout).toBeInTheDocument();
-    expect(within(callout!).getByText(`${remote} | bash -s -- --pack application-security`)).toBeInTheDocument();
-    expect(screen.getByText("./install.sh --pack application-security")).toBeInTheDocument();
-    expect(screen.getByText("./install.ps1 --pack application-security")).toBeInTheDocument();
+    const installations = container.querySelectorAll<HTMLElement>("#installation");
+    const callouts = container.querySelectorAll<HTMLElement>("[data-remote-install]");
+
+    expect(installations).toHaveLength(1);
+    expect(callouts).toHaveLength(1);
+    expect(installations[0]).toContainElement(callouts[0]);
+    expect(
+      within(installations[0]).getByText(
+        `${remote} | bash -s -- --pack application-security`,
+      ),
+    ).toBeInTheDocument();
+    expect(
+      within(installations[0]).getByText("./install.sh --pack application-security"),
+    ).toBeInTheDocument();
+    expect(
+      within(installations[0]).getByText("./install.ps1 --pack application-security"),
+    ).toBeInTheDocument();
   });
 
-  it("shows a remote skill command and retains the canonical local Bash and PowerShell commands", async () => {
+  it("keeps skill installation in one canonical section with remote install first-class", async () => {
     const { container } = render(
       await SkillDetailPage({
         params: Promise.resolve({ locale: "en", slug: "reviewing-web-security" }),
       }),
     );
 
-    const callout = container.querySelector<HTMLElement>("[data-remote-install]");
-    expect(callout).toBeInTheDocument();
-    expect(within(callout!).getByText(`${remote} | bash -s -- --skill reviewing-web-security`)).toBeInTheDocument();
-    expect(screen.getByText("./install.sh --skill reviewing-web-security")).toBeInTheDocument();
-    expect(screen.getByText("./install.ps1 --skill reviewing-web-security")).toBeInTheDocument();
+    const installations = container.querySelectorAll<HTMLElement>("#installation");
+    const callouts = container.querySelectorAll<HTMLElement>("[data-remote-install]");
+
+    expect(installations).toHaveLength(1);
+    expect(callouts).toHaveLength(1);
+    expect(installations[0]).toContainElement(callouts[0]);
+    expect(
+      within(installations[0]).getByText(
+        `${remote} | bash -s -- --skill reviewing-web-security`,
+      ),
+    ).toBeInTheDocument();
+    expect(
+      within(installations[0]).getByText("./install.sh --skill reviewing-web-security"),
+    ).toBeInTheDocument();
+    expect(
+      within(installations[0]).getByText("./install.ps1 --skill reviewing-web-security"),
+    ).toBeInTheDocument();
   });
 });
