@@ -26,6 +26,11 @@ const copy = {
     noFocus: "All currently applicable milestones are complete.",
     priorityReason: (capabilityCount: number, evidenceCount: number) =>
       `This milestone is the highest-priority dependency for the target role with ${capabilityCount} capability gap${capabilityCount === 1 ? "" : "s"} and ${evidenceCount} evidence gate${evidenceCount === 1 ? "" : "s"} still open.`,
+    lockedReason: (prerequisites: readonly string[]) =>
+      `Dependency gate remains closed${prerequisites.length > 0 ? ` behind ${prerequisites.join(", ")}` : ""}.`,
+    availableReason: "Its dependency gates are satisfied, so it is a valid next candidate for the target role.",
+    assessmentReason: "The capability target is met; stronger evidence is now required before completion.",
+    completedReason: "Required capability and evidence gates are both satisfied, so this milestone is complete.",
     statuses: {
       locked: "Locked",
       available: "Available",
@@ -48,6 +53,11 @@ const copy = {
     noFocus: "Todos os marcos atualmente aplicáveis estão concluídos.",
     priorityReason: (capabilityCount: number, evidenceCount: number) =>
       `Este marco é a dependência de maior prioridade para o papel-alvo, com ${capabilityCount} lacuna${capabilityCount === 1 ? "" : "s"} de capacidade e ${evidenceCount} gate${evidenceCount === 1 ? "" : "s"} de evidência ainda aberto${evidenceCount === 1 ? "" : "s"}.`,
+    lockedReason: (prerequisites: readonly string[]) =>
+      `O gate de dependência continua fechado${prerequisites.length > 0 ? ` atrás de ${prerequisites.join(", ")}` : ""}.`,
+    availableReason: "Os gates de dependência estão satisfeitos, então este é um candidato válido para o próximo foco.",
+    assessmentReason: "O alvo de capacidade foi atingido; agora é necessária evidência mais forte antes da conclusão.",
+    completedReason: "Os gates obrigatórios de capacidade e evidência estão satisfeitos, então este marco está concluído.",
     statuses: {
       locked: "Bloqueado",
       available: "Disponível",
@@ -75,6 +85,58 @@ function statusLabel(locale: Locale, status: MilestoneStatus): string {
   return copy[locale].statuses[status];
 }
 
+function milestoneReason(locale: Locale, milestone: RoadmapMilestoneView): string {
+  const localized = copy[locale];
+  switch (milestone.status) {
+    case "locked":
+      return localized.lockedReason(milestone.prerequisites);
+    case "available":
+      return localized.availableReason;
+    case "in-progress":
+      return localized.priorityReason(
+        milestone.priorityFactors.capabilityGapCount,
+        milestone.priorityFactors.evidenceGapCount,
+      );
+    case "ready-for-assessment":
+      return localized.assessmentReason;
+    case "completed":
+      return localized.completedReason;
+  }
+}
+
+function MilestoneDetails({
+  locale,
+  milestone,
+}: Readonly<{ locale: Locale; milestone: RoadmapMilestoneView }>) {
+  const localized = copy[locale];
+  return (
+    <details className="career-roadmap-details">
+      <summary>{localized.whyNow}</summary>
+      <p>{milestoneReason(locale, milestone)}</p>
+      <dl>
+        <div>
+          <dt>{localized.capabilityGap}</dt>
+          <dd>{milestone.capabilityGaps.length > 0 ? milestone.capabilityGaps.join(", ") : "—"}</dd>
+        </div>
+        <div>
+          <dt>{localized.evidenceGate}</dt>
+          <dd>
+            {milestone.evidenceRequirements.length > 0
+              ? milestone.evidenceRequirements
+                  .map((requirement) => `${requirement.competencyId}: ${requirement.minimumClass}`)
+                  .join(" · ")
+              : "—"}
+          </dd>
+        </div>
+        <div>
+          <dt>{localized.effort}</dt>
+          <dd>{formatEffort(milestone)}</dd>
+        </div>
+      </dl>
+    </details>
+  );
+}
+
 function MilestoneSummary({
   locale,
   milestone,
@@ -87,6 +149,7 @@ function MilestoneSummary({
       </div>
       <h3>{milestone.title[locale]}</h3>
       <p>{milestone.summary[locale]}</p>
+      <MilestoneDetails locale={locale} milestone={milestone} />
     </article>
   );
 }
@@ -103,10 +166,12 @@ export function CareerRoadmap({
   const roadmap = buildRoadmap(profile, roleMap);
   const milestones = getRoadmapMilestoneViews(profile, roleMap, roadmap);
   const current = milestones.find((milestone) => milestone.id === roadmap.currentFocusMilestoneId) ?? null;
-  const currentIndex = current ? milestones.findIndex((milestone) => milestone.id === current.id) : -1;
   const nextMilestones = milestones
-    .slice(currentIndex >= 0 ? currentIndex + 1 : 0)
-    .filter((milestone) => milestone.status !== "completed")
+    .filter(
+      (milestone) =>
+        milestone.id !== current?.id &&
+        (milestone.status === "available" || milestone.status === "ready-for-assessment"),
+    )
     .slice(0, 3);
 
   return (
@@ -125,12 +190,7 @@ export function CareerRoadmap({
             </div>
             <div className="career-roadmap-now__rationale">
               <h2>{localized.whyNow}</h2>
-              <p>
-                {localized.priorityReason(
-                  current.priorityFactors.capabilityGapCount,
-                  current.priorityFactors.evidenceGapCount,
-                )}
-              </p>
+              <p>{milestoneReason(locale, current)}</p>
               <dl>
                 <div>
                   <dt>{localized.capabilityGap}</dt>
@@ -185,9 +245,10 @@ export function CareerRoadmap({
               data-status={milestone.status}
             >
               <span className="career-roadmap-map__number">{String(index + 1).padStart(2, "0")}</span>
-              <div>
+              <div className="career-roadmap-map__body">
                 <h3>{milestone.title[locale]}</h3>
                 <p>{milestone.summary[locale]}</p>
+                <MilestoneDetails locale={locale} milestone={milestone} />
               </div>
               <div className="career-roadmap-map__state">
                 <strong>{statusLabel(locale, milestone.status)}</strong>
@@ -213,10 +274,14 @@ export function CareerRoadmapSurface({ locale }: Readonly<{ locale: Locale }>) {
     if (status !== "ready" || !profile || !derivedRoadmap) return;
     if (roadmapEqual(profile.roadmap, derivedRoadmap)) return;
 
-    void updateProfile((current) => ({
-      ...current,
-      roadmap: buildRoadmap(current, getRoleMap(current.targetRoles[0])),
-    }));
+    void updateProfile((current) => {
+      const currentRoleId = current.targetRoles[0];
+      if (!currentRoleId) return current;
+      return {
+        ...current,
+        roadmap: buildRoadmap(current, getRoleMap(currentRoleId)),
+      };
+    });
   }, [derivedRoadmap, profile, status, updateProfile]);
 
   if (status === "hydrating") return <p role="status">Loading roadmap…</p>;
