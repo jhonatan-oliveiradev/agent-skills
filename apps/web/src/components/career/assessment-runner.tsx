@@ -2,11 +2,11 @@
 
 import { useMemo, useState } from "react";
 import {
-  applyAssessmentResult,
   evaluateAssessment,
   type AssessmentResponses,
   type PublicAssessmentBlueprint,
 } from "@/lib/career/assessment";
+import { applyCareerAssessmentResult } from "@/lib/career/assessment-application";
 import {
   getAssessmentBlueprint,
   getPublicAssessmentBlueprintForLocale,
@@ -143,7 +143,7 @@ export function AssessmentDetailSurface({
           const next = evaluateAssessment(blueprint, responses);
           setResult(next);
           if (profile) {
-            void updateProfile((current) => applyAssessmentResult(current, next));
+            void updateProfile((current) => applyCareerAssessmentResult(current, next));
           }
         }}
       />
