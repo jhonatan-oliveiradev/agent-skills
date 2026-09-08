@@ -17,6 +17,8 @@ describe("GET /install", () => {
 
     expect(response.status).toBe(200);
     expect(response.headers.get("content-type")).toMatch(/text\/(x-shellscript|plain)/i);
+    expect(response.headers.get("cache-control")).toBe("no-store");
+    expect(response.headers.get("x-content-type-options")).toBe("nosniff");
     expect(body).toMatch(/^#!\/usr\/bin\/env bash\n/);
     expect(body).toContain("set -euo pipefail");
     expect(body).toContain(revision);
