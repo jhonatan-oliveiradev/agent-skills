@@ -67,21 +67,41 @@ describe("Career Roadmap", () => {
     const firstMilestone = within(map).getAllByRole("article")[0];
     if (!firstMilestone) throw new Error("Expected a roadmap milestone");
 
-    expect(within(firstMilestone).getByText(/why now/i)).toBeInTheDocument();
-    expect(within(firstMilestone).getByText(/capability gap/i)).toBeInTheDocument();
-    expect(within(firstMilestone).getByText(/evidence gate/i)).toBeInTheDocument();
-    expect(within(firstMilestone).getByText(/estimated effort/i)).toBeInTheDocument();
+    expect(within(firstMilestone).getByText(/^why now$/i)).toBeInTheDocument();
+    expect(within(firstMilestone).getByText(/^capability gap$/i)).toBeInTheDocument();
+    expect(within(firstMilestone).getByText(/^evidence gate$/i)).toBeInTheDocument();
+    expect(within(firstMilestone).getByText(/^estimated effort$/i)).toBeInTheDocument();
   });
 
-  it("uses explicit localized status text instead of color-only roadmap state", () => {
+  it("uses complete localized Roadmap copy and explicit status text instead of color-only state", () => {
     render(<CareerRoadmap locale="pt-BR" profile={profileWithEmptyRoadmap()} />);
 
-    expect(screen.getByRole("region", { name: /^agora$/i })).toBeInTheDocument();
+    const now = screen.getByRole("region", { name: /^agora$/i });
+    const map = screen.getByRole("region", { name: /^mapa$/i });
+    expect(now).toBeInTheDocument();
     expect(screen.getByRole("region", { name: /^próximos$/i })).toBeInTheDocument();
-    expect(screen.getByRole("region", { name: /^mapa$/i })).toBeInTheDocument();
+    expect(map).toBeInTheDocument();
     expect(screen.getAllByText(/em andamento/i).length).toBeGreaterThan(0);
     expect(screen.getAllByText(/bloqueado/i).length).toBeGreaterThan(0);
     expect(screen.getByRole("heading", { name: /por que agora/i })).toBeInTheDocument();
+    expect(within(now).getByText(/foco atual/i)).toBeInTheDocument();
+    expect(within(map).getByText(/^\d+ marcos$/i)).toBeInTheDocument();
+  });
+
+  it("localizes the Roadmap hydration state", () => {
+    const storage: CareerStorage = {
+      load: vi.fn(() => new Promise<CareerProfile | null>(() => undefined)),
+      save: vi.fn().mockResolvedValue(undefined),
+      clear: vi.fn().mockResolvedValue(undefined),
+    };
+
+    render(
+      <CareerProfileProvider storage={storage}>
+        <CareerRoadmapSurface locale="pt-BR" />
+      </CareerProfileProvider>,
+    );
+
+    expect(screen.getByRole("status")).toHaveTextContent(/carregando roadmap/i);
   });
 
   it("persists the first derived roadmap through the existing Career Profile storage boundary", async () => {
