@@ -47,15 +47,17 @@ async function makeRemoteHarness() {
     mkdir(projectRoot),
   ]);
 
-  const fakeInstaller = `#!/usr/bin/env bash
-set -euo pipefail
-printf '%s\\0' "$@" > "$REMOTE_INSTALL_TEST_ARGS"
-printf '%s' "${BASH_SOURCE[0]}" > "$REMOTE_INSTALL_TEST_INSTALLER"
-printf '%s' "$PWD" > "$REMOTE_INSTALL_TEST_CWD"
-if [[ -n "${REMOTE_INSTALL_TEST_EXIT_CODE:-}" ]]; then
-  exit "$REMOTE_INSTALL_TEST_EXIT_CODE"
-fi
-`;
+  const fakeInstaller = [
+    "#!/usr/bin/env bash",
+    "set -euo pipefail",
+    "printf '%s\\0' \"$@\" > \"$REMOTE_INSTALL_TEST_ARGS\"",
+    "printf '%s' \"${BASH_SOURCE[0]}\" > \"$REMOTE_INSTALL_TEST_INSTALLER\"",
+    "printf '%s' \"$PWD\" > \"$REMOTE_INSTALL_TEST_CWD\"",
+    "if [[ -n \"${REMOTE_INSTALL_TEST_EXIT_CODE:-}\" ]]; then",
+    "  exit \"$REMOTE_INSTALL_TEST_EXIT_CODE\"",
+    "fi",
+    "",
+  ].join("\n");
   await writeFile(path.join(archiveRoot, "install.sh"), fakeInstaller);
 
   const archive = path.join(root, "repository.tar.gz");
@@ -66,25 +68,27 @@ fi
   });
   assert.equal(tarCode, 0);
 
-  const fakeCurl = `#!/usr/bin/env bash
-set -euo pipefail
-if [[ "${REMOTE_INSTALL_TEST_CURL_FAIL:-0}" == "1" ]]; then
-  echo "simulated download failure" >&2
-  exit 22
-fi
-output=""
-while (($#)); do
-  case "$1" in
-    -o)
-      output="$2"
-      shift 2
-      ;;
-    *) shift ;;
-  esac
-done
-[[ -n "$output" ]]
-cp -- "$REMOTE_INSTALL_TEST_ARCHIVE" "$output"
-`;
+  const fakeCurl = [
+    "#!/usr/bin/env bash",
+    "set -euo pipefail",
+    "if [[ \"${REMOTE_INSTALL_TEST_CURL_FAIL:-0}\" == \"1\" ]]; then",
+    "  echo \"simulated download failure\" >&2",
+    "  exit 22",
+    "fi",
+    "output=\"\"",
+    "while (($#)); do",
+    "  case \"$1\" in",
+    "    -o)",
+    "      output=\"$2\"",
+    "      shift 2",
+    "      ;;",
+    "    *) shift ;;",
+    "  esac",
+    "done",
+    "[[ -n \"$output\" ]]",
+    "cp -- \"$REMOTE_INSTALL_TEST_ARCHIVE\" \"$output\"",
+    "",
+  ].join("\n");
   const fakeCurlPath = path.join(fakeBin, "curl");
   await writeFile(fakeCurlPath, fakeCurl);
   await chmod(fakeCurlPath, 0o755);
@@ -99,7 +103,7 @@ cp -- "$REMOTE_INSTALL_TEST_ARCHIVE" "$output"
     REMOTE_INSTALL_TEST_CWD: path.join(capture, "cwd.txt"),
   };
 
-  return { root, capture, tempRoot, projectRoot, env };
+  return { capture, tempRoot, projectRoot, env };
 }
 
 async function readNullSeparated(filePath) {
