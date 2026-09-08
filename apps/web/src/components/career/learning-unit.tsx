@@ -1,6 +1,6 @@
 "use client";
 
-import type { LearningUnit as LearningUnitDefinition, PracticePromptKind } from "@/lib/career/learning";
+import type { LearningUnit as LearningUnitDefinition } from "@/lib/career/learning";
 import type { Locale } from "@/lib/locales";
 
 const copy = {
@@ -75,7 +75,7 @@ export function LearningUnit({
       <ol className="career-learning-unit__practice">
         {unit.practice.map((prompt) => (
           <li key={prompt.id}>
-            <span>{localized.kinds[prompt.kind as PracticePromptKind]}</span>
+            <span>{localized.kinds[prompt.kind]}</span>
             <p>{prompt.prompt[locale]}</p>
           </li>
         ))}
