@@ -1,0 +1,35 @@
+{
+  "$schema": "../schemas/skill.schema.json",
+  "slug": "evaluating-developer-proficiency",
+  "category": "developer-career",
+  "packs": ["developer-career"],
+  "maturity": "beta",
+  "difficulty": "intermediate",
+  "featured": false,
+  "compatibility": { "surfaces": ["chatgpt", "codex"], "operatingSystems": ["linux", "macos", "windows"], "installModes": ["plugin", "filesystem"] },
+  "tags": ["career", "assessment", "rubric", "evaluation", "evidence"],
+  "dependencies": [],
+  "relatedSkills": ["assessing-developer-proficiency", "teaching-developer-concepts"],
+  "version": "1.1.0",
+  "updatedAt": "2026-09-04",
+  "locales": {
+    "en": {
+      "displayName": "Evaluating Developer Proficiency",
+      "summary": "Evaluates a target developer capability against a versioned blueprint, observable rubric criteria, and explicit evidence gates.",
+      "primaryBenefit": "Makes proficiency results auditable by separating evidence observation from deterministic gates and confidence instead of relying on a free-form model score.",
+      "whenToUse": "Use when a learner must formally demonstrate a target capability level after learning, practice, or prior uncertain evidence.",
+      "whenNotToUse": "Do not use without fixed criteria, to invent a new level definition, or to treat an unconstrained model score as the final result.",
+      "useCases": ["Run a rubric-based assessment after focused practice", "Produce a structured proficiency report with failed gates and retest guidance"],
+      "examplePrompts": ["Use evaluating-developer-proficiency to evaluate this capability against the supplied blueprint and report observed evidence, gates, level, and confidence."]
+    },
+    "pt-BR": {
+      "displayName": "Avaliação de Proficiência de Desenvolvedor",
+      "summary": "Avalia uma capacidade-alvo contra blueprint versionado, critérios observáveis de rubrica e gates explícitos de evidência.",
+      "primaryBenefit": "Torna o resultado auditável ao separar observação de evidência, gates determinísticos e confiança em vez de depender de uma nota livre do modelo.",
+      "whenToUse": "Use quando a pessoa precisa demonstrar formalmente um nível-alvo após aprendizado, prática ou evidência anterior incerta.",
+      "whenNotToUse": "Não use sem critérios fixos, para inventar uma nova definição de nível ou tratar nota livre do modelo como resultado final.",
+      "useCases": ["Executar assessment por rubrica após prática focada", "Produzir relatório estruturado de proficiência com gates falhos e orientação de reteste"],
+      "examplePrompts": ["Use evaluating-developer-proficiency para avaliar esta capacidade contra o blueprint e relatar evidências, gates, nível e confiança."]
+    }
+  }
+}

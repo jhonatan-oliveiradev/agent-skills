@@ -1,0 +1,35 @@
+{
+  "$schema": "../schemas/skill.schema.json",
+  "slug": "assessing-developer-proficiency",
+  "category": "developer-career",
+  "packs": ["developer-career"],
+  "maturity": "beta",
+  "difficulty": "beginner",
+  "featured": false,
+  "compatibility": { "surfaces": ["chatgpt", "codex"], "operatingSystems": ["linux", "macos", "windows"], "installModes": ["plugin", "filesystem"] },
+  "tags": ["career", "assessment", "proficiency", "evidence", "confidence"],
+  "dependencies": [],
+  "relatedSkills": ["evaluating-developer-proficiency", "building-developer-career-roadmaps"],
+  "version": "1.1.0",
+  "updatedAt": "2026-09-04",
+  "locales": {
+    "en": {
+      "displayName": "Assessing Developer Proficiency",
+      "summary": "Builds an evidence-aware baseline of demonstrated developer capabilities, confidence, uncertainty, and weakly evidenced areas.",
+      "primaryBenefit": "Separates claims from observed evidence so career decisions start from an explainable current state rather than a synthetic score.",
+      "whenToUse": "Use before career planning or focused improvement when the developer needs to understand what is demonstrated, uncertain, or missing evidence.",
+      "whenNotToUse": "Do not use to sequence a roadmap, teach a topic, perform formal post-learning evaluation, or prioritize capabilities from market demand.",
+      "useCases": ["Establish a baseline before creating a developer career roadmap", "Reassess confidence after new project or assessment evidence arrives"],
+      "examplePrompts": ["Use assessing-developer-proficiency to map my current evidence to demonstrated capabilities and confidence without averaging away unknowns."]
+    },
+    "pt-BR": {
+      "displayName": "Avaliação do Nível de Desenvolvedor",
+      "summary": "Constrói uma linha de base orientada por evidências das capacidades demonstradas, confiança, incertezas e áreas com evidência fraca.",
+      "primaryBenefit": "Separa alegações de evidências observadas para que decisões de carreira partam de um estado atual explicável, não de uma nota sintética.",
+      "whenToUse": "Use antes do planejamento de carreira ou melhoria focada quando for necessário entender o que está demonstrado, incerto ou sem evidência.",
+      "whenNotToUse": "Não use para sequenciar roadmap, ensinar um tema, realizar avaliação formal pós-aprendizado ou priorizar capacidades por demanda de mercado.",
+      "useCases": ["Estabelecer uma linha de base antes de criar um roadmap de carreira", "Reavaliar confiança após novas evidências de projeto ou assessment"],
+      "examplePrompts": ["Use assessing-developer-proficiency para mapear minhas evidências atuais em capacidades demonstradas e confiança sem esconder incertezas."]
+    }
+  }
+}

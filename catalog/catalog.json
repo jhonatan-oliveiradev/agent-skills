@@ -1,7 +1,7 @@
 {
   "$schema": "./schemas/catalog.schema.json",
   "schemaVersion": 1,
-  "version": "1.0.0",
+  "version": "1.1.0",
   "defaultLocale": "en",
   "locales": ["en", "pt-BR"]
 }

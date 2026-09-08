@@ -51,6 +51,6 @@ test("lists every active pack in both README catalog sections", async () => {
     assert.ok(portuguese.includes(marker), `PT-BR README is missing ${slug}`);
   }
 
-  assert.match(english, /All eleven published packs are active and installable\./);
-  assert.match(portuguese, /Todos os onze pacotes publicados estão ativos e são instaláveis\./);
+  assert.match(english, /All twelve published packs are active and installable\./);
+  assert.match(portuguese, /Todos os doze pacotes publicados estão ativos e são instaláveis\./);
 });

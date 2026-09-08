@@ -22,9 +22,9 @@ describe("real-use pack coverage", () => {
         "quality-testing",
         "writing-communication",
       ],
-      uncoveredPackSlugs: ["backend-data", "design-brand"],
+      uncoveredPackSlugs: ["backend-data", "design-brand", "developer-career"],
       coveredCount: 9,
-      totalActivePacks: 11,
+      totalActivePacks: 12,
     });
   });
 

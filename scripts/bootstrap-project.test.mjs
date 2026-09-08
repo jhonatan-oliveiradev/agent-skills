@@ -66,7 +66,7 @@ test('installs all personal skills into the supplied destination', async () => {
     skillsDestination,
   });
 
-  assert.equal(result.skillsInstalled, 54);
+  assert.equal(result.skillsInstalled, 60);
   assert.match(
     await readFile(path.join(skillsDestination, 'craft-premium-motion', 'SKILL.md'), 'utf8'),
     /name: craft-premium-motion/,

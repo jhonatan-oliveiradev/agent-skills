@@ -16,8 +16,8 @@ describe("catalog adapter", () => {
     );
 
     expect(catalog.sourceDigest).toBe(source.sourceDigest);
-    expect(catalog.skills).toHaveLength(54);
-    expect(catalog.packs).toHaveLength(11);
+    expect(catalog.skills).toHaveLength(60);
+    expect(catalog.packs).toHaveLength(12);
     expect(getCatalogCounts()).toEqual(source.counts);
     expect(getSupportedLocales()).toEqual(["en", "pt-BR"]);
   });
@@ -83,7 +83,7 @@ describe("catalog adapter", () => {
 
     expect(adapter.getLocalizedPacks).toBeTypeOf("function");
     const packs = adapter.getLocalizedPacks?.("pt-BR") ?? [];
-    expect(packs).toHaveLength(11);
+    expect(packs).toHaveLength(12);
     expect(packs.every((pack) => pack.status === "active")).toBe(true);
     expect(packs.find((pack) => pack.slug === "frontend-product")).toMatchObject({
       name: "Frontend e Produto",

@@ -1,12 +1,12 @@
 {
   "schemaVersion": 1,
-  "version": "1.0.0",
+  "version": "1.1.0",
   "defaultLocale": "en",
   "locales": [
     "en",
     "pt-BR"
   ],
-  "sourceDigest": "391c2256c25eebee23c50bb6be779e869ccc7cf648cddd153fe28285dacd2b14",
+  "sourceDigest": "df9de95f3184e15e15cb512ef2907908c76f15e6ea9d8c611d3b12a5b8528075",
   "filters": {
     "categories": [
       "application-security",
@@ -15,6 +15,7 @@
       "brand-design",
       "codebase-intelligence",
       "delivery",
+      "developer-career",
       "engineering-workflow",
       "frontend",
       "game-development",
@@ -30,6 +31,7 @@
       "backend-data",
       "codebase-intelligence",
       "design-brand",
+      "developer-career",
       "engineering-workflow",
       "frontend-product",
       "game-development",
@@ -53,6 +55,7 @@
       "api-security",
       "architecture",
       "art-direction",
+      "assessment",
       "asset-pipeline",
       "audience",
       "authentication",
@@ -68,6 +71,8 @@
       "browser",
       "bugs",
       "calls-to-action",
+      "capabilities",
+      "career",
       "change-evidence",
       "change-impact",
       "character-art",
@@ -79,6 +84,7 @@
       "combat-animation",
       "communication",
       "component-apis",
+      "confidence",
       "constraints",
       "content-design",
       "content-strategy",
@@ -105,11 +111,13 @@
       "end-to-end",
       "engineering",
       "entrypoints",
+      "evaluation",
       "evidence",
       "execution-trace",
       "explain",
       "external-services",
       "figma",
+      "fit",
       "frontend-fidelity",
       "game-assets",
       "game-design",
@@ -130,9 +138,12 @@
       "interaction-design",
       "interface",
       "interface-design",
+      "jobs",
       "landing-pages",
       "language",
+      "learning",
       "logo",
+      "market",
       "marketing",
       "memory-leaks",
       "messaging",
@@ -140,12 +151,14 @@
       "microcopy",
       "migration",
       "migrations",
+      "milestones",
       "motion-design",
       "motion-performance",
       "naming",
       "nextjs",
       "nodejs",
       "observability",
+      "opportunities",
       "orchestration",
       "owasp",
       "ownership",
@@ -154,14 +167,18 @@
       "planning",
       "planning-handoff",
       "playtesting",
+      "portfolio",
       "positioning",
       "postgresql",
+      "practice",
       "pricing-pages",
       "procedural-3d",
       "product",
       "product-marketing",
+      "proficiency",
       "profiling",
       "project-scaffolding",
+      "projects",
       "provenance",
       "pull-requests",
       "quality",
@@ -178,7 +195,9 @@
       "reusable-processes",
       "rewriting",
       "risk",
+      "roadmap",
       "routing",
+      "rubric",
       "runtime-performance",
       "runtime-validation",
       "schema-evolution",
@@ -197,6 +216,7 @@
       "supply-chain",
       "tailwind-css",
       "tdd",
+      "teaching",
       "test-strategy",
       "testing",
       "testing-surfaces",
@@ -262,10 +282,10 @@
     ]
   },
   "counts": {
-    "skills": 54,
+    "skills": 60,
     "packs": {
-      "total": 11,
-      "active": 11,
+      "total": 12,
+      "active": 12,
       "planned": 0
     },
     "categories": {
@@ -275,6 +295,7 @@
       "brand-design": 5,
       "codebase-intelligence": 5,
       "delivery": 1,
+      "developer-career": 6,
       "engineering-workflow": 4,
       "frontend": 5,
       "game-development": 5,
@@ -285,13 +306,13 @@
       "writing-communication": 5
     },
     "maturity": {
-      "beta": 36,
+      "beta": 42,
       "stable": 18
     },
     "difficulty": {
       "advanced": 29,
-      "beginner": 2,
-      "intermediate": 23
+      "beginner": 4,
+      "intermediate": 27
     },
     "activePackMembership": {
       "application-security": 4,
@@ -299,6 +320,7 @@
       "backend-data": 4,
       "codebase-intelligence": 5,
       "design-brand": 5,
+      "developer-career": 6,
       "engineering-workflow": 4,
       "frontend-product": 8,
       "game-development": 5,
@@ -345,7 +367,7 @@
         "planning-safe-refactors",
         "building-regression-tests"
       ],
-      "version": "1.0.0",
+      "version": "1.1.0",
       "updatedAt": "2026-09-02",
       "locales": {
         "en": {
@@ -374,6 +396,146 @@
           ],
           "examplePrompts": [
             "Use analyzing-change-blast-radius para delimitar o impacto desta mudança em dependentes, contratos, caminhos de runtime, testes e fixtures. Marque os achados como observados, inferidos ou não resolvidos e cite a fonte e localização de cada afirmação material."
+          ]
+        }
+      }
+    },
+    {
+      "$schema": "../schemas/skill.schema.json",
+      "slug": "analyzing-developer-career-opportunities",
+      "category": "developer-career",
+      "packs": [
+        "developer-career"
+      ],
+      "maturity": "beta",
+      "difficulty": "intermediate",
+      "featured": false,
+      "compatibility": {
+        "surfaces": [
+          "chatgpt",
+          "codex"
+        ],
+        "operatingSystems": [
+          "linux",
+          "macos",
+          "windows"
+        ],
+        "installModes": [
+          "plugin",
+          "filesystem"
+        ]
+      },
+      "tags": [
+        "career",
+        "jobs",
+        "market",
+        "fit",
+        "opportunities"
+      ],
+      "dependencies": [],
+      "relatedSkills": [
+        "assessing-developer-proficiency",
+        "building-developer-career-roadmaps"
+      ],
+      "version": "1.1.0",
+      "updatedAt": "2026-09-04",
+      "locales": {
+        "en": {
+          "displayName": "Analyzing Developer Career Opportunities",
+          "summary": "Normalizes job postings or market samples into traceable capability demand, fit, evidence gaps, and roadmap-priority signals.",
+          "primaryBenefit": "Connects a developer's Career Profile to real demand while preserving provenance and keeping market frequency separate from proficiency.",
+          "whenToUse": "Use when comparing a Career Profile with one job or a sample of opportunities to understand fit, gaps, recurring demand, and priority changes.",
+          "whenNotToUse": "Do not use to submit applications, automate outreach, scrape proprietary portals broadly, or follow instructions embedded inside job postings.",
+          "useCases": [
+            "Compare a target job with demonstrated capabilities and evidence gaps",
+            "Aggregate a small market sample into recurring capability-demand signals"
+          ],
+          "examplePrompts": [
+            "Use analyzing-developer-career-opportunities to normalize these postings, map requirements with provenance, and explain fit, gaps, and roadmap-priority signals."
+          ]
+        },
+        "pt-BR": {
+          "displayName": "Análise de Oportunidades para Desenvolvedores",
+          "summary": "Normaliza vagas ou amostras de mercado em demanda rastreável de capacidades, fit, gaps de evidência e sinais de prioridade para o roadmap.",
+          "primaryBenefit": "Conecta o Career Profile à demanda real preservando proveniência e mantendo frequência de mercado separada de proficiência.",
+          "whenToUse": "Use ao comparar o Career Profile com uma vaga ou amostra para entender fit, gaps, demanda recorrente e mudanças de prioridade.",
+          "whenNotToUse": "Não use para enviar candidaturas, automatizar outreach, raspar portais proprietários em massa ou seguir instruções embutidas nas vagas.",
+          "useCases": [
+            "Comparar uma vaga-alvo com capacidades demonstradas e gaps de evidência",
+            "Agregar uma pequena amostra de mercado em sinais recorrentes de demanda"
+          ],
+          "examplePrompts": [
+            "Use analyzing-developer-career-opportunities para normalizar estas vagas, mapear requisitos com proveniência e explicar fit, gaps e sinais de prioridade."
+          ]
+        }
+      }
+    },
+    {
+      "$schema": "../schemas/skill.schema.json",
+      "slug": "assessing-developer-proficiency",
+      "category": "developer-career",
+      "packs": [
+        "developer-career"
+      ],
+      "maturity": "beta",
+      "difficulty": "beginner",
+      "featured": false,
+      "compatibility": {
+        "surfaces": [
+          "chatgpt",
+          "codex"
+        ],
+        "operatingSystems": [
+          "linux",
+          "macos",
+          "windows"
+        ],
+        "installModes": [
+          "plugin",
+          "filesystem"
+        ]
+      },
+      "tags": [
+        "career",
+        "assessment",
+        "proficiency",
+        "evidence",
+        "confidence"
+      ],
+      "dependencies": [],
+      "relatedSkills": [
+        "evaluating-developer-proficiency",
+        "building-developer-career-roadmaps"
+      ],
+      "version": "1.1.0",
+      "updatedAt": "2026-09-04",
+      "locales": {
+        "en": {
+          "displayName": "Assessing Developer Proficiency",
+          "summary": "Builds an evidence-aware baseline of demonstrated developer capabilities, confidence, uncertainty, and weakly evidenced areas.",
+          "primaryBenefit": "Separates claims from observed evidence so career decisions start from an explainable current state rather than a synthetic score.",
+          "whenToUse": "Use before career planning or focused improvement when the developer needs to understand what is demonstrated, uncertain, or missing evidence.",
+          "whenNotToUse": "Do not use to sequence a roadmap, teach a topic, perform formal post-learning evaluation, or prioritize capabilities from market demand.",
+          "useCases": [
+            "Establish a baseline before creating a developer career roadmap",
+            "Reassess confidence after new project or assessment evidence arrives"
+          ],
+          "examplePrompts": [
+            "Use assessing-developer-proficiency to map my current evidence to demonstrated capabilities and confidence without averaging away unknowns."
+          ]
+        },
+        "pt-BR": {
+          "displayName": "Avaliação do Nível de Desenvolvedor",
+          "summary": "Constrói uma linha de base orientada por evidências das capacidades demonstradas, confiança, incertezas e áreas com evidência fraca.",
+          "primaryBenefit": "Separa alegações de evidências observadas para que decisões de carreira partam de um estado atual explicável, não de uma nota sintética.",
+          "whenToUse": "Use antes do planejamento de carreira ou melhoria focada quando for necessário entender o que está demonstrado, incerto ou sem evidência.",
+          "whenNotToUse": "Não use para sequenciar roadmap, ensinar um tema, realizar avaliação formal pós-aprendizado ou priorizar capacidades por demanda de mercado.",
+          "useCases": [
+            "Estabelecer uma linha de base antes de criar um roadmap de carreira",
+            "Reavaliar confiança após novas evidências de projeto ou assessment"
+          ],
+          "examplePrompts": [
+            "Use assessing-developer-proficiency para mapear minhas evidências atuais em capacidades demonstradas e confiança sem esconder incertezas."
           ]
         }
       }
@@ -416,7 +578,7 @@
         "reviewing-web-security",
         "building-regression-tests"
       ],
-      "version": "1.0.0",
+      "version": "1.1.0",
       "updatedAt": "2026-09-01",
       "locales": {
         "en": {
@@ -484,7 +646,7 @@
       "relatedSkills": [
         "implementing-reference-faithful-ui"
       ],
-      "version": "1.0.0",
+      "version": "1.1.0",
       "updatedAt": "2026-08-26",
       "locales": {
         "en": {
@@ -553,7 +715,7 @@
       "relatedSkills": [
         "designing-ui-systems"
       ],
-      "version": "1.0.0",
+      "version": "1.1.0",
       "updatedAt": "2026-08-26",
       "locales": {
         "en": {
@@ -624,7 +786,7 @@
         "writing-brand-voice-and-messaging",
         "designing-ui-systems"
       ],
-      "version": "1.0.0",
+      "version": "1.1.0",
       "updatedAt": "2026-09-01",
       "locales": {
         "en": {
@@ -692,7 +854,7 @@
       "relatedSkills": [
         "building-premium-nextjs-interfaces"
       ],
-      "version": "1.0.0",
+      "version": "1.1.0",
       "updatedAt": "2026-08-26",
       "locales": {
         "en": {
@@ -721,6 +883,77 @@
           ],
           "examplePrompts": [
             "Use building-conversion-product-pages para reorganizar esta página de produto em torno de clareza, confiança e uma única ação principal."
+          ]
+        }
+      }
+    },
+    {
+      "$schema": "../schemas/skill.schema.json",
+      "slug": "building-developer-career-roadmaps",
+      "category": "developer-career",
+      "packs": [
+        "developer-career"
+      ],
+      "maturity": "beta",
+      "difficulty": "intermediate",
+      "featured": false,
+      "compatibility": {
+        "surfaces": [
+          "chatgpt",
+          "codex"
+        ],
+        "operatingSystems": [
+          "linux",
+          "macos",
+          "windows"
+        ],
+        "installModes": [
+          "plugin",
+          "filesystem"
+        ]
+      },
+      "tags": [
+        "career",
+        "roadmap",
+        "milestones",
+        "learning",
+        "evidence"
+      ],
+      "dependencies": [],
+      "relatedSkills": [
+        "assessing-developer-proficiency",
+        "teaching-developer-concepts",
+        "designing-developer-portfolio-evidence"
+      ],
+      "version": "1.1.0",
+      "updatedAt": "2026-09-04",
+      "locales": {
+        "en": {
+          "displayName": "Building Developer Career Roadmaps",
+          "summary": "Turns a capability baseline, career target, constraints, and market signals into an adaptive sequence of evidence-gated milestones.",
+          "primaryBenefit": "Keeps learning focused on the smallest high-leverage next capability while preserving dependencies and the reasons behind roadmap changes.",
+          "whenToUse": "Use after a baseline exists and the developer needs milestone ordering, a current focus, effort ranges, and recalibration rules.",
+          "whenNotToUse": "Do not use to redefine proficiency criteria, award levels, or replace evidence gates with content-completion checklists.",
+          "useCases": [
+            "Sequence gaps for a target Frontend, Backend, or Full-stack role",
+            "Recalibrate the current focus after assessment or market evidence changes"
+          ],
+          "examplePrompts": [
+            "Use building-developer-career-roadmaps to turn this capability baseline into an adaptive evidence-gated roadmap with one current focus."
+          ]
+        },
+        "pt-BR": {
+          "displayName": "Construção de Roadmaps de Carreira Dev",
+          "summary": "Transforma uma linha de base de capacidades, objetivo, restrições e sinais de mercado em uma sequência adaptativa de marcos com gates de evidência.",
+          "primaryBenefit": "Mantém o aprendizado focado na próxima capacidade de maior alavancagem, preservando dependências e os motivos de cada mudança no roadmap.",
+          "whenToUse": "Use quando já existe uma linha de base e são necessários ordenação de marcos, foco atual, faixas de esforço e regras de recalibração.",
+          "whenNotToUse": "Não use para redefinir critérios de proficiência, conceder níveis ou substituir gates de evidência por checklists de conteúdo consumido.",
+          "useCases": [
+            "Sequenciar gaps para uma vaga-alvo Frontend, Backend ou Full-stack",
+            "Recalibrar o foco atual após novas evidências de assessment ou mercado"
+          ],
+          "examplePrompts": [
+            "Use building-developer-career-roadmaps para transformar esta linha de base em um roadmap adaptativo com gates de evidência e um foco atual."
           ]
         }
       }
@@ -760,7 +993,7 @@
       "relatedSkills": [
         "reconstructing-images-as-threejs"
       ],
-      "version": "1.0.0",
+      "version": "1.1.0",
       "updatedAt": "2026-08-26",
       "locales": {
         "en": {
@@ -829,7 +1062,7 @@
       "relatedSkills": [
         "designing-ui-systems"
       ],
-      "version": "1.0.0",
+      "version": "1.1.0",
       "updatedAt": "2026-08-26",
       "locales": {
         "en": {
@@ -900,7 +1133,7 @@
         "testing-integration-boundaries",
         "testing-web-applications-end-to-end"
       ],
-      "version": "1.0.0",
+      "version": "1.1.0",
       "updatedAt": "2026-09-01",
       "locales": {
         "en": {
@@ -976,7 +1209,7 @@
       "relatedSkills": [
         "designing-relational-data-models"
       ],
-      "version": "1.0.0",
+      "version": "1.1.0",
       "updatedAt": "2026-09-01",
       "locales": {
         "en": {
@@ -1046,7 +1279,7 @@
         "designing-software-boundaries",
         "documenting-architecture-decisions"
       ],
-      "version": "1.0.0",
+      "version": "1.1.0",
       "updatedAt": "2026-09-01",
       "locales": {
         "en": {
@@ -1115,7 +1348,7 @@
       "relatedSkills": [
         "engineering-gsap-animations"
       ],
-      "version": "1.0.0",
+      "version": "1.1.0",
       "updatedAt": "2026-08-26",
       "locales": {
         "en": {
@@ -1183,7 +1416,7 @@
       "relatedSkills": [
         "building-hybrid-game-assets"
       ],
-      "version": "1.0.0",
+      "version": "1.1.0",
       "updatedAt": "2026-08-26",
       "locales": {
         "en": {
@@ -1254,7 +1487,7 @@
         "designing-visual-identities",
         "writing-brand-voice-and-messaging"
       ],
-      "version": "1.0.0",
+      "version": "1.1.0",
       "updatedAt": "2026-09-01",
       "locales": {
         "en": {
@@ -1322,7 +1555,7 @@
       "relatedSkills": [
         "testing-playable-games"
       ],
-      "version": "1.0.0",
+      "version": "1.1.0",
       "updatedAt": "2026-08-26",
       "locales": {
         "en": {
@@ -1351,6 +1584,76 @@
           ],
           "examplePrompts": [
             "Use designing-action-combat para ajustar este duelo em tempo real com sinalizações mais claras dos ataques inimigos e controles mais responsivos."
+          ]
+        }
+      }
+    },
+    {
+      "$schema": "../schemas/skill.schema.json",
+      "slug": "designing-developer-portfolio-evidence",
+      "category": "developer-career",
+      "packs": [
+        "developer-career"
+      ],
+      "maturity": "beta",
+      "difficulty": "intermediate",
+      "featured": false,
+      "compatibility": {
+        "surfaces": [
+          "chatgpt",
+          "codex"
+        ],
+        "operatingSystems": [
+          "linux",
+          "macos",
+          "windows"
+        ],
+        "installModes": [
+          "plugin",
+          "filesystem"
+        ]
+      },
+      "tags": [
+        "career",
+        "portfolio",
+        "projects",
+        "evidence",
+        "capabilities"
+      ],
+      "dependencies": [],
+      "relatedSkills": [
+        "building-developer-career-roadmaps",
+        "evaluating-developer-proficiency"
+      ],
+      "version": "1.1.0",
+      "updatedAt": "2026-09-04",
+      "locales": {
+        "en": {
+          "displayName": "Designing Developer Portfolio Evidence",
+          "summary": "Turns capability gaps into portfolio project briefs with explicit proof contracts that define what a completed artifact must actually demonstrate.",
+          "primaryBenefit": "Makes portfolio work evidence-bearing and inspectable instead of assuming that project existence proves proficiency.",
+          "whenToUse": "Use when one or more roadmap gaps should be demonstrated through a realistic project or professional artifact.",
+          "whenNotToUse": "Do not use to grant proficiency from project existence alone or to replace formal evaluation where a criterion requires it.",
+          "useCases": [
+            "Design a project that demonstrates several related target-role capabilities",
+            "Define proof requirements for an existing portfolio project before claiming it as evidence"
+          ],
+          "examplePrompts": [
+            "Use designing-developer-portfolio-evidence to turn these roadmap gaps into one project brief with explicit evidence contracts for each capability."
+          ]
+        },
+        "pt-BR": {
+          "displayName": "Design de Evidências para Portfólio Dev",
+          "summary": "Transforma gaps de capacidade em briefs de projeto com contratos explícitos de prova que definem o que o artefato concluído deve demonstrar.",
+          "primaryBenefit": "Faz o trabalho de portfólio gerar evidência inspecionável em vez de assumir que a existência do projeto prova proficiência.",
+          "whenToUse": "Use quando um ou mais gaps do roadmap devem ser demonstrados por um projeto realista ou artefato profissional.",
+          "whenNotToUse": "Não use para conceder proficiência apenas pela existência do projeto nem substituir avaliação formal quando um critério a exige.",
+          "useCases": [
+            "Projetar um projeto que demonstre várias capacidades relacionadas à função-alvo",
+            "Definir requisitos de prova para um projeto existente antes de usá-lo como evidência"
+          ],
+          "examplePrompts": [
+            "Use designing-developer-portfolio-evidence para transformar estes gaps em um brief de projeto com contratos explícitos de evidência por capacidade."
           ]
         }
       }
@@ -1392,7 +1695,7 @@
         "building-reliable-node-api-boundaries",
         "evolving-postgres-schemas-safely"
       ],
-      "version": "1.0.0",
+      "version": "1.1.0",
       "updatedAt": "2026-09-01",
       "locales": {
         "en": {
@@ -1463,7 +1766,7 @@
         "building-reliable-node-api-boundaries",
         "planning-safe-refactors"
       ],
-      "version": "1.0.0",
+      "version": "1.1.0",
       "updatedAt": "2026-09-01",
       "locales": {
         "en": {
@@ -1534,7 +1837,7 @@
         "testing-web-applications-end-to-end",
         "building-regression-tests"
       ],
-      "version": "1.0.0",
+      "version": "1.1.0",
       "updatedAt": "2026-09-01",
       "locales": {
         "en": {
@@ -1603,7 +1906,7 @@
       "relatedSkills": [
         "building-premium-nextjs-interfaces"
       ],
-      "version": "1.0.0",
+      "version": "1.1.0",
       "updatedAt": "2026-08-26",
       "locales": {
         "en": {
@@ -1675,7 +1978,7 @@
         "building-brand-guidelines",
         "designing-ui-systems"
       ],
-      "version": "1.0.0",
+      "version": "1.1.0",
       "updatedAt": "2026-09-01",
       "locales": {
         "en": {
@@ -1745,7 +2048,7 @@
         "choosing-application-architecture",
         "designing-software-boundaries"
       ],
-      "version": "1.0.0",
+      "version": "1.1.0",
       "updatedAt": "2026-09-01",
       "locales": {
         "en": {
@@ -1816,7 +2119,7 @@
         "humanizing-generated-prose",
         "writing-brand-voice-and-messaging"
       ],
-      "version": "1.0.0",
+      "version": "1.1.0",
       "updatedAt": "2026-09-01",
       "locales": {
         "en": {
@@ -1892,7 +2195,7 @@
       "relatedSkills": [
         "craft-premium-motion"
       ],
-      "version": "1.0.0",
+      "version": "1.1.0",
       "updatedAt": "2026-08-26",
       "locales": {
         "en": {
@@ -1921,6 +2224,76 @@
           ],
           "examplePrompts": [
             "Use engineering-gsap-animations para implementar esta timeline escolhida em GSAP com ciclo de vida correto no React e comportamento para redução de movimento."
+          ]
+        }
+      }
+    },
+    {
+      "$schema": "../schemas/skill.schema.json",
+      "slug": "evaluating-developer-proficiency",
+      "category": "developer-career",
+      "packs": [
+        "developer-career"
+      ],
+      "maturity": "beta",
+      "difficulty": "intermediate",
+      "featured": false,
+      "compatibility": {
+        "surfaces": [
+          "chatgpt",
+          "codex"
+        ],
+        "operatingSystems": [
+          "linux",
+          "macos",
+          "windows"
+        ],
+        "installModes": [
+          "plugin",
+          "filesystem"
+        ]
+      },
+      "tags": [
+        "career",
+        "assessment",
+        "rubric",
+        "evaluation",
+        "evidence"
+      ],
+      "dependencies": [],
+      "relatedSkills": [
+        "assessing-developer-proficiency",
+        "teaching-developer-concepts"
+      ],
+      "version": "1.1.0",
+      "updatedAt": "2026-09-04",
+      "locales": {
+        "en": {
+          "displayName": "Evaluating Developer Proficiency",
+          "summary": "Evaluates a target developer capability against a versioned blueprint, observable rubric criteria, and explicit evidence gates.",
+          "primaryBenefit": "Makes proficiency results auditable by separating evidence observation from deterministic gates and confidence instead of relying on a free-form model score.",
+          "whenToUse": "Use when a learner must formally demonstrate a target capability level after learning, practice, or prior uncertain evidence.",
+          "whenNotToUse": "Do not use without fixed criteria, to invent a new level definition, or to treat an unconstrained model score as the final result.",
+          "useCases": [
+            "Run a rubric-based assessment after focused practice",
+            "Produce a structured proficiency report with failed gates and retest guidance"
+          ],
+          "examplePrompts": [
+            "Use evaluating-developer-proficiency to evaluate this capability against the supplied blueprint and report observed evidence, gates, level, and confidence."
+          ]
+        },
+        "pt-BR": {
+          "displayName": "Avaliação de Proficiência de Desenvolvedor",
+          "summary": "Avalia uma capacidade-alvo contra blueprint versionado, critérios observáveis de rubrica e gates explícitos de evidência.",
+          "primaryBenefit": "Torna o resultado auditável ao separar observação de evidência, gates determinísticos e confiança em vez de depender de uma nota livre do modelo.",
+          "whenToUse": "Use quando a pessoa precisa demonstrar formalmente um nível-alvo após aprendizado, prática ou evidência anterior incerta.",
+          "whenNotToUse": "Não use sem critérios fixos, para inventar uma nova definição de nível ou tratar nota livre do modelo como resultado final.",
+          "useCases": [
+            "Executar assessment por rubrica após prática focada",
+            "Produzir relatório estruturado de proficiência com gates falhos e orientação de reteste"
+          ],
+          "examplePrompts": [
+            "Use evaluating-developer-proficiency para avaliar esta capacidade contra o blueprint e relatar evidências, gates, nível e confiança."
           ]
         }
       }
@@ -1969,7 +2342,7 @@
         "designing-relational-data-models",
         "profiling-postgres-query-performance"
       ],
-      "version": "1.0.0",
+      "version": "1.1.0",
       "updatedAt": "2026-09-01",
       "locales": {
         "en": {
@@ -2040,7 +2413,7 @@
         "planning-written-communication",
         "writing-brand-voice-and-messaging"
       ],
-      "version": "1.0.0",
+      "version": "1.1.0",
       "updatedAt": "2026-09-01",
       "locales": {
         "en": {
@@ -2108,7 +2481,7 @@
       "relatedSkills": [
         "auditing-pixel-perfect-frontend"
       ],
-      "version": "1.0.0",
+      "version": "1.1.0",
       "updatedAt": "2026-08-26",
       "locales": {
         "en": {
@@ -2177,7 +2550,7 @@
       "relatedSkills": [
         "tracing-code-execution-paths"
       ],
-      "version": "1.0.0",
+      "version": "1.1.0",
       "updatedAt": "2026-09-02",
       "locales": {
         "en": {
@@ -2248,7 +2621,7 @@
         "reviewing-pull-requests",
         "planning-safe-refactors"
       ],
-      "version": "1.0.0",
+      "version": "1.1.0",
       "updatedAt": "2026-09-01",
       "locales": {
         "en": {
@@ -2318,7 +2691,7 @@
         "designing-software-boundaries",
         "choosing-application-architecture"
       ],
-      "version": "1.0.0",
+      "version": "1.1.0",
       "updatedAt": "2026-09-02",
       "locales": {
         "en": {
@@ -2389,7 +2762,7 @@
         "designing-visual-identities",
         "writing-brand-voice-and-messaging"
       ],
-      "version": "1.0.0",
+      "version": "1.1.0",
       "updatedAt": "2026-09-01",
       "locales": {
         "en": {
@@ -2458,7 +2831,7 @@
       "relatedSkills": [
         "craft-premium-motion"
       ],
-      "version": "1.0.0",
+      "version": "1.1.0",
       "updatedAt": "2026-08-26",
       "locales": {
         "en": {
@@ -2527,7 +2900,7 @@
       "relatedSkills": [
         "craft-premium-motion"
       ],
-      "version": "1.0.0",
+      "version": "1.1.0",
       "updatedAt": "2026-08-26",
       "locales": {
         "en": {
@@ -2597,7 +2970,7 @@
         "planning-engineering-work",
         "designing-test-strategies"
       ],
-      "version": "1.0.0",
+      "version": "1.1.0",
       "updatedAt": "2026-09-02",
       "locales": {
         "en": {
@@ -2668,7 +3041,7 @@
         "documenting-architecture-decisions",
         "designing-test-strategies"
       ],
-      "version": "1.0.0",
+      "version": "1.1.0",
       "updatedAt": "2026-09-01",
       "locales": {
         "en": {
@@ -2738,7 +3111,7 @@
         "designing-software-boundaries",
         "documenting-architecture-decisions"
       ],
-      "version": "1.0.0",
+      "version": "1.1.0",
       "updatedAt": "2026-09-01",
       "locales": {
         "en": {
@@ -2810,7 +3183,7 @@
         "editing-for-clarity-and-tone",
         "writing-brand-voice-and-messaging"
       ],
-      "version": "1.0.0",
+      "version": "1.1.0",
       "updatedAt": "2026-09-01",
       "locales": {
         "en": {
@@ -2887,7 +3260,7 @@
         "designing-relational-data-models",
         "evolving-postgres-schemas-safely"
       ],
-      "version": "1.0.0",
+      "version": "1.1.0",
       "updatedAt": "2026-09-01",
       "locales": {
         "en": {
@@ -2963,7 +3336,7 @@
       "relatedSkills": [
         "building-hybrid-game-assets"
       ],
-      "version": "1.0.0",
+      "version": "1.1.0",
       "updatedAt": "2026-08-26",
       "locales": {
         "en": {
@@ -3034,7 +3407,7 @@
         "reviewing-web-security",
         "building-reliable-node-api-boundaries"
       ],
-      "version": "1.0.0",
+      "version": "1.1.0",
       "updatedAt": "2026-09-01",
       "locales": {
         "en": {
@@ -3105,7 +3478,7 @@
         "building-regression-tests",
         "reviewing-web-security"
       ],
-      "version": "1.0.0",
+      "version": "1.1.0",
       "updatedAt": "2026-09-01",
       "locales": {
         "en": {
@@ -3176,7 +3549,7 @@
         "reviewing-api-security",
         "building-regression-tests"
       ],
-      "version": "1.0.0",
+      "version": "1.1.0",
       "updatedAt": "2026-09-01",
       "locales": {
         "en": {
@@ -3245,7 +3618,7 @@
         "planning-engineering-work",
         "managing-implementation-slices"
       ],
-      "version": "1.0.0",
+      "version": "1.1.0",
       "updatedAt": "2026-09-01",
       "locales": {
         "en": {
@@ -3326,7 +3699,7 @@
       "relatedSkills": [
         "bootstrapping-modern-web-apps"
       ],
-      "version": "1.0.0",
+      "version": "1.1.0",
       "updatedAt": "2026-08-26",
       "locales": {
         "en": {
@@ -3355,6 +3728,76 @@
           ],
           "examplePrompts": [
             "Use shipping-github-vercel-changes para preparar esta mudança do repositório para revisão conforme a política atual de branches."
+          ]
+        }
+      }
+    },
+    {
+      "$schema": "../schemas/skill.schema.json",
+      "slug": "teaching-developer-concepts",
+      "category": "developer-career",
+      "packs": [
+        "developer-career"
+      ],
+      "maturity": "beta",
+      "difficulty": "beginner",
+      "featured": false,
+      "compatibility": {
+        "surfaces": [
+          "chatgpt",
+          "codex"
+        ],
+        "operatingSystems": [
+          "linux",
+          "macos",
+          "windows"
+        ],
+        "installModes": [
+          "plugin",
+          "filesystem"
+        ]
+      },
+      "tags": [
+        "career",
+        "learning",
+        "teaching",
+        "practice",
+        "capabilities"
+      ],
+      "dependencies": [],
+      "relatedSkills": [
+        "building-developer-career-roadmaps",
+        "evaluating-developer-proficiency"
+      ],
+      "version": "1.1.0",
+      "updatedAt": "2026-09-04",
+      "locales": {
+        "en": {
+          "displayName": "Teaching Developer Concepts",
+          "summary": "Teaches only the concepts needed for a known capability gap and moves quickly from explanation into targeted practice and demonstration.",
+          "primaryBenefit": "Reduces passive course consumption by tying explanations, examples, and exercises to one observable capability criterion.",
+          "whenToUse": "Use when the current gap is known and the learner needs a concise mental model, examples, practice, or selective resources before demonstrating it.",
+          "whenNotToUse": "Do not use as a generic long-form curriculum, career diagnosis, roadmap engine, or formal proficiency evaluator.",
+          "useCases": [
+            "Explain a misconception discovered in an assessment",
+            "Create a short practice progression for one blocking capability gap"
+          ],
+          "examplePrompts": [
+            "Use teaching-developer-concepts to teach only what I need for this capability gap, then move me into practice that can produce evidence."
+          ]
+        },
+        "pt-BR": {
+          "displayName": "Ensino de Conceitos para Desenvolvedores",
+          "summary": "Ensina apenas os conceitos necessários para um gap conhecido e avança rapidamente da explicação para prática direcionada e demonstração.",
+          "primaryBenefit": "Reduz consumo passivo de cursos ao ligar explicações, exemplos e exercícios a um critério observável de capacidade.",
+          "whenToUse": "Use quando o gap atual é conhecido e a pessoa precisa de um modelo mental conciso, exemplos, prática ou recursos seletivos antes de demonstrá-lo.",
+          "whenNotToUse": "Não use como currículo genérico de longo prazo, diagnóstico de carreira, motor de roadmap ou avaliador formal de proficiência.",
+          "useCases": [
+            "Explicar uma concepção equivocada encontrada em um assessment",
+            "Criar uma progressão curta de prática para um gap bloqueador"
+          ],
+          "examplePrompts": [
+            "Use teaching-developer-concepts para ensinar apenas o necessário para este gap e depois me levar a uma prática que gere evidência."
           ]
         }
       }
@@ -3397,7 +3840,7 @@
         "building-regression-tests",
         "building-reliable-node-api-boundaries"
       ],
-      "version": "1.0.0",
+      "version": "1.1.0",
       "updatedAt": "2026-09-01",
       "locales": {
         "en": {
@@ -3465,7 +3908,7 @@
       "relatedSkills": [
         "designing-action-combat"
       ],
-      "version": "1.0.0",
+      "version": "1.1.0",
       "updatedAt": "2026-08-26",
       "locales": {
         "en": {
@@ -3536,7 +3979,7 @@
         "building-regression-tests",
         "auditing-pixel-perfect-frontend"
       ],
-      "version": "1.0.0",
+      "version": "1.1.0",
       "updatedAt": "2026-09-01",
       "locales": {
         "en": {
@@ -3607,7 +4050,7 @@
         "reviewing-api-security",
         "designing-software-boundaries"
       ],
-      "version": "1.0.0",
+      "version": "1.1.0",
       "updatedAt": "2026-09-01",
       "locales": {
         "en": {
@@ -3676,7 +4119,7 @@
       "relatedSkills": [
         "investigating-codebase-semantically"
       ],
-      "version": "1.0.0",
+      "version": "1.1.0",
       "updatedAt": "2026-09-02",
       "locales": {
         "en": {
@@ -3752,7 +4195,7 @@
       "relatedSkills": [
         "implementing-reference-faithful-ui"
       ],
-      "version": "1.0.0",
+      "version": "1.1.0",
       "updatedAt": "2026-08-26",
       "locales": {
         "en": {
@@ -3816,7 +4259,7 @@
       ],
       "dependencies": [],
       "relatedSkills": [],
-      "version": "1.0.0",
+      "version": "1.1.0",
       "updatedAt": "2026-08-26",
       "locales": {
         "en": {
@@ -3887,7 +4330,7 @@
         "naming-brands-and-products",
         "building-brand-guidelines"
       ],
-      "version": "1.0.0",
+      "version": "1.1.0",
       "updatedAt": "2026-09-01",
       "locales": {
         "en": {
@@ -3959,7 +4402,7 @@
         "building-conversion-product-pages",
         "editing-for-clarity-and-tone"
       ],
-      "version": "1.0.0",
+      "version": "1.1.0",
       "updatedAt": "2026-09-01",
       "locales": {
         "en": {
@@ -4030,7 +4473,7 @@
         "managing-implementation-slices",
         "shipping-github-vercel-changes"
       ],
-      "version": "1.0.0",
+      "version": "1.1.0",
       "updatedAt": "2026-09-01",
       "locales": {
         "en": {
@@ -4102,7 +4545,7 @@
         "editing-for-clarity-and-tone",
         "writing-brand-voice-and-messaging"
       ],
-      "version": "1.0.0",
+      "version": "1.1.0",
       "updatedAt": "2026-09-01",
       "locales": {
         "en": {
@@ -4142,7 +4585,7 @@
       "status": "active",
       "featured": false,
       "color": "amber",
-      "version": "1.0.0",
+      "version": "1.1.0",
       "locales": {
         "en": {
           "name": "Application Security",
@@ -4229,7 +4672,7 @@
       "status": "active",
       "featured": false,
       "color": "cyan",
-      "version": "1.0.0",
+      "version": "1.1.0",
       "locales": {
         "en": {
           "name": "Architecture & Engineering",
@@ -4316,7 +4759,7 @@
       "status": "active",
       "featured": false,
       "color": "violet",
-      "version": "1.0.0",
+      "version": "1.1.0",
       "locales": {
         "en": {
           "name": "Backend & Data",
@@ -4403,7 +4846,7 @@
       "status": "active",
       "featured": false,
       "color": "indigo",
-      "version": "1.0.0",
+      "version": "1.1.0",
       "locales": {
         "en": {
           "name": "Codebase Intelligence",
@@ -4504,7 +4947,7 @@
       "status": "active",
       "featured": false,
       "color": "rose",
-      "version": "1.0.0",
+      "version": "1.1.0",
       "locales": {
         "en": {
           "name": "Design & Brand",
@@ -4601,11 +5044,126 @@
       ]
     },
     {
+      "slug": "developer-career",
+      "status": "active",
+      "featured": false,
+      "color": "violet",
+      "version": "1.1.0",
+      "locales": {
+        "en": {
+          "name": "Developer Career",
+          "summary": "Evidence-aware diagnosis, adaptive roadmaps, focused learning, proficiency evaluation, portfolio proof, and market analysis for developer career progression.",
+          "description": "Six independent working methods that connect current capability evidence to a target developer role without turning learning activity, project existence, or market keywords into synthetic proficiency.",
+          "outcomes": [
+            "Establish an explainable capability baseline and turn its real gaps into an adaptive evidence-gated development roadmap",
+            "Learn, demonstrate, document, and compare capabilities against real market signals while preserving uncertainty and provenance"
+          ]
+        },
+        "pt-BR": {
+          "name": "Carreira de Desenvolvedor",
+          "summary": "Diagnóstico orientado por evidências, roadmaps adaptativos, aprendizado focado, avaliação de proficiência, prova de portfólio e análise de mercado.",
+          "description": "Seis métodos independentes que conectam evidências atuais de capacidade a uma função-alvo sem transformar atividade de estudo, existência de projeto ou palavras de vagas em proficiência sintética.",
+          "outcomes": [
+            "Estabelecer uma linha de base explicável e transformar gaps reais em um roadmap adaptativo com gates de evidência",
+            "Aprender, demonstrar, documentar e comparar capacidades com sinais reais de mercado preservando incerteza e proveniência"
+          ]
+        }
+      },
+      "skillSlugs": [
+        "assessing-developer-proficiency",
+        "building-developer-career-roadmaps",
+        "teaching-developer-concepts",
+        "evaluating-developer-proficiency",
+        "designing-developer-portfolio-evidence",
+        "analyzing-developer-career-opportunities"
+      ],
+      "skills": [
+        {
+          "slug": "assessing-developer-proficiency",
+          "displayName": {
+            "en": "Assessing Developer Proficiency",
+            "pt-BR": "Avaliação do Nível de Desenvolvedor"
+          },
+          "summary": {
+            "en": "Builds an evidence-aware baseline of demonstrated developer capabilities, confidence, uncertainty, and weakly evidenced areas.",
+            "pt-BR": "Constrói uma linha de base orientada por evidências das capacidades demonstradas, confiança, incertezas e áreas com evidência fraca."
+          },
+          "difficulty": "beginner",
+          "maturity": "beta"
+        },
+        {
+          "slug": "building-developer-career-roadmaps",
+          "displayName": {
+            "en": "Building Developer Career Roadmaps",
+            "pt-BR": "Construção de Roadmaps de Carreira Dev"
+          },
+          "summary": {
+            "en": "Turns a capability baseline, career target, constraints, and market signals into an adaptive sequence of evidence-gated milestones.",
+            "pt-BR": "Transforma uma linha de base de capacidades, objetivo, restrições e sinais de mercado em uma sequência adaptativa de marcos com gates de evidência."
+          },
+          "difficulty": "intermediate",
+          "maturity": "beta"
+        },
+        {
+          "slug": "teaching-developer-concepts",
+          "displayName": {
+            "en": "Teaching Developer Concepts",
+            "pt-BR": "Ensino de Conceitos para Desenvolvedores"
+          },
+          "summary": {
+            "en": "Teaches only the concepts needed for a known capability gap and moves quickly from explanation into targeted practice and demonstration.",
+            "pt-BR": "Ensina apenas os conceitos necessários para um gap conhecido e avança rapidamente da explicação para prática direcionada e demonstração."
+          },
+          "difficulty": "beginner",
+          "maturity": "beta"
+        },
+        {
+          "slug": "evaluating-developer-proficiency",
+          "displayName": {
+            "en": "Evaluating Developer Proficiency",
+            "pt-BR": "Avaliação de Proficiência de Desenvolvedor"
+          },
+          "summary": {
+            "en": "Evaluates a target developer capability against a versioned blueprint, observable rubric criteria, and explicit evidence gates.",
+            "pt-BR": "Avalia uma capacidade-alvo contra blueprint versionado, critérios observáveis de rubrica e gates explícitos de evidência."
+          },
+          "difficulty": "intermediate",
+          "maturity": "beta"
+        },
+        {
+          "slug": "designing-developer-portfolio-evidence",
+          "displayName": {
+            "en": "Designing Developer Portfolio Evidence",
+            "pt-BR": "Design de Evidências para Portfólio Dev"
+          },
+          "summary": {
+            "en": "Turns capability gaps into portfolio project briefs with explicit proof contracts that define what a completed artifact must actually demonstrate.",
+            "pt-BR": "Transforma gaps de capacidade em briefs de projeto com contratos explícitos de prova que definem o que o artefato concluído deve demonstrar."
+          },
+          "difficulty": "intermediate",
+          "maturity": "beta"
+        },
+        {
+          "slug": "analyzing-developer-career-opportunities",
+          "displayName": {
+            "en": "Analyzing Developer Career Opportunities",
+            "pt-BR": "Análise de Oportunidades para Desenvolvedores"
+          },
+          "summary": {
+            "en": "Normalizes job postings or market samples into traceable capability demand, fit, evidence gaps, and roadmap-priority signals.",
+            "pt-BR": "Normaliza vagas ou amostras de mercado em demanda rastreável de capacidades, fit, gaps de evidência e sinais de prioridade para o roadmap."
+          },
+          "difficulty": "intermediate",
+          "maturity": "beta"
+        }
+      ]
+    },
+    {
       "slug": "engineering-workflow",
       "status": "active",
       "featured": false,
       "color": "teal",
-      "version": "1.0.0",
+      "version": "1.1.0",
       "locales": {
         "en": {
           "name": "Engineering Workflow",
@@ -4692,7 +5250,7 @@
       "status": "active",
       "featured": true,
       "color": "electric-blue",
-      "version": "1.0.0",
+      "version": "1.1.0",
       "locales": {
         "en": {
           "name": "Frontend & Product",
@@ -4835,7 +5393,7 @@
       "status": "active",
       "featured": true,
       "color": "amber",
-      "version": "1.0.0",
+      "version": "1.1.0",
       "locales": {
         "en": {
           "name": "Game Development",
@@ -4936,7 +5494,7 @@
       "status": "active",
       "featured": true,
       "color": "violet",
-      "version": "1.0.0",
+      "version": "1.1.0",
       "locales": {
         "en": {
           "name": "Motion",
@@ -5037,7 +5595,7 @@
       "status": "active",
       "featured": false,
       "color": "coral",
-      "version": "1.0.0",
+      "version": "1.1.0",
       "locales": {
         "en": {
           "name": "Quality & Testing",
@@ -5124,7 +5682,7 @@
       "status": "active",
       "featured": false,
       "color": "amber",
-      "version": "1.0.0",
+      "version": "1.1.0",
       "locales": {
         "en": {
           "name": "Writing & Communication",

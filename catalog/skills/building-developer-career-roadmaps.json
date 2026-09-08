@@ -1,0 +1,35 @@
+{
+  "$schema": "../schemas/skill.schema.json",
+  "slug": "building-developer-career-roadmaps",
+  "category": "developer-career",
+  "packs": ["developer-career"],
+  "maturity": "beta",
+  "difficulty": "intermediate",
+  "featured": false,
+  "compatibility": { "surfaces": ["chatgpt", "codex"], "operatingSystems": ["linux", "macos", "windows"], "installModes": ["plugin", "filesystem"] },
+  "tags": ["career", "roadmap", "milestones", "learning", "evidence"],
+  "dependencies": [],
+  "relatedSkills": ["assessing-developer-proficiency", "teaching-developer-concepts", "designing-developer-portfolio-evidence"],
+  "version": "1.1.0",
+  "updatedAt": "2026-09-04",
+  "locales": {
+    "en": {
+      "displayName": "Building Developer Career Roadmaps",
+      "summary": "Turns a capability baseline, career target, constraints, and market signals into an adaptive sequence of evidence-gated milestones.",
+      "primaryBenefit": "Keeps learning focused on the smallest high-leverage next capability while preserving dependencies and the reasons behind roadmap changes.",
+      "whenToUse": "Use after a baseline exists and the developer needs milestone ordering, a current focus, effort ranges, and recalibration rules.",
+      "whenNotToUse": "Do not use to redefine proficiency criteria, award levels, or replace evidence gates with content-completion checklists.",
+      "useCases": ["Sequence gaps for a target Frontend, Backend, or Full-stack role", "Recalibrate the current focus after assessment or market evidence changes"],
+      "examplePrompts": ["Use building-developer-career-roadmaps to turn this capability baseline into an adaptive evidence-gated roadmap with one current focus."]
+    },
+    "pt-BR": {
+      "displayName": "Construção de Roadmaps de Carreira Dev",
+      "summary": "Transforma uma linha de base de capacidades, objetivo, restrições e sinais de mercado em uma sequência adaptativa de marcos com gates de evidência.",
+      "primaryBenefit": "Mantém o aprendizado focado na próxima capacidade de maior alavancagem, preservando dependências e os motivos de cada mudança no roadmap.",
+      "whenToUse": "Use quando já existe uma linha de base e são necessários ordenação de marcos, foco atual, faixas de esforço e regras de recalibração.",
+      "whenNotToUse": "Não use para redefinir critérios de proficiência, conceder níveis ou substituir gates de evidência por checklists de conteúdo consumido.",
+      "useCases": ["Sequenciar gaps para uma vaga-alvo Frontend, Backend ou Full-stack", "Recalibrar o foco atual após novas evidências de assessment ou mercado"],
+      "examplePrompts": ["Use building-developer-career-roadmaps para transformar esta linha de base em um roadmap adaptativo com gates de evidência e um foco atual."]
+    }
+  }
+}

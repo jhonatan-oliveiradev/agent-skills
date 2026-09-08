@@ -1,0 +1,36 @@
+{
+  "$schema": "../schemas/pack.schema.json",
+  "slug": "developer-career",
+  "status": "active",
+  "featured": false,
+  "color": "violet",
+  "version": "1.1.0",
+  "skills": [
+    "assessing-developer-proficiency",
+    "building-developer-career-roadmaps",
+    "teaching-developer-concepts",
+    "evaluating-developer-proficiency",
+    "designing-developer-portfolio-evidence",
+    "analyzing-developer-career-opportunities"
+  ],
+  "locales": {
+    "en": {
+      "name": "Developer Career",
+      "summary": "Evidence-aware diagnosis, adaptive roadmaps, focused learning, proficiency evaluation, portfolio proof, and market analysis for developer career progression.",
+      "description": "Six independent working methods that connect current capability evidence to a target developer role without turning learning activity, project existence, or market keywords into synthetic proficiency.",
+      "outcomes": [
+        "Establish an explainable capability baseline and turn its real gaps into an adaptive evidence-gated development roadmap",
+        "Learn, demonstrate, document, and compare capabilities against real market signals while preserving uncertainty and provenance"
+      ]
+    },
+    "pt-BR": {
+      "name": "Carreira de Desenvolvedor",
+      "summary": "Diagnóstico orientado por evidências, roadmaps adaptativos, aprendizado focado, avaliação de proficiência, prova de portfólio e análise de mercado.",
+      "description": "Seis métodos independentes que conectam evidências atuais de capacidade a uma função-alvo sem transformar atividade de estudo, existência de projeto ou palavras de vagas em proficiência sintética.",
+      "outcomes": [
+        "Estabelecer uma linha de base explicável e transformar gaps reais em um roadmap adaptativo com gates de evidência",
+        "Aprender, demonstrar, documentar e comparar capacidades com sinais reais de mercado preservando incerteza e proveniência"
+      ]
+    }
+  }
+}

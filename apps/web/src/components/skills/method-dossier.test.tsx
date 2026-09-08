@@ -52,11 +52,11 @@ describe("Method Dossier", () => {
 
     expect(screen.getByRole("link", { name: label })).toHaveAttribute(
       "href",
-      "/downloads/skills/designing-ui-systems-1.0.0.zip",
+      "/downloads/skills/designing-ui-systems-1.1.0.zip",
     );
     expect(screen.getByRole("link", { name: label })).toHaveAttribute(
       "download",
-      "designing-ui-systems-1.0.0.zip",
+      "designing-ui-systems-1.1.0.zip",
     );
   });
 

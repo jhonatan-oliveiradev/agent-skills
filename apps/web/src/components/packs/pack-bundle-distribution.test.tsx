@@ -32,7 +32,7 @@ describe("Pack bundle distribution", () => {
     const download = screen.getByRole("link", { name: label });
     expect(download).toHaveAttribute(
       "href",
-      "/downloads/packs/agent-skills-design-brand-1.0.0.zip",
+      "/downloads/packs/agent-skills-design-brand-1.1.0.zip",
     );
     expect(download).toHaveAttribute("download");
     expect(screen.getByText("5 skills · ZIP")).toBeInTheDocument();

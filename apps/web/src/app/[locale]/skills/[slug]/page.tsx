@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+import { RemoteInstallCallout } from "@/components/remote-install-callout";
 import { MethodDossier } from "@/components/skills/method-dossier";
 import { getBuiltWithSkillsCases } from "@/lib/built-with-skills";
 import {
@@ -15,6 +16,7 @@ import { editorialRelationsCopy } from "@/lib/editorial-relations-copy";
 import { isLocale } from "@/lib/i18n";
 import { getChatgptSkillDownload } from "@/lib/installation";
 import { messages } from "@/lib/messages";
+import { getRemoteSkillInstallCommand } from "@/lib/remote-installer.mjs";
 
 const repositoryUrl = "https://github.com/jhonatan-oliveiradev/agent-skills";
 
@@ -95,6 +97,10 @@ export default async function SkillDetailPage({ params }: SkillPageProps) {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
+      />
+      <RemoteInstallCallout
+        locale={locale}
+        command={getRemoteSkillInstallCommand(skill.slug)}
       />
       <MethodDossier
         skill={skill}

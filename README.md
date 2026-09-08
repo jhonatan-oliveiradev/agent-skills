@@ -1,6 +1,6 @@
 # Agent Skills Studio
 
-A curated Agent Skills library for production frontend, product design, motion, visual QA, delivery workflows, backend and data engineering, software architecture and engineering, quality and testing, application security, engineering workflow, brand design, writing and communication, and game-development tasks. The current catalog publishes 54 reusable skills across 11 active packs. It is inspired by useful patterns from the broader agent-skills ecosystem, but the skills in this repository are intentionally rewritten, consolidated, and kept project-agnostic.
+A curated Agent Skills library for production frontend, product design, motion, visual QA, delivery workflows, backend and data engineering, software architecture and engineering, quality and testing, application security, engineering workflow, developer career, brand design, writing and communication, and game-development tasks. The current development catalog publishes 60 reusable skills across 12 active packs. It is inspired by useful patterns from the broader agent-skills ecosystem, but the skills in this repository are intentionally rewritten, consolidated, and kept project-agnostic.
 
 ## Principles
 
@@ -53,6 +53,14 @@ kept.
 - `analyzing-change-blast-radius`
 - `investigating-codebase-semantically`
 - `planning-codebase-changes-with-evidence`
+
+### Developer career
+- `assessing-developer-proficiency`
+- `building-developer-career-roadmaps`
+- `teaching-developer-concepts`
+- `evaluating-developer-proficiency`
+- `designing-developer-portfolio-evidence`
+- `analyzing-developer-career-opportunities`
 
 ### Quality & testing
 - `designing-test-strategies`
@@ -127,6 +135,12 @@ Each method keeps an evidence ledger that distinguishes observed, inferred, and 
 CodeGraph can optionally accelerate structural retrieval when its MCP tool and a project index are already available. The verified fallback uses targeted repository search, direct source reads, imports, references, tests, and configuration under the same evidence contract. The methods never automatically install CodeGraph, initialize or index a project, or depend on CodeGraph or another vendor runtime.
 
 See the canonical [CodeGraph integration guide](skills/mapping-existing-codebase-structure/references/codegraph.md) for the optional setup and fallback contract.
+
+## Developer Career v1
+
+The Developer Career pack separates six responsibilities that should remain independently invokable: evidence-aware current-state diagnosis, adaptive roadmap construction, gap-targeted teaching, criterion-based proficiency evaluation, portfolio-evidence design, and market/opportunity analysis.
+
+The methods keep proficiency separate from confidence, treat learning completion and project existence as insufficient proof on their own, preserve provenance for external evidence, and allow market signals to prioritize development without rewriting demonstrated competency. `dev` is the pre-production integration branch for this `1.1.0` development line; production `main` and historical Stable `1.0.0` evidence remain unchanged until a later explicit promotion.
 
 ## Quality & Testing v1
 
@@ -259,10 +273,11 @@ The active, installable packs are:
 - `quality-testing` — Quality & Testing (4 skills);
 - `application-security` — Application Security (4 skills);
 - `engineering-workflow` — Engineering Workflow (4 skills);
-- `design-brand` — Design & Brand (5 skills).
-- `writing-communication` — Writing & Communication (5 skills).
+- `design-brand` — Design & Brand (5 skills);
+- `writing-communication` — Writing & Communication (5 skills);
+- `developer-career` — Developer Career (6 skills).
 
-All eleven published packs are active and installable.
+All twelve published packs are active and installable.
 
 Install an active pack on Bash or PowerShell:
 
@@ -326,10 +341,11 @@ Os pacotes ativos e instaláveis são:
 - `quality-testing` — Qualidade e Testes (4 skills);
 - `application-security` — Segurança de Aplicações (4 skills);
 - `engineering-workflow` — Fluxo de Engenharia (4 skills).
-- `design-brand` — Design & Marca (5 skills).
-- `writing-communication` — Escrita & Comunicação (5 skills).
+- `design-brand` — Design & Marca (5 skills);
+- `writing-communication` — Escrita & Comunicação (5 skills);
+- `developer-career` — Carreira de Desenvolvedor (6 skills).
 
-Todos os onze pacotes publicados estão ativos e são instaláveis.
+Todos os doze pacotes publicados estão ativos e são instaláveis.
 
 Instale um pacote ativo com Bash ou PowerShell:
 

@@ -4,6 +4,12 @@ All notable changes to this skill library are documented here.
 
 ## [Unreleased]
 
+### Developer Career
+
+- Expanded the current development catalog to 60 canonical skills and 12 active packs with six Developer Career working methods.
+- Added evidence-aware proficiency diagnosis, adaptive roadmaps, targeted teaching, criterion-based proficiency evaluation, portfolio-evidence design, and opportunity analysis with explicit ownership boundaries.
+- Advanced the `dev` integration line to `1.1.0` while preserving Stable `1.0.0` snapshots and release evidence unchanged.
+
 ### Distribution
 
 - Added deterministic ChatGPT-ready skill ZIP downloads for every canonical skill, keeping `SKILL.md` at the archive root and preserving supporting files with stable relative paths.
@@ -12,7 +18,7 @@ All notable changes to this skill library are documented here.
 ### Studio and roadmap
 
 - Promoted the release-qualified plugin, catalog, installers, and microsite surfaces to Stable in the public roadmap while keeping individual skill maturity distinct from Stable release status.
-- Kept current README/catalog documentation aligned with 54 canonical skills and 11 active packs, and removed only confirmed orphaned localized Home/Getting Started copy.
+- Kept current README/catalog documentation aligned with 60 canonical skills and 12 active packs, and removed only confirmed orphaned localized Home/Getting Started copy.
 
 ### Reliability and maintenance
 

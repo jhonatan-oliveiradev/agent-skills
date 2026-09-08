@@ -29,14 +29,14 @@ test("RC1 readiness matrix covers the four public Beta surfaces", async () => {
   }
 });
 
-test("current catalog exposes 54 skills and 11 active packs", async () => {
+test("current development catalog exposes 60 skills and 12 active packs", async () => {
   const catalog = await readJson("catalog/generated/catalog.json");
 
-  assert.equal(catalog.counts.skills, 54);
-  assert.deepEqual(catalog.counts.packs, { total: 11, active: 11, planned: 0 });
+  assert.equal(catalog.counts.skills, 60);
+  assert.deepEqual(catalog.counts.packs, { total: 12, active: 12, planned: 0 });
 });
 
-test("project-level version owners are synchronized at Stable 1.0.0", async () => {
+test("project-level version owners are synchronized on the 1.1.0 development line", async () => {
   const version = (await readText("VERSION")).trim();
   const rootPackage = await readJson("package.json");
   const plugin = await readJson(".codex-plugin/plugin.json");
@@ -44,7 +44,7 @@ test("project-level version owners are synchronized at Stable 1.0.0", async () =
   const webPackage = await readJson("apps/web/package.json");
   const webLock = await readJson("apps/web/package-lock.json");
 
-  assert.equal(version, "1.0.0");
+  assert.equal(version, "1.1.0");
   assert.equal(rootPackage.version, version);
   assert.equal(plugin.version, version);
   assert.equal(catalogManifest.version, version);

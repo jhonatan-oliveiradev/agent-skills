@@ -9,13 +9,13 @@ import { getProjectPages } from "./project-pages";
 const repositoryRoot = resolve(process.cwd(), "../..");
 
 describe("post-Stable changelog", () => {
-  it("publishes unreleased post-Stable changes without bumping the Stable version", async () => {
+  it("publishes unreleased changes against the current development version", async () => {
     const [changelog, version] = await Promise.all([
       readFile(resolve(repositoryRoot, "CHANGELOG.md"), "utf8"),
       readFile(resolve(repositoryRoot, "VERSION"), "utf8"),
     ]);
 
-    expect(version.trim()).toBe("1.0.0");
+    expect(version.trim()).toBe("1.1.0");
     expect(changelog).toMatch(/^## \[Unreleased\]/m);
     expect(changelog).toContain("ChatGPT-ready skill ZIP");
     expect(changelog).toContain("Method Archive");
