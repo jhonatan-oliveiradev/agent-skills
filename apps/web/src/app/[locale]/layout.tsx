@@ -21,6 +21,7 @@ import "../editorial-method-dossier.css";
 import "../editorial-packs.css";
 import "../editorial-pack-blueprint.css";
 import "../editorial-pack-distribution.css";
+import "../editorial-detail-layout.css";
 import "../editorial-evidence.css";
 import "../editorial-evidence-report.css";
 import "../editorial-relations.css";
