@@ -48,4 +48,8 @@
   .pack-blueprint__installation .remote-install-callout {
     grid-template-columns: 1fr;
   }
+
+  .remote-install-callout .command-entry:last-child {
+    grid-column: 1;
+  }
 }
