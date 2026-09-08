@@ -37,7 +37,9 @@ const milestoneUnitIds: Readonly<Record<string, readonly string[]>> = {
   "portfolio-proof": ["git-collaboration-workflow"],
 };
 
-const unitById = new Map(learningUnitCatalog.map((unit) => [unit.id, unit] as const));
+const unitById = new Map<string, LearningUnit>(
+  learningUnitCatalog.map((unit) => [unit.id, unit] as const),
+);
 
 export function getLearningUnitsForMilestone(milestoneId: string): readonly LearningUnit[] {
   getRoadmapMilestone(milestoneId);

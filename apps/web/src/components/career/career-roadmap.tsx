@@ -2,6 +2,11 @@
 
 import { useEffect, useMemo } from "react";
 import {
+  completeLearningUnit,
+  getLearningUnitsForMilestone,
+  isLearningUnitCompleted,
+} from "@/lib/career/learning";
+import {
   buildRoadmap,
   getRoadmapMilestoneViews,
   type RoadmapMilestoneView,
@@ -10,6 +15,7 @@ import { getRoleMap } from "@/lib/career/role-maps";
 import type { CareerProfile, MilestoneStatus, RoadmapState } from "@/lib/career/types";
 import type { Locale } from "@/lib/locales";
 import { useCareerProfile } from "./career-profile-provider";
+import { LearningUnit } from "./learning-unit";
 
 const copy = {
   en: {
@@ -163,7 +169,12 @@ function MilestoneSummary({
 export function CareerRoadmap({
   locale,
   profile,
-}: Readonly<{ locale: Locale; profile: CareerProfile }>) {
+  onCompleteLearningUnit,
+}: Readonly<{
+  locale: Locale;
+  profile: CareerProfile;
+  onCompleteLearningUnit?: (milestoneId: string, unitId: string) => void;
+}>) {
   const localized = copy[locale];
   const roleId = profile.targetRoles[0];
   if (!roleId) return <p role="alert">{localized.noProfile}</p>;
@@ -172,6 +183,7 @@ export function CareerRoadmap({
   const roadmap = buildRoadmap(profile, roleMap);
   const milestones = getRoadmapMilestoneViews(profile, roleMap, roadmap);
   const current = milestones.find((milestone) => milestone.id === roadmap.currentFocusMilestoneId) ?? null;
+  const currentLearningUnit = current ? getLearningUnitsForMilestone(current.id)[0] ?? null : null;
   const nextMilestones = milestones
     .filter(
       (milestone) =>
@@ -188,35 +200,49 @@ export function CareerRoadmap({
           {current ? <span className="career-roadmap-card__status">{statusLabel(locale, current.status)}</span> : null}
         </header>
         {current ? (
-          <div className="career-roadmap-now__grid">
-            <div className="career-roadmap-now__identity">
-              <p className="career-roadmap-now__index">01 / {localized.currentFocus}</p>
-              <h1>{current.title[locale]}</h1>
-              <p>{current.summary[locale]}</p>
+          <>
+            <div className="career-roadmap-now__grid">
+              <div className="career-roadmap-now__identity">
+                <p className="career-roadmap-now__index">01 / {localized.currentFocus}</p>
+                <h1>{current.title[locale]}</h1>
+                <p>{current.summary[locale]}</p>
+              </div>
+              <div className="career-roadmap-now__rationale">
+                <h2>{localized.whyNow}</h2>
+                <p>{milestoneReason(locale, current)}</p>
+                <dl>
+                  <div>
+                    <dt>{localized.capabilityGap}</dt>
+                    <dd>{current.capabilityGaps.length > 0 ? current.capabilityGaps.join(", ") : "—"}</dd>
+                  </div>
+                  <div>
+                    <dt>{localized.evidenceGate}</dt>
+                    <dd>
+                      {current.evidenceRequirements.length > 0
+                        ? current.evidenceRequirements.map((requirement) => requirement.minimumClass).join(" · ")
+                        : "—"}
+                    </dd>
+                  </div>
+                  <div>
+                    <dt>{localized.effort}</dt>
+                    <dd>{formatEffort(current)}</dd>
+                  </div>
+                </dl>
+              </div>
             </div>
-            <div className="career-roadmap-now__rationale">
-              <h2>{localized.whyNow}</h2>
-              <p>{milestoneReason(locale, current)}</p>
-              <dl>
-                <div>
-                  <dt>{localized.capabilityGap}</dt>
-                  <dd>{current.capabilityGaps.length > 0 ? current.capabilityGaps.join(", ") : "—"}</dd>
-                </div>
-                <div>
-                  <dt>{localized.evidenceGate}</dt>
-                  <dd>
-                    {current.evidenceRequirements.length > 0
-                      ? current.evidenceRequirements.map((requirement) => requirement.minimumClass).join(" · ")
-                      : "—"}
-                  </dd>
-                </div>
-                <div>
-                  <dt>{localized.effort}</dt>
-                  <dd>{formatEffort(current)}</dd>
-                </div>
-              </dl>
-            </div>
-          </div>
+            {currentLearningUnit ? (
+              <LearningUnit
+                unit={currentLearningUnit}
+                locale={locale}
+                completed={isLearningUnitCompleted(profile, current.id, currentLearningUnit.id)}
+                onComplete={
+                  onCompleteLearningUnit
+                    ? (unitId) => onCompleteLearningUnit(current.id, unitId)
+                    : undefined
+                }
+              />
+            ) : null}
+          </>
         ) : (
           <p className="career-roadmap-empty">{localized.noFocus}</p>
         )}
@@ -294,5 +320,13 @@ export function CareerRoadmapSurface({ locale }: Readonly<{ locale: Locale }>) {
   if (status === "error") return <p role="alert">{copy[locale].noProfile}</p>;
   if (!profile) return <p className="career-roadmap-empty">{copy[locale].noProfile}</p>;
 
-  return <CareerRoadmap locale={locale} profile={profile} />;
+  return (
+    <CareerRoadmap
+      locale={locale}
+      profile={profile}
+      onCompleteLearningUnit={(milestoneId, unitId) => {
+        void updateProfile((current) => completeLearningUnit(current, milestoneId, unitId));
+      }}
+    />
+  );
 }

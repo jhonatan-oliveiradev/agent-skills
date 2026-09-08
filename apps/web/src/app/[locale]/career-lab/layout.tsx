@@ -3,6 +3,7 @@ import { resolveLocale } from "@/components/foundation-route";
 import { CareerLabShell } from "@/components/career/career-lab-shell";
 import { CareerProfileProvider } from "@/components/career/career-profile-provider";
 import "@/styles/career-lab.css";
+import "@/styles/career-learning-evidence.css";
 
 type LayoutProps = Readonly<{
   children: ReactNode;
