@@ -1,15 +1,22 @@
+import {
+  getRemotePackInstallCommand,
+  getRemoteSkillInstallCommand,
+  getRemoteTargetInstallCommand,
+  REMOTE_QUICK_INSTALL_COMMAND,
+} from "./remote-installer.mjs";
+
 export const installationCommands = {
-  complete: { bash: "bash install.sh", powershell: "./install.ps1" },
+  complete: { bash: REMOTE_QUICK_INSTALL_COMMAND, powershell: "./install.ps1" },
   claudeCode: {
-    bash: "bash install.sh --target claude-code",
+    bash: getRemoteTargetInstallCommand("claude-code"),
     powershell: "./install.ps1 --target claude-code",
   },
   skill: {
-    bash: "./install.sh --skill craft-premium-motion",
+    bash: getRemoteSkillInstallCommand("craft-premium-motion"),
     powershell: "./install.ps1 --skill craft-premium-motion",
   },
   pack: {
-    bash: "./install.sh --pack motion",
+    bash: getRemotePackInstallCommand("motion"),
     powershell: "./install.ps1 --pack motion",
   },
   verify: {
