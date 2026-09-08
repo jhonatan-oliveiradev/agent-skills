@@ -178,6 +178,58 @@
   opacity: 0.68;
 }
 
+.career-roadmap-details {
+  margin-top: 1.35rem;
+  border-top: 1px solid var(--career-rule);
+}
+
+.career-roadmap-details summary {
+  padding: 0.8rem 0;
+  color: var(--career-copper-dark);
+  cursor: pointer;
+  font-family: var(--font-mono, ui-monospace, monospace);
+  font-size: 0.67rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.career-roadmap-details > p {
+  margin: 0 0 1rem;
+  color: var(--career-muted);
+  font-size: 0.84rem;
+  line-height: 1.55;
+}
+
+.career-roadmap-details dl {
+  margin: 0;
+  border-top: 1px solid var(--career-rule);
+}
+
+.career-roadmap-details dl > div {
+  display: grid;
+  grid-template-columns: minmax(7rem, 0.7fr) minmax(0, 1.3fr);
+  gap: 0.75rem;
+  padding: 0.65rem 0;
+  border-bottom: 1px solid var(--career-rule);
+}
+
+.career-roadmap-details dt {
+  color: var(--career-muted);
+  font-family: var(--font-mono, ui-monospace, monospace);
+  font-size: 0.6rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.career-roadmap-details dd {
+  margin: 0;
+  font-size: 0.76rem;
+  line-height: 1.45;
+  text-align: right;
+  overflow-wrap: anywhere;
+}
+
 .career-roadmap-map {
   margin-top: clamp(3rem, 7vw, 6rem);
 }
@@ -190,7 +242,7 @@
   display: grid;
   grid-template-columns: 3.5rem minmax(0, 1fr) minmax(10rem, auto);
   gap: 1.25rem;
-  align-items: center;
+  align-items: start;
   min-height: 8.5rem;
   padding: 1.25rem 0;
   border-bottom: 1px solid var(--career-rule);
@@ -208,6 +260,10 @@
   font-size: 0.68rem;
 }
 
+.career-roadmap-map__body {
+  min-width: 0;
+}
+
 .career-roadmap-map__milestone h3 {
   font-size: clamp(1.3rem, 2.5vw, 2rem);
 }
@@ -221,6 +277,7 @@
   display: grid;
   justify-items: end;
   gap: 0.4rem;
+  padding-top: 0.2rem;
   text-align: right;
 }
 
@@ -292,11 +349,13 @@
     padding: 0.9rem 0;
   }
 
-  .career-roadmap-now__rationale dl > div {
+  .career-roadmap-now__rationale dl > div,
+  .career-roadmap-details dl > div {
     grid-template-columns: 1fr;
   }
 
-  .career-roadmap-now__rationale dd {
+  .career-roadmap-now__rationale dd,
+  .career-roadmap-details dd {
     text-align: left;
   }
 
