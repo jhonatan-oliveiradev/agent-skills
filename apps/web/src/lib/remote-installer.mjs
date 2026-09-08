@@ -25,7 +25,7 @@ for dependency in curl tar bash node mktemp mkdir rm; do
   fi
 done
 
-temporary_directory="$(mktemp -d "${TMPDIR:-/tmp}/agent-skills-install.XXXXXX")"
+temporary_directory="$(mktemp -d "\${TMPDIR:-/tmp}/agent-skills-install.XXXXXX")"
 cleanup() {
   rm -rf -- "$temporary_directory"
 }
