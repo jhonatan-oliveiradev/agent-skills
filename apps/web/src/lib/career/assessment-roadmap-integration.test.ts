@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
-import { applyAssessmentResult, evaluateAssessment } from "./assessment";
+import { evaluateAssessment } from "./assessment";
+import { applyCareerAssessmentResult } from "./assessment-application";
 import { baselineAssessmentBlueprints } from "./assessment-blueprints";
 import { createEmptyCareerProfile } from "./profile";
 import { buildRoadmap } from "./roadmap-engine";
@@ -32,7 +33,7 @@ describe("assessment -> roadmap integration", () => {
     };
     const previousFocus = profile.roadmap.currentFocusMilestoneId;
 
-    const next = applyAssessmentResult(profile, correctAssessmentResult());
+    const next = applyCareerAssessmentResult(profile, correctAssessmentResult());
 
     expect(previousFocus).toBe("programming-foundations");
     expect(next.roadmap.currentFocusMilestoneId).not.toBe(previousFocus);
