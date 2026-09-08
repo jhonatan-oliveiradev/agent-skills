@@ -1,6 +1,10 @@
 import "server-only";
 import generatedCatalog from "@/generated/catalog.json";
 import type { Locale } from "./locales";
+import {
+  getRemotePackInstallCommand,
+  getRemoteSkillInstallCommand,
+} from "./remote-installer.mjs";
 import type { SkillCatalogItem } from "./skill-filters";
 
 interface CatalogSkillLocale {
@@ -154,7 +158,7 @@ export function getLocalizedSkillBySlug(
 
 export function getSkillInstallCommands(slug: string) {
   return {
-    bash: `./install.sh --skill ${slug}`,
+    bash: getRemoteSkillInstallCommand(slug),
     powershell: `./install.ps1 --skill ${slug}`,
   } as const;
 }
@@ -182,7 +186,7 @@ export function getLocalizedPackBySlug(
 export function getPackInstallCommands(slug: string, status: "active" | "planned") {
   if (status !== "active") return undefined;
   return {
-    bash: `./install.sh --pack ${slug}`,
+    bash: getRemotePackInstallCommand(slug),
     powershell: `./install.ps1 --pack ${slug}`,
   } as const;
 }
