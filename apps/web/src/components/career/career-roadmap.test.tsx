@@ -43,6 +43,13 @@ describe("Career Roadmap", () => {
     expect(within(map).getAllByRole("article")).toHaveLength(expected.milestoneIds.length);
   });
 
+  it("keeps NEXT limited to genuinely unlocked milestones", () => {
+    render(<CareerRoadmap locale="en" profile={profileWithEmptyRoadmap()} />);
+
+    const next = screen.getByRole("region", { name: /^next$/i });
+    expect(within(next).queryByText(/^locked$/i)).not.toBeInTheDocument();
+  });
+
   it("explains why the current milestone matters, its gaps, evidence gate and effort", () => {
     render(<CareerRoadmap locale="en" profile={profileWithEmptyRoadmap()} />);
 
@@ -51,6 +58,19 @@ describe("Career Roadmap", () => {
     expect(within(now).getByText(/programming-javascript/i)).toBeInTheDocument();
     expect(within(now).getByText(/e1/i)).toBeInTheDocument();
     expect(within(now).getByText(/4–8 h/i)).toBeInTheDocument();
+  });
+
+  it("keeps every MAP milestone inspectably explainable", () => {
+    render(<CareerRoadmap locale="en" profile={profileWithEmptyRoadmap()} />);
+
+    const map = screen.getByRole("region", { name: /^map$/i });
+    const firstMilestone = within(map).getAllByRole("article")[0];
+    if (!firstMilestone) throw new Error("Expected a roadmap milestone");
+
+    expect(within(firstMilestone).getByText(/why now/i)).toBeInTheDocument();
+    expect(within(firstMilestone).getByText(/capability gap/i)).toBeInTheDocument();
+    expect(within(firstMilestone).getByText(/evidence gate/i)).toBeInTheDocument();
+    expect(within(firstMilestone).getByText(/estimated effort/i)).toBeInTheDocument();
   });
 
   it("uses explicit localized status text instead of color-only roadmap state", () => {
