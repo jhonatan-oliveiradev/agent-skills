@@ -1,7 +1,30 @@
 const DEFAULT_REVISION = "main";
 const COMMIT_SHA_PATTERN = /^[0-9a-f]{40}$/i;
+const INSTALL_SLUG_PATTERN = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
 const REPOSITORY_ARCHIVE_BASE =
   "https://github.com/jhonatan-oliveiradev/agent-skills/archive";
+
+export const REMOTE_INSTALL_URL = "https://skills.jhonatanoliveira.com/install";
+export const REMOTE_QUICK_INSTALL_COMMAND = `curl -fsSL ${REMOTE_INSTALL_URL} | bash`;
+
+function requireInstallSlug(slug) {
+  if (typeof slug !== "string" || !INSTALL_SLUG_PATTERN.test(slug)) {
+    throw new Error(`Invalid install slug: ${String(slug)}`);
+  }
+  return slug;
+}
+
+export function getRemoteSkillInstallCommand(slug) {
+  return `curl -fsSL ${REMOTE_INSTALL_URL} | bash -s -- --skill ${requireInstallSlug(slug)}`;
+}
+
+export function getRemotePackInstallCommand(slug) {
+  return `curl -fsSL ${REMOTE_INSTALL_URL} | bash -s -- --pack ${requireInstallSlug(slug)}`;
+}
+
+export function getRemoteTargetInstallCommand(target) {
+  return `curl -fsSL ${REMOTE_INSTALL_URL} | bash -s -- --target ${requireInstallSlug(target)}`;
+}
 
 export function resolveRemoteInstallRevision(value) {
   return typeof value === "string" && COMMIT_SHA_PATTERN.test(value)
