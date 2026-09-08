@@ -16,6 +16,7 @@ const copy = {
     now: "NOW",
     next: "NEXT",
     map: "MAP",
+    currentFocus: "CURRENT FOCUS",
     whyNow: "Why now",
     nextTitle: "Next available milestones",
     noNext: "No additional milestone is available until the current dependency is cleared.",
@@ -24,6 +25,8 @@ const copy = {
     effort: "Estimated effort",
     noProfile: "Create a Career Profile before generating an adaptive roadmap.",
     noFocus: "All currently applicable milestones are complete.",
+    loading: "Loading roadmap…",
+    milestoneCount: (count: number) => `${count.toString().padStart(2, "0")} milestones`,
     priorityReason: (capabilityCount: number, evidenceCount: number) =>
       `This milestone is the highest-priority dependency for the target role with ${capabilityCount} capability gap${capabilityCount === 1 ? "" : "s"} and ${evidenceCount} evidence gate${evidenceCount === 1 ? "" : "s"} still open.`,
     lockedReason: (prerequisites: readonly string[]) =>
@@ -43,6 +46,7 @@ const copy = {
     now: "Agora",
     next: "Próximos",
     map: "Mapa",
+    currentFocus: "FOCO ATUAL",
     whyNow: "Por que agora",
     nextTitle: "Próximos marcos disponíveis",
     noNext: "Nenhum marco adicional fica disponível até que a dependência atual seja concluída.",
@@ -51,6 +55,8 @@ const copy = {
     effort: "Esforço estimado",
     noProfile: "Crie um Career Profile antes de gerar um roadmap adaptativo.",
     noFocus: "Todos os marcos atualmente aplicáveis estão concluídos.",
+    loading: "Carregando roadmap…",
+    milestoneCount: (count: number) => `${count.toString().padStart(2, "0")} marcos`,
     priorityReason: (capabilityCount: number, evidenceCount: number) =>
       `Este marco é a dependência de maior prioridade para o papel-alvo, com ${capabilityCount} lacuna${capabilityCount === 1 ? "" : "s"} de capacidade e ${evidenceCount} gate${evidenceCount === 1 ? "" : "s"} de evidência ainda aberto${evidenceCount === 1 ? "" : "s"}.`,
     lockedReason: (prerequisites: readonly string[]) =>
@@ -184,7 +190,7 @@ export function CareerRoadmap({
         {current ? (
           <div className="career-roadmap-now__grid">
             <div className="career-roadmap-now__identity">
-              <p className="career-roadmap-now__index">01 / CURRENT FOCUS</p>
+              <p className="career-roadmap-now__index">01 / {localized.currentFocus}</p>
               <h1>{current.title[locale]}</h1>
               <p>{current.summary[locale]}</p>
             </div>
@@ -235,7 +241,7 @@ export function CareerRoadmap({
       <section className="career-roadmap-map" role="region" aria-label={localized.map}>
         <header className="career-roadmap-section-heading">
           <p>{localized.map}</p>
-          <strong>{milestones.length.toString().padStart(2, "0")} milestones</strong>
+          <strong>{localized.milestoneCount(milestones.length)}</strong>
         </header>
         <div className="career-roadmap-map__sequence">
           {milestones.map((milestone, index) => (
@@ -284,7 +290,7 @@ export function CareerRoadmapSurface({ locale }: Readonly<{ locale: Locale }>) {
     });
   }, [derivedRoadmap, profile, status, updateProfile]);
 
-  if (status === "hydrating") return <p role="status">Loading roadmap…</p>;
+  if (status === "hydrating") return <p role="status">{copy[locale].loading}</p>;
   if (status === "error") return <p role="alert">{copy[locale].noProfile}</p>;
   if (!profile) return <p className="career-roadmap-empty">{copy[locale].noProfile}</p>;
 
