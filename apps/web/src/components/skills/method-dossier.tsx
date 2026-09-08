@@ -4,11 +4,13 @@ import { Fragment } from "react";
 import { CopyCommand } from "@/components/copy-command";
 import { EditorialMetadata } from "@/components/editorial/editorial-metadata";
 import { EditorialSectionHeading } from "@/components/editorial/editorial-section-heading";
+import { RemoteInstallCallout } from "@/components/remote-install-callout";
 import type { BuiltWithSkillsCase } from "@/lib/built-with-skills";
 import type { LocalizedPack, LocalizedSkillDetail } from "@/lib/catalog";
 import { formatMethodCount, formatSystemStatus } from "@/lib/editorial-relations-copy";
 import type { Locale } from "@/lib/locales";
 import type { Messages } from "@/lib/messages";
+import { getRemoteSkillInstallCommand } from "@/lib/remote-installer.mjs";
 import { MethodReader } from "./method-reader";
 import { PromptSpecimen } from "./prompt-specimen";
 
@@ -209,6 +211,10 @@ export function MethodDossier({
           <EditorialSectionHeading
             title={editorialCopy.installAction}
             summary={detail.installationSummary}
+          />
+          <RemoteInstallCallout
+            locale={locale}
+            command={getRemoteSkillInstallCommand(skill.slug)}
           />
           <div className="method-dossier__commands">
             <div>

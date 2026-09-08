@@ -4,11 +4,13 @@ import { CopyCommand } from "@/components/copy-command";
 import { EditorialMetadata } from "@/components/editorial/editorial-metadata";
 import { EditorialReaderNav } from "@/components/editorial/editorial-reader-nav";
 import { EditorialSectionHeading } from "@/components/editorial/editorial-section-heading";
+import { RemoteInstallCallout } from "@/components/remote-install-callout";
 import type { LocalizedPack } from "@/lib/catalog";
 import type { PackEvidenceRelation } from "@/lib/cross-domain-relations";
 import { formatMethodOverlap } from "@/lib/editorial-relations-copy";
 import type { Locale } from "@/lib/locales";
 import type { Messages } from "@/lib/messages";
+import { getRemotePackInstallCommand } from "@/lib/remote-installer.mjs";
 import { PackCompositionMap } from "./pack-composition-map";
 
 interface PackInstallCommands {
@@ -189,6 +191,10 @@ export function PackBlueprint(props: Readonly<PackBlueprintProps>) {
           {commands ? (
             <section id="installation" className="pack-blueprint__installation">
               <EditorialSectionHeading title={detail.installation} summary={detail.installationSummary} />
+              <RemoteInstallCallout
+                locale={locale}
+                command={getRemotePackInstallCommand(pack.slug)}
+              />
               <div className="pack-blueprint__commands">
                 <div><p>{detail.bash}</p><CopyCommand command={commands.bash} label={detail.copy} copiedLabel={detail.copied} /></div>
                 <div><p>{detail.powershell}</p><CopyCommand command={commands.powershell} label={detail.copy} copiedLabel={detail.copied} /></div>
