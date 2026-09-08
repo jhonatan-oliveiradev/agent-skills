@@ -1,8 +1,10 @@
 import type { Locale } from "../locales";
+import type { CompetencyId } from "./competencies";
 import { learningUnitCatalog } from "./learning-catalog";
 import { getRoadmapMilestone } from "./roadmap-catalog";
+import { buildRoadmap } from "./roadmap-engine";
+import { getRoleMap } from "./role-maps";
 import type { CareerProfile } from "./types";
-import type { CompetencyId } from "./competencies";
 
 export type PracticePromptKind =
   | "example"
@@ -72,9 +74,14 @@ export function completeLearningUnit(
   if (!Number.isFinite(Date.parse(now))) {
     throw new Error("Learning completion requires a valid observed time");
   }
-  if (!profile.roadmap.milestoneIds.includes(milestoneId)) {
+
+  const roleId = profile.targetRoles[0];
+  if (!roleId) throw new Error("Learning completion requires a target role");
+  const roadmap = buildRoadmap(profile, getRoleMap(roleId));
+  if (!roadmap.milestoneIds.includes(milestoneId)) {
     throw new Error(`Learning milestone is not part of the active roadmap: ${milestoneId}`);
   }
+
   const allowedUnit = getLearningUnitsForMilestone(milestoneId).find((unit) => unit.id === unitId);
   if (!allowedUnit) {
     throw new Error(`Learning unit ${unitId} is not assigned to milestone ${milestoneId}`);
@@ -83,7 +90,7 @@ export function completeLearningUnit(
   return {
     ...profile,
     roadmap: {
-      ...profile.roadmap,
+      ...roadmap,
       supportingActivityId: activityId(milestoneId, unitId),
     },
     updatedAt: now,
