@@ -42,11 +42,14 @@ describe("editorial detail layout", () => {
     );
   });
 
-  it("preserves the one-column reader layout at tablet and mobile widths", async () => {
+  it("preserves the one-column reader and quick-install layout at tablet and mobile widths", async () => {
     const css = await readOptional("app/editorial-detail-layout.css");
 
     expect(css).toMatch(
       /@media\s*\(max-width:\s*64rem\)\s*\{[\s\S]*?\.method-reader,\s*\.pack-blueprint__reader\s*\{[\s\S]*?grid-template-columns:\s*1fr;/,
+    );
+    expect(css).toMatch(
+      /@media\s*\(max-width:\s*64rem\)\s*\{[\s\S]*?\.remote-install-callout \.command-entry:last-child\s*\{[\s\S]*?grid-column:\s*1;/,
     );
   });
 });
