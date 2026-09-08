@@ -10,9 +10,6 @@ vi.mock("next/navigation", () => ({
 
 import PackDetailPage from "@/app/[locale]/packs/[slug]/page";
 
-const remotePack = (slug: string) =>
-  `curl -fsSL https://skills.jhonatanoliveira.com/install | bash -s -- --pack ${slug}`;
-
 describe("System Blueprint", () => {
   it("renders an active pack as an installable editorial blueprint", async () => {
     const { container } = render(
@@ -25,7 +22,7 @@ describe("System Blueprint", () => {
     expect(container.querySelectorAll("[data-pack-outcome]").length).toBeGreaterThan(0);
     expect(container.querySelector("[data-pack-composition-map]")).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: "Install this pack" })).toBeInTheDocument();
-    expect(screen.getByText(remotePack("frontend-product"))).toBeInTheDocument();
+    expect(screen.getByText("./install.sh --pack frontend-product")).toBeInTheDocument();
   });
 
   it("explains that a pack coordinates related responsibilities without becoming a fixed workflow", async () => {
@@ -43,69 +40,131 @@ describe("System Blueprint", () => {
     ).toBeInTheDocument();
   });
 
-  for (const fixture of [
-    {
-      slug: "backend-data",
-      links: 4,
-      heading: /Designing Relational Data Models$/,
-      href: "/en/skills/designing-relational-data-models",
-    },
-    {
-      slug: "architecture-engineering",
-      links: 4,
-      heading: /Choosing Application Architecture$/,
-      href: "/en/skills/choosing-application-architecture",
-    },
-    {
-      slug: "quality-testing",
-      links: 4,
-      heading: /Designing Test Strategies$/,
-      href: "/en/skills/designing-test-strategies",
-    },
-    {
-      slug: "application-security",
-      links: 4,
-      heading: /Threat Modeling Applications$/,
-      href: "/en/skills/threat-modeling-applications",
-    },
-    {
-      slug: "engineering-workflow",
-      links: 4,
-      heading: /Planning Engineering Work$/,
-      href: "/en/skills/planning-engineering-work",
-    },
-    {
-      slug: "design-brand",
-      links: 5,
-      heading: /Defining Brand Strategy$/,
-      href: "/en/skills/defining-brand-strategy",
-    },
-    {
-      slug: "codebase-intelligence",
-      links: 5,
-      heading: /Mapping Existing Codebase Structure$/,
-      href: "/en/skills/mapping-existing-codebase-structure",
-    },
-  ] as const) {
-    it(`renders ${fixture.slug} as a real installable system`, async () => {
-      const { container } = render(
-        await PackDetailPage({
-          params: Promise.resolve({ locale: "en", slug: fixture.slug }),
-        }),
-      );
+  it("renders Backend & Data as a real four-method installable system", async () => {
+    const { container } = render(
+      await PackDetailPage({
+        params: Promise.resolve({ locale: "en", slug: "backend-data" }),
+      }),
+    );
 
-      expect(container.querySelector('[data-pack-state="active"]')).toBeInTheDocument();
-      const composition = container.querySelector<HTMLElement>("[data-pack-composition-map]");
-      expect(composition).toBeInTheDocument();
-      expect(within(composition!).getAllByRole("link")).toHaveLength(fixture.links);
-      expect(screen.getByRole("heading", { name: "Install this pack" })).toBeInTheDocument();
-      expect(screen.getByText(remotePack(fixture.slug))).toBeInTheDocument();
-      expect(within(composition!).getByRole("link", { name: fixture.heading })).toHaveAttribute(
-        "href",
-        fixture.href,
-      );
-    });
-  }
+    expect(container.querySelector('[data-pack-state="active"]')).toBeInTheDocument();
+    const composition = container.querySelector<HTMLElement>("[data-pack-composition-map]");
+    expect(composition).toBeInTheDocument();
+    expect(within(composition!).getAllByRole("link")).toHaveLength(4);
+    expect(screen.getByRole("heading", { name: "Install this pack" })).toBeInTheDocument();
+    expect(screen.getByText("./install.sh --pack backend-data")).toBeInTheDocument();
+    expect(
+      within(composition!).getByRole("link", { name: /Designing Relational Data Models$/ }),
+    ).toHaveAttribute("href", "/en/skills/designing-relational-data-models");
+  });
+
+  it("renders Architecture & Engineering as a real four-method installable system", async () => {
+    const { container } = render(
+      await PackDetailPage({
+        params: Promise.resolve({ locale: "en", slug: "architecture-engineering" }),
+      }),
+    );
+
+    expect(container.querySelector('[data-pack-state="active"]')).toBeInTheDocument();
+    const composition = container.querySelector<HTMLElement>("[data-pack-composition-map]");
+    expect(composition).toBeInTheDocument();
+    expect(within(composition!).getAllByRole("link")).toHaveLength(4);
+    expect(screen.getByRole("heading", { name: "Install this pack" })).toBeInTheDocument();
+    expect(screen.getByText("./install.sh --pack architecture-engineering")).toBeInTheDocument();
+    expect(
+      within(composition!).getByRole("link", { name: /Choosing Application Architecture$/ }),
+    ).toHaveAttribute("href", "/en/skills/choosing-application-architecture");
+  });
+
+  it("renders Quality & Testing as a real four-method installable system", async () => {
+    const { container } = render(
+      await PackDetailPage({
+        params: Promise.resolve({ locale: "en", slug: "quality-testing" }),
+      }),
+    );
+
+    expect(container.querySelector('[data-pack-state="active"]')).toBeInTheDocument();
+    const composition = container.querySelector<HTMLElement>("[data-pack-composition-map]");
+    expect(composition).toBeInTheDocument();
+    expect(within(composition!).getAllByRole("link")).toHaveLength(4);
+    expect(screen.getByRole("heading", { name: "Install this pack" })).toBeInTheDocument();
+    expect(screen.getByText("./install.sh --pack quality-testing")).toBeInTheDocument();
+    expect(
+      within(composition!).getByRole("link", { name: /Designing Test Strategies$/ }),
+    ).toHaveAttribute("href", "/en/skills/designing-test-strategies");
+  });
+
+  it("renders Application Security as a real four-method installable system", async () => {
+    const { container } = render(
+      await PackDetailPage({
+        params: Promise.resolve({ locale: "en", slug: "application-security" }),
+      }),
+    );
+
+    expect(container.querySelector('[data-pack-state="active"]')).toBeInTheDocument();
+    const composition = container.querySelector<HTMLElement>("[data-pack-composition-map]");
+    expect(composition).toBeInTheDocument();
+    expect(within(composition!).getAllByRole("link")).toHaveLength(4);
+    expect(screen.getByRole("heading", { name: "Install this pack" })).toBeInTheDocument();
+    expect(screen.getByText("./install.sh --pack application-security")).toBeInTheDocument();
+    expect(
+      within(composition!).getByRole("link", { name: /Threat Modeling Applications$/ }),
+    ).toHaveAttribute("href", "/en/skills/threat-modeling-applications");
+  });
+
+  it("renders Engineering Workflow as a real four-method installable system", async () => {
+    const { container } = render(
+      await PackDetailPage({
+        params: Promise.resolve({ locale: "en", slug: "engineering-workflow" }),
+      }),
+    );
+
+    expect(container.querySelector('[data-pack-state="active"]')).toBeInTheDocument();
+    const composition = container.querySelector<HTMLElement>("[data-pack-composition-map]");
+    expect(composition).toBeInTheDocument();
+    expect(within(composition!).getAllByRole("link")).toHaveLength(4);
+    expect(screen.getByRole("heading", { name: "Install this pack" })).toBeInTheDocument();
+    expect(screen.getByText("./install.sh --pack engineering-workflow")).toBeInTheDocument();
+    expect(
+      within(composition!).getByRole("link", { name: /Planning Engineering Work$/ }),
+    ).toHaveAttribute("href", "/en/skills/planning-engineering-work");
+  });
+
+  it("renders Design & Brand as a real five-method installable system", async () => {
+    const { container } = render(
+      await PackDetailPage({
+        params: Promise.resolve({ locale: "en", slug: "design-brand" }),
+      }),
+    );
+
+    expect(container.querySelector('[data-pack-state="active"]')).toBeInTheDocument();
+    const composition = container.querySelector<HTMLElement>("[data-pack-composition-map]");
+    expect(composition).toBeInTheDocument();
+    expect(within(composition!).getAllByRole("link")).toHaveLength(5);
+    expect(screen.getByRole("heading", { name: "Install this pack" })).toBeInTheDocument();
+    expect(screen.getByText("./install.sh --pack design-brand")).toBeInTheDocument();
+    expect(
+      within(composition!).getByRole("link", { name: /Defining Brand Strategy$/ }),
+    ).toHaveAttribute("href", "/en/skills/defining-brand-strategy");
+  });
+
+  it("renders Codebase Intelligence as a real five-method installable system", async () => {
+    const { container } = render(
+      await PackDetailPage({
+        params: Promise.resolve({ locale: "en", slug: "codebase-intelligence" }),
+      }),
+    );
+
+    expect(container.querySelector('[data-pack-state="active"]')).toBeInTheDocument();
+    const composition = container.querySelector<HTMLElement>("[data-pack-composition-map]");
+    expect(composition).toBeInTheDocument();
+    expect(within(composition!).getAllByRole("link")).toHaveLength(5);
+    expect(screen.getByRole("heading", { name: "Install this pack" })).toBeInTheDocument();
+    expect(screen.getByText("./install.sh --pack codebase-intelligence")).toBeInTheDocument();
+    expect(
+      within(composition!).getByRole("link", { name: /Mapping Existing Codebase Structure$/ }),
+    ).toHaveAttribute("href", "/en/skills/mapping-existing-codebase-structure");
+  });
 
   it("connects a pack to reports using methods from the system without claiming pack usage", async () => {
     const { container } = render(
