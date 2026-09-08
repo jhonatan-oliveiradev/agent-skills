@@ -148,7 +148,7 @@ describe("portfolio evidence contracts", () => {
     expect(next.decisionRecords.at(-1)?.reason).toBe("portfolio-evidence");
   });
 
-  it("fails closed for duplicate evidence ids and unknown competency claims", () => {
+  it("fails closed for duplicate ids, unknown competencies, forged criteria and elevated trust", () => {
     const profile = profileWithRoadmap();
     const contract = buildPortfolioEvidenceContract(profile, "programming-foundations");
     const [record] = createPortfolioEvidenceRecords(contract, {
@@ -164,6 +164,23 @@ describe("portfolio evidence contracts", () => {
     expect(() =>
       addEvidence(profile, { ...record, id: "evidence:unknown", competencyId: "not-real" }),
     ).toThrow(/unknown competency/i);
+
+    expect(() =>
+      addEvidence(profile, {
+        ...record,
+        id: "evidence:forged-criterion",
+        criterionIds: ["programming-typescript.foundation"],
+      }),
+    ).toThrow(/criterion is not valid/i);
+
+    expect(() =>
+      addEvidence(profile, {
+        ...record,
+        id: "evidence:elevated-trust",
+        trust: "local-deterministic",
+      }),
+    ).toThrow(/external-unverified/i);
+
     expect(competencyDefinitions.some((definition) => definition.id === record.competencyId)).toBe(
       true,
     );

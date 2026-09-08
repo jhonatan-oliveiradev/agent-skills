@@ -5,7 +5,7 @@ import {
   createPortfolioEvidenceRecords,
   type PortfolioEvidenceContract,
 } from "@/lib/career/portfolio-evidence";
-import type { EvidenceRecord } from "@/lib/career/types";
+import type { EvidenceRecord, ProficiencyLevel } from "@/lib/career/types";
 import type { Locale } from "@/lib/locales";
 
 const copy = {
@@ -22,6 +22,13 @@ const copy = {
     submit: "Record evidence",
     saving: "Recording…",
     saved: "Evidence recorded. Roadmap and competency confidence were recalculated.",
+    invalid: "Review the evidence summary, source and checklist before recording this artifact.",
+    levels: {
+      foundation: "Foundation",
+      developing: "Developing",
+      proficient: "Proficient",
+      advanced: "Advanced",
+    } satisfies Record<ProficiencyLevel, string>,
   },
   "pt-BR": {
     eyebrow: "Contrato de evidência",
@@ -36,6 +43,13 @@ const copy = {
     submit: "Registrar evidência",
     saving: "Registrando…",
     saved: "Evidência registrada. Roadmap e confiança das competências foram recalculados.",
+    invalid: "Revise o resumo, a fonte e o checklist antes de registrar este artefato.",
+    levels: {
+      foundation: "Fundamentos",
+      developing: "Em desenvolvimento",
+      proficient: "Proficiente",
+      advanced: "Avançado",
+    } satisfies Record<ProficiencyLevel, string>,
   },
 } as const;
 
@@ -87,9 +101,9 @@ export function EvidenceForm({
       setRepositoryUrl("");
       setCompletedIds([]);
       setStatus("saved");
-    } catch (caught) {
+    } catch {
       setStatus("idle");
-      setError(caught instanceof Error ? caught.message : String(caught));
+      setError(localized.invalid);
     }
   }
 
@@ -112,7 +126,7 @@ export function EvidenceForm({
           {contract.capabilities.map((capability) => (
             <li key={capability.competencyId}>
               <code>{capability.competencyId}</code>
-              <span>{capability.targetLevel}</span>
+              <span>{localized.levels[capability.targetLevel]}</span>
             </li>
           ))}
         </ul>

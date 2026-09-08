@@ -49,6 +49,21 @@ const proficiencyRank: Readonly<Record<ProficiencyLevel, number>> = {
   advanced: 3,
 };
 
+const levelLabels: Readonly<Record<Locale, Readonly<Record<ProficiencyLevel, string>>>> = {
+  en: {
+    foundation: "foundation",
+    developing: "developing",
+    proficient: "proficient",
+    advanced: "advanced",
+  },
+  "pt-BR": {
+    foundation: "fundamentos",
+    developing: "em desenvolvimento",
+    proficient: "proficiente",
+    advanced: "avançado",
+  },
+};
+
 function competencyDefinition(competencyId: string) {
   const definition = competencyDefinitions.find((candidate) => candidate.id === competencyId);
   if (!definition) throw new Error(`Unknown competency: ${competencyId}`);
@@ -83,8 +98,8 @@ export function buildPortfolioEvidenceContract(
     ...capabilities.map((capability) => ({
       id: `capability:${capability.competencyId}`,
       label: {
-        en: `The artifact demonstrates ${capability.competencyId} at the ${capability.targetLevel} target with concrete implementation evidence.`,
-        "pt-BR": `O artefato demonstra ${capability.competencyId} no alvo ${capability.targetLevel} com evidência concreta de implementação.`,
+        en: `The artifact demonstrates ${capability.competencyId} at the ${levelLabels.en[capability.targetLevel]} target with concrete implementation evidence.`,
+        "pt-BR": `O artefato demonstra ${capability.competencyId} no alvo ${levelLabels["pt-BR"][capability.targetLevel]} com evidência concreta de implementação.`,
       },
     })),
     {
@@ -183,6 +198,44 @@ export function createPortfolioEvidenceRecords(
   }));
 }
 
+function validatePortfolioEvidence(record: EvidenceRecord): void {
+  if (!record.id.trim()) throw new Error("Portfolio evidence id is required");
+  if (!record.summary.trim()) throw new Error("Portfolio evidence summary is required");
+  if (record.sourceType !== "portfolio") {
+    throw new Error("Career portfolio evidence must use sourceType portfolio");
+  }
+  if (record.class !== "E4") {
+    throw new Error("Completed portfolio evidence must use the E4 authentic evidence class");
+  }
+  if (record.trust !== "external-unverified") {
+    throw new Error("Career portfolio evidence must remain external-unverified in V1");
+  }
+  if (!Number.isFinite(Date.parse(record.observedAt))) {
+    throw new Error("Portfolio evidence requires a valid observed time");
+  }
+  if (record.sourceUrl) assertHttpUrl(record.sourceUrl);
+
+  const definition = competencyDefinition(record.competencyId);
+  const demonstratedLevel = record.demonstratedLevel;
+  const criterionIds = record.criterionIds;
+  if (!demonstratedLevel || !criterionIds || criterionIds.length === 0) {
+    throw new Error("Portfolio evidence requires demonstratedLevel and criterionIds");
+  }
+
+  const allowedCriterionIds = new Set(
+    definition.criteria
+      .filter(
+        (criterion) =>
+          proficiencyRank[criterion.level] <= proficiencyRank[demonstratedLevel],
+      )
+      .map((criterion) => criterion.id),
+  );
+  const invalidCriterion = criterionIds.find((id) => !allowedCriterionIds.has(id));
+  if (invalidCriterion) {
+    throw new Error(`Portfolio evidence criterion is not valid for competency: ${invalidCriterion}`);
+  }
+}
+
 export function addEvidence(
   profile: CareerProfile,
   evidenceRecord: EvidenceRecord,
@@ -190,13 +243,8 @@ export function addEvidence(
   if (profile.evidence.some((record) => record.id === evidenceRecord.id)) {
     throw new Error(`Duplicate evidence id: ${evidenceRecord.id}`);
   }
-  if (evidenceRecord.sourceType !== "portfolio") {
-    throw new Error("Career portfolio evidence must use sourceType portfolio");
-  }
+  validatePortfolioEvidence(evidenceRecord);
   const definition = competencyDefinition(evidenceRecord.competencyId);
-  if (!Number.isFinite(Date.parse(evidenceRecord.observedAt))) {
-    throw new Error("Portfolio evidence requires a valid observed time");
-  }
 
   const evidence = [...profile.evidence, evidenceRecord];
   const derived = deriveCompetencyState(
