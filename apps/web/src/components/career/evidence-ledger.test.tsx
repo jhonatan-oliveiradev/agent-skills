@@ -114,6 +114,6 @@ describe("Professional Evidence Ledger", () => {
       "/pt-BR/career-lab/evidence",
     );
     expect(screen.getByRole("heading", { name: /evidência profissional/i })).toBeInTheDocument();
-    expect(screen.getByText(/contrato de evidência/i)).toBeInTheDocument();
+    expect(screen.getByText(/^contrato de evidência$/i)).toBeInTheDocument();
   });
 });
