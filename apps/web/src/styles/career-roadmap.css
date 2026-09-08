@@ -1,0 +1,311 @@
+.career-roadmap {
+  max-width: 88rem;
+  margin: 0 auto;
+  padding: clamp(2.5rem, 6vw, 6rem) 0 2rem;
+}
+
+.career-roadmap section {
+  border-top: 1px solid var(--career-rule);
+}
+
+.career-roadmap-section-heading {
+  min-height: 4.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  border-bottom: 1px solid var(--career-rule);
+}
+
+.career-roadmap-section-heading > p {
+  margin: 0;
+  color: var(--career-copper-dark);
+  font-family: var(--font-mono, ui-monospace, monospace);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.career-roadmap-section-heading > strong {
+  font-family: var(--font-serif, Georgia, serif);
+  font-size: clamp(1.1rem, 2vw, 1.55rem);
+  font-weight: 500;
+}
+
+.career-roadmap-now__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.25fr) minmax(20rem, 0.75fr);
+}
+
+.career-roadmap-now__identity,
+.career-roadmap-now__rationale {
+  min-width: 0;
+  padding: clamp(2rem, 5vw, 4.5rem) clamp(1rem, 4vw, 3.5rem) clamp(2rem, 5vw, 4rem) 0;
+}
+
+.career-roadmap-now__identity {
+  border-right: 1px solid var(--career-rule);
+}
+
+.career-roadmap-now__rationale {
+  padding-left: clamp(1.5rem, 4vw, 3.5rem);
+}
+
+.career-roadmap-now__index {
+  margin: 0 0 1.5rem;
+  color: var(--career-muted);
+  font-family: var(--font-mono, ui-monospace, monospace);
+  font-size: 0.68rem;
+  letter-spacing: 0.1em;
+}
+
+.career-roadmap-now h1,
+.career-roadmap-now h2,
+.career-roadmap-card h3,
+.career-roadmap-map__milestone h3 {
+  margin: 0;
+  font-family: var(--font-serif, Georgia, serif);
+  font-weight: 500;
+  letter-spacing: -0.03em;
+}
+
+.career-roadmap-now h1 {
+  max-width: 11ch;
+  font-size: clamp(3rem, 7vw, 7rem);
+  line-height: 0.9;
+}
+
+.career-roadmap-now__identity > p:last-child,
+.career-roadmap-now__rationale > p,
+.career-roadmap-card > p,
+.career-roadmap-map__milestone p {
+  color: var(--career-muted);
+  line-height: 1.65;
+}
+
+.career-roadmap-now__identity > p:last-child {
+  max-width: 48rem;
+  margin: 1.75rem 0 0;
+  font-size: 1rem;
+}
+
+.career-roadmap-now__rationale h2 {
+  font-size: clamp(1.8rem, 3vw, 2.8rem);
+}
+
+.career-roadmap-now__rationale > p {
+  margin: 1rem 0 2rem;
+}
+
+.career-roadmap-now__rationale dl {
+  margin: 0;
+  border-top: 1px solid var(--career-rule);
+}
+
+.career-roadmap-now__rationale dl > div {
+  display: grid;
+  grid-template-columns: minmax(7rem, 0.7fr) minmax(0, 1.3fr);
+  gap: 1rem;
+  padding: 0.9rem 0;
+  border-bottom: 1px solid var(--career-rule);
+}
+
+.career-roadmap-now__rationale dt {
+  color: var(--career-muted);
+  font-family: var(--font-mono, ui-monospace, monospace);
+  font-size: 0.67rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.career-roadmap-now__rationale dd {
+  margin: 0;
+  text-align: right;
+  overflow-wrap: anywhere;
+}
+
+.career-roadmap-card__status {
+  display: inline-flex;
+  align-items: center;
+  min-height: 1.7rem;
+  padding: 0.2rem 0.55rem;
+  border: 1px solid currentColor;
+  color: var(--career-copper-dark);
+  font-family: var(--font-mono, ui-monospace, monospace);
+  font-size: 0.63rem;
+  font-weight: 700;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+}
+
+.career-roadmap-next {
+  margin-top: clamp(3rem, 7vw, 6rem);
+}
+
+.career-roadmap-next__grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.career-roadmap-card {
+  min-height: 17rem;
+  padding: 1.5rem;
+  border-right: 1px solid var(--career-rule);
+  border-bottom: 1px solid var(--career-rule);
+}
+
+.career-roadmap-card:last-child {
+  border-right: 0;
+}
+
+.career-roadmap-card__meta {
+  display: flex;
+  align-items: start;
+  justify-content: space-between;
+  gap: 1rem;
+  color: var(--career-muted);
+  font-family: var(--font-mono, ui-monospace, monospace);
+  font-size: 0.65rem;
+}
+
+.career-roadmap-card h3 {
+  margin-top: 2.5rem;
+  font-size: clamp(1.55rem, 3vw, 2.35rem);
+}
+
+.career-roadmap-card[data-status="locked"] {
+  opacity: 0.68;
+}
+
+.career-roadmap-map {
+  margin-top: clamp(3rem, 7vw, 6rem);
+}
+
+.career-roadmap-map__sequence {
+  border-bottom: 1px solid var(--career-rule);
+}
+
+.career-roadmap-map__milestone {
+  display: grid;
+  grid-template-columns: 3.5rem minmax(0, 1fr) minmax(10rem, auto);
+  gap: 1.25rem;
+  align-items: center;
+  min-height: 8.5rem;
+  padding: 1.25rem 0;
+  border-bottom: 1px solid var(--career-rule);
+}
+
+.career-roadmap-map__milestone:last-child {
+  border-bottom: 0;
+}
+
+.career-roadmap-map__number {
+  align-self: start;
+  padding-top: 0.25rem;
+  color: var(--career-muted);
+  font-family: var(--font-mono, ui-monospace, monospace);
+  font-size: 0.68rem;
+}
+
+.career-roadmap-map__milestone h3 {
+  font-size: clamp(1.3rem, 2.5vw, 2rem);
+}
+
+.career-roadmap-map__milestone p {
+  max-width: 48rem;
+  margin: 0.55rem 0 0;
+}
+
+.career-roadmap-map__state {
+  display: grid;
+  justify-items: end;
+  gap: 0.4rem;
+  text-align: right;
+}
+
+.career-roadmap-map__state strong {
+  color: var(--career-copper-dark);
+  font-family: var(--font-mono, ui-monospace, monospace);
+  font-size: 0.68rem;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+}
+
+.career-roadmap-map__state span {
+  color: var(--career-muted);
+  font-size: 0.75rem;
+}
+
+.career-roadmap-map__milestone[data-status="in-progress"] {
+  background: rgba(169, 95, 53, 0.07);
+}
+
+.career-roadmap-map__milestone[data-status="locked"] {
+  opacity: 0.62;
+}
+
+.career-roadmap-empty {
+  margin: 0;
+  padding: 2rem 0;
+  color: var(--career-muted);
+  line-height: 1.6;
+}
+
+@media (max-width: 900px) {
+  .career-roadmap-now__grid,
+  .career-roadmap-next__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .career-roadmap-now__identity {
+    border-right: 0;
+    border-bottom: 1px solid var(--career-rule);
+    padding-right: 0;
+  }
+
+  .career-roadmap-now__rationale {
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  .career-roadmap-card {
+    border-right: 0;
+  }
+
+  .career-roadmap-map__milestone {
+    grid-template-columns: 2.5rem minmax(0, 1fr);
+  }
+
+  .career-roadmap-map__state {
+    grid-column: 2;
+    justify-items: start;
+    text-align: left;
+  }
+}
+
+@media (max-width: 560px) {
+  .career-roadmap-section-heading {
+    align-items: flex-start;
+    flex-direction: column;
+    justify-content: center;
+    padding: 0.9rem 0;
+  }
+
+  .career-roadmap-now__rationale dl > div {
+    grid-template-columns: 1fr;
+  }
+
+  .career-roadmap-now__rationale dd {
+    text-align: left;
+  }
+
+  .career-roadmap-map__milestone {
+    grid-template-columns: 1fr;
+  }
+
+  .career-roadmap-map__number,
+  .career-roadmap-map__state {
+    grid-column: 1;
+  }
+}
