@@ -4,37 +4,57 @@ vi.mock("server-only", () => ({}));
 
 import { getPackInstallCommands, getSkillInstallCommands } from "./catalog";
 import { installationCommands } from "./installation";
+import {
+  getRemotePackInstallCommand,
+  getRemoteSkillInstallCommand,
+  getRemoteTargetInstallCommand,
+  REMOTE_QUICK_INSTALL_COMMAND,
+} from "./remote-installer.mjs";
 
 const remote = "curl -fsSL https://skills.jhonatanoliveira.com/install";
 
 describe("remote consumer installation commands", () => {
-  it("uses the remote quick install for the complete Bash collection", () => {
-    expect(installationCommands.complete.bash).toBe(`${remote} | bash`);
-    expect(installationCommands.complete.powershell).toBe("./install.ps1");
+  it("publishes the copy-paste remote quick install without replacing the local installer API", () => {
+    expect(REMOTE_QUICK_INSTALL_COMMAND).toBe(`${remote} | bash`);
+    expect(installationCommands.complete).toEqual({
+      bash: "bash install.sh",
+      powershell: "./install.ps1",
+    });
   });
 
-  it("passes skill selections through bash -s -- while leaving PowerShell local", () => {
+  it("passes skill selections through bash -s -- while preserving canonical local commands", () => {
+    expect(getRemoteSkillInstallCommand("reviewing-web-security")).toBe(
+      `${remote} | bash -s -- --skill reviewing-web-security`,
+    );
     expect(getSkillInstallCommands("reviewing-web-security")).toEqual({
-      bash: `${remote} | bash -s -- --skill reviewing-web-security`,
+      bash: "./install.sh --skill reviewing-web-security",
       powershell: "./install.ps1 --skill reviewing-web-security",
     });
-    expect(installationCommands.skill.bash).toBe(
-      `${remote} | bash -s -- --skill craft-premium-motion`,
-    );
   });
 
-  it("passes pack selections through bash -s -- while leaving PowerShell local", () => {
+  it("passes pack selections through bash -s -- while preserving canonical local commands", () => {
+    expect(getRemotePackInstallCommand("application-security")).toBe(
+      `${remote} | bash -s -- --pack application-security`,
+    );
     expect(getPackInstallCommands("application-security", "active")).toEqual({
-      bash: `${remote} | bash -s -- --pack application-security`,
+      bash: "./install.sh --pack application-security",
       powershell: "./install.ps1 --pack application-security",
     });
-    expect(installationCommands.pack.bash).toBe(`${remote} | bash -s -- --pack motion`);
   });
 
-  it("uses the remote bootstrap for supported target arguments too", () => {
-    expect(installationCommands.claudeCode.bash).toBe(
+  it("supports target passthrough without inventing a separate installer engine", () => {
+    expect(getRemoteTargetInstallCommand("claude-code")).toBe(
       `${remote} | bash -s -- --target claude-code`,
     );
-    expect(installationCommands.claudeCode.powershell).toBe("./install.ps1 --target claude-code");
+    expect(installationCommands.claudeCode).toEqual({
+      bash: "bash install.sh --target claude-code",
+      powershell: "./install.ps1 --target claude-code",
+    });
+  });
+
+  it("rejects unsafe slugs before composing shell-facing copy", () => {
+    expect(() => getRemoteSkillInstallCommand("../payload")).toThrow(/invalid install slug/i);
+    expect(() => getRemotePackInstallCommand("motion;rm-rf")).toThrow(/invalid install slug/i);
+    expect(() => getRemoteTargetInstallCommand("claude code")).toThrow(/invalid install slug/i);
   });
 });
