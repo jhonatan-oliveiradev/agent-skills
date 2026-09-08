@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { PackBlueprint } from "@/components/packs/pack-blueprint";
-import { RemoteInstallCallout } from "@/components/remote-install-callout";
 import { getBuiltWithSkillsCases } from "@/lib/built-with-skills";
 import {
   getCatalog,
@@ -14,7 +13,6 @@ import { editorialPacksCopy } from "@/lib/editorial-packs-copy";
 import { editorialRelationsCopy } from "@/lib/editorial-relations-copy";
 import { isLocale } from "@/lib/i18n";
 import { messages } from "@/lib/messages";
-import { getRemotePackInstallCommand } from "@/lib/remote-installer.mjs";
 
 type PackPageProps = Readonly<{ params: Promise<{ locale: string; slug: string }> }>;
 
@@ -79,12 +77,6 @@ export default async function PackDetailPage({ params }: PackPageProps) {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
       />
-      {pack.status === "active" ? (
-        <RemoteInstallCallout
-          locale={locale}
-          command={getRemotePackInstallCommand(pack.slug)}
-        />
-      ) : null}
       <PackBlueprint
         pack={pack}
         locale={locale}
