@@ -8,6 +8,17 @@ import { getRoleMap } from "@/lib/career/role-maps";
 import type { Locale } from "@/lib/locales";
 import { useCareerProfile } from "./career-profile-provider";
 
+const emptyProgressCopy = {
+  en: {
+    evidence: "No evidence yet",
+    assessments: "No assessments completed yet",
+  },
+  "pt-BR": {
+    evidence: "Nenhuma evidência ainda",
+    assessments: "Nenhuma avaliação concluída ainda",
+  },
+} as const;
+
 export function CareerOverview({ locale }: Readonly<{ locale: Locale }>) {
   const { profile } = useCareerProfile();
   if (!profile) return null;
@@ -16,6 +27,7 @@ export function CareerOverview({ locale }: Readonly<{ locale: Locale }>) {
   if (!roleId) return null;
 
   const copy = careerLabCopy[locale];
+  const emptyCopy = emptyProgressCopy[locale];
   const roleMap = getRoleMap(roleId);
   const readiness = calculateRoleReadiness(profile, roleMap);
   const effectiveRoadmap = buildRoadmap(profile, roleMap);
@@ -64,11 +76,11 @@ export function CareerOverview({ locale }: Readonly<{ locale: Locale }>) {
 
         <article className="career-card">
           <p className="career-card__label">{copy.evidence}</p>
-          <strong>{profile.evidence.length > 0 ? profile.evidence.length : copy.noEvidenceYet}</strong>
+          <strong>{profile.evidence.length > 0 ? profile.evidence.length : emptyCopy.evidence}</strong>
           <p>
             {profile.assessments.length > 0
               ? `${profile.assessments.length} ${copy.assessments}`
-              : copy.noAssessmentsYet}
+              : emptyCopy.assessments}
           </p>
         </article>
 
