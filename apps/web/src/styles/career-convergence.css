@@ -364,14 +364,9 @@
   .career-lab-entry__journey li,
   .career-lab-entry__journey li:nth-child(2n) {
     min-height: 0;
-    padding: 1.25rem 0 1.5rem;
+    padding: 1.25rem 1rem 1.5rem;
     border-right: 0;
     border-bottom: 1px solid var(--career-rule);
-  }
-
-  .career-lab-entry__journey li[data-state="next"],
-  .career-lab-entry__journey li[data-state="waiting"] {
-    padding-inline: 1rem;
   }
 
   .career-lab-entry__journey h3 {
