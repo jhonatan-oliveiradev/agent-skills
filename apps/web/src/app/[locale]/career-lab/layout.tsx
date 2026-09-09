@@ -6,6 +6,7 @@ import { CareerProfileProvider } from "@/components/career/career-profile-provid
 import "@/styles/career-lab.css";
 import "@/styles/career-learning-evidence.css";
 import "@/styles/career-market.css";
+import "@/styles/career-convergence.css";
 
 type LayoutProps = Readonly<{
   children: ReactNode;
