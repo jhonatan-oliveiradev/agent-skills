@@ -35,7 +35,7 @@ async function renderRoot(
 }
 
 describe("Career Lab root route", () => {
-  it("renders an editorial Career Profile entry instead of a generic empty-state card", async () => {
+  it("renders an editorial Career Profile entry as a stateful career workspace", async () => {
     await renderRoot(null);
 
     expect(
@@ -49,16 +49,21 @@ describe("Career Lab root route", () => {
     expect(screen.getByText("02 / Market")).toBeInTheDocument();
     expect(screen.getByText("03 / Capacity")).toBeInTheDocument();
 
-    const journey = screen.getByRole("list", { name: "How Career Lab works" });
-    expect(journey).toHaveTextContent("Profile");
-    expect(journey).toHaveTextContent("Assessment");
-    expect(journey).toHaveTextContent("Roadmap");
-    expect(journey).toHaveTextContent("Evidence");
-    expect(journey).toHaveTextContent("Market");
+    const system = screen.getByRole("list", { name: "Your career system" });
+    expect(system).toHaveTextContent("Profile");
+    expect(system).toHaveTextContent("Not started");
+    expect(system).toHaveTextContent("Assessment");
+    expect(system).toHaveTextContent("Waiting for profile");
+    expect(system).toHaveTextContent("Roadmap");
+    expect(system).toHaveTextContent("Waiting for assessment");
+    expect(system).toHaveTextContent("Evidence");
+    expect(system).toHaveTextContent("0 evidence records");
+    expect(system).toHaveTextContent("Market");
+    expect(system).toHaveTextContent("Waiting for target role");
     expect(screen.getAllByRole("link", { name: "Developer Career Pack" })).not.toHaveLength(0);
   });
 
-  it("localizes the editorial entry for pt-BR", async () => {
+  it("localizes the stateful workspace entry for pt-BR", async () => {
     await renderRoot(null, "pt-BR");
 
     expect(
@@ -71,9 +76,14 @@ describe("Career Lab root route", () => {
     expect(screen.getByText("01 / Função")).toBeInTheDocument();
     expect(screen.getByText("02 / Mercado")).toBeInTheDocument();
     expect(screen.getByText("03 / Capacidade")).toBeInTheDocument();
-    expect(screen.getByRole("list", { name: "Como o Career Lab funciona" })).toHaveTextContent(
-      "Evidências",
-    );
+
+    const system = screen.getByRole("list", { name: "Seu sistema de carreira" });
+    expect(system).toHaveTextContent("Perfil");
+    expect(system).toHaveTextContent("Não iniciado");
+    expect(system).toHaveTextContent("Aguardando perfil");
+    expect(system).toHaveTextContent("Aguardando avaliação");
+    expect(system).toHaveTextContent("0 evidências");
+    expect(system).toHaveTextContent("Aguardando função-alvo");
   });
 
   it("renders the overview when a valid local profile exists", async () => {
