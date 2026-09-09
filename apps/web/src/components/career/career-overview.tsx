@@ -3,6 +3,7 @@
 import { baselineAssessmentBlueprints } from "@/lib/career/assessment-blueprints";
 import { careerLabCopy, careerLabRoleLabels } from "@/lib/career/copy";
 import { calculateRoleReadiness } from "@/lib/career/readiness";
+import { buildRoadmap, getRoadmapMilestoneViews } from "@/lib/career/roadmap-engine";
 import { getRoleMap } from "@/lib/career/role-maps";
 import type { Locale } from "@/lib/locales";
 import { useCareerProfile } from "./career-profile-provider";
@@ -15,10 +16,15 @@ export function CareerOverview({ locale }: Readonly<{ locale: Locale }>) {
   if (!roleId) return null;
 
   const copy = careerLabCopy[locale];
-  const readiness = calculateRoleReadiness(profile, getRoleMap(roleId));
+  const roleMap = getRoleMap(roleId);
+  const readiness = calculateRoleReadiness(profile, roleMap);
+  const effectiveRoadmap = buildRoadmap(profile, roleMap);
+  const milestoneViews = getRoadmapMilestoneViews(profile, roleMap, effectiveRoadmap);
   const targetMarket = profile.targetMarkets[0] ?? "—";
-  const totalMilestones = profile.roadmap.milestoneIds.length;
-  const completedMilestones = 0;
+  const totalMilestones = milestoneViews.length;
+  const completedMilestones = milestoneViews.filter(
+    (milestone) => milestone.status === "completed",
+  ).length;
   const latestMarket = [...profile.marketSamples].sort((a, b) =>
     b.capturedAt.localeCompare(a.capturedAt),
   )[0];
@@ -47,7 +53,7 @@ export function CareerOverview({ locale }: Readonly<{ locale: Locale }>) {
       <div className="career-overview__grid">
         <article className="career-card career-card--focus">
           <p className="career-card__label">{copy.currentFocus}</p>
-          <strong>{profile.roadmap.currentFocusMilestoneId ?? copy.noCurrentFocus}</strong>
+          <strong>{effectiveRoadmap.currentFocusMilestoneId ?? copy.noCurrentFocus}</strong>
           <p>{profile.weeklyStudyHours ? copy.weeklyCapacity(profile.weeklyStudyHours) : "—"}</p>
         </article>
 
@@ -58,8 +64,12 @@ export function CareerOverview({ locale }: Readonly<{ locale: Locale }>) {
 
         <article className="career-card">
           <p className="career-card__label">{copy.evidence}</p>
-          <strong>{profile.evidence.length}</strong>
-          <p>{profile.assessments.length} {copy.assessments}</p>
+          <strong>{profile.evidence.length > 0 ? profile.evidence.length : copy.noEvidenceYet}</strong>
+          <p>
+            {profile.assessments.length > 0
+              ? `${profile.assessments.length} ${copy.assessments}`
+              : copy.noAssessmentsYet}
+          </p>
         </article>
 
         <article className="career-card">

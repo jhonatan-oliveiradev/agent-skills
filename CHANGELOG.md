@@ -8,7 +8,9 @@ All notable changes to this skill library are documented here.
 
 - Expanded the current development catalog to 60 canonical skills and 12 active packs with six Developer Career working methods.
 - Added evidence-aware proficiency diagnosis, adaptive roadmaps, targeted teaching, criterion-based proficiency evaluation, portfolio-evidence design, and opportunity analysis with explicit ownership boundaries.
-- Advanced the `dev` integration line to `1.1.0` while preserving Stable `1.0.0` snapshots and release evidence unchanged.
+- Added the browser-local Career Lab with deterministic baseline assessments, adaptive NOW/NEXT/MAP planning, gap-targeted microlearning, a Professional Evidence Ledger, Market Intelligence, and explicit Career Profile import/export/reset controls.
+- Kept Career Lab local-first in V1: no account requirement, cloud sync, billing, first-party model inference, or certification claim is introduced.
+- Advanced the `dev` integration line to `1.1.0` while preserving Stable `1.0.0` snapshots and release evidence unchanged until a separate production promotion.
 
 ### Distribution
 
@@ -17,6 +19,8 @@ All notable changes to this skill library are documented here.
 
 ### Studio and roadmap
 
+- Added Career Lab as a seventh shared Studio navigation context and cross-linked it bidirectionally with the canonical Developer Career pack.
+- Added localized Career Lab metadata and public sitemap coverage for Overview, Roadmap, Assessments, Evidence, and Market.
 - Promoted the release-qualified plugin, catalog, installers, and microsite surfaces to Stable in the public roadmap while keeping individual skill maturity distinct from Stable release status.
 - Kept current README/catalog documentation aligned with 60 canonical skills and 12 active packs, and removed only confirmed orphaned localized Home/Getting Started copy.
 
@@ -25,6 +29,7 @@ All notable changes to this skill library are documented here.
 - Removed superseded post-Stable workflow helpers so `validate.yml` remains the canonical workflow.
 - Hardened Windows CI around the live Next integration fixture and teardown contention without raising test timeouts or serializing the entire suite.
 - Restored native Method Archive select/option contrast with existing surface/text theme tokens while preserving native select semantics and keyboard behavior.
+- Converged Career Lab accessibility with shared `:focus-visible`, reduced-motion, responsive cross-link, explicit empty-state, and import-error announcement contracts.
 
 ## [1.0.0] - 2026-09-02
 
@@ -125,7 +130,6 @@ All notable changes to this skill library are documented here.
 - Automatic installation of reusable skills into `~/.agents/skills/`.
 - Package-manager detection for npm, pnpm, Yarn, and Bun when installing Prettier tooling.
 - Non-destructive bootstrap behavior with explicit `--force`, `--skip-deps`, and `--skip-skills` controls.
-- Node test coverage for Tailwind stylesheet detection and safe file generation.
 
 ### Changed
 - Package version bumped to `0.3.0`.

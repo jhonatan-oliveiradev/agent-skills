@@ -14,6 +14,7 @@ export interface Messages {
     readonly gettingStarted: string;
     readonly builtWithSkills: string;
     readonly roadmap: string;
+    readonly careerLab: string;
     readonly about: string;
     readonly contribute: string;
     readonly changelog: string;
@@ -239,6 +240,7 @@ export const messages = {
       gettingStarted: "Getting started",
       builtWithSkills: "Built with skills",
       roadmap: "Roadmap",
+      careerLab: "Career Lab",
       about: "About",
       contribute: "Contribute",
       changelog: "Changelog",
@@ -510,6 +512,7 @@ export const messages = {
       gettingStarted: "Primeiros passos",
       builtWithSkills: "Feito com habilidades",
       roadmap: "Roteiro",
+      careerLab: "Career Lab",
       about: "Sobre",
       contribute: "Contribuir",
       changelog: "Registro de alterações",
