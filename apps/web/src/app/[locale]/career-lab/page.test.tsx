@@ -57,7 +57,7 @@ describe("Career Lab root route", () => {
     await renderRoot(profile, "pt-BR");
 
     expect(
-      await screen.findByRole("heading", { name: /desenvolvedor front-end/i }),
+      await screen.findByRole("heading", { name: /desenvolvedor frontend/i }),
     ).toBeInTheDocument();
     expect(screen.getByText(/mercado-alvo: br/i)).toBeInTheDocument();
   });
