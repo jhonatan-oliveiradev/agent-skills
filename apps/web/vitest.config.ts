@@ -11,10 +11,14 @@ const heavyHomeRenderTests = [
 const srcRoot = fileURLToPath(new URL("./src", import.meta.url));
 const studioRoot = fileURLToPath(new URL("./src/app/[locale]/(studio)", import.meta.url));
 const careerRoot = fileURLToPath(new URL("./src/app/[locale]/(career)", import.meta.url));
+const studioLocaleLayoutHarness = fileURLToPath(
+  new URL("./src/test-support/studio-locale-layout.tsx", import.meta.url),
+);
 
 export default defineConfig({
   resolve: {
     alias: [
+      { find: "@/app/[locale]/layout", replacement: studioLocaleLayoutHarness },
       { find: "@/app/[locale]/page", replacement: `${studioRoot}/page` },
       { find: "@/app/[locale]/about", replacement: `${studioRoot}/about` },
       {
