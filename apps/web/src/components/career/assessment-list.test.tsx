@@ -2,8 +2,11 @@ import { fireEvent, render, screen } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 import AssessmentDetailPage from "@/app/[locale]/career-lab/assessments/[id]/page";
 import AssessmentsPage from "@/app/[locale]/career-lab/assessments/page";
+import { baselineAssessmentBlueprints } from "@/lib/career/assessment-blueprints";
 import { createEmptyCareerProfile } from "@/lib/career/profile";
 import type { CareerStorage } from "@/lib/career/storage";
+import type { AssessmentRecord, CareerProfile } from "@/lib/career/types";
+import { AssessmentList } from "./assessment-list";
 import { CareerOnboarding } from "./career-onboarding";
 import { CareerProfileProvider } from "./career-profile-provider";
 
@@ -19,6 +22,38 @@ function storageWithProfile(): CareerStorage {
     save: vi.fn().mockResolvedValue(undefined),
     clear: vi.fn().mockResolvedValue(undefined),
   };
+}
+
+function storageWith(profile: CareerProfile): CareerStorage {
+  return {
+    load: vi.fn().mockResolvedValue(profile),
+    save: vi.fn().mockResolvedValue(undefined),
+    clear: vi.fn().mockResolvedValue(undefined),
+  };
+}
+
+function profileWithCompletedAssessment(blueprintId: string): CareerProfile {
+  const base = createEmptyCareerProfile({
+    targetRole: "frontend-developer",
+    targetMarket: "br",
+    now: "2026-09-09T18:00:00.000Z",
+  });
+  const blueprint = baselineAssessmentBlueprints.find((candidate) => candidate.id === blueprintId);
+  if (!blueprint) throw new Error(`Unknown blueprint: ${blueprintId}`);
+
+  const record: AssessmentRecord = {
+    id: `assessment-${blueprint.id}`,
+    blueprintId: blueprint.id,
+    blueprintVersion: blueprint.version,
+    competencyId: blueprint.competencyId,
+    level: "developing",
+    confidence: "low",
+    evidenceIds: [],
+    completedAt: "2026-09-09T18:10:00.000Z",
+    trust: "local-deterministic",
+  };
+
+  return { ...base, assessments: [record] };
 }
 
 describe("Assessment discovery, routes, and baseline handoff", () => {
@@ -90,5 +125,33 @@ describe("Assessment discovery, routes, and baseline handoff", () => {
       "href",
       "/en/career-lab/assessments/baseline-javascript",
     );
+  });
+
+  it("renders baseline progress and actionable rows in pt-BR", async () => {
+    render(
+      <CareerProfileProvider storage={storageWith(profileWithCompletedAssessment("baseline-javascript"))}>
+        <AssessmentList locale="pt-BR" blueprints={baselineAssessmentBlueprints} />
+      </CareerProfileProvider>,
+    );
+
+    expect(await screen.findByRole("heading", { name: "Avaliações de baseline" })).toBeInTheDocument();
+    expect(screen.getByText("1 de 6 concluídas")).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: /revisar javascript/i })).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: /iniciar typescript/i })).toBeInTheDocument();
+    expect(screen.getAllByTestId("assessment-index-row")).toHaveLength(6);
+  });
+
+  it("renders baseline progress and actionable rows in English", async () => {
+    render(
+      <CareerProfileProvider storage={storageWith(profileWithCompletedAssessment("baseline-javascript"))}>
+        <AssessmentList locale="en" blueprints={baselineAssessmentBlueprints} />
+      </CareerProfileProvider>,
+    );
+
+    expect(await screen.findByRole("heading", { name: "Baseline assessments" })).toBeInTheDocument();
+    expect(screen.getByText("1 of 6 completed")).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: /review javascript/i })).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: /start typescript/i })).toBeInTheDocument();
+    expect(screen.getAllByTestId("assessment-index-row")).toHaveLength(6);
   });
 });
