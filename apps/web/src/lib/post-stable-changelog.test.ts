@@ -9,16 +9,28 @@ import { getProjectPages } from "./project-pages";
 const repositoryRoot = resolve(process.cwd(), "../..");
 
 describe("post-Stable changelog", () => {
-  it("publishes unreleased changes against the current development version", async () => {
-    const [changelog, version] = await Promise.all([
+  it("publishes Career Lab on the 1.1.0 development line without rewriting Stable history", async () => {
+    const [changelog, readme, version] = await Promise.all([
       readFile(resolve(repositoryRoot, "CHANGELOG.md"), "utf8"),
+      readFile(resolve(repositoryRoot, "README.md"), "utf8"),
       readFile(resolve(repositoryRoot, "VERSION"), "utf8"),
     ]);
 
     expect(version.trim()).toBe("1.1.0");
     expect(changelog).toMatch(/^## \[Unreleased\]/m);
+    expect(changelog).toContain("Career Lab");
+    expect(changelog).toMatch(/browser-local|local-first/i);
+    expect(changelog).toMatch(/60 canonical skills/i);
+    expect(changelog).toMatch(/12 active packs/i);
     expect(changelog).toContain("ChatGPT-ready skill ZIP");
     expect(changelog).toContain("Method Archive");
+
+    expect(readme).toContain("Career Lab");
+    expect(readme).toMatch(/browser-local|local-first/i);
+    expect(readme).toMatch(/import.*export.*reset|import\/export\/reset/is);
+    expect(readme).toMatch(/60 reusable skills across 12 active packs/i);
+    expect(readme).toMatch(/`dev` is the pre-production integration branch/i);
+    expect(readme).toMatch(/`main`.*production/i);
 
     const en = getProjectPages("en").changelog;
     const pt = getProjectPages("pt-BR").changelog;
@@ -29,10 +41,29 @@ describe("post-Stable changelog", () => {
     expect(enUnreleased.date).toBe(en.unreleased);
     expect(ptUnreleased.version).toBe(pt.unreleased);
     expect(ptUnreleased.date).toBe(pt.unreleased);
+    expect(enUnreleased.version).not.toBe("1.1.0");
+    expect(ptUnreleased.version).not.toBe("1.1.0");
 
-    expect(JSON.stringify(enUnreleased)).toContain("ChatGPT-ready skill ZIP");
-    expect(JSON.stringify(enUnreleased)).toContain("Method Archive");
-    expect(JSON.stringify(ptUnreleased)).toContain("ZIP");
-    expect(JSON.stringify(ptUnreleased)).toContain("Method Archive");
+    const enUnreleasedText = JSON.stringify(enUnreleased);
+    const ptUnreleasedText = JSON.stringify(ptUnreleased);
+    expect(enUnreleasedText).toContain("Career Lab");
+    expect(enUnreleasedText).toMatch(/browser-local|local-first/i);
+    expect(enUnreleasedText).toMatch(/60 canonical skills/i);
+    expect(enUnreleasedText).toMatch(/12 active packs/i);
+    expect(enUnreleasedText).toContain("ChatGPT-ready skill ZIP");
+    expect(enUnreleasedText).toContain("Method Archive");
+    expect(ptUnreleasedText).toContain("Career Lab");
+    expect(ptUnreleasedText).toMatch(/local|navegador/i);
+    expect(ptUnreleasedText).toMatch(/60 skills canônicas/i);
+    expect(ptUnreleasedText).toMatch(/12 pacotes ativos/i);
+    expect(ptUnreleasedText).toContain("ZIP");
+    expect(ptUnreleasedText).toContain("Method Archive");
+
+    const enStable = en.releases[1];
+    const ptStable = pt.releases[1];
+    expect(enStable).toMatchObject({ version: "1.0.0", date: "2026-09-02" });
+    expect(ptStable).toMatchObject({ version: "1.0.0", date: "2026-09-02" });
+    expect(JSON.stringify(enStable)).toMatch(/54 canonical skills.*11 active packs/is);
+    expect(JSON.stringify(ptStable)).toMatch(/54 skills canônicas.*11 pacotes ativos/is);
   });
 });
