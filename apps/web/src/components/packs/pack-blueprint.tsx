@@ -50,6 +50,23 @@ export interface PackBlueprintProps {
   readonly usageSummary: string;
 }
 
+const careerLabCopy = {
+  en: {
+    label: "Career Lab",
+    title: "Turn this pack into an interactive local workspace.",
+    summary:
+      "Career Lab applies the Developer Career methods through a browser-local profile, assessments, adaptive roadmap, evidence ledger, and market analysis.",
+    action: "Open Career Lab",
+  },
+  "pt-BR": {
+    label: "Career Lab",
+    title: "Transforme este pack em um workspace local interativo.",
+    summary:
+      "O Career Lab aplica os métodos do Developer Career por meio de perfil local no navegador, avaliações, roadmap adaptativo, ledger de evidências e análise de mercado.",
+    action: "Abrir Career Lab",
+  },
+} as const;
+
 export function PackBlueprint(props: Readonly<PackBlueprintProps>) {
   const {
     pack,
@@ -69,8 +86,11 @@ export function PackBlueprint(props: Readonly<PackBlueprintProps>) {
   } = props;
   const active = pack.status === "active";
   const status = active ? detail.active : detail.planned;
+  const hasCareerLab = pack.slug === "developer-career";
+  const labCopy = careerLabCopy[locale];
   const readerItems = [
     { id: "usage", label: usageTitle },
+    ...(hasCareerLab ? [{ id: "career-lab", label: labCopy.label }] : []),
     { id: "outcomes", label: detail.outcomes },
     ...(!active ? [{ id: "roadmap-status", label: detail.plannedTitle }] : []),
     { id: "composition", label: detail.composition },
@@ -117,6 +137,21 @@ export function PackBlueprint(props: Readonly<PackBlueprintProps>) {
             <h2>{usageTitle}</h2>
             <p>{usageSummary}</p>
           </section>
+
+          {hasCareerLab ? (
+            <section
+              id="career-lab"
+              className="pack-blueprint__planned-note"
+              data-career-lab-link
+            >
+              <p className="eyebrow">{labCopy.label}</p>
+              <h2>{labCopy.title}</h2>
+              <p>{labCopy.summary}</p>
+              <Link className="button button--secondary" href={`/${locale}/career-lab` as Route}>
+                {labCopy.action}
+              </Link>
+            </section>
+          ) : null}
 
           <section id="outcomes" className="pack-blueprint__outcomes">
             <EditorialSectionHeading title={detail.outcomes} />
