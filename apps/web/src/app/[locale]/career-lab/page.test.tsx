@@ -35,14 +35,45 @@ async function renderRoot(
 }
 
 describe("Career Lab root route", () => {
-  it("renders the intentional onboarding empty state when no local profile exists", async () => {
+  it("renders an editorial Career Profile entry instead of a generic empty-state card", async () => {
     await renderRoot(null);
 
-    expect(await screen.findByRole("link", { name: /start onboarding/i })).toHaveAttribute(
+    expect(
+      await screen.findByRole("heading", { name: "Build a real map of your career." }),
+    ).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: "Start Career Profile" })).toHaveAttribute(
       "href",
       "/en/career-lab/onboarding",
     );
+    expect(screen.getByText("01 / Role")).toBeInTheDocument();
+    expect(screen.getByText("02 / Market")).toBeInTheDocument();
+    expect(screen.getByText("03 / Capacity")).toBeInTheDocument();
+
+    const journey = screen.getByRole("list", { name: "How Career Lab works" });
+    expect(journey).toHaveTextContent("Profile");
+    expect(journey).toHaveTextContent("Assessment");
+    expect(journey).toHaveTextContent("Roadmap");
+    expect(journey).toHaveTextContent("Evidence");
+    expect(journey).toHaveTextContent("Market");
     expect(screen.getAllByRole("link", { name: "Developer Career Pack" })).not.toHaveLength(0);
+  });
+
+  it("localizes the editorial entry for pt-BR", async () => {
+    await renderRoot(null, "pt-BR");
+
+    expect(
+      await screen.findByRole("heading", { name: "Construa um mapa real da sua carreira." }),
+    ).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: "Iniciar Career Profile" })).toHaveAttribute(
+      "href",
+      "/pt-BR/career-lab/onboarding",
+    );
+    expect(screen.getByText("01 / Função")).toBeInTheDocument();
+    expect(screen.getByText("02 / Mercado")).toBeInTheDocument();
+    expect(screen.getByText("03 / Capacidade")).toBeInTheDocument();
+    expect(screen.getByRole("list", { name: "Como o Career Lab funciona" })).toHaveTextContent(
+      "Evidências",
+    );
   });
 
   it("renders the overview when a valid local profile exists", async () => {
