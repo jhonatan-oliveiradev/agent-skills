@@ -127,7 +127,7 @@
 
 .career-guide__qa summary {
   display: grid;
-  grid-template-columns: 3rem minmax(0, 1fr);
+  grid-template-columns: 3rem minmax(0, 1fr) auto;
   gap: 1rem;
   align-items: baseline;
   padding: 1.35rem 0;
