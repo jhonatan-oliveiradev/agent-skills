@@ -61,7 +61,11 @@ describe("Assessment discovery, routes, and baseline handoff", () => {
     const page = await AssessmentsPage({
       params: Promise.resolve({ locale: "en" }),
     });
-    render(page);
+    render(
+      <CareerProfileProvider storage={storageWithProfile()}>
+        {page}
+      </CareerProfileProvider>,
+    );
 
     expect(
       await screen.findByRole("heading", { name: /baseline assessment/i }),
