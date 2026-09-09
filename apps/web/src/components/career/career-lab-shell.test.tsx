@@ -1,10 +1,8 @@
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
-import { createEmptyCareerProfile } from "@/lib/career/profile";
-import { buildRoadmap } from "@/lib/career/roadmap-engine";
-import { getRoleMap } from "@/lib/career/role-maps";
-import type { CareerStorage } from "@/lib/career/storage";
 import { careerLabCopy } from "@/lib/career/copy";
+import { createEmptyCareerProfile } from "@/lib/career/profile";
+import type { CareerStorage } from "@/lib/career/storage";
 import { CareerLabShell } from "./career-lab-shell";
 import { CareerProfileProvider, useCareerProfile } from "./career-profile-provider";
 
@@ -29,17 +27,17 @@ function ProviderProbe() {
 }
 
 describe("Career Lab shell", () => {
-  it("renders without a profile and offers onboarding instead of requiring login", async () => {
+  it("renders shared chrome and provided route content without inferring route state", async () => {
     render(
       <CareerProfileProvider storage={storageWith(null)}>
-        <CareerLabShell locale="en" />
+        <CareerLabShell locale="en">
+          <p>Root route content</p>
+        </CareerLabShell>
       </CareerProfileProvider>,
     );
 
-    expect(await screen.findByRole("link", { name: /start onboarding/i })).toHaveAttribute(
-      "href",
-      "/en/career-lab/onboarding",
-    );
+    expect(await screen.findByText("Root route content")).toBeInTheDocument();
+    expect(screen.getByRole("navigation", { name: "Career Lab" })).toBeInTheDocument();
     expect(screen.getByRole("link", { name: "Developer Career Pack" })).toHaveAttribute(
       "href",
       "/en/packs/developer-career",
@@ -68,48 +66,6 @@ describe("Career Lab shell", () => {
 
     await waitFor(() => expect(storage.save).toHaveBeenCalledTimes(1));
     expect(storage.save).toHaveBeenCalledWith(expect.objectContaining({ weeklyStudyHours: 12 }));
-  });
-
-  it("renders hydrated role, market, readiness, competency state and the canonical derived roadmap", async () => {
-    const base = createEmptyCareerProfile({
-      targetRole: "frontend-developer",
-      targetMarket: "br",
-      weeklyStudyHours: 8,
-      now: "2026-09-05T12:00:00.000Z",
-    });
-    const profile = {
-      ...base,
-      competencies: [
-        {
-          competencyId: "programming-javascript",
-          level: null,
-          confidence: "low" as const,
-          evidenceIds: [],
-          lastAssessedAt: null,
-        },
-      ],
-    };
-    const roadmap = buildRoadmap(profile, getRoleMap("frontend-developer"));
-
-    render(
-      <CareerProfileProvider storage={storageWith(profile)}>
-        <CareerLabShell locale="en" />
-      </CareerProfileProvider>,
-    );
-
-    expect(await screen.findByRole("heading", { name: /frontend developer/i })).toBeInTheDocument();
-    expect(screen.getByText(/target market: br/i)).toBeInTheDocument();
-    expect(screen.getByText(/0%/)).toBeInTheDocument();
-    expect(screen.getAllByText(/programming-javascript/i).length).toBeGreaterThan(0);
-    expect(screen.getByText(/unknown · low confidence/i)).toBeInTheDocument();
-    expect(screen.getByText(`0 / ${roadmap.milestoneIds.length} milestones`)).toBeInTheDocument();
-    if (roadmap.currentFocusMilestoneId) {
-      expect(screen.getByText(roadmap.currentFocusMilestoneId)).toBeInTheDocument();
-    } else {
-      expect(screen.getByText(/no current focus yet/i)).toBeInTheDocument();
-    }
-    expect(screen.getByText("No evidence yet")).toBeInTheDocument();
-    expect(screen.getByText("No assessments yet")).toBeInTheDocument();
   });
 
   it("owns complete EN and PT-BR navigation copy locally", () => {
