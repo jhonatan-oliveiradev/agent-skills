@@ -140,7 +140,11 @@ See the canonical [CodeGraph integration guide](skills/mapping-existing-codebase
 
 The Developer Career pack separates six responsibilities that should remain independently invokable: evidence-aware current-state diagnosis, adaptive roadmap construction, gap-targeted teaching, criterion-based proficiency evaluation, portfolio-evidence design, and market/opportunity analysis.
 
-The methods keep proficiency separate from confidence, treat learning completion and project existence as insufficient proof on their own, preserve provenance for external evidence, and allow market signals to prioritize development without rewriting demonstrated competency. `dev` is the pre-production integration branch for this `1.1.0` development line; production `main` and historical Stable `1.0.0` evidence remain unchanged until a later explicit promotion.
+The methods keep proficiency separate from confidence, treat learning completion and project existence as insufficient proof on their own, preserve provenance for external evidence, and allow market signals to prioritize development without rewriting demonstrated competency.
+
+Career Lab is the browser-local interactive surface for this pack. Its Career Profile, assessments, roadmap, learning progress, portfolio evidence, market samples, and Decision Records stay in the current browser until the user explicitly exports them. Import, export, and reset are deliberate user actions; V1 does not require an account, cloud sync, billing, first-party model inference, or accredited certification. The Developer Career pack and Career Lab link to each other so the canonical methods remain inspectable from the interactive workspace.
+
+`dev` is the pre-production integration branch for this `1.1.0` development line; production `main` and historical Stable `1.0.0` evidence remain unchanged until a later explicit promotion.
 
 ## Quality & Testing v1
 

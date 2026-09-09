@@ -1,6 +1,8 @@
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 import { createEmptyCareerProfile } from "@/lib/career/profile";
+import { buildRoadmap } from "@/lib/career/roadmap-engine";
+import { getRoleMap } from "@/lib/career/role-maps";
 import type { CareerStorage } from "@/lib/career/storage";
 import { careerLabCopy } from "@/lib/career/copy";
 import { CareerLabShell } from "./career-lab-shell";
@@ -38,6 +40,10 @@ describe("Career Lab shell", () => {
       "href",
       "/en/career-lab/onboarding",
     );
+    expect(screen.getByRole("link", { name: "Developer Career Pack" })).toHaveAttribute(
+      "href",
+      "/en/packs/developer-career",
+    );
     expect(screen.queryByText(/sign in|log in/i)).not.toBeInTheDocument();
   });
 
@@ -64,7 +70,7 @@ describe("Career Lab shell", () => {
     expect(storage.save).toHaveBeenCalledWith(expect.objectContaining({ weeklyStudyHours: 12 }));
   });
 
-  it("renders hydrated role, market, readiness, competency state, roadmap and current focus", async () => {
+  it("renders hydrated role, market, readiness, competency state and the canonical derived roadmap", async () => {
     const base = createEmptyCareerProfile({
       targetRole: "frontend-developer",
       targetMarket: "br",
@@ -83,6 +89,7 @@ describe("Career Lab shell", () => {
         },
       ],
     };
+    const roadmap = buildRoadmap(profile, getRoleMap("frontend-developer"));
 
     render(
       <CareerProfileProvider storage={storageWith(profile)}>
@@ -93,10 +100,16 @@ describe("Career Lab shell", () => {
     expect(await screen.findByRole("heading", { name: /frontend developer/i })).toBeInTheDocument();
     expect(screen.getByText(/target market: br/i)).toBeInTheDocument();
     expect(screen.getByText(/0%/)).toBeInTheDocument();
-    expect(screen.getByText(/no current focus yet/i)).toBeInTheDocument();
     expect(screen.getAllByText(/programming-javascript/i).length).toBeGreaterThan(0);
     expect(screen.getByText(/unknown · low confidence/i)).toBeInTheDocument();
-    expect(screen.getByText(/0 \/ 0 milestones/i)).toBeInTheDocument();
+    expect(screen.getByText(`0 / ${roadmap.milestoneIds.length} milestones`)).toBeInTheDocument();
+    if (roadmap.currentFocusMilestoneId) {
+      expect(screen.getByText(roadmap.currentFocusMilestoneId)).toBeInTheDocument();
+    } else {
+      expect(screen.getByText(/no current focus yet/i)).toBeInTheDocument();
+    }
+    expect(screen.getByText("No evidence yet")).toBeInTheDocument();
+    expect(screen.getByText("No assessments yet")).toBeInTheDocument();
   });
 
   it("owns complete EN and PT-BR navigation copy locally", () => {

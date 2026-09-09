@@ -19,6 +19,7 @@ export function CareerDataControls({ locale }: Readonly<{ locale: Locale }>) {
   const copy = careerLabCopy[locale];
   const { profile, replaceProfile, resetProfile } = useCareerProfile();
   const [message, setMessage] = useState<string | null>(null);
+  const [messageKind, setMessageKind] = useState<"status" | "error">("status");
   const [confirmingReset, setConfirmingReset] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -41,8 +42,10 @@ export function CareerDataControls({ locale }: Readonly<{ locale: Locale }>) {
       const parsed = JSON.parse(await file.text()) as unknown;
       const nextProfile = migrateCareerProfile(parsed);
       await replaceProfile(nextProfile);
+      setMessageKind("status");
       setMessage(copy.importSuccess);
     } catch {
+      setMessageKind("error");
       setMessage(copy.importFailed);
     } finally {
       if (inputRef.current) inputRef.current.value = "";
@@ -52,6 +55,7 @@ export function CareerDataControls({ locale }: Readonly<{ locale: Locale }>) {
   async function confirmReset() {
     await resetProfile();
     setConfirmingReset(false);
+    setMessageKind("status");
     setMessage(copy.resetComplete);
   }
 
@@ -82,7 +86,14 @@ export function CareerDataControls({ locale }: Readonly<{ locale: Locale }>) {
           </div>
         )}
       </div>
-      {message ? <p role="status" className="career-data-controls__status">{message}</p> : null}
+      {message ? (
+        <p
+          role={messageKind === "error" ? "alert" : "status"}
+          className="career-data-controls__status"
+        >
+          {message}
+        </p>
+      ) : null}
     </section>
   );
 }

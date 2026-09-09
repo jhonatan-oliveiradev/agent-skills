@@ -1,0 +1,367 @@
+.career-learning-unit {
+  margin-top: clamp(2rem, 4vw, 4rem);
+  border-top: 1px solid var(--career-rule);
+  border-bottom: 1px solid var(--career-rule);
+  background: rgba(255, 255, 255, 0.18);
+}
+
+.career-learning-unit__header {
+  display: flex;
+  align-items: start;
+  justify-content: space-between;
+  gap: 2rem;
+  padding: 1.5rem 0;
+}
+
+.career-learning-unit__header h2,
+.career-evidence-workspace h1,
+.career-evidence-workspace h2,
+.career-evidence-form h2,
+.career-evidence-form h3,
+.career-evidence-record h3 {
+  margin: 0;
+  font-family: var(--font-serif, Georgia, serif);
+  font-weight: 500;
+  letter-spacing: -0.03em;
+}
+
+.career-learning-unit__header h2 {
+  margin-top: 0.45rem;
+  font-size: clamp(1.8rem, 4vw, 3.2rem);
+}
+
+.career-learning-unit__header > span {
+  color: var(--career-muted);
+  font-family: var(--font-mono, ui-monospace, monospace);
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.career-learning-unit__model {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  margin: 0;
+  border-top: 1px solid var(--career-rule);
+}
+
+.career-learning-unit__model > div {
+  padding: 1.35rem;
+  border-right: 1px solid var(--career-rule);
+}
+
+.career-learning-unit__model > div:last-child {
+  border-right: 0;
+}
+
+.career-learning-unit__model dt,
+.career-evidence-record dt {
+  color: var(--career-copper-dark);
+  font-family: var(--font-mono, ui-monospace, monospace);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.career-learning-unit__model dd,
+.career-evidence-record dd {
+  margin: 0.6rem 0 0;
+  color: var(--career-muted);
+  line-height: 1.6;
+}
+
+.career-learning-unit__practice {
+  margin: 0;
+  padding: 0;
+  border-top: 1px solid var(--career-rule);
+  list-style: none;
+}
+
+.career-learning-unit__practice li {
+  display: grid;
+  grid-template-columns: minmax(8rem, 0.28fr) minmax(0, 1fr);
+  gap: 1.25rem;
+  padding: 1rem 0;
+  border-bottom: 1px solid var(--career-rule);
+}
+
+.career-learning-unit__practice li > span {
+  color: var(--career-copper-dark);
+  font-family: var(--font-mono, ui-monospace, monospace);
+  font-size: 0.7rem;
+  text-transform: uppercase;
+}
+
+.career-learning-unit__practice p {
+  margin: 0;
+  line-height: 1.55;
+}
+
+.career-learning-unit__footer {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 1.4rem 0;
+}
+
+.career-learning-unit__footer p {
+  max-width: 50rem;
+  margin: 0;
+  color: var(--career-muted);
+  font-size: 0.82rem;
+  line-height: 1.5;
+}
+
+.career-learning-unit button,
+.career-evidence-form button {
+  min-height: 2.75rem;
+  border: 1px solid var(--career-ink);
+  background: var(--career-ink);
+  color: var(--career-paper);
+  padding: 0.75rem 1rem;
+  font: inherit;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.career-learning-unit button:disabled,
+.career-evidence-form button:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.career-learning-unit button:focus-visible,
+.career-evidence-form button:focus-visible,
+.career-evidence-form input:focus-visible,
+.career-evidence-form textarea:focus-visible,
+.career-evidence-form input[type="checkbox"]:focus-visible,
+.career-evidence-record a:focus-visible {
+  outline: 2px solid var(--career-copper);
+  outline-offset: 3px;
+}
+
+.career-evidence-workspace {
+  width: min(88rem, 100%);
+  margin: 0 auto;
+  padding-top: clamp(2.5rem, 6vw, 6rem);
+}
+
+.career-evidence-workspace__header {
+  display: grid;
+  gap: 1rem;
+  padding-bottom: 2rem;
+  border-bottom: 1px solid var(--career-rule);
+}
+
+.career-evidence-workspace__header h1 {
+  max-width: 10ch;
+  font-size: clamp(3rem, 7vw, 6.5rem);
+  line-height: 0.9;
+}
+
+.career-evidence-workspace__header > p:last-child {
+  max-width: 52rem;
+  margin: 0;
+  color: var(--career-muted);
+  line-height: 1.65;
+}
+
+.career-evidence-workspace__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.12fr) minmax(20rem, 0.88fr);
+  gap: clamp(2rem, 5vw, 5rem);
+  padding-top: 2.5rem;
+}
+
+.career-evidence-workspace__grid > section > h2 {
+  margin-bottom: 1.25rem;
+  font-size: 2rem;
+}
+
+.career-evidence-form {
+  display: grid;
+  gap: 1.5rem;
+}
+
+.career-evidence-form > header,
+.career-evidence-form > section,
+.career-evidence-form fieldset,
+.career-evidence-form__field {
+  margin: 0;
+  padding: 0 0 1.5rem;
+  border: 0;
+  border-bottom: 1px solid var(--career-rule);
+}
+
+.career-evidence-form h2 {
+  margin-top: 0.45rem;
+  font-size: clamp(2rem, 4vw, 3.4rem);
+}
+
+.career-evidence-form h3,
+.career-evidence-form legend {
+  margin: 0 0 0.8rem;
+  font-size: 1.3rem;
+  font-weight: 500;
+}
+
+.career-evidence-form p,
+.career-evidence-form li {
+  line-height: 1.6;
+}
+
+.career-evidence-form__capabilities {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.career-evidence-form__capabilities li {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.7rem 0;
+  border-top: 1px solid var(--career-rule);
+}
+
+.career-evidence-form__capabilities code,
+.career-evidence-record code {
+  font-family: var(--font-mono, ui-monospace, monospace);
+  font-size: 0.76rem;
+}
+
+.career-evidence-form fieldset {
+  display: grid;
+  gap: 0.8rem;
+}
+
+.career-evidence-form fieldset label {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.8rem;
+  align-items: start;
+  cursor: pointer;
+}
+
+.career-evidence-form input[type="checkbox"] {
+  margin-top: 0.25rem;
+  accent-color: var(--career-copper);
+}
+
+.career-evidence-form__field {
+  display: grid;
+  gap: 0.6rem;
+  color: var(--career-copper-dark);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.career-evidence-form textarea,
+.career-evidence-form input[type="url"] {
+  width: 100%;
+  border: 1px solid var(--career-rule);
+  border-radius: 0;
+  background: rgba(255, 255, 255, 0.3);
+  color: var(--career-ink);
+  padding: 0.9rem 1rem;
+  font: inherit;
+  font-size: 0.95rem;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.career-evidence-ledger {
+  display: grid;
+  border-top: 1px solid var(--career-rule);
+}
+
+.career-evidence-record {
+  padding: 1.3rem 0;
+  border-bottom: 1px solid var(--career-rule);
+}
+
+.career-evidence-record header {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  color: var(--career-muted);
+  font-size: 0.72rem;
+}
+
+.career-evidence-record h3 {
+  margin-top: 1.2rem;
+  font-size: 1.7rem;
+}
+
+.career-evidence-record > p {
+  color: var(--career-muted);
+  line-height: 1.55;
+}
+
+.career-evidence-record dl {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+  margin: 1rem 0;
+}
+
+.career-evidence-record a {
+  color: var(--career-copper-dark);
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.career-evidence-ledger__empty,
+.career-evidence-workspace__empty {
+  color: var(--career-muted);
+  line-height: 1.6;
+}
+
+@media (max-width: 70rem) {
+  .career-evidence-workspace__grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 48rem) {
+  .career-learning-unit__model,
+  .career-learning-unit__footer,
+  .career-evidence-record dl {
+    grid-template-columns: 1fr;
+  }
+
+  .career-learning-unit__model > div {
+    border-right: 0;
+    border-bottom: 1px solid var(--career-rule);
+  }
+
+  .career-learning-unit__model > div:last-child {
+    border-bottom: 0;
+  }
+
+  .career-learning-unit__practice li {
+    grid-template-columns: 1fr;
+    gap: 0.4rem;
+  }
+
+  .career-learning-unit__footer button {
+    width: 100%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .career-learning-unit *,
+  .career-evidence-workspace * {
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+  }
+}

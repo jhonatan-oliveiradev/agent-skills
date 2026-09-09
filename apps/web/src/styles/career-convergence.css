@@ -1,0 +1,51 @@
+.career-lab-rail__pack-link {
+  color: var(--career-copper-dark);
+  font-family: var(--font-mono, ui-monospace, SFMono-Regular, Menlo, monospace);
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  line-height: 1.35;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+.career-lab-rail__pack-link:hover {
+  text-decoration: underline;
+  text-underline-offset: 0.22em;
+}
+
+.career-lab-shell :is(
+  a,
+  button,
+  input,
+  select,
+  textarea,
+  summary,
+  .career-data-controls__import
+):focus-visible {
+  outline: 2px solid var(--career-copper);
+  outline-offset: 3px;
+}
+
+@media (max-width: 760px) {
+  .career-lab-rail__brand {
+    align-items: center;
+    flex-wrap: wrap;
+  }
+
+  .career-lab-rail__pack-link {
+    flex-basis: 100%;
+    font-size: 0.58rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .career-lab-shell *,
+  .career-lab-shell *::before,
+  .career-lab-shell *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

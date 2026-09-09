@@ -20,6 +20,7 @@ export function SiteHeader({ locale }: Readonly<{ locale: Locale }>) {
     ["/getting-started", copy.navigation.gettingStarted, "gettingStarted"],
     ["/built-with-skills", copy.navigation.builtWithSkills, "builtWithSkills"],
     ["/roadmap", copy.navigation.roadmap, "roadmap"],
+    ["/career-lab", copy.navigation.careerLab, "careerLab"],
     ["/about", copy.navigation.about, "about"],
   ].map(([path, label, contextKey]) => {
     const key = contextKey as SiteChromeContextKey;
