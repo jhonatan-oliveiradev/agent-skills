@@ -27,7 +27,7 @@ describe("post-Stable changelog", () => {
 
     expect(readme).toContain("Career Lab");
     expect(readme).toMatch(/browser-local|local-first/i);
-    expect(readme).toMatch(/import.*export.*reset|import\/export\/reset/is);
+    expect(readme).toMatch(/import[\s\S]*export[\s\S]*reset|import\/export\/reset/i);
     expect(readme).toMatch(/60 reusable skills across 12 active packs/i);
     expect(readme).toMatch(/`dev` is the pre-production integration branch/i);
     expect(readme).toMatch(/`main`.*production/i);
@@ -63,7 +63,7 @@ describe("post-Stable changelog", () => {
     const ptStable = pt.releases[1];
     expect(enStable).toMatchObject({ version: "1.0.0", date: "2026-09-02" });
     expect(ptStable).toMatchObject({ version: "1.0.0", date: "2026-09-02" });
-    expect(JSON.stringify(enStable)).toMatch(/54 canonical skills.*11 active packs/is);
-    expect(JSON.stringify(ptStable)).toMatch(/54 skills canônicas.*11 pacotes ativos/is);
+    expect(JSON.stringify(enStable)).toMatch(/54 canonical skills[\s\S]*11 active packs/i);
+    expect(JSON.stringify(ptStable)).toMatch(/54 skills canônicas[\s\S]*11 pacotes ativos/i);
   });
 });
