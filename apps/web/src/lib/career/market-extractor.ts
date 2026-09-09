@@ -95,6 +95,18 @@ function extractStructuralRequirements(text: string): readonly StructuralRequire
     });
   }
 
+  const location = text.match(
+    /\b(?:candidates?\s+)?must\s+(?:be\s+(?:based|located)|reside|live)\s+in\s+[^.;\n]+/i,
+  );
+  if (location?.[0]) {
+    pushRequirement(requirements, {
+      kind: "location",
+      label: location[0],
+      hard: true,
+      status: "unknown",
+    });
+  }
+
   const language = text.match(
     /\b(?:fluent\s+(?:in\s+)?english|english\s+(?:is\s+)?required|required\s+english)\b/i,
   );
