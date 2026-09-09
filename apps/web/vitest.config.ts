@@ -8,8 +8,39 @@ const heavyHomeRenderTests = [
   "src/components/home/home-living-archive.test.tsx",
 ];
 
+const srcRoot = fileURLToPath(new URL("./src", import.meta.url));
+const studioRoot = fileURLToPath(new URL("./src/app/[locale]/(studio)", import.meta.url));
+const careerRoot = fileURLToPath(new URL("./src/app/[locale]/(career)", import.meta.url));
+const studioLocaleLayoutHarness = fileURLToPath(
+  new URL("./src/test-support/studio-locale-layout.tsx", import.meta.url),
+);
+
 export default defineConfig({
-  resolve: { alias: { "@": fileURLToPath(new URL("./src", import.meta.url)) } },
+  resolve: {
+    alias: [
+      { find: "@/app/[locale]/layout", replacement: studioLocaleLayoutHarness },
+      { find: "@/app/[locale]/page", replacement: `${studioRoot}/page` },
+      { find: "@/app/[locale]/about", replacement: `${studioRoot}/about` },
+      {
+        find: "@/app/[locale]/built-with-skills",
+        replacement: `${studioRoot}/built-with-skills`,
+      },
+      { find: "@/app/[locale]/changelog", replacement: `${studioRoot}/changelog` },
+      { find: "@/app/[locale]/contribute", replacement: `${studioRoot}/contribute` },
+      {
+        find: "@/app/[locale]/getting-started",
+        replacement: `${studioRoot}/getting-started`,
+      },
+      { find: "@/app/[locale]/packs", replacement: `${studioRoot}/packs` },
+      { find: "@/app/[locale]/roadmap", replacement: `${studioRoot}/roadmap` },
+      { find: "@/app/[locale]/skills", replacement: `${studioRoot}/skills` },
+      {
+        find: "@/app/[locale]/career-lab",
+        replacement: `${careerRoot}/career-lab`,
+      },
+      { find: "@", replacement: srcRoot },
+    ],
+  },
   test: {
     environment: "jsdom",
     setupFiles: ["./vitest.setup.ts"],

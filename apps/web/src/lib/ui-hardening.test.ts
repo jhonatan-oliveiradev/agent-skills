@@ -13,13 +13,16 @@ async function readSource(path: string) {
 }
 
 describe("sitewide UI hardening", () => {
-  it("loads the hardening layer after the editorial styles", async () => {
-    const layout = await readSource("app/[locale]/layout.tsx");
-    const finalPolish = layout.indexOf('import "../site-chrome-refinement.css"');
-    const hardening = layout.indexOf('import "../ui-hardening.css"');
+  it("keeps shared hardening infrastructure outside Studio chrome ownership", async () => {
+    const [localeLayout, studioLayout] = await Promise.all([
+      readSource("app/[locale]/layout.tsx"),
+      readSource("app/[locale]/(studio)/layout.tsx"),
+    ]);
 
-    expect(finalPolish).toBeGreaterThan(-1);
-    expect(hardening).toBeGreaterThan(finalPolish);
+    expect(localeLayout).toContain('import "../ui-hardening.css"');
+    expect(localeLayout).not.toContain("site-chrome-refinement.css");
+    expect(studioLayout).toContain('import "../../site-chrome-refinement.css"');
+    expect(studioLayout).not.toContain("ui-hardening.css");
   });
 
   it("reflows narrow pack dossiers with selectors strong enough to win the existing cascade", async () => {

@@ -77,22 +77,25 @@ describe("editorial design foundation", () => {
     expect(plexLicense).toContain("SIL OPEN FONT LICENSE");
   });
 
-  it("keeps editorial page styles and global chrome owned by the locale layout", async () => {
-    const [layout, skillsIndex, skillDetail] = await Promise.all([
+  it("keeps editorial page styles and institutional chrome owned by the Studio layout", async () => {
+    const [rootLayout, studioLayout, skillsIndex, skillDetail] = await Promise.all([
       read("app/[locale]/layout.tsx"),
-      read("app/[locale]/skills/page.tsx"),
-      read("app/[locale]/skills/[slug]/page.tsx"),
+      read("app/[locale]/(studio)/layout.tsx"),
+      read("app/[locale]/(studio)/skills/page.tsx"),
+      read("app/[locale]/(studio)/skills/[slug]/page.tsx"),
     ]);
 
-    expect(layout).toContain('import "../editorial-foundation.css"');
-    expect(layout.indexOf('import "../editorial-foundation.css"')).toBeGreaterThan(
-      layout.indexOf('import "../globals.css"'),
+    expect(rootLayout).toContain('import "../globals.css"');
+    expect(rootLayout).not.toContain("editorial-foundation.css");
+    expect(rootLayout).not.toContain("SiteHeader");
+    expect(rootLayout).not.toContain("SiteFooter");
+
+    expect(studioLayout).toContain('import "../../editorial-foundation.css"');
+    expect(studioLayout.indexOf('import "../../editorial-foundation.css"')).toBeLessThan(
+      studioLayout.indexOf('import "../../editorial-pages.css"'),
     );
-    expect(layout.indexOf('import "../editorial-foundation.css"')).toBeLessThan(
-      layout.indexOf('import "../editorial-pages.css"'),
-    );
-    expect(layout).toContain("<SiteHeader locale={locale} />");
-    expect(layout).toContain("<SiteFooter locale={locale} />");
+    expect(studioLayout).toContain("<SiteHeader locale={locale} />");
+    expect(studioLayout).toContain("<SiteFooter locale={locale} />");
 
     for (const route of [skillsIndex, skillDetail]) {
       expect(route).not.toContain("SiteHeader");

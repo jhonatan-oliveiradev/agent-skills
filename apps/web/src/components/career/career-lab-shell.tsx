@@ -10,16 +10,32 @@ import { useCareerProfile } from "./career-profile-provider";
 
 const navigationSegments = ["", "roadmap", "assessments", "evidence", "market"] as const;
 
+const shellClosingCopy = {
+  en: {
+    local: "Local-first workspace",
+    methods: "Methods ↗",
+    studio: "Agent Skills Studio ↗",
+    navigationLabel: "Career Lab ecosystem",
+  },
+  "pt-BR": {
+    local: "Workspace local-first",
+    methods: "Métodos ↗",
+    studio: "Agent Skills Studio ↗",
+    navigationLabel: "Ecossistema do Career Lab",
+  },
+} as const;
+
 export function CareerLabShell({
   locale,
   children,
 }: Readonly<{ locale: Locale; children?: ReactNode }>) {
   const copy = careerLabCopy[locale];
+  const closingCopy = shellClosingCopy[locale];
   const { profile, status } = useCareerProfile();
 
   if (status === "hydrating") {
     return (
-      <main className="career-lab-shell career-lab-shell--state">
+      <main id="main-content" className="career-lab-shell career-lab-shell--state">
         <p role="status">{copy.loading}</p>
       </main>
     );
@@ -27,14 +43,14 @@ export function CareerLabShell({
 
   if (status === "error") {
     return (
-      <main className="career-lab-shell career-lab-shell--state">
+      <main id="main-content" className="career-lab-shell career-lab-shell--state">
         <p role="alert">{copy.storageError}</p>
       </main>
     );
   }
 
   return (
-    <main className="career-lab-shell">
+    <main id="main-content" className="career-lab-shell">
       <header className="career-lab-rail">
         <div className="career-lab-rail__brand">
           <span>Agent Skills Studio</span>
@@ -80,6 +96,21 @@ export function CareerLabShell({
           <p>{copy.summary}</p>
         </header>
         {children}
+        <footer className="career-lab-product-footer">
+          <div className="career-lab-product-footer__identity">
+            <strong>Career Lab</strong>
+            <span>{closingCopy.local}</span>
+          </div>
+          <nav aria-label={closingCopy.navigationLabel}>
+            <Link
+              href={`/${locale}/packs/developer-career` as Route}
+              title={copy.developerCareerPackHint}
+            >
+              {closingCopy.methods}
+            </Link>
+            <Link href={`/${locale}` as Route}>{closingCopy.studio}</Link>
+          </nav>
+        </footer>
       </div>
     </main>
   );
