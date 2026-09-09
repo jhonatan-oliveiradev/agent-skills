@@ -4,6 +4,7 @@ import { CareerLabShell } from "@/components/career/career-lab-shell";
 import { CareerProfileProvider } from "@/components/career/career-profile-provider";
 import "@/styles/career-lab.css";
 import "@/styles/career-learning-evidence.css";
+import "@/styles/career-market.css";
 
 type LayoutProps = Readonly<{
   children: ReactNode;
