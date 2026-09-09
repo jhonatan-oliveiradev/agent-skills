@@ -1,3 +1,4 @@
+import { competencyIds } from "./competencies";
 import type {
   AssessmentRecord,
   CareerArtifact,
@@ -100,6 +101,19 @@ function assertString(value: unknown, label: string): asserts value is string {
   }
 }
 
+function assertHttpUrl(value: unknown, label: string): asserts value is string {
+  assertString(value, label);
+  let parsed: URL;
+  try {
+    parsed = new URL(value);
+  } catch {
+    throw new Error(`${label}: expected valid HTTP(S) URL`);
+  }
+  if (parsed.protocol !== "http:" && parsed.protocol !== "https:") {
+    throw new Error(`${label}: expected valid HTTP(S) URL`);
+  }
+}
+
 function assertIsoDateTime(value: unknown, label: string): asserts value is string {
   assertString(value, label);
   if (!Number.isFinite(Date.parse(value))) {
@@ -114,6 +128,13 @@ function assertOneOf<T extends string>(
 ): asserts value is T {
   if (typeof value !== "string" || !allowed.includes(value as T)) {
     throw new Error(`${label}: invalid value`);
+  }
+}
+
+function assertCompetencyId(value: unknown, label: string): asserts value is string {
+  assertString(value, label);
+  if (!competencyIds.includes(value as (typeof competencyIds)[number])) {
+    throw new Error(`${label}: unknown competency`);
   }
 }
 
@@ -300,7 +321,7 @@ function parseJobCapabilitySignal(
 ): JobCapabilitySignal {
   assertRecord(value, label);
   assertOnlyKeys(value, ["competencyId", "label", "provenance"], label);
-  assertString(value.competencyId, `${label}.competencyId`);
+  assertCompetencyId(value.competencyId, `${label}.competencyId`);
   assertString(value.label, `${label}.label`);
   if (value.provenance !== expectedProvenance) {
     throw new Error(`${label}.provenance: expected ${expectedProvenance}`);
@@ -355,7 +376,7 @@ function parseNormalizedJobPosting(value: unknown, label: string): NormalizedJob
   assertRecord(value.source, `${label}.source`);
   assertOnlyKeys(value.source, ["type", "url", "capturedAt"], `${label}.source`);
   assertOneOf(value.source.type, jobSourceTypes, `${label}.source.type`);
-  if (value.source.url !== undefined) assertString(value.source.url, `${label}.source.url`);
+  if (value.source.url !== undefined) assertHttpUrl(value.source.url, `${label}.source.url`);
   assertIsoDateTime(value.source.capturedAt, `${label}.source.capturedAt`);
   if (value.postedAt !== null) assertIsoDateTime(value.postedAt, `${label}.postedAt`);
   if (value.deadline !== null) assertIsoDateTime(value.deadline, `${label}.deadline`);
@@ -408,7 +429,7 @@ function parseMarketSignal(value: unknown, label: string): MarketSignal {
     ["competencyId", "provenance", "explicitCount", "inferredCount", "postingCount"],
     label,
   );
-  assertString(value.competencyId, `${label}.competencyId`);
+  assertCompetencyId(value.competencyId, `${label}.competencyId`);
   if (value.provenance !== "market-derived") {
     throw new Error(`${label}.provenance: expected market-derived`);
   }
