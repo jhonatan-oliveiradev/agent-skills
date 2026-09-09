@@ -1,6 +1,6 @@
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import type { ComponentType, ReactNode } from "react";
-import { afterEach, describe, expect, it, vi } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { normalizeJobPosting } from "@/lib/career/market";
 import { createEmptyCareerProfile } from "@/lib/career/profile";
 import { buildRoadmap } from "@/lib/career/roadmap-engine";
@@ -60,6 +60,23 @@ function storageWith(profile: CareerProfile): CareerStorage {
     clear: vi.fn().mockResolvedValue(undefined),
   };
 }
+
+beforeEach(() => {
+  vi.stubGlobal(
+    "IntersectionObserver",
+    class {
+      readonly root = null;
+      readonly rootMargin = "";
+      readonly thresholds: readonly number[] = [];
+      disconnect() {}
+      observe() {}
+      takeRecords() {
+        return [];
+      }
+      unobserve() {}
+    },
+  );
+});
 
 afterEach(() => {
   vi.unstubAllGlobals();
