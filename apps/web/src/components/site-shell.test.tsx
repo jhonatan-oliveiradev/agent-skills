@@ -19,11 +19,11 @@ import ContributePage from "@/app/[locale]/contribute/page";
 import BuiltWithSkillsPage from "@/app/[locale]/built-with-skills/page";
 import BuiltWithSkillsDetailPage from "@/app/[locale]/built-with-skills/[slug]/page";
 import GettingStartedPage from "@/app/[locale]/getting-started/page";
+import LocaleLayout from "@/app/[locale]/layout";
 import HomePage, { generateMetadata } from "@/app/[locale]/page";
 import PacksPage from "@/app/[locale]/packs/page";
 import RoadmapPage from "@/app/[locale]/roadmap/page";
 import SkillsPage from "@/app/[locale]/skills/page";
-import LocaleLayout from "@/test-support/studio-locale-layout";
 import { ThemeProvider } from "./theme-provider";
 import { SiteFooter } from "./site-footer";
 import { SiteHeader } from "./site-header";
@@ -283,19 +283,104 @@ describe("foundation navigation targets", () => {
     ["contribute", ContributePage, "Contribute a focused improvement.", "Contribua com uma melhoria focada."],
     ["changelog", ChangelogPage, "Changelog", "Histórico de mudanças"],
   ] as const)("renders real localized content for /%s", async (_section, Page, enHeading, ptHeading) => {
-    render(await Page({ params: Promise.resolve({ locale: "en" }) }));
-    expect(screen.getByRole("heading", { level: 1, name: enHeading })).toBeInTheDocument();
-  });
-
-  it.each([
-    ["skills", SkillsPage, "Find a method for the work in front of you.", "Encontre um método para o trabalho que você precisa resolver."],
-    ["packs", PacksPage, "Use a pack when one method is not enough.", "Use um pack quando um único método não for suficiente."],
-    ["roadmap", RoadmapPage, "Build the collection in public.", "Construa a coleção em público."],
-  ] as const)("renders localized discovery routes for /%s", async (_section, Page, enHeading, ptHeading) => {
     const { unmount } = render(await Page({ params: Promise.resolve({ locale: "en" }) }));
     expect(screen.getByRole("heading", { level: 1, name: enHeading })).toBeInTheDocument();
     unmount();
+
     render(await Page({ params: Promise.resolve({ locale: "pt-BR" }) }));
     expect(screen.getByRole("heading", { level: 1, name: ptHeading })).toBeInTheDocument();
+  });
+
+  it("publishes real contribution paths and readable release notes", async () => {
+    const { unmount } = render(await ContributePage({ params: Promise.resolve({ locale: "en" }) }));
+    expect(screen.getByRole("link", { name: /open a focused issue/i })).toHaveAttribute(
+      "href",
+      "https://github.com/jhonatan-oliveiradev/agent-skills/issues/new",
+    );
+    expect(screen.getByRole("link", { name: /prepare a pull request/i })).toHaveAttribute(
+      "href",
+      "https://github.com/jhonatan-oliveiradev/agent-skills/compare",
+    );
+    unmount();
+
+    render(await ChangelogPage({ params: Promise.resolve({ locale: "en" }) }));
+    const currentReleaseHeading = screen.getByRole("heading", { name: "1.0.0" });
+    expect(currentReleaseHeading).toBeInTheDocument();
+    const currentRelease = currentReleaseHeading.closest("article");
+    expect(currentRelease).not.toBeNull();
+    expect(currentRelease).toHaveTextContent(/evidence-qualified.*Stable 1.0.0/i);
+    expect(screen.getByRole("link", { name: /source changelog/i })).toHaveAttribute(
+      "href",
+      expect.stringContaining("CHANGELOG.md"),
+    );
+  });
+
+  it.each([
+    ["en", "Roadmap", "Proposal", "Stable", "No initiatives in this stage."],
+    ["pt-BR", "Roteiro", "Proposta", "Estável", "Nenhuma iniciativa nesta etapa."],
+  ] as const)("renders the evidence-backed roadmap for %s", async (locale, heading, proposal, stable, empty) => {
+    const { container } = render(await RoadmapPage({ params: Promise.resolve({ locale }) }));
+
+    expect(screen.getByRole("heading", { level: 1, name: heading })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: proposal })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: stable })).toBeInTheDocument();
+    expect(screen.getAllByText(empty)).toHaveLength(6);
+    expect(container.querySelectorAll("[data-program-record]")).toHaveLength(5);
+  });
+
+  it.each([
+    ["en", "Use a pack when one method is not enough.", "/en/packs/frontend-product"],
+    ["pt-BR", "Use um pack quando um único método não for suficiente.", "/pt-BR/packs/frontend-product"],
+  ] as const)("renders the curated systems archive for %s", async (locale, heading, packHref) => {
+    const { container } = render(await PacksPage({ params: Promise.resolve({ locale }) }));
+
+    expect(screen.getByRole("heading", { level: 1, name: heading })).toBeInTheDocument();
+    expect(container.querySelectorAll("[data-pack-dossier]")).toHaveLength(12);
+    expect(container.querySelectorAll('[data-pack-dossier][data-status="active"]')).toHaveLength(12);
+    expect(container.querySelectorAll('[data-pack-dossier][data-status="planned"]')).toHaveLength(0);
+    expect(container.querySelector(`[data-pack-dossier] a[href="${packHref}"]`)).toBeInTheDocument();
+    expect(container.querySelector(".pack-card")).not.toBeInTheDocument();
+  });
+
+  it.each([
+    ["en", "Getting started", "Install the complete collection", "Verify the installation"],
+    ["pt-BR", "Primeiros passos", "Instale a coleção completa", "Verifique a instalação"],
+  ] as const)("renders the localized installation guide for %s", async (locale, heading, fullInstall, verify) => {
+    render(await GettingStartedPage({ params: Promise.resolve({ locale }) }));
+
+    expect(screen.getByRole("heading", { level: 1, name: heading })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: fullInstall })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: verify })).toBeInTheDocument();
+    expect(screen.getAllByText("bash install.sh")).toHaveLength(2);
+    expect(screen.getByText("./install.ps1")).toBeInTheDocument();
+    expect(screen.getByText("./install.sh --skill craft-premium-motion")).toBeInTheDocument();
+    expect(screen.getByText("./install.sh --pack motion")).toBeInTheDocument();
+  });
+
+  it.each([
+    [
+      "en",
+      "Find a method for the work in front of you.",
+      "Describe the work",
+      "/en/skills/designing-ui-systems",
+    ],
+    [
+      "pt-BR",
+      "Encontre um método para o trabalho que você precisa resolver.",
+      "Descreva o trabalho",
+      "/pt-BR/skills/designing-ui-systems",
+    ],
+  ] as const)("renders the localized method archive for %s", async (locale, heading, searchLabel, methodHref) => {
+    const { container } = render(
+      <NuqsTestingAdapter>
+        {await SkillsPage({ params: Promise.resolve({ locale }) })}
+      </NuqsTestingAdapter>,
+    );
+
+    expect(screen.getByRole("heading", { level: 1, name: heading })).toBeInTheDocument();
+    expect(screen.getByRole("searchbox", { name: searchLabel })).toBeInTheDocument();
+    expect(container.querySelectorAll("[data-method-row]")).toHaveLength(60);
+    expect(container.querySelector(`[data-method-row] a[href="${methodHref}"]`)).toBeInTheDocument();
+    expect(container.querySelector(".skill-card")).not.toBeInTheDocument();
   });
 });
