@@ -31,10 +31,10 @@
 
 .career-lab-entry__hero {
   display: grid;
-  grid-template-columns: minmax(0, 1.45fr) minmax(17rem, 0.55fr);
-  gap: clamp(3rem, 8vw, 8rem);
+  grid-template-columns: minmax(0, 1.2fr) minmax(18rem, 0.8fr);
+  gap: clamp(2.5rem, 6vw, 6rem);
   align-items: end;
-  padding: clamp(3.5rem, 7vw, 7rem) 0 clamp(3rem, 6vw, 5.5rem);
+  padding: clamp(2.75rem, 4.5vw, 4.5rem) 0 clamp(2.5rem, 4vw, 4rem);
   border-bottom: 1px solid var(--career-rule);
 }
 
@@ -48,26 +48,18 @@
 }
 
 .career-lab-entry__intro h1 {
-  max-width: 9.5ch;
-  margin-top: 1rem;
-  font-size: clamp(3.8rem, 7.5vw, 8.4rem);
-  line-height: 0.87;
+  max-width: 10.5ch;
+  margin-top: 0.9rem;
+  font-size: clamp(3.6rem, 6vw, 6.7rem);
+  line-height: 0.9;
 }
 
 .career-lab-entry__lede {
-  max-width: 39rem;
-  margin: 2rem 0 0;
+  max-width: 36rem;
+  margin: 1.5rem 0 0;
   color: var(--career-muted);
-  font-size: clamp(1rem, 1.35vw, 1.2rem);
-  line-height: 1.7;
-}
-
-.career-lab-entry__start {
-  display: grid;
-  grid-template-columns: max-content minmax(0, 22rem);
-  gap: 1.5rem 2rem;
-  align-items: center;
-  margin-top: 2.25rem;
+  font-size: clamp(0.98rem, 1.2vw, 1.12rem);
+  line-height: 1.65;
 }
 
 .career-lab-entry__primary {
@@ -93,20 +85,13 @@
   background: var(--career-copper);
 }
 
-.career-lab-entry__start p {
-  margin: 0;
-  color: var(--career-muted);
-  font-size: 0.78rem;
-  line-height: 1.55;
-}
-
 .career-lab-entry__dimensions {
   margin: 0;
   border-top: 1px solid var(--career-rule);
 }
 
 .career-lab-entry__dimensions div {
-  padding: 1.35rem 0 1.45rem;
+  padding: 1.25rem 0 1.35rem;
   border-bottom: 1px solid var(--career-rule);
 }
 
@@ -120,105 +105,139 @@
 }
 
 .career-lab-entry__dimensions dd {
-  margin: 1rem 0 0;
+  margin: 0.85rem 0 0;
   color: var(--career-ink);
   font-family: var(--font-serif, Georgia, "Times New Roman", serif);
-  font-size: clamp(1.35rem, 2vw, 1.8rem);
+  font-size: clamp(1.3rem, 1.8vw, 1.7rem);
   line-height: 1.08;
 }
 
 .career-lab-entry__journey {
-  padding: clamp(3rem, 5vw, 4.5rem) 0 clamp(2rem, 4vw, 3.5rem);
+  padding: clamp(2.25rem, 4vw, 3.75rem) 0 clamp(2rem, 4vw, 3.25rem);
 }
 
-.career-lab-entry__journey > header {
-  display: flex;
+.career-lab-entry__workspace-header {
+  display: grid;
+  grid-template-columns: minmax(18rem, 0.78fr) minmax(28rem, 1.22fr);
+  gap: clamp(2.5rem, 6vw, 6rem);
   align-items: end;
-  justify-content: space-between;
-  gap: 2rem;
-  margin-bottom: 1.5rem;
+  margin-bottom: 1.6rem;
 }
 
-.career-lab-entry__journey h2 {
-  max-width: 11ch;
-  font-size: clamp(2.7rem, 5vw, 5rem);
+.career-lab-entry__workspace-title h2 {
+  max-width: 10ch;
+  margin-top: 0.8rem;
+  font-size: clamp(3rem, 4.5vw, 4.75rem);
   line-height: 0.92;
-  text-align: right;
+  text-align: left;
+}
+
+.career-lab-entry__current {
+  padding: 1.15rem 0 1.25rem;
+  border-top: 2px solid var(--career-copper);
+  border-bottom: 1px solid var(--career-rule);
+}
+
+.career-lab-entry__current > .career-lab__eyebrow {
+  margin-bottom: 0.9rem;
+}
+
+.career-lab-entry__current-action {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) max-content;
+  gap: 1.5rem 2rem;
+  align-items: center;
+}
+
+.career-lab-entry__current h3 {
+  font-size: clamp(1.8rem, 2.6vw, 2.45rem);
+  line-height: 1;
+}
+
+.career-lab-entry__current-action p,
+.career-lab-entry__current-note {
+  color: var(--career-muted);
+  font-size: 0.8rem;
+  line-height: 1.55;
+}
+
+.career-lab-entry__current-action p {
+  max-width: 31rem;
+  margin: 0.55rem 0 0;
+}
+
+.career-lab-entry__current-note {
+  max-width: 38rem;
+  margin: 0.9rem 0 0;
 }
 
 .career-lab-entry__journey ol {
-  display: grid;
-  grid-template-columns: repeat(5, minmax(0, 1fr));
   margin: 0;
   padding: 0;
   border-top: 1px solid var(--career-rule);
-  border-bottom: 1px solid var(--career-rule);
   list-style: none;
 }
 
 .career-lab-entry__journey li {
-  min-height: 12.5rem;
-  padding: 1.25rem;
-  border-right: 1px solid var(--career-rule);
+  min-height: 6.1rem;
+  display: grid;
+  grid-template-columns: 4rem minmax(0, 1fr) minmax(11rem, 14rem);
+  gap: 1.5rem;
+  align-items: center;
+  padding: 1rem 1rem 1rem 0;
+  border-bottom: 1px solid var(--career-rule);
 }
 
 .career-lab-entry__journey li[data-state="next"] {
-  background: rgba(169, 95, 53, 0.065);
+  background: linear-gradient(90deg, rgba(169, 95, 53, 0.075), rgba(169, 95, 53, 0) 68%);
+  box-shadow: inset 2px 0 0 var(--career-copper);
 }
 
-.career-lab-entry__journey li[data-state="waiting"] {
-  background: rgba(20, 33, 43, 0.012);
-}
-
-.career-lab-entry__journey li:last-child {
-  border-right: 0;
-}
-
-.career-lab-entry__stage-meta {
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: 0.75rem;
-  min-height: 1.75rem;
-}
-
-.career-lab-entry__stage-meta > span:first-child,
+.career-lab-entry__stage-index,
 .career-lab-entry__stage-status {
   font-family: var(--font-mono, ui-monospace, SFMono-Regular, Menlo, monospace);
   font-weight: 700;
   text-transform: uppercase;
 }
 
-.career-lab-entry__stage-meta > span:first-child {
+.career-lab-entry__stage-index {
+  padding-left: 1rem;
   color: var(--career-copper-dark);
   font-size: 0.67rem;
   letter-spacing: 0.08em;
 }
 
-.career-lab-entry__stage-status {
-  max-width: 10rem;
+.career-lab-entry__stage-copy {
+  min-width: 0;
+  display: grid;
+  grid-template-columns: minmax(9.5rem, 0.42fr) minmax(0, 1fr);
+  gap: 1.5rem 2.25rem;
+  align-items: baseline;
+}
+
+.career-lab-entry__stage-copy h3 {
+  font-size: clamp(1.5rem, 2vw, 1.95rem);
+  line-height: 1;
+}
+
+.career-lab-entry__stage-copy p {
+  margin: 0;
   color: var(--career-muted);
-  font-size: 0.58rem;
-  letter-spacing: 0.06em;
-  line-height: 1.35;
+  font-size: 0.8rem;
+  line-height: 1.5;
+}
+
+.career-lab-entry__stage-status {
+  max-width: 14rem;
+  color: var(--career-muted);
+  font-size: 0.6rem;
+  letter-spacing: 0.065em;
+  line-height: 1.4;
   text-align: right;
 }
 
 .career-lab-entry__journey li[data-state="next"] .career-lab-entry__stage-status {
   color: var(--career-copper-dark);
-}
-
-.career-lab-entry__journey h3 {
-  margin-top: 2rem;
-  font-size: clamp(1.45rem, 2.5vw, 2rem);
-  line-height: 1;
-}
-
-.career-lab-entry__journey li p {
-  margin: 0.85rem 0 0;
-  color: var(--career-muted);
-  font-size: 0.82rem;
-  line-height: 1.55;
 }
 
 .career-lab-entry__pack {
@@ -272,7 +291,7 @@
 @media (max-width: 980px) {
   .career-lab-entry__hero {
     grid-template-columns: 1fr;
-    gap: 3.5rem;
+    gap: 3rem;
   }
 
   .career-lab-entry__dimensions {
@@ -289,20 +308,23 @@
     border-right: 0;
   }
 
-  .career-lab-entry__journey ol {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+  .career-lab-entry__workspace-header {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  .career-lab-entry__workspace-title h2 {
+    max-width: 12ch;
   }
 
   .career-lab-entry__journey li {
-    border-bottom: 1px solid var(--career-rule);
+    grid-template-columns: 3.5rem minmax(0, 1fr) minmax(9rem, 11rem);
+    gap: 1.25rem;
   }
 
-  .career-lab-entry__journey li:nth-child(2n) {
-    border-right: 0;
-  }
-
-  .career-lab-entry__journey li:last-child {
-    border-bottom: 0;
+  .career-lab-entry__stage-copy {
+    grid-template-columns: minmax(8rem, 0.4fr) minmax(0, 1fr);
+    gap: 1.25rem;
   }
 }
 
@@ -326,16 +348,12 @@
     width: 100%;
   }
 
+  .career-lab-entry__hero {
+    padding-top: 2.5rem;
+  }
+
   .career-lab-entry__intro h1 {
-    font-size: clamp(3.25rem, 15vw, 5.6rem);
-  }
-
-  .career-lab-entry__start {
-    grid-template-columns: 1fr;
-  }
-
-  .career-lab-entry__primary {
-    width: 100%;
+    font-size: clamp(3.2rem, 14vw, 5.25rem);
   }
 
   .career-lab-entry__dimensions {
@@ -347,30 +365,40 @@
     border-right: 0;
   }
 
-  .career-lab-entry__journey > header,
-  .career-lab-entry__pack {
-    align-items: start;
-    flex-direction: column;
-  }
-
-  .career-lab-entry__journey h2 {
-    text-align: left;
-  }
-
-  .career-lab-entry__journey ol {
+  .career-lab-entry__current-action {
     grid-template-columns: 1fr;
   }
 
-  .career-lab-entry__journey li,
-  .career-lab-entry__journey li:nth-child(2n) {
-    min-height: 0;
-    padding: 1.25rem 1rem 1.5rem;
-    border-right: 0;
-    border-bottom: 1px solid var(--career-rule);
+  .career-lab-entry__primary {
+    width: 100%;
   }
 
-  .career-lab-entry__journey h3 {
-    margin-top: 1.35rem;
+  .career-lab-entry__journey li {
+    min-height: 0;
+    grid-template-columns: 2.25rem minmax(0, 1fr);
+    gap: 0.75rem 1rem;
+    padding: 1.1rem 0;
+  }
+
+  .career-lab-entry__stage-index {
+    align-self: start;
+    padding: 0.3rem 0 0 0.55rem;
+  }
+
+  .career-lab-entry__stage-copy {
+    grid-template-columns: 1fr;
+    gap: 0.4rem;
+  }
+
+  .career-lab-entry__stage-status {
+    grid-column: 2;
+    max-width: none;
+    text-align: left;
+  }
+
+  .career-lab-entry__pack {
+    align-items: start;
+    flex-direction: column;
   }
 }
 
