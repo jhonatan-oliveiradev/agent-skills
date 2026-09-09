@@ -43,6 +43,7 @@ export function CareerLabShell({
           <h1>{copy.noProfileTitle}</h1>
           <p>{copy.noProfileBody}</p>
           <Link href={`/${locale}/career-lab/onboarding` as Route}>{copy.startOnboarding}</Link>
+          <Link href={`/${locale}/packs/developer-career` as Route}>{copy.developerCareerPack}</Link>
         </section>
       </main>
     );
@@ -54,6 +55,13 @@ export function CareerLabShell({
         <div className="career-lab-rail__brand">
           <span>Agent Skills Studio</span>
           <strong>Career Lab</strong>
+          <Link
+            className="career-lab-rail__pack-link"
+            href={`/${locale}/packs/developer-career` as Route}
+            title={copy.developerCareerPackHint}
+          >
+            {copy.developerCareerPack}
+          </Link>
         </div>
         <nav aria-label="Career Lab">
           <ol>
