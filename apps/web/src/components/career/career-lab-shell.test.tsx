@@ -1,5 +1,12 @@
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
+
+const navigation = vi.hoisted(() => ({ pathname: "/en/career-lab" }));
+
+vi.mock("next/navigation", () => ({
+  usePathname: () => navigation.pathname,
+}));
+
 import { careerLabCopy } from "@/lib/career/copy";
 import { createEmptyCareerProfile } from "@/lib/career/profile";
 import type { CareerStorage } from "@/lib/career/storage";
@@ -27,7 +34,8 @@ function ProviderProbe() {
 }
 
 describe("Career Lab shell", () => {
-  it("renders product-owned chrome and provided route content without inferring route state", async () => {
+  it("renders product-owned chrome and provided route content", async () => {
+    navigation.pathname = "/en/career-lab";
     render(
       <CareerProfileProvider storage={storageWith(null)}>
         <CareerLabShell locale="en">
@@ -53,6 +61,41 @@ describe("Career Lab shell", () => {
     );
     expect(screen.queryByText(/methods only matter|métodos só têm valor/i)).not.toBeInTheDocument();
     expect(screen.queryByText(/sign in|log in/i)).not.toBeInTheDocument();
+  });
+
+  it("marks Guide as an unnumbered current utility route in PT-BR", async () => {
+    navigation.pathname = "/pt-BR/career-lab/guide";
+    render(
+      <CareerProfileProvider storage={storageWith(null)}>
+        <CareerLabShell locale="pt-BR">
+          <p>Guide route content</p>
+        </CareerLabShell>
+      </CareerProfileProvider>,
+    );
+
+    expect(await screen.findByText("Guide route content")).toBeInTheDocument();
+    const workflow = screen.getByRole("navigation", { name: "Career Lab" });
+    expect(workflow.querySelectorAll("ol > li")).toHaveLength(5);
+    expect(screen.getByRole("link", { name: "Guia" })).toHaveAttribute("aria-current", "page");
+    expect(screen.getByText("Local-first")).toBeInTheDocument();
+  });
+
+  it("marks the numbered workflow route current without marking Guide current", async () => {
+    navigation.pathname = "/pt-BR/career-lab/roadmap";
+    render(
+      <CareerProfileProvider storage={storageWith(null)}>
+        <CareerLabShell locale="pt-BR">
+          <p>Roadmap route content</p>
+        </CareerLabShell>
+      </CareerProfileProvider>,
+    );
+
+    expect(await screen.findByText("Roadmap route content")).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: /02\s*Roadmap/i })).toHaveAttribute(
+      "aria-current",
+      "page",
+    );
+    expect(screen.getByRole("link", { name: "Guia" })).not.toHaveAttribute("aria-current");
   });
 
   it("exposes hydrating -> ready state and persists profile updater mutations", async () => {
