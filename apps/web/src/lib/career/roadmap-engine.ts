@@ -11,6 +11,7 @@ import type {
   DecisionRecord,
   EvidenceClass,
   EvidenceRecord,
+  MarketSample,
   MilestoneStatus,
   ProficiencyLevel,
   RoadmapState,
@@ -27,6 +28,7 @@ export interface RoadmapPriorityFactors {
   readonly capabilityGapCount: number;
   readonly evidenceGapCount: number;
   readonly marketSampleAvailable: boolean;
+  readonly marketSignalCount: number;
   readonly estimatedEffortHours: Readonly<{ min: number; max: number }>;
 }
 
@@ -138,6 +140,26 @@ function roleRequirementRank(
   return ranks.length === 0 ? -1 : Math.max(...ranks);
 }
 
+function latestMarketSample(profile: CareerProfile): MarketSample | null {
+  return [...profile.marketSamples]
+    .sort((left, right) => right.capturedAt.localeCompare(left.capturedAt))
+    .find((sample) => (sample.signals?.length ?? 0) > 0) ?? null;
+}
+
+function marketRelevanceScore(
+  profile: CareerProfile,
+  milestone: RoadmapMilestoneDefinition,
+): number {
+  const sample = latestMarketSample(profile);
+  if (!sample?.signals) return 0;
+  const competencyIds = new Set(
+    milestone.requirements.map((requirement) => requirement.competencyId),
+  );
+  return sample.signals
+    .filter((signal) => competencyIds.has(signal.competencyId as CompetencyId))
+    .reduce((sum, signal) => sum + signal.postingCount, 0);
+}
+
 function comparePriority(
   left: RoadmapMilestoneDefinition,
   right: RoadmapMilestoneDefinition,
@@ -151,8 +173,9 @@ function comparePriority(
   const rightGapCount = capabilityGaps(profile, right).length + evidenceGaps(profile, right).length;
   if (leftGapCount !== rightGapCount) return rightGapCount - leftGapCount;
 
-  // MarketSample does not contain capability-level demand before Task 8.
-  // Keep this factor deliberately neutral rather than inventing market relevance.
+  const marketRank = marketRelevanceScore(profile, right) - marketRelevanceScore(profile, left);
+  if (marketRank !== 0) return marketRank;
+
   const effort = left.estimatedEffortHours.min - right.estimatedEffortHours.min;
   if (effort !== 0) return effort;
 
@@ -294,6 +317,7 @@ export function getRoadmapMilestoneViews(
         capabilityGapCount: openCapabilities.length,
         evidenceGapCount: openEvidence.length,
         marketSampleAvailable: profile.marketSamples.length > 0,
+        marketSignalCount: marketRelevanceScore(profile, milestone),
         estimatedEffortHours: milestone.estimatedEffortHours,
       },
     };
