@@ -95,7 +95,7 @@ const copy = {
 
 function uniqueCapabilitySignals(
   analyses: readonly JobFitAnalysis[],
-  key: "matches" | "capabilityGaps" | "evidenceGaps",
+  key: "capabilityGaps" | "evidenceGaps",
 ): readonly JobCapabilitySignal[] {
   const unique = new Map<string, JobCapabilitySignal>();
   for (const analysis of analyses) {
@@ -179,7 +179,6 @@ export function MarketAnalysis({
     () => uniquePostings.map((posting) => analyzeJobFit(profile, posting)),
     [profile, uniquePostings],
   );
-  const matches = uniqueCapabilitySignals(analyses, "matches");
   const capabilityGaps = uniqueCapabilitySignals(analyses, "capabilityGaps");
   const evidenceGaps = uniqueCapabilitySignals(analyses, "evidenceGaps");
   const structuralGaps = uniqueRequirements(analyses, "structuralGaps");
