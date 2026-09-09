@@ -36,7 +36,7 @@ describe("Career Lab data controls", () => {
     );
   });
 
-  it("rejects invalid imports without replacing the hydrated profile", async () => {
+  it("rejects invalid imports without replacing the hydrated profile and announces the error", async () => {
     const storage = makeStorage();
     render(
       <CareerProfileProvider storage={storage}>
@@ -52,7 +52,8 @@ describe("Career Lab data controls", () => {
     });
     fireEvent.change(screen.getByLabelText(/import profile/i), { target: { files: [file] } });
 
-    expect(await screen.findByRole("status")).toHaveTextContent(/import failed/i);
+    expect(await screen.findByRole("alert")).toHaveTextContent(/import failed/i);
+    expect(screen.queryByRole("status")).not.toBeInTheDocument();
     expect(storage.save).not.toHaveBeenCalled();
   });
 
