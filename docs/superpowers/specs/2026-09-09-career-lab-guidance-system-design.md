@@ -6,21 +6,21 @@ Base: `main` @ `a9d7f1e5471086a03fe908e377c46e2bfa5bf684`
 
 ## Problem
 
-The Career Lab now has a coherent editorial identity, but the filled-profile experience is still harder to understand than it should be. The visual language is strongest on Roadmap and acceptable on Evidence and Market, but the product does not consistently answer four questions for the user:
+Career Lab now has a coherent editorial identity, but the filled-profile experience is still harder to understand than it should be. The product does not consistently answer four questions:
 
 1. What should I do now?
 2. Why should I do it?
 3. What changes after I complete it?
 4. Where do I go if I do not understand a concept or workflow?
 
-The existing `CareerOnboarding` is a profile-setup flow, not a product onboarding flow. It collects context, target role, target market and weekly capacity, then creates the local Career Profile. After that, users are dropped into the workspace with no explicit product-level orientation.
+The existing `CareerOnboarding` is a profile-setup flow, not product onboarding. It collects context, target role, target market and weekly capacity, creates the local Career Profile, then sends the user into the workspace without teaching the operating model.
 
-The screenshots from the filled-profile audit also exposed visual inconsistencies:
+The filled-profile visual audit exposed the following gaps:
 
-- Assessments currently renders close to unstyled document content and is visually far below the quality of the other Career Lab surfaces.
-- Overview is informative but mostly descriptive; it exposes readiness, roadmap, evidence and market state without making the next action dominant.
+- Assessments renders close to unstyled document content and is visually far below the other Career Lab surfaces.
+- Overview is informative but mostly descriptive; readiness, roadmap, evidence and market state are visible without a dominant next action.
 - Internal competency and milestone identifiers are too prominent for end users.
-- Evidence and Market have large empty areas and weak empty-state guidance.
+- Evidence and Market have weak empty-state guidance and large low-value empty areas.
 - Export / import / reset have too much visual parity with primary navigation despite being secondary utilities.
 - The product lacks a persistent, discoverable help surface.
 
@@ -28,11 +28,11 @@ The screenshots from the filled-profile audit also exposed visual inconsistencie
 
 Turn Career Lab into a self-explanatory editorial workbench without turning it into a generic SaaS dashboard or adding an AI chat layer.
 
-The interface should make the career loop legible as:
+The career loop must be legible as:
 
 `Set profile → establish baseline → follow current roadmap focus → produce evidence → compare against market → return to overview`
 
-At every meaningful state, the user should be able to understand the current recommendation and the reason for it.
+At every meaningful state, the interface should expose a recommended action and the reason for it.
 
 ## Non-goals
 
@@ -42,15 +42,15 @@ This project does not:
 - change readiness, roadmap, assessment, evidence or market engines;
 - introduce cloud persistence or accounts;
 - introduce an AI assistant or free-form chatbot;
-- alter public URL semantics outside the addition of a help/guide route;
+- change existing public Career Lab URL semantics outside the addition of a Guide route;
 - redesign the full Agent Skills Studio shell;
 - change catalog, versioning, packs or distribution behavior.
 
 ## Product model
 
-### 1. Profile setup remains separate
+### Profile setup remains separate
 
-The current four-step Career Profile setup remains responsible only for profile creation:
+The current four-step profile setup remains responsible only for:
 
 - context;
 - target role;
@@ -59,9 +59,9 @@ The current four-step Career Profile setup remains responsible only for profile 
 
 It must not become overloaded with product education.
 
-### 2. Product onboarding is a separate first-run orientation
+### Product onboarding becomes a separate first-run orientation
 
-After a profile is created for the first time, Career Lab opens a short product orientation that explains the operating model:
+After a profile is created for the first time, Career Lab opens a short orientation explaining the operating model:
 
 1. **Assess** — establish a baseline.
 2. **Roadmap** — follow the current highest-priority milestone.
@@ -71,21 +71,22 @@ After a profile is created for the first time, Career Lab opens a short product 
 
 Behavior:
 
-- opens automatically once after profile creation;
+- opens automatically only when guidance state is `unseen` and a Career Profile exists;
 - can be skipped;
+- can be completed;
+- never blocks navigation after skip or completion;
 - can be reopened from the Guide at any time;
-- completion state is stored separately from the Career Profile;
-- does not block navigation after dismissal.
+- remains separate from Career Profile import/export.
 
-### 3. Persistent Guide / Q&A
+### Persistent Guide / Q&A
 
-Add a new localized route:
+Add a localized route:
 
 - `/{locale}/career-lab/guide`
 
-The Guide is not part of the numbered five-step career workflow. It is a secondary support surface available from the Career Lab shell.
+Guide is not a sixth numbered career step. It is a secondary support surface exposed by the Career Lab shell.
 
-The page has four sections:
+The page contains four sections.
 
 #### Start here
 
@@ -93,15 +94,7 @@ Explains the five-stage operating loop and where a new user should begin.
 
 #### How each area works
 
-Short operational explanations for:
-
-- Overview;
-- Roadmap;
-- Assessments;
-- Evidence;
-- Market.
-
-Each explanation answers:
+For Overview, Roadmap, Assessments, Evidence and Market, explain:
 
 - purpose;
 - when to use it;
@@ -125,171 +118,177 @@ Initial deterministic questions:
 - What do export, import and reset do?
 - Can I restart the product onboarding?
 
-Q&A is static/localized content, rendered as accessible disclosure sections. No network request or generative answer is required.
+Q&A is static localized content rendered with native accessible disclosure semantics. It performs no network requests and does not generate answers dynamically.
 
 #### Restart orientation
 
-A clear action reopens the product onboarding.
+A clear action opens the product orientation again. Reopening does not require clearing Career Profile data.
 
 ## Guidance architecture
 
-### Derived next action
+### Deterministic next action
 
-Introduce a pure deterministic selector, conceptually:
+Introduce a pure selector, conceptually:
 
 `getCareerNextAction(profile)`
 
-It returns a presentation-safe recommendation based only on existing profile state.
+It must not mutate profile state and must reuse existing engine outputs instead of recreating readiness or roadmap rules.
 
 Initial precedence:
 
-1. required baseline assessment incomplete → complete baseline;
-2. no active/current roadmap focus → review roadmap;
-3. current focus has no supporting evidence → produce evidence;
+1. any required baseline blueprint is incomplete → complete the next incomplete baseline;
+2. no current roadmap focus exists → review roadmap;
+3. current roadmap focus exists but the profile has no evidence attached to the competency or competencies targeted by that focus → produce evidence;
 4. no market sample exists → add a real market sample;
-5. otherwise → continue current roadmap milestone / revisit overview.
+5. otherwise → continue the current roadmap focus and revisit Overview after new evidence/assessment/market input.
 
-The selector must not mutate profile state and must not duplicate engine logic. It can use existing readiness, roadmap and assessment-derived state as inputs.
-
-Returned shape should stay small, for example:
+The selector returns only presentation-safe data:
 
 - `kind`;
-- localized-title key or presentation token;
 - destination route;
-- optional contextual identifiers needed for copy;
-- reason token.
+- reason token;
+- optional blueprint, milestone or competency identifiers required to resolve localized copy.
+
+Technical identifiers may be carried internally but must not be the primary user-facing label.
 
 ### Guidance state
 
-Do not add onboarding completion to the Career Profile schema.
+Do not add product-onboarding state to `CareerProfile`.
 
-Use a small local-first guidance state with a versioned storage key, conceptually:
+Use a separate local-first versioned storage key:
 
 `career-lab:guidance:v1`
 
-Minimum state:
+Stored shape:
 
-- `orientationCompleted: boolean`;
-- `orientationDismissed: boolean` if needed to distinguish skip from completion.
+```ts
+{
+  orientationStatus: "unseen" | "completed" | "skipped"
+}
+```
 
-A versioned key allows future onboarding revisions without corrupting Career Profile imports/exports.
+Rules:
 
-### Shared components
+- missing/invalid storage defaults to `unseen`;
+- profile creation + `unseen` triggers automatic orientation;
+- Skip writes `skipped`;
+- Complete writes `completed`;
+- neither `skipped` nor `completed` auto-opens again;
+- Guide can force-open orientation transiently without first rewriting storage;
+- completing a reopened orientation writes `completed`;
+- skipping a reopened orientation preserves the existing terminal state when one already exists.
 
-Target component boundaries:
+Versioning permits a future onboarding revision to use a new key without corrupting Career Profile imports/exports.
 
-- `CareerNextAction` — renders the current deterministic recommendation.
-- `CareerProductOrientation` — first-run/reopenable onboarding experience.
-- `CareerGuide` — Guide page content and Q&A.
-- `CareerGuidanceProvider` or a small storage hook — owns only guidance UI state, not Career Profile data.
-- `CareerSectionGuidance` — optional compact reusable explanation block for Roadmap, Assessments, Evidence and Market.
+### Component boundaries
 
-Avoid one large all-purpose guidance component.
+Target boundaries:
+
+- `CareerNextAction` — renders the deterministic recommendation.
+- `CareerProductOrientation` — first-run/reopenable product orientation.
+- `CareerGuide` — Guide page and Q&A content.
+- `CareerGuidanceProvider` or a small storage hook — owns guidance UI state only.
+- `CareerSectionGuidance` — optional compact explanation block shared by working surfaces where useful.
+
+Avoid one all-purpose guidance component and keep Career Profile state ownership unchanged.
 
 ## Shell changes
 
-The primary numbered navigation remains:
+Keep numbered primary navigation:
 
-1. Visão geral / Overview
+1. Overview / Visão geral
 2. Roadmap
-3. Avaliações / Assessments
-4. Evidências / Evidence
-5. Mercado / Market
+3. Assessments / Avaliações
+4. Evidence / Evidências
+5. Market / Mercado
 
-Add **Guia / Guide** as a secondary utility, visually separated from the numbered workflow.
+Add **Guide / Guia** as a visually separate secondary utility. Guide must expose active-route semantics when visited but must not receive a workflow number.
 
-Data controls should become secondary utilities rather than equal-weight primary actions:
+Data controls become secondary utilities:
 
 - Export profile;
 - Import profile;
 - Reset profile.
 
-Reset remains explicit and visually treated as a destructive/rare action.
+Reset remains explicit and visually destructive/rare rather than looking like a normal navigation action.
 
-The current local-first explanation should be reduced from a dominant repeated sentence to a compact persistent indicator with accessible explanatory copy.
+Reduce the repeated long local-first sentence to a compact persistent local-first indicator with accessible explanatory copy.
 
-## Surface-specific visual improvements
+## Surface-specific improvements
 
 ### Overview
 
-Current strengths:
-
-- strong editorial hero;
-- clear readiness score;
-- consistent ledger language.
+Preserve the strong editorial hero and readiness score.
 
 Changes:
 
-- add `CareerNextAction` directly below the hero/state summary;
-- humanize roadmap milestone and competency labels;
-- preserve technical IDs as secondary metadata only;
+- place `CareerNextAction` directly below the hero/state summary;
+- make it the strongest operational element below identity/readiness;
+- humanize current milestone and competency labels;
+- demote technical IDs to secondary metadata;
 - reduce duplication between competency-state and blocking-gap ledgers;
-- convert empty metrics into actionable states where appropriate.
-
-The next action must become the strongest operational element below the identity/readiness hero.
+- turn empty metrics into actionable states where appropriate.
 
 ### Assessments
 
-This is the highest-priority visual repair.
+Highest-priority visual repair.
 
-Transform the current plain list into a deliberate editorial assessment index with:
+Replace the plain list with an editorial assessment index:
 
 - concise hero/introduction;
-- explanation of what baseline means;
+- plain-language explanation of baseline;
+- overall required-baseline progress;
 - ordered assessment rows;
-- human-readable competency/dimension title;
+- human-readable title/dimension;
 - state: not started / completed;
 - concise purpose;
-- primary action to start or review;
-- progress summary across required baselines.
+- action: start / review result.
 
-Do not use a card grid. Prefer ledger / index rows consistent with Career Lab.
+Use ledger/index rows, not a card grid.
 
 ### Roadmap
 
-Preserve the existing design direction.
+Preserve the current visual direction.
 
-Add only a compact section-level guide that explains:
+Add only compact contextual guidance explaining:
 
-- why this milestone is current;
+- why the current milestone is current;
 - what counts as done;
-- where evidence should be registered.
+- where resulting evidence should be registered.
 
-Avoid adding extra visual chrome to the roadmap map itself.
+Do not add heavy chrome to the roadmap map.
 
 ### Evidence
 
-Current form is visually strong but conceptually demanding.
+Keep the existing provenance/verification emphasis.
 
 Changes:
 
 - explain “evidence contract” in plain language before the detailed contract;
-- make the empty ledger useful with an explanation and example of accepted evidence;
-- clarify that evidence should support the current roadmap focus;
-- keep provenance/verification emphasis.
+- make an empty ledger teach what acceptable evidence looks like;
+- relate evidence explicitly to the current roadmap focus;
+- avoid presenting an empty second column as finished content.
 
 ### Market
 
-The existing screen visually merges three ingestion paths.
-
-Reframe them explicitly as separate methods:
+Separate the three ingestion methods visually and semantically:
 
 1. Fetch by URL;
 2. Paste job description;
 3. Import compatible analysis JSON.
 
-Only one path needs to be visually primary at a time; the others remain clearly available but secondary.
+One path may be primary; the others remain clearly available but secondary.
 
-Explain why a small real sample is useful and how it affects interpretation rather than implying that more data is always better.
+Explain why a small real sample is useful and how market input affects interpretation. Do not imply that collecting maximum volume is the goal.
 
 ## Copy principles
 
-Career Lab guidance copy should be:
+Guidance copy is:
 
 - operational rather than motivational;
 - short;
 - evidence-oriented;
-- specific about cause and effect;
+- explicit about cause and effect;
 - free of gamification language;
 - localized in EN and PT-BR from the first implementation slice.
 
@@ -303,49 +302,48 @@ Avoid:
 
 ## Accessibility
 
-- Product orientation must be keyboard navigable and dismissible.
-- It must not depend on visual spotlight overlays to communicate structure.
-- Guide Q&A must use native/accessible disclosure semantics.
-- Current navigation and current step must expose semantic state.
-- Next-action reason and destination must be understandable without color.
-- Focus must be managed when orientation opens/closes.
-- Reduced-motion preferences must be respected if any transition is introduced.
+- Orientation is keyboard navigable and dismissible.
+- Orientation cannot depend on spotlight overlays to communicate structure.
+- Q&A uses native/accessible disclosure semantics.
+- Current route and current step expose semantic state.
+- Next-action reason and destination remain understandable without color.
+- Focus is managed when orientation opens/closes.
+- Reduced-motion preferences are respected for any introduced transition.
 
 ## Testing strategy
 
 Every implementation slice follows RED → GREEN.
 
-Required coverage:
-
 ### Unit / pure logic
 
-- deterministic next-action precedence;
-- no mutation of profile;
-- guidance-state storage versioning and default behavior.
+- next-action precedence;
+- next-action selector does not mutate profile;
+- guidance-state default/version behavior;
+- guidance-state skip/complete/reopen rules.
 
 ### Component
 
-- orientation opens only when expected;
+- orientation auto-opens only for `unseen` + existing profile;
 - orientation can skip, complete and reopen;
-- Guide renders EN/PT-BR content and all core Q&A items;
+- Guide renders EN/PT-BR content and core Q&A;
 - shell exposes Guide separately from numbered workflow;
-- Overview next action changes as profile state changes;
-- Assessments renders structured states and localized labels;
-- Evidence and Market contextual guidance appears without changing engine behavior.
+- Overview next action changes with profile state;
+- Assessments renders structured localized status rows;
+- Evidence and Market guidance appears without changing engine behavior.
 
 ### Regression
 
-- existing Career Profile import/export remains compatible;
-- existing roadmap/readiness/assessment/evidence/market engine tests remain unchanged and green;
-- all current public Career Lab routes continue to build;
+- Career Profile import/export remains compatible;
+- roadmap/readiness/assessment/evidence/market engine tests stay green;
+- all existing Career Lab routes continue to build;
 - local-first storage errors remain accessible.
 
 ### Visual QA
 
-Required manual screenshots after each visual slice at minimum:
+Manual screenshots after each visual slice at minimum:
 
 - desktop wide;
-- tablet or narrow desktop;
+- tablet/narrow desktop;
 - mobile.
 
 Priority screens:
@@ -356,15 +354,11 @@ Priority screens:
 - Evidence empty state;
 - Market empty state;
 - Guide;
-- first-run product orientation.
+- first-run orientation.
 
 ## Implementation slices
 
 ### Slice 1 — Assessment visual foundation
-
-Purpose: repair the weakest current screen before layering more guidance.
-
-Scope:
 
 - structured assessment index;
 - baseline explanation;
@@ -372,20 +366,16 @@ Scope:
 - EN/PT-BR;
 - dedicated styles consistent with Career Lab ledger language.
 
-No guidance persistence yet.
+No guidance persistence in this slice.
 
 ### Slice 2 — Guide + Q&A + shell entry
 
-Scope:
-
-- `/career-lab/guide` route;
+- `/{locale}/career-lab/guide`;
 - static localized Q&A;
-- Guide entry in shell, outside numbered workflow;
+- Guide entry outside numbered workflow;
 - secondary treatment of data controls/local-first utility copy.
 
 ### Slice 3 — Product onboarding first run
-
-Scope:
 
 - guidance storage v1;
 - product orientation;
@@ -395,33 +385,27 @@ Scope:
 
 ### Slice 4 — Deterministic next action
 
-Scope:
-
 - pure next-action selector;
-- Overview current recommendation;
-- destination CTA and reason;
+- Overview recommendation;
+- route CTA and reason;
 - humanized current milestone label where touched.
 
 ### Slice 5 — Contextual guidance on working surfaces
 
-Scope:
-
 - Roadmap guidance;
 - Evidence guidance + stronger empty state;
-- Market ingestion-path hierarchy + guidance.
+- Market ingestion hierarchy + guidance.
 
 ### Slice 6 — Overview humanization and visual polish
-
-Scope:
 
 - human-readable competency names;
 - technical IDs demoted to metadata;
 - competency/gap information architecture cleanup;
-- final spacing, density and responsive QA across the Career Lab.
+- final spacing, density and responsive QA across Career Lab.
 
 ## Acceptance criteria
 
-The design is complete when a new user with a freshly created profile can answer, without outside documentation:
+A new user with a freshly created profile can determine, without outside documentation:
 
 - what to do first;
 - why readiness may be low or zero;
@@ -434,6 +418,6 @@ The design is complete when a new user with a freshly created profile can answer
 - where their data lives;
 - how to export/import/reset safely.
 
-A returning user should be able to land on Overview and identify the recommended next action within the first viewport.
+A returning user can land on Overview and identify the recommended next action within the first viewport.
 
-The final Career Lab must preserve its editorial workbench identity: structured type, restrained color, ledger-like information architecture and explicit state, without adopting a generic card-heavy SaaS dashboard.
+The final Career Lab preserves its editorial workbench identity: structured type, restrained color, ledger-like information architecture and explicit state, without becoming a generic card-heavy SaaS dashboard.
