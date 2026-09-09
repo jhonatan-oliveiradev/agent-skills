@@ -5,7 +5,7 @@ import { describe, expect, it } from "vitest";
 const appRoot = resolve(process.cwd(), "src");
 
 async function readHome() {
-  return readFile(resolve(appRoot, "app/[locale]/page.tsx"), "utf8");
+  return readFile(resolve(appRoot, "app/[locale]/(studio)/page.tsx"), "utf8");
 }
 
 async function readCss(path: string) {
