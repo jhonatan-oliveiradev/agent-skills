@@ -15,6 +15,16 @@
     "incremental": true,
     "plugins": [{ "name": "next" }],
     "paths": {
+      "@/app/[locale]/page": ["./src/app/[locale]/(studio)/page"],
+      "@/app/[locale]/about/*": ["./src/app/[locale]/(studio)/about/*"],
+      "@/app/[locale]/built-with-skills/*": ["./src/app/[locale]/(studio)/built-with-skills/*"],
+      "@/app/[locale]/changelog/*": ["./src/app/[locale]/(studio)/changelog/*"],
+      "@/app/[locale]/contribute/*": ["./src/app/[locale]/(studio)/contribute/*"],
+      "@/app/[locale]/getting-started/*": ["./src/app/[locale]/(studio)/getting-started/*"],
+      "@/app/[locale]/packs/*": ["./src/app/[locale]/(studio)/packs/*"],
+      "@/app/[locale]/roadmap/*": ["./src/app/[locale]/(studio)/roadmap/*"],
+      "@/app/[locale]/skills/*": ["./src/app/[locale]/(studio)/skills/*"],
+      "@/app/[locale]/career-lab/*": ["./src/app/[locale]/(career)/career-lab/*"],
       "@/*": ["./src/*"]
     }
   },
