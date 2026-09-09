@@ -113,10 +113,7 @@ function milestoneIsComplete(
   profile: CareerProfile,
   milestone: RoadmapMilestoneDefinition,
 ): boolean {
-  return (
-    capabilityGaps(profile, milestone).length === 0 &&
-    evidenceGaps(profile, milestone).length === 0
-  );
+  return capabilityGaps(profile, milestone).length === 0 && evidenceGaps(profile, milestone).length === 0;
 }
 
 function applicableMilestones(roleMap: RoleCapabilityMap) {
@@ -133,17 +130,37 @@ function roleRequirementRank(
     milestone.requirements.map((requirement) => requirement.competencyId),
   );
   const ranks = roleMap.requirements
-    .filter(
-      (requirement) => requirement.required && requirementIds.has(requirement.competencyId),
-    )
+    .filter((requirement) => requirement.required && requirementIds.has(requirement.competencyId))
     .map((requirement) => proficiencyRank[requirement.requiredLevel]);
   return ranks.length === 0 ? -1 : Math.max(...ranks);
 }
 
+function normalizedMarket(value: string): string {
+  return value.trim().toLocaleLowerCase("en-US");
+}
+
+function marketSampleApplies(profile: CareerProfile, sample: MarketSample): boolean {
+  if (sample.targetRole && !profile.targetRoles.includes(sample.targetRole)) return false;
+  if (
+    sample.targetMarket &&
+    !profile.targetMarkets.some(
+      (market) => normalizedMarket(market) === normalizedMarket(sample.targetMarket as string),
+    )
+  ) {
+    return false;
+  }
+  return true;
+}
+
 function latestMarketSample(profile: CareerProfile): MarketSample | null {
-  return [...profile.marketSamples]
-    .sort((left, right) => right.capturedAt.localeCompare(left.capturedAt))
-    .find((sample) => (sample.signals?.length ?? 0) > 0) ?? null;
+  return (
+    [...profile.marketSamples]
+      .sort((left, right) => right.capturedAt.localeCompare(left.capturedAt))
+      .find(
+        (sample) =>
+          marketSampleApplies(profile, sample) && (sample.signals?.length ?? 0) > 0,
+      ) ?? null
+  );
 }
 
 function marketRelevanceScore(
@@ -152,11 +169,11 @@ function marketRelevanceScore(
 ): number {
   const sample = latestMarketSample(profile);
   if (!sample?.signals) return 0;
-  const competencyIds = new Set(
+  const milestoneCompetencies = new Set(
     milestone.requirements.map((requirement) => requirement.competencyId),
   );
   return sample.signals
-    .filter((signal) => competencyIds.has(signal.competencyId as CompetencyId))
+    .filter((signal) => milestoneCompetencies.has(signal.competencyId as CompetencyId))
     .reduce((sum, signal) => sum + signal.postingCount, 0);
 }
 
@@ -292,6 +309,7 @@ export function getRoadmapMilestoneViews(
   roleMap: RoleCapabilityMap,
   roadmap: RoadmapState = buildRoadmap(profile, roleMap),
 ): readonly RoadmapMilestoneView[] {
+  const marketSample = latestMarketSample(profile);
   return roadmap.milestoneIds.map((milestoneId) => {
     const milestone = getRoadmapMilestone(milestoneId);
     const openCapabilities = capabilityGaps(profile, milestone);
@@ -316,7 +334,7 @@ export function getRoadmapMilestoneViews(
         requiredRoleCompetencies: requiredRoleCompetencies(milestone, roleMap),
         capabilityGapCount: openCapabilities.length,
         evidenceGapCount: openEvidence.length,
-        marketSampleAvailable: profile.marketSamples.length > 0,
+        marketSampleAvailable: marketSample !== null,
         marketSignalCount: marketRelevanceScore(profile, milestone),
         estimatedEffortHours: milestone.estimatedEffortHours,
       },
