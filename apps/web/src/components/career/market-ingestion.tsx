@@ -160,7 +160,8 @@ export function MarketIngestion({
   }
 
   async function handleImport(event: ChangeEvent<HTMLInputElement>) {
-    const file = event.currentTarget.files?.[0];
+    const input = event.currentTarget;
+    const file = input.files?.[0];
     if (!file) return;
     setResult("working", null);
     try {
@@ -170,7 +171,7 @@ export function MarketIngestion({
     } catch {
       setResult("error", localized.importFailed);
     } finally {
-      event.currentTarget.value = "";
+      input.value = "";
     }
   }
 
