@@ -479,15 +479,25 @@ function parseMarketSample(value: unknown, label: string): MarketSample {
   assertNonNegativeInteger(value.distinctCompanyCount, `${label}.distinctCompanyCount`);
   assertNonNegativeInteger(value.distinctSourceCount, `${label}.distinctSourceCount`);
 
-  const numericOptionals = [
-    "deduplicatedCount",
-    "freshCount",
-    "recentCount",
-    "historicalCount",
-    "unknownDateCount",
-  ] as const;
-  for (const key of numericOptionals) {
-    if (value[key] !== undefined) assertNonNegativeInteger(value[key], `${label}.${key}`);
+  const deduplicatedCount = value.deduplicatedCount;
+  const freshCount = value.freshCount;
+  const recentCount = value.recentCount;
+  const historicalCount = value.historicalCount;
+  const unknownDateCount = value.unknownDateCount;
+  if (deduplicatedCount !== undefined) {
+    assertNonNegativeInteger(deduplicatedCount, `${label}.deduplicatedCount`);
+  }
+  if (freshCount !== undefined) {
+    assertNonNegativeInteger(freshCount, `${label}.freshCount`);
+  }
+  if (recentCount !== undefined) {
+    assertNonNegativeInteger(recentCount, `${label}.recentCount`);
+  }
+  if (historicalCount !== undefined) {
+    assertNonNegativeInteger(historicalCount, `${label}.historicalCount`);
+  }
+  if (unknownDateCount !== undefined) {
+    assertNonNegativeInteger(unknownDateCount, `${label}.unknownDateCount`);
   }
   const signals = value.signals === undefined
     ? undefined
@@ -507,11 +517,11 @@ function parseMarketSample(value: unknown, label: string): MarketSample {
     postingCount: value.postingCount,
     distinctCompanyCount: value.distinctCompanyCount,
     distinctSourceCount: value.distinctSourceCount,
-    ...(value.deduplicatedCount === undefined ? {} : { deduplicatedCount: value.deduplicatedCount }),
-    ...(value.freshCount === undefined ? {} : { freshCount: value.freshCount }),
-    ...(value.recentCount === undefined ? {} : { recentCount: value.recentCount }),
-    ...(value.historicalCount === undefined ? {} : { historicalCount: value.historicalCount }),
-    ...(value.unknownDateCount === undefined ? {} : { unknownDateCount: value.unknownDateCount }),
+    ...(deduplicatedCount === undefined ? {} : { deduplicatedCount }),
+    ...(freshCount === undefined ? {} : { freshCount }),
+    ...(recentCount === undefined ? {} : { recentCount }),
+    ...(historicalCount === undefined ? {} : { historicalCount }),
+    ...(unknownDateCount === undefined ? {} : { unknownDateCount }),
     ...(signals === undefined ? {} : { signals }),
     ...(postings === undefined ? {} : { postings }),
   };
