@@ -10,9 +10,17 @@ import type {
   EvidenceRecord,
   EvidenceSourceType,
   EvidenceTrust,
+  JobCapabilitySignal,
+  JobSourceType,
+  JobWorkMode,
   MarketSample,
+  MarketSignal,
+  NormalizedJobPosting,
   ProficiencyLevel,
   RoadmapState,
+  StructuralRequirement,
+  StructuralRequirementKind,
+  StructuralRequirementStatus,
   TargetRoleId,
 } from "./types";
 
@@ -48,6 +56,23 @@ const artifactTypes = [
   "market-analysis",
 ] as const satisfies readonly CareerArtifactType[];
 const decisionKinds = ["roadmap-recalculation", "target-change", "profile-import"] as const;
+const jobSourceTypes = ["url", "pasted", "agent-import"] as const satisfies readonly JobSourceType[];
+const jobWorkModes = ["remote", "hybrid", "onsite", "unknown"] as const satisfies readonly JobWorkMode[];
+const structuralRequirementKinds = [
+  "experience",
+  "location",
+  "work-authorization",
+  "language",
+  "work-mode",
+  "credential",
+  "availability",
+  "other",
+] as const satisfies readonly StructuralRequirementKind[];
+const structuralRequirementStatuses = [
+  "met",
+  "unmet",
+  "unknown",
+] as const satisfies readonly StructuralRequirementStatus[];
 
 export function assertRecord(
   value: unknown,
@@ -268,6 +293,137 @@ function assertNonNegativeInteger(value: unknown, label: string): asserts value 
   }
 }
 
+function parseJobCapabilitySignal(
+  value: unknown,
+  label: string,
+  expectedProvenance: "explicit" | "inferred",
+): JobCapabilitySignal {
+  assertRecord(value, label);
+  assertOnlyKeys(value, ["competencyId", "label", "provenance"], label);
+  assertString(value.competencyId, `${label}.competencyId`);
+  assertString(value.label, `${label}.label`);
+  if (value.provenance !== expectedProvenance) {
+    throw new Error(`${label}.provenance: expected ${expectedProvenance}`);
+  }
+  return {
+    competencyId: value.competencyId,
+    label: value.label,
+    provenance: expectedProvenance,
+  };
+}
+
+function parseStructuralRequirement(value: unknown, label: string): StructuralRequirement {
+  assertRecord(value, label);
+  assertOnlyKeys(value, ["kind", "label", "hard", "status"], label);
+  assertOneOf(value.kind, structuralRequirementKinds, `${label}.kind`);
+  assertString(value.label, `${label}.label`);
+  if (typeof value.hard !== "boolean") {
+    throw new Error(`${label}.hard: expected boolean`);
+  }
+  assertOneOf(value.status, structuralRequirementStatuses, `${label}.status`);
+  return {
+    kind: value.kind,
+    label: value.label,
+    hard: value.hard,
+    status: value.status,
+  };
+}
+
+function parseNormalizedJobPosting(value: unknown, label: string): NormalizedJobPosting {
+  assertRecord(value, label);
+  assertOnlyKeys(
+    value,
+    [
+      "id",
+      "title",
+      "company",
+      "source",
+      "postedAt",
+      "deadline",
+      "location",
+      "workMode",
+      "explicitSignals",
+      "inferredSignals",
+      "structuralRequirements",
+      "rawSnapshot",
+    ],
+    label,
+  );
+  assertString(value.id, `${label}.id`);
+  assertString(value.title, `${label}.title`);
+  assertString(value.company, `${label}.company`);
+  assertRecord(value.source, `${label}.source`);
+  assertOnlyKeys(value.source, ["type", "url", "capturedAt"], `${label}.source`);
+  assertOneOf(value.source.type, jobSourceTypes, `${label}.source.type`);
+  if (value.source.url !== undefined) assertString(value.source.url, `${label}.source.url`);
+  assertIsoDateTime(value.source.capturedAt, `${label}.source.capturedAt`);
+  if (value.postedAt !== null) assertIsoDateTime(value.postedAt, `${label}.postedAt`);
+  if (value.deadline !== null) assertIsoDateTime(value.deadline, `${label}.deadline`);
+  if (value.location !== null) assertString(value.location, `${label}.location`);
+  assertOneOf(value.workMode, jobWorkModes, `${label}.workMode`);
+  if (!Array.isArray(value.explicitSignals)) {
+    throw new Error(`${label}.explicitSignals: expected array`);
+  }
+  if (!Array.isArray(value.inferredSignals)) {
+    throw new Error(`${label}.inferredSignals: expected array`);
+  }
+  if (!Array.isArray(value.structuralRequirements)) {
+    throw new Error(`${label}.structuralRequirements: expected array`);
+  }
+  const explicitSignals = value.explicitSignals.map((signal, index) =>
+    parseJobCapabilitySignal(signal, `${label}.explicitSignals[${index}]`, "explicit"),
+  );
+  const inferredSignals = value.inferredSignals.map((signal, index) =>
+    parseJobCapabilitySignal(signal, `${label}.inferredSignals[${index}]`, "inferred"),
+  );
+  const structuralRequirements = value.structuralRequirements.map((requirement, index) =>
+    parseStructuralRequirement(requirement, `${label}.structuralRequirements[${index}]`),
+  );
+  assertString(value.rawSnapshot, `${label}.rawSnapshot`);
+
+  return {
+    id: value.id,
+    title: value.title,
+    company: value.company,
+    source: {
+      type: value.source.type,
+      ...(value.source.url === undefined ? {} : { url: value.source.url }),
+      capturedAt: value.source.capturedAt,
+    },
+    postedAt: value.postedAt,
+    deadline: value.deadline,
+    location: value.location,
+    workMode: value.workMode,
+    explicitSignals,
+    inferredSignals,
+    structuralRequirements,
+    rawSnapshot: value.rawSnapshot,
+  };
+}
+
+function parseMarketSignal(value: unknown, label: string): MarketSignal {
+  assertRecord(value, label);
+  assertOnlyKeys(
+    value,
+    ["competencyId", "provenance", "explicitCount", "inferredCount", "postingCount"],
+    label,
+  );
+  assertString(value.competencyId, `${label}.competencyId`);
+  if (value.provenance !== "market-derived") {
+    throw new Error(`${label}.provenance: expected market-derived`);
+  }
+  assertNonNegativeInteger(value.explicitCount, `${label}.explicitCount`);
+  assertNonNegativeInteger(value.inferredCount, `${label}.inferredCount`);
+  assertNonNegativeInteger(value.postingCount, `${label}.postingCount`);
+  return {
+    competencyId: value.competencyId,
+    provenance: "market-derived",
+    explicitCount: value.explicitCount,
+    inferredCount: value.inferredCount,
+    postingCount: value.postingCount,
+  };
+}
+
 function parseMarketSample(value: unknown, label: string): MarketSample {
   assertRecord(value, label);
   assertOnlyKeys(
@@ -280,25 +436,63 @@ function parseMarketSample(value: unknown, label: string): MarketSample {
       "postingCount",
       "distinctCompanyCount",
       "distinctSourceCount",
+      "deduplicatedCount",
+      "freshCount",
+      "recentCount",
+      "historicalCount",
+      "unknownDateCount",
+      "signals",
+      "postings",
     ],
     label,
   );
   assertString(value.id, `${label}.id`);
-  assertOneOf(value.targetRole, targetRoles, `${label}.targetRole`);
-  assertString(value.targetMarket, `${label}.targetMarket`);
+  if (value.targetRole !== undefined) {
+    assertOneOf(value.targetRole, targetRoles, `${label}.targetRole`);
+  }
+  if (value.targetMarket !== undefined) {
+    assertString(value.targetMarket, `${label}.targetMarket`);
+  }
   assertIsoDateTime(value.capturedAt, `${label}.capturedAt`);
   assertNonNegativeInteger(value.postingCount, `${label}.postingCount`);
   assertNonNegativeInteger(value.distinctCompanyCount, `${label}.distinctCompanyCount`);
   assertNonNegativeInteger(value.distinctSourceCount, `${label}.distinctSourceCount`);
 
+  const numericOptionals = [
+    "deduplicatedCount",
+    "freshCount",
+    "recentCount",
+    "historicalCount",
+    "unknownDateCount",
+  ] as const;
+  for (const key of numericOptionals) {
+    if (value[key] !== undefined) assertNonNegativeInteger(value[key], `${label}.${key}`);
+  }
+  const signals = value.signals === undefined
+    ? undefined
+    : parseArray(value.signals, `${label}.signals`, parseMarketSignal);
+  const postings = value.postings === undefined
+    ? undefined
+    : parseArray(value.postings, `${label}.postings`, parseNormalizedJobPosting);
+  if (postings && postings.length !== value.postingCount) {
+    throw new Error(`${label}.postings: unique posting count must match postingCount`);
+  }
+
   return {
     id: value.id,
-    targetRole: value.targetRole,
-    targetMarket: value.targetMarket,
+    ...(value.targetRole === undefined ? {} : { targetRole: value.targetRole }),
+    ...(value.targetMarket === undefined ? {} : { targetMarket: value.targetMarket }),
     capturedAt: value.capturedAt,
     postingCount: value.postingCount,
     distinctCompanyCount: value.distinctCompanyCount,
     distinctSourceCount: value.distinctSourceCount,
+    ...(value.deduplicatedCount === undefined ? {} : { deduplicatedCount: value.deduplicatedCount }),
+    ...(value.freshCount === undefined ? {} : { freshCount: value.freshCount }),
+    ...(value.recentCount === undefined ? {} : { recentCount: value.recentCount }),
+    ...(value.historicalCount === undefined ? {} : { historicalCount: value.historicalCount }),
+    ...(value.unknownDateCount === undefined ? {} : { unknownDateCount: value.unknownDateCount }),
+    ...(signals === undefined ? {} : { signals }),
+    ...(postings === undefined ? {} : { postings }),
   };
 }
 
