@@ -43,11 +43,11 @@ describe("Career Lab shell", () => {
       "href",
       "/en/packs/developer-career",
     );
-    expect(screen.getByRole("link", { name: "Back to Agent Skills Studio" })).toHaveAttribute(
+    expect(screen.getByRole("link", { name: "Agent Skills Studio ↗" })).toHaveAttribute(
       "href",
       "/en",
     );
-    expect(screen.getByRole("link", { name: "Open Developer Career Pack" })).toHaveAttribute(
+    expect(screen.getByRole("link", { name: "Methods ↗" })).toHaveAttribute(
       "href",
       "/en/packs/developer-career",
     );
