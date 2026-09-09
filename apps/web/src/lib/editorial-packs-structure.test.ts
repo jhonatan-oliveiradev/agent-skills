@@ -10,13 +10,13 @@ async function read(relativePath: string) {
 }
 
 describe("editorial packs system", () => {
-  it("turns Packs into a curated systems archive without forking global chrome", async () => {
+  it("turns Packs into a curated systems archive without forking Studio chrome", async () => {
     const [layout, page] = await Promise.all([
-      read("app/[locale]/layout.tsx"),
-      read("app/[locale]/packs/page.tsx"),
+      read("app/[locale]/(studio)/layout.tsx"),
+      read("app/[locale]/(studio)/packs/page.tsx"),
     ]);
 
-    expect(layout).toContain('import "../editorial-packs.css"');
+    expect(layout).toContain('import "../../editorial-packs.css"');
     expect(page).toContain("PackArchive");
     expect(page).toContain("EditorialPageHero");
     expect(page).toContain("editorialPacksCopy");
@@ -45,8 +45,8 @@ describe("editorial packs system", () => {
     const en = editorialPacksCopy.en as Readonly<Record<string, string>>;
     const pt = editorialPacksCopy["pt-BR"] as Readonly<Record<string, string>>;
     const [page, notFound] = await Promise.all([
-      read("app/[locale]/packs/page.tsx"),
-      read("app/[locale]/packs/[slug]/not-found.tsx"),
+      read("app/[locale]/(studio)/packs/page.tsx"),
+      read("app/[locale]/(studio)/packs/[slug]/not-found.tsx"),
     ]);
 
     expect(en.selectionTitle).toBe("Skill or pack?");
