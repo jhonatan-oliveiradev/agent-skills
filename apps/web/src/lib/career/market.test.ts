@@ -2,6 +2,7 @@ import { describe, expect, it } from "vitest";
 import { createEmptyCareerProfile } from "./profile";
 import { buildRoadmap } from "./roadmap-engine";
 import { getRoleMap } from "./role-maps";
+import { parseCareerProfile } from "./schema";
 import type { CareerProfile, CompetencyState } from "./types";
 
 type Posting = {
@@ -38,6 +39,7 @@ type MarketModule = {
       postingCount: number;
       provenance: string;
     }[];
+    postings?: readonly Posting[];
   };
   parseMarketAnalysisArtifact(value: unknown): {
     trust: string;
@@ -174,6 +176,32 @@ describe("Career Market Intelligence", () => {
     expect(sample.freshCount).toBe(1);
     expect(sample.recentCount).toBe(1);
     expect(sample.historicalCount).toBe(1);
+  });
+
+  it("preserves enriched market samples through the Career Profile parser", async () => {
+    const market = await loadModule<MarketModule>("./market");
+    const profile = createEmptyCareerProfile({
+      targetRole: "frontend-developer",
+      targetMarket: "Brazil",
+      now: "2026-09-08T18:00:00.000Z",
+    });
+    const posting = market.normalizeJobPosting({
+      title: "Frontend Engineer",
+      company: "Example Co",
+      source: { type: "pasted", capturedAt: "2026-09-08T18:00:00.000Z" },
+      rawSnapshot: "React and TypeScript are required.",
+    });
+    const sample = market.buildMarketSample([posting], {
+      targetRole: "frontend-developer",
+      targetMarket: "Brazil",
+      capturedAt: "2026-09-08T18:00:00.000Z",
+    });
+
+    const parsed = parseCareerProfile({ ...profile, marketSamples: [sample] });
+
+    expect(parsed.marketSamples[0]?.signals?.[0]?.provenance).toBe("market-derived");
+    expect(parsed.marketSamples[0]?.postings?.[0]?.rawSnapshot).toContain("React");
+    expect(parsed.marketSamples[0]?.unknownDateCount).toBe(1);
   });
 
   it("validates imported market artifacts and forces agent-import/external-unverified provenance", async () => {
