@@ -6,6 +6,7 @@ export type SiteChromeContextKey =
   | "gettingStarted"
   | "builtWithSkills"
   | "roadmap"
+  | "careerLab"
   | "about";
 
 type SiteChromeCopy = Readonly<{
@@ -40,7 +41,7 @@ export const siteChromeCopy: Readonly<Record<Locale, SiteChromeCopy>> = {
     header: {
       index: "INDEX",
       indexTitle: "Index of the Studio",
-      indexSummary: "Move between skills, packs, installation, real-use evidence, and the public state of the project.",
+      indexSummary: "Move between skills, packs, installation, real-use evidence, Career Lab, and the public state of the project.",
       collectionLabel: "COLLECTION",
       versionLabel: "VERSION",
       contexts: {
@@ -63,6 +64,10 @@ export const siteChromeCopy: Readonly<Record<Locale, SiteChromeCopy>> = {
         roadmap: {
           kicker: "OPEN DEVELOPMENT",
           summary: "Release status and individual skill maturity are tracked separately and advance only with evidence.",
+        },
+        careerLab: {
+          kicker: "LOCAL CAREER WORKSPACE",
+          summary: "Build an evidence-aware developer baseline, roadmap, portfolio ledger, and market view without requiring an account or cloud sync.",
         },
         about: {
           kicker: "STUDIO NOTES",
@@ -88,7 +93,7 @@ export const siteChromeCopy: Readonly<Record<Locale, SiteChromeCopy>> = {
     header: {
       index: "INDEX",
       indexTitle: "Índice do Studio",
-      indexSummary: "Navegue entre skills, packs, instalação, evidências de uso real e o estado público do projeto.",
+      indexSummary: "Navegue entre skills, packs, instalação, evidências de uso real, Career Lab e o estado público do projeto.",
       collectionLabel: "COLEÇÃO",
       versionLabel: "VERSÃO",
       contexts: {
@@ -111,6 +116,10 @@ export const siteChromeCopy: Readonly<Record<Locale, SiteChromeCopy>> = {
         roadmap: {
           kicker: "DESENVOLVIMENTO ABERTO",
           summary: "O status da release e a maturidade das skills são acompanhados separadamente e só avançam com evidência.",
+        },
+        careerLab: {
+          kicker: "WORKSPACE LOCAL DE CARREIRA",
+          summary: "Construa baseline, roadmap, ledger de portfólio e visão de mercado orientados por evidências, sem exigir conta ou sincronização em nuvem.",
         },
         about: {
           kicker: "NOTAS DO STUDIO",
