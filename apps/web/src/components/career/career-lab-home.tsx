@@ -7,9 +7,42 @@ import type { Locale } from "@/lib/locales";
 import { CareerOverview } from "./career-overview";
 import { useCareerProfile } from "./career-profile-provider";
 
+const emptyWorkspaceState = {
+  en: {
+    eyebrow: "05 / Workspace state",
+    label: "Your career system",
+    stages: [
+      { status: "Not started", state: "next" },
+      { status: "Waiting for profile", state: "waiting" },
+      { status: "Waiting for assessment", state: "waiting" },
+      { status: "0 evidence records", state: "empty" },
+      { status: "Waiting for target role", state: "waiting" },
+    ],
+  },
+  "pt-BR": {
+    eyebrow: "05 / Estado do workspace",
+    label: "Seu sistema de carreira",
+    stages: [
+      { status: "Não iniciado", state: "next" },
+      { status: "Aguardando perfil", state: "waiting" },
+      { status: "Aguardando avaliação", state: "waiting" },
+      { status: "0 evidências", state: "empty" },
+      { status: "Aguardando função-alvo", state: "waiting" },
+    ],
+  },
+} as const satisfies Record<
+  Locale,
+  {
+    eyebrow: string;
+    label: string;
+    stages: ReadonlyArray<{ status: string; state: "next" | "waiting" | "empty" }>;
+  }
+>;
+
 export function CareerLabHome({ locale }: Readonly<{ locale: Locale }>) {
   const copy = careerLabCopy[locale];
   const entry = copy.entry;
+  const workspaceState = emptyWorkspaceState[locale];
   const { profile } = useCareerProfile();
 
   if (profile) {
@@ -47,18 +80,27 @@ export function CareerLabHome({ locale }: Readonly<{ locale: Locale }>) {
 
       <section className="career-lab-entry__journey" aria-labelledby="career-lab-entry-journey">
         <header>
-          <p className="career-lab__eyebrow">{entry.journeyEyebrow}</p>
-          <h2 id="career-lab-entry-journey">{entry.howItWorks}</h2>
+          <p className="career-lab__eyebrow">{workspaceState.eyebrow}</p>
+          <h2 id="career-lab-entry-journey">{workspaceState.label}</h2>
         </header>
 
-        <ol aria-label={entry.howItWorks}>
-          {entry.stages.map((stage, index) => (
-            <li key={stage.title}>
-              <span>{String(index + 1).padStart(2, "0")}</span>
-              <h3>{stage.title}</h3>
-              <p>{stage.body}</p>
-            </li>
-          ))}
+        <ol aria-label={workspaceState.label}>
+          {entry.stages.map((stage, index) => {
+            const stageState = workspaceState.stages[index];
+
+            return (
+              <li key={stage.title} data-state={stageState?.state ?? "waiting"}>
+                <div className="career-lab-entry__stage-meta">
+                  <span>{String(index + 1).padStart(2, "0")}</span>
+                  <span className="career-lab-entry__stage-status">
+                    {stageState?.status}
+                  </span>
+                </div>
+                <h3>{stage.title}</h3>
+                <p>{stage.body}</p>
+              </li>
+            );
+          })}
         </ol>
 
         <div className="career-lab-entry__pack">
