@@ -116,7 +116,7 @@ describe("Career Market ingestion and analysis", () => {
     ).toBeInTheDocument();
     expect(urlInput).toHaveValue("https://jobs.example/123");
     expect(fetch).toHaveBeenCalledWith(
-      "https://jobs.example/123/",
+      "https://jobs.example/123",
       expect.objectContaining({ credentials: "omit" }),
     );
   });
