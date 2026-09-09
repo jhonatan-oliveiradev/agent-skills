@@ -170,11 +170,11 @@ export function MarketAnalysis({
   const sample = useMemo(() => {
     const targetRole = profile.targetRoles[0];
     const targetMarket = profile.targetMarkets[0];
-    return buildMarketSample(uniquePostings, {
+    return buildMarketSample(postings, {
       ...(targetRole ? { targetRole } : {}),
       ...(targetMarket ? { targetMarket } : {}),
     });
-  }, [profile.targetMarkets, profile.targetRoles, uniquePostings]);
+  }, [postings, profile.targetMarkets, profile.targetRoles]);
   const analyses = useMemo(
     () => uniquePostings.map((posting) => analyzeJobFit(profile, posting)),
     [profile, uniquePostings],
@@ -312,7 +312,7 @@ export function MarketIntelligenceSurface({ locale }: Readonly<{ locale: Locale 
         locale={locale}
         onIngest={(incoming) => {
           setSaved(false);
-          setPostings((current) => deduplicateJobPostings([...current, ...incoming]));
+          setPostings((current) => [...current, ...incoming]);
         }}
       />
 
