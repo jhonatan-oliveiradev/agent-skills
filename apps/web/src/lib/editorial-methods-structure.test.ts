@@ -17,13 +17,13 @@ function getRule(css: string, selector: string) {
 }
 
 describe("editorial methods system", () => {
-  it("turns the Skills index into the Method Archive without forking global chrome", async () => {
+  it("turns the Skills index into the Method Archive without forking Studio chrome", async () => {
     const [layout, page] = await Promise.all([
-      read("app/[locale]/layout.tsx"),
-      read("app/[locale]/skills/page.tsx"),
+      read("app/[locale]/(studio)/layout.tsx"),
+      read("app/[locale]/(studio)/skills/page.tsx"),
     ]);
 
-    expect(layout).toContain('import "../editorial-methods.css"');
+    expect(layout).toContain('import "../../editorial-methods.css"');
     expect(page).toContain("MethodArchive");
     expect(page).toContain("EditorialPageHero");
     expect(page).toContain("editorialMethodsCopy");
@@ -44,7 +44,7 @@ describe("editorial methods system", () => {
   });
 
   it("frames discovery around the task instead of catalog taxonomy", async () => {
-    const page = await read("app/[locale]/skills/page.tsx");
+    const page = await read("app/[locale]/(studio)/skills/page.tsx");
     const en = editorialMethodsCopy.en;
     const pt = editorialMethodsCopy["pt-BR"];
 
@@ -65,7 +65,7 @@ describe("editorial methods system", () => {
   });
 
   it("explains an empty archive result and gives a concrete recovery action", async () => {
-    const page = await read("app/[locale]/skills/page.tsx");
+    const page = await read("app/[locale]/(studio)/skills/page.tsx");
 
     expect(editorialMethodsCopy.en.noResultsTitle).toBe("No method matches this selection.");
     expect(editorialMethodsCopy.en.noResultsSummary).toContain("Broaden the task");
