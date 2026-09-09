@@ -1,14 +1,15 @@
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import type { ComponentType, ReactNode } from "react";
 import { afterEach, describe, expect, it, vi } from "vitest";
-import { CareerLabShell } from "./career-lab-shell";
-import { CareerProfileProvider } from "./career-profile-provider";
+import { normalizeJobPosting } from "@/lib/career/market";
 import { createEmptyCareerProfile } from "@/lib/career/profile";
 import { buildRoadmap } from "@/lib/career/roadmap-engine";
 import { getRoleMap } from "@/lib/career/role-maps";
 import type { CareerStorage } from "@/lib/career/storage";
 import type { CareerProfile, NormalizedJobPosting } from "@/lib/career/types";
 import type { Locale } from "@/lib/locales";
+import { CareerLabShell } from "./career-lab-shell";
+import { CareerProfileProvider } from "./career-profile-provider";
 
 type IngestionProps = Readonly<{
   locale: Locale;
@@ -23,16 +24,11 @@ type AnalysisProps = Readonly<{
 type MarketPageModule = {
   default: (props: { params: Promise<{ locale: string }> }) => Promise<ReactNode>;
 };
-
 type MarketComponentsModule = {
   MarketIngestion: ComponentType<IngestionProps>;
 };
 type MarketAnalysisModule = {
   MarketAnalysis: ComponentType<AnalysisProps>;
-};
-
-type MarketModule = {
-  normalizeJobPosting(input: Record<string, unknown>): NormalizedJobPosting;
 };
 
 async function loadModule<T>(path: string): Promise<T> {
@@ -160,9 +156,8 @@ describe("Career Market ingestion and analysis", () => {
 
   it("renders separate fit gaps, sample health, demand provenance and a save action", async () => {
     const { MarketAnalysis } = await loadModule<MarketAnalysisModule>("./market-analysis");
-    const market = await loadModule<MarketModule>("@/lib/career/market");
     const profile = profileWithRoadmap();
-    const posting = market.normalizeJobPosting({
+    const posting = normalizeJobPosting({
       title: "Frontend Engineer",
       company: "Example Co",
       source: { type: "pasted", capturedAt: "2026-09-08T18:00:00.000Z" },
@@ -190,9 +185,7 @@ describe("Career Market ingestion and analysis", () => {
   });
 
   it("publishes the localized Market route and enables it in the Career Lab rail", async () => {
-    const pageModule = await loadModule<MarketPageModule>(
-      "@/app/[locale]/career-lab/market/page",
-    );
+    const pageModule = await loadModule<MarketPageModule>("../../app/[locale]/career-lab/market/page");
     const profile = profileWithRoadmap();
     const page = await pageModule.default({ params: Promise.resolve({ locale: "pt-BR" }) });
 
