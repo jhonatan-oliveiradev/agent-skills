@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import { render, screen } from "@testing-library/react";
+import { render, screen, within } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 import { CareerLabShell } from "@/components/career/career-lab-shell";
 import { CareerProfileProvider } from "@/components/career/career-profile-provider";
@@ -35,21 +35,28 @@ async function renderRoot(
 }
 
 describe("Career Lab root route", () => {
-  it("renders an editorial Career Profile entry as a stateful career workspace", async () => {
+  it("renders an editorial Career Profile entry as an operational career workbench", async () => {
     await renderRoot(null);
 
     expect(
       await screen.findByRole("heading", { name: "Build a real map of your career." }),
     ).toBeInTheDocument();
-    expect(screen.getByRole("link", { name: "Start Career Profile" })).toHaveAttribute(
-      "href",
-      "/en/career-lab/onboarding",
-    );
     expect(screen.getByText("01 / Role")).toBeInTheDocument();
     expect(screen.getByText("02 / Market")).toBeInTheDocument();
     expect(screen.getByText("03 / Capacity")).toBeInTheDocument();
 
+    const currentStep = screen.getByRole("complementary", { name: "Current step" });
+    expect(within(currentStep).getByRole("heading", { name: "Profile" })).toBeInTheDocument();
+    expect(within(currentStep).getByText("Define your role, market and weekly capacity.")).toBeInTheDocument();
+    expect(within(currentStep).getByRole("link", { name: "Start Career Profile" })).toHaveAttribute(
+      "href",
+      "/en/career-lab/onboarding",
+    );
+
     const system = screen.getByRole("list", { name: "Your career system" });
+    const stages = within(system).getAllByRole("listitem");
+    expect(stages).toHaveLength(5);
+    expect(stages[0]).toHaveAttribute("aria-current", "step");
     expect(system).toHaveTextContent("Profile");
     expect(system).toHaveTextContent("Not started");
     expect(system).toHaveTextContent("Assessment");
@@ -63,21 +70,30 @@ describe("Career Lab root route", () => {
     expect(screen.getAllByRole("link", { name: "Developer Career Pack" })).not.toHaveLength(0);
   });
 
-  it("localizes the stateful workspace entry for pt-BR", async () => {
+  it("localizes the operational workbench entry for pt-BR", async () => {
     await renderRoot(null, "pt-BR");
 
     expect(
       await screen.findByRole("heading", { name: "Construa um mapa real da sua carreira." }),
     ).toBeInTheDocument();
-    expect(screen.getByRole("link", { name: "Iniciar Career Profile" })).toHaveAttribute(
-      "href",
-      "/pt-BR/career-lab/onboarding",
-    );
     expect(screen.getByText("01 / Função")).toBeInTheDocument();
     expect(screen.getByText("02 / Mercado")).toBeInTheDocument();
     expect(screen.getByText("03 / Capacidade")).toBeInTheDocument();
 
+    const currentStep = screen.getByRole("complementary", { name: "Etapa atual" });
+    expect(within(currentStep).getByRole("heading", { name: "Perfil" })).toBeInTheDocument();
+    expect(
+      within(currentStep).getByText("Defina sua função, mercado e capacidade semanal."),
+    ).toBeInTheDocument();
+    expect(within(currentStep).getByRole("link", { name: "Iniciar Career Profile" })).toHaveAttribute(
+      "href",
+      "/pt-BR/career-lab/onboarding",
+    );
+
     const system = screen.getByRole("list", { name: "Seu sistema de carreira" });
+    const stages = within(system).getAllByRole("listitem");
+    expect(stages).toHaveLength(5);
+    expect(stages[0]).toHaveAttribute("aria-current", "step");
     expect(system).toHaveTextContent("Perfil");
     expect(system).toHaveTextContent("Não iniciado");
     expect(system).toHaveTextContent("Aguardando perfil");
