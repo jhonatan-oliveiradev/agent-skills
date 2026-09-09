@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { buildMarketSample, applyMarketSample, normalizeJobPosting, parseMarketAnalysisArtifact } from "./market";
+import { extractExplicitJobSignals } from "./market-extractor";
 import { createEmptyCareerProfile } from "./profile";
 import { buildRoadmap } from "./roadmap-engine";
 import { getRoleMap } from "./role-maps";
@@ -42,6 +43,23 @@ function frontendProfile(): CareerProfile {
 }
 
 describe("market review regressions", () => {
+  it("extracts an explicit mandatory location as an unknown hard constraint", () => {
+    const extracted = extractExplicitJobSignals(
+      "Frontend role. Candidates must be based in Brazil. React and TypeScript required.",
+    );
+
+    expect(extracted.structuralRequirements).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          kind: "location",
+          hard: true,
+          status: "unknown",
+          label: expect.stringMatching(/must be based in Brazil/i),
+        }),
+      ]),
+    );
+  });
+
   it("fails closed on malformed imported posting fields instead of coercing them", () => {
     const artifact = (posting: Record<string, unknown>) => ({
       schemaVersion: "1",
