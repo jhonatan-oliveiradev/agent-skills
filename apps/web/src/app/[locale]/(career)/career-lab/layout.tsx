@@ -7,6 +7,7 @@ import "@/styles/career-lab.css";
 import "@/styles/career-learning-evidence.css";
 import "@/styles/career-market.css";
 import "@/styles/career-convergence.css";
+import "@/styles/career-shell-separation.css";
 
 type LayoutProps = Readonly<{
   children: ReactNode;
