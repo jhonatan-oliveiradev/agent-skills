@@ -74,6 +74,11 @@ function nonEmpty(value: string, label: string): string {
   return value.trim();
 }
 
+function requiredString(value: unknown, label: string): string {
+  if (typeof value !== "string") throw new Error(`${label}: expected string`);
+  return nonEmpty(value, label);
+}
+
 function isoDate(value: string, label: string): string {
   const normalized = nonEmpty(value, label);
   if (!Number.isFinite(Date.parse(normalized))) {
@@ -138,6 +143,9 @@ function normalizeSignals(
 ): readonly JobCapabilitySignal[] {
   const unique = new Map<string, JobCapabilitySignal>();
   for (const [index, signal] of signals.entries()) {
+    if (!signal || typeof signal !== "object") {
+      throw new Error(`${label}[${index}]: expected signal object`);
+    }
     assertCompetencyId(signal.competencyId, `${label}[${index}].competencyId`);
     if (signal.provenance !== expectedProvenance) {
       throw new Error(`${label}[${index}].provenance: expected ${expectedProvenance}`);
@@ -159,6 +167,9 @@ function normalizeRequirements(
 ): readonly StructuralRequirement[] {
   const unique = new Map<string, StructuralRequirement>();
   for (const [index, requirement] of requirements.entries()) {
+    if (!requirement || typeof requirement !== "object") {
+      throw new Error(`${label}[${index}]: expected requirement object`);
+    }
     if (!requirementKinds.includes(requirement.kind)) {
       throw new Error(`${label}[${index}].kind: invalid value`);
     }
@@ -383,9 +394,9 @@ function readImportedSignal(
   label: string,
 ): JobCapabilitySignal {
   assertRecord(value, label);
-  const competencyId = nonEmpty(String(value.competencyId ?? ""), `${label}.competencyId`);
+  const competencyId = requiredString(value.competencyId, `${label}.competencyId`);
   assertCompetencyId(competencyId, `${label}.competencyId`);
-  const signalLabel = nonEmpty(String(value.label ?? ""), `${label}.label`);
+  const signalLabel = requiredString(value.label, `${label}.label`);
   if (value.provenance !== expected) {
     throw new Error(`${label}.provenance: expected ${expected}`);
   }
@@ -394,78 +405,114 @@ function readImportedSignal(
 
 function readImportedRequirement(value: unknown, label: string): StructuralRequirement {
   assertRecord(value, label);
-  const kind = String(value.kind ?? "") as StructuralRequirementKind;
-  const status = String(value.status ?? "unknown") as StructuralRequirementStatus;
-  if (!requirementKinds.includes(kind)) throw new Error(`${label}.kind: invalid value`);
-  if (!requirementStatuses.includes(status)) throw new Error(`${label}.status: invalid value`);
+  if (typeof value.kind !== "string" || !requirementKinds.includes(value.kind as StructuralRequirementKind)) {
+    throw new Error(`${label}.kind: invalid value`);
+  }
+  if (
+    value.status !== undefined &&
+    (typeof value.status !== "string" ||
+      !requirementStatuses.includes(value.status as StructuralRequirementStatus))
+  ) {
+    throw new Error(`${label}.status: invalid value`);
+  }
   if (typeof value.hard !== "boolean") throw new Error(`${label}.hard: expected boolean`);
   return {
-    kind,
-    label: nonEmpty(String(value.label ?? ""), `${label}.label`),
+    kind: value.kind as StructuralRequirementKind,
+    label: requiredString(value.label, `${label}.label`),
     hard: value.hard,
-    status,
+    status: (value.status ?? "unknown") as StructuralRequirementStatus,
   };
+}
+
+function optionalImportedString(
+  value: unknown,
+  label: string,
+): string | null | undefined {
+  if (value === undefined || value === null) return value;
+  if (typeof value !== "string") throw new Error(`${label}: expected string or null`);
+  return value;
 }
 
 function importedPosting(value: unknown, index: number): NormalizedJobPosting {
   const label = `careerArtifact.postings[${index}]`;
   assertRecord(value, label);
-  const source = value.source;
+
   let sourceUrl: string | undefined;
-  let capturedAt = value.capturedAt;
-  if (source && typeof source === "object" && !Array.isArray(source)) {
-    const sourceRecord = source as Record<string, unknown>;
-    if (typeof sourceRecord.url === "string") sourceUrl = sourceRecord.url;
-    if (capturedAt === undefined) capturedAt = sourceRecord.capturedAt;
+  let capturedAt: unknown = value.capturedAt;
+  if (value.source !== undefined) {
+    assertRecord(value.source, `${label}.source`);
+    if (value.source.url !== undefined) {
+      if (typeof value.source.url !== "string") {
+        throw new Error(`${label}.source.url: expected string`);
+      }
+      sourceUrl = value.source.url;
+    }
+    if (capturedAt === undefined) capturedAt = value.source.capturedAt;
   }
-  if (typeof value.sourceUrl === "string") sourceUrl = value.sourceUrl;
+  if (value.sourceUrl !== undefined) {
+    if (typeof value.sourceUrl !== "string") {
+      throw new Error(`${label}.sourceUrl: expected string`);
+    }
+    sourceUrl = value.sourceUrl;
+  }
   if (typeof capturedAt !== "string") {
     throw new Error(`${label}.capturedAt: expected ISO date-time string`);
   }
-  const explicitSignals = Array.isArray(value.explicitSignals)
-    ? value.explicitSignals.map((signal, signalIndex) =>
-        readImportedSignal(signal, "explicit", `${label}.explicitSignals[${signalIndex}]`),
-      )
-    : [];
-  const inferredSignals = Array.isArray(value.inferredSignals)
-    ? value.inferredSignals.map((signal, signalIndex) =>
-        readImportedSignal(signal, "inferred", `${label}.inferredSignals[${signalIndex}]`),
-      )
-    : [];
-  const structuralRequirements = Array.isArray(value.structuralRequirements)
-    ? value.structuralRequirements.map((requirement, requirementIndex) =>
-        readImportedRequirement(
-          requirement,
-          `${label}.structuralRequirements[${requirementIndex}]`,
-        ),
-      )
-    : [];
+
+  const parseSignalArray = (
+    candidate: unknown,
+    provenance: "explicit" | "inferred",
+    field: string,
+  ): readonly JobCapabilitySignal[] => {
+    if (candidate === undefined) return [];
+    if (!Array.isArray(candidate)) throw new Error(`${label}.${field}: expected array`);
+    return candidate.map((signal, signalIndex) =>
+      readImportedSignal(signal, provenance, `${label}.${field}[${signalIndex}]`),
+    );
+  };
+  const explicitSignals = parseSignalArray(value.explicitSignals, "explicit", "explicitSignals");
+  const inferredSignals = parseSignalArray(value.inferredSignals, "inferred", "inferredSignals");
+  let structuralRequirements: readonly StructuralRequirement[] = [];
+  if (value.structuralRequirements !== undefined) {
+    if (!Array.isArray(value.structuralRequirements)) {
+      throw new Error(`${label}.structuralRequirements: expected array`);
+    }
+    structuralRequirements = value.structuralRequirements.map((requirement, requirementIndex) =>
+      readImportedRequirement(requirement, `${label}.structuralRequirements[${requirementIndex}]`),
+    );
+  }
+
+  if (value.id !== undefined && typeof value.id !== "string") {
+    throw new Error(`${label}.id: expected string`);
+  }
+  const postedAt = optionalImportedString(value.postedAt, `${label}.postedAt`);
+  const deadline = optionalImportedString(value.deadline, `${label}.deadline`);
+  const location = optionalImportedString(value.location, `${label}.location`);
+  let workMode: JobWorkMode | undefined;
+  if (value.workMode !== undefined) {
+    if (typeof value.workMode !== "string" || !workModes.includes(value.workMode as JobWorkMode)) {
+      throw new Error(`${label}.workMode: invalid value`);
+    }
+    workMode = value.workMode as JobWorkMode;
+  }
 
   return normalizeJobPosting({
-    ...(typeof value.id === "string" ? { id: value.id } : {}),
-    title: nonEmpty(String(value.title ?? ""), `${label}.title`),
-    company: nonEmpty(String(value.company ?? ""), `${label}.company`),
+    ...(value.id === undefined ? {} : { id: value.id as string }),
+    title: requiredString(value.title, `${label}.title`),
+    company: requiredString(value.company, `${label}.company`),
     source: {
       type: "agent-import",
       ...(sourceUrl ? { url: sourceUrl } : {}),
       capturedAt,
     },
-    ...(typeof value.postedAt === "string" || value.postedAt === null
-      ? { postedAt: value.postedAt }
-      : {}),
-    ...(typeof value.deadline === "string" || value.deadline === null
-      ? { deadline: value.deadline }
-      : {}),
-    ...(typeof value.location === "string" || value.location === null
-      ? { location: value.location }
-      : {}),
-    ...(typeof value.workMode === "string" && workModes.includes(value.workMode as JobWorkMode)
-      ? { workMode: value.workMode as JobWorkMode }
-      : {}),
+    ...(postedAt === undefined ? {} : { postedAt }),
+    ...(deadline === undefined ? {} : { deadline }),
+    ...(location === undefined ? {} : { location }),
+    ...(workMode === undefined ? {} : { workMode }),
     explicitSignals,
     inferredSignals,
     structuralRequirements,
-    rawSnapshot: nonEmpty(String(value.rawSnapshot ?? ""), `${label}.rawSnapshot`),
+    rawSnapshot: requiredString(value.rawSnapshot, `${label}.rawSnapshot`),
   });
 }
 
