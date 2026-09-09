@@ -60,7 +60,7 @@ export function CareerLabShell({
             {copy.navigation.map((label, index) => {
               const segment = navigationSegments[index];
               const href = `/${locale}/career-lab${segment ? `/${segment}` : ""}` as Route;
-              const available = index <= 3;
+              const available = index <= 4;
               return (
                 <li key={label}>
                   {available ? (
