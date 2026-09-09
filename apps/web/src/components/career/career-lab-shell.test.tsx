@@ -27,7 +27,7 @@ function ProviderProbe() {
 }
 
 describe("Career Lab shell", () => {
-  it("renders shared chrome and provided route content without inferring route state", async () => {
+  it("renders product-owned chrome and provided route content without inferring route state", async () => {
     render(
       <CareerProfileProvider storage={storageWith(null)}>
         <CareerLabShell locale="en">
@@ -37,11 +37,21 @@ describe("Career Lab shell", () => {
     );
 
     expect(await screen.findByText("Root route content")).toBeInTheDocument();
+    expect(screen.getByRole("main")).toHaveAttribute("id", "main-content");
     expect(screen.getByRole("navigation", { name: "Career Lab" })).toBeInTheDocument();
     expect(screen.getByRole("link", { name: "Developer Career Pack" })).toHaveAttribute(
       "href",
       "/en/packs/developer-career",
     );
+    expect(screen.getByRole("link", { name: "Agent Skills Studio ↗" })).toHaveAttribute(
+      "href",
+      "/en",
+    );
+    expect(screen.getByRole("link", { name: "Methods ↗" })).toHaveAttribute(
+      "href",
+      "/en/packs/developer-career",
+    );
+    expect(screen.queryByText(/methods only matter|métodos só têm valor/i)).not.toBeInTheDocument();
     expect(screen.queryByText(/sign in|log in/i)).not.toBeInTheDocument();
   });
 

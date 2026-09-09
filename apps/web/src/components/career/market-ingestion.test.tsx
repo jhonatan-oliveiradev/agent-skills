@@ -244,7 +244,9 @@ describe("Career Market ingestion and analysis", () => {
   });
 
   it("publishes the localized Market route and enables it in the Career Lab rail", async () => {
-    const pageModule = await loadModule<MarketPageModule>("../../app/[locale]/career-lab/market/page");
+    const pageModule = await loadModule<MarketPageModule>(
+      "../../app/[locale]/(career)/career-lab/market/page",
+    );
     const profile = profileWithRoadmap();
     const page = await pageModule.default({ params: Promise.resolve({ locale: "pt-BR" }) });
 

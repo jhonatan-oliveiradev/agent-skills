@@ -19,14 +19,14 @@ async function readOptional(relativePath: string) {
 
 describe("editorial detail layout", () => {
   it("loads the detail-layout override after skill and pack editorial styles", async () => {
-    const layout = await read("app/[locale]/layout.tsx");
+    const layout = await read("app/[locale]/(studio)/layout.tsx");
 
-    expect(layout).toContain('import "../editorial-detail-layout.css"');
-    expect(layout.indexOf('import "../editorial-detail-layout.css"')).toBeGreaterThan(
-      layout.indexOf('import "../editorial-method-dossier.css"'),
+    expect(layout).toContain('import "../../editorial-detail-layout.css"');
+    expect(layout.indexOf('import "../../editorial-detail-layout.css"')).toBeGreaterThan(
+      layout.indexOf('import "../../editorial-method-dossier.css"'),
     );
-    expect(layout.indexOf('import "../editorial-detail-layout.css"')).toBeGreaterThan(
-      layout.indexOf('import "../editorial-pack-blueprint.css"'),
+    expect(layout.indexOf('import "../../editorial-detail-layout.css"')).toBeGreaterThan(
+      layout.indexOf('import "../../editorial-pack-blueprint.css"'),
     );
   });
 
