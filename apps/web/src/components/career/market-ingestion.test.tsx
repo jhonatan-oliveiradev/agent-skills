@@ -184,6 +184,48 @@ describe("Career Market ingestion and analysis", () => {
     await waitFor(() => expect(onSave).toHaveBeenCalledTimes(1));
   });
 
+  it("preserves duplicate-removal decisions in the sample saved from the UI", async () => {
+    const { MarketAnalysis } = await loadModule<MarketAnalysisModule>("./market-analysis");
+    const profile = profileWithRoadmap();
+    const first = normalizeJobPosting({
+      title: "Frontend Engineer",
+      company: "Example Co",
+      source: {
+        type: "url",
+        url: "https://jobs.example/1",
+        capturedAt: "2026-09-08T18:00:00.000Z",
+      },
+      rawSnapshot: "Build React interfaces with TypeScript.",
+    });
+    const duplicate = normalizeJobPosting({
+      title: " frontend  engineer ",
+      company: "EXAMPLE CO",
+      source: {
+        type: "url",
+        url: "https://mirror.example/99",
+        capturedAt: "2026-09-08T18:05:00.000Z",
+      },
+      rawSnapshot: "  Build React interfaces with   TypeScript. ",
+    });
+    const onSave = vi.fn();
+
+    render(
+      <MarketAnalysis
+        locale="en"
+        profile={profile}
+        postings={[first, duplicate]}
+        onSave={onSave}
+      />,
+    );
+
+    fireEvent.click(screen.getByRole("button", { name: /save market sample/i }));
+    await waitFor(() => expect(onSave).toHaveBeenCalledTimes(1));
+    expect(onSave.mock.calls[0]?.[0]).toMatchObject({
+      postingCount: 1,
+      deduplicatedCount: 1,
+    });
+  });
+
   it("publishes the localized Market route and enables it in the Career Lab rail", async () => {
     const pageModule = await loadModule<MarketPageModule>("../../app/[locale]/career-lab/market/page");
     const profile = profileWithRoadmap();
