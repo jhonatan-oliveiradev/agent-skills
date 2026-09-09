@@ -3,34 +3,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { NuqsAdapter } from "nuqs/adapters/next/app";
 import "../globals.css";
-import "../editorial-foundation.css";
-import "../home-evidence.css";
-import "../home-living-archive.css";
-import "../home-living-systems.css";
-import "../home-scroll-choreography.css";
-import "../home-scroll-systems.css";
-import "../home-scroll-workflow.css";
-import "../home-final-polish.css";
-import "../editorial-pages.css";
-import "../editorial-secondary.css";
-import "../editorial-living-program.css";
-import "../editorial-colophon.css";
-import "../editorial-institutional.css";
-import "../editorial-methods.css";
-import "../editorial-method-dossier.css";
-import "../editorial-packs.css";
-import "../editorial-pack-blueprint.css";
-import "../editorial-pack-distribution.css";
-import "../editorial-detail-layout.css";
-import "../editorial-evidence.css";
-import "../editorial-evidence-report.css";
-import "../editorial-relations.css";
-import "../site-chrome.css";
-import "../site-chrome-responsive.css";
-import "../site-chrome-refinement.css";
 import "../ui-hardening.css";
-import { SiteFooter } from "@/components/site-footer";
-import { SiteHeader } from "@/components/site-header";
 import { ThemeProvider } from "@/components/theme-provider";
 import { isLocale } from "@/lib/i18n";
 import { messages } from "@/lib/messages";
@@ -87,9 +60,7 @@ export default async function LocaleLayout({
             <a className="skip-link" href="#main-content">
               {messages[locale].skipLink}
             </a>
-            <SiteHeader locale={locale} />
-            <main id="main-content">{children}</main>
-            <SiteFooter locale={locale} />
+            {children}
           </NuqsAdapter>
         </ThemeProvider>
       </body>
