@@ -11,6 +11,8 @@ const emptyWorkspaceState = {
   en: {
     eyebrow: "05 / Workspace state",
     label: "Your career system",
+    currentLabel: "Current step",
+    currentBody: "Define your role, market and weekly capacity.",
     stages: [
       { status: "Not started", state: "next" },
       { status: "Waiting for profile", state: "waiting" },
@@ -22,6 +24,8 @@ const emptyWorkspaceState = {
   "pt-BR": {
     eyebrow: "05 / Estado do workspace",
     label: "Seu sistema de carreira",
+    currentLabel: "Etapa atual",
+    currentBody: "Defina sua função, mercado e capacidade semanal.",
     stages: [
       { status: "Não iniciado", state: "next" },
       { status: "Aguardando perfil", state: "waiting" },
@@ -35,6 +39,8 @@ const emptyWorkspaceState = {
   {
     eyebrow: string;
     label: string;
+    currentLabel: string;
+    currentBody: string;
     stages: ReadonlyArray<{ status: string; state: "next" | "waiting" | "empty" }>;
   }
 >;
@@ -49,6 +55,8 @@ export function CareerLabHome({ locale }: Readonly<{ locale: Locale }>) {
     return <CareerOverview locale={locale} />;
   }
 
+  const firstStage = entry.stages[0];
+
   return (
     <section className="career-lab-entry" aria-labelledby="career-lab-entry-title">
       <div className="career-lab-entry__hero">
@@ -56,16 +64,6 @@ export function CareerLabHome({ locale }: Readonly<{ locale: Locale }>) {
           <p className="career-lab__eyebrow">{entry.eyebrow}</p>
           <h1 id="career-lab-entry-title">{entry.title}</h1>
           <p className="career-lab-entry__lede">{entry.body}</p>
-          <div className="career-lab-entry__start">
-            <Link
-              className="career-lab-entry__primary"
-              href={`/${locale}/career-lab/onboarding` as Route}
-            >
-              {entry.cta}
-              <span aria-hidden="true">→</span>
-            </Link>
-            <p>{entry.localNote}</p>
-          </div>
         </div>
 
         <dl className="career-lab-entry__dimensions">
@@ -79,9 +77,31 @@ export function CareerLabHome({ locale }: Readonly<{ locale: Locale }>) {
       </div>
 
       <section className="career-lab-entry__journey" aria-labelledby="career-lab-entry-journey">
-        <header>
-          <p className="career-lab__eyebrow">{workspaceState.eyebrow}</p>
-          <h2 id="career-lab-entry-journey">{workspaceState.label}</h2>
+        <header className="career-lab-entry__workspace-header">
+          <div className="career-lab-entry__workspace-title">
+            <p className="career-lab__eyebrow">{workspaceState.eyebrow}</p>
+            <h2 id="career-lab-entry-journey">{workspaceState.label}</h2>
+          </div>
+
+          {firstStage ? (
+            <aside className="career-lab-entry__current" aria-label={workspaceState.currentLabel}>
+              <p className="career-lab__eyebrow">{workspaceState.currentLabel}</p>
+              <div className="career-lab-entry__current-action">
+                <div>
+                  <h3>{firstStage.title}</h3>
+                  <p>{workspaceState.currentBody}</p>
+                </div>
+                <Link
+                  className="career-lab-entry__primary"
+                  href={`/${locale}/career-lab/onboarding` as Route}
+                >
+                  {entry.cta}
+                  <span aria-hidden="true">→</span>
+                </Link>
+              </div>
+              <p className="career-lab-entry__current-note">{entry.localNote}</p>
+            </aside>
+          ) : null}
         </header>
 
         <ol aria-label={workspaceState.label}>
@@ -89,15 +109,19 @@ export function CareerLabHome({ locale }: Readonly<{ locale: Locale }>) {
             const stageState = workspaceState.stages[index];
 
             return (
-              <li key={stage.title} data-state={stageState?.state ?? "waiting"}>
-                <div className="career-lab-entry__stage-meta">
-                  <span>{String(index + 1).padStart(2, "0")}</span>
-                  <span className="career-lab-entry__stage-status">
-                    {stageState?.status}
-                  </span>
+              <li
+                key={stage.title}
+                data-state={stageState?.state ?? "waiting"}
+                aria-current={index === 0 ? "step" : undefined}
+              >
+                <span className="career-lab-entry__stage-index">
+                  {String(index + 1).padStart(2, "0")}
+                </span>
+                <div className="career-lab-entry__stage-copy">
+                  <h3>{stage.title}</h3>
+                  <p>{stage.body}</p>
                 </div>
-                <h3>{stage.title}</h3>
-                <p>{stage.body}</p>
+                <span className="career-lab-entry__stage-status">{stageState?.status}</span>
               </li>
             );
           })}
