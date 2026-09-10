@@ -58,7 +58,10 @@ function renderProvider(storage: CareerGuidanceStorage) {
 describe("CareerGuidanceProvider", () => {
   it("auto-opens once when a profile exists and guidance is unseen", async () => {
     renderProvider(guidanceStorage({ orientationStatus: "unseen" }));
-    expect(await screen.findByTestId("guidance-state")).toHaveTextContent("ready:unseen:open");
+
+    await waitFor(() =>
+      expect(screen.getByTestId("guidance-state")).toHaveTextContent("ready:unseen:open"),
+    );
   });
 
   it("does not auto-open when status is completed", async () => {
