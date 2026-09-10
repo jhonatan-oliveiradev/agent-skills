@@ -1,5 +1,6 @@
 "use client";
 
+import type { Route } from "next";
 import { useEffect, useMemo } from "react";
 import {
   completeLearningUnit,
@@ -15,6 +16,7 @@ import { getRoleMap } from "@/lib/career/role-maps";
 import type { CareerProfile, MilestoneStatus, RoadmapState } from "@/lib/career/types";
 import type { Locale } from "@/lib/locales";
 import { useCareerProfile } from "./career-profile-provider";
+import { CareerSectionGuidance } from "./career-section-guidance";
 import { LearningUnit } from "./learning-unit";
 
 const copy = {
@@ -32,6 +34,11 @@ const copy = {
     noProfile: "Create a Career Profile before generating an adaptive roadmap.",
     noFocus: "All currently applicable milestones are complete.",
     loading: "Loading roadmap…",
+    guidanceEyebrow: "Working contract",
+    guidanceTitle: "Use this focus now",
+    guidanceBody:
+      "This is the highest-priority available milestone under your current gaps. Completion requires both its capability and evidence requirements; use the practice below, then register the resulting proof.",
+    guidanceAction: "Register resulting proof in Evidence",
     milestoneCount: (count: number) => `${count.toString().padStart(2, "0")} milestones`,
     priorityReason: (capabilityCount: number, evidenceCount: number) =>
       `This milestone is the highest-priority dependency for the target role with ${capabilityCount} capability gap${capabilityCount === 1 ? "" : "s"} and ${evidenceCount} evidence gate${evidenceCount === 1 ? "" : "s"} still open.`,
@@ -62,6 +69,11 @@ const copy = {
     noProfile: "Crie um Career Profile antes de gerar um roadmap adaptativo.",
     noFocus: "Todos os marcos atualmente aplicáveis estão concluídos.",
     loading: "Carregando roadmap…",
+    guidanceEyebrow: "Contrato de trabalho",
+    guidanceTitle: "Use este foco agora",
+    guidanceBody:
+      "Este é o marco disponível de maior prioridade diante dos seus gaps atuais. A conclusão exige tanto os requisitos de capacidade quanto os de evidência; faça a prática abaixo e registre a prova resultante.",
+    guidanceAction: "Registrar a prova resultante em Evidências",
     milestoneCount: (count: number) => `${count.toString().padStart(2, "0")} marcos`,
     priorityReason: (capabilityCount: number, evidenceCount: number) =>
       `Este marco é a dependência de maior prioridade para o papel-alvo, com ${capabilityCount} lacuna${capabilityCount === 1 ? "" : "s"} de capacidade e ${evidenceCount} gate${evidenceCount === 1 ? "" : "s"} de evidência ainda aberto${evidenceCount === 1 ? "" : "s"}.`,
@@ -230,6 +242,15 @@ export function CareerRoadmap({
                 </dl>
               </div>
             </div>
+            <CareerSectionGuidance
+              eyebrow={localized.guidanceEyebrow}
+              title={localized.guidanceTitle}
+              body={localized.guidanceBody}
+              action={{
+                href: `/${locale}/career-lab/evidence` as Route,
+                label: localized.guidanceAction,
+              }}
+            />
             {currentLearningUnit ? (
               <LearningUnit
                 unit={currentLearningUnit}

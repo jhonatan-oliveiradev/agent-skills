@@ -62,8 +62,8 @@ export function CareerDataControls({ locale }: Readonly<{ locale: Locale }>) {
   if (!profile) return null;
 
   return (
-    <section className="career-data-controls" aria-labelledby="career-data-title">
-      <p className="career-card__label" id="career-data-title">{copy.localData}</p>
+    <details className="career-data-controls">
+      <summary>{copy.localData}</summary>
       <div className="career-data-controls__actions">
         <button type="button" onClick={exportProfile}>{copy.exportProfile}</button>
         <label className="career-data-controls__import" htmlFor="career-profile-import">
@@ -77,11 +77,23 @@ export function CareerDataControls({ locale }: Readonly<{ locale: Locale }>) {
           onChange={(event) => void importProfile(event)}
         />
         {!confirmingReset ? (
-          <button type="button" onClick={() => setConfirmingReset(true)}>{copy.resetProfile}</button>
+          <button
+            className="career-data-controls__destructive"
+            type="button"
+            onClick={() => setConfirmingReset(true)}
+          >
+            {copy.resetProfile}
+          </button>
         ) : (
           <div className="career-data-controls__confirm">
             <p>{copy.resetWarning}</p>
-            <button type="button" onClick={() => void confirmReset()}>{copy.confirmReset}</button>
+            <button
+              className="career-data-controls__destructive"
+              type="button"
+              onClick={() => void confirmReset()}
+            >
+              {copy.confirmReset}
+            </button>
             <button type="button" onClick={() => setConfirmingReset(false)}>{copy.cancel}</button>
           </div>
         )}
@@ -94,6 +106,6 @@ export function CareerDataControls({ locale }: Readonly<{ locale: Locale }>) {
           {message}
         </p>
       ) : null}
-    </section>
+    </details>
   );
 }

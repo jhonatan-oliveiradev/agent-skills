@@ -1,6 +1,7 @@
 import { AssessmentList } from "@/components/career/assessment-list";
-import { baselineAssessmentBlueprints } from "@/lib/career/assessment-blueprints";
 import { resolveLocale } from "@/components/foundation-route";
+import { baselineAssessmentBlueprints } from "@/lib/career/assessment-blueprints";
+import "@/styles/career-assessments.css";
 
 type PageProps = Readonly<{ params: Promise<{ locale: string }> }>;
 

@@ -10,7 +10,7 @@ import type { CareerProfile, EvidenceRecord } from "@/lib/career/types";
 import { CareerLabShell } from "./career-lab-shell";
 import { CareerProfileProvider } from "./career-profile-provider";
 import { EvidenceForm } from "./evidence-form";
-import { EvidenceLedger } from "./evidence-ledger";
+import { EvidenceLedger, EvidenceLedgerSurface } from "./evidence-ledger";
 
 function profileWithRoadmap(): CareerProfile {
   const profile = createEmptyCareerProfile({
@@ -65,6 +65,25 @@ describe("Professional Evidence Ledger", () => {
       "href",
       "https://github.com/example/project",
     );
+  });
+
+  it("teaches the evidence contract before a first record", async () => {
+    render(
+      <CareerProfileProvider storage={storageWith(profileWithRoadmap())}>
+        <EvidenceLedgerSurface locale="en" />
+      </CareerProfileProvider>,
+    );
+
+    const guidance = await screen.findByRole("region", {
+      name: /evidence is an inspectable artifact tied to your current roadmap focus/i,
+    });
+    expect(
+      within(guidance).getByRole("heading", {
+        name: /evidence is an inspectable artifact tied to your current roadmap focus/i,
+      }),
+    ).toBeInTheDocument();
+    expect(within(guidance).getByText(/repository change, pull request, or test report/i)).toBeInTheDocument();
+    expect(within(guidance).getByText(/provenance/i)).toBeInTheDocument();
   });
 
   it("turns a fully acknowledged evidence contract into traceable external-unverified records", async () => {

@@ -1,0 +1,124 @@
+.career-overview__capability-ledger {
+  padding: clamp(2.75rem, 5vw, 4.5rem) 0 1rem;
+}
+
+.career-overview__capability-heading {
+  align-items: end;
+  margin-bottom: 1.25rem;
+  padding-top: 1.4rem;
+  border-top: 1px solid var(--career-rule);
+}
+
+.career-overview__capability-heading > div {
+  min-width: 0;
+}
+
+.career-overview__capability-heading h2 {
+  margin-top: 0.55rem;
+  font-size: clamp(2rem, 3.2vw, 3.35rem);
+  line-height: 0.96;
+}
+
+.career-overview__capability-summary {
+  margin: 0;
+  color: var(--career-muted);
+  font-family: var(--font-mono, ui-monospace, SFMono-Regular, Menlo, monospace);
+  font-size: 0.66rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.career-overview__capability-ledger ul {
+  margin: 0;
+  padding: 0;
+  border-top: 1px solid var(--career-rule);
+  list-style: none;
+}
+
+.career-overview__capability-ledger li {
+  min-height: 5.4rem;
+  display: grid;
+  grid-template-columns: minmax(15rem, 1.35fr) minmax(13rem, 1fr) minmax(6.5rem, 0.42fr);
+  gap: 1.5rem;
+  align-items: center;
+  padding: 1rem 0;
+  border-bottom: 1px solid var(--career-rule);
+}
+
+.career-overview__capability-name {
+  min-width: 0;
+}
+
+.career-overview__capability-name strong {
+  display: block;
+  margin: 0;
+  font-family: var(--font-serif, Georgia, "Times New Roman", serif);
+  font-size: clamp(1.05rem, 1.5vw, 1.35rem);
+  font-weight: 500;
+  line-height: 1.1;
+}
+
+.career-overview__capability-name code {
+  display: block;
+  margin-top: 0.42rem;
+  overflow-wrap: anywhere;
+  color: var(--career-muted);
+  font-family: var(--font-mono, ui-monospace, SFMono-Regular, Menlo, monospace);
+  font-size: 0.62rem;
+  letter-spacing: 0.025em;
+}
+
+.career-overview__capability-state {
+  color: var(--career-muted);
+  font-size: 0.78rem;
+  line-height: 1.45;
+}
+
+.career-overview__capability-gap {
+  justify-self: end;
+  color: var(--career-copper-dark);
+  font-family: var(--font-mono, ui-monospace, SFMono-Regular, Menlo, monospace);
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.075em;
+  text-align: right;
+  text-transform: uppercase;
+}
+
+.career-overview__capability-ledger li[data-gap="clear"] .career-overview__capability-gap {
+  color: var(--career-muted);
+}
+
+@media (max-width: 980px) {
+  .career-overview__capability-ledger li {
+    grid-template-columns: minmax(12rem, 1.2fr) minmax(10rem, 0.9fr) minmax(6rem, 0.4fr);
+    gap: 1.15rem;
+  }
+}
+
+@media (max-width: 700px) {
+  .career-overview__capability-heading {
+    align-items: start;
+    flex-direction: column;
+  }
+
+  .career-overview__capability-ledger li {
+    min-height: 0;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 0.75rem 1rem;
+    padding: 1.15rem 0;
+  }
+
+  .career-overview__capability-name {
+    grid-column: 1 / -1;
+  }
+
+  .career-overview__capability-state {
+    grid-column: 1;
+  }
+
+  .career-overview__capability-gap {
+    grid-column: 2;
+  }
+}

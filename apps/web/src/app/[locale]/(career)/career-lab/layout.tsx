@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
 import { resolveLocale } from "@/components/foundation-route";
+import { CareerGuidanceProvider } from "@/components/career/career-guidance-provider";
 import { CareerLabShell } from "@/components/career/career-lab-shell";
 import { CareerProfileProvider } from "@/components/career/career-profile-provider";
 import "@/styles/career-lab.css";
@@ -8,6 +9,8 @@ import "@/styles/career-learning-evidence.css";
 import "@/styles/career-market.css";
 import "@/styles/career-convergence.css";
 import "@/styles/career-shell-separation.css";
+import "@/styles/career-guidance.css";
+import "@/styles/career-overview.css";
 
 type LayoutProps = Readonly<{
   children: ReactNode;
@@ -62,7 +65,9 @@ export default async function CareerLabLayout({ children, params }: LayoutProps)
 
   return (
     <CareerProfileProvider>
-      <CareerLabShell locale={locale}>{children}</CareerLabShell>
+      <CareerGuidanceProvider>
+        <CareerLabShell locale={locale}>{children}</CareerLabShell>
+      </CareerGuidanceProvider>
     </CareerProfileProvider>
   );
 }

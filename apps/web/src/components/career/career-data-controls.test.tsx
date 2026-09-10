@@ -27,12 +27,35 @@ function makeStorage(profile = makeProfile()) {
   return storage;
 }
 
+async function openDataControls() {
+  const summary = await screen.findByText("Local data");
+  const details = summary.closest("details");
+  expect(summary.tagName).toBe("SUMMARY");
+  expect(details).not.toHaveAttribute("open");
+  fireEvent.click(summary);
+  expect(details).toHaveAttribute("open");
+}
+
 describe("Career Lab data controls", () => {
   it("serializes the exact current Career Profile contract for export", () => {
     const profile = makeProfile();
     expect(serializeCareerProfile(profile)).toBe(`${JSON.stringify(profile, null, 2)}\n`);
     expect(getCareerProfileExportFilename(new Date("2026-09-05T12:00:00.000Z"))).toBe(
       "agent-skills-career-profile-2026-09-05.json",
+    );
+  });
+
+  it("keeps local profile utilities behind a secondary disclosure", async () => {
+    render(
+      <CareerProfileProvider storage={makeStorage()}>
+        <CareerDataControls locale="en" />
+      </CareerProfileProvider>,
+    );
+
+    await openDataControls();
+    expect(screen.getByRole("button", { name: /export profile/i })).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: /reset profile/i })).toHaveClass(
+      "career-data-controls__destructive",
     );
   });
 
@@ -44,7 +67,7 @@ describe("Career Lab data controls", () => {
       </CareerProfileProvider>,
     );
 
-    expect(await screen.findByRole("button", { name: /export profile/i })).toBeInTheDocument();
+    await openDataControls();
 
     const file = new File(["not-json"], "invalid.json", { type: "application/json" });
     Object.defineProperty(file, "text", {
@@ -65,11 +88,13 @@ describe("Career Lab data controls", () => {
       </CareerProfileProvider>,
     );
 
-    await screen.findByRole("button", { name: /reset profile/i });
+    await openDataControls();
     fireEvent.click(screen.getByRole("button", { name: /reset profile/i }));
     expect(storage.clear).not.toHaveBeenCalled();
 
-    fireEvent.click(screen.getByRole("button", { name: /confirm reset/i }));
+    const confirm = screen.getByRole("button", { name: /confirm reset/i });
+    expect(confirm).toHaveClass("career-data-controls__destructive");
+    fireEvent.click(confirm);
     await waitFor(() => expect(storage.clear).toHaveBeenCalledTimes(1));
   });
 });

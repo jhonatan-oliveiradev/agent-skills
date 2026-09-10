@@ -10,6 +10,7 @@ import type {
 } from "@/lib/career/types";
 import type { Locale } from "@/lib/locales";
 import { useCareerProfile } from "./career-profile-provider";
+import { CareerSectionGuidance } from "./career-section-guidance";
 import { EvidenceForm } from "./evidence-form";
 
 const copy = {
@@ -27,6 +28,10 @@ const copy = {
     source: "Open source",
     trustLabel: "Trust",
     dateLabel: "Observed",
+    guidanceEyebrow: "Before you record",
+    guidanceTitle: "Evidence is an inspectable artifact tied to your current roadmap focus",
+    guidanceBody:
+      "Start with something concrete — a repository change, pull request, or test report — and record where it came from. Provenance keeps the claim inspectable instead of turning it into an unsupported self-report.",
     trust: {
       "local-deterministic": "Locally verified",
       "external-unverified": "External — unverified",
@@ -53,6 +58,10 @@ const copy = {
     source: "Abrir fonte",
     trustLabel: "Confiança da fonte",
     dateLabel: "Observado em",
+    guidanceEyebrow: "Antes de registrar",
+    guidanceTitle: "Evidência é um artefato inspecionável ligado ao foco atual do seu roadmap",
+    guidanceBody:
+      "Comece por algo concreto — uma alteração de repositório, pull request ou relatório de testes — e registre de onde veio. A proveniência mantém a afirmação inspecionável em vez de transformá-la em uma autodeclaração sem suporte.",
     trust: {
       "local-deterministic": "Verificado localmente",
       "external-unverified": "Externo — não verificado",
@@ -154,6 +163,14 @@ export function EvidenceLedgerSurface({ locale }: Readonly<{ locale: Locale }>) 
         <h1>{localized.title}</h1>
         <p>{localized.summary}</p>
       </header>
+
+      {profile.evidence.length === 0 ? (
+        <CareerSectionGuidance
+          eyebrow={localized.guidanceEyebrow}
+          title={localized.guidanceTitle}
+          body={localized.guidanceBody}
+        />
+      ) : null}
 
       <div className="career-evidence-workspace__grid">
         <div>

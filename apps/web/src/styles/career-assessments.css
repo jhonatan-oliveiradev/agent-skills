@@ -1,0 +1,189 @@
+.career-assessment-list {
+  max-width: 88rem;
+  margin: 0 auto;
+  padding: clamp(2.5rem, 6vw, 6rem) 0 2rem;
+}
+
+.career-assessment-list--state {
+  min-height: 18rem;
+  display: grid;
+  place-items: center;
+  color: var(--career-muted);
+}
+
+.career-assessment-list__hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1.35fr) minmax(18rem, 0.65fr);
+  gap: clamp(2rem, 6vw, 6rem);
+  align-items: end;
+  padding-bottom: clamp(2.5rem, 5vw, 4.5rem);
+  border-bottom: 1px solid var(--career-rule);
+}
+
+.career-assessment-list__intro h1 {
+  max-width: 9ch;
+  margin: 1.25rem 0 0;
+  font-family: var(--font-serif, Georgia, serif);
+  font-size: clamp(3.25rem, 7vw, 7rem);
+  font-weight: 500;
+  letter-spacing: -0.045em;
+  line-height: 0.9;
+}
+
+.career-assessment-list__intro > p:last-child {
+  max-width: 50rem;
+  margin: 1.75rem 0 0;
+  color: var(--career-muted);
+  font-size: 1rem;
+  line-height: 1.65;
+}
+
+.career-assessment-list__progress {
+  display: grid;
+  gap: 0.85rem;
+  padding: 1.25rem 0 1.25rem clamp(1.5rem, 4vw, 3.5rem);
+  border-left: 1px solid var(--career-rule);
+}
+
+.career-assessment-list__progress strong {
+  font-family: var(--font-serif, Georgia, serif);
+  font-size: clamp(1.75rem, 3vw, 2.75rem);
+  font-weight: 500;
+  letter-spacing: -0.03em;
+}
+
+.career-assessment-list__progress span {
+  max-width: 28rem;
+  color: var(--career-muted);
+  line-height: 1.6;
+}
+
+.career-assessment-index {
+  margin: clamp(2.5rem, 6vw, 5rem) 0 0;
+  padding: 0;
+  border-top: 1px solid var(--career-rule);
+  list-style: none;
+}
+
+.career-assessment-index__row {
+  min-height: 8.5rem;
+  display: grid;
+  grid-template-columns: 3.5rem minmax(0, 1fr) minmax(11rem, auto);
+  gap: clamp(1rem, 3vw, 2.5rem);
+  align-items: center;
+  border-bottom: 1px solid var(--career-rule);
+}
+
+.career-assessment-index__number {
+  align-self: start;
+  padding-top: 1.65rem;
+  color: var(--career-muted);
+  font-family: var(--font-mono, ui-monospace, monospace);
+  font-size: 0.67rem;
+  letter-spacing: 0.1em;
+}
+
+.career-assessment-index__meta {
+  min-width: 0;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 1.5rem;
+  align-items: center;
+}
+
+.career-assessment-index__meta h2 {
+  margin: 0;
+  font-family: var(--font-serif, Georgia, serif);
+  font-size: clamp(1.7rem, 3vw, 2.6rem);
+  font-weight: 500;
+  letter-spacing: -0.03em;
+  line-height: 1;
+}
+
+.career-assessment-index__meta p {
+  margin: 0.55rem 0 0;
+  color: var(--career-muted);
+  font-size: 0.84rem;
+}
+
+.career-assessment-index__meta > span {
+  color: var(--career-copper-dark);
+  font-family: var(--font-mono, ui-monospace, monospace);
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.career-assessment-index__row[data-status="completed"] .career-assessment-index__meta > span::before {
+  content: "✓ ";
+}
+
+.career-assessment-index__action {
+  justify-self: end;
+  display: inline-flex;
+  min-height: 2.5rem;
+  align-items: center;
+  padding: 0.55rem 0.8rem;
+  border: 1px solid var(--career-rule-strong, var(--career-rule));
+  color: var(--career-ink);
+  font-family: var(--font-mono, ui-monospace, monospace);
+  font-size: 0.66rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+.career-assessment-index__action:hover {
+  border-color: var(--career-copper-dark);
+  color: var(--career-copper-dark);
+}
+
+@media (max-width: 760px) {
+  .career-assessment-list {
+    padding-top: 2rem;
+  }
+
+  .career-assessment-list__hero {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  .career-assessment-list__intro h1 {
+    font-size: clamp(3rem, 15vw, 5rem);
+  }
+
+  .career-assessment-list__progress {
+    padding: 1.25rem 0 0;
+    border-top: 1px solid var(--career-rule);
+    border-left: 0;
+  }
+
+  .career-assessment-index__row {
+    grid-template-columns: 2.25rem minmax(0, 1fr);
+    gap: 0.75rem 1rem;
+    align-items: start;
+    padding: 1.5rem 0;
+  }
+
+  .career-assessment-index__number {
+    padding-top: 0.25rem;
+  }
+
+  .career-assessment-index__meta {
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+  }
+
+  .career-assessment-index__meta > span {
+    white-space: normal;
+  }
+
+  .career-assessment-index__action {
+    grid-column: 2;
+    justify-self: start;
+    margin-top: 0.35rem;
+  }
+}

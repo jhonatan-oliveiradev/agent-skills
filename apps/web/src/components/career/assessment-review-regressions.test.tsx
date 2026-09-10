@@ -50,7 +50,16 @@ describe("assessment review integration regressions", () => {
     const listPage = await AssessmentsPage({
       params: Promise.resolve({ locale: "pt-BR" }),
     });
-    const list = render(listPage);
+    const listProfile = createEmptyCareerProfile({
+      targetRole: "frontend-developer",
+      targetMarket: "br",
+      now: "2026-09-07T11:50:00.000Z",
+    });
+    const list = render(
+      <CareerProfileProvider storage={storageWith(listProfile)}>
+        {listPage}
+      </CareerProfileProvider>,
+    );
 
     expect(
       await screen.findByRole("heading", { name: /avaliações de baseline/i }),

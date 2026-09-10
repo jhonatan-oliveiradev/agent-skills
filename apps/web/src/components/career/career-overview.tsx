@@ -2,11 +2,27 @@
 
 import { baselineAssessmentBlueprints } from "@/lib/career/assessment-blueprints";
 import { careerLabCopy, careerLabRoleLabels } from "@/lib/career/copy";
+import { getCompetencyLabel } from "@/lib/career/presentation";
 import { calculateRoleReadiness } from "@/lib/career/readiness";
+import { getRoadmapMilestone } from "@/lib/career/roadmap-catalog";
 import { buildRoadmap, getRoadmapMilestoneViews } from "@/lib/career/roadmap-engine";
 import { getRoleMap } from "@/lib/career/role-maps";
 import type { Locale } from "@/lib/locales";
+import { CareerNextAction } from "./career-next-action";
 import { useCareerProfile } from "./career-profile-provider";
+
+const capabilityLedgerCopy = {
+  en: {
+    eyebrow: "Capability system",
+    title: "Capability map",
+    aligned: "aligned",
+  },
+  "pt-BR": {
+    eyebrow: "Sistema de capacidades",
+    title: "Mapa de capacidades",
+    aligned: "alinhada",
+  },
+} as const satisfies Record<Locale, { eyebrow: string; title: string; aligned: string }>;
 
 export function CareerOverview({ locale }: Readonly<{ locale: Locale }>) {
   const { profile } = useCareerProfile();
@@ -16,6 +32,7 @@ export function CareerOverview({ locale }: Readonly<{ locale: Locale }>) {
   if (!roleId) return null;
 
   const copy = careerLabCopy[locale];
+  const ledgerCopy = capabilityLedgerCopy[locale];
   const roleMap = getRoleMap(roleId);
   const readiness = calculateRoleReadiness(profile, roleMap);
   const effectiveRoadmap = buildRoadmap(profile, roleMap);
@@ -35,6 +52,25 @@ export function CareerOverview({ locale }: Readonly<{ locale: Locale }>) {
         assessment.blueprintVersion === blueprint.version,
     ),
   );
+  const currentFocusTitle = effectiveRoadmap.currentFocusMilestoneId
+    ? getRoadmapMilestone(effectiveRoadmap.currentFocusMilestoneId).title[locale]
+    : copy.noCurrentFocus;
+  const capabilityRows = roleMap.requirements.map((requirement) => {
+    const state = profile.competencies.find(
+      (candidate) => candidate.competencyId === requirement.competencyId,
+    );
+    const gap = readiness.blockingGaps.includes(requirement.competencyId)
+      ? readiness.evidenceGaps.includes(requirement.competencyId)
+        ? copy.evidenceGap
+        : copy.capabilityGap
+      : null;
+
+    return {
+      requirement,
+      state,
+      gap,
+    };
+  });
 
   return (
     <section className="career-overview" aria-labelledby="career-overview-title">
@@ -53,7 +89,7 @@ export function CareerOverview({ locale }: Readonly<{ locale: Locale }>) {
       <div className="career-overview__grid">
         <article className="career-card career-card--focus">
           <p className="career-card__label">{copy.currentFocus}</p>
-          <strong>{effectiveRoadmap.currentFocusMilestoneId ?? copy.noCurrentFocus}</strong>
+          <strong>{currentFocusTitle}</strong>
           <p>{profile.weeklyStudyHours ? copy.weeklyCapacity(profile.weeklyStudyHours) : "—"}</p>
         </article>
 
@@ -85,42 +121,40 @@ export function CareerOverview({ locale }: Readonly<{ locale: Locale }>) {
         </article>
       </div>
 
+      <CareerNextAction profile={profile} locale={locale} />
+
       {baselineIncomplete ? (
         <p className="career-overview__baseline">{copy.baselineIncomplete}</p>
       ) : null}
 
-      <section className="career-overview__competencies" aria-labelledby="career-competencies-title">
-        <div className="career-overview__section-heading">
-          <p className="career-lab__eyebrow">{copy.competencyStates}</p>
-          <h2 id="career-competencies-title">{profile.competencies.length}</h2>
+      <section
+        className="career-overview__capability-ledger"
+        aria-labelledby="career-capability-ledger-title"
+      >
+        <div className="career-overview__section-heading career-overview__capability-heading">
+          <div>
+            <p className="career-lab__eyebrow">{ledgerCopy.eyebrow}</p>
+            <h2 id="career-capability-ledger-title">{ledgerCopy.title}</h2>
+          </div>
+          <p className="career-overview__capability-summary">
+            {copy.openGaps(readiness.blockingGaps.length)}
+          </p>
         </div>
+
         <ul>
-          {profile.competencies.map((competency) => (
-            <li key={competency.competencyId}>
-              <code>{competency.competencyId}</code>
-              <span>{copy.competencyState(competency.level, competency.confidence)}</span>
+          {capabilityRows.map(({ requirement, state, gap }) => (
+            <li key={requirement.competencyId} data-gap={gap ? "blocking" : "clear"}>
+              <div className="career-overview__capability-name">
+                <strong>{getCompetencyLabel(requirement.competencyId, locale)}</strong>
+                <code>{requirement.competencyId}</code>
+              </div>
+              <span className="career-overview__capability-state">
+                {copy.competencyState(state?.level ?? null, state?.confidence ?? "low")}
+              </span>
+              <span className="career-overview__capability-gap">{gap ?? ledgerCopy.aligned}</span>
             </li>
           ))}
         </ul>
-      </section>
-
-      <section className="career-overview__gaps" aria-labelledby="career-gaps-title">
-        <div className="career-overview__section-heading">
-          <p className="career-lab__eyebrow">{copy.blockingGaps}</p>
-          <h2 id="career-gaps-title">{copy.openGaps(readiness.blockingGaps.length)}</h2>
-        </div>
-        {readiness.blockingGaps.length > 0 ? (
-          <ul>
-            {readiness.blockingGaps.map((competencyId) => (
-              <li key={competencyId}>
-                <code>{competencyId}</code>
-                <span>{readiness.evidenceGaps.includes(competencyId) ? copy.evidenceGap : copy.capabilityGap}</span>
-              </li>
-            ))}
-          </ul>
-        ) : (
-          <p>—</p>
-        )}
       </section>
     </section>
   );

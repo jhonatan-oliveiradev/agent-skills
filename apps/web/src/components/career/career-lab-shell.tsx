@@ -2,10 +2,12 @@
 
 import type { Route } from "next";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import type { ReactNode } from "react";
 import { careerLabCopy } from "@/lib/career/copy";
 import type { Locale } from "@/lib/locales";
 import { CareerDataControls } from "./career-data-controls";
+import { CareerProductOrientation } from "./career-product-orientation";
 import { useCareerProfile } from "./career-profile-provider";
 
 const navigationSegments = ["", "roadmap", "assessments", "evidence", "market"] as const;
@@ -25,6 +27,11 @@ const shellClosingCopy = {
   },
 } as const;
 
+function routeIsCurrent(pathname: string, href: string, index: number): boolean {
+  if (index === 0) return pathname === href;
+  return pathname === href || pathname.startsWith(`${href}/`);
+}
+
 export function CareerLabShell({
   locale,
   children,
@@ -32,6 +39,9 @@ export function CareerLabShell({
   const copy = careerLabCopy[locale];
   const closingCopy = shellClosingCopy[locale];
   const { profile, status } = useCareerProfile();
+  const pathname = usePathname() ?? "";
+  const guideHref = `/${locale}/career-lab/guide` as Route;
+  const guideIsCurrent = pathname === guideHref || pathname.startsWith(`${guideHref}/`);
 
   if (status === "hydrating") {
     return (
@@ -68,26 +78,31 @@ export function CareerLabShell({
             {copy.navigation.map((label, index) => {
               const segment = navigationSegments[index];
               const href = `/${locale}/career-lab${segment ? `/${segment}` : ""}` as Route;
-              const available = index <= 4;
               return (
                 <li key={label}>
-                  {available ? (
-                    <Link href={href}>
-                      <span>0{index + 1}</span>
-                      {label}
-                    </Link>
-                  ) : (
-                    <span aria-disabled="true">
-                      <span>0{index + 1}</span>
-                      {label}
-                    </span>
-                  )}
+                  <Link
+                    href={href}
+                    aria-current={routeIsCurrent(pathname, href, index) ? "page" : undefined}
+                  >
+                    <span>0{index + 1}</span>
+                    {label}
+                  </Link>
                 </li>
               );
             })}
           </ol>
         </nav>
-        {profile ? <CareerDataControls locale={locale} /> : null}
+        <div className="career-lab-rail__utilities" aria-label={copy.utilities}>
+          <Link
+            className="career-lab-rail__guide"
+            href={guideHref}
+            aria-current={guideIsCurrent ? "page" : undefined}
+          >
+            {copy.guide}
+          </Link>
+          <span className="career-lab-rail__local">{copy.localFirstIndicator}</span>
+          {profile ? <CareerDataControls locale={locale} /> : null}
+        </div>
       </header>
 
       <div className="career-lab-content">
@@ -112,6 +127,7 @@ export function CareerLabShell({
           </nav>
         </footer>
       </div>
+      <CareerProductOrientation locale={locale} />
     </main>
   );
 }
