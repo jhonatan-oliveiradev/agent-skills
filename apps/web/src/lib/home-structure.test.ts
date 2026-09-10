@@ -3,6 +3,7 @@ import { resolve } from "node:path";
 import { describe, expect, it } from "vitest";
 
 const appRoot = resolve(process.cwd(), "src");
+const catalogPath = resolve(appRoot, "../../..", "catalog/generated/catalog.json");
 
 async function readHome() {
   return readFile(resolve(appRoot, "app/[locale]/(studio)/page.tsx"), "utf8");
@@ -10,6 +11,12 @@ async function readHome() {
 
 async function readCss(path: string) {
   return readFile(resolve(appRoot, "app", path), "utf8");
+}
+
+async function getActivePackCount() {
+  const source = await readFile(catalogPath, "utf8");
+  const catalog = JSON.parse(source) as { packs: Array<{ status: string }> };
+  return catalog.packs.filter((pack) => pack.status === "active").length;
 }
 
 describe("Home Living Research Archive composition", () => {
@@ -54,19 +61,25 @@ describe("Home Living Research Archive composition", () => {
     expect(packs).toBeLessThan(evidence);
   });
 
-  it("owns the deliberate placement of all 11 active packs in the Home composition layer", async () => {
-    const [homeSystems, hardening] = await Promise.all([
+  it("owns deliberate desktop placement and responsive reset for every active pack", async () => {
+    const [homeSystems, hardening, activePackCount] = await Promise.all([
       readCss("home-living-systems.css"),
       readCss("ui-hardening.css"),
+      getActivePackCount(),
     ]);
 
-    for (let index = 1; index <= 11; index += 1) {
-      expect(homeSystems).toMatch(
-        new RegExp(`\\.home-pack-dossier:nth-child\\(${index}\\)[\\s\\S]*grid-column:`),
-      );
+    expect(activePackCount).toBeGreaterThan(0);
+
+    for (let index = 1; index <= activePackCount; index += 1) {
+      const selector = `\\.home-pack-dossier:nth-child\\(${index}\\)`;
+      const placements = homeSystems.match(new RegExp(selector, "g")) ?? [];
+
+      expect(homeSystems).toMatch(new RegExp(`${selector}[\\s\\S]*grid-column:`));
+      expect(placements.length).toBeGreaterThanOrEqual(2);
     }
 
     expect(hardening).not.toContain(".home-pack-archive .home-pack-dossier:nth-child(10)");
     expect(hardening).not.toContain(".home-pack-archive .home-pack-dossier:nth-child(11)");
+    expect(hardening).not.toContain(".home-pack-archive .home-pack-dossier:nth-child(12)");
   });
 });
