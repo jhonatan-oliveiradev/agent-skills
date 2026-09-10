@@ -296,9 +296,74 @@
   color: var(--career-paper);
 }
 
+.career-next-action {
+  display: grid;
+  grid-template-columns: minmax(7rem, 0.3fr) minmax(0, 1.35fr) auto;
+  gap: clamp(1.5rem, 4vw, 4rem);
+  align-items: end;
+  margin-top: clamp(2.5rem, 5vw, 4.5rem);
+  padding: clamp(1.75rem, 3vw, 2.75rem) 0;
+  border-top: 1px solid var(--career-ink);
+  border-bottom: 1px solid var(--career-rule);
+}
+
+.career-next-action > .career-lab__eyebrow {
+  align-self: start;
+  margin: 0.35rem 0 0;
+  color: var(--career-copper-dark);
+}
+
+.career-next-action__body h2 {
+  max-width: 18ch;
+  margin: 0;
+  font-family: var(--font-serif, Georgia, serif);
+  font-size: clamp(2rem, 4vw, 3.5rem);
+  font-weight: 500;
+  letter-spacing: -0.04em;
+  line-height: 0.98;
+}
+
+.career-next-action__body p {
+  max-width: 48rem;
+  margin: 1rem 0 0;
+  color: var(--career-muted);
+  line-height: 1.6;
+}
+
+.career-next-action__link {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.75rem;
+  padding: 0.8rem 1rem;
+  border: 1px solid var(--career-ink);
+  color: var(--career-ink);
+  font-family: var(--font-mono, ui-monospace, monospace);
+  font-size: 0.66rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-decoration: none;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.career-next-action__link:hover,
+.career-next-action__link:focus-visible {
+  background: var(--career-ink);
+  color: var(--career-paper);
+}
+
 @media (max-width: 900px) {
   .career-guide__area { grid-template-columns: 2.5rem minmax(0, 1fr); }
   .career-guide__area dl { grid-column: 2; }
+
+  .career-next-action {
+    grid-template-columns: minmax(6rem, 0.3fr) minmax(0, 1fr);
+  }
+
+  .career-next-action__link {
+    grid-column: 2;
+    justify-self: start;
+  }
 }
 
 @media (max-width: 640px) {
@@ -325,4 +390,17 @@
   .career-orientation__close { justify-self: start; grid-row: 1; }
   .career-orientation__actions { align-items: stretch; flex-direction: column-reverse; }
   .career-orientation__actions button { width: 100%; }
+
+  .career-next-action {
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+  }
+
+  .career-next-action__link {
+    grid-column: 1;
+    width: 100%;
+    justify-content: center;
+    white-space: normal;
+    text-align: center;
+  }
 }

@@ -55,6 +55,21 @@ export interface CareerOrientationCopy {
   readonly close: string;
 }
 
+type CareerNextActionPresentation = Readonly<{
+  title: string;
+  reason: string;
+  action: string;
+}>;
+
+export interface CareerNextActionCopy {
+  readonly label: string;
+  readonly completeBaseline: (title: string) => CareerNextActionPresentation;
+  readonly reviewRoadmap: CareerNextActionPresentation;
+  readonly produceEvidence: (title: string, gapCount: number) => CareerNextActionPresentation;
+  readonly addMarketSample: CareerNextActionPresentation;
+  readonly continueRoadmap: (title: string) => CareerNextActionPresentation;
+}
+
 const enGuide: CareerGuideCopy = {
   eyebrow: "Career Lab / guide",
   title: "Use Career Lab as a working loop.",
@@ -190,9 +205,71 @@ const ptBrOrientation = buildOrientationCopy(ptBrGuide, {
   close: "Fechar orientação",
 });
 
+const enNextAction: CareerNextActionCopy = {
+  label: "Now",
+  completeBaseline: (title) => ({
+    title: `Complete your ${title} baseline.`,
+    reason: "This assessment replaces an unknown competency state with an evidence-backed level, making the next focus more reliable.",
+    action: `Start ${title}`,
+  }),
+  reviewRoadmap: {
+    title: "Review your roadmap.",
+    reason: "No current milestone needs work. Review the roadmap to understand what is complete and what should be calibrated next.",
+    action: "Open Roadmap",
+  },
+  produceEvidence: (title, gapCount) => ({
+    title: `Produce evidence for ${title}.`,
+    reason: `The current milestone still has ${gapCount} evidence ${gapCount === 1 ? "gate" : "gates"} open. Register inspectable work before moving on.`,
+    action: "Register evidence",
+  }),
+  addMarketSample: {
+    title: "Add a market sample.",
+    reason: "Your current focus has its evidence gate satisfied. A real job description now adds an external demand signal to the workspace.",
+    action: "Add real job",
+  },
+  continueRoadmap: (title) => ({
+    title: `Continue ${title}.`,
+    reason: "Baseline, evidence and market context are available. Keep working the current roadmap focus and return here when the state changes.",
+    action: "Continue in Roadmap",
+  }),
+};
+
+const ptBrNextAction: CareerNextActionCopy = {
+  label: "Agora",
+  completeBaseline: (title) => ({
+    title: `Complete seu baseline de ${title}.`,
+    reason: "Esta avaliação ajuda a substituir um estado desconhecido por um nível sustentado por evidências e torna o próximo foco mais confiável.",
+    action: `Iniciar ${title}`,
+  }),
+  reviewRoadmap: {
+    title: "Revise seu roadmap.",
+    reason: "Nenhum marco atual exige trabalho. Revise o roadmap para entender o que já foi concluído e o que deve ser calibrado em seguida.",
+    action: "Abrir Roadmap",
+  },
+  produceEvidence: (title, gapCount) => ({
+    title: `Produza evidência para ${title}.`,
+    reason: `O marco atual ainda possui ${gapCount} ${gapCount === 1 ? "gate" : "gates"} de evidência aberto${gapCount === 1 ? "" : "s"}. Registre trabalho inspecionável antes de avançar.`,
+    action: "Registrar evidência",
+  }),
+  addMarketSample: {
+    title: "Adicione uma amostra de mercado.",
+    reason: "O gate de evidência do foco atual está satisfeito. Uma descrição de vaga real agora adiciona um sinal externo de demanda ao workspace.",
+    action: "Adicionar vaga real",
+  },
+  continueRoadmap: (title) => ({
+    title: `Continue ${title}.`,
+    reason: "Baseline, evidência e contexto de mercado estão disponíveis. Continue trabalhando o foco atual do roadmap e volte aqui quando o estado mudar.",
+    action: "Continuar no Roadmap",
+  }),
+};
+
 export const careerGuidanceCopy: Readonly<
-  Record<Locale, Readonly<{ guide: CareerGuideCopy; orientation: CareerOrientationCopy }>>
+  Record<Locale, Readonly<{
+    guide: CareerGuideCopy;
+    orientation: CareerOrientationCopy;
+    nextAction: CareerNextActionCopy;
+  }>>
 > = {
-  en: { guide: enGuide, orientation: enOrientation },
-  "pt-BR": { guide: ptBrGuide, orientation: ptBrOrientation },
+  en: { guide: enGuide, orientation: enOrientation, nextAction: enNextAction },
+  "pt-BR": { guide: ptBrGuide, orientation: ptBrOrientation, nextAction: ptBrNextAction },
 };

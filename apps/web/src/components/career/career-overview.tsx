@@ -3,9 +3,11 @@
 import { baselineAssessmentBlueprints } from "@/lib/career/assessment-blueprints";
 import { careerLabCopy, careerLabRoleLabels } from "@/lib/career/copy";
 import { calculateRoleReadiness } from "@/lib/career/readiness";
+import { getRoadmapMilestone } from "@/lib/career/roadmap-catalog";
 import { buildRoadmap, getRoadmapMilestoneViews } from "@/lib/career/roadmap-engine";
 import { getRoleMap } from "@/lib/career/role-maps";
 import type { Locale } from "@/lib/locales";
+import { CareerNextAction } from "./career-next-action";
 import { useCareerProfile } from "./career-profile-provider";
 
 export function CareerOverview({ locale }: Readonly<{ locale: Locale }>) {
@@ -35,6 +37,9 @@ export function CareerOverview({ locale }: Readonly<{ locale: Locale }>) {
         assessment.blueprintVersion === blueprint.version,
     ),
   );
+  const currentFocusTitle = effectiveRoadmap.currentFocusMilestoneId
+    ? getRoadmapMilestone(effectiveRoadmap.currentFocusMilestoneId).title[locale]
+    : copy.noCurrentFocus;
 
   return (
     <section className="career-overview" aria-labelledby="career-overview-title">
@@ -53,7 +58,7 @@ export function CareerOverview({ locale }: Readonly<{ locale: Locale }>) {
       <div className="career-overview__grid">
         <article className="career-card career-card--focus">
           <p className="career-card__label">{copy.currentFocus}</p>
-          <strong>{effectiveRoadmap.currentFocusMilestoneId ?? copy.noCurrentFocus}</strong>
+          <strong>{currentFocusTitle}</strong>
           <p>{profile.weeklyStudyHours ? copy.weeklyCapacity(profile.weeklyStudyHours) : "—"}</p>
         </article>
 
@@ -84,6 +89,8 @@ export function CareerOverview({ locale }: Readonly<{ locale: Locale }>) {
           )}
         </article>
       </div>
+
+      <CareerNextAction profile={profile} locale={locale} />
 
       {baselineIncomplete ? (
         <p className="career-overview__baseline">{copy.baselineIncomplete}</p>
