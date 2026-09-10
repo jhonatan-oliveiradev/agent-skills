@@ -147,6 +147,26 @@ describe("Assessment surfaces", () => {
     );
   });
 
+  it("exposes a stable editorial structure and selected state for assessment styling", () => {
+    const { container } = render(
+      <AssessmentRunner blueprint={runnerBlueprint} onComplete={vi.fn()} />,
+    );
+
+    expect(container.querySelector(".career-assessment-runner__header")).toBeInTheDocument();
+    expect(container.querySelector(".career-assessment-runner__options")).toBeInTheDocument();
+    expect(container.querySelector(".career-assessment-runner__actions")).toBeInTheDocument();
+
+    const radio = screen.getByRole("radio", {
+      name: /the component that owns the interaction/i,
+    });
+    const option = radio.closest("label");
+    expect(option).toHaveClass("career-assessment-runner__option");
+    expect(option).toHaveAttribute("data-selected", "false");
+
+    fireEvent.click(radio);
+    expect(option).toHaveAttribute("data-selected", "true");
+  });
+
   it("never serializes scoring keys or correct answer identifiers into the runner DOM", () => {
     const { container } = render(
       <AssessmentRunner blueprint={runnerBlueprint} onComplete={vi.fn()} />,
@@ -160,7 +180,7 @@ describe("Assessment surfaces", () => {
   });
 
   it("presents level, confidence, signals, and next evidence without a celebratory percentage", () => {
-    render(<AssessmentResult result={result} />);
+    const { container } = render(<AssessmentResult result={result} />);
 
     expect(screen.getByText(/developing/i)).toBeInTheDocument();
     expect(screen.getByText(/low confidence/i)).toBeInTheDocument();
@@ -170,5 +190,7 @@ describe("Assessment surfaces", () => {
       screen.getByText(/complete a deterministic debugging challenge/i),
     ).toBeInTheDocument();
     expect(screen.queryByText(/\d+%/)).not.toBeInTheDocument();
+    expect(container.querySelector(".career-assessment-result__summary")).toBeInTheDocument();
+    expect(container.querySelectorAll(".career-assessment-result__section")).toHaveLength(3);
   });
 });
