@@ -74,11 +74,16 @@ describe("Professional Evidence Ledger", () => {
       </CareerProfileProvider>,
     );
 
+    const guidance = await screen.findByRole("region", {
+      name: /evidence is an inspectable artifact tied to your current roadmap focus/i,
+    });
     expect(
-      await screen.findByText(/evidence is an inspectable artifact tied to your current roadmap focus/i),
+      within(guidance).getByRole("heading", {
+        name: /evidence is an inspectable artifact tied to your current roadmap focus/i,
+      }),
     ).toBeInTheDocument();
-    expect(screen.getByText(/repository change, pull request, or test report/i)).toBeInTheDocument();
-    expect(screen.getByText(/provenance/i)).toBeInTheDocument();
+    expect(within(guidance).getByText(/repository change, pull request, or test report/i)).toBeInTheDocument();
+    expect(within(guidance).getByText(/provenance/i)).toBeInTheDocument();
   });
 
   it("turns a fully acknowledged evidence contract into traceable external-unverified records", async () => {

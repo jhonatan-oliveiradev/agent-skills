@@ -28,7 +28,7 @@ const copy = {
     source: "Open source",
     trustLabel: "Trust",
     dateLabel: "Observed",
-    guidanceEyebrow: "Evidence contract",
+    guidanceEyebrow: "Before you record",
     guidanceTitle: "Evidence is an inspectable artifact tied to your current roadmap focus",
     guidanceBody:
       "Start with something concrete — a repository change, pull request, or test report — and record where it came from. Provenance keeps the claim inspectable instead of turning it into an unsupported self-report.",
@@ -58,7 +58,7 @@ const copy = {
     source: "Abrir fonte",
     trustLabel: "Confiança da fonte",
     dateLabel: "Observado em",
-    guidanceEyebrow: "Contrato de evidência",
+    guidanceEyebrow: "Antes de registrar",
     guidanceTitle: "Evidência é um artefato inspecionável ligado ao foco atual do seu roadmap",
     guidanceBody:
       "Comece por algo concreto — uma alteração de repositório, pull request ou relatório de testes — e registre de onde veio. A proveniência mantém a afirmação inspecionável em vez de transformá-la em uma autodeclaração sem suporte.",
