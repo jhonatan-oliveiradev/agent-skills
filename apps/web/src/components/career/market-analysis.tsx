@@ -283,12 +283,26 @@ export function MarketAnalysis({
 
 export function MarketIntelligenceSurface({ locale }: Readonly<{ locale: Locale }>) {
   const localized = copy[locale];
+  const title = locale === "pt-BR" ? "Inteligência de mercado" : "Market Intelligence";
   const { profile, status, updateProfile } = useCareerProfile();
   const [postings, setPostings] = useState<readonly NormalizedJobPosting[]>([]);
   const [saved, setSaved] = useState(false);
 
   if (status === "hydrating") return <p role="status">…</p>;
-  if (status === "error" || !profile) return <p role="alert">{localized.noProfile}</p>;
+  if (status === "error" || !profile) {
+    return (
+      <div className="career-market-workspace career-market-workspace--empty">
+        <header className="career-market-workspace__header">
+          <p className="career-lab__eyebrow">{localized.eyebrow}</p>
+          <h1>{title}</h1>
+          <p>{localized.summary}</p>
+        </header>
+        <p role="alert" className="career-market-workspace__empty">
+          {localized.noProfile}
+        </p>
+      </div>
+    );
+  }
 
   const latestSample = [...profile.marketSamples].sort((a, b) =>
     b.capturedAt.localeCompare(a.capturedAt),
@@ -304,7 +318,7 @@ export function MarketIntelligenceSurface({ locale }: Readonly<{ locale: Locale 
     <div className="career-market-workspace">
       <header className="career-market-workspace__header">
         <p className="career-lab__eyebrow">{localized.eyebrow}</p>
-        <h1>{locale === "pt-BR" ? "Inteligência de mercado" : "Market Intelligence"}</h1>
+        <h1>{title}</h1>
         <p>{localized.summary}</p>
       </header>
 

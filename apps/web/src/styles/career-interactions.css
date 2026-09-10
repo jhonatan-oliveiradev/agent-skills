@@ -61,7 +61,7 @@
   border-bottom-color: color-mix(in srgb, var(--career-copper) 52%, var(--career-rule));
 }
 
-/* Native details semantics with an author-level collapsible grid. */
+/* Native details semantics with an author-level collapsible grid fallback. */
 .career-guide__answer {
   display: grid;
   grid-template-rows: 0fr;
@@ -132,6 +132,43 @@
 .career-guide__qa details[open] summary::after {
   content: "";
   transform: rotate(90deg) scaleX(0);
+}
+
+/* Modern browsers can interpolate the native details content in both directions. */
+@supports (interpolate-size: allow-keywords) and selector(details::details-content) {
+  .career-lab-shell {
+    interpolate-size: allow-keywords;
+  }
+
+  .career-guide__qa details::details-content,
+  .career-roadmap-details::details-content {
+    block-size: 0;
+    overflow: clip;
+    opacity: 0;
+    transition:
+      block-size var(--career-motion-base) var(--career-ease),
+      opacity var(--career-motion-fast) var(--career-ease),
+      content-visibility var(--career-motion-base) step-end;
+    transition-behavior: allow-discrete;
+  }
+
+  .career-guide__qa details[open]::details-content,
+  .career-roadmap-details[open]::details-content {
+    block-size: auto;
+    opacity: 1;
+  }
+
+  .career-guide__answer {
+    grid-template-rows: 1fr;
+    opacity: 1;
+    transition: none;
+  }
+
+  .career-guide__answer-inner > p {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
 }
 
 .career-guide__restart-action,
