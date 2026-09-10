@@ -37,6 +37,17 @@ describe("Career Lab UI hardening styles", () => {
     expect(css).toMatch(/transition:/);
   });
 
+  it("progressively animates native FAQ and Roadmap details content in both directions", () => {
+    const css = readStyle("career-interactions.css");
+
+    expect(css).toMatch(/interpolate-size:\s*allow-keywords/);
+    expect(css).toMatch(/\.career-guide__qa details::details-content/);
+    expect(css).toMatch(/\.career-roadmap-details::details-content/);
+    expect(css).toMatch(/block-size:\s*0/);
+    expect(css).toMatch(/details\[open\]::details-content[\s\S]*block-size:\s*auto/);
+    expect(css).toMatch(/transition-behavior:\s*allow-discrete/);
+  });
+
   it("defines scoped Career Lab motion tokens and retains reduced-motion protection", () => {
     const interactions = readStyle("career-interactions.css");
     const convergence = readStyle("career-convergence.css");
