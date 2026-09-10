@@ -1,4 +1,4 @@
-import { cleanup, fireEvent, render, screen, waitFor } from "@testing-library/react";
+import { cleanup, fireEvent, render, screen, waitFor, within } from "@testing-library/react";
 import type { ComponentType, ReactNode } from "react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { normalizeJobPosting } from "@/lib/career/market";
@@ -112,6 +112,18 @@ describe("Career Market ingestion and analysis", () => {
       ]),
     );
     expect(postings[0]?.explicitSignals.every((signal) => signal.provenance === "explicit")).toBe(true);
+  });
+
+  it("presents exactly three ingestion methods with pasted description as primary", async () => {
+    const { MarketIngestion } = await loadModule<MarketComponentsModule>("./market-ingestion");
+    render(<MarketIngestion locale="en" onIngest={vi.fn()} />);
+
+    const methods = screen.getAllByTestId("career-market-ingestion-method");
+    expect(methods).toHaveLength(3);
+    expect(within(methods[0]!).getByRole("heading", { name: "01 / Paste job description — primary" })).toBeInTheDocument();
+    expect(methods[0]).toHaveAttribute("data-priority", "primary");
+    expect(within(methods[1]!).getByRole("heading", { name: "02 / Fetch by URL — secondary convenience" })).toBeInTheDocument();
+    expect(within(methods[2]!).getByRole("heading", { name: "03 / Import compatible analysis JSON — secondary expert path" })).toBeInTheDocument();
   });
 
   it("keeps URL provenance and shows the direct paste/import fallback when browser fetch fails", async () => {

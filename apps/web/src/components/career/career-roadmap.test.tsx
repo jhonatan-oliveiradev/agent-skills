@@ -60,6 +60,21 @@ describe("Career Roadmap", () => {
     expect(within(now).getByText(/4–8 h/i)).toBeInTheDocument();
   });
 
+  it("explains the current working contract and routes resulting proof to Evidence", () => {
+    render(<CareerRoadmap locale="en" profile={profileWithEmptyRoadmap()} />);
+
+    const now = screen.getByRole("region", { name: /^now$/i });
+    expect(
+      within(now).getByText(/highest-priority available milestone under your current gaps/i),
+    ).toBeInTheDocument();
+    expect(
+      within(now).getByText(/completion requires both its capability and evidence requirements/i),
+    ).toBeInTheDocument();
+    expect(
+      within(now).getByRole("link", { name: /register resulting proof in evidence/i }),
+    ).toHaveAttribute("href", "/en/career-lab/evidence");
+  });
+
   it("keeps every MAP milestone inspectably explainable", () => {
     render(<CareerRoadmap locale="en" profile={profileWithEmptyRoadmap()} />);
 
