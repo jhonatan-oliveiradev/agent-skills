@@ -70,7 +70,11 @@ export function CareerGuide({ locale }: Readonly<{ locale: Locale }>) {
                 <span>{String(index + 1).padStart(2, "0")}</span>
                 {item.question}
               </summary>
-              <p>{item.answer}</p>
+              <div className="career-guide__answer">
+                <div className="career-guide__answer-inner">
+                  <p>{item.answer}</p>
+                </div>
+              </div>
             </details>
           ))}
         </div>
