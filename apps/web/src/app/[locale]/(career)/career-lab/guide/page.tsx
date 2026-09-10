@@ -1,6 +1,5 @@
 import { CareerGuide } from "@/components/career/career-guide";
 import { resolveLocale } from "@/components/foundation-route";
-import "@/styles/career-guidance.css";
 
 type PageProps = Readonly<{ params: Promise<{ locale: string }> }>;
 

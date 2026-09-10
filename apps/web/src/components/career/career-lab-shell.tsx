@@ -7,6 +7,7 @@ import type { ReactNode } from "react";
 import { careerLabCopy } from "@/lib/career/copy";
 import type { Locale } from "@/lib/locales";
 import { CareerDataControls } from "./career-data-controls";
+import { CareerProductOrientation } from "./career-product-orientation";
 import { useCareerProfile } from "./career-profile-provider";
 
 const navigationSegments = ["", "roadmap", "assessments", "evidence", "market"] as const;
@@ -126,6 +127,7 @@ export function CareerLabShell({
           </nav>
         </footer>
       </div>
+      <CareerProductOrientation locale={locale} />
     </main>
   );
 }

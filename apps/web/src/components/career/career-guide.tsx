@@ -1,8 +1,12 @@
+"use client";
+
 import { careerGuidanceCopy } from "@/lib/career/guidance-copy";
 import type { Locale } from "@/lib/locales";
+import { useOptionalCareerGuidance } from "./career-guidance-provider";
 
 export function CareerGuide({ locale }: Readonly<{ locale: Locale }>) {
   const copy = careerGuidanceCopy[locale].guide;
+  const guidance = useOptionalCareerGuidance();
 
   return (
     <article className="career-guide" aria-labelledby="career-guide-title">
@@ -76,7 +80,14 @@ export function CareerGuide({ locale }: Readonly<{ locale: Locale }>) {
         <p className="career-lab__eyebrow">↺ / Orientation</p>
         <h2 id="career-guide-restart-title">{copy.restartTitle}</h2>
         <p>{copy.restartBody}</p>
-        <span className="career-guide__restart-action">{copy.restartAction}</span>
+        <button
+          className="career-guide__restart-action"
+          type="button"
+          onClick={guidance?.openOrientation}
+          disabled={!guidance}
+        >
+          {copy.restartAction}
+        </button>
       </section>
     </article>
   );
