@@ -11,6 +11,7 @@ import "@/styles/career-convergence.css";
 import "@/styles/career-shell-separation.css";
 import "@/styles/career-guidance.css";
 import "@/styles/career-overview.css";
+import "@/styles/career-interactions.css";
 
 type LayoutProps = Readonly<{
   children: ReactNode;

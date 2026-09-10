@@ -70,52 +70,95 @@ export function AssessmentRunner({
 
   return (
     <section className="career-assessment-runner" aria-labelledby="assessment-runner-title">
-      <p role="status" aria-live="polite">{progress}</p>
-      <h1 id="assessment-runner-title">{challenge.prompt}</h1>
+      <header className="career-assessment-runner__header">
+        <p className="career-assessment-runner__progress" role="status" aria-live="polite">
+          {progress}
+        </p>
+        <h1 id="assessment-runner-title">{challenge.prompt}</h1>
+      </header>
+
       {challenge.kind === "structured-ordering" ? (
-        <div role="group" aria-label={copy.arrange}>
-          {challenge.options.map((option) => (
-            <button
-              key={option.id}
-              type="button"
-              onClick={() => selectOption(option.id)}
-              aria-pressed={selected.includes(option.id)}
-            >
-              {selected.includes(option.id)
-                ? (selected.indexOf(option.id) + 1) + ". " + option.label
-                : option.label}
-            </button>
-          ))}
+        <div
+          className="career-assessment-runner__options"
+          role="group"
+          aria-label={copy.arrange}
+        >
+          {challenge.options.map((option) => {
+            const isSelected = selected.includes(option.id);
+            return (
+              <button
+                className="career-assessment-runner__option career-assessment-runner__option--ordering"
+                data-selected={isSelected}
+                key={option.id}
+                type="button"
+                onClick={() => selectOption(option.id)}
+                aria-pressed={isSelected}
+              >
+                <span className="career-assessment-runner__option-copy">
+                  {isSelected
+                    ? (selected.indexOf(option.id) + 1) + ". " + option.label
+                    : option.label}
+                </span>
+              </button>
+            );
+          })}
         </div>
       ) : (
-        <fieldset>
+        <fieldset className="career-assessment-runner__options">
           <legend className="sr-only">{challenge.prompt}</legend>
-          {challenge.options.map((option) => (
-            <label key={option.id}>
-              <input
-                type={inputType}
-                name={"assessment-" + challenge.id}
-                checked={selected.includes(option.id)}
-                onChange={() => selectOption(option.id)}
-              />
-              <span>{option.label}</span>
-            </label>
-          ))}
+          {challenge.options.map((option) => {
+            const isSelected = selected.includes(option.id);
+            return (
+              <label
+                className="career-assessment-runner__option"
+                data-selected={isSelected}
+                key={option.id}
+              >
+                <input
+                  type={inputType}
+                  name={"assessment-" + challenge.id}
+                  checked={isSelected}
+                  onChange={() => selectOption(option.id)}
+                />
+                <span className="career-assessment-runner__option-copy">{option.label}</span>
+              </label>
+            );
+          })}
         </fieldset>
       )}
-      {error ? <p role="alert">{error}</p> : null}
-      <footer>
+
+      {error ? (
+        <p className="career-assessment-runner__error" role="alert">
+          {error}
+        </p>
+      ) : null}
+
+      <footer className="career-assessment-runner__actions">
         {index > 0 ? (
-          <button type="button" onClick={() => setIndex((value) => value - 1)}>
+          <button
+            className="career-assessment-runner__action"
+            type="button"
+            onClick={() => setIndex((value) => value - 1)}
+          >
             {copy.previous}
           </button>
         ) : <span />}
         {index < blueprint.challenges.length - 1 ? (
-          <button type="button" onClick={() => setIndex((value) => value + 1)}>
+          <button
+            className="career-assessment-runner__action career-assessment-runner__action--primary"
+            type="button"
+            onClick={() => setIndex((value) => value + 1)}
+          >
             {copy.next}
           </button>
         ) : (
-          <button type="button" onClick={finish}>{copy.complete}</button>
+          <button
+            className="career-assessment-runner__action career-assessment-runner__action--primary"
+            type="button"
+            onClick={finish}
+          >
+            {copy.complete}
+          </button>
         )}
       </footer>
     </section>

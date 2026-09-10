@@ -36,6 +36,22 @@
   line-height: 1.65;
 }
 
+.career-market-workspace--empty {
+  display: grid;
+  align-content: start;
+  min-height: min(40rem, 70vh);
+}
+
+.career-market-workspace__empty {
+  max-width: 42rem;
+  margin: clamp(2.5rem, 5vw, 5rem) 0 0;
+  padding: 1.4rem 0;
+  border-top: 1px solid var(--career-rule);
+  border-bottom: 1px solid var(--career-rule);
+  color: var(--career-muted);
+  line-height: 1.65;
+}
+
 .career-market-ingestion,
 .career-market-analysis {
   margin-top: clamp(2.5rem, 5vw, 5rem);

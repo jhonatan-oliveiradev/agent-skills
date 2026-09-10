@@ -141,6 +141,270 @@
   color: var(--career-copper-dark);
 }
 
+/* Assessment detail */
+.career-assessment-runner,
+.career-assessment-result {
+  width: min(76rem, 100%);
+  margin: 0 auto;
+  padding: clamp(3rem, 7vw, 6.5rem) 0 clamp(2rem, 5vw, 4.5rem);
+}
+
+.career-assessment-runner__header {
+  display: grid;
+  grid-template-columns: minmax(8rem, 0.28fr) minmax(0, 1.72fr);
+  gap: clamp(1.5rem, 5vw, 5rem);
+  align-items: start;
+  padding-bottom: clamp(2rem, 5vw, 4rem);
+  border-bottom: 1px solid var(--career-ink);
+}
+
+.career-assessment-runner__progress {
+  margin: 0.45rem 0 0;
+  color: var(--career-copper-dark);
+  font-family: var(--font-mono, ui-monospace, monospace);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.09em;
+  line-height: 1.5;
+  text-transform: uppercase;
+}
+
+.career-assessment-runner__header h1 {
+  max-width: 20ch;
+  margin: 0;
+  font-family: var(--font-serif, Georgia, serif);
+  font-size: clamp(2.35rem, 5vw, 4.85rem);
+  font-weight: 500;
+  letter-spacing: -0.045em;
+  line-height: 0.98;
+}
+
+.career-assessment-runner__options {
+  min-width: 0;
+  display: grid;
+  margin: clamp(2rem, 5vw, 4rem) 0 0;
+  padding: 0;
+  border: 0;
+  border-top: 1px solid var(--career-rule);
+}
+
+.career-assessment-runner__option {
+  position: relative;
+  width: 100%;
+  min-height: 5.25rem;
+  display: grid;
+  grid-template-columns: 1.5rem minmax(0, 1fr);
+  gap: 1.25rem;
+  align-items: center;
+  margin: 0;
+  padding: 1.2rem clamp(0.75rem, 2vw, 1.25rem);
+  border: 0;
+  border-bottom: 1px solid var(--career-rule);
+  border-radius: 0;
+  background: transparent;
+  color: var(--career-ink);
+  cursor: pointer;
+  font: inherit;
+  text-align: left;
+  transition:
+    background-color var(--career-motion-base, 260ms) var(--career-ease, ease),
+    border-color var(--career-motion-fast, 160ms) var(--career-ease, ease),
+    color var(--career-motion-fast, 160ms) var(--career-ease, ease);
+}
+
+.career-assessment-runner__option:hover {
+  background: color-mix(in srgb, var(--career-copper) 7%, transparent);
+}
+
+.career-assessment-runner__option[data-selected="true"] {
+  border-bottom-color: color-mix(in srgb, var(--career-copper) 68%, var(--career-rule));
+  background: color-mix(in srgb, var(--career-copper) 11%, transparent);
+  color: var(--career-copper-dark);
+}
+
+.career-assessment-runner__option:focus-within,
+.career-assessment-runner__option--ordering:focus-visible {
+  outline: 2px solid var(--career-copper);
+  outline-offset: -2px;
+}
+
+.career-assessment-runner__option input {
+  width: 1.05rem;
+  height: 1.05rem;
+  margin: 0;
+  accent-color: var(--career-copper-dark);
+}
+
+.career-assessment-runner__option-copy {
+  min-width: 0;
+  font-family: var(--font-serif, Georgia, serif);
+  font-size: clamp(1.2rem, 2vw, 1.65rem);
+  line-height: 1.25;
+}
+
+.career-assessment-runner__option--ordering {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.career-assessment-runner__option--ordering[aria-pressed="true"]::before {
+  content: "↳";
+  position: absolute;
+  left: 0.1rem;
+  color: var(--career-copper-dark);
+  font-family: var(--font-mono, ui-monospace, monospace);
+  font-size: 0.7rem;
+}
+
+.career-assessment-runner__error {
+  margin: 1.5rem 0 0;
+  padding: 0.85rem 1rem;
+  border-left: 2px solid var(--career-copper-dark);
+  background: color-mix(in srgb, var(--career-copper) 8%, transparent);
+  color: var(--career-copper-dark);
+  line-height: 1.55;
+}
+
+.career-assessment-runner__actions {
+  min-height: 5rem;
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  align-items: center;
+  margin-top: clamp(2rem, 4vw, 3.5rem);
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--career-rule);
+}
+
+.career-assessment-runner__action {
+  min-height: 2.75rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--career-rule);
+  border-radius: 0;
+  background: transparent;
+  color: var(--career-ink);
+  cursor: pointer;
+  font-family: var(--font-mono, ui-monospace, monospace);
+  font-size: 0.66rem;
+  font-weight: 700;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+}
+
+.career-assessment-runner__action:hover,
+.career-assessment-runner__action:focus-visible {
+  border-color: var(--career-copper-dark);
+  color: var(--career-copper-dark);
+}
+
+.career-assessment-runner__action--primary {
+  border-color: var(--career-ink);
+  background: var(--career-ink);
+  color: var(--career-paper);
+}
+
+.career-assessment-runner__action--primary:hover,
+.career-assessment-runner__action--primary:focus-visible {
+  border-color: var(--career-copper-dark);
+  background: var(--career-copper-dark);
+  color: var(--career-paper);
+}
+
+/* Assessment result */
+.career-assessment-result__summary {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 1rem 3rem;
+  align-items: end;
+  padding-bottom: clamp(2rem, 5vw, 4rem);
+  border-bottom: 1px solid var(--career-ink);
+}
+
+.career-assessment-result__summary .career-lab__eyebrow {
+  grid-column: 1 / -1;
+}
+
+.career-assessment-result__summary h1 {
+  margin: 0;
+  font-family: var(--font-serif, Georgia, serif);
+  font-size: clamp(3rem, 7vw, 6.5rem);
+  font-weight: 500;
+  letter-spacing: -0.05em;
+  line-height: 0.9;
+}
+
+.career-assessment-result__summary > p:last-child {
+  margin: 0 0 0.4rem;
+  color: var(--career-muted);
+  font-family: var(--font-mono, ui-monospace, monospace);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.career-assessment-result__grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  border-bottom: 1px solid var(--career-rule);
+}
+
+.career-assessment-result__section {
+  min-width: 0;
+  min-height: 15rem;
+  padding: clamp(1.5rem, 3vw, 2.5rem) clamp(1rem, 3vw, 2.5rem) clamp(1.75rem, 4vw, 3rem) 0;
+  border-bottom: 1px solid var(--career-rule);
+}
+
+.career-assessment-result__section:nth-child(2) {
+  padding-left: clamp(1rem, 3vw, 2.5rem);
+  border-left: 1px solid var(--career-rule);
+}
+
+.career-assessment-result__section--next {
+  grid-column: 1 / -1;
+  min-height: 0;
+  padding-right: 0;
+  border-bottom: 0;
+}
+
+.career-assessment-result__section h2 {
+  margin: 0 0 1.25rem;
+  font-family: var(--font-serif, Georgia, serif);
+  font-size: clamp(1.65rem, 3vw, 2.4rem);
+  font-weight: 500;
+  letter-spacing: -0.035em;
+}
+
+.career-assessment-result__section ul {
+  display: grid;
+  gap: 0.75rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.career-assessment-result__section li,
+.career-assessment-result__section p {
+  margin: 0;
+  color: var(--career-muted);
+  line-height: 1.65;
+}
+
+.career-assessment-result__section li {
+  position: relative;
+  padding-left: 1rem;
+}
+
+.career-assessment-result__section li::before {
+  content: "—";
+  position: absolute;
+  left: 0;
+  color: var(--career-copper-dark);
+}
+
 @media (max-width: 760px) {
   .career-assessment-list {
     padding-top: 2rem;
@@ -185,5 +449,52 @@
     grid-column: 2;
     justify-self: start;
     margin-top: 0.35rem;
+  }
+
+  .career-assessment-runner,
+  .career-assessment-result {
+    padding-top: 2rem;
+  }
+
+  .career-assessment-runner__header {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .career-assessment-runner__option {
+    min-height: 4.5rem;
+    padding-inline: 0.5rem;
+  }
+
+  .career-assessment-runner__actions {
+    align-items: stretch;
+  }
+
+  .career-assessment-runner__action {
+    max-width: 48%;
+    white-space: normal;
+  }
+
+  .career-assessment-result__summary,
+  .career-assessment-result__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .career-assessment-result__summary > p:last-child {
+    margin-top: 0.75rem;
+  }
+
+  .career-assessment-result__section,
+  .career-assessment-result__section:nth-child(2),
+  .career-assessment-result__section--next {
+    grid-column: auto;
+    min-height: 0;
+    padding: 1.5rem 0 2rem;
+    border-left: 0;
+    border-bottom: 1px solid var(--career-rule);
+  }
+
+  .career-assessment-result__section--next {
+    border-bottom: 0;
   }
 }

@@ -1,0 +1,61 @@
+import { readFileSync } from "node:fs";
+import { resolve } from "node:path";
+import { describe, expect, it } from "vitest";
+
+function readWebFile(relativePath: string): string {
+  return readFileSync(resolve(process.cwd(), relativePath), "utf8");
+}
+
+function readStyle(name: string): string {
+  return readWebFile(resolve("src/styles", name));
+}
+
+describe("Career Lab UI hardening styles", () => {
+  it("loads the assessment visual system on the dynamic assessment route", () => {
+    const page = readWebFile("src/app/[locale]/(career)/career-lab/assessments/[id]/page.tsx");
+
+    expect(page).toContain('import "@/styles/career-assessments.css";');
+  });
+
+  it("provides a complete visual contract for assessment runner and result surfaces", () => {
+    const css = readStyle("career-assessments.css");
+
+    expect(css).toMatch(/\.career-assessment-runner__header\s*\{/);
+    expect(css).toMatch(/\.career-assessment-runner__option\[data-selected="true"\]/);
+    expect(css).toMatch(/\.career-assessment-runner__actions\s*\{/);
+    expect(css).toMatch(/\.career-assessment-result__summary\s*\{/);
+    expect(css).toMatch(/\.career-assessment-result__section\s*\{/);
+  });
+
+  it("adds interpolated FAQ disclosure motion instead of an abrupt details toggle", () => {
+    const css = readStyle("career-interactions.css");
+
+    expect(css).toMatch(/\.career-guide__answer\s*\{/);
+    expect(css).toMatch(/grid-template-rows:\s*0fr/);
+    expect(css).toMatch(/details\[open\][\s\S]*grid-template-rows:\s*1fr/);
+    expect(css).toMatch(/\.career-guide__answer-inner\s*\{/);
+    expect(css).toMatch(/transition:/);
+  });
+
+  it("progressively animates native FAQ and Roadmap details content in both directions", () => {
+    const css = readStyle("career-interactions.css");
+
+    expect(css).toMatch(/interpolate-size:\s*allow-keywords/);
+    expect(css).toMatch(/\.career-guide__qa details::details-content/);
+    expect(css).toMatch(/\.career-roadmap-details::details-content/);
+    expect(css).toMatch(/block-size:\s*0/);
+    expect(css).toMatch(/details\[open\]::details-content[\s\S]*block-size:\s*auto/);
+    expect(css).toMatch(/transition-behavior:\s*allow-discrete/);
+  });
+
+  it("defines scoped Career Lab motion tokens and retains reduced-motion protection", () => {
+    const interactions = readStyle("career-interactions.css");
+    const convergence = readStyle("career-convergence.css");
+
+    expect(interactions).toMatch(/--career-motion-fast:/);
+    expect(interactions).toMatch(/--career-motion-base:/);
+    expect(interactions).toMatch(/--career-ease:/);
+    expect(convergence).toMatch(/@media\s*\(prefers-reduced-motion:\s*reduce\)/);
+    expect(convergence).toMatch(/transition-duration:\s*0\.01ms/);
+  });
+});
