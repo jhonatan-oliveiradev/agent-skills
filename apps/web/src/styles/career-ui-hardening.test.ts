@@ -29,7 +29,7 @@ describe("Career Lab UI hardening styles", () => {
   });
 
   it("adds interpolated FAQ disclosure motion instead of an abrupt details toggle", () => {
-    const css = readStyle("career-guidance.css");
+    const css = readStyle("career-interactions.css");
 
     expect(css).toMatch(/\.career-guide__answer\s*\{/);
     expect(css).toMatch(/grid-template-rows:\s*0fr/);
@@ -39,12 +39,12 @@ describe("Career Lab UI hardening styles", () => {
   });
 
   it("defines scoped Career Lab motion tokens and retains reduced-motion protection", () => {
-    const lab = readStyle("career-lab.css");
+    const interactions = readStyle("career-interactions.css");
     const convergence = readStyle("career-convergence.css");
 
-    expect(lab).toMatch(/--career-motion-fast:/);
-    expect(lab).toMatch(/--career-motion-base:/);
-    expect(lab).toMatch(/--career-ease:/);
+    expect(interactions).toMatch(/--career-motion-fast:/);
+    expect(interactions).toMatch(/--career-motion-base:/);
+    expect(interactions).toMatch(/--career-ease:/);
     expect(convergence).toMatch(/@media\s*\(prefers-reduced-motion:\s*reduce\)/);
     expect(convergence).toMatch(/transition-duration:\s*0\.01ms/);
   });
