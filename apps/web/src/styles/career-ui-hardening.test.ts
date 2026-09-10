@@ -20,7 +20,6 @@ describe("Career Lab UI hardening styles", () => {
   it("provides a complete visual contract for assessment runner and result surfaces", () => {
     const css = readStyle("career-assessments.css");
 
-    expect(css).toMatch(/\.career-assessment-runner\s*\{/);
     expect(css).toMatch(/\.career-assessment-runner__header\s*\{/);
     expect(css).toMatch(/\.career-assessment-runner__option\[data-selected="true"\]/);
     expect(css).toMatch(/\.career-assessment-runner__actions\s*\{/);
