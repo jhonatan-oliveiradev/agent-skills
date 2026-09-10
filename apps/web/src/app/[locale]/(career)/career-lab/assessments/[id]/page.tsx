@@ -2,6 +2,7 @@ import { resolveLocale } from "@/components/foundation-route";
 import { AssessmentDetailSurface } from "@/components/career/assessment-runner";
 import { getAssessmentBlueprint } from "@/lib/career/assessment-blueprints";
 import { careerLabCopy } from "@/lib/career/copy";
+import "@/styles/career-assessments.css";
 
 type PageProps = Readonly<{ params: Promise<{ locale: string; id: string }> }>;
 
