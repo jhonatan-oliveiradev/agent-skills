@@ -1,0 +1,213 @@
+.career-lab-shell {
+  --career-motion-fast: 160ms;
+  --career-motion-base: 260ms;
+  --career-motion-slow: 420ms;
+  --career-ease: cubic-bezier(0.2, 0.72, 0.25, 1);
+}
+
+.career-lab-shell :is(
+  a,
+  button,
+  summary,
+  input,
+  select,
+  textarea,
+  .career-data-controls__import
+) {
+  transition:
+    color var(--career-motion-fast) var(--career-ease),
+    background-color var(--career-motion-fast) var(--career-ease),
+    border-color var(--career-motion-fast) var(--career-ease),
+    box-shadow var(--career-motion-base) var(--career-ease),
+    opacity var(--career-motion-fast) var(--career-ease);
+}
+
+.career-lab-shell :is(a, button, summary):focus-visible {
+  outline: 2px solid var(--career-copper);
+  outline-offset: 3px;
+}
+
+.career-lab-rail li > a,
+.career-lab-rail__guide,
+.career-lab-product-footer a {
+  transition:
+    color var(--career-motion-fast) var(--career-ease),
+    border-color var(--career-motion-fast) var(--career-ease),
+    text-decoration-color var(--career-motion-fast) var(--career-ease);
+}
+
+.career-lab-rail .career-data-controls > summary {
+  transition:
+    color var(--career-motion-fast) var(--career-ease),
+    border-color var(--career-motion-fast) var(--career-ease),
+    background-color var(--career-motion-fast) var(--career-ease);
+}
+
+.career-data-controls[open] .career-data-controls__actions {
+  transform-origin: top right;
+  animation: career-disclosure-enter var(--career-motion-base) var(--career-ease) both;
+}
+
+.career-onboarding__roles label {
+  transition:
+    color var(--career-motion-fast) var(--career-ease),
+    background-color var(--career-motion-fast) var(--career-ease),
+    border-color var(--career-motion-fast) var(--career-ease);
+}
+
+.career-onboarding__roles label:hover,
+.career-onboarding__roles label:focus-within {
+  background: color-mix(in srgb, var(--career-copper) 7%, transparent);
+  border-bottom-color: color-mix(in srgb, var(--career-copper) 52%, var(--career-rule));
+}
+
+/* Native details semantics with an author-level collapsible grid. */
+.career-guide__answer {
+  display: grid;
+  grid-template-rows: 0fr;
+  opacity: 0;
+  transition:
+    grid-template-rows var(--career-motion-base) var(--career-ease),
+    opacity var(--career-motion-fast) var(--career-ease);
+}
+
+.career-guide__answer-inner {
+  min-height: 0;
+  overflow: hidden;
+}
+
+.career-guide__answer-inner > p {
+  max-width: 62rem;
+  margin: 0 0 1.75rem 4rem;
+  color: var(--career-muted);
+  line-height: 1.7;
+  opacity: 0;
+  transform: translateY(-0.35rem);
+  transition:
+    opacity var(--career-motion-fast) var(--career-ease),
+    transform var(--career-motion-base) var(--career-ease);
+}
+
+.career-guide__qa details[open] > .career-guide__answer {
+  grid-template-rows: 1fr;
+  opacity: 1;
+}
+
+.career-guide__qa details[open] .career-guide__answer-inner > p {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.career-guide__qa summary {
+  transition:
+    color var(--career-motion-fast) var(--career-ease),
+    background-color var(--career-motion-fast) var(--career-ease),
+    padding-inline var(--career-motion-base) var(--career-ease);
+}
+
+.career-guide__qa summary:hover,
+.career-guide__qa summary:focus-visible {
+  color: var(--career-copper-dark);
+  background: color-mix(in srgb, var(--career-copper) 5%, transparent);
+  padding-inline: 0.45rem;
+}
+
+.career-guide__qa summary::before,
+.career-guide__qa summary::after {
+  content: "";
+  grid-column: 3;
+  grid-row: 1;
+  align-self: center;
+  justify-self: end;
+  width: 0.8rem;
+  height: 1px;
+  background: currentColor;
+}
+
+.career-guide__qa summary::after {
+  transform: rotate(90deg) scaleX(1);
+  transition: transform var(--career-motion-base) var(--career-ease);
+}
+
+.career-guide__qa details[open] summary::after {
+  content: "";
+  transform: rotate(90deg) scaleX(0);
+}
+
+.career-guide__restart-action,
+.career-next-action__link,
+.career-assessment-index__action {
+  transition:
+    color var(--career-motion-fast) var(--career-ease),
+    background-color var(--career-motion-fast) var(--career-ease),
+    border-color var(--career-motion-fast) var(--career-ease),
+    transform var(--career-motion-base) var(--career-ease);
+}
+
+.career-guide__restart-action:hover:not(:disabled),
+.career-guide__restart-action:focus-visible {
+  transform: translateX(0.2rem);
+}
+
+.career-next-action__link:hover,
+.career-next-action__link:focus-visible,
+.career-assessment-index__action:hover,
+.career-assessment-index__action:focus-visible {
+  transform: translateY(-1px);
+}
+
+.career-orientation__backdrop {
+  animation: career-backdrop-enter var(--career-motion-base) var(--career-ease) both;
+}
+
+.career-orientation {
+  animation: career-panel-enter var(--career-motion-slow) var(--career-ease) both;
+}
+
+.career-orientation__close:hover,
+.career-orientation__close:focus-visible,
+.career-orientation__actions button:hover:not(:disabled),
+.career-orientation__actions button:focus-visible {
+  border-color: var(--career-copper-dark);
+  color: var(--career-copper-dark);
+}
+
+.career-orientation__actions .career-orientation__complete:hover,
+.career-orientation__actions .career-orientation__complete:focus-visible {
+  background: var(--career-copper);
+  border-color: var(--career-copper);
+  color: var(--career-paper);
+}
+
+@keyframes career-disclosure-enter {
+  from {
+    opacity: 0;
+    transform: translateY(-0.35rem) scale(0.985);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes career-backdrop-enter {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes career-panel-enter {
+  from {
+    opacity: 0;
+    transform: translateY(0.75rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 640px) {
+  .career-guide__answer-inner > p {
+    margin-left: 3rem;
+  }
+}
