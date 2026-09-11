@@ -3,7 +3,7 @@ import { createEmptyCareerProfile } from "./profile";
 import { parseCareerProfile } from "./schema";
 
 describe("Career Profile schema", () => {
-  it("round-trips the V1 Career Profile contract", () => {
+  it("round-trips the V2 Career Profile contract", () => {
     const profile = createEmptyCareerProfile({
       targetRole: "frontend-developer",
       targetMarket: "br",
@@ -11,6 +11,66 @@ describe("Career Profile schema", () => {
     });
 
     expect(parseCareerProfile(profile)).toEqual(profile);
+  });
+
+  it("round-trips valid learning progress", () => {
+    const profile = {
+      ...createEmptyCareerProfile({
+        targetRole: "frontend-developer",
+        targetMarket: "br",
+        now: "2026-09-11T12:00:00.000Z",
+      }),
+      learningProgress: [
+        {
+          noteId: "typescript-application-modeling",
+          startedAt: "2026-09-11T12:00:00.000Z",
+          updatedAt: "2026-09-11T12:10:00.000Z",
+          currentModuleId: "programming-typescript-developing",
+          completedModuleIds: ["programming-typescript-foundation"],
+          completedPracticeIds: ["programming-typescript-foundation-practice"],
+          completedAt: null,
+        },
+      ],
+    };
+
+    expect(parseCareerProfile(profile).learningProgress).toEqual(profile.learningProgress);
+  });
+
+  it("rejects duplicate note progress records", () => {
+    const record = {
+      noteId: "typescript-application-modeling",
+      startedAt: "2026-09-11T12:00:00.000Z",
+      updatedAt: "2026-09-11T12:10:00.000Z",
+      currentModuleId: null,
+      completedModuleIds: [],
+      completedPracticeIds: [],
+      completedAt: null,
+    };
+    const profile = {
+      ...createEmptyCareerProfile({ targetRole: "frontend-developer", targetMarket: "br" }),
+      learningProgress: [record, { ...record }],
+    };
+
+    expect(() => parseCareerProfile(profile)).toThrow(/duplicate.*note/i);
+  });
+
+  it("rejects invalid learning progress timestamps", () => {
+    const profile = {
+      ...createEmptyCareerProfile({ targetRole: "frontend-developer", targetMarket: "br" }),
+      learningProgress: [
+        {
+          noteId: "typescript-application-modeling",
+          startedAt: "not-a-date",
+          updatedAt: "2026-09-11T12:10:00.000Z",
+          currentModuleId: null,
+          completedModuleIds: [],
+          completedPracticeIds: [],
+          completedAt: null,
+        },
+      ],
+    };
+
+    expect(() => parseCareerProfile(profile)).toThrow(/startedAt/i);
   });
 
   it("rejects an unknown schema version instead of mutating local state", () => {

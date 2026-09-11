@@ -1,5 +1,6 @@
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
+import { migrateCareerProfile } from "@/lib/career/migrations";
 import { createEmptyCareerProfile } from "@/lib/career/profile";
 import type { CareerStorage } from "@/lib/career/storage";
 import { CareerProfileProvider } from "./career-profile-provider";
@@ -43,6 +44,25 @@ describe("Career Lab data controls", () => {
     expect(getCareerProfileExportFilename(new Date("2026-09-05T12:00:00.000Z"))).toBe(
       "agent-skills-career-profile-2026-09-05.json",
     );
+  });
+
+  it("round-trips v2 learning progress through the export/import contract", () => {
+    const profile = {
+      ...makeProfile(),
+      learningProgress: [
+        {
+          noteId: "typescript-application-modeling",
+          startedAt: "2026-09-11T12:00:00.000Z",
+          updatedAt: "2026-09-11T12:10:00.000Z",
+          currentModuleId: "programming-typescript-developing",
+          completedModuleIds: ["programming-typescript-foundation"],
+          completedPracticeIds: ["programming-typescript-foundation-practice"],
+          completedAt: null,
+        },
+      ],
+    };
+
+    expect(migrateCareerProfile(JSON.parse(serializeCareerProfile(profile)))).toEqual(profile);
   });
 
   it("keeps local profile utilities behind a secondary disclosure", async () => {

@@ -17,6 +17,31 @@ describe("CareerStorage", () => {
     expect(await storage.load()).toEqual(profile);
   });
 
+  it("round-trips Profile v2 learning progress", async () => {
+    const storage = createMemoryCareerStorage();
+    const profile = {
+      ...createEmptyCareerProfile({
+        targetRole: "frontend-developer",
+        targetMarket: "br",
+        now: "2026-09-11T12:00:00.000Z",
+      }),
+      learningProgress: [
+        {
+          noteId: "typescript-application-modeling",
+          startedAt: "2026-09-11T12:00:00.000Z",
+          updatedAt: "2026-09-11T12:10:00.000Z",
+          currentModuleId: "programming-typescript-developing",
+          completedModuleIds: ["programming-typescript-foundation"],
+          completedPracticeIds: ["programming-typescript-foundation-practice"],
+          completedAt: null,
+        },
+      ],
+    };
+
+    await storage.save(profile);
+    expect(await storage.load()).toEqual(profile);
+  });
+
   it("clears only the active Career Profile value", async () => {
     const storage = createMemoryCareerStorage();
     const profile = createEmptyCareerProfile({
