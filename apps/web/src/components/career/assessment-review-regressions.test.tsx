@@ -107,6 +107,8 @@ describe("assessment review integration regressions", () => {
         fireEvent.click(screen.getByRole(role, { name: option.label }));
       }
 
+      fireEvent.click(screen.getByRole("button", { name: /^responder$/i }));
+
       if (index < canonical.challenges.length - 1) {
         fireEvent.click(screen.getByRole("button", { name: /próximo/i }));
       }
