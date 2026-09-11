@@ -340,6 +340,25 @@ function failedObservationCriteria(
     .map((criterion) => criterion.id);
 }
 
+function passedObservationCriteria(
+  blueprint: AssessmentBlueprint,
+  challenge: AssessmentChallenge,
+  demonstratedLevel: ProficiencyLevel,
+): readonly string[] {
+  const definition = competencyDefinitions.find(
+    (candidate) => candidate.id === blueprint.competencyId,
+  );
+  if (!definition) return [];
+
+  return definition.criteria
+    .filter(
+      (criterion) =>
+        challenge.criterionIds.includes(criterion.id) &&
+        levelRank[criterion.level] <= levelRank[demonstratedLevel],
+    )
+    .map((criterion) => criterion.id);
+}
+
 export function evaluateAssessment(
   blueprint: AssessmentBlueprint,
   responses: AssessmentResponses,
@@ -399,6 +418,7 @@ export function evaluateAssessment(
     };
   });
 
+  const level = gateLevel(blueprint, dimensions);
   const evidence = blueprint.challenges.map((challenge): EvidenceRecord => {
     const observed = dimensions.find((dimension) => dimension.dimensionId === challenge.dimensionId);
     const passed = observed?.passedChallengeIds.includes(challenge.id) === true;
@@ -413,11 +433,15 @@ export function evaluateAssessment(
     };
 
     if (passed) {
-      return {
-        ...base,
-        demonstratedLevel: challenge.demonstratedLevel,
-        criterionIds: challenge.criterionIds,
-      };
+      const demonstratedLevel = lowerCap(challenge.demonstratedLevel, level);
+      const criterionIds = passedObservationCriteria(
+        blueprint,
+        challenge,
+        demonstratedLevel,
+      );
+      return criterionIds.length === 0
+        ? { ...base, demonstratedLevel }
+        : { ...base, demonstratedLevel, criterionIds };
     }
 
     const demonstratedLevel = previousLevel(challenge.demonstratedLevel);
@@ -427,7 +451,6 @@ export function evaluateAssessment(
       : { ...base, demonstratedLevel, criterionIds };
   });
 
-  const level = gateLevel(blueprint, dimensions);
   const confidence = evidence.length < 2
     ? "low"
     : deriveEvidenceConfidence(evidence, new Date(responses.completedAt));
