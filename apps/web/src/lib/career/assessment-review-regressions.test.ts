@@ -5,6 +5,7 @@ import {
   evaluateAssessment,
   validateAssessmentBlueprint,
   type AssessmentBlueprint,
+  type AssessmentChallenge,
   type AssessmentResponses,
 } from "./assessment";
 import { baselineAssessmentBlueprints } from "./assessment-blueprints";
@@ -23,6 +24,29 @@ function evaluate(
     completedAt,
     answers,
   } satisfies AssessmentResponses);
+}
+
+function correctAnswers(blueprint: AssessmentBlueprint): Record<string, readonly string[]> {
+  return Object.fromEntries(
+    blueprint.challenges.map((challenge) => [challenge.id, challenge.correctOptionIds]),
+  );
+}
+
+function incorrectAnswer(challenge: AssessmentChallenge): readonly string[] {
+  if (challenge.kind === "structured-ordering") {
+    return [...challenge.correctOptionIds].reverse();
+  }
+  const incorrect = challenge.options.find(
+    (option) => !challenge.correctOptionIds.includes(option.id),
+  );
+  if (!incorrect) throw new Error("Expected an incorrect assessment option");
+  return [incorrect.id];
+}
+
+function incorrectAnswers(blueprint: AssessmentBlueprint): Record<string, readonly string[]> {
+  return Object.fromEntries(
+    blueprint.challenges.map((challenge) => [challenge.id, incorrectAnswer(challenge)]),
+  );
 }
 
 const progressiveBlueprint = {
@@ -95,13 +119,23 @@ const progressiveAnswers = {
 describe("assessment review regressions", () => {
   it("treats a required dimension as a gate even when no explicit gate is declared", () => {
     const baseline = baselineAssessmentBlueprints[0];
-    const challenge = baseline.challenges[0];
+    const requiredDimensionBlueprint = {
+      ...baseline,
+      id: "required-dimension-regression",
+      dimensions: baseline.dimensions.map((dimension) => ({
+        ...dimension,
+        required: true,
+      })),
+      gates: [],
+    } satisfies AssessmentBlueprint;
+    const passingAnswers = correctAnswers(requiredDimensionBlueprint);
+    const firstChallenge = requiredDimensionBlueprint.challenges[0];
+    if (!firstChallenge) throw new Error("Expected required-dimension challenge");
 
-    const passing = evaluate(baseline, {
-      [challenge.id]: [challenge.correctOptionIds[0]],
-    });
-    const failing = evaluate(baseline, {
-      [challenge.id]: ["unsound"],
+    const passing = evaluate(requiredDimensionBlueprint, passingAnswers);
+    const failing = evaluate(requiredDimensionBlueprint, {
+      ...passingAnswers,
+      [firstChallenge.id]: incorrectAnswer(firstChallenge),
     });
 
     expect(passing.level).toBe("developing");
@@ -110,10 +144,7 @@ describe("assessment review regressions", () => {
 
   it("does not let a failed baseline observation satisfy canonical competency criteria", () => {
     const baseline = baselineAssessmentBlueprints[0];
-    const challenge = baseline.challenges[0];
-    const failed = evaluate(baseline, {
-      [challenge.id]: ["unsound"],
-    });
+    const failed = evaluate(baseline, incorrectAnswers(baseline));
     const profile = createEmptyCareerProfile({
       targetRole: "frontend-developer",
       targetMarket: "br",
@@ -141,14 +172,14 @@ describe("assessment review regressions", () => {
     const baseline = baselineAssessmentBlueprints[0];
     const unsupportedKind = {
       ...baseline,
-      challenges: [{ ...baseline.challenges[0], kind: "free-text" }],
+      challenges: [{ ...baseline.challenges[0], kind: "free-text" }, ...baseline.challenges.slice(1)],
     } as unknown as AssessmentBlueprint;
     const unknownCriterion = {
       ...baseline,
       challenges: [{
         ...baseline.challenges[0],
         criterionIds: ["programming-typescript.developing"],
-      }],
+      }, ...baseline.challenges.slice(1)],
     } as unknown as AssessmentBlueprint;
 
     expect(() => validateAssessmentBlueprint(unsupportedKind)).toThrow(/challenge.*kind|unsupported/i);
@@ -157,10 +188,9 @@ describe("assessment review regressions", () => {
 
   it("fails closed when responses contain a challenge that is not in the blueprint", () => {
     const baseline = baselineAssessmentBlueprints[0];
-    const challenge = baseline.challenges[0];
 
     expect(() => evaluate(baseline, {
-      [challenge.id]: [challenge.correctOptionIds[0]],
+      ...correctAnswers(baseline),
       "not-in-blueprint": ["anything"],
     })).toThrow(/unknown response|challenge.*not.*blueprint/i);
   });
