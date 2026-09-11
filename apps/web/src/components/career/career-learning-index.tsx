@@ -24,14 +24,14 @@ type StudyState = "not-started" | "in-progress" | "studied";
 function moduleState(
   profile: CareerProfile,
   note: LearningNote,
-  module: LearningModule,
+  learningModule: LearningModule,
 ): StudyState {
   const progress = getLearningProgress(profile, note.id);
   if (!progress) return "not-started";
-  if (progress.completedModuleIds.includes(module.id)) return "studied";
+  if (progress.completedModuleIds.includes(learningModule.id)) return "studied";
   if (
-    progress.currentModuleId === module.id ||
-    progress.completedPracticeIds.includes(module.practice.id)
+    progress.currentModuleId === learningModule.id ||
+    progress.completedPracticeIds.includes(learningModule.practice.id)
   ) {
     return "in-progress";
   }
@@ -104,24 +104,28 @@ export function CareerLearningIndex({ locale }: Readonly<{ locale: Locale }>) {
         {profile && recommendation?.kind === "study" ? (
           (() => {
             const note = getLearningNote(recommendation.noteId);
-            const module = note?.modules.find((item) => item.id === recommendation.moduleId);
-            if (!note || !module) return <p>{copy.index.noRecommendation}</p>;
-            const state = moduleState(profile, note, module);
+            const learningModule = note?.modules.find(
+              (item) => item.id === recommendation.moduleId,
+            );
+            if (!note || !learningModule) return <p>{copy.index.noRecommendation}</p>;
+            const state = moduleState(profile, note, learningModule);
             return (
               <div className="career-learning-recommendation">
                 <p className="career-learning-recommendation__reason">
                   {copy.reasons[recommendation.reason]}
                 </p>
-                <h3>{module.title[locale]}</h3>
+                <h3>{learningModule.title[locale]}</h3>
                 <p>{note.title[locale]}</p>
                 <div className="career-learning-meta">
                   <span>
-                    {module.estimatedMinutes} {copy.index.minutes}
+                    {learningModule.estimatedMinutes} {copy.index.minutes}
                   </span>
                   <span>{copy.states[state]}</span>
                 </div>
                 <Link
-                  href={`/${locale}/career-lab/learning/${note.id}#${module.id}` as Route}
+                  href={
+                    `/${locale}/career-lab/learning/${note.id}#${learningModule.id}` as Route
+                  }
                 >
                   {state === "not-started" ? copy.index.openNote : copy.index.continueStudy}
                 </Link>
@@ -157,15 +161,19 @@ export function CareerLearningIndex({ locale }: Readonly<{ locale: Locale }>) {
         {currentPath.length === 0 ? <p>{copy.index.noCurrentPath}</p> : null}
         {currentPath.length > 0 ? (
           <div className="career-learning-grid">
-            {currentPath.map(({ note, module, state }) => (
-              <article className="career-learning-card" key={`${note.id}:${module.id}`}>
+            {currentPath.map(({ note, module: learningModule, state }) => (
+              <article className="career-learning-card" key={`${note.id}:${learningModule.id}`}>
                 <p>{copy.states[state]}</p>
-                <h3>{module.title[locale]}</h3>
+                <h3>{learningModule.title[locale]}</h3>
                 <p>{note.title[locale]}</p>
                 <span>
-                  {module.estimatedMinutes} {copy.index.minutes}
+                  {learningModule.estimatedMinutes} {copy.index.minutes}
                 </span>
-                <Link href={`/${locale}/career-lab/learning/${note.id}#${module.id}` as Route}>
+                <Link
+                  href={
+                    `/${locale}/career-lab/learning/${note.id}#${learningModule.id}` as Route
+                  }
+                >
                   {state === "not-started" ? copy.index.openNote : copy.index.continueStudy}
                 </Link>
               </article>
