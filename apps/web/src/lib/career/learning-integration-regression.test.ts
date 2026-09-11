@@ -76,7 +76,7 @@ beforeEach(() => {
 });
 
 describe("career learning integration regressions", () => {
-  it("derives the active roadmap before recording legacy learning progress on first interaction", () => {
+  it("records compatibility learning completion in Profile v2 without roadmap supporting state", () => {
     const profile = createEmptyCareerProfile({
       targetRole: "frontend-developer",
       targetMarket: "br",
@@ -91,11 +91,9 @@ describe("career learning integration regressions", () => {
       "2026-09-08T18:05:00.000Z",
     );
 
-    expect(next.roadmap.milestoneIds).toContain("programming-foundations");
-    expect(next.roadmap.currentFocusMilestoneId).toBe("programming-foundations");
-    expect(next.roadmap.supportingActivityId).toBe(
-      "learning:programming-foundations:async-js-control-flow:completed",
-    );
+    expect(next.roadmap.supportingActivityId).toBeNull();
+    expect(next.learningProgress).toHaveLength(1);
+    expect(next.learningProgress[0]?.noteId).toBe("javascript-programming");
     expect(next.evidence).toEqual(profile.evidence);
     expect(next.competencies).toEqual(profile.competencies);
   });
