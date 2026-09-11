@@ -1,6 +1,6 @@
 # Agent Skills Studio
 
-A curated Agent Skills library for production frontend, product design, motion, visual QA, delivery workflows, backend and data engineering, software architecture and engineering, quality and testing, application security, engineering workflow, developer career, brand design, writing and communication, and game-development tasks. The current development catalog publishes 60 reusable skills across 12 active packs. It is inspired by useful patterns from the broader agent-skills ecosystem, but the skills in this repository are intentionally rewritten, consolidated, and kept project-agnostic.
+A curated Agent Skills library for production frontend, product design, motion, visual QA, delivery workflows, backend and data engineering, software architecture and engineering, quality and testing, application security, engineering workflow, developer career, brand design, writing and communication, and game-development tasks. The current development catalog publishes 61 reusable skills across 12 active packs. It is inspired by useful patterns from the broader agent-skills ecosystem, but the skills in this repository are intentionally rewritten, consolidated, and kept project-agnostic.
 
 ## Principles
 
@@ -105,6 +105,7 @@ kept.
 - `building-hybrid-game-assets`
 - `reconstructing-images-as-threejs`
 - `creating-character-sprite-pipelines`
+- `sprite-gen`
 - `designing-action-combat`
 - `testing-playable-games`
 
@@ -113,6 +114,8 @@ kept.
 The motion stack is intentionally layered: `craft-premium-motion` owns direction and technology selection; `engineering-gsap-animations` owns GSAP implementation in React/Next.js; and `optimizing-frontend-motion-performance` owns runtime profiling. This avoids making GSAP the default for effects that CSS or Motion can handle.
 
 `reconstructing-images-as-threejs` is an optional, evidence-limited workflow for code-only procedural reconstruction. It does not replace authored GLB/Blender pipelines and must not claim exact hidden geometry or animation readiness without the required gates.
+
+`sprite-gen` is the executable 2D sprite-production owner bundled from `aldegad/sprite-gen` v2.1.1 under Apache-2.0. `creating-character-sprite-pipelines` owns animation planning and acceptance criteria; `sprite-gen` owns generation, extraction, curation, atlas composition, motion QA, variants, layers, and engine exports.
 
 ## Backend & Data v1
 
@@ -270,7 +273,7 @@ The active, installable packs are:
 
 - `frontend-product` — Frontend & Product (8 skills);
 - `motion` — Motion (5 skills);
-- `game-development` — Game Development (5 skills);
+- `game-development` — Game Development (6 skills);
 - `backend-data` — Backend & Data (4 skills);
 - `architecture-engineering` — Architecture & Engineering (4 skills);
 - `codebase-intelligence` — Codebase Intelligence (5 skills);

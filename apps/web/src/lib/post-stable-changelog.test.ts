@@ -20,7 +20,7 @@ describe("post-Stable changelog", () => {
     expect(changelog).toMatch(/^## \[Unreleased\]/m);
     expect(changelog).toContain("Career Lab");
     expect(changelog).toMatch(/browser-local|local-first/i);
-    expect(changelog).toMatch(/60 canonical skills/i);
+    expect(changelog).toMatch(/61 canonical skills/i);
     expect(changelog).toMatch(/12 active packs/i);
     expect(changelog).toContain("ChatGPT-ready skill ZIP");
     expect(changelog).toContain("Method Archive");
@@ -28,7 +28,7 @@ describe("post-Stable changelog", () => {
     expect(readme).toContain("Career Lab");
     expect(readme).toMatch(/browser-local|local-first/i);
     expect(readme).toMatch(/import[\s\S]*export[\s\S]*reset|import\/export\/reset/i);
-    expect(readme).toMatch(/60 reusable skills across 12 active packs/i);
+    expect(readme).toMatch(/61 reusable skills across 12 active packs/i);
     expect(readme).toMatch(/`dev` is the pre-production integration branch/i);
     expect(readme).toMatch(/`main`.*production/i);
 
@@ -48,13 +48,13 @@ describe("post-Stable changelog", () => {
     const ptUnreleasedText = JSON.stringify(ptUnreleased);
     expect(enUnreleasedText).toContain("Career Lab");
     expect(enUnreleasedText).toMatch(/browser-local|local-first/i);
-    expect(enUnreleasedText).toMatch(/60 canonical skills/i);
+    expect(enUnreleasedText).toMatch(/61 canonical skills/i);
     expect(enUnreleasedText).toMatch(/12 active packs/i);
     expect(enUnreleasedText).toContain("ChatGPT-ready skill ZIP");
     expect(enUnreleasedText).toContain("Method Archive");
     expect(ptUnreleasedText).toContain("Career Lab");
     expect(ptUnreleasedText).toMatch(/local|navegador/i);
-    expect(ptUnreleasedText).toMatch(/60 skills canônicas/i);
+    expect(ptUnreleasedText).toMatch(/61 skills canônicas/i);
     expect(ptUnreleasedText).toMatch(/12 pacotes ativos/i);
     expect(ptUnreleasedText).toContain("ZIP");
     expect(ptUnreleasedText).toContain("Method Archive");
