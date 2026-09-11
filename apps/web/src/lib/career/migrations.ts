@@ -10,6 +10,18 @@ function asRecord(value: unknown): Record<string, unknown> {
 
 export function migrateCareerProfile(value: unknown): CareerProfile {
   const record = asRecord(value);
-  if (record.schemaVersion === "1") return parseCareerProfile(record);
+
+  if (record.schemaVersion === "2") {
+    return parseCareerProfile(record);
+  }
+
+  if (record.schemaVersion === "1") {
+    return parseCareerProfile({
+      ...record,
+      schemaVersion: "2",
+      learningProgress: [],
+    });
+  }
+
   throw new Error(`Unsupported career profile schema: ${String(record.schemaVersion)}`);
 }

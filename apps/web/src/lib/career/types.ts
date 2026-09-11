@@ -55,6 +55,16 @@ export interface RoadmapState {
   readonly supportingActivityId: string | null;
 }
 
+export interface LearningProgressRecord {
+  readonly noteId: string;
+  readonly startedAt: string;
+  readonly updatedAt: string;
+  readonly currentModuleId: string | null;
+  readonly completedModuleIds: readonly string[];
+  readonly completedPracticeIds: readonly string[];
+  readonly completedAt: string | null;
+}
+
 export type JobSourceType = "url" | "pasted" | "agent-import";
 export type JobWorkMode = "remote" | "hybrid" | "onsite" | "unknown";
 export type JobSignalProvenance = "explicit" | "inferred" | "market-derived";
@@ -137,7 +147,7 @@ export interface DecisionRecord {
 }
 
 export interface CareerProfile {
-  readonly schemaVersion: "1";
+  readonly schemaVersion: "2";
   readonly targetRoles: readonly TargetRoleId[];
   readonly targetMarkets: readonly string[];
   readonly weeklyStudyHours: number | null;
@@ -147,6 +157,7 @@ export interface CareerProfile {
   readonly evidence: readonly EvidenceRecord[];
   readonly marketSamples: readonly MarketSample[];
   readonly decisionRecords: readonly DecisionRecord[];
+  readonly learningProgress: readonly LearningProgressRecord[];
   readonly createdAt: string;
   readonly updatedAt: string;
 }
