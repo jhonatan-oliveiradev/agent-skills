@@ -1,33 +1,17 @@
 import { describe, expect, it } from "vitest";
 import type { Locale } from "@/lib/locales";
-import * as assessmentBlueprintModule from "./assessment-blueprints";
 import { baselineAssessmentBlueprints } from "./assessment-blueprints";
-
-type LearningFeedback = Readonly<{
-  challengeId: string;
-  correctOptionIds: readonly string[];
-  rationale: string;
-  optionExplanations: Readonly<Record<string, string>>;
-  codeExample?: Readonly<{ language: string; code: string }>;
-}>;
+import { getAssessmentLearningFeedbackForLocale } from "./assessment-learning-feedback";
 
 type LearningFeedbackResolver = (
   blueprint: (typeof baselineAssessmentBlueprints)[number],
   locale: Locale,
-) => readonly LearningFeedback[];
+) => ReturnType<typeof getAssessmentLearningFeedbackForLocale>;
 
-function getResolver(): LearningFeedbackResolver {
-  const candidate = (
-    assessmentBlueprintModule as unknown as Record<string, unknown>
-  ).getAssessmentLearningFeedbackForLocale;
-
-  expect(candidate).toBeTypeOf("function");
-  return candidate as LearningFeedbackResolver;
-}
+const resolveFeedback: LearningFeedbackResolver = getAssessmentLearningFeedbackForLocale;
 
 describe("Career Lab assessment learning feedback", () => {
   it("publishes a localized, complete pedagogical answer key for all 24 baseline challenges", () => {
-    const resolveFeedback = getResolver();
     let challengeCount = 0;
 
     for (const blueprint of baselineAssessmentBlueprints) {
@@ -56,7 +40,6 @@ describe("Career Lab assessment learning feedback", () => {
   });
 
   it("uses the canonical TypeScript answer ids while providing the approved discriminated-union teaching explanation", () => {
-    const resolveFeedback = getResolver();
     const blueprint = baselineAssessmentBlueprints.find(
       (candidate) => candidate.id === "baseline-typescript",
     );

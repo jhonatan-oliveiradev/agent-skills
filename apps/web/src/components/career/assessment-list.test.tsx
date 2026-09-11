@@ -93,15 +93,27 @@ describe("Assessment discovery, routes, and baseline handoff", () => {
 
     expect(await screen.findByRole("status")).toHaveTextContent(/challenge/i);
 
-    for (let challengeIndex = 0; challengeIndex < 12; challengeIndex += 1) {
-      const answer =
-        screen.queryAllByRole("radio")[0] ??
-        screen.queryAllByRole("checkbox")[0];
-      if (!answer) {
-        throw new Error("Assessment route must render a native radio or checkbox response.");
-      }
-      fireEvent.click(answer);
+    for (let challengeIndex = 0; challengeIndex < 4; challengeIndex += 1) {
+      const radios = screen.queryAllByRole("radio");
+      const checkboxes = screen.queryAllByRole("checkbox");
+      const ordering = Array.from(
+        document.querySelectorAll<HTMLButtonElement>(
+          ".career-assessment-runner__option--ordering",
+        ),
+      );
 
+      if (radios.length > 0) {
+        fireEvent.click(radios[0]);
+      } else if (checkboxes.length > 0) {
+        fireEvent.click(checkboxes[0]);
+        fireEvent.click(checkboxes[1]);
+      } else if (ordering.length > 0) {
+        ordering.forEach((button) => fireEvent.click(button));
+      } else {
+        throw new Error("Assessment route must render an answer control.");
+      }
+
+      fireEvent.click(screen.getByRole("button", { name: /^answer$/i }));
       const next = screen.queryByRole("button", { name: /next challenge/i });
       if (!next) break;
       fireEvent.click(next);
