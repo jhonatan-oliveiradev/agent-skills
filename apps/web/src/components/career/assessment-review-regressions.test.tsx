@@ -2,7 +2,10 @@ import { fireEvent, render, screen } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 import AssessmentDetailPage from "@/app/[locale]/career-lab/assessments/[id]/page";
 import AssessmentsPage from "@/app/[locale]/career-lab/assessments/page";
-import { baselineAssessmentBlueprints } from "@/lib/career/assessment-blueprints";
+import {
+  baselineAssessmentBlueprints,
+  getPublicAssessmentBlueprintForLocale,
+} from "@/lib/career/assessment-blueprints";
 import { createEmptyCareerProfile } from "@/lib/career/profile";
 import type { CareerStorage } from "@/lib/career/storage";
 import type { AssessmentRecord, CareerProfile } from "@/lib/career/types";
@@ -46,7 +49,7 @@ function advanceOnboarding() {
 }
 
 describe("assessment review integration regressions", () => {
-  it("localizes the PT-BR assessment list, runner, result and baseline prompt", async () => {
+  it("localizes the PT-BR assessment list, runner, result and complete baseline flow", async () => {
     const listPage = await AssessmentsPage({
       params: Promise.resolve({ locale: "pt-BR" }),
     });
@@ -81,13 +84,34 @@ describe("assessment review integration regressions", () => {
       </CareerProfileProvider>,
     );
 
-    expect(screen.getByRole("status")).toHaveTextContent(/desafio 1 de 1/i);
+    const canonical = baselineAssessmentBlueprints[0];
+    const localized = getPublicAssessmentBlueprintForLocale(canonical, "pt-BR");
+
+    expect(screen.getByRole("status")).toHaveTextContent(/desafio 1 de 4/i);
     expect(
       screen.getByRole("heading", { name: /qual limite mantém o estado da interação local/i }),
     ).toBeInTheDocument();
-    fireEvent.click(
-      screen.getByRole("radio", { name: /o componente que controla a interação/i }),
-    );
+
+    for (const [index, challenge] of canonical.challenges.entries()) {
+      const publicChallenge = localized.challenges[index];
+      if (!publicChallenge) throw new Error("Expected localized baseline challenge");
+
+      for (const optionId of challenge.correctOptionIds) {
+        const option = publicChallenge.options.find((candidate) => candidate.id === optionId);
+        if (!option) throw new Error("Expected localized correct option");
+        const role = challenge.kind === "structured-ordering"
+          ? "button"
+          : challenge.kind === "multi-select"
+            ? "checkbox"
+            : "radio";
+        fireEvent.click(screen.getByRole(role, { name: option.label }));
+      }
+
+      if (index < canonical.challenges.length - 1) {
+        fireEvent.click(screen.getByRole("button", { name: /próximo/i }));
+      }
+    }
+
     fireEvent.click(screen.getByRole("button", { name: /concluir avaliação/i }));
 
     expect(await screen.findByRole("heading", { name: /em desenvolvimento/i })).toBeInTheDocument();
