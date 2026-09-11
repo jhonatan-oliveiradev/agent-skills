@@ -27,15 +27,15 @@ function requireReviewedModule(
     throw new Error(`Unknown learning note: ${noteId}`);
   }
 
-  const module = note.modules.find((candidate) => candidate.id === moduleId);
-  if (!module) {
+  const learningModule = note.modules.find((candidate) => candidate.id === moduleId);
+  if (!learningModule) {
     throw new Error(`Unknown learning module: ${moduleId}`);
   }
-  if (module.reviewStatus !== "reviewed") {
+  if (learningModule.reviewStatus !== "reviewed") {
     throw new Error(`Learning module must be reviewed before study: ${moduleId}`);
   }
 
-  return { note, module };
+  return { note, learningModule };
 }
 
 function updateLearningProgress(
@@ -83,8 +83,8 @@ export function getLearningState(
   if (!progress) return "not-started";
 
   const reviewedModuleIds = note.modules
-    .filter((module) => module.reviewStatus === "reviewed")
-    .map((module) => module.id);
+    .filter((learningModule) => learningModule.reviewStatus === "reviewed")
+    .map((learningModule) => learningModule.id);
   const allReviewedComplete =
     reviewedModuleIds.length > 0 &&
     reviewedModuleIds.every((moduleId) => progress.completedModuleIds.includes(moduleId));
@@ -125,8 +125,8 @@ export function completeLearningPractice(
   now?: string,
   notes: LearningCatalog = learningNoteCatalog,
 ): CareerProfile {
-  const { module } = requireReviewedModule(noteId, moduleId, notes);
-  if (module.practice.id !== practiceId) {
+  const { learningModule } = requireReviewedModule(noteId, moduleId, notes);
+  if (learningModule.practice.id !== practiceId) {
     throw new Error(`Unknown learning practice: ${practiceId}`);
   }
   const timestamp = resolveTimestamp(now);
@@ -167,8 +167,8 @@ export function completeLearningModule(
         ? current.completedModuleIds
         : [...current.completedModuleIds, moduleId];
       const reviewedModuleIds = note.modules
-        .filter((module) => module.reviewStatus === "reviewed")
-        .map((module) => module.id);
+        .filter((learningModule) => learningModule.reviewStatus === "reviewed")
+        .map((learningModule) => learningModule.id);
       const allReviewedComplete =
         reviewedModuleIds.length > 0 &&
         reviewedModuleIds.every((id) => completedModuleIds.includes(id));
