@@ -38,18 +38,48 @@ describe("production Career learning catalog", () => {
     ).toBe(24);
   });
 
-  it("anchors migrated content to the planned reviewed source URLs", () => {
-    expect(learningSourceCatalog.map((source) => source.url)).toEqual([
-      "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/async_function",
-      "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise",
-      "https://www.typescriptlang.org/docs/handbook/2/narrowing.html",
-      "https://www.typescriptlang.org/docs/handbook/2/types-from-types.html",
-      "https://testing-library.com/docs/guiding-principles/",
-      "https://www.rfc-editor.org/rfc/rfc9110.html",
-      "https://git-scm.com/docs/git-commit",
-      "https://git-scm.com/book/en/v2/Distributed-Git-Distributed-Workflows",
-      "https://www.w3.org/TR/WCAG22/",
-      "https://www.w3.org/WAI/ARIA/apg/",
+  it("uses the planned source anchors and institutional Testing Library classification", () => {
+    expect(learningSourceCatalog.map(({ id, url }) => ({ id, url }))).toEqual([
+      {
+        id: "mdn-async-function",
+        url: "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/async_function",
+      },
+      {
+        id: "mdn-promise",
+        url: "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise",
+      },
+      {
+        id: "ts-handbook-narrowing",
+        url: "https://www.typescriptlang.org/docs/handbook/2/narrowing.html",
+      },
+      {
+        id: "ts-handbook-type-manipulation",
+        url: "https://www.typescriptlang.org/docs/handbook/2/types-from-types.html",
+      },
+      {
+        id: "testing-library-guiding-principles",
+        url: "https://testing-library.com/docs/guiding-principles/",
+      },
+      {
+        id: "rfc-9110-http-semantics",
+        url: "https://www.rfc-editor.org/rfc/rfc9110.html",
+      },
+      {
+        id: "git-commit-docs",
+        url: "https://git-scm.com/docs/git-commit",
+      },
+      {
+        id: "pro-git-distributed-workflows",
+        url: "https://git-scm.com/book/en/v2/Distributed-Git-Distributed-Workflows",
+      },
+      {
+        id: "wcag-22",
+        url: "https://www.w3.org/TR/WCAG22/",
+      },
+      {
+        id: "wai-aria-apg",
+        url: "https://www.w3.org/WAI/ARIA/apg/",
+      },
     ]);
 
     expect(

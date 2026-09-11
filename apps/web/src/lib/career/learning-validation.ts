@@ -1,5 +1,6 @@
 import { competencyDefinitions, competencyIds } from "./competencies";
 import { getLearningNote } from "./learning-catalog";
+import { resolveLearningSourceId } from "./learning-source-catalog";
 import type {
   LearningModule,
   LearningNote,
@@ -164,7 +165,8 @@ function validateModule(
   }
 
   const resolvedSources = learningModule.sourceIds.map((sourceId) => {
-    const source = sourcesById.get(sourceId);
+    const canonicalSourceId = resolveLearningSourceId(sourceId);
+    const source = sourcesById.get(canonicalSourceId);
     if (!source) throw new Error(`${label}: unknown source ${sourceId}`);
     if (!source.supportsCriterionIds.includes(learningModule.criterionId)) {
       throw new Error(

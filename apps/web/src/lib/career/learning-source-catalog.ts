@@ -8,6 +8,19 @@ export const LEARNING_REVIEW_WINDOWS_DAYS = {
 
 const reviewedAt = "2026-09-11T00:00:00.000Z";
 
+const learningSourceIdAliases = {
+  "typescript-handbook-narrowing": "ts-handbook-narrowing",
+  "typescript-handbook-type-manipulation": "ts-handbook-type-manipulation",
+  "git-commit-reference": "git-commit-docs",
+  "aria-authoring-practices": "wai-aria-apg",
+} as const;
+
+export function resolveLearningSourceId(sourceId: string): string {
+  return (
+    learningSourceIdAliases[sourceId as keyof typeof learningSourceIdAliases] ?? sourceId
+  );
+}
+
 export const learningSourceCatalog = [
   {
     id: "mdn-async-function",
@@ -40,7 +53,7 @@ export const learningSourceCatalog = [
     ],
   },
   {
-    id: "typescript-handbook-narrowing",
+    id: "ts-handbook-narrowing",
     title: "Narrowing",
     publisher: "TypeScript",
     url: "https://www.typescriptlang.org/docs/handbook/2/narrowing.html",
@@ -55,7 +68,7 @@ export const learningSourceCatalog = [
     ],
   },
   {
-    id: "typescript-handbook-type-manipulation",
+    id: "ts-handbook-type-manipulation",
     title: "Creating Types from Types",
     publisher: "TypeScript",
     url: "https://www.typescriptlang.org/docs/handbook/2/types-from-types.html",
@@ -100,7 +113,7 @@ export const learningSourceCatalog = [
     ],
   },
   {
-    id: "git-commit-reference",
+    id: "git-commit-docs",
     title: "git-commit",
     publisher: "Git",
     url: "https://git-scm.com/docs/git-commit",
@@ -145,7 +158,7 @@ export const learningSourceCatalog = [
     ],
   },
   {
-    id: "aria-authoring-practices",
+    id: "wai-aria-apg",
     title: "ARIA Authoring Practices Guide",
     publisher: "W3C Web Accessibility Initiative",
     url: "https://www.w3.org/WAI/ARIA/apg/",
