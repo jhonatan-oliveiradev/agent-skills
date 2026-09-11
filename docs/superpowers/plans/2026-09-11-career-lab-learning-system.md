@@ -33,7 +33,7 @@ Create these dedicated modules rather than expanding unrelated files:
 - `apps/web/src/lib/career/learning-types.ts` — `LearningNote`, `LearningModule`, `LearningSource`, localized learning primitives.
 - `apps/web/src/lib/career/learning-source-catalog.ts` — source records + centralized review windows.
 - `apps/web/src/lib/career/learning-catalog.ts` — Core Note/module content.
-- `apps/web/src/lib/career/learning-validation.ts` — catalog/source/domain validation.
+- `apps/web/src/lib/career/learning-validation.ts` — catalog/source validation plus Profile learning-reference validation.
 - `apps/web/src/lib/career/learning-progress.ts` — pure Profile v2 study-state mutations/selectors.
 - `apps/web/src/lib/career/learning-recommendations.ts` — deterministic learning/proof recommendations.
 - `apps/web/src/lib/career/learning-copy.ts` — Learning-surface EN/PT-BR product copy.
@@ -135,6 +135,8 @@ validateLearningCatalog(
   sources: readonly LearningSource[],
 ): readonly LearningNote[];
 
+validateLearningProgressReferences(profile: CareerProfile): CareerProfile;
+
 getLearningNote(noteId: string): LearningNote | undefined;
 getLearningNoteByCompetency(competencyId: CompetencyId): LearningNote | undefined;
 getReviewedLearningModules(note: LearningNote): readonly LearningModule[];
@@ -142,6 +144,8 @@ getLearningModuleByCriterion(criterionId: string):
   | Readonly<{ note: LearningNote; module: LearningModule }>
   | undefined;
 ```
+
+`validateLearningProgressReferences` validates every progress `noteId`, `currentModuleId`, `completedModuleIds`, and `completedPracticeIds` against the currently published catalog. It is domain validation, not part of the generic structural parser.
 
 `learning-source-catalog.ts` also exports:
 
@@ -172,6 +176,8 @@ it("rejects a source that claims support for an unknown criterion", ...);
 it("requires a primary source when primarySourcePolicy is required", ...);
 it("requires primarySourceReason in both locales when primarySourcePolicy is not-available", ...);
 it("filters draft modules out of getReviewedLearningModules", ...);
+it("rejects Profile learning progress that references an unknown note", ...);
+it("rejects Profile learning progress that references an unknown module or practice", ...);
 ```
 
 Run:
@@ -192,7 +198,8 @@ Validation rules:
 - reviewed modules require valid `reviewedAt`, non-empty sources, and complete EN/PT-BR pedagogical content;
 - `primarySourcePolicy: "required"` requires at least one referenced `authority: "primary"` source that supports the module criterion;
 - `primarySourcePolicy: "not-available"` requires localized `primarySourceReason` and still requires at least one reviewed source;
-- draft modules may be structurally authored but are never returned by reviewed-content selectors.
+- draft modules may be structurally authored but are never returned by reviewed-content selectors;
+- profile learning progress fails closed when note/module/practice references cannot be resolved.
 
 Run:
 
@@ -277,7 +284,8 @@ Also add explicit rejection tests for:
 - duplicate completed module/practice IDs inside one record;
 - invalid `startedAt`, `updatedAt`, or non-null `completedAt`;
 - `updatedAt` before `startedAt`;
-- v2 profile missing `learningProgress`.
+- v2 profile missing `learningProgress`;
+- imported v2 progress with unknown note/module/practice references.
 
 Add one export/import test in `career-data-controls.test.tsx` proving a non-empty v2 `learningProgress` survives `serializeCareerProfile` → JSON parse → `migrateCareerProfile`.
 
@@ -289,8 +297,9 @@ npm --prefix apps/web test -- src/lib/career/profile.test.ts src/lib/career/sche
 
 ### GREEN
 
-- `parseCareerProfile` parses only schema v2.
-- `migrateCareerProfile` accepts v2 by parsing it and accepts v1 by copying only known v1 fields, adding `schemaVersion: "2"` + `learningProgress: []`, then parsing v2.
+- `parseCareerProfile` performs structural schema-v2 parsing only.
+- `migrateCareerProfile` accepts v2 by parsing it, then calling `validateLearningProgressReferences`; it accepts v1 by copying only known v1 fields, adding `schemaVersion: "2"` + `learningProgress: []`, parsing v2, then calling the domain validator.
+- `CareerStorage.save` calls `parseCareerProfile` and then `validateLearningProgressReferences` before opening the write transaction.
 - Keep `CAREER_DB_VERSION = 1`; no IndexedDB structural upgrade is necessary.
 - `createEmptyCareerProfile` emits v2.
 
@@ -324,28 +333,43 @@ completeLearningPractice(profile: CareerProfile, noteId: string, moduleId: strin
 completeLearningModule(profile: CareerProfile, noteId: string, moduleId: string, now?: string): CareerProfile;
 ```
 
-All helpers must validate note/module/practice references against the curated learning domain and update immutably.
+All helpers validate note/module/practice references against the curated learning domain and update immutably.
 
 ### RED
 
-Use a local two-module reviewed note fixture in the test. Write the full completion test, not a placeholder:
+Use a test-only mocked catalog lookup returning a concrete two-module reviewed note:
+
+```ts
+const fixtureNote: LearningNote = {
+  id: "fixture-note",
+  competencyId: "programming-typescript",
+  title: { en: "Fixture", "pt-BR": "Fixture" },
+  summary: { en: "Fixture", "pt-BR": "Fixture" },
+  objective: { en: "Fixture", "pt-BR": "Fixture" },
+  estimatedMinutes: 10,
+  modules: [
+    fixtureReviewedModule("fixture-foundation", "programming-typescript.foundation", "foundation"),
+    fixtureReviewedModule("fixture-developing", "programming-typescript.developing", "developing"),
+  ],
+};
+```
+
+Define `fixtureReviewedModule` inside `learning-progress.test.ts`; mock only the catalog lookup boundary, not readiness or progress logic.
+
+Write the completion test fully:
 
 ```ts
 it("marks a note studied only after every reviewed fixture module is complete", () => {
-  const note = fixtureNoteWithReviewedModules(["fixture-foundation", "fixture-developing"]);
   let profile = fixtureProfile();
-
-  profile = completeFixtureModule(profile, note, "fixture-foundation", "2026-09-11T13:00:00.000Z");
-  expect(getFixtureLearningState(profile, note)).toBe("in-progress");
+  profile = completeLearningModule(profile, "fixture-note", "fixture-foundation", "2026-09-11T13:00:00.000Z");
+  expect(getLearningState(profile, fixtureNote)).toBe("in-progress");
   expect(profile.learningProgress[0]?.completedAt).toBeNull();
 
-  profile = completeFixtureModule(profile, note, "fixture-developing", "2026-09-11T13:10:00.000Z");
-  expect(getFixtureLearningState(profile, note)).toBe("studied");
+  profile = completeLearningModule(profile, "fixture-note", "fixture-developing", "2026-09-11T13:10:00.000Z");
+  expect(getLearningState(profile, fixtureNote)).toBe("studied");
   expect(profile.learningProgress[0]?.completedAt).toBe("2026-09-11T13:10:00.000Z");
 });
 ```
-
-The actual committed test may expose the note fixture through a test-only helper in `learning-progress.test.ts`; do not add a production export just to support the test.
 
 Also write:
 
@@ -356,7 +380,7 @@ it("does not write roadmap.supportingActivityId", ...);
 it("does not change readiness", ...);
 ```
 
-The readiness assertion must compare `calculateRoleReadiness` before and after against `getRoleMap("frontend-developer")`.
+The readiness assertion compares `calculateRoleReadiness` before/after against `getRoleMap("frontend-developer")`.
 
 Run RED:
 
@@ -412,16 +436,18 @@ Open Draft PR `feat: add Career learning foundation and Profile v2`. Record exac
 - `apps/web/src/lib/career/learning.test.ts`
 - `apps/web/src/lib/career/learning-integration-regression.test.ts`
 
-Migrate these existing topics:
+Use these exact Core Note IDs:
 
-- `programming-javascript`
-- `programming-typescript`
-- `testing-behavior`
-- `http-api-engineering`
-- `git-collaboration`
-- `web-accessibility`
+| Competency | Core Note ID |
+| --- | --- |
+| `programming-javascript` | `javascript-programming` |
+| `programming-typescript` | `typescript-application-modeling` |
+| `testing-behavior` | `testing-observable-behavior` |
+| `http-api-engineering` | `http-api-boundaries` |
+| `git-collaboration` | `git-collaboration-workflow` |
+| `web-accessibility` | `accessible-interface-fundamentals` |
 
-Each gets one Core Note and four reviewed modules matching its canonical `foundation`, `developing`, `proficient`, `advanced` criteria. Module IDs are exactly `<competency-id>-<level>` and practice IDs exactly `<module-id>-practice`.
+Each gets four reviewed modules matching its canonical `foundation`, `developing`, `proficient`, `advanced` criteria. Module IDs are exactly `<competency-id>-<level>` and practice IDs exactly `<module-id>-practice`.
 
 ### Source anchors to verify before `reviewStatus: "reviewed"`
 
@@ -707,6 +733,8 @@ Every reviewed module renders this exact semantic sequence:
 - Consolidated when / Você consolidou quando…
 - Sources / Fontes
 
+At the first explicit interaction inside a reviewed module, call `startLearningModule`; the practice button calls `completeLearningPractice`; the final module completion button calls `completeLearningModule`. A module cannot be marked complete until its practice ID is recorded.
+
 Use normal `href="#module-id"` anchors and `scroll-margin-top`; do not programmatically steal focus on hash navigation. Draft module body is never rendered.
 
 Run:
@@ -938,8 +966,6 @@ it("records learning progress without deriving or mutating roadmap state", () =>
   expect(next.competencies).toEqual(profile.competencies);
 });
 ```
-
-Use the actual JavaScript Core Note ID authored in Slice 2. The implementation plan chooses `javascript-programming` as that Core Note ID; keep that ID stable from Slice 2 onward.
 
 Run RED:
 
@@ -1236,6 +1262,8 @@ This plan was checked after drafting for placeholders, ambiguous ownership, and 
 - `CareerProfile.learningProgress` is the only new canonical learning-progress store.
 - Same-session assessment review is explicit; raw historical answers are not added to Profile v2.
 - Source-governance exceptions are explicit and reviewable.
+- Profile import/save performs both structural parsing and learning-reference domain validation.
+- Core Note IDs for the six migrated topics are fixed before cross-slice consumers use them.
 - Slice 7 cannot edit an unlisted production file without first recording the exact defect/file, preventing open-ended cleanup.
 - GitHub connector operations are preferred for repository writes/commits/PRs, matching the project workflow.
 
