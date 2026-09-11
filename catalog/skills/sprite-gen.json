@@ -1,0 +1,102 @@
+{
+  "$schema": "../schemas/skill.schema.json",
+  "slug": "sprite-gen",
+  "category": "game-development",
+  "packs": [
+    "game-development"
+  ],
+  "maturity": "beta",
+  "difficulty": "intermediate",
+  "featured": true,
+  "compatibility": {
+    "surfaces": [
+      "chatgpt",
+      "codex"
+    ],
+    "operatingSystems": [
+      "linux",
+      "macos",
+      "windows"
+    ],
+    "installModes": [
+      "plugin",
+      "filesystem"
+    ]
+  },
+  "tags": [
+    "sprite-gen",
+    "sprite-animation",
+    "animation-atlas",
+    "image-generation",
+    "godot-assets"
+  ],
+  "dependencies": [
+    {
+      "name": "Python 3.10+",
+      "type": "tool",
+      "required": true,
+      "url": "https://www.python.org"
+    },
+    {
+      "name": "Codex CLI",
+      "type": "tool",
+      "required": false,
+      "url": "https://developers.openai.com/codex/cli"
+    },
+    {
+      "name": "Grok CLI or xAI API",
+      "type": "service",
+      "required": false,
+      "url": "https://x.ai/api"
+    },
+    {
+      "name": "FFmpeg",
+      "type": "tool",
+      "required": false,
+      "url": "https://ffmpeg.org"
+    },
+    {
+      "name": "WebP utilities",
+      "type": "tool",
+      "required": false,
+      "url": "https://developers.google.com/speed/webp/download"
+    }
+  ],
+  "relatedSkills": [
+    "creating-character-sprite-pipelines",
+    "building-hybrid-game-assets",
+    "testing-playable-games"
+  ],
+  "version": "1.1.0",
+  "updatedAt": "2026-09-11",
+  "locales": {
+    "en": {
+      "displayName": "Sprite Gen",
+      "summary": "Runs a bundled, guided pipeline for generated sprites, transparent frames, curated animation atlases, palette variants, layered rigs, and engine exports.",
+      "primaryBenefit": "Turns approved character direction into inspectable, motion-checked, runtime-ready 2D sprite assets with explicit frame metadata.",
+      "whenToUse": "Use when generating, editing, extracting, curating, animating, or exporting production-ready 2D game sprites, transparent frame sets, animation atlases, palette variants, layered rigs, or engine-ready sprite data.",
+      "whenNotToUse": "Do not use when only the animation state plan or model-sheet acceptance criteria are needed, or when the requested output is a 3D asset rather than a 2D sprite pipeline.",
+      "useCases": [
+        "Generate and curate a complete character animation atlas from an approved reference",
+        "Clean an imported sprite sheet and export transparent frames plus engine metadata"
+      ],
+      "examplePrompts": [
+        "Use sprite-gen to turn this approved character reference into idle, run, attack, and hurt animations ready for Godot."
+      ]
+    },
+    "pt-BR": {
+      "displayName": "Sprite Gen",
+      "summary": "Executa um pipeline guiado e incluído no plugin para sprites gerados, frames transparentes, atlas de animação curados, variações de paleta, rigs em camadas e exportação para engines.",
+      "primaryBenefit": "Transforma uma direção de personagem aprovada em assets 2D inspecionáveis, validados em movimento e prontos para runtime, com metadados explícitos de frames.",
+      "whenToUse": "Use ao gerar, editar, extrair, curar, animar ou exportar sprites 2D de produção, conjuntos de frames transparentes, atlas de animação, variações de paleta, rigs em camadas ou dados de sprite prontos para uma engine.",
+      "whenNotToUse": "Não use quando o pedido exigir apenas o planejamento dos estados de animação ou os critérios do model sheet, nem quando o resultado necessário for um asset 3D em vez de um pipeline de sprites 2D.",
+      "useCases": [
+        "Gerar e curar um atlas completo de animações de personagem a partir de uma referência aprovada",
+        "Limpar uma spritesheet importada e exportar frames transparentes com metadados para a engine"
+      ],
+      "examplePrompts": [
+        "Use sprite-gen para transformar esta referência aprovada em animações de idle, corrida, ataque e dano prontas para Godot."
+      ]
+    }
+  }
+}

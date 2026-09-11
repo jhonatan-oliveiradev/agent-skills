@@ -24,44 +24,45 @@
     ]
   },
   "tags": [
-    "sprite-animation",
+    "sprite-planning",
     "character-art",
     "game-assets",
     "animation-pipeline"
   ],
   "dependencies": [],
   "relatedSkills": [
+    "sprite-gen",
     "building-hybrid-game-assets"
   ],
   "version": "1.1.0",
-  "updatedAt": "2026-08-26",
+  "updatedAt": "2026-09-11",
   "locales": {
     "en": {
       "displayName": "Creating Character Sprite Pipelines",
-      "summary": "Builds a model-sheet-led workflow for consistent character poses, cycles, transitions, equipment, and follow-through animation.",
-      "primaryBenefit": "Produces readable sprite sets that preserve anatomy, silhouette, equipment, and motion continuity across gameplay states.",
-      "whenToUse": "Use when defining, generating, reviewing, or expanding a 2D character sprite set that must remain anatomically consistent across idle, movement, combat, directional, and transition animations.",
-      "whenNotToUse": "Do not use for a one-off static character asset or before the character model sheet and required gameplay states are defined.",
+      "summary": "Designs the state, pose, transition, equipment, and acceptance contract that a consistent character sprite set must satisfy.",
+      "primaryBenefit": "Defines a reviewable animation plan that preserves anatomy, silhouette, equipment, and motion continuity before production begins.",
+      "whenToUse": "Use when planning or reviewing the animation design of a 2D character sprite set before or independently of executable generation, especially gameplay states, key poses, anatomical continuity, equipment behavior, and transition coverage.",
+      "whenNotToUse": "Do not use as the execution owner for image generation, extraction, atlas composition, curation, or engine export; use sprite-gen for those deliverables.",
       "useCases": [
-        "Plan a complete locomotion and combat sprite set",
-        "Review animation cycles for anatomical and equipment continuity"
+        "Plan the states, key poses, transitions, and frame budgets for a character",
+        "Review an animation specification for anatomical and equipment continuity"
       ],
       "examplePrompts": [
-        "Use creating-character-sprite-pipelines to define a consistent sprite workflow for this playable character."
+        "Use creating-character-sprite-pipelines to define the animation state and acceptance contract for this playable character."
       ]
     },
     "pt-BR": {
       "displayName": "Criação de Pipelines de Sprites de Personagens",
-      "summary": "Constrói um fluxo guiado por model sheet para poses, ciclos, transições, equipamentos e camadas de acompanhamento (follow-through) consistentes.",
-      "primaryBenefit": "Produz conjuntos de sprites legíveis que preservam anatomia, silhueta, equipamentos e continuidade de movimento entre estados de gameplay.",
-      "whenToUse": "Use ao definir, gerar, revisar ou expandir um conjunto de sprites 2D de personagem que precise manter consistência anatômica entre animações de repouso, movimento, combate, direção e transição.",
-      "whenNotToUse": "Não use para um asset estático e isolado de personagem nem antes de definir o model sheet e os estados de gameplay necessários.",
+      "summary": "Projeta o contrato de estados, poses, transições, equipamentos e aceitação que um conjunto consistente de sprites de personagem deve cumprir.",
+      "primaryBenefit": "Define um plano de animação revisável que preserva anatomia, silhueta, equipamentos e continuidade de movimento antes da produção.",
+      "whenToUse": "Use ao planejar ou revisar o design de animação de um conjunto de sprites 2D antes ou independentemente da geração executável, especialmente estados de gameplay, poses-chave, continuidade anatômica, comportamento de equipamentos e cobertura de transições.",
+      "whenNotToUse": "Não use como responsável pela geração de imagens, extração, composição de atlas, curadoria ou exportação para engines; use sprite-gen para essas entregas.",
       "useCases": [
-        "Planejar um conjunto completo de sprites de locomoção e combate",
-        "Revisar ciclos de animação quanto à continuidade anatômica, dos equipamentos e das camadas de acompanhamento (follow-through)"
+        "Planejar estados, poses-chave, transições e orçamento de frames de um personagem",
+        "Revisar uma especificação de animação quanto à continuidade anatômica e dos equipamentos"
       ],
       "examplePrompts": [
-        "Use creating-character-sprite-pipelines para definir um fluxo de sprites consistente para este personagem jogável."
+        "Use creating-character-sprite-pipelines para definir o contrato de estados e aceitação das animações deste personagem jogável."
       ]
     }
   }

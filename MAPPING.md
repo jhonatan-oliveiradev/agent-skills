@@ -21,7 +21,7 @@ publish roadmap categories without claiming members.
 |---|---|---|
 | Frontend & Product (`frontend-product`) | Active | 8 frontend, product-design, and delivery skills |
 | Motion (`motion`) | Active | 5 motion and procedural-3D skills |
-| Game Development (`game-development`) | Active | 5 game-development and procedural-3D skills |
+| Game Development (`game-development`) | Active | 6 game-development, executable sprite-production, and procedural-3D skills |
 | Backend & Data (`backend-data`) | Active | 4 relational-modeling, Node API, PostgreSQL migration, and query-profiling skills |
 | Architecture & Engineering (`architecture-engineering`) | Active | 4 architecture-selection, software-boundary, ADR, and safe-refactoring skills |
 | Quality & Testing (`quality-testing`) | Active | 4 test-strategy, integration-boundary, web-E2E, and regression-testing skills |
@@ -102,6 +102,7 @@ Upstream keeps game skills deliberately separate from web design; this pack foll
 | optimize-threejs-games | Merged conceptually | skills/testing-playable-games + project-specific profiling |
 | test-playable-web-games | Adapted | skills/testing-playable-games |
 | ship-web-games | Merged | skills/shipping-github-vercel-changes |
+| `aldegad/sprite-gen` v2.1.1 | Bundled | `skills/sprite-gen`; Apache-2.0 `LICENSE` and `NOTICE` retained |
 
 ## New skills added for this workflow
 
@@ -109,7 +110,10 @@ Upstream keeps game skills deliberately separate from web design; this pack foll
 Added as the single source of truth for baseline technology choices, project scaffolding, and required formatter/tooling configuration for new web applications.
 
 ### `creating-character-sprite-pipelines`
-Added for projects that use 2D character model sheets and sprite animation. It explicitly guards against duplicated pseudo-frames, inconsistent stride cycles, weapon drift, foot sliding, and incoherent hair/clothing follow-through.
+Added for projects that need the animation state, pose, transition, and acceptance contract for 2D character sprites. Executable production now routes to `sprite-gen`.
+
+### `sprite-gen`
+Bundled from [`aldegad/sprite-gen`](https://github.com/aldegad/sprite-gen) v2.1.1 as the first-class executable sprite-production method. It owns guided image or video generation, transparent frame extraction, curation, atlas composition, motion QA, palette variants, layered rigs, and engine exports while preserving the upstream Apache-2.0 license and NOTICE.
 
 ### `translating-figma-to-nextjs`
 Added as a first-class bridge between Figma and the dominant production stack instead of treating design references and implementation as unrelated tasks.

@@ -4,9 +4,15 @@ All notable changes to this skill library are documented here.
 
 ## [Unreleased]
 
+### Game Development
+
+- Added `sprite-gen` as the official executable 2D sprite-production skill, bundled from `aldegad/sprite-gen` v2.1.1 under Apache-2.0 with upstream attribution preserved.
+- Added guided image and video generation, transparent frame extraction, curation, atlas composition, motion QA, palette variants, layered rigs, and engine exports to the Game Development pack.
+- Narrowed `creating-character-sprite-pipelines` to animation planning and acceptance criteria so executable sprite production has one clear owner.
+
 ### Developer Career
 
-- Expanded the current development catalog to 60 canonical skills and 12 active packs with six Developer Career working methods.
+- Expanded the current development catalog to 61 canonical skills and 12 active packs, including six Developer Career working methods and the executable Sprite Gen pipeline.
 - Added evidence-aware proficiency diagnosis, adaptive roadmaps, targeted teaching, criterion-based proficiency evaluation, portfolio-evidence design, and opportunity analysis with explicit ownership boundaries.
 - Added the browser-local Career Lab with deterministic baseline assessments, adaptive NOW/NEXT/MAP planning, gap-targeted microlearning, a Professional Evidence Ledger, Market Intelligence, and explicit Career Profile import/export/reset controls.
 - Kept Career Lab local-first in V1: no account requirement, cloud sync, billing, first-party model inference, or certification claim is introduced.
@@ -22,7 +28,7 @@ All notable changes to this skill library are documented here.
 - Added Career Lab as a seventh shared Studio navigation context and cross-linked it bidirectionally with the canonical Developer Career pack.
 - Added localized Career Lab metadata and public sitemap coverage for Overview, Roadmap, Assessments, Evidence, and Market.
 - Promoted the release-qualified plugin, catalog, installers, and microsite surfaces to Stable in the public roadmap while keeping individual skill maturity distinct from Stable release status.
-- Kept current README/catalog documentation aligned with 60 canonical skills and 12 active packs, and removed only confirmed orphaned localized Home/Getting Started copy.
+- Kept current README/catalog documentation aligned with 61 canonical skills and 12 active packs, and removed only confirmed orphaned localized Home/Getting Started copy.
 
 ### Reliability and maintenance
 
