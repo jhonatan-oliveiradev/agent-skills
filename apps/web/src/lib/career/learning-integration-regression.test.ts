@@ -1,5 +1,5 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
-import { getLearningNote } from "./learning-catalog";
+import { getLearningNote, learningNoteCatalog } from "./learning-catalog";
 import { completeLearningUnit } from "./learning";
 import { completeLearningModule, getLearningState } from "./learning-progress";
 import type { LearningNote } from "./learning-types";
@@ -9,7 +9,7 @@ vi.mock("./learning-catalog", async (importOriginal) => {
   const actual = await importOriginal<typeof import("./learning-catalog")>();
   return {
     ...actual,
-    getLearningNote: vi.fn(),
+    getLearningNote: vi.fn(actual.getLearningNote),
   };
 });
 
@@ -70,13 +70,14 @@ const fixtureNote: LearningNote = {
 
 beforeEach(() => {
   vi.mocked(getLearningNote).mockReset();
-  vi.mocked(getLearningNote).mockImplementation((noteId) =>
-    noteId === fixtureNote.id ? fixtureNote : undefined,
-  );
+  vi.mocked(getLearningNote).mockImplementation((noteId) => {
+    if (noteId === fixtureNote.id) return fixtureNote;
+    return learningNoteCatalog.find((note) => note.id === noteId);
+  });
 });
 
 describe("career learning integration regressions", () => {
-  it("derives the active roadmap before recording legacy learning progress on first interaction", () => {
+  it("records compatibility learning completion in Profile v2 without roadmap supporting state", () => {
     const profile = createEmptyCareerProfile({
       targetRole: "frontend-developer",
       targetMarket: "br",
@@ -91,11 +92,9 @@ describe("career learning integration regressions", () => {
       "2026-09-08T18:05:00.000Z",
     );
 
-    expect(next.roadmap.milestoneIds).toContain("programming-foundations");
-    expect(next.roadmap.currentFocusMilestoneId).toBe("programming-foundations");
-    expect(next.roadmap.supportingActivityId).toBe(
-      "learning:programming-foundations:async-js-control-flow:completed",
-    );
+    expect(next.roadmap.supportingActivityId).toBeNull();
+    expect(next.learningProgress).toHaveLength(1);
+    expect(next.learningProgress[0]?.noteId).toBe("javascript-programming");
     expect(next.evidence).toEqual(profile.evidence);
     expect(next.competencies).toEqual(profile.competencies);
   });

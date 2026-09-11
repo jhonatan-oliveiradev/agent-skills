@@ -1,18 +1,14 @@
 import { describe, expect, it } from "vitest";
 import { competencyDefinitions } from "./competencies";
-import {
-  completeLearningUnit,
-  getLearningUnitsForMilestone,
-  isLearningUnitCompleted,
-} from "./learning";
-import { learningUnitCatalog } from "./learning-catalog";
+import { getLearningUnitsForMilestone } from "./learning";
+import { getLearningNoteByCompetency } from "./learning-catalog";
 import {
   addEvidence,
   buildPortfolioEvidenceContract,
   createPortfolioEvidenceRecords,
 } from "./portfolio-evidence";
 import { createEmptyCareerProfile } from "./profile";
-import { buildRoadmap, getRoadmapMilestoneViews } from "./roadmap-engine";
+import { buildRoadmap } from "./roadmap-engine";
 import { getRoleMap } from "./role-maps";
 import type { CareerProfile } from "./types";
 
@@ -30,72 +26,34 @@ function profileWithRoadmap(): CareerProfile {
 }
 
 describe("targeted career learning", () => {
-  it("publishes the six source-controlled V1 microlearning units with bilingual content", () => {
-    expect(learningUnitCatalog).toHaveLength(6);
-    expect(learningUnitCatalog.map((unit) => unit.competencyId)).toEqual([
-      "programming-javascript",
-      "programming-typescript",
-      "testing-behavior",
-      "http-api-engineering",
-      "git-collaboration",
-      "web-accessibility",
-    ]);
+  const migratedCompetencies = [
+    "programming-javascript",
+    "programming-typescript",
+    "testing-behavior",
+    "http-api-engineering",
+    "git-collaboration",
+    "web-accessibility",
+  ] as const;
 
-    for (const unit of learningUnitCatalog) {
-      expect(unit.title.en).toBeTruthy();
-      expect(unit.title["pt-BR"]).toBeTruthy();
-      expect(unit.objective.en).toBeTruthy();
-      expect(unit.objective["pt-BR"]).toBeTruthy();
-      expect(unit.explanation.en).toBeTruthy();
-      expect(unit.practice.map((prompt) => prompt.kind)).toEqual([
-        "example",
-        "problem",
-        "practice",
-        "checkpoint",
-        "handoff",
-      ]);
-      expect(unit.estimatedMinutes).toBeGreaterThan(0);
+  it("publishes six migrated reviewed Core Notes with one module per canonical criterion", () => {
+    for (const competencyId of migratedCompetencies) {
+      const note = getLearningNoteByCompetency(competencyId);
+      const definition = competencyDefinitions.find((item) => item.id === competencyId)!;
+      expect(note).toBeDefined();
+      expect(note?.modules.map((module) => module.criterionId)).toEqual(
+        definition.criteria.map((criterion) => criterion.id),
+      );
+      expect(note?.modules.every((module) => module.reviewStatus === "reviewed")).toBe(true);
     }
   });
 
-  it("selects gap-targeted units for a roadmap milestone", () => {
+  it("selects gap-targeted compatibility units for a roadmap milestone", () => {
     expect(getLearningUnitsForMilestone("programming-foundations").map((unit) => unit.id)).toContain(
       "async-js-control-flow",
     );
     expect(getLearningUnitsForMilestone("typed-application-modeling").map((unit) => unit.id)).toEqual([
       "typescript-application-modeling",
     ]);
-  });
-
-  it("records learning completion only as supporting progress and never as proficiency evidence", () => {
-    const profile = profileWithRoadmap();
-    const beforeCompetencies = profile.competencies;
-    const beforeEvidence = profile.evidence;
-
-    const next = completeLearningUnit(
-      profile,
-      "programming-foundations",
-      "async-js-control-flow",
-      "2026-09-08T18:10:00.000Z",
-    );
-
-    expect(next.competencies).toEqual(beforeCompetencies);
-    expect(next.evidence).toEqual(beforeEvidence);
-    expect(next.roadmap.supportingActivityId).toBe(
-      "learning:programming-foundations:async-js-control-flow:completed",
-    );
-    expect(
-      isLearningUnitCompleted(next, "programming-foundations", "async-js-control-flow"),
-    ).toBe(true);
-
-    const views = getRoadmapMilestoneViews(
-      next,
-      getRoleMap("frontend-developer"),
-      next.roadmap,
-    );
-    expect(views.find((milestone) => milestone.id === "programming-foundations")?.status).not.toBe(
-      "completed",
-    );
   });
 });
 
