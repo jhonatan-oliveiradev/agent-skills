@@ -37,4 +37,24 @@ describe("production Career learning catalog", () => {
       new Set(modules.map((learningModule) => learningModule.practice.prompt["pt-BR"])).size,
     ).toBe(24);
   });
+
+  it("uses the planned source ids and institutional Testing Library classification", () => {
+    expect(learningSourceCatalog.map((source) => source.id)).toEqual([
+      "mdn-async-function",
+      "mdn-promise",
+      "ts-handbook-narrowing",
+      "ts-handbook-type-manipulation",
+      "testing-library-guiding-principles",
+      "rfc-9110-http-semantics",
+      "git-commit-docs",
+      "pro-git-distributed-workflows",
+      "wcag-22",
+      "wai-aria-apg",
+    ]);
+
+    expect(
+      learningSourceCatalog.find((source) => source.id === "testing-library-guiding-principles")
+        ?.authority,
+    ).toBe("recognized-institutional");
+  });
 });
