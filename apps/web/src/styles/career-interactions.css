@@ -148,7 +148,7 @@
     transition:
       block-size var(--career-motion-base) var(--career-ease),
       opacity var(--career-motion-fast) var(--career-ease),
-      content-visibility var(--career-motion-base) step-end;
+      content-visibility var(--career-motion-base) allow-discrete;
     transition-behavior: allow-discrete;
   }
 
