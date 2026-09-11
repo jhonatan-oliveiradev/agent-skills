@@ -8,14 +8,14 @@ import { getRoleMap } from "./role-maps";
 
 function correctAssessmentResult() {
   const blueprint = baselineAssessmentBlueprints[0];
-  const challenge = blueprint.challenges[0];
-  if (!challenge) throw new Error("Expected baseline assessment challenge");
 
   return evaluateAssessment(blueprint, {
     blueprintId: blueprint.id,
     blueprintVersion: blueprint.version,
     completedAt: "2026-09-08T12:00:00.000Z",
-    answers: { [challenge.id]: challenge.correctOptionIds },
+    answers: Object.fromEntries(
+      blueprint.challenges.map((challenge) => [challenge.id, challenge.correctOptionIds]),
+    ),
   });
 }
 
