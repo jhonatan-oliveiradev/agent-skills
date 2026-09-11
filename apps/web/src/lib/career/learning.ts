@@ -1,8 +1,14 @@
-import type { Locale } from "../locales";
-import type { CompetencyId } from "./competencies";
-import { learningUnitCatalog } from "./learning-catalog";
-import { getRoadmapMilestone } from "./roadmap-catalog";
+import {
+  getLearningModuleByCriterion,
+  getLearningNote,
+} from "./learning-catalog";
+import {
+  completeLearningModule,
+  completeLearningPractice,
+  getLearningProgress,
+} from "./learning-progress";
 import { buildRoadmap } from "./roadmap-engine";
+import { getRoadmapMilestone } from "./roadmap-catalog";
 import { getRoleMap } from "./role-maps";
 import type { CareerProfile } from "./types";
 
@@ -16,45 +22,141 @@ export type PracticePromptKind =
 export interface PracticePrompt {
   readonly id: string;
   readonly kind: PracticePromptKind;
-  readonly prompt: Readonly<Record<Locale, string>>;
+  readonly prompt: Readonly<{ en: string; "pt-BR": string }>;
 }
 
 export interface LearningUnit {
   readonly id: string;
-  readonly competencyId: CompetencyId;
-  readonly title: Readonly<Record<Locale, string>>;
-  readonly objective: Readonly<Record<Locale, string>>;
-  readonly explanation: Readonly<Record<Locale, string>>;
+  readonly competencyId: string;
+  readonly title: Readonly<{ en: string; "pt-BR": string }>;
+  readonly objective: Readonly<{ en: string; "pt-BR": string }>;
+  readonly explanation: Readonly<{ en: string; "pt-BR": string }>;
   readonly practice: readonly PracticePrompt[];
   readonly estimatedMinutes: number;
 }
 
-const milestoneUnitIds: Readonly<Record<string, readonly string[]>> = {
-  "programming-foundations": ["async-js-control-flow"],
-  "async-application-control-flow": ["async-js-control-flow"],
-  "typed-application-modeling": ["typescript-application-modeling"],
-  "testing-real-behavior": ["testing-observable-behavior"],
-  "http-api-boundaries": ["http-api-boundaries"],
-  "accessible-web-interfaces": ["accessible-interface-fundamentals"],
-  "portfolio-proof": ["git-collaboration-workflow"],
+type CompatibilityTarget = Readonly<{
+  unitId: string;
+  noteId: string;
+  criterionId: string;
+}>;
+
+const compatibilityTargets: Readonly<Record<string, readonly CompatibilityTarget[]>> = {
+  "programming-foundations": [
+    {
+      unitId: "async-js-control-flow",
+      noteId: "javascript-programming",
+      criterionId: "programming-javascript.foundation",
+    },
+  ],
+  "async-application-control-flow": [
+    {
+      unitId: "async-js-control-flow",
+      noteId: "javascript-programming",
+      criterionId: "programming-javascript.proficient",
+    },
+  ],
+  "typed-application-modeling": [
+    {
+      unitId: "typescript-application-modeling",
+      noteId: "typescript-application-modeling",
+      criterionId: "programming-typescript.proficient",
+    },
+  ],
+  "testing-real-behavior": [
+    {
+      unitId: "testing-observable-behavior",
+      noteId: "testing-observable-behavior",
+      criterionId: "testing-behavior.proficient",
+    },
+  ],
+  "http-api-boundaries": [
+    {
+      unitId: "http-api-boundaries",
+      noteId: "http-api-boundaries",
+      criterionId: "http-api-engineering.proficient",
+    },
+  ],
+  "accessible-web-interfaces": [
+    {
+      unitId: "accessible-interface-fundamentals",
+      noteId: "accessible-interface-fundamentals",
+      criterionId: "web-accessibility.developing",
+    },
+  ],
+  "portfolio-proof": [
+    {
+      unitId: "git-collaboration-workflow",
+      noteId: "git-collaboration-workflow",
+      criterionId: "git-collaboration.developing",
+    },
+  ],
 };
 
-const unitById = new Map<string, LearningUnit>(
-  learningUnitCatalog.map((unit) => [unit.id, unit] as const),
-);
+function targetFor(milestoneId: string, unitId: string): CompatibilityTarget | undefined {
+  return compatibilityTargets[milestoneId]?.find((target) => target.unitId === unitId);
+}
+
+function projectCompatibilityUnit(target: CompatibilityTarget): LearningUnit | null {
+  const note = getLearningNote(target.noteId);
+  const resolved = getLearningModuleByCriterion(target.criterionId);
+  if (!note || !resolved || resolved.note.id !== note.id || resolved.module.reviewStatus !== "reviewed") {
+    return null;
+  }
+
+  const learningModule = resolved.module;
+  const firstCriterion = {
+    en: learningModule.consolidationCriteria.en[0] ?? learningModule.understand.en,
+    "pt-BR":
+      learningModule.consolidationCriteria["pt-BR"][0] ?? learningModule.understand["pt-BR"],
+  };
+  const secondCriterion = {
+    en: learningModule.consolidationCriteria.en[1] ?? firstCriterion.en,
+    "pt-BR": learningModule.consolidationCriteria["pt-BR"][1] ?? firstCriterion["pt-BR"],
+  };
+
+  return {
+    id: target.unitId,
+    competencyId: note.competencyId,
+    title: note.title,
+    objective: note.objective,
+    explanation: learningModule.understand,
+    estimatedMinutes: learningModule.estimatedMinutes,
+    practice: [
+      {
+        id: `${target.unitId}:example`,
+        kind: "example",
+        prompt: learningModule.understand,
+      },
+      {
+        id: `${target.unitId}:problem`,
+        kind: "problem",
+        prompt: learningModule.commonMistake,
+      },
+      {
+        id: learningModule.practice.id,
+        kind: "practice",
+        prompt: learningModule.practice.prompt,
+      },
+      {
+        id: `${target.unitId}:checkpoint`,
+        kind: "checkpoint",
+        prompt: firstCriterion,
+      },
+      {
+        id: `${target.unitId}:handoff`,
+        kind: "handoff",
+        prompt: secondCriterion,
+      },
+    ],
+  };
+}
 
 export function getLearningUnitsForMilestone(milestoneId: string): readonly LearningUnit[] {
   getRoadmapMilestone(milestoneId);
-  const ids = milestoneUnitIds[milestoneId] ?? [];
-  return ids.map((id) => {
-    const unit = unitById.get(id);
-    if (!unit) throw new Error(`Unknown learning unit: ${id}`);
-    return unit;
-  });
-}
-
-function activityId(milestoneId: string, unitId: string): string {
-  return `learning:${milestoneId}:${unitId}:completed`;
+  return (compatibilityTargets[milestoneId] ?? [])
+    .map(projectCompatibilityUnit)
+    .filter((unit): unit is LearningUnit => unit !== null);
 }
 
 export function isLearningUnitCompleted(
@@ -62,37 +164,48 @@ export function isLearningUnitCompleted(
   milestoneId: string,
   unitId: string,
 ): boolean {
-  return profile.roadmap.supportingActivityId === activityId(milestoneId, unitId);
+  const target = targetFor(milestoneId, unitId);
+  if (!target) return false;
+  const resolved = getLearningModuleByCriterion(target.criterionId);
+  if (!resolved || resolved.note.id !== target.noteId || resolved.module.reviewStatus !== "reviewed") {
+    return false;
+  }
+
+  return (
+    getLearningProgress(profile, target.noteId)?.completedModuleIds.includes(resolved.module.id) === true
+  );
 }
 
 export function completeLearningUnit(
   profile: CareerProfile,
   milestoneId: string,
   unitId: string,
-  now = new Date().toISOString(),
+  now?: string,
 ): CareerProfile {
-  if (!Number.isFinite(Date.parse(now))) {
-    throw new Error("Learning completion requires a valid observed time");
-  }
-
   const roleId = profile.targetRoles[0];
-  if (!roleId) throw new Error("Learning completion requires a target role");
-  const roadmap = buildRoadmap(profile, getRoleMap(roleId));
-  if (!roadmap.milestoneIds.includes(milestoneId)) {
-    throw new Error(`Learning milestone is not part of the active roadmap: ${milestoneId}`);
+  if (!roleId) throw new Error("Career learning requires a target role");
+
+  const activeRoadmap = buildRoadmap(profile, getRoleMap(roleId));
+  if (!activeRoadmap.milestoneIds.includes(milestoneId)) {
+    throw new Error(`Learning milestone is not active for target role: ${milestoneId}`);
   }
 
-  const allowedUnit = getLearningUnitsForMilestone(milestoneId).find((unit) => unit.id === unitId);
-  if (!allowedUnit) {
-    throw new Error(`Learning unit ${unitId} is not assigned to milestone ${milestoneId}`);
+  const target = targetFor(milestoneId, unitId);
+  if (!target) {
+    throw new Error(`Learning unit is not available for milestone: ${milestoneId}/${unitId}`);
   }
 
-  return {
-    ...profile,
-    roadmap: {
-      ...roadmap,
-      supportingActivityId: activityId(milestoneId, unitId),
-    },
-    updatedAt: now,
-  };
+  const resolved = getLearningModuleByCriterion(target.criterionId);
+  if (!resolved || resolved.note.id !== target.noteId || resolved.module.reviewStatus !== "reviewed") {
+    throw new Error(`Learning unit has no reviewed module: ${milestoneId}/${unitId}`);
+  }
+
+  const afterPractice = completeLearningPractice(
+    profile,
+    target.noteId,
+    resolved.module.id,
+    resolved.module.practice.id,
+    now,
+  );
+  return completeLearningModule(afterPractice, target.noteId, resolved.module.id, now);
 }
