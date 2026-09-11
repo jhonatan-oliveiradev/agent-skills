@@ -1,5 +1,5 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
-import { getLearningNote } from "./learning-catalog";
+import { getLearningNote, learningNoteCatalog } from "./learning-catalog";
 import { completeLearningUnit } from "./learning";
 import { completeLearningModule, getLearningState } from "./learning-progress";
 import type { LearningNote } from "./learning-types";
@@ -9,7 +9,7 @@ vi.mock("./learning-catalog", async (importOriginal) => {
   const actual = await importOriginal<typeof import("./learning-catalog")>();
   return {
     ...actual,
-    getLearningNote: vi.fn(),
+    getLearningNote: vi.fn(actual.getLearningNote),
   };
 });
 
@@ -70,9 +70,10 @@ const fixtureNote: LearningNote = {
 
 beforeEach(() => {
   vi.mocked(getLearningNote).mockReset();
-  vi.mocked(getLearningNote).mockImplementation((noteId) =>
-    noteId === fixtureNote.id ? fixtureNote : undefined,
-  );
+  vi.mocked(getLearningNote).mockImplementation((noteId) => {
+    if (noteId === fixtureNote.id) return fixtureNote;
+    return learningNoteCatalog.find((note) => note.id === noteId);
+  });
 });
 
 describe("career learning integration regressions", () => {
