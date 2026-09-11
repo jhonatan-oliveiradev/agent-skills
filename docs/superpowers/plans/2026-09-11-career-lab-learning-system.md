@@ -13,7 +13,7 @@
 ## Non-negotiable contracts
 
 - Preserve Agent Skills Studio public version `1.1.0`.
-- Preserve all existing Career Lab public URLs; only add `/{locale}/career-lab/learning` and `/{locale}/career-lab/learning/[noteId]`.
+- Preserve all existing public Career Lab URLs; only add `/{locale}/career-lab/learning` and `/{locale}/career-lab/learning/[noteId]`.
 - Keep Career Lab local-first. No auth, cloud sync, billing, server-side profile storage, runtime model API, or background personal-data processing.
 - Runtime AI never generates lessons and never chooses recommendations.
 - Study progress never creates `EvidenceRecord`, changes competency level/confidence, raises readiness directly, or completes a roadmap milestone by itself.
