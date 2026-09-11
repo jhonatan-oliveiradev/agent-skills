@@ -1,3 +1,4 @@
+import { validateLearningProgressReferences } from "./learning-validation";
 import { migrateCareerProfile } from "./migrations";
 import { parseCareerProfile } from "./schema";
 import type { CareerProfile } from "./types";
@@ -17,6 +18,10 @@ function cloneCareerProfile(profile: CareerProfile): CareerProfile {
   return parseCareerProfile(JSON.parse(JSON.stringify(profile)) as unknown);
 }
 
+function validateForStorage(profile: CareerProfile): CareerProfile {
+  return validateLearningProgressReferences(parseCareerProfile(profile));
+}
+
 export function createMemoryCareerStorage(): CareerStorage {
   let current: CareerProfile | null = null;
 
@@ -25,8 +30,8 @@ export function createMemoryCareerStorage(): CareerStorage {
       return current === null ? null : cloneCareerProfile(current);
     },
     async save(profile) {
-      const parsed = parseCareerProfile(profile);
-      current = cloneCareerProfile(parsed);
+      const validated = validateForStorage(profile);
+      current = cloneCareerProfile(validated);
     },
     async clear() {
       current = null;
@@ -173,12 +178,12 @@ export function createIndexedDbCareerStorage(factory?: IDBFactory): CareerStorag
       }
     },
     async save(profile) {
-      // Validate before opening a write transaction so malformed imports can never
-      // replace a previously valid local profile.
-      const parsed = parseCareerProfile(profile);
+      // Validate structure and learning-domain references before opening a write
+      // transaction so malformed imports can never replace a valid local profile.
+      const validated = validateForStorage(profile);
       const database = await openCareerDatabase(indexedDb);
       try {
-        await writeActiveProfile(database, parsed);
+        await writeActiveProfile(database, validated);
       } finally {
         database.close();
       }

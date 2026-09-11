@@ -17,6 +17,34 @@ describe("CareerStorage", () => {
     expect(await storage.load()).toEqual(profile);
   });
 
+  it("rejects unresolved learning progress before replacing local state", async () => {
+    const storage = createMemoryCareerStorage();
+    const valid = createEmptyCareerProfile({
+      targetRole: "frontend-developer",
+      targetMarket: "br",
+      now: "2026-09-11T12:00:00.000Z",
+    });
+    await storage.save(valid);
+
+    const invalid = {
+      ...valid,
+      learningProgress: [
+        {
+          noteId: "unknown-note",
+          startedAt: "2026-09-11T12:00:00.000Z",
+          updatedAt: "2026-09-11T12:10:00.000Z",
+          currentModuleId: null,
+          completedModuleIds: [],
+          completedPracticeIds: [],
+          completedAt: null,
+        },
+      ],
+    };
+
+    await expect(storage.save(invalid)).rejects.toThrow(/unknown learning note/i);
+    expect(await storage.load()).toEqual(valid);
+  });
+
   it("clears only the active Career Profile value", async () => {
     const storage = createMemoryCareerStorage();
     const profile = createEmptyCareerProfile({

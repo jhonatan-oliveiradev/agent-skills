@@ -1,4 +1,5 @@
 import type { LearningUnit } from "./learning";
+import type { LearningModule, LearningNote } from "./learning-types";
 
 export const learningUnitCatalog = [
   {
@@ -101,3 +102,33 @@ export const learningUnitCatalog = [
     estimatedMinutes: 20,
   },
 ] as const satisfies readonly LearningUnit[];
+
+// New Career Learning notes are introduced incrementally. The legacy unit catalog
+// remains the Roadmap compatibility surface until the migration slice removes it.
+export const learningNoteCatalog: readonly LearningNote[] = [];
+
+export function getLearningNote(noteId: string): LearningNote | undefined {
+  return learningNoteCatalog.find((note) => note.id === noteId);
+}
+
+export function getLearningNoteByCompetency(
+  competencyId: LearningNote["competencyId"],
+): LearningNote | undefined {
+  return learningNoteCatalog.find((note) => note.competencyId === competencyId);
+}
+
+export function getReviewedLearningModules(note: LearningNote): readonly LearningModule[] {
+  return note.modules.filter((learningModule) => learningModule.reviewStatus === "reviewed");
+}
+
+export function getLearningModuleByCriterion(
+  criterionId: string,
+): Readonly<{ note: LearningNote; module: LearningModule }> | undefined {
+  for (const note of learningNoteCatalog) {
+    const learningModule = note.modules.find(
+      (candidate) => candidate.criterionId === criterionId,
+    );
+    if (learningModule) return { note, module: learningModule };
+  }
+  return undefined;
+}

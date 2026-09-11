@@ -14,6 +14,7 @@ import type {
   JobCapabilitySignal,
   JobSourceType,
   JobWorkMode,
+  LearningProgressRecord,
   MarketSample,
   MarketSignal,
   NormalizedJobPosting,
@@ -147,6 +148,12 @@ function parseStringArray(value: unknown, label: string, allowEmpty = true): rea
     assertString(item, `${label}[${index}]`);
     return item;
   });
+}
+
+function assertUniqueStrings(values: readonly string[], label: string): void {
+  if (new Set(values).size !== values.length) {
+    throw new Error(`${label}: duplicate id`);
+  }
 }
 
 function parseTargetRoles(value: unknown): readonly TargetRoleId[] {
@@ -305,6 +312,58 @@ function parseRoadmapState(value: unknown): RoadmapState {
     milestoneIds,
     currentFocusMilestoneId: value.currentFocusMilestoneId,
     supportingActivityId: value.supportingActivityId,
+  };
+}
+
+function parseLearningProgressRecord(
+  value: unknown,
+  label: string,
+): LearningProgressRecord {
+  assertRecord(value, label);
+  assertOnlyKeys(
+    value,
+    [
+      "noteId",
+      "startedAt",
+      "updatedAt",
+      "currentModuleId",
+      "completedModuleIds",
+      "completedPracticeIds",
+      "completedAt",
+    ],
+    label,
+  );
+  assertString(value.noteId, `${label}.noteId`);
+  assertIsoDateTime(value.startedAt, `${label}.startedAt`);
+  assertIsoDateTime(value.updatedAt, `${label}.updatedAt`);
+  if (Date.parse(value.updatedAt) < Date.parse(value.startedAt)) {
+    throw new Error(`${label}.updatedAt: must be on or after startedAt`);
+  }
+  if (value.currentModuleId !== null) {
+    assertString(value.currentModuleId, `${label}.currentModuleId`);
+  }
+  const completedModuleIds = parseStringArray(
+    value.completedModuleIds,
+    `${label}.completedModuleIds`,
+  );
+  const completedPracticeIds = parseStringArray(
+    value.completedPracticeIds,
+    `${label}.completedPracticeIds`,
+  );
+  assertUniqueStrings(completedModuleIds, `${label}.completedModuleIds`);
+  assertUniqueStrings(completedPracticeIds, `${label}.completedPracticeIds`);
+  if (value.completedAt !== null) {
+    assertIsoDateTime(value.completedAt, `${label}.completedAt`);
+  }
+
+  return {
+    noteId: value.noteId,
+    startedAt: value.startedAt,
+    updatedAt: value.updatedAt,
+    currentModuleId: value.currentModuleId,
+    completedModuleIds,
+    completedPracticeIds,
+    completedAt: value.completedAt,
   };
 }
 
@@ -573,7 +632,7 @@ function parseArray<T>(
 export function parseCareerProfile(value: unknown): CareerProfile {
   assertRecord(value, "careerProfile");
 
-  if (value.schemaVersion !== "1") {
+  if (value.schemaVersion !== "2") {
     throw new Error(`Unsupported career profile schema: ${String(value.schemaVersion)}`);
   }
 
@@ -587,6 +646,7 @@ export function parseCareerProfile(value: unknown): CareerProfile {
       "competencies",
       "assessments",
       "roadmap",
+      "learningProgress",
       "evidence",
       "marketSamples",
       "decisionRecords",
@@ -611,6 +671,15 @@ export function parseCareerProfile(value: unknown): CareerProfile {
   const competencies = parseArray(value.competencies, "competencies", parseCompetencyState);
   const assessments = parseArray(value.assessments, "assessments", parseAssessmentRecord);
   const roadmap = parseRoadmapState(value.roadmap);
+  const learningProgress = parseArray(
+    value.learningProgress,
+    "learningProgress",
+    parseLearningProgressRecord,
+  );
+  const noteIds = learningProgress.map((record) => record.noteId);
+  if (new Set(noteIds).size !== noteIds.length) {
+    throw new Error("learningProgress: duplicate note progress record");
+  }
   const evidence = parseArray(value.evidence, "evidence", parseEvidenceRecord);
   const marketSamples = parseArray(value.marketSamples, "marketSamples", parseMarketSample);
   const decisionRecords = parseArray(
@@ -622,13 +691,14 @@ export function parseCareerProfile(value: unknown): CareerProfile {
   assertIsoDateTime(value.updatedAt, "updatedAt");
 
   return {
-    schemaVersion: "1",
+    schemaVersion: "2",
     targetRoles: parsedTargetRoles,
     targetMarkets,
     weeklyStudyHours: value.weeklyStudyHours,
     competencies,
     assessments,
     roadmap,
+    learningProgress,
     evidence,
     marketSamples,
     decisionRecords,

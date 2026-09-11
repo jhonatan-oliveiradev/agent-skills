@@ -1,6 +1,6 @@
 import type { CareerProfile, TargetRoleId } from "./types";
 
-export const CAREER_PROFILE_SCHEMA_VERSION = "1" as const;
+export const CAREER_PROFILE_SCHEMA_VERSION = "2" as const;
 
 export interface CreateEmptyCareerProfileInput {
   readonly targetRole: TargetRoleId;
@@ -52,6 +52,7 @@ export function createEmptyCareerProfile(
     evidence: [],
     marketSamples: [],
     decisionRecords: [],
+    learningProgress: [],
     createdAt: timestamp,
     updatedAt: timestamp,
   };
