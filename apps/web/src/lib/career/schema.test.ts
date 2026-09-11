@@ -13,7 +13,7 @@ describe("Career Profile schema", () => {
     expect(parseCareerProfile(profile)).toEqual(profile);
   });
 
-  it("round-trips valid learning progress", () => {
+  it("round-trips structurally valid learning progress", () => {
     const profile = {
       ...createEmptyCareerProfile({
         targetRole: "frontend-developer",
@@ -36,7 +36,7 @@ describe("Career Profile schema", () => {
     expect(parseCareerProfile(profile).learningProgress).toEqual(profile.learningProgress);
   });
 
-  it("rejects duplicate note progress records", () => {
+  it("rejects duplicate note progress records and completed ids", () => {
     const record = {
       noteId: "typescript-application-modeling",
       startedAt: "2026-09-11T12:00:00.000Z",
@@ -46,31 +46,82 @@ describe("Career Profile schema", () => {
       completedPracticeIds: [],
       completedAt: null,
     };
-    const profile = {
-      ...createEmptyCareerProfile({ targetRole: "frontend-developer", targetMarket: "br" }),
-      learningProgress: [record, { ...record }],
-    };
+    const base = createEmptyCareerProfile({
+      targetRole: "frontend-developer",
+      targetMarket: "br",
+    });
 
-    expect(() => parseCareerProfile(profile)).toThrow(/duplicate.*note/i);
+    expect(() => parseCareerProfile({ ...base, learningProgress: [record, { ...record }] })).toThrow(
+      /duplicate.*note/i,
+    );
+    expect(() =>
+      parseCareerProfile({
+        ...base,
+        learningProgress: [
+          { ...record, completedModuleIds: ["module-a", "module-a"] },
+        ],
+      }),
+    ).toThrow(/duplicate.*completedModuleIds|completedModuleIds.*duplicate/i);
+    expect(() =>
+      parseCareerProfile({
+        ...base,
+        learningProgress: [
+          { ...record, completedPracticeIds: ["practice-a", "practice-a"] },
+        ],
+      }),
+    ).toThrow(/duplicate.*completedPracticeIds|completedPracticeIds.*duplicate/i);
   });
 
-  it("rejects invalid learning progress timestamps", () => {
-    const profile = {
-      ...createEmptyCareerProfile({ targetRole: "frontend-developer", targetMarket: "br" }),
-      learningProgress: [
-        {
-          noteId: "typescript-application-modeling",
-          startedAt: "not-a-date",
-          updatedAt: "2026-09-11T12:10:00.000Z",
-          currentModuleId: null,
-          completedModuleIds: [],
-          completedPracticeIds: [],
-          completedAt: null,
-        },
-      ],
+  it("rejects invalid and non-monotonic learning progress timestamps", () => {
+    const base = createEmptyCareerProfile({
+      targetRole: "frontend-developer",
+      targetMarket: "br",
+    });
+    const record = {
+      noteId: "typescript-application-modeling",
+      startedAt: "2026-09-11T12:00:00.000Z",
+      updatedAt: "2026-09-11T12:10:00.000Z",
+      currentModuleId: null,
+      completedModuleIds: [],
+      completedPracticeIds: [],
+      completedAt: null,
     };
 
-    expect(() => parseCareerProfile(profile)).toThrow(/startedAt/i);
+    for (const [field, value] of [
+      ["startedAt", "not-a-date"],
+      ["updatedAt", "not-a-date"],
+      ["completedAt", "not-a-date"],
+    ] as const) {
+      expect(() =>
+        parseCareerProfile({
+          ...base,
+          learningProgress: [{ ...record, [field]: value }],
+        }),
+      ).toThrow(new RegExp(field, "i"));
+    }
+
+    expect(() =>
+      parseCareerProfile({
+        ...base,
+        learningProgress: [
+          {
+            ...record,
+            startedAt: "2026-09-11T12:10:00.000Z",
+            updatedAt: "2026-09-11T12:00:00.000Z",
+          },
+        ],
+      }),
+    ).toThrow(/updatedAt.*startedAt|startedAt.*updatedAt/i);
+  });
+
+  it("requires learningProgress on schema v2 profiles", () => {
+    const profile = createEmptyCareerProfile({
+      targetRole: "frontend-developer",
+      targetMarket: "br",
+    });
+    const { learningProgress: _learningProgress, ...withoutLearningProgress } = profile;
+
+    expect(() => parseCareerProfile(withoutLearningProgress)).toThrow(/learningProgress/i);
   });
 
   it("rejects an unknown schema version instead of mutating local state", () => {

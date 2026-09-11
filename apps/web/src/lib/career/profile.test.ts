@@ -69,4 +69,65 @@ describe("createEmptyCareerProfile", () => {
       learningProgress: [],
     });
   });
+
+  it("copies only known v1 fields during migration", () => {
+    const v1 = {
+      schemaVersion: "1",
+      targetRoles: ["frontend-developer"],
+      targetMarkets: ["br"],
+      weeklyStudyHours: 8,
+      competencies: [],
+      assessments: [],
+      roadmap: {
+        milestoneIds: [],
+        currentFocusMilestoneId: null,
+        supportingActivityId: null,
+      },
+      evidence: [],
+      marketSamples: [],
+      decisionRecords: [],
+      createdAt: "2026-09-01T12:00:00.000Z",
+      updatedAt: "2026-09-01T12:00:00.000Z",
+      staleLegacyField: "must-not-survive",
+    };
+
+    expect(migrateCareerProfile(v1)).toEqual({
+      schemaVersion: "2",
+      targetRoles: v1.targetRoles,
+      targetMarkets: v1.targetMarkets,
+      weeklyStudyHours: v1.weeklyStudyHours,
+      competencies: v1.competencies,
+      assessments: v1.assessments,
+      roadmap: v1.roadmap,
+      learningProgress: [],
+      evidence: v1.evidence,
+      marketSamples: v1.marketSamples,
+      decisionRecords: v1.decisionRecords,
+      createdAt: v1.createdAt,
+      updatedAt: v1.updatedAt,
+    });
+  });
+
+  it("rejects v2 learning progress whose note is absent from the curated catalog", () => {
+    const profile = {
+      ...createEmptyCareerProfile({
+        targetRole: "frontend-developer",
+        targetMarket: "br",
+        now: "2026-09-11T12:00:00.000Z",
+      }),
+      learningProgress: [
+        {
+          noteId: "unknown-note",
+          startedAt: "2026-09-11T12:00:00.000Z",
+          updatedAt: "2026-09-11T12:10:00.000Z",
+          currentModuleId: null,
+          completedModuleIds: [],
+          completedPracticeIds: [],
+          completedAt: null,
+        },
+      ],
+    };
+
+    expect(() => migrateCareerProfile(profile)).toThrow(/unknown learning note/i);
+  });
 });

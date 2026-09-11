@@ -1,7 +1,23 @@
-import { describe, expect, it } from "vitest";
+import { beforeEach, describe, expect, it, vi } from "vitest";
 import { competencyDefinitions } from "./competencies";
-import { validateLearningCatalog } from "./learning-validation";
+import {
+  getLearningNote,
+  getReviewedLearningModules,
+} from "./learning-catalog";
+import {
+  validateLearningCatalog,
+  validateLearningProgressReferences,
+} from "./learning-validation";
 import type { LearningNote, LearningSource } from "./learning-types";
+import { createEmptyCareerProfile } from "./profile";
+
+vi.mock("./learning-catalog", async (importOriginal) => {
+  const actual = await importOriginal<typeof import("./learning-catalog")>();
+  return {
+    ...actual,
+    getLearningNote: vi.fn(),
+  };
+});
 
 const source: LearningSource = {
   id: "ts-handbook-narrowing",
@@ -65,6 +81,34 @@ const note: LearningNote = {
   ],
 };
 
+function profileWithProgress() {
+  return {
+    ...createEmptyCareerProfile({
+      targetRole: "frontend-developer",
+      targetMarket: "br",
+      now: "2026-09-11T12:00:00.000Z",
+    }),
+    learningProgress: [
+      {
+        noteId: note.id,
+        startedAt: "2026-09-11T12:00:00.000Z",
+        updatedAt: "2026-09-11T12:10:00.000Z",
+        currentModuleId: note.modules[0]!.id,
+        completedModuleIds: [note.modules[0]!.id],
+        completedPracticeIds: [note.modules[0]!.practice.id],
+        completedAt: "2026-09-11T12:10:00.000Z",
+      },
+    ],
+  };
+}
+
+beforeEach(() => {
+  vi.mocked(getLearningNote).mockReset();
+  vi.mocked(getLearningNote).mockImplementation((noteId) =>
+    noteId === note.id ? note : undefined,
+  );
+});
+
 describe("learning catalog governance", () => {
   it("accepts reviewed bilingual criterion-mapped content backed by a primary source", () => {
     expect(validateLearningCatalog([note], [source])).toEqual([note]);
@@ -82,29 +126,6 @@ describe("learning catalog governance", () => {
     };
 
     expect(() => validateLearningCatalog([invalid], [source])).toThrow(/criterion.*competency/i);
-  });
-
-  it("rejects required-primary modules without a primary source", () => {
-    const pedagogical: LearningSource = {
-      ...source,
-      authority: "recognized-pedagogical",
-    };
-
-    expect(() => validateLearningCatalog([note], [pedagogical])).toThrow(/primary/i);
-  });
-
-  it("requires a reason when primarySourcePolicy is not-available", () => {
-    const invalid = {
-      ...note,
-      modules: [
-        {
-          ...note.modules[0],
-          primarySourcePolicy: "not-available" as const,
-        },
-      ],
-    };
-
-    expect(() => validateLearningCatalog([invalid], [source])).toThrow(/reason/i);
   });
 
   it("rejects duplicate note, module, practice, and source ids", () => {
@@ -128,6 +149,105 @@ describe("learning catalog governance", () => {
       modules: [note.modules[0], secondModule],
     };
     expect(() => validateLearningCatalog([duplicatePracticeNote], [source])).toThrow(/duplicate practice/i);
+  });
+
+  it("rejects incomplete bilingual content and invalid review timestamps", () => {
+    const missingPtBr: LearningNote = {
+      ...note,
+      modules: [
+        {
+          ...note.modules[0],
+          understand: { en: "Use explicit variants.", "pt-BR": "" },
+        },
+      ],
+    };
+    expect(() => validateLearningCatalog([missingPtBr], [source])).toThrow(/pt-BR/i);
+
+    const invalidTimestamp: LearningNote = {
+      ...note,
+      modules: [{ ...note.modules[0], reviewedAt: "not-a-date" }],
+    };
+    expect(() => validateLearningCatalog([invalidTimestamp], [source])).toThrow(/reviewedAt/i);
+  });
+
+  it("rejects unknown source references and sources claiming unknown criteria", () => {
+    const unknownSourceNote: LearningNote = {
+      ...note,
+      modules: [{ ...note.modules[0], sourceIds: ["missing-source"] }],
+    };
+    expect(() => validateLearningCatalog([unknownSourceNote], [source])).toThrow(/unknown source/i);
+
+    const invalidSource: LearningSource = {
+      ...source,
+      supportsCriterionIds: ["programming-typescript.unknown"],
+    };
+    expect(() => validateLearningCatalog([note], [invalidSource])).toThrow(/unknown criterion/i);
+  });
+
+  it("enforces primary-source policy and localized not-available reasons", () => {
+    const pedagogical: LearningSource = {
+      ...source,
+      authority: "recognized-pedagogical",
+    };
+    expect(() => validateLearningCatalog([note], [pedagogical])).toThrow(/primary/i);
+
+    const missingReason: LearningNote = {
+      ...note,
+      modules: [
+        {
+          ...note.modules[0],
+          primarySourcePolicy: "not-available",
+          primarySourceReason: { en: "No suitable primary source.", "pt-BR": "" },
+        },
+      ],
+    };
+    expect(() => validateLearningCatalog([missingReason], [pedagogical])).toThrow(/pt-BR/i);
+  });
+
+  it("filters draft modules out of reviewed learning content", () => {
+    const draft = { ...note.modules[0]!, id: "draft-module", reviewStatus: "draft" as const };
+    expect(getReviewedLearningModules({ ...note, modules: [note.modules[0]!, draft] })).toEqual([
+      note.modules[0],
+    ]);
+  });
+
+  it("validates learning progress references against the curated note domain", () => {
+    const profile = profileWithProgress();
+    expect(validateLearningProgressReferences(profile)).toBe(profile);
+
+    expect(() =>
+      validateLearningProgressReferences({
+        ...profile,
+        learningProgress: [{ ...profile.learningProgress[0]!, noteId: "unknown-note" }],
+      }),
+    ).toThrow(/unknown learning note/i);
+
+    expect(() =>
+      validateLearningProgressReferences({
+        ...profile,
+        learningProgress: [
+          { ...profile.learningProgress[0]!, currentModuleId: "unknown-module" },
+        ],
+      }),
+    ).toThrow(/unknown learning module/i);
+
+    expect(() =>
+      validateLearningProgressReferences({
+        ...profile,
+        learningProgress: [
+          { ...profile.learningProgress[0]!, completedModuleIds: ["unknown-module"] },
+        ],
+      }),
+    ).toThrow(/unknown learning module/i);
+
+    expect(() =>
+      validateLearningProgressReferences({
+        ...profile,
+        learningProgress: [
+          { ...profile.learningProgress[0]!, completedPracticeIds: ["unknown-practice"] },
+        ],
+      }),
+    ).toThrow(/unknown learning practice/i);
   });
 
   it("keeps all canonical competency criteria addressable", () => {

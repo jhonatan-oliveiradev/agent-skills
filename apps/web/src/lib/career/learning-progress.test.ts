@@ -1,5 +1,5 @@
-import { describe, expect, it } from "vitest";
-import { calculateRoleReadiness } from "./readiness";
+import { beforeEach, describe, expect, it, vi } from "vitest";
+import { getLearningNote } from "./learning-catalog";
 import {
   completeLearningModule,
   completeLearningPractice,
@@ -9,8 +9,17 @@ import {
 } from "./learning-progress";
 import type { LearningNote } from "./learning-types";
 import { createEmptyCareerProfile } from "./profile";
+import { calculateRoleReadiness } from "./readiness";
 import { buildRoadmap } from "./roadmap-engine";
 import { getRoleMap } from "./role-maps";
+
+vi.mock("./learning-catalog", async (importOriginal) => {
+  const actual = await importOriginal<typeof import("./learning-catalog")>();
+  return {
+    ...actual,
+    getLearningNote: vi.fn(),
+  };
+});
 
 const note: LearningNote = {
   id: "typescript-application-modeling",
@@ -79,8 +88,6 @@ const note: LearningNote = {
   ],
 };
 
-const notes = [note] as const;
-
 function profileWithRoadmap() {
   const profile = createEmptyCareerProfile({
     targetRole: "frontend-developer",
@@ -94,6 +101,13 @@ function profileWithRoadmap() {
   };
 }
 
+beforeEach(() => {
+  vi.mocked(getLearningNote).mockReset();
+  vi.mocked(getLearningNote).mockImplementation((noteId) =>
+    noteId === note.id ? note : undefined,
+  );
+});
+
 describe("Career learning progress", () => {
   it("starts a reviewed module without mutating professional state", () => {
     const before = profileWithRoadmap();
@@ -102,7 +116,6 @@ describe("Career learning progress", () => {
       note.id,
       note.modules[0]!.id,
       "2026-09-11T12:10:00.000Z",
-      notes,
     );
 
     expect(getLearningProgress(after, note.id)).toMatchObject({
@@ -126,7 +139,6 @@ describe("Career learning progress", () => {
       note.modules[0]!.id,
       note.modules[0]!.practice.id,
       "2026-09-11T12:15:00.000Z",
-      notes,
     );
     const afterPracticeAgain = completeLearningPractice(
       afterPractice,
@@ -134,21 +146,18 @@ describe("Career learning progress", () => {
       note.modules[0]!.id,
       note.modules[0]!.practice.id,
       "2026-09-11T12:16:00.000Z",
-      notes,
     );
     const afterModule = completeLearningModule(
       afterPracticeAgain,
       note.id,
       note.modules[0]!.id,
       "2026-09-11T12:20:00.000Z",
-      notes,
     );
     const afterModuleAgain = completeLearningModule(
       afterModule,
       note.id,
       note.modules[0]!.id,
       "2026-09-11T12:21:00.000Z",
-      notes,
     );
 
     const progress = getLearningProgress(afterModuleAgain, note.id);
@@ -165,7 +174,6 @@ describe("Career learning progress", () => {
       note.id,
       note.modules[0]!.id,
       "2026-09-11T12:20:00.000Z",
-      notes,
     );
     expect(getLearningState(first, note)).toBe("in-progress");
     expect(getLearningProgress(first, note.id)?.completedAt).toBeNull();
@@ -175,7 +183,6 @@ describe("Career learning progress", () => {
       note.id,
       note.modules[1]!.id,
       "2026-09-11T12:30:00.000Z",
-      notes,
     );
     expect(getLearningState(second, note)).toBe("studied");
     expect(getLearningProgress(second, note.id)?.completedAt).toBe(
@@ -183,7 +190,7 @@ describe("Career learning progress", () => {
     );
   });
 
-  it("records study without changing evidence, competency state, readiness, or roadmap", () => {
+  it("changes only learning progress and profile updatedAt when study is completed", () => {
     const before = profileWithRoadmap();
     const readinessBefore = calculateRoleReadiness(before, getRoleMap("frontend-developer"));
     const after = completeLearningModule(
@@ -191,14 +198,17 @@ describe("Career learning progress", () => {
       note.id,
       note.modules[1]!.id,
       "2026-09-11T13:00:00.000Z",
-      notes,
     );
 
     expect(after.learningProgress).not.toEqual(before.learningProgress);
+    expect(after.updatedAt).toBe("2026-09-11T13:00:00.000Z");
     expect(after.competencies).toEqual(before.competencies);
     expect(after.evidence).toEqual(before.evidence);
     expect(after.assessments).toEqual(before.assessments);
     expect(after.roadmap).toEqual(before.roadmap);
+    expect(after.roadmap.supportingActivityId).toBe(before.roadmap.supportingActivityId);
+    expect(after.marketSamples).toEqual(before.marketSamples);
+    expect(after.decisionRecords).toEqual(before.decisionRecords);
     expect(calculateRoleReadiness(after, getRoleMap("frontend-developer"))).toEqual(
       readinessBefore,
     );
@@ -206,20 +216,18 @@ describe("Career learning progress", () => {
 
   it("fails closed for unknown notes, modules, practices, and draft modules", () => {
     const profile = profileWithRoadmap();
-    expect(() =>
-      startLearningModule(profile, "unknown-note", "unknown-module", undefined, notes),
-    ).toThrow(/unknown learning note/i);
-    expect(() =>
-      startLearningModule(profile, note.id, "unknown-module", undefined, notes),
-    ).toThrow(/unknown learning module/i);
+    expect(() => startLearningModule(profile, "unknown-note", "unknown-module")).toThrow(
+      /unknown learning note/i,
+    );
+    expect(() => startLearningModule(profile, note.id, "unknown-module")).toThrow(
+      /unknown learning module/i,
+    );
     expect(() =>
       completeLearningPractice(
         profile,
         note.id,
         note.modules[0]!.id,
         "wrong-practice",
-        undefined,
-        notes,
       ),
     ).toThrow(/unknown learning practice/i);
 
@@ -228,8 +236,13 @@ describe("Career learning progress", () => {
       id: "draft-note",
       modules: [{ ...note.modules[0]!, id: "draft-module", reviewStatus: "draft" }],
     };
-    expect(() =>
-      startLearningModule(profile, draftNote.id, "draft-module", undefined, [draftNote]),
-    ).toThrow(/reviewed/i);
+    vi.mocked(getLearningNote).mockImplementation((noteId) => {
+      if (noteId === note.id) return note;
+      if (noteId === draftNote.id) return draftNote;
+      return undefined;
+    });
+    expect(() => startLearningModule(profile, draftNote.id, "draft-module")).toThrow(
+      /reviewed/i,
+    );
   });
 });

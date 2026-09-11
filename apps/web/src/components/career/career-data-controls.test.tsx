@@ -10,6 +10,51 @@ import {
   serializeCareerProfile,
 } from "./career-data-controls";
 
+const { learningNoteFixture } = vi.hoisted(() => ({
+  learningNoteFixture: {
+    id: "typescript-application-modeling",
+    competencyId: "programming-typescript",
+    title: { en: "TypeScript application modeling", "pt-BR": "Modelagem com TypeScript" },
+    summary: { en: "Model application state.", "pt-BR": "Modele o estado da aplicação." },
+    objective: { en: "Represent valid states.", "pt-BR": "Represente estados válidos." },
+    estimatedMinutes: 8,
+    modules: [
+      {
+        id: "programming-typescript-developing",
+        criterionId: "programming-typescript.developing",
+        level: "developing",
+        title: { en: "Application state", "pt-BR": "Estado da aplicação" },
+        estimatedMinutes: 8,
+        contentVersion: "1",
+        reviewStatus: "reviewed",
+        reviewedAt: "2026-09-11T00:00:00.000Z",
+        primarySourcePolicy: "required",
+        understand: { en: "Model explicit states.", "pt-BR": "Modele estados explícitos." },
+        commonMistake: { en: "Loose optionals.", "pt-BR": "Opcionais frouxos." },
+        practice: {
+          id: "programming-typescript-developing-practice",
+          prompt: { en: "Refactor one state.", "pt-BR": "Refatore um estado." },
+        },
+        consolidationCriteria: {
+          en: ["Explains the state model."],
+          "pt-BR": ["Explica o modelo de estado."],
+        },
+        sourceIds: ["fixture-source"],
+      },
+    ],
+  },
+}));
+
+vi.mock("@/lib/career/learning-catalog", async (importOriginal) => {
+  const actual = await importOriginal<typeof import("@/lib/career/learning-catalog")>();
+  return {
+    ...actual,
+    getLearningNote: vi.fn((noteId: string) =>
+      noteId === learningNoteFixture.id ? learningNoteFixture : undefined,
+    ),
+  };
+});
+
 function makeProfile() {
   return createEmptyCareerProfile({
     targetRole: "frontend-developer",
@@ -51,13 +96,13 @@ describe("Career Lab data controls", () => {
       ...makeProfile(),
       learningProgress: [
         {
-          noteId: "typescript-application-modeling",
+          noteId: learningNoteFixture.id,
           startedAt: "2026-09-11T12:00:00.000Z",
           updatedAt: "2026-09-11T12:10:00.000Z",
-          currentModuleId: "programming-typescript-developing",
-          completedModuleIds: ["programming-typescript-foundation"],
-          completedPracticeIds: ["programming-typescript-foundation-practice"],
-          completedAt: null,
+          currentModuleId: learningNoteFixture.modules[0].id,
+          completedModuleIds: [learningNoteFixture.modules[0].id],
+          completedPracticeIds: [learningNoteFixture.modules[0].practice.id],
+          completedAt: "2026-09-11T12:10:00.000Z",
         },
       ],
     };
