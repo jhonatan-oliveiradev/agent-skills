@@ -26,18 +26,55 @@ import type {
   TargetRoleId,
 } from "./types";
 
-const targetRoles = ["frontend-developer", "backend-developer", "fullstack-developer"] as const satisfies readonly TargetRoleId[];
-const proficiencyLevels = ["foundation", "developing", "proficient", "advanced"] as const satisfies readonly ProficiencyLevel[];
+const targetRoles = [
+  "frontend-developer",
+  "backend-developer",
+  "fullstack-developer",
+] as const satisfies readonly TargetRoleId[];
+const proficiencyLevels = [
+  "foundation",
+  "developing",
+  "proficient",
+  "advanced",
+] as const satisfies readonly ProficiencyLevel[];
 const confidenceLevels = ["low", "medium", "high"] as const satisfies readonly ConfidenceLevel[];
 const evidenceClasses = ["E0", "E1", "E2", "E3", "E4"] as const satisfies readonly EvidenceClass[];
-const evidenceTrust = ["local-deterministic", "external-unverified", "user-claimed"] as const satisfies readonly EvidenceTrust[];
-const evidenceSourceTypes = ["self-report", "assessment", "portfolio", "practice"] as const satisfies readonly EvidenceSourceType[];
-const artifactTypes = ["assessment-result", "roadmap-update", "learning-unit", "portfolio-evidence", "market-analysis"] as const satisfies readonly CareerArtifactType[];
+const evidenceTrust = [
+  "local-deterministic",
+  "external-unverified",
+  "user-claimed",
+] as const satisfies readonly EvidenceTrust[];
+const evidenceSourceTypes = [
+  "self-report",
+  "assessment",
+  "portfolio",
+  "practice",
+] as const satisfies readonly EvidenceSourceType[];
+const artifactTypes = [
+  "assessment-result",
+  "roadmap-update",
+  "learning-unit",
+  "portfolio-evidence",
+  "market-analysis",
+] as const satisfies readonly CareerArtifactType[];
 const decisionKinds = ["roadmap-recalculation", "target-change", "profile-import"] as const;
 const jobSourceTypes = ["url", "pasted", "agent-import"] as const satisfies readonly JobSourceType[];
 const jobWorkModes = ["remote", "hybrid", "onsite", "unknown"] as const satisfies readonly JobWorkMode[];
-const structuralRequirementKinds = ["experience", "location", "work-authorization", "language", "work-mode", "credential", "availability", "other"] as const satisfies readonly StructuralRequirementKind[];
-const structuralRequirementStatuses = ["met", "unmet", "unknown"] as const satisfies readonly StructuralRequirementStatus[];
+const structuralRequirementKinds = [
+  "experience",
+  "location",
+  "work-authorization",
+  "language",
+  "work-mode",
+  "credential",
+  "availability",
+  "other",
+] as const satisfies readonly StructuralRequirementKind[];
+const structuralRequirementStatuses = [
+  "met",
+  "unmet",
+  "unknown",
+] as const satisfies readonly StructuralRequirementStatus[];
 
 export function assertRecord(
   value: unknown,
@@ -48,9 +85,15 @@ export function assertRecord(
   }
 }
 
-function assertOnlyKeys(value: Record<string, unknown>, allowed: readonly string[], label: string): void {
+function assertOnlyKeys(
+  value: Record<string, unknown>,
+  allowed: readonly string[],
+  label: string,
+): void {
   const unknownKey = Object.keys(value).find((key) => !allowed.includes(key));
-  if (unknownKey) throw new Error(`${label}.${unknownKey}: unexpected field`);
+  if (unknownKey) {
+    throw new Error(`${label}.${unknownKey}: unexpected field`);
+  }
 }
 
 function assertString(value: unknown, label: string): asserts value is string {
@@ -100,6 +143,7 @@ function parseStringArray(value: unknown, label: string, allowEmpty = true): rea
   if (!Array.isArray(value) || (!allowEmpty && value.length === 0)) {
     throw new Error(`${label}: expected ${allowEmpty ? "array" : "non-empty array"}`);
   }
+
   return value.map((item, index) => {
     assertString(item, `${label}[${index}]`);
     return item;
@@ -112,15 +156,11 @@ function assertUniqueStrings(values: readonly string[], label: string): void {
   }
 }
 
-function parseArray<T>(value: unknown, label: string, parser: (item: unknown, label: string) => T): readonly T[] {
-  if (!Array.isArray(value)) throw new Error(`${label}: expected array`);
-  return value.map((item, index) => parser(item, `${label}[${index}]`));
-}
-
 function parseTargetRoles(value: unknown): readonly TargetRoleId[] {
   if (!Array.isArray(value) || value.length === 0) {
     throw new Error("targetRoles: expected non-empty array");
   }
+
   return value.map((item, index) => {
     assertOneOf(item, targetRoles, `targetRoles[${index}]`);
     return item;
@@ -129,12 +169,21 @@ function parseTargetRoles(value: unknown): readonly TargetRoleId[] {
 
 function parseCompetencyState(value: unknown, label: string): CompetencyState {
   assertRecord(value, label);
-  assertOnlyKeys(value, ["competencyId", "level", "confidence", "evidenceIds", "lastAssessedAt"], label);
+  assertOnlyKeys(
+    value,
+    ["competencyId", "level", "confidence", "evidenceIds", "lastAssessedAt"],
+    label,
+  );
   assertString(value.competencyId, `${label}.competencyId`);
-  if (value.level !== null) assertOneOf(value.level, proficiencyLevels, `${label}.level`);
+  if (value.level !== null) {
+    assertOneOf(value.level, proficiencyLevels, `${label}.level`);
+  }
   assertOneOf(value.confidence, confidenceLevels, `${label}.confidence`);
   const evidenceIds = parseStringArray(value.evidenceIds, `${label}.evidenceIds`);
-  if (value.lastAssessedAt !== null) assertIsoDateTime(value.lastAssessedAt, `${label}.lastAssessedAt`);
+  if (value.lastAssessedAt !== null) {
+    assertIsoDateTime(value.lastAssessedAt, `${label}.lastAssessedAt`);
+  }
+
   return {
     competencyId: value.competencyId,
     level: value.level,
@@ -146,7 +195,22 @@ function parseCompetencyState(value: unknown, label: string): CompetencyState {
 
 function parseEvidenceRecord(value: unknown, label: string): EvidenceRecord {
   assertRecord(value, label);
-  assertOnlyKeys(value, ["id", "competencyId", "class", "sourceType", "trust", "observedAt", "summary", "sourceUrl", "demonstratedLevel", "criterionIds"], label);
+  assertOnlyKeys(
+    value,
+    [
+      "id",
+      "competencyId",
+      "class",
+      "sourceType",
+      "trust",
+      "observedAt",
+      "summary",
+      "sourceUrl",
+      "demonstratedLevel",
+      "criterionIds",
+    ],
+    label,
+  );
   assertString(value.id, `${label}.id`);
   assertString(value.competencyId, `${label}.competencyId`);
   assertOneOf(value.class, evidenceClasses, `${label}.class`);
@@ -154,18 +218,25 @@ function parseEvidenceRecord(value: unknown, label: string): EvidenceRecord {
   assertOneOf(value.trust, evidenceTrust, `${label}.trust`);
   assertIsoDateTime(value.observedAt, `${label}.observedAt`);
   assertString(value.summary, `${label}.summary`);
-  if (value.sourceUrl !== undefined) assertString(value.sourceUrl, `${label}.sourceUrl`);
+  if (value.sourceUrl !== undefined) {
+    assertString(value.sourceUrl, `${label}.sourceUrl`);
+  }
 
   let demonstratedLevel: ProficiencyLevel | undefined;
   if (value.demonstratedLevel !== undefined) {
     assertOneOf(value.demonstratedLevel, proficiencyLevels, `${label}.demonstratedLevel`);
     demonstratedLevel = value.demonstratedLevel;
   }
-  const criterionIds = value.criterionIds === undefined
-    ? undefined
-    : parseStringArray(value.criterionIds, `${label}.criterionIds`, false);
+
+  const criterionIds =
+    value.criterionIds === undefined
+      ? undefined
+      : parseStringArray(value.criterionIds, `${label}.criterionIds`, false);
+
   if ((demonstratedLevel === undefined) !== (criterionIds === undefined)) {
-    throw new Error(`${label}: demonstratedLevel and criterionIds must be supplied together`);
+    throw new Error(
+      `${label}: demonstratedLevel and criterionIds must be supplied together`,
+    );
   }
 
   return {
@@ -184,7 +255,21 @@ function parseEvidenceRecord(value: unknown, label: string): EvidenceRecord {
 
 function parseAssessmentRecord(value: unknown, label: string): AssessmentRecord {
   assertRecord(value, label);
-  assertOnlyKeys(value, ["id", "blueprintId", "blueprintVersion", "competencyId", "level", "confidence", "evidenceIds", "completedAt", "trust"], label);
+  assertOnlyKeys(
+    value,
+    [
+      "id",
+      "blueprintId",
+      "blueprintVersion",
+      "competencyId",
+      "level",
+      "confidence",
+      "evidenceIds",
+      "completedAt",
+      "trust",
+    ],
+    label,
+  );
   assertString(value.id, `${label}.id`);
   assertString(value.blueprintId, `${label}.blueprintId`);
   assertString(value.blueprintVersion, `${label}.blueprintVersion`);
@@ -194,6 +279,7 @@ function parseAssessmentRecord(value: unknown, label: string): AssessmentRecord 
   const evidenceIds = parseStringArray(value.evidenceIds, `${label}.evidenceIds`);
   assertIsoDateTime(value.completedAt, `${label}.completedAt`);
   assertOneOf(value.trust, evidenceTrust, `${label}.trust`);
+
   return {
     id: value.id,
     blueprintId: value.blueprintId,
@@ -209,10 +295,19 @@ function parseAssessmentRecord(value: unknown, label: string): AssessmentRecord 
 
 function parseRoadmapState(value: unknown): RoadmapState {
   assertRecord(value, "roadmap");
-  assertOnlyKeys(value, ["milestoneIds", "currentFocusMilestoneId", "supportingActivityId"], "roadmap");
+  assertOnlyKeys(
+    value,
+    ["milestoneIds", "currentFocusMilestoneId", "supportingActivityId"],
+    "roadmap",
+  );
   const milestoneIds = parseStringArray(value.milestoneIds, "roadmap.milestoneIds");
-  if (value.currentFocusMilestoneId !== null) assertString(value.currentFocusMilestoneId, "roadmap.currentFocusMilestoneId");
-  if (value.supportingActivityId !== null) assertString(value.supportingActivityId, "roadmap.supportingActivityId");
+  if (value.currentFocusMilestoneId !== null) {
+    assertString(value.currentFocusMilestoneId, "roadmap.currentFocusMilestoneId");
+  }
+  if (value.supportingActivityId !== null) {
+    assertString(value.supportingActivityId, "roadmap.supportingActivityId");
+  }
+
   return {
     milestoneIds,
     currentFocusMilestoneId: value.currentFocusMilestoneId,
@@ -220,21 +315,47 @@ function parseRoadmapState(value: unknown): RoadmapState {
   };
 }
 
-function parseLearningProgressRecord(value: unknown, label: string): LearningProgressRecord {
+function parseLearningProgressRecord(
+  value: unknown,
+  label: string,
+): LearningProgressRecord {
   assertRecord(value, label);
-  assertOnlyKeys(value, ["noteId", "startedAt", "updatedAt", "currentModuleId", "completedModuleIds", "completedPracticeIds", "completedAt"], label);
+  assertOnlyKeys(
+    value,
+    [
+      "noteId",
+      "startedAt",
+      "updatedAt",
+      "currentModuleId",
+      "completedModuleIds",
+      "completedPracticeIds",
+      "completedAt",
+    ],
+    label,
+  );
   assertString(value.noteId, `${label}.noteId`);
   assertIsoDateTime(value.startedAt, `${label}.startedAt`);
   assertIsoDateTime(value.updatedAt, `${label}.updatedAt`);
   if (Date.parse(value.updatedAt) < Date.parse(value.startedAt)) {
     throw new Error(`${label}.updatedAt: must be on or after startedAt`);
   }
-  if (value.currentModuleId !== null) assertString(value.currentModuleId, `${label}.currentModuleId`);
-  const completedModuleIds = parseStringArray(value.completedModuleIds, `${label}.completedModuleIds`);
-  const completedPracticeIds = parseStringArray(value.completedPracticeIds, `${label}.completedPracticeIds`);
+  if (value.currentModuleId !== null) {
+    assertString(value.currentModuleId, `${label}.currentModuleId`);
+  }
+  const completedModuleIds = parseStringArray(
+    value.completedModuleIds,
+    `${label}.completedModuleIds`,
+  );
+  const completedPracticeIds = parseStringArray(
+    value.completedPracticeIds,
+    `${label}.completedPracticeIds`,
+  );
   assertUniqueStrings(completedModuleIds, `${label}.completedModuleIds`);
   assertUniqueStrings(completedPracticeIds, `${label}.completedPracticeIds`);
-  if (value.completedAt !== null) assertIsoDateTime(value.completedAt, `${label}.completedAt`);
+  if (value.completedAt !== null) {
+    assertIsoDateTime(value.completedAt, `${label}.completedAt`);
+  }
+
   return {
     noteId: value.noteId,
     startedAt: value.startedAt,
@@ -252,13 +373,23 @@ function assertNonNegativeInteger(value: unknown, label: string): asserts value 
   }
 }
 
-function parseJobCapabilitySignal(value: unknown, label: string, expectedProvenance: "explicit" | "inferred"): JobCapabilitySignal {
+function parseJobCapabilitySignal(
+  value: unknown,
+  label: string,
+  expectedProvenance: "explicit" | "inferred",
+): JobCapabilitySignal {
   assertRecord(value, label);
   assertOnlyKeys(value, ["competencyId", "label", "provenance"], label);
   assertCompetencyId(value.competencyId, `${label}.competencyId`);
   assertString(value.label, `${label}.label`);
-  if (value.provenance !== expectedProvenance) throw new Error(`${label}.provenance: expected ${expectedProvenance}`);
-  return { competencyId: value.competencyId, label: value.label, provenance: expectedProvenance };
+  if (value.provenance !== expectedProvenance) {
+    throw new Error(`${label}.provenance: expected ${expectedProvenance}`);
+  }
+  return {
+    competencyId: value.competencyId,
+    label: value.label,
+    provenance: expectedProvenance,
+  };
 }
 
 function parseStructuralRequirement(value: unknown, label: string): StructuralRequirement {
@@ -266,14 +397,38 @@ function parseStructuralRequirement(value: unknown, label: string): StructuralRe
   assertOnlyKeys(value, ["kind", "label", "hard", "status"], label);
   assertOneOf(value.kind, structuralRequirementKinds, `${label}.kind`);
   assertString(value.label, `${label}.label`);
-  if (typeof value.hard !== "boolean") throw new Error(`${label}.hard: expected boolean`);
+  if (typeof value.hard !== "boolean") {
+    throw new Error(`${label}.hard: expected boolean`);
+  }
   assertOneOf(value.status, structuralRequirementStatuses, `${label}.status`);
-  return { kind: value.kind, label: value.label, hard: value.hard, status: value.status };
+  return {
+    kind: value.kind,
+    label: value.label,
+    hard: value.hard,
+    status: value.status,
+  };
 }
 
 function parseNormalizedJobPosting(value: unknown, label: string): NormalizedJobPosting {
   assertRecord(value, label);
-  assertOnlyKeys(value, ["id", "title", "company", "source", "postedAt", "deadline", "location", "workMode", "explicitSignals", "inferredSignals", "structuralRequirements", "rawSnapshot"], label);
+  assertOnlyKeys(
+    value,
+    [
+      "id",
+      "title",
+      "company",
+      "source",
+      "postedAt",
+      "deadline",
+      "location",
+      "workMode",
+      "explicitSignals",
+      "inferredSignals",
+      "structuralRequirements",
+      "rawSnapshot",
+    ],
+    label,
+  );
   assertString(value.id, `${label}.id`);
   assertString(value.title, `${label}.title`);
   assertString(value.company, `${label}.company`);
@@ -286,10 +441,26 @@ function parseNormalizedJobPosting(value: unknown, label: string): NormalizedJob
   if (value.deadline !== null) assertIsoDateTime(value.deadline, `${label}.deadline`);
   if (value.location !== null) assertString(value.location, `${label}.location`);
   assertOneOf(value.workMode, jobWorkModes, `${label}.workMode`);
-  const explicitSignals = parseArray(value.explicitSignals, `${label}.explicitSignals`, (signal, signalLabel) => parseJobCapabilitySignal(signal, signalLabel, "explicit"));
-  const inferredSignals = parseArray(value.inferredSignals, `${label}.inferredSignals`, (signal, signalLabel) => parseJobCapabilitySignal(signal, signalLabel, "inferred"));
-  const structuralRequirements = parseArray(value.structuralRequirements, `${label}.structuralRequirements`, parseStructuralRequirement);
+  if (!Array.isArray(value.explicitSignals)) {
+    throw new Error(`${label}.explicitSignals: expected array`);
+  }
+  if (!Array.isArray(value.inferredSignals)) {
+    throw new Error(`${label}.inferredSignals: expected array`);
+  }
+  if (!Array.isArray(value.structuralRequirements)) {
+    throw new Error(`${label}.structuralRequirements: expected array`);
+  }
+  const explicitSignals = value.explicitSignals.map((signal, index) =>
+    parseJobCapabilitySignal(signal, `${label}.explicitSignals[${index}]`, "explicit"),
+  );
+  const inferredSignals = value.inferredSignals.map((signal, index) =>
+    parseJobCapabilitySignal(signal, `${label}.inferredSignals[${index}]`, "inferred"),
+  );
+  const structuralRequirements = value.structuralRequirements.map((requirement, index) =>
+    parseStructuralRequirement(requirement, `${label}.structuralRequirements[${index}]`),
+  );
   assertString(value.rawSnapshot, `${label}.rawSnapshot`);
+
   return {
     id: value.id,
     title: value.title,
@@ -312,9 +483,15 @@ function parseNormalizedJobPosting(value: unknown, label: string): NormalizedJob
 
 function parseMarketSignal(value: unknown, label: string): MarketSignal {
   assertRecord(value, label);
-  assertOnlyKeys(value, ["competencyId", "provenance", "explicitCount", "inferredCount", "postingCount"], label);
+  assertOnlyKeys(
+    value,
+    ["competencyId", "provenance", "explicitCount", "inferredCount", "postingCount"],
+    label,
+  );
   assertCompetencyId(value.competencyId, `${label}.competencyId`);
-  if (value.provenance !== "market-derived") throw new Error(`${label}.provenance: expected market-derived`);
+  if (value.provenance !== "market-derived") {
+    throw new Error(`${label}.provenance: expected market-derived`);
+  }
   assertNonNegativeInteger(value.explicitCount, `${label}.explicitCount`);
   assertNonNegativeInteger(value.inferredCount, `${label}.inferredCount`);
   assertNonNegativeInteger(value.postingCount, `${label}.postingCount`);
@@ -329,22 +506,64 @@ function parseMarketSignal(value: unknown, label: string): MarketSignal {
 
 function parseMarketSample(value: unknown, label: string): MarketSample {
   assertRecord(value, label);
-  assertOnlyKeys(value, ["id", "targetRole", "targetMarket", "capturedAt", "postingCount", "distinctCompanyCount", "distinctSourceCount", "deduplicatedCount", "freshCount", "recentCount", "historicalCount", "unknownDateCount", "signals", "postings"], label);
+  assertOnlyKeys(
+    value,
+    [
+      "id",
+      "targetRole",
+      "targetMarket",
+      "capturedAt",
+      "postingCount",
+      "distinctCompanyCount",
+      "distinctSourceCount",
+      "deduplicatedCount",
+      "freshCount",
+      "recentCount",
+      "historicalCount",
+      "unknownDateCount",
+      "signals",
+      "postings",
+    ],
+    label,
+  );
   assertString(value.id, `${label}.id`);
-  if (value.targetRole !== undefined) assertOneOf(value.targetRole, targetRoles, `${label}.targetRole`);
-  if (value.targetMarket !== undefined) assertString(value.targetMarket, `${label}.targetMarket`);
+  if (value.targetRole !== undefined) {
+    assertOneOf(value.targetRole, targetRoles, `${label}.targetRole`);
+  }
+  if (value.targetMarket !== undefined) {
+    assertString(value.targetMarket, `${label}.targetMarket`);
+  }
   assertIsoDateTime(value.capturedAt, `${label}.capturedAt`);
   assertNonNegativeInteger(value.postingCount, `${label}.postingCount`);
   assertNonNegativeInteger(value.distinctCompanyCount, `${label}.distinctCompanyCount`);
   assertNonNegativeInteger(value.distinctSourceCount, `${label}.distinctSourceCount`);
 
-  const optionalCounts = ["deduplicatedCount", "freshCount", "recentCount", "historicalCount", "unknownDateCount"] as const;
-  for (const key of optionalCounts) {
-    if (value[key] !== undefined) assertNonNegativeInteger(value[key], `${label}.${key}`);
+  const deduplicatedCount = value.deduplicatedCount;
+  const freshCount = value.freshCount;
+  const recentCount = value.recentCount;
+  const historicalCount = value.historicalCount;
+  const unknownDateCount = value.unknownDateCount;
+  if (deduplicatedCount !== undefined) {
+    assertNonNegativeInteger(deduplicatedCount, `${label}.deduplicatedCount`);
   }
-
-  const signals = value.signals === undefined ? undefined : parseArray(value.signals, `${label}.signals`, parseMarketSignal);
-  const postings = value.postings === undefined ? undefined : parseArray(value.postings, `${label}.postings`, parseNormalizedJobPosting);
+  if (freshCount !== undefined) {
+    assertNonNegativeInteger(freshCount, `${label}.freshCount`);
+  }
+  if (recentCount !== undefined) {
+    assertNonNegativeInteger(recentCount, `${label}.recentCount`);
+  }
+  if (historicalCount !== undefined) {
+    assertNonNegativeInteger(historicalCount, `${label}.historicalCount`);
+  }
+  if (unknownDateCount !== undefined) {
+    assertNonNegativeInteger(unknownDateCount, `${label}.unknownDateCount`);
+  }
+  const signals = value.signals === undefined
+    ? undefined
+    : parseArray(value.signals, `${label}.signals`, parseMarketSignal);
+  const postings = value.postings === undefined
+    ? undefined
+    : parseArray(value.postings, `${label}.postings`, parseNormalizedJobPosting);
   if (postings && postings.length !== value.postingCount) {
     throw new Error(`${label}.postings: unique posting count must match postingCount`);
   }
@@ -357,26 +576,37 @@ function parseMarketSample(value: unknown, label: string): MarketSample {
     postingCount: value.postingCount,
     distinctCompanyCount: value.distinctCompanyCount,
     distinctSourceCount: value.distinctSourceCount,
-    ...(value.deduplicatedCount === undefined ? {} : { deduplicatedCount: value.deduplicatedCount }),
-    ...(value.freshCount === undefined ? {} : { freshCount: value.freshCount }),
-    ...(value.recentCount === undefined ? {} : { recentCount: value.recentCount }),
-    ...(value.historicalCount === undefined ? {} : { historicalCount: value.historicalCount }),
-    ...(value.unknownDateCount === undefined ? {} : { unknownDateCount: value.unknownDateCount }),
+    ...(deduplicatedCount === undefined ? {} : { deduplicatedCount }),
+    ...(freshCount === undefined ? {} : { freshCount }),
+    ...(recentCount === undefined ? {} : { recentCount }),
+    ...(historicalCount === undefined ? {} : { historicalCount }),
+    ...(unknownDateCount === undefined ? {} : { unknownDateCount }),
     ...(signals === undefined ? {} : { signals }),
     ...(postings === undefined ? {} : { postings }),
-  } as MarketSample;
+  };
 }
 
 function parseDecisionRecord(value: unknown, label: string): DecisionRecord {
   assertRecord(value, label);
-  assertOnlyKeys(value, ["id", "kind", "reason", "summary", "createdAt", "beforeMilestoneIds", "afterMilestoneIds"], label);
+  assertOnlyKeys(
+    value,
+    ["id", "kind", "reason", "summary", "createdAt", "beforeMilestoneIds", "afterMilestoneIds"],
+    label,
+  );
   assertString(value.id, `${label}.id`);
   assertOneOf(value.kind, decisionKinds, `${label}.kind`);
   assertString(value.reason, `${label}.reason`);
   assertString(value.summary, `${label}.summary`);
   assertIsoDateTime(value.createdAt, `${label}.createdAt`);
-  const beforeMilestoneIds = value.beforeMilestoneIds === undefined ? undefined : parseStringArray(value.beforeMilestoneIds, `${label}.beforeMilestoneIds`);
-  const afterMilestoneIds = value.afterMilestoneIds === undefined ? undefined : parseStringArray(value.afterMilestoneIds, `${label}.afterMilestoneIds`);
+  const beforeMilestoneIds =
+    value.beforeMilestoneIds === undefined
+      ? undefined
+      : parseStringArray(value.beforeMilestoneIds, `${label}.beforeMilestoneIds`);
+  const afterMilestoneIds =
+    value.afterMilestoneIds === undefined
+      ? undefined
+      : parseStringArray(value.afterMilestoneIds, `${label}.afterMilestoneIds`);
+
   return {
     id: value.id,
     kind: value.kind,
@@ -388,60 +618,90 @@ function parseDecisionRecord(value: unknown, label: string): DecisionRecord {
   };
 }
 
+function parseArray<T>(
+  value: unknown,
+  label: string,
+  parser: (item: unknown, label: string) => T,
+): readonly T[] {
+  if (!Array.isArray(value)) {
+    throw new Error(`${label}: expected array`);
+  }
+  return value.map((item, index) => parser(item, `${label}[${index}]`));
+}
+
 export function parseCareerProfile(value: unknown): CareerProfile {
   assertRecord(value, "careerProfile");
+
   if (value.schemaVersion !== "2") {
     throw new Error(`Unsupported career profile schema: ${String(value.schemaVersion)}`);
   }
 
-  assertOnlyKeys(value, [
-    "schemaVersion",
-    "targetRoles",
-    "targetMarkets",
-    "weeklyStudyHours",
-    "competencies",
-    "assessments",
-    "roadmap",
-    "evidence",
-    "marketSamples",
-    "decisionRecords",
-    "learningProgress",
-    "createdAt",
-    "updatedAt",
-  ], "careerProfile");
+  assertOnlyKeys(
+    value,
+    [
+      "schemaVersion",
+      "targetRoles",
+      "targetMarkets",
+      "weeklyStudyHours",
+      "competencies",
+      "assessments",
+      "roadmap",
+      "learningProgress",
+      "evidence",
+      "marketSamples",
+      "decisionRecords",
+      "createdAt",
+      "updatedAt",
+    ],
+    "careerProfile",
+  );
 
-  const targetRolesValue = parseTargetRoles(value.targetRoles);
+  const parsedTargetRoles = parseTargetRoles(value.targetRoles);
   const targetMarkets = parseStringArray(value.targetMarkets, "targetMarkets", false);
-  if (value.weeklyStudyHours !== null && (typeof value.weeklyStudyHours !== "number" || !Number.isFinite(value.weeklyStudyHours) || value.weeklyStudyHours <= 0)) {
+
+  if (
+    value.weeklyStudyHours !== null &&
+    (typeof value.weeklyStudyHours !== "number" ||
+      !Number.isFinite(value.weeklyStudyHours) ||
+      value.weeklyStudyHours <= 0)
+  ) {
     throw new Error("weeklyStudyHours: expected null or positive finite number");
   }
 
   const competencies = parseArray(value.competencies, "competencies", parseCompetencyState);
   const assessments = parseArray(value.assessments, "assessments", parseAssessmentRecord);
   const roadmap = parseRoadmapState(value.roadmap);
-  const evidence = parseArray(value.evidence, "evidence", parseEvidenceRecord);
-  const marketSamples = parseArray(value.marketSamples, "marketSamples", parseMarketSample);
-  const decisionRecords = parseArray(value.decisionRecords, "decisionRecords", parseDecisionRecord);
-  const learningProgress = parseArray(value.learningProgress, "learningProgress", parseLearningProgressRecord);
+  const learningProgress = parseArray(
+    value.learningProgress,
+    "learningProgress",
+    parseLearningProgressRecord,
+  );
   const noteIds = learningProgress.map((record) => record.noteId);
   if (new Set(noteIds).size !== noteIds.length) {
     throw new Error("learningProgress: duplicate note progress record");
   }
+  const evidence = parseArray(value.evidence, "evidence", parseEvidenceRecord);
+  const marketSamples = parseArray(value.marketSamples, "marketSamples", parseMarketSample);
+  const decisionRecords = parseArray(
+    value.decisionRecords,
+    "decisionRecords",
+    parseDecisionRecord,
+  );
   assertIsoDateTime(value.createdAt, "createdAt");
   assertIsoDateTime(value.updatedAt, "updatedAt");
 
   return {
     schemaVersion: "2",
-    targetRoles: targetRolesValue,
+    targetRoles: parsedTargetRoles,
     targetMarkets,
     weeklyStudyHours: value.weeklyStudyHours,
     competencies,
     assessments,
     roadmap,
+    learningProgress,
     evidence,
     marketSamples,
     decisionRecords,
-    learningProgress,
     createdAt: value.createdAt,
     updatedAt: value.updatedAt,
   };
@@ -456,6 +716,7 @@ export function parseCareerArtifact(value: unknown): CareerArtifact {
   assertRecord(value.provenance, "careerArtifact.provenance");
   assertOnlyKeys(value.provenance, ["trust"], "careerArtifact.provenance");
   assertOneOf(value.provenance.trust, evidenceTrust, "careerArtifact.provenance.trust");
+
   return {
     ...value,
     schemaVersion: "1",

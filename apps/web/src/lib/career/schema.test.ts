@@ -119,7 +119,8 @@ describe("Career Profile schema", () => {
       targetRole: "frontend-developer",
       targetMarket: "br",
     });
-    const { learningProgress: _learningProgress, ...withoutLearningProgress } = profile;
+    const withoutLearningProgress: Record<string, unknown> = { ...profile };
+    delete withoutLearningProgress.learningProgress;
 
     expect(() => parseCareerProfile(withoutLearningProgress)).toThrow(/learningProgress/i);
   });
