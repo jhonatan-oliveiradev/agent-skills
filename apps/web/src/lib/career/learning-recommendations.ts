@@ -62,6 +62,11 @@ const proficiencyRank: Readonly<Record<ProficiencyLevel, number>> = {
 
 type ModuleState = "not-started" | "in-progress" | "studied";
 
+type ReviewedLearningMapping = Readonly<{
+  note: LearningNote;
+  module: LearningModule;
+}>;
+
 type ResolvedLearningContext = Readonly<{
   competencyId: CompetencyId;
   criterion: CapabilityCriterion;
@@ -117,13 +122,25 @@ function getModuleState(
   return "not-started";
 }
 
+function getReviewedLearningMapping(
+  criterionId: string,
+): ReviewedLearningMapping | null {
+  const mapping = getLearningModuleByCriterion(criterionId);
+  if (!mapping || mapping.module.reviewStatus !== "reviewed") return null;
+
+  return {
+    note: mapping.note,
+    module: mapping.module,
+  };
+}
+
 function resolveContext(
   profile: CareerProfile,
   competencyId: CompetencyId,
   criterion: CapabilityCriterion,
 ): ResolvedLearningContext | null {
-  const mapping = getLearningModuleByCriterion(criterion.id);
-  if (!mapping || mapping.module.reviewStatus !== "reviewed") return null;
+  const mapping = getReviewedLearningMapping(criterion.id);
+  if (!mapping) return null;
 
   return {
     competencyId,
@@ -308,6 +325,11 @@ export function getAssessmentLearningRecommendation(
     return null;
   }
 
+  const definition = competencyDefinitions.find(
+    (candidate) => candidate.id === result.competencyId,
+  );
+  if (!definition) return null;
+
   const failedChallengeIds = new Set(
     result.dimensions.flatMap((dimension) => dimension.failedChallengeIds),
   );
@@ -316,29 +338,18 @@ export function getAssessmentLearningRecommendation(
     if (!failedChallengeIds.has(challenge.id)) continue;
 
     for (const criterionId of challenge.criterionIds) {
-      const definition = competencyDefinitions.find(
-        (candidate) => candidate.id === result.competencyId,
-      );
-      const criterion = definition?.criteria.find((candidate) => candidate.id === criterionId);
+      const criterion = definition.criteria.find((candidate) => candidate.id === criterionId);
       if (!criterion) continue;
 
-      const context = resolveContext(
-        {
-          ...({} as CareerProfile),
-          competencies: [],
-          learningProgress: [],
-        },
-        definition.id,
-        criterion,
-      );
-      if (!context) continue;
+      const mapping = getReviewedLearningMapping(criterion.id);
+      if (!mapping) continue;
 
       return {
         kind: "study",
-        competencyId: context.competencyId,
-        criterionId: context.criterion.id,
-        noteId: context.note.id,
-        moduleId: context.module.id,
+        competencyId: definition.id,
+        criterionId: criterion.id,
+        noteId: mapping.note.id,
+        moduleId: mapping.module.id,
         reason: "blocking-gap",
         priority: priority.blockingGap,
       };
