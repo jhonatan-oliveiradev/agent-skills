@@ -118,13 +118,17 @@ export function getLearningNoteByCompetency(
 }
 
 export function getReviewedLearningModules(note: LearningNote): readonly LearningModule[] {
-  return note.modules.filter((module) => module.reviewStatus === "reviewed");
+  return note.modules.filter((learningModule) => learningModule.reviewStatus === "reviewed");
 }
 
 export function getLearningModuleByCriterion(
   criterionId: string,
-): LearningModule | undefined {
-  return learningNoteCatalog
-    .flatMap((note) => note.modules)
-    .find((module) => module.criterionId === criterionId);
+): Readonly<{ note: LearningNote; module: LearningModule }> | undefined {
+  for (const note of learningNoteCatalog) {
+    const learningModule = note.modules.find(
+      (candidate) => candidate.criterionId === criterionId,
+    );
+    if (learningModule) return { note, module: learningModule };
+  }
+  return undefined;
 }

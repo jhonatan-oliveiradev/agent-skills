@@ -226,6 +226,9 @@ function parseLearningProgressRecord(value: unknown, label: string): LearningPro
   assertString(value.noteId, `${label}.noteId`);
   assertIsoDateTime(value.startedAt, `${label}.startedAt`);
   assertIsoDateTime(value.updatedAt, `${label}.updatedAt`);
+  if (Date.parse(value.updatedAt) < Date.parse(value.startedAt)) {
+    throw new Error(`${label}.updatedAt: must be on or after startedAt`);
+  }
   if (value.currentModuleId !== null) assertString(value.currentModuleId, `${label}.currentModuleId`);
   const completedModuleIds = parseStringArray(value.completedModuleIds, `${label}.completedModuleIds`);
   const completedPracticeIds = parseStringArray(value.completedPracticeIds, `${label}.completedPracticeIds`);

@@ -1,4 +1,5 @@
 import { competencyDefinitions, competencyIds } from "./competencies";
+import { getLearningNote } from "./learning-catalog";
 import type {
   LearningModule,
   LearningNote,
@@ -6,6 +7,14 @@ import type {
   LocalizedList,
   LocalizedText,
 } from "./learning-types";
+import type { CareerProfile } from "./types";
+
+export {
+  getLearningModuleByCriterion,
+  getLearningNote,
+  getLearningNoteByCompetency,
+  getReviewedLearningModules,
+} from "./learning-catalog";
 
 const locales = ["en", "pt-BR"] as const;
 const levels = ["foundation", "developing", "proficient", "advanced"] as const;
@@ -104,70 +113,70 @@ function validateSource(source: LearningSource, index: number): void {
 
 function validateModule(
   note: LearningNote,
-  module: LearningModule,
+  learningModule: LearningModule,
   index: number,
   sourcesById: ReadonlyMap<string, LearningSource>,
 ): void {
   const label = `note ${note.id} module[${index}]`;
-  const canonical = canonicalCriterion(module.criterionId);
+  const canonical = canonicalCriterion(learningModule.criterionId);
   if (!canonical) {
-    throw new Error(`${label}: unknown criterion ${module.criterionId}`);
+    throw new Error(`${label}: unknown criterion ${learningModule.criterionId}`);
   }
   if (canonical.definition.id !== note.competencyId) {
     throw new Error(
-      `${label}: criterion ${module.criterionId} belongs to another competency`,
+      `${label}: criterion ${learningModule.criterionId} belongs to another competency`,
     );
   }
-  if (!levels.includes(module.level) || canonical.criterion.level !== module.level) {
+  if (!levels.includes(learningModule.level) || canonical.criterion.level !== learningModule.level) {
     throw new Error(`${label}: level does not match criterion`);
   }
 
-  assertLocalizedText(module.title, `${label}.title`);
-  assertPositiveMinutes(module.estimatedMinutes, `${label}.estimatedMinutes`);
-  assertNonEmptyString(module.contentVersion, `${label}.contentVersion`);
-  if (!reviewStatuses.includes(module.reviewStatus)) {
+  assertLocalizedText(learningModule.title, `${label}.title`);
+  assertPositiveMinutes(learningModule.estimatedMinutes, `${label}.estimatedMinutes`);
+  assertNonEmptyString(learningModule.contentVersion, `${label}.contentVersion`);
+  if (!reviewStatuses.includes(learningModule.reviewStatus)) {
     throw new Error(`${label}.reviewStatus: invalid value`);
   }
-  assertIsoDateTime(module.reviewedAt, `${label}.reviewedAt`);
-  if (!primarySourcePolicies.includes(module.primarySourcePolicy)) {
+  assertIsoDateTime(learningModule.reviewedAt, `${label}.reviewedAt`);
+  if (!primarySourcePolicies.includes(learningModule.primarySourcePolicy)) {
     throw new Error(`${label}.primarySourcePolicy: invalid value`);
   }
-  if (module.primarySourcePolicy === "not-available") {
-    if (!module.primarySourceReason) {
+  if (learningModule.primarySourcePolicy === "not-available") {
+    if (!learningModule.primarySourceReason) {
       throw new Error(`${label}: primary source reason is required`);
     }
-    assertLocalizedText(module.primarySourceReason, `${label}.primarySourceReason`);
+    assertLocalizedText(learningModule.primarySourceReason, `${label}.primarySourceReason`);
   }
 
-  assertLocalizedText(module.understand, `${label}.understand`);
-  assertLocalizedText(module.commonMistake, `${label}.commonMistake`);
-  assertNonEmptyString(module.practice.id, `${label}.practice.id`);
-  assertLocalizedText(module.practice.prompt, `${label}.practice.prompt`);
-  assertLocalizedList(module.consolidationCriteria, `${label}.consolidationCriteria`);
+  assertLocalizedText(learningModule.understand, `${label}.understand`);
+  assertLocalizedText(learningModule.commonMistake, `${label}.commonMistake`);
+  assertNonEmptyString(learningModule.practice.id, `${label}.practice.id`);
+  assertLocalizedText(learningModule.practice.prompt, `${label}.practice.prompt`);
+  assertLocalizedList(learningModule.consolidationCriteria, `${label}.consolidationCriteria`);
 
-  if (module.example) {
-    assertNonEmptyString(module.example.language, `${label}.example.language`);
-    assertLocalizedText(module.example.code, `${label}.example.code`);
+  if (learningModule.example) {
+    assertNonEmptyString(learningModule.example.language, `${label}.example.language`);
+    assertLocalizedText(learningModule.example.code, `${label}.example.code`);
   }
 
-  if (!Array.isArray(module.sourceIds) || module.sourceIds.length === 0) {
+  if (!Array.isArray(learningModule.sourceIds) || learningModule.sourceIds.length === 0) {
     throw new Error(`${label}.sourceIds: expected non-empty list`);
   }
 
-  const resolvedSources = module.sourceIds.map((sourceId) => {
+  const resolvedSources = learningModule.sourceIds.map((sourceId) => {
     const source = sourcesById.get(sourceId);
     if (!source) throw new Error(`${label}: unknown source ${sourceId}`);
-    if (!source.supportsCriterionIds.includes(module.criterionId)) {
+    if (!source.supportsCriterionIds.includes(learningModule.criterionId)) {
       throw new Error(
-        `${label}: source ${sourceId} does not support criterion ${module.criterionId}`,
+        `${label}: source ${sourceId} does not support criterion ${learningModule.criterionId}`,
       );
     }
     return source;
   });
 
   if (
-    module.reviewStatus === "reviewed" &&
-    module.primarySourcePolicy === "required" &&
+    learningModule.reviewStatus === "reviewed" &&
+    learningModule.primarySourcePolicy === "required" &&
     !resolvedSources.some((source) => source.authority === "primary")
   ) {
     throw new Error(`${label}: reviewed module requires a primary source`);
@@ -203,12 +212,42 @@ export function validateLearningCatalog(
       throw new Error(`note ${note.id}.modules: expected non-empty list`);
     }
 
-    note.modules.forEach((module, index) => {
-      assertUniqueId(moduleIds, module.id, "module");
-      assertUniqueId(practiceIds, module.practice.id, "practice");
-      validateModule(note, module, index, sourcesById);
+    note.modules.forEach((learningModule, index) => {
+      assertUniqueId(moduleIds, learningModule.id, "module");
+      assertUniqueId(practiceIds, learningModule.practice.id, "practice");
+      validateModule(note, learningModule, index, sourcesById);
     });
   }
 
   return notes;
+}
+
+export function validateLearningProgressReferences(profile: CareerProfile): CareerProfile {
+  for (const record of profile.learningProgress) {
+    const note = getLearningNote(record.noteId);
+    if (!note) {
+      throw new Error(`Unknown learning note: ${record.noteId}`);
+    }
+
+    const moduleIds = new Set(note.modules.map((learningModule) => learningModule.id));
+    const practiceIds = new Set(
+      note.modules.map((learningModule) => learningModule.practice.id),
+    );
+
+    if (record.currentModuleId !== null && !moduleIds.has(record.currentModuleId)) {
+      throw new Error(`Unknown learning module: ${record.currentModuleId}`);
+    }
+    for (const moduleId of record.completedModuleIds) {
+      if (!moduleIds.has(moduleId)) {
+        throw new Error(`Unknown learning module: ${moduleId}`);
+      }
+    }
+    for (const practiceId of record.completedPracticeIds) {
+      if (!practiceIds.has(practiceId)) {
+        throw new Error(`Unknown learning practice: ${practiceId}`);
+      }
+    }
+  }
+
+  return profile;
 }

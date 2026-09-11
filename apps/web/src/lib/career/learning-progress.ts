@@ -1,10 +1,8 @@
-import { learningNoteCatalog } from "./learning-catalog";
+import { getLearningNote } from "./learning-catalog";
 import type { LearningNote } from "./learning-types";
 import type { CareerProfile, LearningProgressRecord } from "./types";
 
 export type LearningState = "not-started" | "in-progress" | "studied";
-
-type LearningCatalog = readonly LearningNote[];
 
 function resolveTimestamp(now: string | undefined): string {
   if (now === undefined) return new Date().toISOString();
@@ -17,12 +15,8 @@ function resolveTimestamp(now: string | undefined): string {
   return new Date(timestamp).toISOString();
 }
 
-function requireReviewedModule(
-  noteId: string,
-  moduleId: string,
-  notes: LearningCatalog,
-) {
-  const note = notes.find((candidate) => candidate.id === noteId);
+function requireReviewedModule(noteId: string, moduleId: string) {
+  const note = getLearningNote(noteId);
   if (!note) {
     throw new Error(`Unknown learning note: ${noteId}`);
   }
@@ -99,9 +93,8 @@ export function startLearningModule(
   noteId: string,
   moduleId: string,
   now?: string,
-  notes: LearningCatalog = learningNoteCatalog,
 ): CareerProfile {
-  requireReviewedModule(noteId, moduleId, notes);
+  requireReviewedModule(noteId, moduleId);
   const timestamp = resolveTimestamp(now);
 
   return updateLearningProgress(
@@ -123,9 +116,8 @@ export function completeLearningPractice(
   moduleId: string,
   practiceId: string,
   now?: string,
-  notes: LearningCatalog = learningNoteCatalog,
 ): CareerProfile {
-  const { learningModule } = requireReviewedModule(noteId, moduleId, notes);
+  const { learningModule } = requireReviewedModule(noteId, moduleId);
   if (learningModule.practice.id !== practiceId) {
     throw new Error(`Unknown learning practice: ${practiceId}`);
   }
@@ -152,9 +144,8 @@ export function completeLearningModule(
   noteId: string,
   moduleId: string,
   now?: string,
-  notes: LearningCatalog = learningNoteCatalog,
 ): CareerProfile {
-  const { note } = requireReviewedModule(noteId, moduleId, notes);
+  const { note } = requireReviewedModule(noteId, moduleId);
   const timestamp = resolveTimestamp(now);
 
   return updateLearningProgress(
