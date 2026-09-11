@@ -28,12 +28,12 @@ const metadataCopy = {
   en: {
     title: "Career Lab",
     description:
-      "A local-first developer career workspace for evidence-aware baselines, reviewed learning, adaptive roadmaps, portfolio evidence, and market signals stored in your browser.",
+      "A local-first developer career workspace for evidence-aware baselines, reviewed learning, adaptive roadmaps, professional evidence, and market signals stored in your browser.",
   },
   "pt-BR": {
     title: "Career Lab",
     description:
-      "Um workspace local de carreira para devs com baseline orientado por evidências, aprendizado revisado, roadmap adaptativo, portfólio e sinais de mercado armazenados no navegador.",
+      "Um workspace local de carreira para devs com baseline orientado por evidências, aprendizado revisado, roadmap adaptativo, evidências profissionais e sinais de mercado armazenados no navegador.",
   },
 } as const;
 

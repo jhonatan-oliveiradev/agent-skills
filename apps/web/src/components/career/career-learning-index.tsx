@@ -60,7 +60,11 @@ export function CareerLearningIndex({ locale }: Readonly<{ locale: Locale }>) {
   const copy = careerLearningCopy[locale];
 
   if (status === "hydrating") {
-    return <p role="status">{locale === "pt-BR" ? "Carregando aprendizado…" : "Loading learning…"}</p>;
+    return (
+      <p role="status">
+        {locale === "pt-BR" ? "Carregando aprendizado…" : "Loading learning…"}
+      </p>
+    );
   }
 
   const recommendation = profile ? getPrimaryLearningRecommendation(profile) : null;
@@ -95,7 +99,7 @@ export function CareerLearningIndex({ locale }: Readonly<{ locale: Locale }>) {
         aria-labelledby="career-learning-recommended"
       >
         <h2 id="career-learning-recommended">{copy.index.recommendedNow}</h2>
-        {!profile ? <p>{copy.index.noProfile}</p> : null}
+        {!profile ? <p>{copy.index.noPersonalizedRecommendation}</p> : null}
         {profile && !recommendation ? <p>{copy.index.noRecommendation}</p> : null}
         {profile && recommendation?.kind === "study" ? (
           (() => {
@@ -111,13 +115,13 @@ export function CareerLearningIndex({ locale }: Readonly<{ locale: Locale }>) {
                 <h3>{module.title[locale]}</h3>
                 <p>{note.title[locale]}</p>
                 <div className="career-learning-meta">
-                  <span>{module.estimatedMinutes} {copy.index.minutes}</span>
+                  <span>
+                    {module.estimatedMinutes} {copy.index.minutes}
+                  </span>
                   <span>{copy.states[state]}</span>
                 </div>
                 <Link
-                  href={
-                    `/${locale}/career-lab/learning/${note.id}#${module.id}` as Route
-                  }
+                  href={`/${locale}/career-lab/learning/${note.id}#${module.id}` as Route}
                 >
                   {state === "not-started" ? copy.index.openNote : copy.index.continueStudy}
                 </Link>
@@ -158,10 +162,10 @@ export function CareerLearningIndex({ locale }: Readonly<{ locale: Locale }>) {
                 <p>{copy.states[state]}</p>
                 <h3>{module.title[locale]}</h3>
                 <p>{note.title[locale]}</p>
-                <span>{module.estimatedMinutes} {copy.index.minutes}</span>
-                <Link
-                  href={`/${locale}/career-lab/learning/${note.id}#${module.id}` as Route}
-                >
+                <span>
+                  {module.estimatedMinutes} {copy.index.minutes}
+                </span>
+                <Link href={`/${locale}/career-lab/learning/${note.id}#${module.id}` as Route}>
                   {state === "not-started" ? copy.index.openNote : copy.index.continueStudy}
                 </Link>
               </article>
@@ -192,7 +196,9 @@ export function CareerLearningIndex({ locale }: Readonly<{ locale: Locale }>) {
                         </Link>
                       </h4>
                       <p>{note.summary[locale]}</p>
-                      <span>{note.estimatedMinutes} {copy.index.minutes}</span>
+                      <span>
+                        {note.estimatedMinutes} {copy.index.minutes}
+                      </span>
                     </article>
                   );
                 })}
