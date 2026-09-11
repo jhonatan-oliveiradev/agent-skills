@@ -38,18 +38,18 @@ describe("production Career learning catalog", () => {
     ).toBe(24);
   });
 
-  it("uses the planned source ids and institutional Testing Library classification", () => {
-    expect(learningSourceCatalog.map((source) => source.id)).toEqual([
-      "mdn-async-function",
-      "mdn-promise",
-      "ts-handbook-narrowing",
-      "ts-handbook-type-manipulation",
-      "testing-library-guiding-principles",
-      "rfc-9110-http-semantics",
-      "git-commit-docs",
-      "pro-git-distributed-workflows",
-      "wcag-22",
-      "wai-aria-apg",
+  it("anchors migrated content to the planned reviewed source URLs", () => {
+    expect(learningSourceCatalog.map((source) => source.url)).toEqual([
+      "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/async_function",
+      "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise",
+      "https://www.typescriptlang.org/docs/handbook/2/narrowing.html",
+      "https://www.typescriptlang.org/docs/handbook/2/types-from-types.html",
+      "https://testing-library.com/docs/guiding-principles/",
+      "https://www.rfc-editor.org/rfc/rfc9110.html",
+      "https://git-scm.com/docs/git-commit",
+      "https://git-scm.com/book/en/v2/Distributed-Git-Distributed-Workflows",
+      "https://www.w3.org/TR/WCAG22/",
+      "https://www.w3.org/WAI/ARIA/apg/",
     ]);
 
     expect(

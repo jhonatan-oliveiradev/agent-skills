@@ -74,7 +74,7 @@ export const learningSourceCatalog = [
     title: "Guiding Principles",
     publisher: "Testing Library",
     url: "https://testing-library.com/docs/guiding-principles/",
-    authority: "recognized-pedagogical",
+    authority: "recognized-institutional",
     volatility: "medium",
     reviewedAt,
     supportsCriterionIds: [
