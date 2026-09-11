@@ -83,7 +83,8 @@
 }
 
 .career-learning-recommendation > a,
-.career-learning-card a {
+.career-learning-card a,
+.career-learning-note a {
   color: inherit;
   text-underline-offset: 0.2em;
 }
@@ -145,10 +146,59 @@
   letter-spacing: -0.05em;
 }
 
+.career-learning-note__objective {
+  display: grid;
+  gap: 0.5rem;
+  max-width: 58rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid var(--career-line);
+}
+
+.career-learning-note__objective p {
+  margin: 0;
+  color: var(--career-muted);
+  line-height: 1.65;
+}
+
+.career-learning-note__notice {
+  padding: 1rem 1.15rem;
+  border: 1px solid var(--career-line);
+  background: color-mix(in srgb, var(--career-panel) 84%, transparent);
+}
+
+.career-learning-note__notice h2,
+.career-learning-note__notice p {
+  margin: 0;
+}
+
+.career-learning-note__notice--proof {
+  display: grid;
+  gap: 0.45rem;
+}
+
+.career-learning-note__index {
+  padding-block: 1rem;
+  border-block: 1px solid var(--career-line);
+}
+
+.career-learning-note__index ol {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 13rem), 1fr));
+  gap: 0.65rem 1rem;
+  margin: 0;
+  padding-left: 1.25rem;
+}
+
+.career-learning-note__modules {
+  display: grid;
+  gap: 1.5rem;
+}
+
 .career-learning-module {
   display: grid;
   gap: 1.5rem;
   padding: clamp(1.25rem, 3vw, 2rem);
+  scroll-margin-top: 2rem;
   border: 1px solid var(--career-line);
   background: var(--career-panel);
 }
@@ -158,6 +208,19 @@
   align-items: start;
   justify-content: space-between;
   gap: 1rem;
+}
+
+.career-learning-module__header h2,
+.career-learning-module__header p {
+  margin: 0;
+}
+
+.career-learning-module__header p {
+  margin-bottom: 0.35rem;
+  color: var(--career-muted);
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
 }
 
 .career-learning-module__block {
@@ -172,11 +235,23 @@
   text-transform: uppercase;
 }
 
+.career-learning-module__block > p,
+.career-learning-module__block > ul {
+  margin-block: 0;
+}
+
 .career-learning-module pre {
   overflow-x: auto;
   margin: 0;
   padding: 1rem;
   border: 1px solid var(--career-line);
+  background: color-mix(in srgb, var(--career-panel) 76%, black 8%);
+}
+
+.career-learning-module code {
+  font: inherit;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  white-space: pre;
 }
 
 .career-learning-module button {
@@ -190,8 +265,26 @@
   list-style: none;
 }
 
+.career-learning-source-list li {
+  display: grid;
+  grid-template-columns: minmax(0, 1.4fr) repeat(3, minmax(0, 1fr));
+  gap: 0.5rem 1rem;
+  padding-block: 0.65rem;
+  border-top: 1px solid var(--career-line);
+  color: var(--career-muted);
+  font-size: 0.82rem;
+}
+
+.career-learning-source-list a {
+  color: var(--career-ink);
+}
+
 @media (max-width: 720px) {
   .career-learning-module__header {
     flex-direction: column;
+  }
+
+  .career-learning-source-list li {
+    grid-template-columns: 1fr;
   }
 }
