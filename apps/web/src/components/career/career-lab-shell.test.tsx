@@ -75,12 +75,30 @@ describe("Career Lab shell", () => {
 
     expect(await screen.findByText("Guide route content")).toBeInTheDocument();
     const workflow = screen.getByRole("navigation", { name: "Career Lab" });
-    expect(workflow.querySelectorAll("ol > li")).toHaveLength(5);
+    expect(workflow.querySelectorAll("ol > li")).toHaveLength(6);
     expect(screen.getByRole("link", { name: "Guia" })).toHaveAttribute("aria-current", "page");
     expect(screen.getByText("Local-first")).toBeInTheDocument();
   });
 
-  it("marks the numbered workflow route current without marking Guide current", async () => {
+  it("marks Learning as the third numbered workflow route", async () => {
+    navigation.pathname = "/pt-BR/career-lab/learning";
+    render(
+      <CareerProfileProvider storage={storageWith(null)}>
+        <CareerLabShell locale="pt-BR">
+          <p>Learning route content</p>
+        </CareerLabShell>
+      </CareerProfileProvider>,
+    );
+
+    expect(await screen.findByText("Learning route content")).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: /03\s*Aprendizado/i })).toHaveAttribute(
+      "aria-current",
+      "page",
+    );
+    expect(screen.getByRole("link", { name: "Guia" })).not.toHaveAttribute("aria-current");
+  });
+
+  it("marks Roadmap as the fourth numbered workflow route", async () => {
     navigation.pathname = "/pt-BR/career-lab/roadmap";
     render(
       <CareerProfileProvider storage={storageWith(null)}>
@@ -91,7 +109,7 @@ describe("Career Lab shell", () => {
     );
 
     expect(await screen.findByText("Roadmap route content")).toBeInTheDocument();
-    expect(screen.getByRole("link", { name: /02\s*Roadmap/i })).toHaveAttribute(
+    expect(screen.getByRole("link", { name: /04\s*Roadmap/i })).toHaveAttribute(
       "aria-current",
       "page",
     );
@@ -121,18 +139,20 @@ describe("Career Lab shell", () => {
     expect(storage.save).toHaveBeenCalledWith(expect.objectContaining({ weeklyStudyHours: 12 }));
   });
 
-  it("owns complete EN and PT-BR navigation copy locally", () => {
+  it("owns the exact six-step EN and PT-BR navigation copy locally", () => {
     expect(careerLabCopy.en.navigation).toEqual([
       "Overview",
-      "Roadmap",
       "Assessments",
+      "Learning",
+      "Roadmap",
       "Evidence",
       "Market",
     ]);
     expect(careerLabCopy["pt-BR"].navigation).toEqual([
       "Visão geral",
-      "Roadmap",
       "Avaliações",
+      "Aprendizado",
+      "Roadmap",
       "Evidências",
       "Mercado",
     ]);
