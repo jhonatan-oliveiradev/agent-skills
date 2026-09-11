@@ -57,10 +57,10 @@ export function CareerLearningNote({
   async function recordPractice(learningModule: LearningModule) {
     if (!profile) return;
     await updateProfile((current) => {
-      const started = startLearningModule(current, note.id, learningModule.id);
+      const started = startLearningModule(current, noteId, learningModule.id);
       return completeLearningPractice(
         started,
-        note.id,
+        noteId,
         learningModule.id,
         learningModule.practice.id,
       );
@@ -70,8 +70,8 @@ export function CareerLearningNote({
   async function recordModuleStudied(learningModule: LearningModule) {
     if (!profile) return;
     await updateProfile((current) => {
-      const started = startLearningModule(current, note.id, learningModule.id);
-      return completeLearningModule(started, note.id, learningModule.id);
+      const started = startLearningModule(current, noteId, learningModule.id);
+      return completeLearningModule(started, noteId, learningModule.id);
     });
   }
 
