@@ -131,6 +131,7 @@ Career Lab has 14 canonical competencies. The learning system uses a hybrid cont
 
 - one **Core Note** per canonical competency;
 - modules inside each Core Note map to competency criteria and proficiency levels;
+- with the current competency model, each complete Core Note normally has one module for each of the four proficiency criteria;
 - a gap can deep-link directly to the relevant module;
 - a module may later become an independent note when its scope genuinely requires it.
 
@@ -151,18 +152,15 @@ interface LearningNote {
   summary: LocalizedText;
   objective: LocalizedText;
   estimatedMinutes: number;
-  contentVersion: string;
-  reviewStatus: "draft" | "reviewed";
-  reviewedAt: string;
   modules: LearningModule[];
 }
 ```
 
-Only `reviewed` content is visible in the production learning experience.
+A Core Note is the container and navigation unit. Publication/review state is owned by each module so modules can be audited and withheld independently.
 
 ### Learning Module
 
-Each module maps to one canonical criterion.
+Each module maps to one canonical criterion and is independently reviewable.
 
 ```ts
 interface LearningModule {
@@ -171,6 +169,11 @@ interface LearningModule {
   level: ProficiencyLevel;
   title: LocalizedText;
   estimatedMinutes: number;
+  contentVersion: string;
+  reviewStatus: "draft" | "reviewed";
+  reviewedAt: string;
+  primarySourcePolicy: "required" | "not-available";
+  primarySourceReason?: LocalizedText;
   understand: LocalizedRichContent;
   example?: LocalizedCodeExample;
   commonMistake: LocalizedRichContent;
@@ -179,6 +182,10 @@ interface LearningModule {
   sourceIds: string[];
 }
 ```
+
+`LocalizedPractice` must expose a stable practice ID so practice completion can be recorded without copying lesson content into the user profile.
+
+Only modules with `reviewStatus: "reviewed"` are visible as available learning content in production. Draft modules may exist in the catalog for authoring and validation but cannot be recommended to users.
 
 The required pedagogical sequence is:
 
@@ -229,17 +236,22 @@ Examples of preferred primary sources include:
 
 Recognized institutional and pedagogical sources may supplement primary material, especially when they improve explanation, but should not replace a suitable primary source for a central technical claim.
 
+`primarySourcePolicy` makes this rule machine-checkable:
+
+- `required` means at least one referenced source must have `authority: "primary"`;
+- `not-available` means no suitable primary source was found and `primarySourceReason` is mandatory so the exception is reviewable.
+
 ### Editorial rules
 
 A module is publishable only when:
 
-- it maps to a canonical `criterionId`;
+- it maps to a canonical `criterionId` belonging to the note competency;
 - EN and PT-BR content are present;
 - technical claims have source coverage;
-- at least one primary source is present when one reasonably exists;
+- its primary-source policy validates;
 - `contentVersion` is defined;
 - `reviewStatus` is `reviewed`;
-- `reviewedAt` is present;
+- `reviewedAt` is present and valid;
 - all referenced sources exist;
 - all source-to-criterion mappings are valid.
 
@@ -253,7 +265,9 @@ Review cadence depends on source volatility rather than one global expiration wi
 - `medium` — ecosystem practices and libraries with gradual evolution;
 - `low` — stable language concepts, standards, and fundamentals.
 
-Stale content should be flagged for maintenance. It must not silently disappear or make the whole product unavailable merely because a review date passed.
+The exact maintenance windows are operational configuration, not user-profile semantics. They should be centralized by volatility class so they can change without migrating Career Profiles.
+
+Stale content should be flagged for maintenance. It must not silently disappear or make the whole product unavailable merely because a review window passed. A stale module remains usable unless maintainers explicitly downgrade it to `draft` because its correctness is uncertain.
 
 ### Runtime AI policy
 
@@ -282,6 +296,8 @@ interface LearningProgressRecord {
 The profile stores progress references and timestamps, not copies of lesson content or source text.
 
 A user can therefore retain progress after catalog content is edited without freezing obsolete content into their profile.
+
+Module completion is an explicit user action after reading/practice; it must not be inferred from scroll position alone.
 
 ## Career Profile schema v2
 
@@ -364,9 +380,11 @@ Recommended priority order:
 4. unmet prerequisite;
 5. next relevant competency for the target role.
 
+A `studied-not-proved` recommendation is proof-oriented: it should route the user toward assessment or evidence rather than recommending the same study module again.
+
 The engine must not recommend unrelated material solely to increase catalog engagement.
 
-If no mapped module exists for a relevant criterion, the product should say that no curated study module is available rather than inventing one.
+If no reviewed mapped module exists for a relevant criterion, the product should say that no curated study module is available rather than inventing one.
 
 ## Learning page
 
@@ -401,6 +419,8 @@ Each note uses learning-state language only:
 - In progress · `2/4`;
 - Studied.
 
+A Core Note with draft/unavailable modules must state that coverage is incomplete rather than presenting itself as fully reviewed.
+
 No learning card displays a proficiency percentage.
 
 ## Core Note page
@@ -411,7 +431,11 @@ Route:
 
 The Core Note uses an editorial reading layout with an internal module index.
 
-When the user arrives from a contextual recommendation, the URL or route state deep-links to the relevant module. The rest of the note remains available.
+Contextual links deep-link with a stable URL fragment such as:
+
+`/{locale}/career-lab/learning/[noteId]#[moduleId]`
+
+The rest of the note remains available around the target module.
 
 The page should show:
 
@@ -419,12 +443,14 @@ The page should show:
 - estimated time;
 - review/source status;
 - module navigation;
-- the pedagogical sequence for each module;
+- the pedagogical sequence for each reviewed module;
 - visible source provenance;
 - learning progress controls;
 - a clear handoff to assessment or evidence.
 
-Completing the final module marks the note `studied`, not proved.
+Draft modules are not rendered as learning content. If a Core Note is only partially reviewed, the page may show a neutral coverage note without exposing draft teaching material.
+
+Completing the final reviewed module marks the available note content `studied`; incomplete catalog coverage must remain visible so this state is not misread as having studied unavailable material.
 
 ## Assessment Result v2
 
@@ -446,7 +472,7 @@ Show failed or weak criterion-level areas in user-facing language.
 
 ### Your next step
 
-When a mapped learning module exists, the primary CTA should be contextual study rather than immediate retesting.
+When a reviewed mapped learning module exists, the primary CTA should be contextual study rather than immediate retesting.
 
 Example:
 
@@ -459,7 +485,7 @@ Example:
 
 The result screen also provides:
 
-- **Review challenges** — revisit the completed attempt and its explanations;
+- **Review challenges** — revisit the just-completed attempt and its explanations;
 - **Try again** — start a clean new attempt with a new stable shuffle;
 - **Back to assessments** — return directly to the assessment index.
 
@@ -471,7 +497,11 @@ When an actionable learning gap exists, `Study now` is the primary action; `Try 
 
 Review mode is read-only with respect to the completed attempt.
 
-It should preserve the answer feedback and revealed explanations from the completed run where available. Reviewing does not create new evidence and does not mutate the prior result.
+For this design, answer-level review is a **same-session capability**: the completion surface retains the current attempt responses and feedback in component/session state so `Review challenges` can return to that attempt without creating new evidence or a new result.
+
+Career Profile v2 does not add persisted raw assessment answers solely for historical review. After a full page/session loss, the existing persisted assessment summary remains available, but answer-by-answer historical review is out of scope for this system.
+
+A future persistent attempt-history feature would require its own explicit data contract rather than silently expanding `AssessmentRecord`.
 
 A new attempt starts only through `Try again`.
 
@@ -512,7 +542,7 @@ Example:
 
 Learning completion does not complete the milestone. Roadmap completion still depends on its existing evidence/readiness rules.
 
-The current `roadmap.supportingActivityId` mechanism should no longer be the canonical learning-progress store once Profile v2 exists. Roadmap should read `learningProgress` instead.
+The current `roadmap.supportingActivityId` mechanism should no longer be the canonical learning-progress store once Profile v2 exists. Roadmap should read `learningProgress` instead. The field may remain temporarily for non-learning compatibility until an implementation slice proves it can be removed safely.
 
 ## Guide integration
 
@@ -552,7 +582,7 @@ Requirements include:
 - source links have meaningful accessible names;
 - code examples remain readable without syntax color;
 - reduced-motion preferences are respected;
-- deep-linked modules receive a useful focus/scroll target without stealing focus unexpectedly.
+- deep-linked modules receive a useful scroll target and programmatic focus only when that focus does not unexpectedly interrupt keyboard or assistive-technology flow.
 
 ## Visual direction
 
@@ -601,14 +631,16 @@ Implementation must preserve TDD and add deterministic contracts for at least th
 - module `criterionId`s are canonical and belong to the note competency;
 - required EN/PT-BR content exists;
 - reviewed modules reference valid sources;
-- primary source requirements are enforced where declared applicable;
+- `primarySourcePolicy: "required"` requires a referenced primary source;
+- `primarySourcePolicy: "not-available"` requires an explicit reason;
 - source mappings reference valid criteria;
-- duplicate note, module, and source IDs fail validation.
+- duplicate note, module, practice, and source IDs fail validation;
+- draft modules cannot be returned by the recommendation engine.
 
 ### Profile v2
 
 - v2 profiles require `learningProgress`;
-- learning progress references known note/module IDs where validation scope permits;
+- learning progress references known note/module/practice IDs in domain validation;
 - progress timestamps are valid;
 - duplicate progress records fail closed;
 - V1 migration produces a valid V2 profile with empty learning progress;
@@ -624,14 +656,14 @@ Implementation must preserve TDD and add deterministic contracts for at least th
 ### Recommendations
 
 - recommendation priority is deterministic;
-- a blocking unstudi​ed gap outranks lower-priority material;
+- a blocking unstudied gap outranks lower-priority material;
 - studied-but-unproved state produces a proof-oriented next action rather than another generic study recommendation;
-- missing curated mapping fails transparently instead of inventing content.
+- missing reviewed mapping fails transparently instead of inventing content.
 
 ### Assessment Result v2
 
 - result surfaces a mapped study recommendation when appropriate;
-- Review challenges opens the completed attempt without creating a new result;
+- Review challenges opens the just-completed same-session attempt without creating a new result;
 - Try again starts a clean attempt and new shuffle;
 - Back to assessments returns directly to the index;
 - previous completed records remain intact during retry.
@@ -649,7 +681,7 @@ Implementation must preserve TDD and add deterministic contracts for at least th
 
 The target architecture covers all 14 canonical competencies through one Core Note each.
 
-Content rollout may be implemented in slices, but the catalog must never pretend to have complete coverage when modules are absent. Missing content should remain visibly unavailable until reviewed.
+Content rollout may be implemented in slices, but the catalog must never pretend to have complete coverage when modules are absent or draft. Missing content should remain visibly unavailable until reviewed.
 
 Existing learning units are inputs to the new catalog, not a second permanent content system. Their useful objectives, explanations, and practice prompts should be migrated into the new Core Note/module structure where they remain valid.
 
@@ -688,6 +720,7 @@ This design does not add:
 - auth or billing;
 - automatic proficiency from study completion;
 - automatic evidence from practice checkboxes;
+- persisted answer-by-answer assessment history;
 - a generalized CMS for learning content.
 
 ## Success criteria
