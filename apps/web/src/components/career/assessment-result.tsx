@@ -11,49 +11,6 @@ import {
 } from "@/lib/career/learning-recommendations";
 import type { Locale } from "@/lib/locales";
 
-const resultV2Copy = {
-  en: {
-    diagnosis: "Diagnosis",
-    diagnosisBody:
-      "This deterministic result reflects the strongest level supported by the completed challenge signals.",
-    demonstrated: "Demonstrated",
-    noDemonstrated: "No strong demonstrated signals were recorded in this attempt.",
-    strengthenNext: "Strengthen next",
-    noStrengthen:
-      "No failed criterion could be mapped from this attempt. Use the next evidence recommendation below.",
-    yourNextStep: "Your next step",
-    noCuratedStudy:
-      "No curated study module is available for this result yet. Use the next evidence recommendation as the continuation path.",
-    studyNow: "Study now",
-    proveAssessment: "Prove with assessment",
-    proveEvidence: "Add evidence",
-    actions: "Actions",
-    reviewChallenges: "Review challenges",
-    tryAgain: "Try again",
-    backToAssessments: "Back to assessments",
-  },
-  "pt-BR": {
-    diagnosis: "Diagnóstico",
-    diagnosisBody:
-      "Este resultado determinístico reflete o nível mais alto sustentado pelos sinais observados nos desafios concluídos.",
-    demonstrated: "Demonstrado",
-    noDemonstrated: "Nenhum sinal forte demonstrado foi registrado nesta tentativa.",
-    strengthenNext: "Fortalecer agora",
-    noStrengthen:
-      "Nenhum critério reprovado pôde ser mapeado nesta tentativa. Use a recomendação de próxima evidência abaixo.",
-    yourNextStep: "Seu próximo passo",
-    noCuratedStudy:
-      "Ainda não há um módulo de estudo revisado para este resultado. Use a recomendação de próxima evidência como continuação.",
-    studyNow: "Estudar agora",
-    proveAssessment: "Comprovar com avaliação",
-    proveEvidence: "Adicionar evidência",
-    actions: "Ações",
-    reviewChallenges: "Revisar desafios",
-    tryAgain: "Tentar novamente",
-    backToAssessments: "Voltar para avaliações",
-  },
-} as const;
-
 function strengthenCriteria(result: AssessmentResultArtifact) {
   const blueprint = getAssessmentBlueprint(result.blueprintId);
   if (
@@ -99,7 +56,6 @@ export function AssessmentResult({
   onRetry?: () => void;
 }>) {
   const copy = careerLabCopy[locale].assessment;
-  const v2 = resultV2Copy[locale];
   const criteria = strengthenCriteria(result);
   const resolvedRecommendation =
     recommendation === undefined
@@ -120,12 +76,12 @@ export function AssessmentResult({
 
       <div className="career-assessment-result__grid">
         <section className="career-assessment-result__section">
-          <h2>{v2.diagnosis}</h2>
-          <p>{v2.diagnosisBody}</p>
+          <h2>{copy.diagnosis}</h2>
+          <p>{copy.diagnosisBody}</p>
         </section>
 
         <section className="career-assessment-result__section">
-          <h2>{v2.demonstrated}</h2>
+          <h2>{copy.demonstrated}</h2>
           {result.strongSignals.length > 0 ? (
             <ul>
               {result.strongSignals.map((signal, index) => (
@@ -133,12 +89,12 @@ export function AssessmentResult({
               ))}
             </ul>
           ) : (
-            <p>{v2.noDemonstrated}</p>
+            <p>{copy.noDemonstrated}</p>
           )}
         </section>
 
         <section className="career-assessment-result__section">
-          <h2>{v2.strengthenNext}</h2>
+          <h2>{copy.strengthenNext}</h2>
           {criteria.length > 0 ? (
             <ul>
               {criteria.map((criterion) => (
@@ -146,15 +102,15 @@ export function AssessmentResult({
               ))}
             </ul>
           ) : (
-            <p>{v2.noStrengthen}</p>
+            <p>{copy.noStrengthen}</p>
           )}
         </section>
 
         <section
           className="career-assessment-result__section career-assessment-result__section--next"
-          aria-label={v2.yourNextStep}
+          aria-label={copy.yourNextStep}
         >
-          <h2>{v2.yourNextStep}</h2>
+          <h2>{copy.yourNextStep}</h2>
           {resolvedRecommendation?.kind === "study" ? (
             <>
               <p>
@@ -164,7 +120,7 @@ export function AssessmentResult({
                 className="career-assessment-result__primary-action"
                 href={`/${locale}/career-lab/learning/${resolvedRecommendation.noteId}#${resolvedRecommendation.moduleId}` as Route}
               >
-                {v2.studyNow}
+                {copy.studyNow}
               </Link>
             </>
           ) : resolvedRecommendation?.kind === "prove" ? (
@@ -177,33 +133,33 @@ export function AssessmentResult({
                 }
               >
                 {resolvedRecommendation.destination === "assessment"
-                  ? v2.proveAssessment
-                  : v2.proveEvidence}
+                  ? copy.proveAssessment
+                  : copy.proveEvidence}
               </Link>
             </>
           ) : (
             <>
-              <p>{v2.noCuratedStudy}</p>
+              <p>{copy.noCuratedStudy}</p>
               <p>{copy.signal(result.recommendedNextEvidence)}</p>
             </>
           )}
         </section>
 
         <section className="career-assessment-result__section career-assessment-result__actions">
-          <h2>{v2.actions}</h2>
+          <h2>{copy.actions}</h2>
           <div>
             {onReview ? (
               <button type="button" onClick={onReview}>
-                {v2.reviewChallenges}
+                {copy.reviewChallenges}
               </button>
             ) : null}
             {onRetry ? (
               <button type="button" onClick={onRetry}>
-                {v2.tryAgain}
+                {copy.tryAgain}
               </button>
             ) : null}
             <Link href={`/${locale}/career-lab/assessments` as Route}>
-              {v2.backToAssessments}
+              {copy.backToAssessments}
             </Link>
           </div>
         </section>
