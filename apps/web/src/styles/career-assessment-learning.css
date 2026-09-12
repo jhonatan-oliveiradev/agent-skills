@@ -178,9 +178,174 @@
   color: var(--career-ink);
 }
 
+.career-assessment-review {
+  width: min(76rem, 100%);
+  margin: 0 auto;
+  padding: clamp(3rem, 7vw, 6.5rem) 0 clamp(2rem, 5vw, 4.5rem);
+}
+
+.career-assessment-review__header {
+  padding-bottom: clamp(2rem, 5vw, 4rem);
+  border-bottom: 1px solid var(--career-ink);
+}
+
+.career-assessment-review__header h1 {
+  max-width: 14ch;
+  margin: 1rem 0 0;
+  font-family: var(--font-serif, Georgia, serif);
+  font-size: clamp(2.75rem, 6vw, 5.75rem);
+  font-weight: 500;
+  letter-spacing: -0.045em;
+  line-height: 0.94;
+}
+
+.career-assessment-review__challenges {
+  border-bottom: 1px solid var(--career-rule);
+}
+
+.career-assessment-review__challenge {
+  display: grid;
+  grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+  gap: clamp(1.5rem, 5vw, 5rem);
+  padding: clamp(2rem, 5vw, 4rem) 0;
+  border-bottom: 1px solid var(--career-rule);
+}
+
+.career-assessment-review__challenge > header {
+  display: grid;
+  align-content: start;
+  gap: 0.8rem;
+}
+
+.career-assessment-review__challenge > header > p:first-child {
+  margin: 0;
+  color: var(--career-copper-dark);
+  font-family: var(--font-mono, ui-monospace, monospace);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.09em;
+}
+
+.career-assessment-review__challenge h2 {
+  margin: 0;
+  font-family: var(--font-serif, Georgia, serif);
+  font-size: clamp(1.75rem, 3.5vw, 3rem);
+  font-weight: 500;
+  letter-spacing: -0.035em;
+  line-height: 1.05;
+}
+
+.career-assessment-review__status {
+  width: fit-content;
+  margin: 0.4rem 0 0;
+  padding: 0.4rem 0.55rem;
+  border: 1px solid currentColor;
+  font-family: var(--font-mono, ui-monospace, monospace);
+  font-size: 0.64rem;
+  font-weight: 800;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+}
+
+.career-assessment-review__status[data-correct="true"] {
+  color: #2f6b4f;
+}
+
+.career-assessment-review__status[data-correct="false"] {
+  color: #9a3f37;
+}
+
+.career-assessment-review__response,
+.career-assessment-review__explanation,
+.career-assessment-review__option-notes {
+  grid-column: 2;
+}
+
+.career-assessment-review__response h3,
+.career-assessment-review__explanation h3,
+.career-assessment-review__option-notes h3 {
+  margin: 0 0 0.65rem;
+  color: var(--career-copper-dark);
+  font-family: var(--font-mono, ui-monospace, monospace);
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+}
+
+.career-assessment-review__response ol,
+.career-assessment-review__option-notes ul {
+  margin: 0;
+  padding-left: 1.25rem;
+  color: var(--career-muted);
+  line-height: 1.65;
+}
+
+.career-assessment-review__explanation p {
+  margin: 0;
+  color: var(--career-muted);
+  line-height: 1.7;
+}
+
+.career-assessment-review__explanation pre {
+  margin: 1rem 0 0;
+  padding: 1rem;
+  overflow-x: auto;
+  border: 1px solid var(--career-rule);
+  background: color-mix(in srgb, var(--career-ink) 4%, transparent);
+  font-family: var(--font-mono, ui-monospace, monospace);
+  font-size: 0.82rem;
+  line-height: 1.65;
+}
+
+.career-assessment-review__actions {
+  padding-top: 1.5rem;
+}
+
+.career-assessment-review__actions button {
+  min-height: 2.75rem;
+  padding: 0.7rem 0.9rem;
+  border: 1px solid var(--career-ink);
+  background: var(--career-ink);
+  color: var(--career-paper);
+  cursor: pointer;
+  font-family: var(--font-mono, ui-monospace, monospace);
+  font-size: 0.66rem;
+  font-weight: 700;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+}
+
+.career-assessment-review__actions button:hover,
+.career-assessment-review__actions button:focus-visible {
+  border-color: var(--career-copper-dark);
+  background: var(--career-copper-dark);
+}
+
 @keyframes career-assessment-answer-in {
   from { opacity: 0; transform: translateY(8px); }
   to { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 760px) {
+  .career-assessment-review {
+    padding-top: 2rem;
+  }
+
+  .career-assessment-review__challenge {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .career-assessment-review__response,
+  .career-assessment-review__explanation,
+  .career-assessment-review__option-notes {
+    grid-column: 1;
+  }
+
+  .career-assessment-review__actions button {
+    width: 100%;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
