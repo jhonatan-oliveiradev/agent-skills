@@ -3,30 +3,8 @@ import type {
   PublicAssessmentBlueprint,
 } from "@/lib/career/assessment";
 import type { AssessmentLearningFeedback } from "@/lib/career/assessment-learning-feedback";
+import { careerLabCopy } from "@/lib/career/copy";
 import type { Locale } from "@/lib/locales";
-
-const reviewCopy = {
-  en: {
-    title: "Review challenges",
-    correct: "Correct",
-    incorrect: "Incorrect",
-    selected: "Your answer",
-    expected: "Correct answer",
-    explanation: "Explanation",
-    optionNotes: "Option notes",
-    back: "Back to result",
-  },
-  "pt-BR": {
-    title: "Revisar desafios",
-    correct: "Correta",
-    incorrect: "Incorreta",
-    selected: "Sua resposta",
-    expected: "Resposta correta",
-    explanation: "Explicação",
-    optionNotes: "Notas das alternativas",
-    back: "Voltar ao resultado",
-  },
-} as const;
 
 function isCorrectSelection(
   kind: PublicAssessmentBlueprint["challenges"][number]["kind"],
@@ -67,13 +45,13 @@ export function AssessmentAttemptReview({
   locale: Locale;
   onBack: () => void;
 }>) {
-  const copy = reviewCopy[locale];
+  const copy = careerLabCopy[locale].assessment;
 
   return (
     <section className="career-assessment-review" aria-labelledby="assessment-review-title">
       <header className="career-assessment-review__header">
-        <p className="career-lab__eyebrow">{copy.title}</p>
-        <h1 id="assessment-review-title">{copy.title}</h1>
+        <p className="career-lab__eyebrow">{copy.reviewChallenges}</p>
+        <h1 id="assessment-review-title">{copy.reviewChallenges}</h1>
       </header>
 
       <div className="career-assessment-review__challenges">
@@ -99,13 +77,13 @@ export function AssessmentAttemptReview({
                     className="career-assessment-review__status"
                     data-correct={correct}
                   >
-                    {correct ? copy.correct : copy.incorrect}
+                    {correct ? copy.reviewCorrect : copy.reviewIncorrect}
                   </p>
                 ) : null}
               </header>
 
               <div className="career-assessment-review__response">
-                <h3>{copy.selected}</h3>
+                <h3>{copy.reviewSelected}</h3>
                 {selectedLabels.length > 0 ? (
                   <ol>
                     {selectedLabels.map((label, answerIndex) => (
@@ -120,7 +98,7 @@ export function AssessmentAttemptReview({
               {feedback ? (
                 <>
                   <div className="career-assessment-review__response">
-                    <h3>{copy.expected}</h3>
+                    <h3>{copy.reviewExpected}</h3>
                     <ol>
                       {correctLabels.map((label, answerIndex) => (
                         <li key={`${answerIndex}:${label}`}>{label}</li>
@@ -129,7 +107,7 @@ export function AssessmentAttemptReview({
                   </div>
 
                   <div className="career-assessment-review__explanation">
-                    <h3>{copy.explanation}</h3>
+                    <h3>{copy.reviewExplanation}</h3>
                     <p>{feedback.rationale}</p>
                     {feedback.codeExample ? (
                       <pre data-language={feedback.codeExample.language}>
@@ -139,7 +117,7 @@ export function AssessmentAttemptReview({
                   </div>
 
                   <div className="career-assessment-review__option-notes">
-                    <h3>{copy.optionNotes}</h3>
+                    <h3>{copy.reviewOptionNotes}</h3>
                     <ul>
                       {challenge.options.map((option) => (
                         <li key={option.id}>
@@ -158,7 +136,7 @@ export function AssessmentAttemptReview({
 
       <footer className="career-assessment-review__actions">
         <button type="button" onClick={onBack}>
-          {copy.back}
+          {copy.backToResult}
         </button>
       </footer>
     </section>
