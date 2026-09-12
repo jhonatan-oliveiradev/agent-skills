@@ -5,6 +5,7 @@ import { CareerGuidanceProvider } from "@/components/career/career-guidance-prov
 import { CareerLabShell } from "@/components/career/career-lab-shell";
 import { CareerProfileProvider } from "@/components/career/career-profile-provider";
 import "@/styles/career-lab.css";
+import "@/styles/career-learning.css";
 import "@/styles/career-learning-evidence.css";
 import "@/styles/career-market.css";
 import "@/styles/career-convergence.css";
@@ -27,12 +28,12 @@ const metadataCopy = {
   en: {
     title: "Career Lab",
     description:
-      "A local-first developer career workspace for evidence-aware baselines, adaptive roadmaps, portfolio evidence, and market signals stored in your browser.",
+      "A local-first developer career workspace for evidence-aware baselines, reviewed learning, adaptive roadmaps, professional evidence, and market signals stored in your browser.",
   },
   "pt-BR": {
     title: "Career Lab",
     description:
-      "Um workspace local de carreira para devs com baseline orientado por evidências, roadmap adaptativo, portfólio e sinais de mercado armazenados no navegador.",
+      "Um workspace local de carreira para devs com baseline orientado por evidências, aprendizado revisado, roadmap adaptativo, evidências profissionais e sinais de mercado armazenados no navegador.",
   },
 } as const;
 

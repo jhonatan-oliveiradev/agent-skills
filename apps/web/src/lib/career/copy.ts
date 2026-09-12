@@ -92,7 +92,7 @@ function portugueseAssessmentSignal(signal: string): string {
 
 export const careerLabCopy = {
   en: {
-    navigation: ["Overview", "Roadmap", "Assessments", "Evidence", "Market"],
+    navigation: ["Overview", "Assessments", "Learning", "Roadmap", "Evidence", "Market"],
     eyebrow: "Career Lab / local workspace",
     title: "Build career progress from evidence, not activity.",
     summary: "Your Career Profile, readiness signals and future roadmap stay local to this browser until you explicitly export them.",
@@ -210,7 +210,7 @@ export const careerLabCopy = {
     },
   },
   "pt-BR": {
-    navigation: ["Visão geral", "Roadmap", "Avaliações", "Evidências", "Mercado"],
+    navigation: ["Visão geral", "Avaliações", "Aprendizado", "Roadmap", "Evidências", "Mercado"],
     eyebrow: "Career Lab / workspace local",
     title: "Construa progresso de carreira a partir de evidências, não de atividade.",
     summary: "Seu Career Profile, sinais de readiness e futuro roadmap ficam locais neste navegador até que você os exporte explicitamente.",
