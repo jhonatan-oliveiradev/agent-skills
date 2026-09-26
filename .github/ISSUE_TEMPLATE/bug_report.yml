@@ -1,0 +1,48 @@
+name: Bug report / Relatar problema
+description: Report a reproducible problem with the website, installer, plugin, or a skill. / Relate um problema reproduzível.
+title: "[Bug] "
+labels: []
+body:
+  - type: markdown
+    attributes:
+      value: "For vulnerabilities, use the private channel in SECURITY.md. / Para vulnerabilidades, use o canal privado em SECURITY.md."
+  - type: dropdown
+    id: area
+    attributes:
+      label: Area / Área
+      options:
+        - Website / Site
+        - Skill or pack / Skill ou pacote
+        - Installer / Instalador
+        - Plugin
+        - Documentation / Documentação
+        - Other / Outro
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected result / Resultado esperado
+      description: What should happen? / O que deveria acontecer?
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual result / Resultado atual
+      description: What happened instead? / O que aconteceu?
+    validations:
+      required: true
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: Steps to reproduce / Como reproduzir
+      description: Include the route, skill name, command, or small example as applicable. / Inclua rota, skill, comando ou exemplo quando aplicável.
+      placeholder: "1. ...\n2. ...\n3. ..."
+    validations:
+      required: true
+  - type: input
+    id: environment
+    attributes:
+      label: Environment / Ambiente
+      description: Browser, OS, Node version, or runtime if relevant. / Navegador, sistema, Node ou runtime, se relevante.

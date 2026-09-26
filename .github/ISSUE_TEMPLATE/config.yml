@@ -1,0 +1,5 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Report a security vulnerability / Relatar vulnerabilidade
+    url: https://github.com/jhonatan-oliveiradev/agent-skills/security/advisories/new
+    about: Share security reports privately; do not post them in public issues. / Envie relatos de segurança em privado.

@@ -1,0 +1,36 @@
+name: Improvement or skill proposal / Melhoria ou proposta de skill
+description: Propose a focused improvement or a reusable new skill. / Proponha uma melhoria ou nova skill reutilizável.
+title: "[Proposal] "
+labels: []
+body:
+  - type: dropdown
+    id: area
+    attributes:
+      label: Area / Área
+      options:
+        - Existing skill or pack / Skill ou pacote existente
+        - New skill / Nova skill
+        - Website / Site
+        - Installer or plugin / Instalador ou plugin
+        - Documentation / Documentação
+    validations:
+      required: true
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem and example / Problema e exemplo
+      description: What concrete task or limitation led to this proposal? / Qual tarefa ou limitação motivou a proposta?
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed change / Mudança proposta
+      description: For a skill, include its trigger, expected workflow, and how it differs from existing skills. / Para skill, inclua o gatilho, fluxo esperado e diferença para as existentes.
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Evidence or acceptance criteria / Evidências ou critérios de aceite
+      description: How would we know the improvement works? / Como saberemos que funcionou?

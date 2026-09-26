@@ -277,7 +277,7 @@ describe("foundation navigation targets", () => {
     );
     expect(screen.getByRole("link", { name: /prepare a pull request/i })).toHaveAttribute(
       "href",
-      "https://github.com/jhonatan-oliveiradev/agent-skills/compare",
+      "https://github.com/jhonatan-oliveiradev/agent-skills/blob/main/CONTRIBUTING.md",
     );
     unmount();
 
