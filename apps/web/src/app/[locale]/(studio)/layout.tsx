@@ -28,9 +28,11 @@ import "../../studio-premium.css";
 import "../../skill-lab.css";
 import "lenis/dist/lenis.css";
 import "../../product-experience.css";
+import "../../interior-experience.css";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 import { resolveLocale } from "@/components/foundation-route";
+import { InteriorMotion } from "@/components/motion/interior-motion";
 
 type LayoutProps = Readonly<{
   children: ReactNode;
@@ -43,7 +45,7 @@ export default async function StudioLayout({ children, params }: LayoutProps) {
   return (
     <>
       <SiteHeader locale={locale} />
-      <main id="main-content">{children}</main>
+      <main id="main-content">{children}<InteriorMotion area="studio" /></main>
       <SiteFooter locale={locale} />
     </>
   );

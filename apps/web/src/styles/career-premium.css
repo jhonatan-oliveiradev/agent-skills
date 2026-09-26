@@ -1,0 +1,160 @@
+/* Career Lab: a focused workspace in the same cobalt, navy and sage family as Studio. */
+.career-lab-shell {
+  --career-ink: #112638;
+  --career-muted: #536b79;
+  --career-paper: #eff4f2;
+  --career-paper-deep: #e0eae9;
+  --career-copper: #4265cc;
+  --career-copper-dark: #3052b4;
+  --career-rule: rgba(28, 63, 81, .19);
+  --career-ease: cubic-bezier(.22, 1, .36, 1);
+  background: var(--career-paper);
+}
+
+.career-lab-rail {
+  border-bottom-color: #ffffff2c;
+  background: #112638;
+  box-shadow: 0 1rem 2rem #09213117;
+}
+.career-lab-rail__brand span,
+.career-lab-rail__brand strong,
+.career-lab-rail__pack-link,
+.career-lab-rail li > a,
+.career-lab-rail__guide { color: #f0f7f8; }
+.career-lab-rail__brand strong { font-family: var(--font-instrument, sans-serif); font-weight: 650; letter-spacing: -.045em; }
+.career-lab-rail__brand span { color: #a4c1ca; }
+.career-lab-rail__pack-link { color: #b4daca; }
+.career-lab-rail li > a:hover,
+.career-lab-rail li > a[aria-current="page"],
+.career-lab-rail__guide:hover,
+.career-lab-rail__guide[aria-current="page"] {
+  color: #c6edca;
+  border-bottom-color: #a9e2aa;
+  background: #ffffff0e;
+}
+.career-lab-rail__local { color: #b1d0c0; }
+.career-lab-rail .career-data-controls > summary { color: #e3f2ef; border-color: #ffffff5c; }
+.career-lab-rail .career-data-controls[open] > summary,
+.career-lab-rail .career-data-controls > summary:hover { color: #c6edca; border-color: #a9e2aa; }
+.career-lab-rail :is(a, button, summary):focus-visible { outline-color: #a9e2aa; }
+
+.career-lab-content { max-width: 106rem; margin-inline: auto; }
+.career-lab-content__masthead { padding-bottom: 1.5rem; }
+.career-lab-content__masthead .career-lab__eyebrow { color: var(--career-copper-dark); }
+.career-lab-entry__hero {
+  position: relative;
+  isolation: isolate;
+  grid-template-columns: minmax(0, 1.12fr) minmax(17rem, .7fr);
+  gap: clamp(2.5rem, 6vw, 7rem);
+  align-items: center;
+  margin-top: clamp(1.5rem, 3vw, 3rem);
+  padding: clamp(2.5rem, 5vw, 5rem);
+  overflow: hidden;
+  color: #f4f9fb;
+  background: #173149;
+  border: 1px solid #284963;
+  box-shadow: 1.25rem 1.25rem 0 #d5e7e1;
+}
+.career-lab-entry__hero::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  width: clamp(18rem, 38vw, 40rem);
+  aspect-ratio: 1;
+  right: -8%;
+  top: -37%;
+  border: 1px solid #c9e3ee57;
+  border-radius: 50%;
+  box-shadow: 0 0 0 3rem #ffffff06, 0 0 0 6rem #ffffff05, 0 0 0 9rem #ffffff04;
+  pointer-events: none;
+}
+.career-lab-entry__intro h1 {
+  max-width: 12ch;
+  font-family: var(--font-instrument, sans-serif);
+  font-weight: 600;
+  font-size: clamp(3rem, 5.7vw, 6.5rem);
+  letter-spacing: -.07em;
+  line-height: .97;
+  text-wrap: balance;
+}
+.career-lab-entry__hero .career-lab__eyebrow { color: #b5e5c4; }
+.career-lab-entry__lede { max-width: 33rem; color: #c3d5e1; }
+.career-lab-entry__dimensions { border-top-color: #ffffff6b; }
+.career-lab-entry__dimensions div { padding-block: 1.15rem; border-bottom-color: #ffffff49; }
+.career-lab-entry__dimensions dt { color: #a9e2aa; }
+.career-lab-entry__dimensions dd {
+  max-width: 24ch;
+  color: #f4f9fb;
+  font-family: var(--font-instrument, sans-serif);
+  font-weight: 550;
+  line-height: 1.2;
+  letter-spacing: -.035em;
+}
+.career-lab-entry__journey { padding-top: clamp(4rem, 8vw, 8rem); }
+.career-lab-entry__journey h2,
+.career-lab-entry__journey h3 { font-family: var(--font-instrument, sans-serif); font-weight: 580; }
+.career-lab-entry__workspace-title h2 { letter-spacing: -.065em; }
+.career-lab-entry__current {
+  padding: clamp(1.3rem, 2.5vw, 2.5rem);
+  border: 1px solid #a7c3cc;
+  border-top: 3px solid #4165d0;
+  background: #f9fbfa;
+  box-shadow: .65rem .65rem 0 #dce7eb;
+}
+.career-lab-entry__primary {
+  border-color: #3153bf;
+  background: #3153bf;
+  color: #fff;
+  transition: background-color 320ms ease, border-color 320ms ease,
+    box-shadow 320ms ease, transform 380ms var(--career-ease);
+}
+.career-lab-entry__primary:hover,
+.career-lab-entry__primary:focus-visible {
+  border-color: #20398a;
+  background: #20398a;
+  box-shadow: 0 .8rem 1.5rem #3153bf3d;
+  transform: translateY(-3px);
+}
+.career-lab-entry__primary span,
+.career-lab-entry__pack a span { display: inline-block; transition: transform 320ms var(--career-ease); }
+.career-lab-entry__primary:hover span,
+.career-lab-entry__pack a:hover span { transform: translate(.2rem, -.2rem); }
+.career-lab-entry__journey ol { border-color: #90a9ba; }
+.career-lab-entry__journey li {
+  transition: background-color 320ms ease, padding-inline 400ms var(--career-ease);
+}
+.career-lab-entry__journey li:hover { background: #e1edee; padding-inline: .65rem 1rem; }
+.career-lab-entry__journey li[data-state="next"] {
+  background: #dfeae9;
+  box-shadow: inset 3px 0 0 #4165d0;
+}
+.career-lab-entry__journey li[data-state="next"]:hover { background: #d3e3e6; }
+.career-lab-entry__stage-index { color: #3153bf; }
+.career-lab-entry__pack { border-top: 1px solid var(--career-rule); margin-top: 1.5rem; }
+.career-lab-entry__pack a { color: #3153bf; }
+.career-lab-entry__pack a:hover { color: #20398a; }
+
+.career-overview__hero h1,
+.career-onboarding h1,
+.career-guide h1 { font-family: var(--font-instrument, sans-serif); font-weight: 570; letter-spacing: -.065em; }
+.career-card,
+.career-next-action { transition: background-color 320ms ease, border-color 320ms ease; }
+.career-card:hover { background-color: #e3eeee; }
+
+@media (max-width: 980px) {
+  .career-lab-entry__hero { grid-template-columns: 1fr; }
+  .career-lab-entry__dimensions div { border-right-color: #ffffff49; }
+}
+@media (max-width: 760px) {
+  .career-lab-entry__hero { padding: 2rem 1.4rem; margin-right: .5rem; box-shadow: .5rem .5rem 0 #d5e7e1; }
+  .career-lab-entry__hero::before { right: -47%; top: -25%; }
+  .career-lab-entry__dimensions div { border-right: 0; }
+  .career-lab-entry__journey li:hover { padding-inline: 0; }
+  .career-lab-rail__brand strong { font-size: 1.1rem; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .career-lab-entry__journey li,
+  .career-lab-entry__primary,
+  .career-lab-entry__primary span,
+  .career-lab-entry__pack a span { transition-duration: .01ms !important; }
+}
