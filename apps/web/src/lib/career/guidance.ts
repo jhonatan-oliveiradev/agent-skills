@@ -5,7 +5,9 @@ import { getLearningNoteByCompetency } from "./learning-catalog";
 import { getLearningProgress } from "./learning-progress";
 import { buildRoadmap, getRoadmapMilestoneViews } from "./roadmap-engine";
 import { getRoleMap } from "./role-maps";
-import type { CareerProfile } from "./types";
+import type { CareerProfile, ProficiencyLevel } from "./types";
+
+const levels: readonly ProficiencyLevel[] = ["foundation", "developing", "proficient", "advanced"];
 
 export type CareerNextAction =
   | { kind: "complete-baseline"; blueprintId: string; href: string }
@@ -48,11 +50,21 @@ export function getCareerNextAction(
       );
       const note = competency ? getLearningNoteByCompetency(competency.id) : undefined;
       const progress = note ? getLearningProgress(profile, note.id) : undefined;
+      const requirement = profile.targetRoles[0]
+        ? getRoleMap(profile.targetRoles[0]).requirements.find(
+            (item) => item.competencyId === latestAssessment.competencyId,
+          )
+        : undefined;
+      const observedRank = levels.indexOf(latestAssessment.level);
+      const targetRank = requirement ? levels.indexOf(requirement.requiredLevel) : -1;
+      const nextLevel = observedRank < targetRank ? levels[observedRank + 1] : undefined;
       const nextModule = note?.modules.find(
-        (module) => module.reviewStatus === "reviewed" &&
-          !progress?.completedModuleIds.includes(module.id),
+        (module) => module.reviewStatus === "reviewed" && module.level === nextLevel,
       );
-      if (note && nextModule && !progress?.completedAt) {
+      const moduleStudiedAfterAssessment = nextModule &&
+        progress?.completedModuleIds.includes(nextModule.id) &&
+        Date.parse(progress.updatedAt) > Date.parse(latestAssessment.completedAt);
+      if (note && nextModule && !progress?.completedModuleIds.includes(nextModule.id)) {
         return {
           kind: "study-assessed-gap",
           noteId: note.id,
@@ -63,7 +75,7 @@ export function getCareerNextAction(
       const blueprint = baselineAssessmentBlueprints.find(
         (item) => item.competencyId === latestAssessment.competencyId,
       );
-      if (note && progress?.completedAt && blueprint && Date.parse(progress.completedAt) > Date.parse(latestAssessment.completedAt)) {
+      if (note && moduleStudiedAfterAssessment && blueprint) {
         return {
           kind: "prove-studied-gap",
           blueprintId: blueprint.id,

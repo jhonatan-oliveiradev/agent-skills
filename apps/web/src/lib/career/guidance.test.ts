@@ -179,13 +179,14 @@ describe("getCareerNextAction", () => {
     expect(study.kind).toBe("study-assessed-gap");
     if (study.kind !== "study-assessed-gap") return;
     const note = getLearningNote(study.noteId)!;
+    expect(note.modules.find((item) => item.id === study.moduleId)?.level).toBe("developing");
     const studied = {
       ...assessed,
       learningProgress: [{
         noteId: note.id, startedAt: NOW, updatedAt: "2026-09-10T12:00:00.000Z",
-        currentModuleId: null, completedModuleIds: note.modules.map((module) => module.id),
-        completedPracticeIds: note.modules.map((module) => module.practice.id),
-        completedAt: "2026-09-10T12:00:00.000Z",
+        currentModuleId: study.moduleId, completedModuleIds: [study.moduleId],
+        completedPracticeIds: [note.modules.find((item) => item.id === study.moduleId)!.practice.id],
+        completedAt: null,
       }],
     };
     expect(getCareerNextAction(studied, "pt-BR")).toEqual({
@@ -194,5 +195,6 @@ describe("getCareerNextAction", () => {
     });
     const reassessed = { ...studied, assessments: [{ ...assessed.assessments[0]!, completedAt: "2026-09-11T12:00:00.000Z" }] };
     expect(getCareerNextAction(reassessed, "pt-BR").kind).toBe("complete-baseline");
+    expect(getCareerNextAction({ ...assessed, assessments: [{ ...assessed.assessments[0]!, level: "advanced" }] }, "pt-BR").kind).toBe("complete-baseline");
   });
 });
