@@ -11,18 +11,43 @@ export function ProductMotion() {
   useGSAP(() => {
     const root = document.querySelector<HTMLElement>(".product-home");
     if (!root) return;
+    const header = document.querySelector<HTMLElement>(".site-header");
+
+    ScrollTrigger.create({
+      trigger: root.querySelector(".product-hero"),
+      start: "bottom top+=72",
+      onEnter: () => header?.classList.add("is-product-scrolled"),
+      onLeaveBack: () => header?.classList.remove("is-product-scrolled"),
+    });
 
     const media = gsap.matchMedia();
     media.add("(prefers-reduced-motion: no-preference)", () => {
+      gsap.timeline({ delay: 1.08, defaults: { ease: "power3.out" } })
+        .from(root.querySelector(".product-kicker"), { y: 18, autoAlpha: 0, duration: 0.65 })
+        .from(root.querySelector(".product-hero h1"), { y: 35, autoAlpha: 0, duration: 0.85 }, "-=0.35")
+        .from(root.querySelector(".product-hero__intro"), { y: 20, autoAlpha: 0, duration: 0.7 }, "-=0.55")
+        .from(root.querySelector(".product-hero .product-actions"), { y: 16, autoAlpha: 0, duration: 0.65 }, "-=0.45")
+        .from(root.querySelector(".product-hero__graphic"), { scale: 0.9, autoAlpha: 0, duration: 1.15 }, 0.5)
+        .from(root.querySelector(".product-hero__bottom"), { autoAlpha: 0, duration: 0.7 }, 1.15);
+
+      const progress = root.querySelector<HTMLElement>(".product-scroll-track > span");
+      if (progress) {
+        gsap.fromTo(progress, { scaleY: 0 }, {
+          scaleY: 1,
+          ease: "none",
+          scrollTrigger: { trigger: root, start: "top top", end: "bottom bottom", scrub: 0.35 },
+        });
+      }
+
       const reveal = root.querySelectorAll<HTMLElement>(
         ".product-demo__copy, .product-thesis__lead, .product-section-heading, .product-install__intro, .product-close__inner",
       );
       reveal.forEach((element) => {
         gsap.from(element, {
-          y: 32,
+          y: 40,
           autoAlpha: 0,
-          duration: 0.85,
-          ease: "power2.out",
+          duration: 0.95,
+          ease: "power3.out",
           scrollTrigger: { trigger: element, start: "top 88%", once: true },
         });
       });
@@ -35,7 +60,7 @@ export function ProductMotion() {
             autoAlpha: 0,
             duration: 0.75,
             delay: Math.min(index, 3) * 0.09,
-            ease: "power2.out",
+            ease: "power3.out",
             scrollTrigger: { trigger: element, start: "top 92%", once: true },
           });
         });
@@ -60,7 +85,10 @@ export function ProductMotion() {
       }
     });
 
-    return () => media.revert();
+    return () => {
+      media.revert();
+      header?.classList.remove("is-product-scrolled");
+    };
   }, []);
 
   useEffect(() => {
