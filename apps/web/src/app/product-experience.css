@@ -73,7 +73,8 @@ body:has(.product-home) .site-header[data-site-chrome="publication-bar"] .naviga
   background: radial-gradient(circle at 50% 40%, #b9e8d6 0 12%, #487b78 13% 29%, #2c535d 30% 45%, #18323b 46%);
 }
 .product-home .product-case__interface--motion strong { border-color: #b8e9d7a6; color: #defbeb; }
-.product-home .product-skill:hover { background: #e1ebed; }
+.product-home .product-skill:hover,
+.product-home .product-skill:focus-visible { background: #e1ebed; }
 .product-home .product-skill__number,
 .product-home .product-skill__category,
 .product-home .product-thesis__steps span,
@@ -137,7 +138,9 @@ body:has(.product-home) .site-footer[data-footer-mode="end-matter"] {
 
 /* Tactile links and controls, with transforms kept separate from GSAP-owned nodes. */
 .product-home .product-button { position: relative; overflow: hidden; transition: background-color 350ms ease, box-shadow 350ms ease, transform 350ms var(--product-ease); }
-.product-home .product-button:hover { background: #e3f3cb; box-shadow: 0 1.2rem 2.5rem #0b1e3f30; transform: translateY(-4px); }
+.product-home .product-button--white { color: #182f48; transition: color 350ms ease, background-color 350ms ease, box-shadow 350ms ease, transform 350ms var(--product-ease); }
+.product-home .product-button:hover,
+.product-home .product-button:focus-visible { color: #182f48; background: #e3f3cb; box-shadow: 0 1.2rem 2.5rem #0b1e3f30; transform: translateY(-4px); }
 .product-home .product-button:active { transform: translateY(0) scale(.98); }
 .product-home .product-button span,
 .product-home .product-text-link span,
@@ -163,7 +166,23 @@ body:has(.product-home) .site-footer[data-footer-mode="end-matter"] {
 .product-home .product-pack__symbol { transition: transform 650ms var(--product-ease); }
 .product-home .product-pack:hover .product-pack__symbol { transform: scale(1.08) rotate(-10deg); }
 .product-home .product-skill { transition: padding 400ms var(--product-ease), background-color 400ms ease; }
-.product-home .product-skill:hover { padding-inline: 1.25rem; }
+.product-home .product-skill:hover,
+.product-home .product-skill:focus-visible { padding-inline: 1.25rem; }
+.product-home .product-skill h3,
+.product-home .product-skill p,
+.product-home .product-skill__number,
+.product-home .product-skill__category,
+.product-home .product-skill__arrow { transition: color 400ms ease, transform 350ms var(--product-ease); }
+.product-home .product-skill h3 { color: inherit; }
+.product-home .product-skill:hover,
+.product-home .product-skill:focus-visible { color: #132b3c; }
+.dark .product-home .product-skill:hover,
+.dark .product-home .product-skill:focus-visible { color: #fff; background: #29485a; }
+.dark .product-home .product-skill:hover .product-skill__number,
+.dark .product-home .product-skill:hover .product-skill__category,
+.dark .product-home .product-skill:hover .product-skill__arrow { color: #c7e9da; }
+.dark .product-home .product-skill:hover h3,
+.dark .product-home .product-skill:focus-visible h3 { color: #d4f2e2; }
 .product-home .skill-lab {
   --lab-ink: #f1f7ff;
   --lab-muted: #a9bbcf;
@@ -181,6 +200,20 @@ body:has(.product-home) .site-footer[data-footer-mode="end-matter"] {
 .product-home .skill-lab__output { background: linear-gradient(135deg, #213c55, #1a3045 66%, #172738); border-color: #617f9b; }
 .product-home .skill-lab__tags span { color: #deebff; border-color: #637f9b; }
 .product-home .skill-lab__result { background: #9bc99b16; }
+.product-home .skill-lab__link {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  align-items: center;
+  gap: .4rem;
+  text-align: center;
+  transition: color 350ms ease, background-color 350ms ease, box-shadow 350ms ease, transform 350ms var(--product-ease);
+}
+.product-home .skill-lab__link-label { grid-column: 2; font-size: .84rem; line-height: 1.4; }
+.product-home .skill-lab__link-arrow { grid-column: 3; justify-self: end; font-size: 1.2rem; transition: transform 350ms var(--product-ease); }
+.product-home .skill-lab__link:hover,
+.product-home .skill-lab__link:focus-visible { color: #132337; background: #dcf5c9; box-shadow: 0 .75rem 1.75rem #0003; transform: translateY(-3px); }
+.product-home .skill-lab__link:hover .skill-lab__link-arrow,
+.product-home .skill-lab__link:focus-visible .skill-lab__link-arrow { transform: translate(.2rem, -.2rem); }
 
 html:has(.product-home):not(.lenis) { scroll-behavior: smooth; }
 @media (max-width: 700px) {

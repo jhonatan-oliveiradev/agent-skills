@@ -41,7 +41,7 @@ export function MethodEngine({ copy, metrics, locale }: MethodEngineProps) {
           <div className="skill-lab__connector" aria-hidden="true"><span /><span>{example.skill}</span><span /></div>
           <div className="skill-lab__output"><span className="skill-lab__caption">02 / {locale === "pt-BR" ? "O MÉTODO" : "THE METHOD"}</span><p>{example.method}</p><div className="skill-lab__tags">{example.tags.map((tag) => <span key={tag}>{tag}</span>)}</div></div>
           <div className="skill-lab__result"><span className="skill-lab__caption">03 / {copy.resultLabel}</span><p>{example.outcome}</p></div>
-          <Link className="skill-lab__link" href={`/${locale}/skills/${example.skill}` as Route}>{locale === "pt-BR" ? "Conhecer e instalar esta skill" : "Explore and install this skill"}<span aria-hidden="true">↗</span></Link>
+          <Link className="skill-lab__link" href={`/${locale}/skills/${example.skill}` as Route}><span className="skill-lab__link-label">{locale === "pt-BR" ? "Conhecer e instalar esta skill" : "Explore and install this skill"}</span><span className="skill-lab__link-arrow" aria-hidden="true">↗</span></Link>
         </div>
       </div>
       <div className="skill-lab__foot">{metrics.map((metric) => <span key={metric}>{metric}</span>)}</div>
