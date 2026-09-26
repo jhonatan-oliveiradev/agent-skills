@@ -1,4 +1,4 @@
-import { render, screen, within } from "@testing-library/react";
+import { fireEvent, render, screen, within } from "@testing-library/react";
 import { afterEach, describe, expect, it, vi } from "vitest";
 
 const motionState = vi.hoisted(() => ({ reduced: false }));
@@ -51,11 +51,12 @@ describe("editorial Home motion", () => {
     expect(container.querySelector("canvas")).not.toBeInTheDocument();
   });
 
-  it("shows the complete method when motion is disabled", () => {
+  it("shows an example and lets visitors explore another skill", () => {
     motionState.reduced = true;
 
     const { container } = render(
       <MethodEngine
+        locale="en"
         copy={{
           label: "Method Engine",
           promptLabel: "Natural request",
@@ -69,15 +70,12 @@ describe("editorial Home motion", () => {
     );
 
     const region = screen.getByRole("region", { name: "Method Engine" });
-    expect(within(region).getByText(/Create a premium experience for this collection\./)).toBeVisible();
-    expect(within(region).getByText("Context")).toBeVisible();
-    expect(within(region).getByText("Method")).toBeVisible();
-    expect(within(region).getByText("Evidence")).toBeVisible();
-    expect(within(region).getByText("designing-ui-systems")).toBeVisible();
-    expect(within(region).getByText("building-premium-nextjs-interfaces")).toBeVisible();
-    expect(within(region).getByText("craft-premium-motion")).toBeVisible();
-    expect(within(region).getByText("Implemented · responsive · accessible · validated")).toBeVisible();
+    expect(within(region).getByText(/Turn these scattered screens/)).toBeVisible();
+    expect(within(region).getByRole("link", { name: /Explore and install this skill/ })).toHaveAttribute("href", "/en/skills/designing-ui-systems");
+    fireEvent.click(within(region).getByRole("tab", { name: "Motion direction" }));
+    expect(within(region).getByText(/Make these interactions feel intentional/)).toBeVisible();
+    expect(within(region).getByRole("link", { name: /Explore and install this skill/ })).toHaveAttribute("href", "/en/skills/craft-premium-motion");
     expect(within(region).getByText("18 skills")).toBeVisible();
-    expect(container.querySelector('[data-motion="static"]')).toBeInTheDocument();
+    expect(container.querySelectorAll('[role="tabpanel"]')).toHaveLength(1);
   });
 });
