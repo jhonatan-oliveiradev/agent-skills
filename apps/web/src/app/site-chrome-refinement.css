@@ -62,11 +62,6 @@
   padding-bottom: clamp(0.85rem, 2dvh, 1.35rem);
 }
 
-.site-footer__wordmark[data-wordmark-scale="restrained"] {
-  font-size: clamp(5rem, 12vw, 14rem);
-  line-height: 0.82;
-}
-
 @media (min-width: 60.001rem) {
   .primary-navigation[data-navigation-mode="studio-index"][data-viewport-contract="desktop-100dvh"] {
     overflow: hidden;
@@ -179,12 +174,6 @@
     min-height: 100%;
     height: auto;
     padding-top: clamp(1.4rem, 4dvh, 2.4rem);
-  }
-}
-
-@media (max-width: 38rem) {
-  .site-footer__wordmark[data-wordmark-scale="restrained"] {
-    font-size: clamp(4.8rem, 22vw, 8rem);
   }
 }
 

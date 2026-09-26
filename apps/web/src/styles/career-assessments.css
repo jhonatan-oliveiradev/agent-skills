@@ -21,13 +21,13 @@
 }
 
 .career-assessment-list__intro h1 {
-  max-width: 9ch;
+  max-width: 12ch;
   margin: 1.25rem 0 0;
-  font-family: var(--font-serif, Georgia, serif);
+  font-family: var(--font-instrument, "Instrument Sans", sans-serif);
   font-size: clamp(3.25rem, 7vw, 7rem);
-  font-weight: 500;
-  letter-spacing: -0.045em;
-  line-height: 0.9;
+  font-weight: 600;
+  letter-spacing: -0.065em;
+  line-height: 0.96;
 }
 
 .career-assessment-list__intro > p:last-child {
@@ -46,10 +46,10 @@
 }
 
 .career-assessment-list__progress strong {
-  font-family: var(--font-serif, Georgia, serif);
+  font-family: var(--font-instrument, "Instrument Sans", sans-serif);
   font-size: clamp(1.75rem, 3vw, 2.75rem);
-  font-weight: 500;
-  letter-spacing: -0.03em;
+  font-weight: 600;
+  letter-spacing: -0.05em;
 }
 
 .career-assessment-list__progress span {
@@ -93,10 +93,10 @@
 
 .career-assessment-index__meta h2 {
   margin: 0;
-  font-family: var(--font-serif, Georgia, serif);
+  font-family: var(--font-instrument, "Instrument Sans", sans-serif);
   font-size: clamp(1.7rem, 3vw, 2.6rem);
-  font-weight: 500;
-  letter-spacing: -0.03em;
+  font-weight: 600;
+  letter-spacing: -0.045em;
   line-height: 1;
 }
 
@@ -172,7 +172,7 @@
 .career-assessment-runner__header h1 {
   max-width: 20ch;
   margin: 0;
-  font-family: var(--font-serif, Georgia, serif);
+  font-family: var(--font-instrument, "Instrument Sans", sans-serif);
   font-size: clamp(2.35rem, 5vw, 4.85rem);
   font-weight: 500;
   letter-spacing: -0.045em;
@@ -237,7 +237,7 @@
 
 .career-assessment-runner__option-copy {
   min-width: 0;
-  font-family: var(--font-serif, Georgia, serif);
+  font-family: var(--font-instrument, "Instrument Sans", sans-serif);
   font-size: clamp(1.2rem, 2vw, 1.65rem);
   line-height: 1.25;
 }
@@ -328,7 +328,7 @@
 
 .career-assessment-result__summary h1 {
   margin: 0;
-  font-family: var(--font-serif, Georgia, serif);
+  font-family: var(--font-instrument, "Instrument Sans", sans-serif);
   font-size: clamp(3rem, 7vw, 6.5rem);
   font-weight: 500;
   letter-spacing: -0.05em;
@@ -361,7 +361,7 @@
 
 .career-assessment-result__section h2 {
   margin: 0;
-  font-family: var(--font-serif, Georgia, serif);
+  font-family: var(--font-instrument, "Instrument Sans", sans-serif);
   font-size: clamp(1.65rem, 3vw, 2.4rem);
   font-weight: 500;
   letter-spacing: -0.035em;
