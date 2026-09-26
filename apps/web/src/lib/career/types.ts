@@ -62,6 +62,7 @@ export interface LearningProgressRecord {
   readonly currentModuleId: string | null;
   readonly completedModuleIds: readonly string[];
   readonly completedPracticeIds: readonly string[];
+  readonly practiceReflections?: readonly Readonly<{ practiceId: string; response: string; updatedAt: string }>[];
   readonly completedAt: string | null;
 }
 

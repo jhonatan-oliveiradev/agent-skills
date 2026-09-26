@@ -109,7 +109,7 @@ export const careerLabCopy = {
     entry: {
       eyebrow: "01 / Start here",
       title: "Build a real map of your career.",
-      body: "Define the target, calibrate your current level, and turn real evidence into development priorities.",
+      body: "Assess your starting point, study a mapped gap and record your practice. Reassess or show inspectable work to see what changed.",
       cta: "Start Career Profile",
       localNote: "Your profile stays in this browser until you explicitly export it.",
       dimensions: [
@@ -117,11 +117,12 @@ export const careerLabCopy = {
         { label: "02 / Market", body: "Define where you want to compete." },
         { label: "03 / Capacity", body: "Set a sustainable weekly pace." },
       ],
-      journeyEyebrow: "05 / Evidence-led progression",
+      journeyEyebrow: "06 / Evidence-led progression",
       howItWorks: "How Career Lab works",
       stages: [
         { title: "Profile", body: "Define context and objective." },
         { title: "Assessment", body: "Calibrate your current level." },
+        { title: "Learning", body: "Study a mapped gap and record your practice." },
         { title: "Roadmap", body: "Turn gaps into priorities." },
         { title: "Evidence", body: "Prove what changed." },
         { title: "Market", body: "Compare with real opportunities." },
@@ -249,7 +250,7 @@ export const careerLabCopy = {
     entry: {
       eyebrow: "01 / Comece aqui",
       title: "Construa um mapa real da sua carreira.",
-      body: "Defina o alvo, calibre seu nível atual e transforme evidências reais em prioridades de desenvolvimento.",
+      body: "Avalie seu ponto de partida, estude um gap mapeado e registre sua prática. Reavalie ou mostre trabalho inspecionável para ver o que mudou.",
       cta: "Iniciar Career Profile",
       localNote: "Seu perfil fica neste navegador até que você o exporte explicitamente.",
       dimensions: [
@@ -257,11 +258,12 @@ export const careerLabCopy = {
         { label: "02 / Mercado", body: "Defina onde quer competir." },
         { label: "03 / Capacidade", body: "Determine um ritmo semanal sustentável." },
       ],
-      journeyEyebrow: "05 / Progressão por evidências",
+      journeyEyebrow: "06 / Progressão por evidências",
       howItWorks: "Como o Career Lab funciona",
       stages: [
         { title: "Perfil", body: "Defina contexto e objetivo." },
         { title: "Avaliação", body: "Calibre seu nível atual." },
+        { title: "Aprendizado", body: "Estude um gap mapeado e registre a prática." },
         { title: "Roadmap", body: "Transforme gaps em prioridades." },
         { title: "Evidências", body: "Comprove o que mudou." },
         { title: "Mercado", body: "Compare com oportunidades reais." },

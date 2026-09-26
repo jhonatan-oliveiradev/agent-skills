@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { createEmptyCareerProfile } from "./profile";
+import { recordLearningReflection } from "./learning-progress";
 import { parseCareerProfile } from "./schema";
 
 describe("Career Profile schema", () => {
@@ -34,6 +35,27 @@ describe("Career Profile schema", () => {
     };
 
     expect(parseCareerProfile(profile).learningProgress).toEqual(profile.learningProgress);
+  });
+
+  it("preserves a written practice response through export/import validation", () => {
+    const profile = createEmptyCareerProfile({
+      targetRole: "frontend-developer", targetMarket: "br", now: "2026-09-11T12:00:00.000Z",
+    });
+    const saved = recordLearningReflection(
+      profile, "typescript-application-modeling", "programming-typescript-foundation",
+      "programming-typescript-foundation-practice", "  Narrow with typeof first  ",
+      "2026-09-11T12:10:00.000Z",
+    );
+    const imported = parseCareerProfile(JSON.parse(JSON.stringify(saved)));
+    expect(imported.learningProgress[0]?.practiceReflections?.[0]?.response).toBe("Narrow with typeof first");
+    expect(imported.competencies).toEqual(profile.competencies);
+    expect(imported.evidence).toEqual(profile.evidence);
+    expect(() => parseCareerProfile({
+      ...saved,
+      learningProgress: [{ ...saved.learningProgress[0], practiceReflections: [
+        { practiceId: "programming-typescript-foundation-practice", response: " ", updatedAt: "2026-09-11T12:10:00.000Z" },
+      ] }],
+    })).toThrow(/response/);
   });
 
   it("rejects duplicate note progress records and completed ids", () => {

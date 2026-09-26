@@ -7,7 +7,7 @@ describe("CareerGuide", () => {
     render(<CareerGuide locale="pt-BR" />);
 
     expect(screen.getByRole("heading", { name: "Comece aqui" })).toBeInTheDocument();
-    expect(screen.getAllByTestId("career-guide-area")).toHaveLength(5);
+    expect(screen.getAllByTestId("career-guide-area")).toHaveLength(6);
     expect(screen.getByText("Por que meu readiness está em 0%?")).toBeInTheDocument();
     expect(screen.getAllByTestId("career-guide-question").length).toBeGreaterThanOrEqual(12);
   });
@@ -16,7 +16,7 @@ describe("CareerGuide", () => {
     render(<CareerGuide locale="en" />);
 
     expect(screen.getByRole("heading", { name: "Start here" })).toBeInTheDocument();
-    expect(screen.getAllByTestId("career-guide-area")).toHaveLength(5);
+    expect(screen.getAllByTestId("career-guide-area")).toHaveLength(6);
     expect(screen.getByText("Why is my readiness 0%?")).toBeInTheDocument();
     expect(screen.getAllByTestId("career-guide-question").length).toBeGreaterThanOrEqual(12);
   });

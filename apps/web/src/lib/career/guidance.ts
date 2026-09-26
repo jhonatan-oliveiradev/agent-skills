@@ -1,11 +1,16 @@
 import type { Locale } from "@/lib/locales";
 import { baselineAssessmentBlueprints } from "./assessment-blueprints";
+import { competencyDefinitions } from "./competencies";
+import { getLearningNoteByCompetency } from "./learning-catalog";
+import { getLearningProgress } from "./learning-progress";
 import { buildRoadmap, getRoadmapMilestoneViews } from "./roadmap-engine";
 import { getRoleMap } from "./role-maps";
 import type { CareerProfile } from "./types";
 
 export type CareerNextAction =
   | { kind: "complete-baseline"; blueprintId: string; href: string }
+  | { kind: "study-assessed-gap"; noteId: string; moduleId: string; href: string }
+  | { kind: "prove-studied-gap"; blueprintId: string; href: string }
   | { kind: "review-roadmap"; href: string }
   | {
       kind: "produce-evidence";
@@ -34,6 +39,38 @@ export function getCareerNextAction(
   );
 
   if (missingBaseline) {
+    const latestAssessment = [...profile.assessments].sort(
+      (a, b) => Date.parse(b.completedAt) - Date.parse(a.completedAt),
+    )[0];
+    if (latestAssessment) {
+      const competency = competencyDefinitions.find(
+        (item) => item.id === latestAssessment.competencyId,
+      );
+      const note = competency ? getLearningNoteByCompetency(competency.id) : undefined;
+      const progress = note ? getLearningProgress(profile, note.id) : undefined;
+      const nextModule = note?.modules.find(
+        (module) => module.reviewStatus === "reviewed" &&
+          !progress?.completedModuleIds.includes(module.id),
+      );
+      if (note && nextModule && !progress?.completedAt) {
+        return {
+          kind: "study-assessed-gap",
+          noteId: note.id,
+          moduleId: nextModule.id,
+          href: careerHref(locale, `learning/${note.id}#${nextModule.id}`),
+        };
+      }
+      const blueprint = baselineAssessmentBlueprints.find(
+        (item) => item.competencyId === latestAssessment.competencyId,
+      );
+      if (note && progress?.completedAt && blueprint && Date.parse(progress.completedAt) > Date.parse(latestAssessment.completedAt)) {
+        return {
+          kind: "prove-studied-gap",
+          blueprintId: blueprint.id,
+          href: careerHref(locale, `assessments/${blueprint.id}`),
+        };
+      }
+    }
     return {
       kind: "complete-baseline",
       blueprintId: missingBaseline.id,

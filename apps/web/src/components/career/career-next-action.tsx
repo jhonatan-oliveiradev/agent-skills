@@ -7,6 +7,7 @@ import {
 import { getCareerNextAction, type CareerNextAction as NextAction } from "@/lib/career/guidance";
 import { careerGuidanceCopy } from "@/lib/career/guidance-copy";
 import { getRoadmapMilestone } from "@/lib/career/roadmap-catalog";
+import { getLearningNote } from "@/lib/career/learning-catalog";
 import type { CareerProfile } from "@/lib/career/types";
 import type { Locale } from "@/lib/locales";
 
@@ -23,6 +24,13 @@ function actionPresentation(action: NextAction, locale: Locale) {
     }
     case "review-roadmap":
       return copy.reviewRoadmap;
+    case "study-assessed-gap": {
+      const note = getLearningNote(action.noteId);
+      const learningModule = note?.modules.find((item) => item.id === action.moduleId);
+      return copy.studyAssessedGap(learningModule?.title[locale] ?? note?.title[locale] ?? action.noteId);
+    }
+    case "prove-studied-gap":
+      return copy.proveStudiedGap;
     case "produce-evidence":
       return copy.produceEvidence(
         getRoadmapMilestone(action.milestoneId).title[locale],

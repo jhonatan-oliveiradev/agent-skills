@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { baselineAssessmentBlueprints } from "./assessment-blueprints";
 import { getCareerNextAction } from "./guidance";
+import { getLearningNote } from "./learning-catalog";
 import { createEmptyCareerProfile } from "./profile";
 import { roadmapMilestoneCatalog } from "./roadmap-catalog";
 import type { CareerProfile, ProficiencyLevel } from "./types";
@@ -161,5 +162,37 @@ describe("getCareerNextAction", () => {
       blueprintId: "baseline-javascript",
       href: "/pt-BR/career-lab/assessments/baseline-javascript",
     });
+  });
+
+  it("connects a completed assessment to learning, then sends studied content to reassessment", () => {
+    const baseline = baselineAssessmentBlueprints[0]!;
+    const assessed = {
+      ...freshProfile(),
+      assessments: [{
+        id: "assessment-1", blueprintId: baseline.id, blueprintVersion: baseline.version,
+        competencyId: baseline.competencyId, level: "foundation" as const,
+        confidence: "medium" as const, evidenceIds: [], completedAt: NOW,
+        trust: "local-deterministic" as const,
+      }],
+    };
+    const study = getCareerNextAction(assessed, "pt-BR");
+    expect(study.kind).toBe("study-assessed-gap");
+    if (study.kind !== "study-assessed-gap") return;
+    const note = getLearningNote(study.noteId)!;
+    const studied = {
+      ...assessed,
+      learningProgress: [{
+        noteId: note.id, startedAt: NOW, updatedAt: "2026-09-10T12:00:00.000Z",
+        currentModuleId: null, completedModuleIds: note.modules.map((module) => module.id),
+        completedPracticeIds: note.modules.map((module) => module.practice.id),
+        completedAt: "2026-09-10T12:00:00.000Z",
+      }],
+    };
+    expect(getCareerNextAction(studied, "pt-BR")).toEqual({
+      kind: "prove-studied-gap", blueprintId: baseline.id,
+      href: `/pt-BR/career-lab/assessments/${baseline.id}`,
+    });
+    const reassessed = { ...studied, assessments: [{ ...assessed.assessments[0]!, completedAt: "2026-09-11T12:00:00.000Z" }] };
+    expect(getCareerNextAction(reassessed, "pt-BR").kind).toBe("complete-baseline");
   });
 });

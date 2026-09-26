@@ -1,5 +1,8 @@
 "use client";
 
+import Link from "next/link";
+import type { Route } from "next";
+import { learningNoteCatalog } from "@/lib/career/learning-catalog";
 import type { LearningUnit as LearningUnitDefinition } from "@/lib/career/learning";
 import type { Locale } from "@/lib/locales";
 
@@ -9,7 +12,7 @@ const copy = {
     objective: "Objective",
     mentalModel: "Mental model",
     estimated: (minutes: number) => `${minutes} min`,
-    complete: "Mark practice complete",
+    complete: "Open guided practice",
     completed: "Practice logged",
     note: "Learning progress does not count as proficiency evidence. Demonstrate the capability through assessment or portfolio evidence.",
     kinds: {
@@ -25,7 +28,7 @@ const copy = {
     objective: "Objetivo",
     mentalModel: "Modelo mental",
     estimated: (minutes: number) => `${minutes} min`,
-    complete: "Marcar prática como concluída",
+    complete: "Abrir prática guiada",
     completed: "Prática registrada",
     note: "Progresso de estudo não conta como evidência de proficiência. Demonstre a capacidade por avaliação ou evidência de portfólio.",
     kinds: {
@@ -42,14 +45,13 @@ export function LearningUnit({
   unit,
   locale,
   completed,
-  onComplete,
 }: Readonly<{
   unit: LearningUnitDefinition;
   locale: Locale;
   completed: boolean;
-  onComplete?: (unitId: string) => void;
 }>) {
   const localized = copy[locale];
+  const note = learningNoteCatalog.find((item) => item.competencyId === unit.competencyId);
 
   return (
     <article className="career-learning-unit" data-learning-unit={unit.id}>
@@ -83,13 +85,11 @@ export function LearningUnit({
 
       <footer className="career-learning-unit__footer">
         <p>{localized.note}</p>
-        {onComplete ? (
-          <button type="button" disabled={completed} onClick={() => onComplete(unit.id)}>
+        {note ? (
+          <Link href={`/${locale}/career-lab/learning/${note.id}` as Route}>
             {completed ? localized.completed : localized.complete}
-          </button>
-        ) : (
-          <span role="status">{completed ? localized.completed : null}</span>
-        )}
+          </Link>
+        ) : <span role="status">{completed ? localized.completed : null}</span>}
       </footer>
     </article>
   );
