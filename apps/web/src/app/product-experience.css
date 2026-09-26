@@ -1,0 +1,198 @@
+/* The studio's blue, ink, and green palette. This layer refines the original product page. */
+.site-header[data-site-chrome="publication-bar"] .brand-logo {
+  display: block;
+  width: auto;
+  height: 2.8rem;
+  max-width: min(34vw, 8rem);
+  filter: brightness(0);
+}
+.dark .site-header[data-site-chrome="publication-bar"] .brand-logo,
+body:has(.product-home) .site-header[data-site-chrome="publication-bar"] .brand-logo {
+  filter: none;
+}
+.site-header[data-site-chrome="publication-bar"] .brand-link {
+  transition: opacity 320ms ease, transform 320ms cubic-bezier(.22, 1, .36, 1);
+}
+.site-header[data-site-chrome="publication-bar"] .brand-link:hover {
+  opacity: .76;
+  transform: translateY(-2px);
+}
+body:has(.product-home) .site-header[data-site-chrome="publication-bar"] .brand-link::after {
+  content: none;
+}
+body:has(.product-home) .site-header[data-site-chrome="publication-bar"].is-product-scrolled {
+  background: #111d2b;
+  border-bottom-color: #ffffff27;
+  --canvas: #111d2b;
+}
+body:has(.product-home) .site-header[data-site-chrome="publication-bar"] .locale-switcher,
+body:has(.product-home) .site-header[data-site-chrome="publication-bar"] .site-theme-toggle {
+  color: #e7efff;
+  transition: background-color 250ms ease, color 250ms ease, transform 250ms ease;
+}
+body:has(.product-home) .site-header[data-site-chrome="publication-bar"] .locale-switcher:hover,
+body:has(.product-home) .site-header[data-site-chrome="publication-bar"] .site-theme-toggle:hover {
+  color: #fff;
+  background: #ffffff20 !important;
+  transform: translateY(-2px);
+}
+body:has(.product-home) .site-header[data-site-chrome="publication-bar"] .navigation-trigger:hover {
+  color: #d1e7ff;
+  letter-spacing: .16em;
+}
+
+.product-home {
+  --product-blue: #4239e8;
+  --product-green: #a9e2aa;
+  --product-ink: #111d2b;
+  --product-ease: cubic-bezier(.22, 1, .36, 1);
+  background: #111d2b;
+}
+.product-home .product-hero { background: var(--product-blue); }
+.product-home .product-demo { background: #101a27; }
+.product-home .product-thesis { background: #f0f4f3; }
+.product-home .product-work { background: #dfe8eb; }
+.product-home .product-skills { background: #f4f6f4; }
+.product-home .product-packs { background: #dce7e8; }
+.product-home .product-close { background: #294acb; }
+.product-home .product-case { background: #182c3f; }
+.product-home .product-case--2 { background: #3454c5; }
+.product-home .product-case--3 { background: #18323b; }
+.product-home .product-pack { background: #315477; }
+.product-home .product-pack:nth-child(2) { background: #263e54; }
+.product-home .product-pack:nth-child(3) { background: #182f3a; }
+.product-home .product-pack__symbol { color: #d8f1e8; }
+.product-home .product-case__content > span { color: #c9e0f7; }
+.product-home .product-section-heading h2 em,
+.product-home .product-thesis h2 em { color: #3c54c9; }
+.product-home .product-case__art { background: radial-gradient(circle at 50% 50%, #3b729a, #203a55 55%, #182c3f); }
+.product-home .product-case--2 .product-case__art { background: radial-gradient(circle at 75% 30%, #b4d2ee, #5585d9 37%, #2748a8 84%); }
+.product-home .product-case--3 .product-case__art { background: radial-gradient(circle at 40% 55%, #adc9b1, #396b67 40%, #1a323b 80%); }
+.product-home .product-case__interface--motion span {
+  border-color: #b8e9d7a6;
+  background: radial-gradient(circle at 50% 40%, #b9e8d6 0 12%, #487b78 13% 29%, #2c535d 30% 45%, #18323b 46%);
+}
+.product-home .product-case__interface--motion strong { border-color: #b8e9d7a6; color: #defbeb; }
+.product-home .product-skill:hover { background: #e1ebed; }
+.product-home .product-skill__number,
+.product-home .product-skill__category,
+.product-home .product-thesis__steps span,
+.product-home .product-thesis .product-eyebrow,
+.product-home .product-section-heading .product-eyebrow { color: #3655c2; }
+
+.dark .product-home .product-thesis { background: #192536; color: #f4f7fa; }
+.dark .product-home .product-work { background: #223447; color: #f4f7fa; }
+.dark .product-home .product-skills { background: #152330; color: #f4f7fa; }
+.dark .product-home .product-packs { background: #253c47; color: #f4f7fa; }
+.dark .product-home .product-section-heading > p,
+.dark .product-home .product-thesis__steps p,
+.dark .product-home .product-thesis__lead > p:last-child,
+.dark .product-home .product-skill p { color: #c0d0dc; }
+.dark .product-home .product-thesis .product-eyebrow,
+.dark .product-home .product-section-heading .product-eyebrow,
+.dark .product-home .product-skill__number,
+.dark .product-home .product-skill__category { color: #b0c8ff; }
+.dark .product-home .product-section-heading h2 em,
+.dark .product-home .product-thesis h2 em { color: #9cb6ff; }
+.dark .product-home .product-skills__list,
+.dark .product-home .product-skill { border-color: #536477; }
+.dark .product-home .product-skill:hover { background: #264052; }
+.dark .product-home .product-install { background: #294b38; }
+.dark .product-home .product-install__terminal { box-shadow: 1rem 1rem 0 #5c8561; }
+body:has(.product-home) .site-footer[data-footer-mode="end-matter"] {
+  background: #101a27;
+  --canvas: #101a27;
+  --brand: #b2d5f7;
+  --text-muted: #b6c6d4;
+}
+
+/* A brief, deterministic opening curtain. It disappears even without JavaScript. */
+.product-intro {
+  position: fixed;
+  z-index: 120;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  color: white;
+  background: #4239e8;
+  pointer-events: none;
+  animation: product-intro-exit 1.55s cubic-bezier(.76, 0, .24, 1) both;
+}
+.product-intro__center { display: grid; justify-items: center; gap: 1.7rem; width: min(72vw, 20rem); animation: product-intro-enter .55s var(--product-ease) both; }
+.product-intro__center img { display: block; width: min(72vw, 16rem); height: auto; }
+.product-intro__caption { font: .59rem var(--font-plex-mono), monospace; letter-spacing: .2em; text-align: center; }
+.product-intro__bar { display: block; width: 100%; height: 1px; overflow: hidden; background: #ffffff55; }
+.product-intro__bar > span { display: block; width: 100%; height: 100%; background: #dcf5b3; transform-origin: left; animation: product-intro-fill .7s .25s cubic-bezier(.65, 0, .35, 1) both; }
+.product-intro__index { position: absolute; right: clamp(1rem, 4vw, 4rem); bottom: 2rem; font: .6rem var(--font-plex-mono), monospace; letter-spacing: .12em; }
+@keyframes product-intro-enter { from { opacity: 0; transform: translateY(1.5rem); } to { opacity: 1; transform: translateY(0); } }
+@keyframes product-intro-fill { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+@keyframes product-intro-exit {
+  0%, 56% { visibility: visible; transform: translateY(0); }
+  99% { visibility: visible; transform: translateY(-100%); }
+  100% { visibility: hidden; transform: translateY(-100%); }
+}
+.product-scroll-track { position: fixed; z-index: 60; top: 5.75rem; right: 1.2rem; bottom: 1.2rem; width: 2px; background: #aec1d055; pointer-events: none; }
+.product-scroll-track > span { display: block; width: 100%; height: 100%; transform-origin: top; background: #a9e2aa; }
+
+/* Tactile links and controls, with transforms kept separate from GSAP-owned nodes. */
+.product-home .product-button { position: relative; overflow: hidden; transition: background-color 350ms ease, box-shadow 350ms ease, transform 350ms var(--product-ease); }
+.product-home .product-button:hover { background: #e3f3cb; box-shadow: 0 1.2rem 2.5rem #0b1e3f30; transform: translateY(-4px); }
+.product-home .product-button:active { transform: translateY(0) scale(.98); }
+.product-home .product-button span,
+.product-home .product-text-link span,
+.product-home .product-inline-link span,
+.product-home .product-case__top span:last-child,
+.product-home .product-skill__arrow { display: inline-block; transition: transform 350ms var(--product-ease); }
+.product-home .product-button:hover span,
+.product-home .product-text-link:hover span,
+.product-home .product-inline-link:hover span,
+.product-home .product-case:hover .product-case__top span:last-child,
+.product-home .product-skill:hover .product-skill__arrow { transform: translate(.25rem, -.25rem); }
+.product-home .product-text-link { position: relative; padding-block: .55rem; transition: color 250ms ease, gap 350ms var(--product-ease); }
+.product-home .product-text-link::after { content: ""; position: absolute; right: 0; bottom: .15rem; left: 0; height: 1px; background: currentColor; transform: scaleX(0); transform-origin: left; transition: transform 350ms var(--product-ease); }
+.product-home .product-text-link:hover { text-decoration: none; gap: 1.9rem; }
+.product-home .product-text-link:hover::after { transform: scaleX(1); }
+.product-home .product-inline-link { transition: gap 350ms var(--product-ease), color 250ms ease, border-color 250ms ease; }
+.product-home .product-case,
+.product-home .product-pack { transition: transform 500ms var(--product-ease), box-shadow 500ms var(--product-ease), background-color 400ms ease; }
+.product-home .product-case:hover,
+.product-home .product-pack:hover { transform: translateY(-.7rem); box-shadow: 0 2rem 3rem #09182e36; }
+.product-home .product-case__trace { transition: transform 450ms var(--product-ease); }
+.product-home .product-case:hover .product-case__trace { transform: translateY(-.4rem); }
+.product-home .product-pack__symbol { transition: transform 650ms var(--product-ease); }
+.product-home .product-pack:hover .product-pack__symbol { transform: scale(1.08) rotate(-10deg); }
+.product-home .product-skill { transition: padding 400ms var(--product-ease), background-color 400ms ease; }
+.product-home .product-skill:hover { padding-inline: 1.25rem; }
+.product-home .skill-lab {
+  --lab-ink: #f1f7ff;
+  --lab-muted: #a9bbcf;
+  --lab-line: #304154;
+  --lab-accent: #b2d4ff;
+  background: #111e2d;
+  border-color: #486582;
+}
+.product-home .skill-lab__body { background: radial-gradient(circle at 95% 0%, #2f537060, transparent 44%), #111e2d; }
+.product-home .skill-lab__tabs button[aria-selected="true"],
+.product-home .skill-lab__link { background: #b9d9ff; color: #132337; }
+.product-home .skill-lab__tabs button:hover { background: #ffffff20; }
+.product-home .skill-lab__tabs button[aria-selected="true"]:hover,
+.product-home .skill-lab__link:hover { background: #dcf5c9; }
+.product-home .skill-lab__output { background: linear-gradient(135deg, #213c55, #1a3045 66%, #172738); border-color: #617f9b; }
+.product-home .skill-lab__tags span { color: #deebff; border-color: #637f9b; }
+.product-home .skill-lab__result { background: #9bc99b16; }
+
+html:has(.product-home):not(.lenis) { scroll-behavior: smooth; }
+@media (max-width: 700px) {
+  .product-scroll-track { display: none; }
+  .product-intro__center { gap: 1.2rem; }
+  .site-header[data-site-chrome="publication-bar"] .brand-logo { height: 2.5rem; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .product-intro, .product-scroll-track { display: none; }
+  html:has(.product-home):not(.lenis) { scroll-behavior: auto; }
+  .product-home *, .product-home *::before, .product-home *::after,
+  body:has(.product-home) .site-header *,
+  body:has(.product-home) .site-header *::before,
+  body:has(.product-home) .site-header *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; }
+}

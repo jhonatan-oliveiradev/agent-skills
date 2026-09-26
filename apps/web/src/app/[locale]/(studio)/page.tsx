@@ -1,4 +1,5 @@
 import type { Metadata, Route } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import { resolveLocale } from "@/components/foundation-route";
 import { MethodEngine } from "@/components/motion/method-engine";
@@ -129,6 +130,15 @@ export default async function HomePage({ params }: HomePageProps) {
 
   return (
     <div className="product-home">
+      <div className="product-intro" aria-hidden="true">
+        <div className="product-intro__center">
+          <Image src="/brand/agent-skills-logo-horizontal.svg" alt="" width={745} height={290} priority />
+          <span className="product-intro__caption">{locale === "pt-BR" ? "MÉTODOS PARA CRIAR MELHOR" : "BETTER WAYS TO BUILD"}</span>
+          <span className="product-intro__bar"><span /></span>
+        </div>
+        <span className="product-intro__index">AS / 001</span>
+      </div>
+      <div className="product-scroll-track" aria-hidden="true"><span /></div>
       <ProductMotion />
       <section className="product-hero" aria-labelledby="product-title">
         <div className="product-hero__orbit" aria-hidden="true"><span /><span /><span /></div>

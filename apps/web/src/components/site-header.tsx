@@ -36,26 +36,14 @@ export function SiteHeader({ locale }: Readonly<{ locale: Locale }>) {
       <div className="shell site-header__inner">
         <div className="site-identity">
           <Link className="brand-link" href={`/${locale}` as Route}>
-            <span
-              aria-hidden="true"
-              className="brand-lockup"
-              style={{
-                alignItems: "center",
-                background: "#0b0810",
-                display: "inline-flex",
-                padding: "0.2rem 0.45rem",
-              }}
-            >
-              <Image
-                className="brand-logo"
-                height={36}
-                priority
-                src="/brand/agent-skills-monogram.svg"
-                style={{ height: "2rem", width: "2rem" }}
-                width={36}
-                alt=""
-              />
-            </span>
+            <Image
+              className="brand-logo"
+              height={290}
+              priority
+              src="/brand/agent-skills-logo-horizontal.svg"
+              width={745}
+              alt=""
+            />
             <span className="sr-only">{copy.brandLabel}</span>
           </Link>
         </div>
