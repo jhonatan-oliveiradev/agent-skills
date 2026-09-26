@@ -120,10 +120,7 @@ describe("editorial site chrome", () => {
     expect(screen.getByText(project)).toBeInTheDocument();
     expect(screen.getByText(source)).toBeInTheDocument();
 
-    const wordmark = footer?.querySelector<HTMLImageElement>(".site-footer__brand-logo");
-    expect(wordmark).toBeInTheDocument();
-    expect(wordmark).toHaveAttribute("src", "/brand/agent-skills-logo-horizontal.svg");
-    expect(wordmark).toHaveAttribute("alt", "");
+    expect(footer?.querySelector(".site-footer__wordmark-wrap")).toBeNull();
 
     const collection = footer?.querySelector<HTMLElement>(".site-footer__collection");
     expect(collection).toBeInTheDocument();

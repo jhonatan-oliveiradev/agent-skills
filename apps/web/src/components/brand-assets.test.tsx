@@ -7,7 +7,6 @@ vi.mock("next/navigation", () => ({
 }));
 
 import { metadata } from "@/app/[locale]/layout";
-import { SiteFooter } from "./site-footer";
 import { SiteHeader } from "./site-header";
 import { ThemeProvider } from "./theme-provider";
 
@@ -22,15 +21,6 @@ describe("Agent Skills Studio brand assets", () => {
     const brandLink = screen.getByRole("link", { name: "Agent Skills Studio" });
     expect(brandLink).toHaveAttribute("href", "/en");
     expect(brandLink.querySelector("img")).toHaveAttribute(
-      "src",
-      "/brand/agent-skills-logo-horizontal.svg",
-    );
-  });
-
-  it("uses the supplied horizontal logo as the footer wordmark", () => {
-    const { container } = render(<SiteFooter locale="en" />);
-
-    expect(container.querySelector(".site-footer__brand-logo")).toHaveAttribute(
       "src",
       "/brand/agent-skills-logo-horizontal.svg",
     );

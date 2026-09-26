@@ -2,12 +2,6 @@
   display: none;
 }
 
-.site-footer__wordmark-wrap {
-  max-width: 100vw;
-  contain: inline-size;
-  overflow: clip;
-}
-
 @media (max-width: 60rem) {
   .primary-navigation__mobile-context {
     display: block;
