@@ -184,7 +184,7 @@ export function EditorialNavigation({
             <div className="shell primary-navigation__frame">
               <div className="primary-navigation__masthead">
                 <div>
-                  <span className="primary-navigation__eyebrow">{indexLabel} / 01—06</span>
+                  <span className="primary-navigation__eyebrow">{indexLabel} / 01—{String(links.length).padStart(2, "0")}</span>
                   <h2>{indexTitle}</h2>
                 </div>
                 <p>{indexSummary}</p>
