@@ -4,6 +4,7 @@ import { useMemo, useState } from "react";
 import {
   evaluateAssessment,
   type AssessmentResponses,
+  type AssessmentResultArtifact,
   type PublicAssessmentBlueprint,
 } from "@/lib/career/assessment";
 import { applyCareerAssessmentResult } from "@/lib/career/assessment-application";
@@ -17,6 +18,7 @@ import {
 } from "@/lib/career/assessment-learning-feedback";
 import { careerLabCopy } from "@/lib/career/copy";
 import type { Locale } from "@/lib/locales";
+import { AssessmentAttemptReview } from "./assessment-attempt-review";
 import { AssessmentResult } from "./assessment-result";
 import { useCareerProfile } from "./career-profile-provider";
 
@@ -377,32 +379,75 @@ export function AssessmentRunner({
   );
 }
 
+type CompletedAttempt = Readonly<{
+  result: AssessmentResultArtifact;
+  responses: AssessmentResponses;
+}>;
+
+type AssessmentSurfaceView = "run" | "result" | "review";
+
 export function AssessmentDetailSurface({
   locale,
   blueprintId,
 }: Readonly<{ locale: Locale; blueprintId: string }>) {
   const { profile, updateProfile } = useCareerProfile();
-  const [result, setResult] = useState<ReturnType<typeof evaluateAssessment> | null>(null);
+  const [completedAttempt, setCompletedAttempt] = useState<CompletedAttempt | null>(null);
+  const [view, setView] = useState<AssessmentSurfaceView>("run");
+  const [runnerKey, setRunnerKey] = useState(0);
   const blueprint = useMemo(() => getAssessmentBlueprint(blueprintId), [blueprintId]);
+  const publicBlueprint = useMemo(
+    () => blueprint ? getPublicAssessmentBlueprintForLocale(blueprint, locale) : null,
+    [blueprint, locale],
+  );
+  const learningFeedback = useMemo(
+    () => blueprint ? getAssessmentLearningFeedbackForLocale(blueprint, locale) : [],
+    [blueprint, locale],
+  );
   const copy = careerLabCopy[locale].assessment;
 
-  if (!blueprint) return <p role="alert">{copy.notFound}</p>;
-  if (result) return <AssessmentResult result={result} locale={locale} />;
+  if (!blueprint || !publicBlueprint) return <p role="alert">{copy.notFound}</p>;
 
-  return (
-    <div data-locale={locale}>
-      <AssessmentRunner
+  let surface;
+  if (view === "result" && completedAttempt) {
+    surface = (
+      <AssessmentResult
+        result={completedAttempt.result}
         locale={locale}
-        blueprint={getPublicAssessmentBlueprintForLocale(blueprint, locale)}
-        learningFeedback={getAssessmentLearningFeedbackForLocale(blueprint, locale)}
+        onReview={() => setView("review")}
+        onRetry={() => {
+          setRunnerKey((current) => current + 1);
+          setView("run");
+        }}
+      />
+    );
+  } else if (view === "review" && completedAttempt) {
+    surface = (
+      <AssessmentAttemptReview
+        blueprint={publicBlueprint}
+        responses={completedAttempt.responses}
+        learningFeedback={learningFeedback}
+        locale={locale}
+        onBack={() => setView("result")}
+      />
+    );
+  } else {
+    surface = (
+      <AssessmentRunner
+        key={runnerKey}
+        locale={locale}
+        blueprint={publicBlueprint}
+        learningFeedback={learningFeedback}
         onComplete={(responses) => {
           const next = evaluateAssessment(blueprint, responses);
-          setResult(next);
+          setCompletedAttempt({ result: next, responses });
+          setView("result");
           if (profile) {
             void updateProfile((current) => applyCareerAssessmentResult(current, next));
           }
         }}
       />
-    </div>
-  );
+    );
+  }
+
+  return <div data-locale={locale}>{surface}</div>;
 }

@@ -118,8 +118,10 @@ describe("assessment review integration regressions", () => {
 
     expect(await screen.findByRole("heading", { name: /em desenvolvimento/i })).toBeInTheDocument();
     expect(screen.getByText(/baixa confiança/i)).toBeInTheDocument();
-    expect(screen.getByRole("heading", { name: /sinais fortes/i })).toBeInTheDocument();
-    expect(screen.getByRole("heading", { name: /próxima evidência/i })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: /diagnóstico/i })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: /demonstrado/i })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: /fortalecer agora/i })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: /seu próximo passo/i })).toBeInTheDocument();
   });
 
   it("persists the neutral profile before handing onboarding to the baseline route", () => {

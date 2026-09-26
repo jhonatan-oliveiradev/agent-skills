@@ -1,11 +1,19 @@
-import { fireEvent, render, screen } from "@testing-library/react";
+import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 import type {
   AssessmentBlueprint,
   AssessmentResultArtifact,
 } from "@/lib/career/assessment";
+import {
+  baselineAssessmentBlueprints,
+  getPublicAssessmentBlueprintForLocale,
+} from "@/lib/career/assessment-blueprints";
+import { createEmptyCareerProfile } from "@/lib/career/profile";
+import type { CareerStorage } from "@/lib/career/storage";
+import type { CareerProfile } from "@/lib/career/types";
 import { AssessmentResult } from "./assessment-result";
-import { AssessmentRunner } from "./assessment-runner";
+import { AssessmentDetailSurface, AssessmentRunner } from "./assessment-runner";
+import { CareerProfileProvider } from "./career-profile-provider";
 
 const completedAt = "2026-09-05T16:30:00.000Z";
 
@@ -79,6 +87,54 @@ const result = {
   recommendedNextEvidence: "Complete a deterministic debugging challenge.",
   provenance: { trust: "local-deterministic" },
 } as const satisfies AssessmentResultArtifact;
+
+function storageHarness(profile: CareerProfile) {
+  const save = vi.fn().mockResolvedValue(undefined);
+  const storage: CareerStorage = {
+    load: vi.fn().mockResolvedValue(profile),
+    save,
+    clear: vi.fn().mockResolvedValue(undefined),
+  };
+  return { storage, save };
+}
+
+async function completeJavascriptAttempt(options: Readonly<{ incorrectFirst?: boolean }> = {}) {
+  const canonical = baselineAssessmentBlueprints.find(
+    (candidate) => candidate.id === "baseline-javascript",
+  );
+  if (!canonical) throw new Error("Expected JavaScript baseline blueprint");
+  const localized = getPublicAssessmentBlueprintForLocale(canonical, "en");
+
+  await screen.findByRole("status");
+
+  for (const [index, challenge] of canonical.challenges.entries()) {
+    const publicChallenge = localized.challenges[index];
+    if (!publicChallenge) throw new Error("Expected localized challenge");
+
+    const selectedIds = index === 0 && options.incorrectFirst
+      ? [publicChallenge.options.find((option) => !challenge.correctOptionIds.includes(option.id))?.id]
+          .filter((id): id is string => Boolean(id))
+      : challenge.correctOptionIds;
+
+    for (const optionId of selectedIds) {
+      const option = publicChallenge.options.find((candidate) => candidate.id === optionId);
+      if (!option) throw new Error("Expected selected option");
+      const role = challenge.kind === "structured-ordering"
+        ? "button"
+        : challenge.kind === "multi-select"
+          ? "checkbox"
+          : "radio";
+      fireEvent.click(screen.getByRole(role, { name: option.label }));
+    }
+
+    fireEvent.click(screen.getByRole("button", { name: /^answer$/i }));
+    if (index < canonical.challenges.length - 1) {
+      fireEvent.click(screen.getByRole("button", { name: /next challenge/i }));
+    }
+  }
+
+  fireEvent.click(screen.getByRole("button", { name: /complete assessment/i }));
+}
 
 describe("Assessment surfaces", () => {
   it("uses native, accessible, focusable controls while preserving answers and completing with collected responses", () => {
@@ -184,13 +240,69 @@ describe("Assessment surfaces", () => {
 
     expect(screen.getByText(/developing/i)).toBeInTheDocument();
     expect(screen.getByText(/low confidence/i)).toBeInTheDocument();
-    expect(screen.getByRole("heading", { name: /strong signals/i })).toBeInTheDocument();
-    expect(screen.getByRole("heading", { name: /weak signals/i })).toBeInTheDocument();
-    expect(
-      screen.getByText(/complete a deterministic debugging challenge/i),
-    ).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: /demonstrated/i })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: /strengthen next/i })).toBeInTheDocument();
     expect(screen.queryByText(/\d+%/)).not.toBeInTheDocument();
     expect(container.querySelector(".career-assessment-result__summary")).toBeInTheDocument();
-    expect(container.querySelectorAll(".career-assessment-result__section")).toHaveLength(3);
+  });
+
+  it("Review challenges is same-session read-only and Back to result does not save again", async () => {
+    const profile = createEmptyCareerProfile({
+      targetRole: "frontend-developer",
+      targetMarket: "br",
+      now: "2026-09-12T12:00:00.000Z",
+    });
+    const { storage, save } = storageHarness(profile);
+    render(
+      <CareerProfileProvider storage={storage}>
+        <AssessmentDetailSurface locale="en" blueprintId="baseline-javascript" />
+      </CareerProfileProvider>,
+    );
+
+    await completeJavascriptAttempt({ incorrectFirst: true });
+    expect(await screen.findByRole("heading", { name: "Diagnosis" })).toBeInTheDocument();
+    await waitFor(() => expect(save).toHaveBeenCalledTimes(1));
+
+    fireEvent.click(screen.getByRole("button", { name: "Review challenges" }));
+    expect(screen.getByRole("heading", { name: "Review challenges" })).toBeInTheDocument();
+    expect(save).toHaveBeenCalledTimes(1);
+
+    fireEvent.click(screen.getByRole("button", { name: "Back to result" }));
+    expect(screen.getByRole("heading", { name: "Diagnosis" })).toBeInTheDocument();
+    expect(save).toHaveBeenCalledTimes(1);
+  });
+
+  it("Try again returns to challenge 1 with a fresh runner while preserving the completed AssessmentRecord", async () => {
+    const profile = createEmptyCareerProfile({
+      targetRole: "frontend-developer",
+      targetMarket: "br",
+      now: "2026-09-12T12:00:00.000Z",
+    });
+    const { storage, save } = storageHarness(profile);
+    const random = vi.spyOn(Math, "random").mockReturnValue(0);
+
+    try {
+      render(
+        <CareerProfileProvider storage={storage}>
+          <AssessmentDetailSurface locale="en" blueprintId="baseline-javascript" />
+        </CareerProfileProvider>,
+      );
+
+      await completeJavascriptAttempt();
+      expect(await screen.findByRole("heading", { name: "Diagnosis" })).toBeInTheDocument();
+      await waitFor(() => expect(save).toHaveBeenCalledTimes(1));
+      const randomCallsBeforeRetry = random.mock.calls.length;
+      const persisted = save.mock.calls[0]?.[0] as CareerProfile | undefined;
+      expect(persisted?.assessments).toHaveLength(1);
+
+      fireEvent.click(screen.getByRole("button", { name: "Try again" }));
+
+      expect(await screen.findByRole("status")).toHaveTextContent("Challenge 1 of 4");
+      expect(random.mock.calls.length).toBeGreaterThan(randomCallsBeforeRetry);
+      expect(save).toHaveBeenCalledTimes(1);
+      expect((save.mock.calls[0]?.[0] as CareerProfile).assessments).toHaveLength(1);
+    } finally {
+      random.mockRestore();
+    }
   });
 });

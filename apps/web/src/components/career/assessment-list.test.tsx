@@ -121,7 +121,7 @@ describe("Assessment discovery, routes, and baseline handoff", () => {
 
     fireEvent.click(screen.getByRole("button", { name: /complete assessment/i }));
     expect(await screen.findByText(/confidence/i)).toBeInTheDocument();
-    expect(screen.getByText(/next evidence/i)).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: /your next step/i })).toBeInTheDocument();
   });
 
   it("hands the final onboarding stage to the baseline assessment route", () => {
