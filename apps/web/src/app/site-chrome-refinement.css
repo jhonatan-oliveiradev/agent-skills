@@ -21,6 +21,13 @@
     letter-spacing 280ms var(--ease-editorial);
 }
 
+/* The legacy expanded-button offsets moved a relative grid item into the
+   center of the bar when the full-screen index opened. */
+.site-header[data-site-chrome="publication-bar"] .navigation-trigger[aria-expanded="true"] {
+  top: auto;
+  right: auto;
+}
+
 .site-header[data-site-chrome="publication-bar"]:has(.navigation-trigger[aria-expanded="true"])
   .navigation-trigger {
   color: var(--brand);
@@ -112,7 +119,7 @@
     .primary-navigation__list ol {
     display: grid;
     height: 100%;
-    grid-template-rows: repeat(6, minmax(0, 1fr));
+    grid-template-rows: repeat(7, minmax(0, 1fr));
   }
 
   .primary-navigation[data-navigation-mode="studio-index"][data-viewport-contract="desktop-100dvh"]
@@ -132,7 +139,16 @@
   .primary-navigation[data-navigation-mode="studio-index"][data-viewport-contract="desktop-100dvh"]
     .primary-navigation__context {
     min-height: 0;
-    padding: clamp(1.25rem, min(3vw, 4dvh), 2.75rem);
+    overflow: hidden;
+    align-items: stretch;
+    padding: clamp(1rem, min(2.5vw, 3dvh), 2.25rem);
+  }
+
+  .primary-navigation[data-navigation-mode="studio-index"][data-viewport-contract="desktop-100dvh"]
+    .primary-navigation__context > div {
+    display: flex;
+    min-height: 0;
+    flex-direction: column;
   }
 
   .primary-navigation[data-navigation-mode="studio-index"][data-viewport-contract="desktop-100dvh"]
@@ -143,8 +159,9 @@
 
   .primary-navigation[data-navigation-mode="studio-index"][data-viewport-contract="desktop-100dvh"]
     .primary-navigation__context-index {
-    margin-top: clamp(1rem, 3dvh, 2rem);
-    font-size: clamp(3.8rem, min(9vw, 12dvh), 8rem) !important;
+    margin-top: auto;
+    padding-top: clamp(0.5rem, 2dvh, 1.25rem);
+    font-size: clamp(3.25rem, min(7vw, 9dvh), 6rem) !important;
   }
 
   .primary-navigation[data-navigation-mode="studio-index"][data-viewport-contract="desktop-100dvh"]

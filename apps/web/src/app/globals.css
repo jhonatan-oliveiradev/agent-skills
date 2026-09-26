@@ -92,6 +92,12 @@
   border-color: var(--border);
 }
 
+::selection {
+  background: #a9e2aa;
+  color: #101a27;
+  text-shadow: none;
+}
+
 body {
   min-height: 100vh;
   margin: 0;
