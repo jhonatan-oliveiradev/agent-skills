@@ -39,42 +39,13 @@ describe("Living Research Archive Home", () => {
     motionState.reduced = false;
   });
 
-  it.each([
-    ["en", "From a problem to an outcome."],
-    ["pt-BR", "Do problema ao resultado."],
-  ] as const)("renders three acts without a standalone transformation section for %s", async (locale, oldTransformationHeading) => {
+  it.each(["en", "pt-BR"] as const)("replaces the editorial archive with a product narrative for %s", async (locale) => {
     const { container } = render(await HomePage({ params: Promise.resolve({ locale }) }));
-
-    expect(container.querySelectorAll("[data-home-act]")).toHaveLength(3);
-    expect(screen.queryByRole("heading", { name: oldTransformationHeading })).not.toBeInTheDocument();
-  });
-
-  it.each(["en", "pt-BR"] as const)("renders methods and packs as scroll-reactive editorial systems for %s", async (locale) => {
-    const { container } = render(await HomePage({ params: Promise.resolve({ locale }) }));
-
-    const methods = container.querySelector('[data-home-section="methods"]');
-    const packs = container.querySelector('[data-home-section="packs"]');
-
-    expect(methods).toHaveAttribute("data-scroll-choreography", "staggered");
-    expect(methods).toHaveAttribute("data-scroll-timing", "reading-zone");
-    expect(packs).toHaveAttribute("data-scroll-choreography", "staged");
-    expect(packs).toHaveAttribute("data-scroll-timing", "reading-zone");
-    expect(container.querySelectorAll("[data-method-stage]")).toHaveLength(3);
-    expect(container.querySelectorAll(".home-pack-dossier")).toHaveLength(12);
-    expect(container.querySelectorAll("[data-pack-stage]")).toHaveLength(12);
-    expect(container.querySelectorAll(".home-pack-dossier__skills")).toHaveLength(12);
-  });
-
-  it("drives the four workflow movements from one section timeline", async () => {
-    const { container } = render(await HomePage({ params: Promise.resolve({ locale: "en" }) }));
-    const workflow = container.querySelector('[data-home-section="workflow"]');
-
-    expect(workflow).toHaveAttribute("data-scroll-choreography", "scrubbed");
-    expect(workflow).toHaveAttribute("data-scroll-timing", "section-timeline");
-    expect(workflow?.querySelector('[data-workflow-track="single-timeline"]')).toBeInTheDocument();
-    expect(container.querySelectorAll("[data-workflow-stage]")).toHaveLength(4);
-    expect(workflow?.querySelector('[data-evidence-thread-mode="workflow"]')).toBeInTheDocument();
-    expect(workflow?.querySelector("canvas")).not.toBeInTheDocument();
+    expect(container.querySelectorAll(".product-case")).toHaveLength(3);
+    expect(container.querySelectorAll(".product-pack")).toHaveLength(3);
+    expect(container.querySelectorAll("[data-home-act]")).toHaveLength(0);
+    expect(container.querySelectorAll("[data-pack-stage]")).toHaveLength(0);
+    expect(container.querySelector(".product-demo .skill-lab")).toBeInTheDocument();
   });
 
   it("renders Case 001 as one scrubbed four-checkpoint scene with a reading dwell", () => {

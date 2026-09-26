@@ -20,11 +20,11 @@ type HomeManifestoCopy = Readonly<{
 
 export const homeManifesto = {
   en: {
-    eyebrow: "AGENT SKILLS STUDIO / METHODS FOR MAKING",
-    titleLead: "Give your agent",
-    titleClose: "a better way to work.",
+    eyebrow: "Agent Skills Studio / Open collection",
+    titleLead: "Skills are not prompts.",
+    titleClose: "They are working methods.",
     summary:
-      "From the first idea to the finished result. Install methods that help your agent think through the work, make deliberate choices, and deliver with evidence.",
+      "A curated, installable, inspectable collection of working methods that helps agents investigate, decide, build, and verify real work.",
     primaryAction: "Explore skills",
     secondaryAction: "Inspect real-use evidence",
     secondaryHref: "/built-with-skills",
@@ -38,11 +38,11 @@ export const homeManifesto = {
     },
   },
   "pt-BR": {
-    eyebrow: "AGENT SKILLS STUDIO / MÉTODOS PARA CRIAR",
-    titleLead: "Dê ao seu agente",
-    titleClose: "um jeito melhor de trabalhar.",
+    eyebrow: "Agent Skills Studio / Coleção aberta",
+    titleLead: "Skills não são prompts.",
+    titleClose: "São métodos de trabalho.",
     summary:
-      "Da primeira ideia ao resultado final. Instale métodos que ajudam seu agente a entender o trabalho, tomar decisões e entregar com evidências.",
+      "Uma coleção curada, instalável e inspecionável de métodos de trabalho que ajuda agentes a investigar, decidir, construir e verificar trabalho real.",
     primaryAction: "Explorar skills",
     secondaryAction: "Inspecionar evidências reais",
     secondaryHref: "/built-with-skills",

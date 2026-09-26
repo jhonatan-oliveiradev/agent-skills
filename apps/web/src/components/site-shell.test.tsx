@@ -164,50 +164,28 @@ describe("localized layout", () => {
   });
 });
 
-describe("definitive home", () => {
+describe("product home", () => {
   it.each([
-    ["en", "Skills are not prompts. They are working methods.", "60 skills", "12 packs", "2 locales", "This Home was built with Skills.", "Inspect the method. Then inspect what it changed."],
-    ["pt-BR", "Skills não são prompts. São métodos de trabalho.", "60 skills", "12 pacotes", "2 idiomas", "Esta Home foi construída com Skills.", "Inspecione o método. Depois, inspecione o que ele mudou."],
-  ] as const)("renders the definitive catalog-backed home for %s", async (locale, title, skills, packs, locales, startingPoint, proof) => {
+    ["en", "Your agent can do more. Give it a way to.", "Real work. Traceable decisions."],
+    ["pt-BR", "Seu agente pode fazer mais. Dê a ele um método.", "Trabalho real. Decisões rastreáveis."],
+  ] as const)("shows a product narrative and real evidence for %s", async (locale, title, proof) => {
     const { container } = render(await HomePage({ params: Promise.resolve({ locale }) }));
-
     expect(screen.getByRole("heading", { level: 1, name: title })).toBeInTheDocument();
-    expect(screen.getByText(skills)).toBeInTheDocument();
-    expect(screen.getByText(packs)).toBeInTheDocument();
-    expect(screen.getByText(locales)).toBeInTheDocument();
-    expect(screen.getByRole("region", { name: locale === "en" ? "Method Engine" : "Motor de Método" })).toBeInTheDocument();
-    expect(container.querySelector("canvas")).not.toBeInTheDocument();
-    expect(screen.getByRole("heading", { name: startingPoint })).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: proof })).toBeInTheDocument();
-    expect(container.querySelectorAll(".home-pack-dossier")).toHaveLength(12);
-    expect(container.querySelectorAll(".home-method-index li")).toHaveLength(3);
-    expect(container.querySelectorAll(".home-workflow-rail li")).toHaveLength(4);
-    expect(screen.getByRole("link", { name: locale === "en" ? "Explore skills" : "Explorar skills" })).toHaveAttribute(
-      "href",
-      `/${locale}/skills`,
-    );
-    expect(screen.getByRole("link", { name: locale === "en" ? "Inspect real-use evidence" : "Inspecionar evidências reais" })).toHaveAttribute(
-      "href",
-      `/${locale}/built-with-skills`,
-    );
-    expect(screen.queryByText(locale === "en" ? /foundation delivery/i : /entrega de fundação/i)).not.toBeInTheDocument();
+    expect(screen.getByRole("region", { name: locale === "en" ? "Method Engine" : "Motor de Método" })).toBeInTheDocument();
+    expect(container.querySelectorAll(".product-case")).toHaveLength(3);
+    expect(container.querySelectorAll(".product-skill")).toHaveLength(3);
+    expect(container.querySelectorAll(".product-pack")).toHaveLength(3);
+    expect(container.querySelector("canvas")).not.toBeInTheDocument();
+    expect(screen.getByRole("link", { name: locale === "en" ? /How to install/ : /Como instalar/ })).toHaveAttribute("href", `/${locale}/getting-started`);
   });
 
   it.each([
-    ["en", "Agent Skills Studio — Working methods for agents", "Explore an open, installable collection of agent skills: reusable working methods with explicit constraints and inspectable real-use evidence.", "/en"],
-    ["pt-BR", "Agent Skills Studio — Métodos de trabalho para agentes", "Explore uma coleção aberta e instalável de skills para agentes: métodos de trabalho reutilizáveis, com restrições explícitas e evidências reais inspecionáveis.", "/pt-BR"],
-  ] as const)("publishes canonical localized metadata for %s", async (locale, title, description, canonical) => {
+    ["en", "Agent Skills Studio — Better ways to build", "Installable skills for AI agents. Explore methods, real outcomes, and bring a new capability into your workflow.", "/en"],
+    ["pt-BR", "Agent Skills Studio — Métodos para criar melhor", "Skills instaláveis para agentes de IA. Explore métodos, resultados reais e leve uma nova capacidade para seu workflow.", "/pt-BR"],
+  ] as const)("publishes localized metadata for %s", async (locale, title, description, canonical) => {
     await expect(generateMetadata({ params: Promise.resolve({ locale }) })).resolves.toMatchObject({
-      title,
-      description,
-      alternates: {
-        canonical,
-        languages: {
-          en: "/en",
-          "pt-BR": "/pt-BR",
-          "x-default": "/en",
-        },
-      },
+      title, description, alternates: { canonical, languages: { en: "/en", "pt-BR": "/pt-BR", "x-default": "/en" } },
     });
   });
 });
