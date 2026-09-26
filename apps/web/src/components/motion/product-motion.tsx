@@ -39,29 +39,38 @@ export function ProductMotion() {
         });
       }
 
-      const reveal = root.querySelectorAll<HTMLElement>(
+      const storyBlocks = root.querySelectorAll<HTMLElement>(
         ".product-demo__copy, .product-thesis__lead, .product-section-heading, .product-install__intro, .product-close__inner",
       );
-      reveal.forEach((element) => {
-        gsap.from(element, {
-          y: 40,
-          autoAlpha: 0,
-          duration: 0.95,
-          ease: "power3.out",
-          scrollTrigger: { trigger: element, start: "top 88%", once: true },
-        });
+      const entryBlur = window.matchMedia("(min-width: 700px)").matches ? 9 : 0;
+      storyBlocks.forEach((block) => {
+        const content = Array.from(block.children).filter((element): element is HTMLElement =>
+          element instanceof HTMLElement && !element.classList.contains("product-demo__number"),
+        );
+        gsap.fromTo(content,
+          { y: 32, autoAlpha: 0, filter: `blur(${entryBlur}px)` },
+          {
+            y: 0,
+            autoAlpha: 1,
+            filter: "blur(0px)",
+            stagger: 0.12,
+            ease: "none",
+            scrollTrigger: { trigger: block, start: "top 92%", end: "top 55%", scrub: 0.55 },
+          },
+        );
       });
 
-      const groups = [".product-thesis__steps > div", ".product-case", ".product-skill", ".product-pack", ".product-install__detail"];
+      const groups = [".product-demo .skill-lab", ".product-thesis__steps > div", ".product-case", ".product-skill", ".product-pack", ".product-install__detail"];
       groups.forEach((selector) => {
         root.querySelectorAll<HTMLElement>(selector).forEach((element, index) => {
           gsap.from(element, {
             y: 34,
             autoAlpha: 0,
-            duration: 0.75,
+            duration: 0.85,
             delay: Math.min(index, 3) * 0.09,
             ease: "power3.out",
-            scrollTrigger: { trigger: element, start: "top 92%", once: true },
+            scrollTrigger: { trigger: element, start: "top 86%", once: true },
+            onComplete: () => gsap.set(element, { clearProps: "transform,opacity,visibility" }),
           });
         });
       });
