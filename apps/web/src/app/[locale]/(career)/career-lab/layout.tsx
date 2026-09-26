@@ -14,6 +14,8 @@ import "@/styles/career-guidance.css";
 import "@/styles/career-overview.css";
 import "@/styles/career-interactions.css";
 import "@/styles/career-assessment-learning.css";
+import "@/styles/career-premium.css";
+import "lenis/dist/lenis.css";
 
 type LayoutProps = Readonly<{
   children: ReactNode;

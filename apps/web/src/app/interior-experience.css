@@ -1,0 +1,45 @@
+/* Interior pages inherit the landing page's cobalt, ink, and sage system. */
+body:not(:has(.product-home)) .site-header[data-site-chrome="publication-bar"] {
+  transition: background-color 360ms ease, border-color 360ms ease;
+}
+
+body:not(:has(.product-home)) .site-header[data-site-chrome="publication-bar"] :is(a, button),
+body:not(:has(.product-home)) .site-footer :is(a, button),
+#main-content :is(a, button, summary) {
+  transition: color 260ms ease, background-color 320ms ease, border-color 260ms ease,
+    box-shadow 320ms ease, transform 380ms cubic-bezier(.22, 1, .36, 1), opacity 260ms ease;
+}
+
+#main-content :is(a, button, summary):focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 4px;
+}
+
+.editorial-page__hero,
+.editorial-packs-page__hero,
+.editorial-colophon__hero,
+.institutional-page__hero,
+.field-manual__hero,
+.living-program__hero,
+.method-dossier__hero,
+.pack-blueprint__hero {
+  border-color: color-mix(in srgb, var(--brand) 32%, var(--border));
+}
+
+.editorial-reader-nav a:hover,
+.editorial-reader-nav a:focus-visible {
+  color: var(--brand);
+}
+
+#main-content [data-editorial-section] {
+  scroll-margin-top: calc(var(--site-publication-bar-height, 4.5rem) + 2rem);
+}
+
+html:has(#main-content):not(:has(.product-home)):not(.lenis) {
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html:has(#main-content):not(:has(.product-home)) { scroll-behavior: auto; }
+  body:not(:has(.product-home)) :is(a, button, summary) { transition-duration: .01ms !important; }
+}

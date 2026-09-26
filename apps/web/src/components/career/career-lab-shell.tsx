@@ -9,6 +9,7 @@ import type { Locale } from "@/lib/locales";
 import { CareerDataControls } from "./career-data-controls";
 import { CareerProductOrientation } from "./career-product-orientation";
 import { useCareerProfile } from "./career-profile-provider";
+import { InteriorMotion } from "@/components/motion/interior-motion";
 
 const navigationSegments = ["", "assessments", "learning", "roadmap", "evidence", "market"] as const;
 
@@ -128,6 +129,7 @@ export function CareerLabShell({
         </footer>
       </div>
       <CareerProductOrientation locale={locale} />
+      <InteriorMotion area="career" />
     </main>
   );
 }
