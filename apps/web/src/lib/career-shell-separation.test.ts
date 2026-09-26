@@ -32,7 +32,7 @@ describe("Career Lab shell separation", () => {
     expect(localeLayout).not.toContain('<main id="main-content"');
 
     expect(studioLayout).toContain("<SiteHeader locale={locale} />");
-    expect(studioLayout).toContain('<main id="main-content">{children}</main>');
+    expect(studioLayout).toContain('<main id="main-content">{children}<InteriorMotion area="studio" /></main>');
     expect(studioLayout).toContain("<SiteFooter locale={locale} />");
   });
 

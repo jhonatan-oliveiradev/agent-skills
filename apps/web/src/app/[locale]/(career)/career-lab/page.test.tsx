@@ -8,6 +8,8 @@ import type { CareerStorage } from "@/lib/career/storage";
 import type { Locale } from "@/lib/locales";
 import CareerLabPage from "./page";
 
+vi.mock("@/components/motion/interior-motion", () => ({ InteriorMotion: () => null }));
+
 function storageWith(profile: Awaited<ReturnType<CareerStorage["load"]>>): CareerStorage {
   return {
     load: vi.fn().mockResolvedValue(profile),
@@ -55,11 +57,12 @@ describe("Career Lab root route", () => {
 
     const system = screen.getByRole("list", { name: "Your career system" });
     const stages = within(system).getAllByRole("listitem");
-    expect(stages).toHaveLength(5);
+    expect(stages).toHaveLength(6);
     expect(stages[0]).toHaveAttribute("aria-current", "step");
     expect(system).toHaveTextContent("Profile");
     expect(system).toHaveTextContent("Not started");
     expect(system).toHaveTextContent("Assessment");
+    expect(system).toHaveTextContent("Learning");
     expect(system).toHaveTextContent("Waiting for profile");
     expect(system).toHaveTextContent("Roadmap");
     expect(system).toHaveTextContent("Waiting for assessment");
@@ -92,10 +95,11 @@ describe("Career Lab root route", () => {
 
     const system = screen.getByRole("list", { name: "Seu sistema de carreira" });
     const stages = within(system).getAllByRole("listitem");
-    expect(stages).toHaveLength(5);
+    expect(stages).toHaveLength(6);
     expect(stages[0]).toHaveAttribute("aria-current", "step");
     expect(system).toHaveTextContent("Perfil");
     expect(system).toHaveTextContent("Não iniciado");
+    expect(system).toHaveTextContent("Aprendizado");
     expect(system).toHaveTextContent("Aguardando perfil");
     expect(system).toHaveTextContent("Aguardando avaliação");
     expect(system).toHaveTextContent("0 evidências");

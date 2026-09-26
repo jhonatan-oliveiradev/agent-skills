@@ -86,7 +86,7 @@ export function CareerLabHome({ locale }: Readonly<{ locale: Locale }>) {
           </div>
 
           {firstStage ? (
-            <aside className="career-lab-entry__current" aria-label={workspaceState.currentLabel}>
+            <aside className="career-lab-entry__current" role="complementary" aria-label={workspaceState.currentLabel}>
               <p className="career-lab__eyebrow">{workspaceState.currentLabel}</p>
               <div className="career-lab-entry__current-action">
                 <div>
