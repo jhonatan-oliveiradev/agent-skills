@@ -12,13 +12,39 @@ export function ProductMotion() {
     const root = document.querySelector<HTMLElement>(".product-home");
     if (!root) return;
     const header = document.querySelector<HTMLElement>(".site-header");
-
-    ScrollTrigger.create({
-      trigger: root.querySelector(".product-hero"),
-      start: "bottom top+=72",
-      onEnter: () => header?.classList.add("is-product-scrolled"),
-      onLeaveBack: () => header?.classList.remove("is-product-scrolled"),
+    const surfaces = [
+      [".product-hero", "blue"],
+      [".product-demo", "ink"],
+      [".product-thesis", "light"],
+      [".product-work", "mist"],
+      [".product-skills", "light"],
+      [".product-install", "green"],
+      [".product-packs", "pale"],
+      [".product-close", "blue"],
+      [".site-footer", "ink"],
+    ] as const;
+    const sections = surfaces.flatMap(([selector, tone]) => {
+      const element = document.querySelector<HTMLElement>(selector);
+      return element ? [{ element, tone }] : [];
     });
+    let frame = 0;
+    const syncHeaderTone = () => {
+      frame = 0;
+      if (!header) return;
+      const edge = header.getBoundingClientRect().bottom + 1;
+      const current = sections.find(({ element }) => {
+        const rect = element.getBoundingClientRect();
+        return rect.top <= edge && rect.bottom > edge;
+      });
+      const tone = current?.tone ?? (window.scrollY > 0 ? sections.at(-1)?.tone : "blue");
+      if (tone && header.dataset.productTone !== tone) header.dataset.productTone = tone;
+    };
+    const onToneScroll = () => {
+      if (!frame) frame = window.requestAnimationFrame(syncHeaderTone);
+    };
+    syncHeaderTone();
+    window.addEventListener("scroll", onToneScroll, { passive: true });
+    window.addEventListener("resize", onToneScroll);
 
     const media = gsap.matchMedia();
     media.add("(prefers-reduced-motion: no-preference)", () => {
@@ -96,7 +122,10 @@ export function ProductMotion() {
 
     return () => {
       media.revert();
-      header?.classList.remove("is-product-scrolled");
+      window.removeEventListener("scroll", onToneScroll);
+      window.removeEventListener("resize", onToneScroll);
+      window.cancelAnimationFrame(frame);
+      header?.removeAttribute("data-product-tone");
     };
   }, []);
 

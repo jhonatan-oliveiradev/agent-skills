@@ -73,6 +73,7 @@ describe("editorial site chrome", () => {
       expect(within(dialog).getByText("12 PACKS")).toBeInTheDocument();
       expect(within(dialog).getByText("1.1.0")).toBeInTheDocument();
       expect(dialog.querySelectorAll(".primary-navigation__mobile-context")).toHaveLength(7);
+      expect(dialog.querySelector(".primary-navigation__eyebrow")).toHaveTextContent("INDEX / 01—07");
 
       const proofLink = within(dialog).getByRole("link", { name: proofLabel });
       fireEvent.mouseEnter(proofLink);

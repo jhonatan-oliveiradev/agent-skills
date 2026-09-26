@@ -1,0 +1,160 @@
+/* Give editorial pages the reading area their multi-column content requires. */
+body:not(:has(.product-home)) .shell {
+  --content-max: 96rem;
+  --page-gutter: clamp(1.25rem, 4vw, 5rem);
+}
+
+body:not(:has(.product-home)) :is(.editorial-page__hero-copy, .field-manual__hero-copy,
+  .pack-blueprint__hero-copy, .evidence-report__hero-copy, .editorial-colophon__hero-copy,
+  .institutional-page__hero-copy) {
+  min-width: 0;
+}
+
+body:not(:has(.product-home)) :is(.editorial-page__hero, .field-manual__hero,
+  .pack-blueprint__hero, .evidence-report__hero, .editorial-colophon__hero,
+  .institutional-page__hero) {
+  min-height: 0;
+  padding-block: clamp(4rem, 8dvh, 7rem) clamp(3.5rem, 7dvh, 6rem);
+}
+
+/* Packs: keep the full names legible and move the composition underneath
+   before the identity column becomes narrower than the title. */
+.pack-dossier__link {
+  grid-template-columns: clamp(3.5rem, 6vw, 6rem) minmax(0, 1.2fr) minmax(18rem, 0.8fr);
+  column-gap: clamp(1.5rem, 3vw, 3.5rem);
+}
+
+.pack-dossier__identity h2 {
+  font-size: clamp(2.7rem, 4.15vw, 4.8rem);
+  line-height: 0.96;
+  overflow-wrap: anywhere;
+}
+
+.pack-dossier__composition li {
+  overflow-wrap: break-word;
+}
+
+/* The chapter index is a guide, not a strip of five narrow labels. */
+.field-manual__index {
+  grid-template-columns: minmax(0, 1fr);
+  gap: 1.25rem;
+}
+
+.field-manual__index ol {
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+}
+
+.field-manual__index li { grid-column: span 2; }
+.field-manual__index li:nth-last-child(-n + 2) { grid-column: span 3; }
+.field-manual__index li:nth-child(3) { border-right: 0; }
+.field-manual__index a { min-height: 7.25rem; padding: 1.15rem 1.4rem; }
+.field-manual__index a strong { font-size: clamp(0.9rem, 1.1vw, 1.05rem); }
+.field-manual__index a:hover,
+.field-manual__index a:focus-visible { padding-left: 1.65rem; }
+
+.field-manual .installation-command-row {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  column-gap: clamp(1.5rem, 3vw, 3.5rem);
+  row-gap: 1.5rem;
+}
+
+.field-manual .installation-command-row__label,
+.field-manual .maintenance-grid article > * { min-width: 0; }
+.field-manual .installation-command-row__label {
+  grid-column: 1 / -1;
+  grid-row: auto;
+  max-width: 48rem;
+}
+
+.field-manual .command-block { min-width: 0; }
+
+.field-manual .installation-command-row.field-manual__verification-option {
+  grid-template-columns: minmax(12rem, 0.35fr) minmax(0, 0.65fr);
+}
+
+.field-manual__verification-option > :is(.eyebrow, h3) { grid-column: 1; }
+.field-manual__verification-commands {
+  display: grid;
+  min-width: 0;
+  grid-column: 2;
+  grid-row: 1 / span 2;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(1rem, 2vw, 2rem);
+}
+
+@media (max-width: 82rem) {
+  body:not(:has(.product-home)) :is(.editorial-page__hero, .pack-blueprint__hero,
+    .evidence-report__hero, .editorial-colophon__hero-grid, .institutional-page__hero-grid,
+    .field-manual__hero-grid) {
+    grid-template-columns: minmax(0, 1fr);
+    gap: clamp(2rem, 4vw, 3.5rem);
+  }
+
+  body:not(:has(.product-home)) :is(.editorial-page__metadata, .pack-blueprint__metadata,
+    .field-manual__metadata, .evidence-report__metadata) {
+    width: 100%;
+    max-width: 45rem;
+  }
+
+  .pack-dossier__link {
+    grid-template-columns: clamp(3rem, 6vw, 5rem) minmax(0, 1fr);
+    grid-template-rows: auto auto auto;
+  }
+
+  .pack-dossier__composition {
+    grid-column: 2;
+    padding: 1.75rem 0 0;
+    border-top: 1px solid var(--border);
+    border-left: 0;
+  }
+
+  .pack-dossier__composition ol { grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 2rem; }
+  .pack-dossier__action { grid-column: 2; }
+
+  .field-manual__orientation,
+  .field-manual__maintain { grid-template-columns: minmax(0, 1fr); gap: 3rem; }
+
+  .field-manual .installation-command-row { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .field-manual .installation-command-row .command-entry:last-child { grid-column: auto; }
+  .field-manual .installation-command-row.field-manual__verification-option { grid-template-columns: 1fr; }
+  .field-manual__verification-commands { grid-column: 1; grid-row: auto; }
+}
+
+@media (max-width: 60rem) {
+  .field-manual__index ol { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .field-manual__index li,
+  .field-manual__index li:nth-last-child(-n + 2) { grid-column: auto; }
+  .field-manual__index li:nth-child(3) { border-right: 1px solid var(--border); }
+  .field-manual__index li:nth-child(even) { border-right: 0; }
+  .field-manual__index li:last-child { grid-column: 1 / -1; }
+}
+
+@media (max-width: 44rem) {
+  body:not(:has(.product-home)) .shell { --page-gutter: clamp(1rem, 5vw, 1.5rem); }
+
+  body:not(:has(.product-home)) :is(.editorial-page__hero, .field-manual__hero,
+    .pack-blueprint__hero, .evidence-report__hero, .editorial-colophon__hero,
+    .institutional-page__hero) { padding-block: 3.5rem; }
+
+  .pack-dossier__link { grid-template-columns: 2.25rem minmax(0, 1fr); }
+  .pack-dossier__identity h2 { font-size: clamp(2.25rem, 10vw, 3.5rem); }
+  .pack-dossier__composition ol { grid-template-columns: minmax(0, 1fr); }
+
+  .field-manual__index ol { grid-template-columns: minmax(0, 1fr); }
+  .field-manual__index li,
+  .field-manual__index li:nth-child(3),
+  .field-manual__index li:last-child { grid-column: auto; border-right: 0; }
+  .field-manual__index a { min-height: 5rem; padding: 1rem; }
+  .field-manual__index a:hover,
+  .field-manual__index a:focus-visible { padding-left: 1.25rem; }
+
+  .field-manual .installation-command-row { grid-template-columns: minmax(0, 1fr); }
+  .field-manual .installation-command-row__label,
+  .field-manual .installation-command-row .command-entry:last-child { grid-column: 1; }
+  .field-manual__verification-commands { grid-template-columns: 1fr; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .field-manual__index a:hover,
+  .field-manual__index a:focus-visible { padding-left: 1rem; }
+}
