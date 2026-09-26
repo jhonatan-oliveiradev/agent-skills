@@ -3,7 +3,6 @@
 import type { Route } from "next";
 import { useEffect, useMemo } from "react";
 import {
-  completeLearningUnit,
   getLearningUnitsForMilestone,
   isLearningUnitCompleted,
 } from "@/lib/career/learning";
@@ -181,11 +180,9 @@ function MilestoneSummary({
 export function CareerRoadmap({
   locale,
   profile,
-  onCompleteLearningUnit,
 }: Readonly<{
   locale: Locale;
   profile: CareerProfile;
-  onCompleteLearningUnit?: (milestoneId: string, unitId: string) => void;
 }>) {
   const localized = copy[locale];
   const roleId = profile.targetRoles[0];
@@ -256,11 +253,6 @@ export function CareerRoadmap({
                 unit={currentLearningUnit}
                 locale={locale}
                 completed={isLearningUnitCompleted(profile, current.id, currentLearningUnit.id)}
-                onComplete={
-                  onCompleteLearningUnit
-                    ? (unitId) => onCompleteLearningUnit(current.id, unitId)
-                    : undefined
-                }
               />
             ) : null}
           </>
@@ -345,9 +337,6 @@ export function CareerRoadmapSurface({ locale }: Readonly<{ locale: Locale }>) {
     <CareerRoadmap
       locale={locale}
       profile={profile}
-      onCompleteLearningUnit={(milestoneId, unitId) => {
-        void updateProfile((current) => completeLearningUnit(current, milestoneId, unitId));
-      }}
     />
   );
 }

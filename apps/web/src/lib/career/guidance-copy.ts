@@ -4,6 +4,7 @@ export type CareerGuideAreaId =
   | "overview"
   | "roadmap"
   | "assessments"
+  | "learning"
   | "evidence"
   | "market";
 
@@ -64,6 +65,8 @@ type CareerNextActionPresentation = Readonly<{
 export interface CareerNextActionCopy {
   readonly label: string;
   readonly completeBaseline: (title: string) => CareerNextActionPresentation;
+  readonly studyAssessedGap: (title: string) => CareerNextActionPresentation;
+  readonly proveStudiedGap: CareerNextActionPresentation;
   readonly reviewRoadmap: CareerNextActionPresentation;
   readonly produceEvidence: (title: string, gapCount: number) => CareerNextActionPresentation;
   readonly addMarketSample: CareerNextActionPresentation;
@@ -74,7 +77,7 @@ const enGuide: CareerGuideCopy = {
   eyebrow: "Career Lab / guide",
   title: "Use Career Lab as a working loop.",
   intro:
-    "Career Lab is not a checklist to finish once. Assess your current state, work the highest-priority gap, attach evidence, compare against the market, then return to Overview to read what changed.",
+    "Assess your current state, study a mapped gap, record a practice response, then reassess or attach evidence to see what changed. Compare your plan with the market and return to Overview for the next step.",
   startHereTitle: "Start here",
   labels: {
     purpose: "Purpose",
@@ -108,6 +111,14 @@ const enGuide: CareerGuideCopy = {
       after: "Competency level and confidence can update readiness and roadmap priorities.",
     },
     {
+      id: "learning",
+      title: "Learning",
+      purpose: "Study a reviewed Core Note linked to a capability gap and save your practice response.",
+      when: "Use it after an assessment identifies a gap or the roadmap recommends a mapped competency.",
+      done: "You compared your written practice with the consolidation criteria and marked the module studied.",
+      after: "Reassess or register inspectable work; studying never raises proficiency automatically.",
+    },
+    {
       id: "evidence",
       title: "Evidence",
       purpose: "Connect a capability claim to an inspectable artifact and its provenance.",
@@ -126,10 +137,10 @@ const enGuide: CareerGuideCopy = {
   ],
   qaTitle: "Questions and answers",
   questions: [
-    { id: "where-start", question: "Where do I start?", answer: "Create your Career Profile, complete the required baseline assessments, then follow the current Roadmap focus. Overview is where you return to read the result of new work." },
+    { id: "where-start", question: "Where do I start?", answer: "Create your Career Profile and take a baseline assessment. Follow its learning recommendation, record your practice, then reassess or add evidence. Return to Overview for your next step." },
     { id: "readiness-zero", question: "Why is my readiness 0%?", answer: "A new profile starts with unknown capability states and low confidence. Zero readiness means Career Lab does not yet have enough evidence-backed capability data for the target role; it is not a judgment of your professional value." },
     { id: "baseline", question: "What is a baseline assessment?", answer: "A baseline is a short deterministic probe that records an evidence-backed observation for a competency. It gives Career Lab a calibrated starting point instead of assuming strength or weakness." },
-    { id: "all-assessments", question: "Do I need to complete every assessment before using the roadmap?", answer: "The roadmap can exist before every baseline is complete, but unresolved baselines leave important competency states unknown. Complete the required baselines before treating readiness and roadmap priorities as fully calibrated." },
+    { id: "all-assessments", question: "Do I need to complete every assessment before using the roadmap?", answer: "No. You can work on a gap after your first assessment. Unresolved baselines leave some competencies unknown, so finish them before treating readiness as fully calibrated." },
     { id: "professional-evidence", question: "What counts as professional evidence?", answer: "Use inspectable work such as a repository change, pull request, test report, architecture decision, screenshot, log, or other concrete artifact tied to observable behavior. A claim without an inspectable artifact is not strong evidence." },
     { id: "real-job-description", question: "Why does Career Lab ask for a real job description?", answer: "A real posting provides explicit capability and structural-demand signals from the market you want to enter. Career Lab treats the posting as an input to inspect, not as trusted truth about your fit." },
     { id: "multiple-jobs", question: "Do I need to register multiple jobs?", answer: "No. Start with a small representative sample. Add another posting when it contributes a genuinely different signal; useful coverage matters more than volume." },
@@ -147,22 +158,23 @@ const enGuide: CareerGuideCopy = {
 const ptBrGuide: CareerGuideCopy = {
   eyebrow: "Career Lab / guia",
   title: "Use o Career Lab como um ciclo de trabalho.",
-  intro: "O Career Lab não é uma checklist para concluir uma vez. Avalie seu estado atual, trabalhe o gap de maior prioridade, registre evidências, compare com o mercado e volte à Visão geral para entender o que mudou.",
+  intro: "Avalie seu estado atual, estude um gap mapeado, registre a prática e depois reavalie ou anexe evidências para ver o que mudou. Compare seu plano com o mercado e volte à Visão geral para encontrar o próximo passo.",
   startHereTitle: "Comece aqui",
   labels: { purpose: "Objetivo", when: "Use quando", done: "Concluído significa", after: "O que muda depois" },
   stages: [
     { id: "overview", title: "Visão geral", purpose: "Leia seu estado atual e identifique a próxima ação recomendada.", when: "Volte depois de uma nova avaliação, evidência, amostra de mercado ou mudança no roadmap.", done: "Você consegue explicar o que mudou e qual superfície de trabalho precisa de atenção agora.", after: "Siga para a superfície recomendada em vez de tratar a Visão geral como o trabalho em si." },
     { id: "roadmap", title: "Roadmap", purpose: "Transforme gaps de capacidade e evidência em um caminho ordenado de desenvolvimento.", when: "Use após estabelecer seu baseline e sempre que novas evidências ou sinais de mercado alterarem prioridades.", done: "O marco atual atende aos requisitos de capacidade e evidência.", after: "O Career Lab pode avançar para o próximo marco elegível." },
     { id: "assessments", title: "Avaliações", purpose: "Substitua capacidades desconhecidas por observações determinísticas sustentadas por evidências.", when: "Comece aqui após configurar o perfil e reavalie quando um marco precisar de nova calibração.", done: "Os baselines obrigatórios registraram resultado para as capacidades que cobrem.", after: "Nível e confiança das competências podem atualizar readiness e prioridades do roadmap." },
+    { id: "learning", title: "Aprendizado", purpose: "Estude uma Core Note revisada ligada a um gap e salve sua resposta da prática.", when: "Use após uma avaliação apontar um gap ou o roadmap recomendar uma competência mapeada.", done: "Você comparou sua resposta escrita com os critérios de consolidação e marcou o módulo como estudado.", after: "Reavalie ou registre trabalho inspecionável; estudar nunca aumenta proficiência automaticamente." },
     { id: "evidence", title: "Evidências", purpose: "Conecte uma afirmação de capacidade a um artefato inspecionável e sua proveniência.", when: "Use quando o foco atual do roadmap produzir trabalho que demonstre a capacidade-alvo.", done: "O registro aponta para trabalho concreto, explica o que ele demonstra e pode ser inspecionado ou verificado.", after: "A evidência pode atender requisitos do roadmap e fortalecer o estado da competência." },
     { id: "market", title: "Mercado", purpose: "Compare seu plano de desenvolvimento com sinais explícitos de vagas reais.", when: "Use após escolher função e mercado-alvo e atualize quando sua amostra deixar de representar o mercado.", done: "Você possui uma pequena amostra representativa com sinais explícitos úteis de demanda.", after: "A relevância de mercado pode informar o roadmap sem aumentar readiness automaticamente." },
   ],
   qaTitle: "Perguntas e respostas",
   questions: [
-    { id: "where-start", question: "Por onde começo?", answer: "Crie seu Career Profile, conclua as avaliações de baseline obrigatórias e depois siga o foco atual do Roadmap. A Visão geral é o lugar para onde você volta para ler o resultado do novo trabalho." },
+    { id: "where-start", question: "Por onde começo?", answer: "Crie seu Career Profile e faça uma avaliação inicial. Siga a recomendação de aprendizado, registre a prática e depois reavalie ou adicione evidências. Volte à Visão geral para ver o próximo passo." },
     { id: "readiness-zero", question: "Por que meu readiness está em 0%?", answer: "Um perfil novo começa com capacidades desconhecidas e baixa confiança. Readiness zero significa que o Career Lab ainda não possui dados suficientes sustentados por evidências para a função-alvo; não é um julgamento sobre seu valor profissional." },
     { id: "baseline", question: "O que é uma avaliação de baseline?", answer: "É uma sondagem determinística curta que registra uma observação sustentada por evidência para uma competência. Ela oferece um ponto de partida calibrado em vez de presumir força ou fraqueza." },
-    { id: "all-assessments", question: "Preciso concluir todas as avaliações antes de usar o roadmap?", answer: "O roadmap pode existir antes de todos os baselines, mas baselines pendentes mantêm capacidades importantes desconhecidas. Conclua os baselines obrigatórios antes de tratar readiness e prioridades como plenamente calibrados." },
+    { id: "all-assessments", question: "Preciso concluir todas as avaliações antes de usar o roadmap?", answer: "Não. Você pode trabalhar um gap após a primeira avaliação. Baselines pendentes mantêm algumas competências desconhecidas; conclua-os antes de tratar o readiness como plenamente calibrado." },
     { id: "professional-evidence", question: "O que conta como evidência profissional?", answer: "Use trabalho inspecionável: mudança em repositório, pull request, relatório de testes, decisão arquitetural, screenshot, log ou outro artefato concreto ligado a comportamento observável. Uma afirmação sem artefato inspecionável não é uma evidência forte." },
     { id: "real-job-description", question: "Por que o Career Lab pede uma descrição de vaga real?", answer: "Uma vaga real fornece sinais explícitos de capacidade e requisitos estruturais do mercado em que você quer competir. O Career Lab trata a vaga como uma entrada para inspeção, não como verdade sobre sua adequação." },
     { id: "multiple-jobs", question: "Preciso registrar várias vagas?", answer: "Não. Comece com uma amostra pequena e representativa. Adicione outra vaga quando ela trouxer um sinal realmente diferente; cobertura útil importa mais do que volume." },
@@ -189,7 +201,7 @@ function buildOrientationCopy(
 
 const enOrientation = buildOrientationCopy(enGuide, {
   eyebrow: "Career Lab / orientation",
-  title: "Five surfaces. One working loop.",
+  title: "Six surfaces. One working loop.",
   intro: "Career Lab becomes useful when each surface hands work to the next. Use this short orientation as the operating model, then return to the Guide whenever you need the detail.",
   skip: "Skip orientation",
   complete: "Complete orientation",
@@ -198,7 +210,7 @@ const enOrientation = buildOrientationCopy(enGuide, {
 
 const ptBrOrientation = buildOrientationCopy(ptBrGuide, {
   eyebrow: "Career Lab / orientação",
-  title: "Cinco superfícies. Um ciclo de trabalho.",
+  title: "Seis superfícies. Um ciclo de trabalho.",
   intro: "O Career Lab ganha valor quando cada superfície entrega trabalho para a próxima. Use esta orientação curta como modelo operacional e volte ao Guia quando precisar dos detalhes.",
   skip: "Pular orientação",
   complete: "Concluir orientação",
@@ -212,6 +224,8 @@ const enNextAction: CareerNextActionCopy = {
     reason: "This assessment replaces an unknown competency state with an evidence-backed level, making the next focus more reliable.",
     action: `Start ${title}`,
   }),
+  studyAssessedGap: (title) => ({ title: `Work on ${title}.`, reason: "Use your assessment as a starting point: study, write a practice response and compare it with the review criteria. Study alone does not change your proficiency.", action: "Open guided practice" }),
+  proveStudiedGap: { title: "Check what changed.", reason: "You studied the reviewed modules. Reassess to measure your capability; continue the other baselines afterward.", action: "Reassess capability" },
   reviewRoadmap: {
     title: "Review your roadmap.",
     reason: "No current milestone needs work. Review the roadmap to understand what is complete and what should be calibrated next.",
@@ -241,6 +255,8 @@ const ptBrNextAction: CareerNextActionCopy = {
     reason: "Esta avaliação ajuda a substituir um estado desconhecido por um nível sustentado por evidências e torna o próximo foco mais confiável.",
     action: `Iniciar ${title}`,
   }),
+  studyAssessedGap: (title) => ({ title: `Trabalhe ${title}.`, reason: "Use a avaliação como ponto de partida: estude, escreva uma resposta da prática e compare com os critérios de revisão. Estudo sozinho não altera sua proficiência.", action: "Abrir prática guiada" }),
+  proveStudiedGap: { title: "Confira o que mudou.", reason: "Você estudou os módulos revisados. Reavalie sua capacidade e depois continue os outros baselines.", action: "Reavaliar competência" },
   reviewRoadmap: {
     title: "Revise seu roadmap.",
     reason: "Nenhum marco atual exige trabalho. Revise o roadmap para entender o que já foi concluído e o que deve ser calibrado em seguida.",

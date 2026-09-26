@@ -9,7 +9,7 @@ import { useCareerProfile } from "./career-profile-provider";
 
 const emptyWorkspaceState = {
   en: {
-    eyebrow: "05 / Workspace state",
+    eyebrow: "06 / Workspace state",
     label: "Your career system",
     currentLabel: "Current step",
     currentBody: "Define your role, market and weekly capacity.",
@@ -17,18 +17,20 @@ const emptyWorkspaceState = {
       { status: "Not started", state: "next" },
       { status: "Waiting for profile", state: "waiting" },
       { status: "Waiting for assessment", state: "waiting" },
+      { status: "Waiting for assessment", state: "waiting" },
       { status: "0 evidence records", state: "empty" },
       { status: "Waiting for target role", state: "waiting" },
     ],
   },
   "pt-BR": {
-    eyebrow: "05 / Estado do workspace",
+    eyebrow: "06 / Estado do workspace",
     label: "Seu sistema de carreira",
     currentLabel: "Etapa atual",
     currentBody: "Defina sua função, mercado e capacidade semanal.",
     stages: [
       { status: "Não iniciado", state: "next" },
       { status: "Aguardando perfil", state: "waiting" },
+      { status: "Aguardando avaliação", state: "waiting" },
       { status: "Aguardando avaliação", state: "waiting" },
       { status: "0 evidências", state: "empty" },
       { status: "Aguardando função-alvo", state: "waiting" },
@@ -84,7 +86,7 @@ export function CareerLabHome({ locale }: Readonly<{ locale: Locale }>) {
           </div>
 
           {firstStage ? (
-            <aside className="career-lab-entry__current" aria-label={workspaceState.currentLabel}>
+            <aside className="career-lab-entry__current" role="complementary" aria-label={workspaceState.currentLabel}>
               <p className="career-lab__eyebrow">{workspaceState.currentLabel}</p>
               <div className="career-lab-entry__current-action">
                 <div>

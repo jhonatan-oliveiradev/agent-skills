@@ -1,12 +1,16 @@
 "use client";
 
+import { useState } from "react";
+import Link from "next/link";
+import type { Route } from "next";
+import { baselineAssessmentBlueprints } from "@/lib/career/assessment-blueprints";
 import { getLearningNote } from "@/lib/career/learning-catalog";
 import { careerLearningCopy } from "@/lib/career/learning-copy";
 import {
   completeLearningModule,
-  completeLearningPractice,
   getLearningProgress,
   getLearningState,
+  recordLearningReflection,
   startLearningModule,
 } from "@/lib/career/learning-progress";
 import {
@@ -24,6 +28,46 @@ function sourceFor(sourceId: string): LearningSource | undefined {
 
 function reviewedDate(value: string): string {
   return value.slice(0, 10);
+}
+
+function PracticeResponse({
+  locale,
+  module,
+  savedResponse,
+  disabled,
+  onSave,
+}: Readonly<{
+  locale: Locale;
+  module: LearningModule;
+  savedResponse?: string;
+  disabled: boolean;
+  onSave: (response: string) => Promise<void>;
+}>) {
+  const [response, setResponse] = useState(savedResponse ?? "");
+  const [saving, setSaving] = useState(false);
+  const copy = careerLearningCopy[locale].reader;
+  return (
+    <form onSubmit={(event) => {
+      event.preventDefault();
+      setSaving(true);
+      void onSave(response).finally(() => setSaving(false));
+    }}>
+      <label htmlFor={`${module.id}-response`}>{copy.practiceResponse}</label>
+      <textarea
+        id={`${module.id}-response`}
+        value={response}
+        onChange={(event) => setResponse(event.target.value)}
+        maxLength={4000}
+        rows={5}
+        disabled={disabled || saving}
+        required
+      />
+      <button type="submit" disabled={disabled || saving || !response.trim() || response.trim() === savedResponse}>
+        {savedResponse ? copy.updateResponse : copy.saveResponse}
+      </button>
+      {savedResponse ? <p role="status">{copy.responseSaved}</p> : null}
+    </form>
+  );
 }
 
 export function CareerLearningNote({
@@ -53,16 +97,20 @@ export function CareerLearningNote({
     (learningModule) => learningModule.reviewStatus === "draft",
   );
   const noteState = profile ? getLearningState(profile, note) : "not-started";
+  const assessment = baselineAssessmentBlueprints.find(
+    (blueprint) => blueprint.competencyId === note.competencyId,
+  );
 
-  async function recordPractice(learningModule: LearningModule) {
+  async function recordPractice(learningModule: LearningModule, response: string) {
     if (!profile) return;
     await updateProfile((current) => {
       const started = startLearningModule(current, noteId, learningModule.id);
-      return completeLearningPractice(
+      return recordLearningReflection(
         started,
         noteId,
         learningModule.id,
         learningModule.practice.id,
+        response,
       );
     });
   }
@@ -103,6 +151,9 @@ export function CareerLearningNote({
         <aside className="career-learning-note__notice career-learning-note__notice--proof">
           <h2>{copy.reader.studiedTitle}</h2>
           <p>{copy.reader.proofStillRequired}</p>
+          <Link href={`/${locale}/career-lab/${assessment ? `assessments/${assessment.id}` : "evidence"}` as Route}>
+            {assessment ? copy.reader.reassess : copy.reader.prove}
+          </Link>
         </aside>
       ) : null}
 
@@ -121,6 +172,9 @@ export function CareerLearningNote({
           const progress = profile ? getLearningProgress(profile, note.id) : undefined;
           const practiceComplete =
             progress?.completedPracticeIds.includes(learningModule.practice.id) ?? false;
+          const savedResponse = progress?.practiceReflections?.find(
+            (item) => item.practiceId === learningModule.practice.id,
+          )?.response;
           const moduleComplete =
             progress?.completedModuleIds.includes(learningModule.id) ?? false;
           const sources = learningModule.sourceIds
@@ -171,15 +225,13 @@ export function CareerLearningNote({
               <div className="career-learning-module__block">
                 <h3>{copy.reader.practice}</h3>
                 <p>{learningModule.practice.prompt[locale]}</p>
-                <button
-                  type="button"
-                  disabled={!profile || practiceComplete}
-                  onClick={() => void recordPractice(learningModule)}
-                >
-                  {practiceComplete
-                    ? copy.reader.practiceComplete
-                    : copy.reader.markPractice}
-                </button>
+                <PracticeResponse
+                  locale={locale}
+                  module={learningModule}
+                  savedResponse={savedResponse}
+                  disabled={!profile}
+                  onSave={(response) => recordPractice(learningModule, response)}
+                />
                 <button
                   type="button"
                   disabled={!profile || !practiceComplete || moduleComplete}

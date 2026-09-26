@@ -18,7 +18,7 @@ export function CareerGuide({ locale }: Readonly<{ locale: Locale }>) {
 
       <section className="career-guide__start" aria-labelledby="career-guide-start-title">
         <header>
-          <p className="career-lab__eyebrow">01 / 05</p>
+          <p className="career-lab__eyebrow">01 / {String(copy.stages.length).padStart(2, "0")}</p>
           <h2 id="career-guide-start-title">{copy.startHereTitle}</h2>
         </header>
 

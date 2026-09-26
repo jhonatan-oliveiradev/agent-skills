@@ -329,6 +329,7 @@ function parseLearningProgressRecord(
       "currentModuleId",
       "completedModuleIds",
       "completedPracticeIds",
+      "practiceReflections",
       "completedAt",
     ],
     label,
@@ -352,6 +353,25 @@ function parseLearningProgressRecord(
   );
   assertUniqueStrings(completedModuleIds, `${label}.completedModuleIds`);
   assertUniqueStrings(completedPracticeIds, `${label}.completedPracticeIds`);
+  let practiceReflections: LearningProgressRecord["practiceReflections"];
+  if (value.practiceReflections !== undefined) {
+    if (!Array.isArray(value.practiceReflections)) {
+      throw new Error(`${label}.practiceReflections: expected array`);
+    }
+    practiceReflections = value.practiceReflections.map((item: unknown, index: number) => {
+      const field = `${label}.practiceReflections[${index}]`;
+      assertRecord(item, field);
+      assertOnlyKeys(item, ["practiceId", "response", "updatedAt"], field);
+      assertString(item.practiceId, `${field}.practiceId`);
+      assertString(item.response, `${field}.response`);
+      if (!item.response.trim() || item.response.length > 4000) {
+        throw new Error(`${field}.response: expected 1–4000 characters`);
+      }
+      assertIsoDateTime(item.updatedAt, `${field}.updatedAt`);
+      return { practiceId: item.practiceId, response: item.response, updatedAt: item.updatedAt };
+    });
+    assertUniqueStrings(practiceReflections.map((item) => item.practiceId), `${label}.practiceReflections`);
+  }
   if (value.completedAt !== null) {
     assertIsoDateTime(value.completedAt, `${label}.completedAt`);
   }
@@ -363,6 +383,7 @@ function parseLearningProgressRecord(
     currentModuleId: value.currentModuleId,
     completedModuleIds,
     completedPracticeIds,
+    ...(practiceReflections === undefined ? {} : { practiceReflections }),
     completedAt: value.completedAt,
   };
 }

@@ -139,6 +139,37 @@ export function completeLearningPractice(
   );
 }
 
+export function recordLearningReflection(
+  profile: CareerProfile,
+  noteId: string,
+  moduleId: string,
+  practiceId: string,
+  response: string,
+  now?: string,
+): CareerProfile {
+  const { learningModule } = requireReviewedModule(noteId, moduleId);
+  if (learningModule.practice.id !== practiceId) {
+    throw new Error(`Unknown learning practice: ${practiceId}`);
+  }
+  const answer = response.trim();
+  if (!answer || answer.length > 4000) {
+    throw new Error("learning practice: response must contain 1–4000 characters");
+  }
+  const timestamp = resolveTimestamp(now);
+  return updateLearningProgress(profile, noteId, moduleId, timestamp, (current) => ({
+    ...current,
+    updatedAt: timestamp,
+    currentModuleId: moduleId,
+    completedPracticeIds: current.completedPracticeIds.includes(practiceId)
+      ? current.completedPracticeIds
+      : [...current.completedPracticeIds, practiceId],
+    practiceReflections: [
+      ...(current.practiceReflections ?? []).filter((item) => item.practiceId !== practiceId),
+      { practiceId, response: answer, updatedAt: timestamp },
+    ],
+  }));
+}
+
 export function completeLearningModule(
   profile: CareerProfile,
   noteId: string,

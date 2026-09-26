@@ -119,7 +119,7 @@ describe("Career Learning Core Note reader", () => {
 
     const foundation = await screen.findByRole("region", { name: "Narrow before use" });
     const practiceButton = within(foundation).getByRole("button", {
-      name: "Mark practice complete",
+      name: "Save practice response",
     });
     const moduleButton = within(foundation).getByRole("button", {
       name: "Mark module studied",
@@ -127,7 +127,11 @@ describe("Career Learning Core Note reader", () => {
 
     expect(storage.save).not.toHaveBeenCalled();
     expect(moduleButton).toBeDisabled();
+    expect(practiceButton).toBeDisabled();
 
+    fireEvent.change(within(foundation).getByRole("textbox", { name: "Write your solution or reflection" }), {
+      target: { value: "I narrow the union with typeof before calling a string method." },
+    });
     fireEvent.click(practiceButton);
     await waitFor(() => expect(storage.save).toHaveBeenCalledTimes(1));
 
@@ -137,6 +141,7 @@ describe("Career Learning Core Note reader", () => {
         noteId,
         currentModuleId: foundationModuleId,
         completedPracticeIds: [foundationPracticeId],
+        practiceReflections: [expect.objectContaining({ practiceId: foundationPracticeId, response: "I narrow the union with typeof before calling a string method." })],
         completedModuleIds: [],
       }),
     ]);
@@ -194,8 +199,11 @@ describe("Career Learning Core Note reader", () => {
     renderNote("en", subject, storage);
 
     const foundation = await screen.findByRole("region", { name: "Narrow before use" });
+    fireEvent.change(within(foundation).getByRole("textbox", { name: "Write your solution or reflection" }), {
+      target: { value: "Check the type before calling a string method." },
+    });
     fireEvent.click(
-      within(foundation).getByRole("button", { name: "Mark practice complete" }),
+      within(foundation).getByRole("button", { name: "Save practice response" }),
     );
     await waitFor(() => expect(storage.save).toHaveBeenCalledTimes(1));
 

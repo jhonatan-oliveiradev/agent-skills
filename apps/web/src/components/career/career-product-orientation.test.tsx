@@ -29,7 +29,7 @@ function guidanceStorage(): CareerGuidanceStorage {
 }
 
 describe("CareerProductOrientation", () => {
-  it("renders an accessible five-stage product orientation with persistent terminal actions", async () => {
+  it("renders an accessible six-stage product orientation with persistent terminal actions", async () => {
     const guidance = guidanceStorage();
     render(
       <CareerProfileProvider storage={profileStorage()}>
@@ -41,7 +41,7 @@ describe("CareerProductOrientation", () => {
 
     const dialog = await screen.findByRole("dialog");
     expect(dialog).toHaveAttribute("aria-modal", "true");
-    expect(screen.getAllByTestId("career-orientation-stage")).toHaveLength(5);
+    expect(screen.getAllByTestId("career-orientation-stage")).toHaveLength(6);
     expect(screen.getByRole("button", { name: "Skip orientation" })).toBeInTheDocument();
     expect(screen.getByRole("button", { name: "Complete orientation" })).toBeInTheDocument();
     await waitFor(() => expect(dialog.contains(document.activeElement)).toBe(true));

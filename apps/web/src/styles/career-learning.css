@@ -258,6 +258,46 @@
   width: fit-content;
 }
 
+.career-learning-module form {
+  display: grid;
+  justify-items: start;
+  gap: 0.75rem;
+}
+
+.career-learning-module textarea {
+  box-sizing: border-box;
+  width: 100%;
+  min-height: 8rem;
+  resize: vertical;
+  padding: 0.9rem 1rem;
+  border: 1px solid var(--career-line);
+  border-radius: 0.5rem;
+  background: var(--career-panel);
+  color: var(--career-ink);
+  font: inherit;
+  transition: border-color 180ms ease, box-shadow 180ms ease;
+}
+
+.career-learning-module textarea:focus-visible {
+  outline: 2px solid var(--career-accent, #5682da);
+  outline-offset: 2px;
+}
+
+.career-learning-module form button,
+.career-learning-note__notice a {
+  transition: transform 180ms ease, opacity 180ms ease;
+}
+
+.career-learning-module form button:hover:not(:disabled),
+.career-learning-note__notice a:hover {
+  transform: translateY(-2px);
+}
+
+.career-learning-index__coverage {
+  max-width: 55ch;
+  font-size: 0.85rem;
+}
+
 .career-learning-source-list {
   display: grid;
   gap: 0.65rem;

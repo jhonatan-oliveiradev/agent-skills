@@ -92,6 +92,7 @@ export function CareerLearningIndex({ locale }: Readonly<{ locale: Locale }>) {
         <p className="career-lab__eyebrow">{copy.index.eyebrow}</p>
         <h1>{copy.index.title}</h1>
         <p>{copy.index.intro}</p>
+        <p className="career-learning-index__coverage">{copy.index.coverage(learningNoteCatalog.length, competencyDefinitions.length)}</p>
       </header>
 
       <section

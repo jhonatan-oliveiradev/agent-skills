@@ -1,11 +1,18 @@
 import type { Locale } from "@/lib/locales";
 import { baselineAssessmentBlueprints } from "./assessment-blueprints";
+import { competencyDefinitions } from "./competencies";
+import { getLearningNoteByCompetency } from "./learning-catalog";
+import { getLearningProgress } from "./learning-progress";
 import { buildRoadmap, getRoadmapMilestoneViews } from "./roadmap-engine";
 import { getRoleMap } from "./role-maps";
-import type { CareerProfile } from "./types";
+import type { CareerProfile, ProficiencyLevel } from "./types";
+
+const levels: readonly ProficiencyLevel[] = ["foundation", "developing", "proficient", "advanced"];
 
 export type CareerNextAction =
   | { kind: "complete-baseline"; blueprintId: string; href: string }
+  | { kind: "study-assessed-gap"; noteId: string; moduleId: string; href: string }
+  | { kind: "prove-studied-gap"; blueprintId: string; href: string }
   | { kind: "review-roadmap"; href: string }
   | {
       kind: "produce-evidence";
@@ -34,6 +41,48 @@ export function getCareerNextAction(
   );
 
   if (missingBaseline) {
+    const latestAssessment = [...profile.assessments].sort(
+      (a, b) => Date.parse(b.completedAt) - Date.parse(a.completedAt),
+    )[0];
+    if (latestAssessment) {
+      const competency = competencyDefinitions.find(
+        (item) => item.id === latestAssessment.competencyId,
+      );
+      const note = competency ? getLearningNoteByCompetency(competency.id) : undefined;
+      const progress = note ? getLearningProgress(profile, note.id) : undefined;
+      const requirement = profile.targetRoles[0]
+        ? getRoleMap(profile.targetRoles[0]).requirements.find(
+            (item) => item.competencyId === latestAssessment.competencyId,
+          )
+        : undefined;
+      const observedRank = levels.indexOf(latestAssessment.level);
+      const targetRank = requirement ? levels.indexOf(requirement.requiredLevel) : -1;
+      const nextLevel = observedRank < targetRank ? levels[observedRank + 1] : undefined;
+      const nextModule = note?.modules.find(
+        (module) => module.reviewStatus === "reviewed" && module.level === nextLevel,
+      );
+      const moduleStudiedAfterAssessment = nextModule &&
+        progress?.completedModuleIds.includes(nextModule.id) &&
+        Date.parse(progress.updatedAt) > Date.parse(latestAssessment.completedAt);
+      if (note && nextModule && !progress?.completedModuleIds.includes(nextModule.id)) {
+        return {
+          kind: "study-assessed-gap",
+          noteId: note.id,
+          moduleId: nextModule.id,
+          href: careerHref(locale, `learning/${note.id}#${nextModule.id}`),
+        };
+      }
+      const blueprint = baselineAssessmentBlueprints.find(
+        (item) => item.competencyId === latestAssessment.competencyId,
+      );
+      if (note && moduleStudiedAfterAssessment && blueprint) {
+        return {
+          kind: "prove-studied-gap",
+          blueprintId: blueprint.id,
+          href: careerHref(locale, `assessments/${blueprint.id}`),
+        };
+      }
+    }
     return {
       kind: "complete-baseline",
       blueprintId: missingBaseline.id,
