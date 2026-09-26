@@ -39,6 +39,11 @@
 .career-lab-rail :is(a, button, summary):focus-visible { outline-color: #a9e2aa; }
 
 .career-lab-content { max-width: 106rem; margin-inline: auto; }
+.career-lab-content :is(h1, h2, h3) {
+  font-family: var(--font-instrument, sans-serif);
+  font-weight: 600;
+  letter-spacing: -.045em;
+}
 .career-lab-content__masthead { padding-bottom: 1.5rem; }
 .career-lab-content__masthead .career-lab__eyebrow { color: var(--career-copper-dark); }
 .career-lab-entry__hero {
