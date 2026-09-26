@@ -1,0 +1,71 @@
+/* The interactive product example, shared with the original studio demo. */
+.skill-lab {
+  --lab-ink: #f6f3ff;
+  --lab-muted: #a59eb7;
+  --lab-line: #373244;
+  --lab-accent: #c5a9ff;
+  overflow: hidden;
+  color: var(--lab-ink);
+  background: #14111d;
+  border: 1px solid #625477;
+  border-radius: 1rem;
+  box-shadow: 0 2.5rem 7rem #10091d38, 0 0 0 .4rem color-mix(in srgb, var(--brand) 7%, transparent);
+  transform: rotate(1deg);
+  transition: transform 500ms cubic-bezier(.22,1,.36,1), box-shadow 500ms;
+}
+.skill-lab:hover, .skill-lab:focus-within {
+  transform: rotate(0deg) translateY(-.25rem);
+  box-shadow: 0 3rem 8rem #10091d46, 0 0 0 .4rem color-mix(in srgb, var(--brand) 12%, transparent);
+}
+.skill-lab__chrome, .skill-lab__foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: .9rem 1.3rem;
+  font: .6rem/1.4 var(--font-plex-mono);
+  letter-spacing: .08em;
+  color: var(--lab-muted);
+  border-bottom: 1px solid var(--lab-line);
+}
+.skill-lab__lights { display: flex; gap: .35rem; }
+.skill-lab__lights i { width: .46rem; height: .46rem; border: 1px solid #a79bb8; border-radius: 50%; }
+.skill-lab__lights i:first-child { background: var(--lab-accent); border-color: var(--lab-accent); }
+.skill-lab__live { color: var(--lab-accent); white-space: nowrap; }
+.skill-lab__body { padding: clamp(1.2rem, 2.8vw, 2rem); background: radial-gradient(circle at 95% 0%, #45315865, transparent 44%), #14111d; }
+.skill-lab__intro { display: flex; align-items: baseline; gap: .8rem; margin-bottom: 1.3rem; }
+.skill-lab__index, .skill-lab__caption { color: var(--lab-accent); font: .62rem/1.5 var(--font-plex-mono); letter-spacing: .09em; text-transform: uppercase; }
+.skill-lab__intro p { margin: 0; color: var(--lab-ink); font-size: .94rem; font-weight: 600; }
+.skill-lab__tabs { display: flex; gap: .3rem; padding: .25rem; border: 1px solid var(--lab-line); border-radius: .55rem; }
+.skill-lab__tabs button { flex: 1; min-width: 0; padding: .75rem .35rem; color: var(--lab-muted); border: 0; border-radius: .32rem; background: transparent; font-size: clamp(.65rem, .8vw, .78rem); cursor: pointer; transition: background .2s, color .2s; }
+.skill-lab__tabs button:hover { color: white; background: #ffffff12; }
+.skill-lab__tabs button[aria-selected="true"] { color: #18121f; background: #d6baff; font-weight: 700; }
+.skill-lab__tabs button:focus-visible, .skill-lab__link:focus-visible { outline: 2px solid white; outline-offset: 3px; }
+.skill-lab__panel { animation: skill-lab-enter .35s ease both; }
+.skill-lab__prompt, .skill-lab__output, .skill-lab__result { padding: 1.1rem 1.2rem; border: 1px solid var(--lab-line); border-radius: .55rem; }
+.skill-lab__prompt { margin-top: 1rem; background: #ffffff08; }
+.skill-lab__prompt p { margin: .65rem 0 0; font-size: clamp(.96rem, 1.3vw, 1.1rem); line-height: 1.45; }
+.skill-lab__connector { display: flex; align-items: center; justify-content: center; gap: .65rem; min-height: 2.5rem; color: var(--lab-accent); font: .57rem var(--font-plex-mono); }
+.skill-lab__connector span:first-child, .skill-lab__connector span:last-child { width: 1rem; height: 1px; background: var(--lab-accent); opacity: .55; }
+.skill-lab__output { background: linear-gradient(135deg, #35233e, #251c30 66%, #1d1a28); border-color: #765d8b; }
+.skill-lab__output p { margin: .55rem 0 .9rem; font-size: .93rem; line-height: 1.5; }
+.skill-lab__tags { display: flex; flex-wrap: wrap; gap: .4rem; }
+.skill-lab__tags span { padding: .32rem .45rem; color: #e5d3ff; border: 1px solid #78648b; border-radius: .2rem; font: .52rem var(--font-plex-mono); }
+.skill-lab__result { margin-top: .7rem; padding-block: .75rem; background: #c6abff12; }
+.skill-lab__result p { margin: .4rem 0 0; font-size: .8rem; line-height: 1.4; }
+.skill-lab__link { display: flex; justify-content: space-between; align-items: center; margin-top: 1.2rem; padding: .95rem 1.15rem; color: #1c1325; background: #d6baff; border-radius: .35rem; font-size: .82rem; font-weight: 700; text-decoration: none; transition: background .2s, transform .2s; }
+.skill-lab__link:hover { background: white; transform: translateY(-2px); }
+.skill-lab__link span { font-size: 1.2rem; }
+.skill-lab__foot { justify-content: flex-start; gap: 1.4rem; flex-wrap: wrap; border-top: 1px solid var(--lab-line); border-bottom: 0; }
+@keyframes skill-lab-enter { from { opacity: .3; transform: translateY(.5rem); } to { opacity: 1; transform: translateY(0); } }
+@media (max-width: 540px) {
+  .skill-lab__chrome { gap: .45rem; font-size: .48rem; }
+  .skill-lab__intro { display: block; }
+  .skill-lab__intro p { margin-top: .35rem; }
+  .skill-lab__foot { gap: .5rem 1rem; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .skill-lab, .skill-lab__link, .skill-lab__tabs button { transition: none; }
+  .skill-lab__panel { animation: none; }
+  .skill-lab:hover, .skill-lab:focus-within { transform: none; }
+}

@@ -24,3 +24,65 @@ body:has(.product-home) .site-header[data-site-chrome="publication-bar"]{backgro
 /* The shared theme control remains meaningful on this product page. */
 .dark .product-thesis{background:#202039;color:#f4f3ff}.dark .product-thesis__lead>p:last-child,.dark .product-thesis__steps p{color:#c2c0d4}.dark .product-work{background:#2a294b;color:#fff}.dark .product-skills{background:#212137;color:#fff}.dark .product-packs{background:#32305b;color:#fff}.dark .product-section-heading>p{color:#d1cee9}.dark .product-section-heading .product-eyebrow,.dark .product-thesis .product-eyebrow{color:#bcb5ff}.dark .product-skill{color:#fff;border-color:#626076}.dark .product-skills__list{border-color:#626076}.dark .product-skill p{color:#c6c3d6}.dark .product-skill__category,.dark .product-skill__number{color:#bcb5ff}.dark .product-skill:hover{background:#373654}.dark .product-inline-link{color:inherit}
 
+/* Keep the full promise, example, and actions within the first desktop viewport. */
+.product-hero { min-height: min(52rem, calc(100svh - 4.5rem)); }
+.product-hero__inner {
+  grid-template-columns: minmax(0, 1.2fr) minmax(0, .8fr);
+  padding-block: clamp(3rem, 5svh, 4.5rem) clamp(6rem, 9svh, 7rem);
+}
+.product-hero h1 {
+  margin-block: 1.6rem 1.3rem;
+  font-size: clamp(3.3rem, min(6vw, 9.5svh), 6.2rem);
+  line-height: .97;
+}
+.product-hero__intro { margin-bottom: 1.7rem !important; }
+.product-hero__graphic { width: min(100%, 30rem); transform: translateX(2%); }
+.product-hero__graphic-core { font-size: clamp(7rem, 15vw, 15rem); }
+.product-demo .skill-lab { width: 100%; }
+
+/* The installation moment makes the step from inspiration to use concrete. */
+.product-install { padding-block: clamp(6rem, 10vw, 10rem); background: #dce5da; }
+.product-install__grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: clamp(3rem, 9vw, 9rem); align-items: center; }
+.product-install .product-eyebrow { color: #37634c; }
+.product-install h2 { max-width: 11ch; font-size: clamp(3.5rem, 6vw, 7rem); line-height: .98; }
+.product-install h2 em { color: #387653; }
+.product-install__intro > p:not(.product-eyebrow) { max-width: 32rem; margin: 1.8rem 0 2.2rem; color: #455c4d; line-height: 1.7; }
+.product-install__detail ol { list-style: none; margin: 0 0 2rem; padding: 0; border-top: 1px solid #799580; }
+.product-install__detail li { display: grid; grid-template-columns: 2rem 1fr 1rem; gap: 1rem; align-items: center; padding: 1.1rem 0; border-bottom: 1px solid #799580; }
+.product-install__detail li span:first-child { color: #37634c; font: .7rem var(--font-plex-mono), monospace; }
+.product-install__detail li strong { font-size: clamp(1rem, 1.5vw, 1.4rem); font-weight: 600; letter-spacing: -.03em; }
+.product-install__terminal { padding: 1.4rem; color: #e9f2e7; background: #17241e; font-family: var(--font-plex-mono), monospace; box-shadow: 1rem 1rem 0 #abc7ac; }
+.product-install__terminal-top { display: flex; justify-content: space-between; padding-bottom: 1rem; border-bottom: 1px solid #ffffff35; font-size: .6rem; letter-spacing: .07em; }
+.product-install__terminal-top span:first-child { color: #a9cba6; }
+.product-install__terminal p { margin: 1.7rem 0 .8rem; color: #bbd1bd; font-size: .7rem; line-height: 1.5; }
+.product-install__terminal code { display: block; overflow-x: auto; padding-block: .35rem; color: #fff; font: clamp(.7rem, 1vw, .88rem)/1.6 var(--font-plex-mono), monospace; white-space: nowrap; }
+.product-install__terminal code span, .product-install__terminal-done { color: #b9ed9c; }
+.product-install__terminal-done { display: block; margin-top: 1.6rem; font-size: .72rem; }
+.dark .product-install { color: #f3f8f1; background: #25392e; }
+.dark .product-install .product-eyebrow, .dark .product-install h2 em, .dark .product-install__detail li span:first-child { color: #a9e2aa; }
+.dark .product-install__intro > p:not(.product-eyebrow) { color: #c7daca; }
+.dark .product-install__detail ol, .dark .product-install__detail li { border-color: #698572; }
+.dark .product-install__terminal { box-shadow: 1rem 1rem 0 #45674b; }
+
+@media (max-width: 1050px) {
+  .product-hero__inner { grid-template-columns: 1fr; }
+  .product-hero__graphic { right: 0; width: min(38%, 25rem); }
+  .product-hero__copy { max-width: 44rem; }
+  .product-hero h1 { font-size: clamp(3.7rem, 7vw, 5.6rem); }
+}
+@media (max-width: 700px) {
+  .product-hero { min-height: min(46rem, calc(100svh - 4.5rem)); }
+  .product-hero__inner { padding-block: 4.1rem 6rem; }
+  .product-hero h1 { margin-block: 1.5rem 1.2rem; font-size: clamp(2.75rem, 11vw, 4.4rem); line-height: 1; }
+  .product-hero__intro { max-width: 28rem; font-size: 1rem; }
+  .product-hero__graphic { top: 30%; right: -23%; width: 65%; }
+  .product-hero__bottom { padding-block: 1.2rem; }
+  .product-demo .skill-lab { min-width: 0; }
+  .product-install__grid { grid-template-columns: 1fr; }
+  .product-install h2 { font-size: clamp(3.2rem, 11vw, 5rem); }
+}
+@media (max-width: 380px) {
+  .product-hero__inner { padding-top: 3rem; }
+  .product-hero h1 { font-size: 2.75rem; }
+  .product-hero__bottom span:nth-child(2) { display: none; }
+}

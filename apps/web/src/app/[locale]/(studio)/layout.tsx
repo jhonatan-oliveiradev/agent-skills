@@ -25,6 +25,8 @@ import "../../site-chrome.css";
 import "../../site-chrome-responsive.css";
 import "../../site-chrome-refinement.css";
 import "../../studio-premium.css";
+import "../../skill-lab.css";
+import "lenis/dist/lenis.css";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 import { resolveLocale } from "@/components/foundation-route";

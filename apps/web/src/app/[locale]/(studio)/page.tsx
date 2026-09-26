@@ -2,6 +2,7 @@ import type { Metadata, Route } from "next";
 import Link from "next/link";
 import { resolveLocale } from "@/components/foundation-route";
 import { MethodEngine } from "@/components/motion/method-engine";
+import { ProductMotion } from "@/components/motion/product-motion";
 import { getBuiltWithSkillsCases } from "@/lib/built-with-skills";
 import { getCatalog, getLocalizedPacks, getLocalizedSkills } from "@/lib/catalog";
 import { homeManifesto } from "@/lib/home-content";
@@ -36,6 +37,12 @@ const content = {
     skillsText: "One skill for a focused job. Each has its own scope, guidance and installation path.",
     skillAction: "Explore skill",
     allSkills: "Browse all skills",
+    installLabel: "FROM INTEREST TO PRACTICE",
+    installTitle: <>A method you can <em>actually use.</em></>,
+    installText: "Look inside the skill, install it in your project, and put it to work on your next real request.",
+    installSteps: ["Choose a skill", "Install the method", "Start with a real brief"],
+    installCommand: "From the repository root · example: Motion Direction",
+    installAction: "See the installation guide",
     packsLabel: "GO FURTHER",
     packsTitle: "When the work needs more than one method.",
     packsText: "Packs connect related skills into a more complete workflow. Start with a discipline and expand when the project asks for it.",
@@ -75,6 +82,12 @@ const content = {
     skillsText: "Uma skill para uma tarefa específica. Cada uma tem escopo, instruções e seu próprio caminho de instalação.",
     skillAction: "Conhecer a skill",
     allSkills: "Ver todas as skills",
+    installLabel: "DA DESCOBERTA À PRÁTICA",
+    installTitle: <>Um método para <em>usar de verdade.</em></>,
+    installText: "Veja as instruções da skill, instale no seu projeto e coloque o método em ação no próximo pedido real.",
+    installSteps: ["Escolha uma skill", "Instale o método", "Comece com um pedido real"],
+    installCommand: "Na raiz do repositório · exemplo: Direção de Motion",
+    installAction: "Ver guia de instalação",
     packsLabel: "VÁ ALÉM",
     packsTitle: "Quando o trabalho precisa de mais de um método.",
     packsText: "Os packs conectam skills relacionadas em um fluxo mais completo. Comece por uma disciplina e amplie quando o projeto pedir.",
@@ -116,6 +129,7 @@ export default async function HomePage({ params }: HomePageProps) {
 
   return (
     <div className="product-home">
+      <ProductMotion />
       <section className="product-hero" aria-labelledby="product-title">
         <div className="product-hero__orbit" aria-hidden="true"><span /><span /><span /></div>
         <div className="product-shell product-hero__inner">
@@ -182,6 +196,26 @@ export default async function HomePage({ params }: HomePageProps) {
           <header className="product-section-heading"><div><p className="product-eyebrow">{copy.skillsLabel}</p><h2 id="skills-title">{copy.skillsTitle}</h2></div><p>{copy.skillsText}</p></header>
           <div className="product-skills__list">{featured.map((skill, index) => <Link className="product-skill" href={href(`/skills/${skill.slug}`)} key={skill.slug}><span className="product-skill__number">0{index + 1}</span><div><span className="product-skill__category">{skill.category}</span><h3>{skill.displayName}</h3><p>{skill.primaryBenefit}</p></div><span className="product-skill__arrow" aria-label={copy.skillAction}>↗</span></Link>)}</div>
           <Link className="product-inline-link" href={href("/skills")}>{copy.allSkills}<span aria-hidden="true">↗</span></Link>
+        </div>
+      </section>
+
+      <section className="product-install" aria-labelledby="install-title">
+        <div className="product-shell product-install__grid">
+          <div className="product-install__intro">
+            <p className="product-eyebrow">{copy.installLabel}</p>
+            <h2 id="install-title">{copy.installTitle}</h2>
+            <p>{copy.installText}</p>
+            <Link className="product-inline-link" href={href("/getting-started")}>{copy.installAction}<span aria-hidden="true">↗</span></Link>
+          </div>
+          <div className="product-install__detail">
+            <ol>{copy.installSteps.map((step, index) => <li key={step}><span>0{index + 1}</span><strong>{step}</strong><span aria-hidden="true">↗</span></li>)}</ol>
+            <div className="product-install__terminal">
+              <span className="product-install__terminal-top"><span>●&nbsp; ●&nbsp; ●</span><span>INSTALL / SKILL</span></span>
+              <p>{copy.installCommand}</p>
+              <code><span aria-hidden="true">$ </span>./install.sh --skill craft-premium-motion</code>
+              <span className="product-install__terminal-done">✓&nbsp; craft-premium-motion</span>
+            </div>
+          </div>
         </div>
       </section>
 
