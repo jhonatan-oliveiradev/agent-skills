@@ -65,7 +65,7 @@ const content: Readonly<Record<Locale, ProjectPageContent>> = {
       paths: [
         { index: "01", title: "Report a limitation", summary: "Open an issue with the expected outcome, the current limitation, and a reproducible example when possible.", action: "Open a focused issue", href: `${repositoryUrl}/issues/new` },
         { index: "02", title: "Validate a method", summary: "Run a skill or pack in real work and report what held up, what was missing, and how you verified the result.", action: "Browse validation issues", href: `${repositoryUrl}/issues` },
-        { index: "03", title: "Submit a narrow patch", summary: "Prepare a focused change with equivalent EN/PT-BR metadata when applicable, relevant tests, and no private or project-specific material.", action: "Prepare a pull request", href: `${repositoryUrl}/compare` },
+        { index: "03", title: "Submit a narrow patch", summary: "Prepare a focused change with equivalent EN/PT-BR metadata when applicable, relevant tests, and no private or project-specific material.", action: "Prepare a pull request", href: `${repositoryUrl}/blob/main/CONTRIBUTING.md` },
         { index: "04", title: "Report a security concern", summary: "Use GitHub's private security channel for vulnerabilities; do not disclose sensitive details in a public issue.", action: "Open a private advisory", href: `${repositoryUrl}/security/advisories/new` },
       ],
       expectationsLabel: "Before you submit",
@@ -145,7 +145,7 @@ const content: Readonly<Record<Locale, ProjectPageContent>> = {
       paths: [
         { index: "01", title: "Relate uma limitação", summary: "Abra uma issue com o resultado esperado, a limitação atual e, quando possível, um exemplo reproduzível.", action: "Abrir uma issue focada", href: `${repositoryUrl}/issues/new` },
         { index: "02", title: "Valide um método", summary: "Execute uma skill ou pack em trabalho real e relate o que funcionou, o que faltou e como você verificou o resultado.", action: "Ver issues de validação", href: `${repositoryUrl}/issues` },
-        { index: "03", title: "Envie um patch delimitado", summary: "Prepare uma mudança focada com metadados EN/PT-BR equivalentes quando aplicável, testes relevantes e nenhum material privado ou específico de projeto.", action: "Preparar um pull request", href: `${repositoryUrl}/compare` },
+        { index: "03", title: "Envie um patch delimitado", summary: "Prepare uma mudança focada com metadados EN/PT-BR equivalentes quando aplicável, testes relevantes e nenhum material privado ou específico de projeto.", action: "Preparar um pull request", href: `${repositoryUrl}/blob/main/CONTRIBUTING.md#português` },
         { index: "04", title: "Reporte uma questão de segurança", summary: "Use o canal privado do GitHub para vulnerabilidades; não publique detalhes sensíveis em uma issue pública.", action: "Abrir um advisory privado", href: `${repositoryUrl}/security/advisories/new` },
       ],
       expectationsLabel: "Antes de enviar",

@@ -38,7 +38,7 @@ describe("project page content", () => {
     expect(content.about.purpose.length).toBeGreaterThan(40);
     expect(content.about.principles.length).toBeGreaterThan(0);
     expect(content.contribute.paths.some((path) => path.href.endsWith("/issues/new"))).toBe(true);
-    expect(content.contribute.paths.some((path) => path.href.endsWith("/compare"))).toBe(true);
+    expect(content.contribute.paths.some((path) => path.href.includes("/blob/main/CONTRIBUTING.md"))).toBe(true);
     expect(content.contribute.expectations.length).toBeGreaterThan(0);
     expect(content.changelog.releases.every((release) => release.groups.length > 0)).toBe(true);
 

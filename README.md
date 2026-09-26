@@ -2,6 +2,18 @@
 
 A curated Agent Skills library for production frontend, product design, motion, visual QA, delivery workflows, backend and data engineering, software architecture and engineering, quality and testing, application security, engineering workflow, developer career, brand design, writing and communication, and game-development tasks. The current development catalog publishes 60 reusable skills across 12 active packs. It is inspired by useful patterns from the broader agent-skills ecosystem, but the skills in this repository are intentionally rewritten, consolidated, and kept project-agnostic.
 
+## Contribute / Contribuir
+
+Found a bug, tried a skill in real work, or want to improve the site? See
+[CONTRIBUTING.md](CONTRIBUTING.md) for the fork-to-PR workflow, local setup,
+repository map, and checks. Please report vulnerabilities through the
+[private security channel](SECURITY.md).
+
+Encontrou um problema ou quer melhorar uma skill ou o site? O
+[guia de contribuição](CONTRIBUTING.md#português) explica como fazer um fork,
+rodar o projeto e enviar um PR. Para vulnerabilidades, use o
+[canal privado de segurança](SECURITY.md).
+
 ## Principles
 
 - Prefer narrow, explicit skill triggers over a huge library of overlapping presets.
