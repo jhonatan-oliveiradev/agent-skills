@@ -31,6 +31,7 @@ import "../../product-experience.css";
 import "../../interior-experience.css";
 import "../../interior-layout-pass.css";
 import "../../studio-color-motion.css";
+import "../../product-showcase.css";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 import { resolveLocale } from "@/components/foundation-route";
