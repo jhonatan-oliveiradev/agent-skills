@@ -110,12 +110,31 @@ export function ProductMotion() {
             scrollTrigger: { trigger: ".product-hero", start: "top top", end: "bottom top", scrub: 0.7 },
           });
         }
-        root.querySelectorAll<HTMLElement>(".product-case__interface").forEach((element) => {
-          gsap.fromTo(element, { yPercent: -7 }, {
-            yPercent: 7,
-            ease: "none",
-            scrollTrigger: { trigger: element.closest(".product-case__art"), start: "top bottom", end: "bottom top", scrub: 0.7 },
-          });
+      }
+    });
+
+    media.add("(min-width: 700px) and (prefers-reduced-motion: no-preference)", () => {
+      const leadingCase = root.querySelector<HTMLElement>(".product-case--1");
+      if (leadingCase) {
+        const nodes = leadingCase.querySelectorAll(".product-proof__ping-node");
+        gsap.from(nodes, {
+          x: -18, autoAlpha: 0, duration: 0.55, stagger: 0.13, ease: "power2.out",
+          scrollTrigger: { trigger: leadingCase, start: "top 74%", once: true },
+          onComplete: () => gsap.set(nodes, { clearProps: "transform,opacity,visibility" }),
+        });
+      }
+
+      const leadingPack = root.querySelector<HTMLElement>(".product-pack--1");
+      const map = leadingPack?.querySelector<HTMLElement>(".product-pack__map");
+      if (leadingPack && map) {
+        gsap.timeline({ scrollTrigger: { trigger: leadingPack, start: "top 72%", once: true } })
+          .from(map.querySelector(".product-pack__request"), { y: 14, autoAlpha: 0, duration: 0.45 })
+          .from(map.querySelectorAll(".product-pack__methods li"), { x: -16, autoAlpha: 0, duration: 0.42, stagger: 0.1 }, "-=0.12")
+          .from(map.querySelector(".product-pack__output"), { y: 14, autoAlpha: 0, duration: 0.45 }, "-=0.08")
+          .set(map.querySelectorAll(".product-pack__request, .product-pack__methods li, .product-pack__output"), { clearProps: "transform,opacity,visibility" });
+        gsap.fromTo(map.querySelector(".product-pack__flow-line"), { scaleY: 0 }, {
+          scaleY: 1, ease: "none",
+          scrollTrigger: { trigger: leadingPack, start: "top 80%", end: "bottom 40%", scrub: 0.65 },
         });
       }
     });

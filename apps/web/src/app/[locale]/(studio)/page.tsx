@@ -2,6 +2,7 @@ import type { Metadata, Route } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { resolveLocale } from "@/components/foundation-route";
+import { CaseProofArt, PackMethodMap } from "@/components/home/product-proof-art";
 import { MethodEngine } from "@/components/motion/method-engine";
 import { ProductMotion } from "@/components/motion/product-motion";
 import { getBuiltWithSkillsCases } from "@/lib/built-with-skills";
@@ -31,6 +32,8 @@ const content = {
     workLabel: "BUILT WITH SKILLS",
     workTitle: <>Real work.<br /><em>Traceable decisions.</em></>,
     workText: "See where these methods were used in actual projects. Each case documents the problem, the decisions and the evidence.",
+    workResults: ["The credential issuer verifies active Space membership.", "The obsolete SDK is removed; historical migration stays.", "The eclipse stays cinematic; reduced motion renders on demand."],
+    resultLabel: "VERIFIED RESULT",
     viewCase: "Read the case",
     allCases: "Explore all cases",
     skillsLabel: "START SOMEWHERE",
@@ -76,6 +79,8 @@ const content = {
     workLabel: "FEITO COM SKILLS",
     workTitle: <>Trabalho real.<br /><em>Decisões rastreáveis.</em></>,
     workText: "Veja onde estes métodos foram usados em projetos reais. Cada caso documenta o problema, as decisões e as evidências.",
+    workResults: ["A emissão da credencial verifica a participação ativa no Space.", "O SDK obsoleto sai; a migração histórica continua.", "O eclipse mantém a direção; o modo reduzido renderiza sob demanda."],
+    resultLabel: "RESULTADO VERIFICADO",
     viewCase: "Ler o case",
     allCases: "Explorar todos os cases",
     skillsLabel: "COMECE POR AQUI",
@@ -187,13 +192,14 @@ export default async function HomePage({ params }: HomePageProps) {
             {featuredCases.map((item, index) => (
               <Link className={`product-case product-case--${index + 1}`} key={item.slug} href={href(`/built-with-skills/${item.slug}`)}>
                 <div className="product-case__top"><span>{item.project.name}</span><span>↗</span></div>
-                <div className="product-case__art" aria-hidden="true">
-                  {index === 0 && <div className="product-case__interface product-case__interface--voice"><div><i /><span>VOICE / SPACE</span><b>● LIVE</b></div><div><span>MEMBERSHIP</span><strong>VERIFIED ✓</strong></div><div><span>CREDENTIAL</span><strong>AUTHORIZED →</strong></div></div>}
-                  {index === 1 && <div className="product-case__interface product-case__interface--graph"><span>LEGACY SDK</span><i /><strong>CODEBASE</strong><i /><span>SAFE REMOVAL ✓</span></div>}
-                  {index === 2 && <div className="product-case__interface product-case__interface--motion"><span>FRAME 01</span><span>FRAME 02</span><span>FRAME 03</span><strong>REDUCED MOTION ✓</strong></div>}
-                  <span className="product-case__trace">METHOD / {String(index + 1).padStart(2, "0")}<br />EVIDENCE → RESULT</span>
+                <div className="product-case__art"><CaseProofArt index={index} locale={locale} /></div>
+                <div className="product-case__content">
+                  <span>{item.skills.slice(0, 2).map((slug) => slug.replaceAll("-", " ")).join(" / ")}</span>
+                  <h3>{item.title}</h3>
+                  <p>{item.summary || copy.caseFallback}</p>
+                  <span className="product-case__result"><small>{copy.resultLabel}</small>{copy.workResults[index]}</span>
+                  <strong>{copy.viewCase} <span aria-hidden="true">↗</span></strong>
                 </div>
-                <div className="product-case__content"><span>{item.skills.slice(0, 2).map((slug) => slug.replaceAll("-", " ")).join(" / ")}</span><h3>{item.title}</h3><p>{item.summary || copy.caseFallback}</p><strong>{copy.viewCase} <span aria-hidden="true">↗</span></strong></div>
               </Link>
             ))}
           </div>
@@ -232,7 +238,11 @@ export default async function HomePage({ params }: HomePageProps) {
       <section className="product-packs" aria-labelledby="packs-title">
         <div className="product-shell">
           <header className="product-section-heading"><div><p className="product-eyebrow">{copy.packsLabel}</p><h2 id="packs-title">{copy.packsTitle}</h2></div><p>{copy.packsText}</p></header>
-          <div className="product-packs__grid">{featuredPacks.map((pack, index) => <Link className="product-pack" href={href(`/packs/${pack.slug}`)} key={pack.slug}><span className="product-pack__meta">PACK / 0{index + 1} <span>{pack.skills.length} SKILLS</span></span><span className="product-pack__symbol" aria-hidden="true">{["✳", "◌", "⌘"][index]}</span><h3>{pack.name}</h3><p>{pack.summary}</p><strong>{copy.packAction} <span aria-hidden="true">↗</span></strong></Link>)}</div>
+          <div className="product-packs__grid">{featuredPacks.map((pack, index) => <Link className={`product-pack product-pack--${index + 1}`} href={href(`/packs/${pack.slug}`)} key={pack.slug}>
+            <span className="product-pack__meta">PACK / 0{index + 1} <span>{pack.skills.length} SKILLS</span></span>
+            <PackMethodMap pack={pack} locale={locale} featured={index === 0} />
+            <div className="product-pack__copy"><h3>{pack.name}</h3><p>{pack.summary}</p><strong>{copy.packAction} <span aria-hidden="true">↗</span></strong></div>
+          </Link>)}</div>
           <Link className="product-inline-link" href={href("/packs")}>{copy.allPacks}<span aria-hidden="true">↗</span></Link>
         </div>
       </section>
