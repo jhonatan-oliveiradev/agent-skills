@@ -254,7 +254,7 @@ export default async function HomePage({ params }: HomePageProps) {
 
       <section className="product-close" aria-labelledby="close-title">
         <ShapeArtwork className="studio-artwork studio-artwork--close" name="ribbon-soft" tone="olive" rotation={-16} shadow echo />
-        <div className="product-shell product-close__inner"><p className="product-eyebrow">{copy.closingLabel}</p><h2 id="close-title">{copy.closingTitle}</h2><p>{copy.closingText}</p><div className="product-actions"><HeroButton asChild shape="capsule" appearance="ink-sweep" className="studio-hero-button"><Link href={href("/skills")}>{copy.discover}</Link></HeroButton><Link className="product-text-link" href={href("/getting-started")}>{copy.install}<span aria-hidden="true">↗</span></Link><LivingLink className="studio-living-link" href="https://github.com/jhonatan-oliveiradev/agent-skills" target="_blank" rel="noopener noreferrer" treatment="wash-across" tone="olive">{copy.source}</LivingLink></div></div>
+        <div className="product-shell product-close__inner"><p className="product-eyebrow">{copy.closingLabel}</p><h2 id="close-title">{copy.closingTitle}</h2><p>{copy.closingText}</p><div className="product-actions"><HeroButton asChild shape="capsule" appearance="ink-sweep" className="studio-hero-button"><Link href={href("/skills")}>{copy.discover}</Link></HeroButton><Link className="product-text-link" href={href("/getting-started")}>{copy.install}<span aria-hidden="true">↗</span></Link><LivingLink className="studio-living-link" href="https://github.com/jhonatan-oliveiradev/agent-skills" target="_blank" rel="noopener noreferrer" treatment="underline-start" tone="olive">{copy.source}</LivingLink></div></div>
       </section>
     </div>
   );
