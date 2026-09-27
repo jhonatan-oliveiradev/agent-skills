@@ -5,6 +5,7 @@ import { CopyCommand } from "@/components/copy-command";
 import { EditorialMetadata } from "@/components/editorial/editorial-metadata";
 import { EditorialSectionHeading } from "@/components/editorial/editorial-section-heading";
 import { RemoteInstallCallout } from "@/components/remote-install-callout";
+import { QuickInstallDrawer } from "@/components/quick-install-drawer";
 import type { BuiltWithSkillsCase } from "@/lib/built-with-skills";
 import type { LocalizedPack, LocalizedSkillDetail } from "@/lib/catalog";
 import { formatMethodCount, formatSystemStatus } from "@/lib/editorial-relations-copy";
@@ -133,6 +134,7 @@ export function MethodDossier({
             </p>
             <h1>{skill.displayName}</h1>
             <p className="method-dossier__summary">{skill.summary}</p>
+            <QuickInstallDrawer locale={locale} name={skill.displayName} remoteCommand={getRemoteSkillInstallCommand(skill.slug)} commands={commands} />
           </div>
         </div>
 

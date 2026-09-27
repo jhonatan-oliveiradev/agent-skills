@@ -5,6 +5,17 @@ import { afterEach, vi } from "vitest";
 afterEach(cleanup);
 
 if (typeof window !== "undefined") {
+  vi.stubGlobal("ResizeObserver", class {
+    observe() {}
+    unobserve() {}
+    disconnect() {}
+  });
+  vi.stubGlobal("DOMMatrixReadOnly", class {
+    readonly m41 = 0;
+    readonly m42 = 0;
+  });
+  window.scrollTo = vi.fn();
+
   Object.defineProperty(window, "matchMedia", {
     configurable: true,
     writable: true,

@@ -8,6 +8,9 @@ import { ProductMotion } from "@/components/motion/product-motion";
 import { getBuiltWithSkillsCases } from "@/lib/built-with-skills";
 import { getCatalog, getLocalizedPacks, getLocalizedSkills } from "@/lib/catalog";
 import { homeManifesto } from "@/lib/home-content";
+import { HeroButton } from "@/registry/cojeev/ui/hero-button";
+import { LivingLink } from "@/registry/cojeev/ui/living-link";
+import { ShapeArtwork } from "@/registry/cojeev/ui/shape-artwork";
 
 type HomePageProps = Readonly<{ params: Promise<{ locale: string }> }>;
 
@@ -153,8 +156,8 @@ export default async function HomePage({ params }: HomePageProps) {
             <h1 id="product-title" aria-label={locale === "pt-BR" ? "Seu agente pode fazer mais. Dê a ele um método." : "Your agent can do more. Give it a way to."}>{copy.headline}</h1>
             <p className="product-hero__intro">{copy.intro}</p>
             <div className="product-actions">
-              <Link className="product-button product-button--white" href={href("/skills")}>{copy.discover}<span aria-hidden="true">↗</span></Link>
-              <a className="product-text-link" href="#product-demo">{copy.seeHow}<span aria-hidden="true">↓</span></a>
+              <HeroButton asChild shape="capsule" appearance="ink-sweep" className="studio-hero-button"><Link href={href("/skills")}>{copy.discover}</Link></HeroButton>
+              <LivingLink className="studio-living-link" href="#product-demo" direction="forward" treatment="underline-start">{copy.seeHow}</LivingLink>
             </div>
           </div>
           <div className="product-hero__graphic" aria-hidden="true">
@@ -179,6 +182,7 @@ export default async function HomePage({ params }: HomePageProps) {
       </section>
 
       <section className="product-thesis" aria-labelledby="thesis-title">
+        <ShapeArtwork className="studio-artwork studio-artwork--thesis" name="seed-wing" tone="blue" rotation={-24} shadow echo ambient morphTo="pebble-tall" morphDuration={16} />
         <div className="product-shell">
           <div className="product-thesis__lead"><p className="product-eyebrow">{copy.thesisLabel}</p><h2 id="thesis-title">{copy.thesis}</h2><p>{copy.thesisText}</p></div>
           <div className="product-thesis__steps">{copy.principles.map((item, index) => <div key={item.title}><span>0{index + 1}</span><h3>{item.title}</h3><p>{item.text}</p></div>)}</div>
@@ -236,6 +240,7 @@ export default async function HomePage({ params }: HomePageProps) {
       </section>
 
       <section className="product-packs" aria-labelledby="packs-title">
+        <ShapeArtwork className="studio-artwork studio-artwork--packs" name="aster-9" tone="blue" rotation={13} shadow echo />
         <div className="product-shell">
           <header className="product-section-heading"><div><p className="product-eyebrow">{copy.packsLabel}</p><h2 id="packs-title">{copy.packsTitle}</h2></div><p>{copy.packsText}</p></header>
           <div className="product-packs__grid">{featuredPacks.map((pack, index) => <Link className={`product-pack product-pack--${index + 1}`} href={href(`/packs/${pack.slug}`)} key={pack.slug}>
@@ -248,7 +253,8 @@ export default async function HomePage({ params }: HomePageProps) {
       </section>
 
       <section className="product-close" aria-labelledby="close-title">
-        <div className="product-shell product-close__inner"><p className="product-eyebrow">{copy.closingLabel}</p><h2 id="close-title">{copy.closingTitle}</h2><p>{copy.closingText}</p><div className="product-actions"><Link className="product-button product-button--white" href={href("/skills")}>{copy.discover}<span aria-hidden="true">↗</span></Link><Link className="product-text-link" href={href("/getting-started")}>{copy.install}<span aria-hidden="true">↗</span></Link><a className="product-text-link" href="https://github.com/jhonatan-oliveiradev/agent-skills" target="_blank" rel="noopener noreferrer">{copy.source}<span aria-hidden="true">↗</span></a></div></div>
+        <ShapeArtwork className="studio-artwork studio-artwork--close" name="ribbon-soft" tone="olive" rotation={-16} shadow echo />
+        <div className="product-shell product-close__inner"><p className="product-eyebrow">{copy.closingLabel}</p><h2 id="close-title">{copy.closingTitle}</h2><p>{copy.closingText}</p><div className="product-actions"><HeroButton asChild shape="capsule" appearance="ink-sweep" className="studio-hero-button"><Link href={href("/skills")}>{copy.discover}</Link></HeroButton><Link className="product-text-link" href={href("/getting-started")}>{copy.install}<span aria-hidden="true">↗</span></Link><LivingLink className="studio-living-link" href="https://github.com/jhonatan-oliveiradev/agent-skills" target="_blank" rel="noopener noreferrer" treatment="wash-across" tone="olive">{copy.source}</LivingLink></div></div>
       </section>
     </div>
   );

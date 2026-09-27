@@ -5,6 +5,7 @@ import { EditorialMetadata } from "@/components/editorial/editorial-metadata";
 import { EditorialReaderNav } from "@/components/editorial/editorial-reader-nav";
 import { EditorialSectionHeading } from "@/components/editorial/editorial-section-heading";
 import { RemoteInstallCallout } from "@/components/remote-install-callout";
+import { QuickInstallDrawer } from "@/components/quick-install-drawer";
 import type { LocalizedPack } from "@/lib/catalog";
 import type { PackEvidenceRelation } from "@/lib/cross-domain-relations";
 import { formatMethodOverlap } from "@/lib/editorial-relations-copy";
@@ -109,6 +110,7 @@ export function PackBlueprint(props: Readonly<PackBlueprintProps>) {
           <p className="eyebrow">{systemLabel} / {status}</p>
           <h1>{pack.name}</h1>
           <p className="pack-blueprint__summary">{pack.summary}</p>
+          {commands ? <QuickInstallDrawer locale={locale} name={pack.name} remoteCommand={getRemotePackInstallCommand(pack.slug)} commands={commands} /> : null}
         </div>
         <EditorialMetadata
           className="pack-blueprint__metadata"
