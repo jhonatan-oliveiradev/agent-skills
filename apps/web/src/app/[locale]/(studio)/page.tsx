@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { resolveLocale } from "@/components/foundation-route";
 import { CaseProofArt, PackMethodMap } from "@/components/home/product-proof-art";
+import { ThesisJourney } from "@/components/home/thesis-journey";
 import { MethodEngine } from "@/components/motion/method-engine";
 import { ProductMotion } from "@/components/motion/product-motion";
 import { getBuiltWithSkillsCases } from "@/lib/built-with-skills";
@@ -185,7 +186,7 @@ export default async function HomePage({ params }: HomePageProps) {
         <ShapeArtwork className="studio-artwork studio-artwork--thesis" name="seed-wing" tone="blue" rotation={-24} shadow echo ambient morphTo="pebble-tall" morphDuration={16} />
         <div className="product-shell">
           <div className="product-thesis__lead"><p className="product-eyebrow">{copy.thesisLabel}</p><h2 id="thesis-title">{copy.thesis}</h2><p>{copy.thesisText}</p></div>
-          <div className="product-thesis__steps">{copy.principles.map((item, index) => <div key={item.title}><span>0{index + 1}</span><h3>{item.title}</h3><p>{item.text}</p></div>)}</div>
+          <ThesisJourney locale={locale} principles={copy.principles} />
         </div>
       </section>
 

@@ -86,7 +86,7 @@ export function ProductMotion() {
         );
       });
 
-      const groups = [".product-demo .skill-lab", ".product-thesis__steps > div", ".product-case", ".product-skill", ".product-pack", ".product-install__detail"];
+      const groups = [".product-demo .skill-lab", ".product-thesis__step", ".product-thesis__preview", ".product-case", ".product-skill", ".product-pack", ".product-install__detail"];
       groups.forEach((selector) => {
         root.querySelectorAll<HTMLElement>(selector).forEach((element, index) => {
           gsap.from(element, {
