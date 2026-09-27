@@ -28,13 +28,18 @@ describe("editorial design foundation", () => {
     expect(css).toMatch(/\.dark\s*\{[\s\S]*?--editorial-canvas:/);
   });
 
-  it("uses the current blue product accent in both themes", async () => {
+  it("shares the studio palette between light and dark themes", async () => {
     const css = await read("app/globals.css");
 
-    expect(css).toMatch(/:root\s*\{[\s\S]*?--editorial-accent:\s*#3153bf;/);
-    expect(css).toMatch(/:root\s*\{[\s\S]*?--editorial-focus:\s*#3153bf;/);
-    expect(css).toMatch(/\.dark\s*\{[\s\S]*?--editorial-accent:\s*#afc9ff;/);
-    expect(css).toMatch(/\.dark\s*\{[\s\S]*?--editorial-focus:\s*#c9deff;/);
+    expect(css).toContain("--studio-blue-hero: #4239e8;");
+    expect(css).toContain("--studio-blue: #3159dc;");
+    expect(css).toContain("--studio-blue-soft: #a1caff;");
+    expect(css).toContain("--studio-green: #86e69a;");
+    expect(css).toContain("--studio-purple: #9e78f2;");
+    expect(css).toMatch(/:root\s*\{[\s\S]*?--editorial-accent:\s*var\(--studio-blue\);/);
+    expect(css).toMatch(/:root\s*\{[\s\S]*?--editorial-focus:\s*var\(--studio-blue\);/);
+    expect(css).toMatch(/\.dark\s*\{[\s\S]*?--editorial-accent:\s*var\(--studio-blue-soft\);/);
+    expect(css).toMatch(/\.dark\s*\{[\s\S]*?--editorial-focus:\s*var\(--studio-blue-soft\);/);
   });
 
   it("preserves legacy aliases while the internal pages migrate", async () => {
