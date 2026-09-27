@@ -1,0 +1,28 @@
+/* The reference uses Arial Black for the statement, with a quieter reading face. */
+#main-content h1,
+.product-home h2 {
+  font-family: var(--font-impact-display);
+  font-weight: 900;
+  letter-spacing: -0.055em;
+  text-wrap: balance;
+}
+
+.product-home .product-hero h1 {
+  font-size: clamp(3rem, min(5.7vw, 8.5svh), 5.8rem);
+  line-height: 1;
+}
+
+.product-home :is(.product-demo, .product-thesis, .product-section-heading, .product-install, .product-close) h2 {
+  font-size: clamp(2.85rem, 5.2vw, 5.9rem);
+  line-height: 1.02;
+}
+
+@media (max-width: 44rem) {
+  .product-home .product-hero h1 {
+    font-size: clamp(2.65rem, 10vw, 4rem);
+  }
+
+  .product-home :is(.product-demo, .product-thesis, .product-section-heading, .product-install, .product-close) h2 {
+    font-size: clamp(2.55rem, 9vw, 4rem);
+  }
+}

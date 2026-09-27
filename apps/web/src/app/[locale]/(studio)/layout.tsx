@@ -44,6 +44,7 @@ import "@/registry/cojeev/styles/living-link.css";
 import "@/registry/cojeev/styles/motion-drawer.css";
 import "../../cojeev-integration.css";
 import "../../thesis-journey.css";
+import "../../studio-display-type.css";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 import { resolveLocale } from "@/components/foundation-route";
