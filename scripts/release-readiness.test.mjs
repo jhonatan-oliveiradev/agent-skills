@@ -29,10 +29,10 @@ test("RC1 readiness matrix covers the four public Beta surfaces", async () => {
   }
 });
 
-test("current development catalog exposes 64 skills and 13 active packs", async () => {
+test("current development catalog exposes 65 skills and 13 active packs", async () => {
   const catalog = await readJson("catalog/generated/catalog.json");
 
-  assert.equal(catalog.counts.skills, 64);
+  assert.equal(catalog.counts.skills, 65);
   assert.deepEqual(catalog.counts.packs, { total: 13, active: 13, planned: 0 });
 });
 

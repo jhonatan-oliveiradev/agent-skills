@@ -1,6 +1,6 @@
 # Agent Skills Studio
 
-A curated Agent Skills library for production frontend, product design, motion, visual QA, delivery workflows, backend and data engineering, software architecture and engineering, quality and testing, application security, engineering workflow, developer career, brand design, writing and communication, and game-development tasks. The current development catalog publishes 64 reusable skills across 13 active packs. Most skills are independently written and project-agnostic; attributed upstream inclusions are identified below.
+A curated Agent Skills library for production frontend, product design, motion, visual QA, delivery workflows, backend and data engineering, software architecture and engineering, quality and testing, application security, engineering workflow, developer career, brand design, writing and communication, and game-development tasks. The current development catalog publishes 65 reusable skills across 13 active packs. Most skills are independently written and project-agnostic; attributed upstream inclusions are identified below.
 
 ## Contribute / Contribuir
 
@@ -40,6 +40,7 @@ kept.
 - `building-conversion-product-pages`
 - `translating-figma-to-nextjs`
 - `auditing-pixel-perfect-frontend`
+- `reviewing-apple-platform-interfaces`
 
 ### Motion & performance
 - `craft-premium-motion`
@@ -127,6 +128,10 @@ kept.
 - `creating-character-sprite-pipelines`
 - `designing-action-combat`
 - `testing-playable-games`
+
+## Apple platform review
+
+`reviewing-apple-platform-interfaces` was inspired by [dickwu/apple-design-skill](https://github.com/dickwu/apple-design-skill). That repository has no license granting redistribution and includes copies of Apple's guidelines, so this collection contains an independently written method that links to current official Apple documentation. It does not include upstream code, HIG copies, or a claim of Apple endorsement. To use the original author's complete skill separately, follow the installation instructions in their repository.
 
 ## Layered motion and procedural 3D
 
@@ -288,7 +293,7 @@ generated file by hand.
 
 The active, installable packs are:
 
-- `frontend-product` — Frontend & Product (8 skills);
+- `frontend-product` — Frontend & Product (9 skills);
 - `motion` — Motion (5 skills);
 - `game-development` — Game Development (5 skills);
 - `backend-data` — Backend & Data (4 skills);
@@ -357,7 +362,7 @@ consumidores somente leitura; não edite o arquivo gerado manualmente.
 
 Os pacotes ativos e instaláveis são:
 
-- `frontend-product` — Frontend e Produto (8 skills);
+- `frontend-product` — Frontend e Produto (9 skills);
 - `motion` — Motion (5 skills);
 - `game-development` — Desenvolvimento de Jogos (5 skills);
 - `backend-data` — Backend e Dados (4 skills);

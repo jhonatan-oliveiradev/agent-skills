@@ -94,7 +94,7 @@ describe("Evidence Report", () => {
       "href",
       "/en/packs/frontend-product",
     );
-    expect(screen.getByText("3 / 8 methods represented")).toBeInTheDocument();
+    expect(screen.getByText("3 / 9 methods represented")).toBeInTheDocument();
     expect(screen.getByText("Method overlap only — not proof that the pack was used as a unit.")).toBeInTheDocument();
   });
 });
