@@ -71,9 +71,13 @@ describe("editorial Home motion", () => {
 
     const region = screen.getByRole("region", { name: "Method Engine" });
     expect(within(region).getByText(/Turn these scattered screens/)).toBeVisible();
+    expect(within(region).getByText("ILLUSTRATIVE EXAMPLE")).toBeVisible();
+    expect(within(region).getByText("FOUNDATION", { exact: false })).toBeVisible();
     expect(within(region).getByRole("link", { name: /Explore and install this skill/ })).toHaveAttribute("href", "/en/skills/designing-ui-systems");
     fireEvent.click(within(region).getByRole("tab", { name: "Motion direction" }));
     expect(within(region).getByText(/Make these interactions feel intentional/)).toBeVisible();
+    expect(within(region).getByText("SCENE 01 / 03")).toBeVisible();
+    expect(within(region).queryByText("FOUNDATION", { exact: false })).not.toBeInTheDocument();
     expect(within(region).getByRole("link", { name: /Explore and install this skill/ })).toHaveAttribute("href", "/en/skills/craft-premium-motion");
     expect(within(region).getByText("18 skills")).toBeVisible();
     expect(container.querySelectorAll('[role="tabpanel"]')).toHaveLength(1);
