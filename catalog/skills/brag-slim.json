@@ -1,0 +1,69 @@
+{
+  "$schema": "../schemas/skill.schema.json",
+  "slug": "brag-slim",
+  "category": "motion",
+  "packs": [
+    "project-showcase-launch"
+  ],
+  "maturity": "beta",
+  "difficulty": "advanced",
+  "featured": false,
+  "compatibility": {
+    "surfaces": [
+      "codex"
+    ],
+    "operatingSystems": [
+      "linux",
+      "macos",
+      "windows"
+    ],
+    "installModes": [
+      "plugin",
+      "filesystem"
+    ]
+  },
+  "tags": [
+    "launch-video",
+    "motion-design",
+    "product-demo",
+    "open-source",
+    "attributed-mit"
+  ],
+  "dependencies": [],
+  "relatedSkills": [
+    "preparing-project-launch",
+    "building-project-showcases"
+  ],
+  "version": "1.1.0",
+  "updatedAt": "2026-09-27",
+  "locales": {
+    "en": {
+      "displayName": "Brag Slim — Project Launch Video",
+      "summary": "The official lightweight Brag skill turns a project or live site into a short launch video with motion, poster, and share copy.",
+      "primaryBenefit": "Produces a project-specific shareable demonstration from real product visuals without bundling music or large assets.",
+      "whenToUse": "Use when the project is ready to be shown through a short motion video and the agent has access to working video creation and rendering tools.",
+      "whenNotToUse": "Do not promise a rendered video when the environment has no rendering tools or the product cannot be observed; for the full Hyperframes workflow install upstream /brag separately.",
+      "useCases": [
+        "Create a short motion demo of a finished open source product",
+        "Turn a live website into a shareable release video and poster"
+      ],
+      "examplePrompts": [
+        "Use brag-slim to create a 20-second launch video from this project using real interface footage and provide the poster and share copy."
+      ]
+    },
+    "pt-BR": {
+      "displayName": "Brag Slim — Vídeo de Lançamento",
+      "summary": "A variante leve oficial do Brag transforma um projeto ou site em vídeo curto com motion, pôster e texto para compartilhar.",
+      "primaryBenefit": "Produz uma demonstração compartilhável e específica do projeto com imagens reais, sem incluir músicas nem assets grandes.",
+      "whenToUse": "Use quando o projeto estiver pronto para ser mostrado em um vídeo curto com motion e o agente puder usar ferramentas de criação e renderização de vídeo.",
+      "whenNotToUse": "Não prometa um vídeo renderizado sem ferramentas de renderização ou acesso ao produto; para o fluxo completo com Hyperframes, instale o /brag original separadamente.",
+      "useCases": [
+        "Criar uma demonstração curta em motion de um produto open source concluído",
+        "Transformar um site no ar em vídeo de lançamento compartilhável com pôster"
+      ],
+      "examplePrompts": [
+        "Use brag-slim para criar um vídeo de 20 segundos mostrando a interface real deste projeto e entregar pôster e texto para o post."
+      ]
+    }
+  }
+}

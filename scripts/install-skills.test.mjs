@@ -132,6 +132,20 @@ test("installs an active pack in manifest order", async () => {
   assert.match(await readFile(path.join(destination, "alpha", "SKILL.md"), "utf8"), /name: alpha/);
 });
 
+test("installs the project launch pack with its attributed Brag Slim skill", async () => {
+  const destination = await mkdtemp(path.join(tmpdir(), "agent-skills-launch-pack-"));
+  const installed = await installSkills({ repoRoot: repositoryRoot, destination, packs: ["project-showcase-launch"] });
+
+  assert.deepEqual(installed, [
+    "preparing-project-launch",
+    "brag-slim",
+    "building-project-showcases",
+    "planning-launch-distribution",
+  ]);
+  assert.match(await readFile(path.join(destination, "brag-slim", "SKILL.md"), "utf8"), /name: brag-slim/);
+  assert.match(await readFile(path.join(destination, "brag-slim", "LICENSE"), "utf8"), /MIT License[\s\S]*Shunit Haviv Hakimi/);
+});
+
 test("installs the deterministic union of packs and explicit skills", async () => {
   const repoRoot = await repositoryFixture();
   const destination = await mkdtemp(path.join(tmpdir(), "agent-skills-union-"));

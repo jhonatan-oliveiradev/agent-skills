@@ -32,11 +32,11 @@ function assertCatalog(catalog, version) {
   ) {
     throw new Error("Catalog locales must equal en, pt-BR");
   }
-  if (!Array.isArray(catalog.skills) || catalog.skills.length !== 60) {
-    throw new Error("Catalog must contain 60 skills");
+  if (!Array.isArray(catalog.skills) || catalog.skills.length !== 64) {
+    throw new Error("Catalog must contain 64 skills");
   }
-  if (!Array.isArray(catalog.packs) || catalog.packs.length !== 12) {
-    throw new Error("Catalog must contain 12 packs");
+  if (!Array.isArray(catalog.packs) || catalog.packs.length !== 13) {
+    throw new Error("Catalog must contain 13 packs");
   }
 }
 

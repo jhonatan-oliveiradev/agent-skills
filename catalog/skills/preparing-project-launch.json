@@ -1,0 +1,69 @@
+{
+  "$schema": "../schemas/skill.schema.json",
+  "slug": "preparing-project-launch",
+  "category": "delivery",
+  "packs": [
+    "project-showcase-launch"
+  ],
+  "maturity": "beta",
+  "difficulty": "intermediate",
+  "featured": false,
+  "compatibility": {
+    "surfaces": [
+      "chatgpt",
+      "codex"
+    ],
+    "operatingSystems": [
+      "linux",
+      "macos",
+      "windows"
+    ],
+    "installModes": [
+      "plugin",
+      "filesystem"
+    ]
+  },
+  "tags": [
+    "launch-readiness",
+    "product-evidence",
+    "open-source",
+    "demo"
+  ],
+  "dependencies": [],
+  "relatedSkills": [
+    "building-project-showcases",
+    "brag-slim"
+  ],
+  "version": "1.1.0",
+  "updatedAt": "2026-09-27",
+  "locales": {
+    "en": {
+      "displayName": "Preparing a Project Launch",
+      "summary": "Checks the release, visitor path, demo, links, and public claims before a project is announced.",
+      "primaryBenefit": "Replaces launch guesswork with a verified brief and a short list of actual blockers.",
+      "whenToUse": "Use when an app or open source project is about to be shared and its public readiness and demonstration claims need checking.",
+      "whenNotToUse": "Do not use for deployment implementation, video production, or a product idea with nothing usable to verify.",
+      "useCases": [
+        "Verify that a public demo and install path work for a new visitor",
+        "Build a fact-checked launch brief for an open source release"
+      ],
+      "examplePrompts": [
+        "Use preparing-project-launch to audit this release's demo, install path, and claims before we announce it."
+      ]
+    },
+    "pt-BR": {
+      "displayName": "Preparação do Lançamento de Projetos",
+      "summary": "Confere versão, percurso do visitante, demo, links e promessas públicas antes de anunciar um projeto.",
+      "primaryBenefit": "Substitui suposições por um briefing verificado e uma lista curta de bloqueios reais.",
+      "whenToUse": "Use quando um app ou projeto open source estiver prestes a ser divulgado e sua prontidão e promessas precisarem ser verificadas.",
+      "whenNotToUse": "Não use para executar o deploy, produzir o vídeo ou divulgar uma ideia sem produto utilizável para conferir.",
+      "useCases": [
+        "Verificar se uma pessoa nova consegue abrir a demo e seguir as instruções de instalação",
+        "Criar um briefing de lançamento com fatos conferidos para um projeto open source"
+      ],
+      "examplePrompts": [
+        "Use preparing-project-launch para conferir demo, instalação e promessas antes de anunciarmos esta versão."
+      ]
+    }
+  }
+}

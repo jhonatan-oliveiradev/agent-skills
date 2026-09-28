@@ -1,0 +1,36 @@
+{
+  "$schema": "../schemas/pack.schema.json",
+  "slug": "project-showcase-launch",
+  "status": "active",
+  "featured": false,
+  "color": "green",
+  "version": "1.1.0",
+  "skills": [
+    "preparing-project-launch",
+    "brag-slim",
+    "building-project-showcases",
+    "planning-launch-distribution"
+  ],
+  "locales": {
+    "en": {
+      "name": "Project Showcase & Launch",
+      "summary": "Turn a finished project into verified launch assets, a motion video, a lasting showcase, and channel-specific distribution.",
+      "description": "A focused post-development workflow: check the actual release and its claims, produce a short project-specific video with the official Brag Slim skill, build a durable public presentation, and plan a credible release across relevant channels.",
+      "outcomes": [
+        "Make a working project understandable and easy to try through evidence-backed visuals and links",
+        "Prepare a short launch video and reusable showcase without fabricating capabilities or social proof",
+        "Distribute the release with tailored copy, a clear next action, and a way to learn from real feedback"
+      ]
+    },
+    "pt-BR": {
+      "name": "Apresentação & Lançamento",
+      "summary": "Transforme um projeto concluído em materiais verificados, vídeo com motion, showcase duradouro e distribuição por canal.",
+      "description": "Um fluxo focado no pós-desenvolvimento: confira a versão disponível e suas promessas, produza um vídeo curto e próprio do projeto com a skill oficial Brag Slim, construa uma apresentação pública duradoura e planeje uma divulgação confiável nos canais adequados.",
+      "outcomes": [
+        "Tornar um projeto funcional compreensível e fácil de experimentar com imagens e links sustentados por evidências",
+        "Preparar um vídeo curto de lançamento e um showcase reutilizável sem inventar capacidades ou provas sociais",
+        "Divulgar a entrega com textos adequados a cada canal, próxima ação clara e aprendizado a partir do feedback real"
+      ]
+    }
+  }
+}

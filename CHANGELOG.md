@@ -4,6 +4,11 @@ All notable changes to this skill library are documented here.
 
 ## [Unreleased]
 
+### Project showcase and launch
+
+- Added a four-method post-development pack for verifying a release, creating a project launch video, building a lasting showcase, and planning channel-specific distribution. The development catalog now contains 64 skills and 13 active packs.
+- Included the official lightweight Brag Slim (`brag-slim`) skill with its MIT attribution. Video creation depends on the agent's available rendering tools; the full Hyperframes workflow remains available directly from the upstream `/brag` project.
+
 ### Developer Career
 
 - Expanded the current development catalog to 60 canonical skills and 12 active packs with six Developer Career working methods.
@@ -22,7 +27,7 @@ All notable changes to this skill library are documented here.
 - Added Career Lab as a seventh shared Studio navigation context and cross-linked it bidirectionally with the canonical Developer Career pack.
 - Added localized Career Lab metadata and public sitemap coverage for Overview, Roadmap, Assessments, Evidence, and Market.
 - Promoted the release-qualified plugin, catalog, installers, and microsite surfaces to Stable in the public roadmap while keeping individual skill maturity distinct from Stable release status.
-- Kept current README/catalog documentation aligned with 60 canonical skills and 12 active packs, and removed only confirmed orphaned localized Home/Getting Started copy.
+- Kept README/catalog documentation aligned with 60 canonical skills and 12 active packs at that point, and removed only confirmed orphaned localized Home/Getting Started copy.
 
 ### Reliability and maintenance
 

@@ -1,6 +1,6 @@
 # Agent Skills Studio
 
-A curated Agent Skills library for production frontend, product design, motion, visual QA, delivery workflows, backend and data engineering, software architecture and engineering, quality and testing, application security, engineering workflow, developer career, brand design, writing and communication, and game-development tasks. The current development catalog publishes 60 reusable skills across 12 active packs. It is inspired by useful patterns from the broader agent-skills ecosystem, but the skills in this repository are intentionally rewritten, consolidated, and kept project-agnostic.
+A curated Agent Skills library for production frontend, product design, motion, visual QA, delivery workflows, backend and data engineering, software architecture and engineering, quality and testing, application security, engineering workflow, developer career, brand design, writing and communication, and game-development tasks. The current development catalog publishes 64 reusable skills across 13 active packs. Most skills are independently written and project-agnostic; attributed upstream inclusions are identified below.
 
 ## Contribute / Contribuir
 
@@ -46,6 +46,14 @@ kept.
 - `engineering-gsap-animations`
 - `orchestrating-cinematic-web-motion`
 - `optimizing-frontend-motion-performance`
+
+### Project showcase & launch
+- `preparing-project-launch`
+- `brag-slim`
+- `building-project-showcases`
+- `planning-launch-distribution`
+
+`brag-slim` is the official, single-file variant of [latent-spaces/brag](https://github.com/latent-spaces/brag), included under its MIT license in [skills/brag-slim/LICENSE](skills/brag-slim/LICENSE). The original skill produces a short video, poster, and sharing copy when a capable video-rendering environment is available. For the upstream full workflow with Hyperframes, install [`/brag`](https://github.com/latent-spaces/brag) separately; it requires Node.js 22+, FFmpeg, and Hyperframes. The other three methods cover verified launch readiness, a lasting showcase, and channel-specific distribution. Video rendering requires appropriate runtime tools; installing this pack alone does not render or publish anything.
 
 ### Backend & data
 - `designing-relational-data-models`
@@ -291,9 +299,10 @@ The active, installable packs are:
 - `engineering-workflow` — Engineering Workflow (4 skills);
 - `design-brand` — Design & Brand (5 skills);
 - `writing-communication` — Writing & Communication (5 skills);
-- `developer-career` — Developer Career (6 skills).
+- `developer-career` — Developer Career (6 skills);
+- `project-showcase-launch` — Project Showcase & Launch (4 skills).
 
-All twelve published packs are active and installable.
+All thirteen published packs are active and installable.
 
 Install an active pack on Bash or PowerShell:
 
@@ -359,9 +368,12 @@ Os pacotes ativos e instaláveis são:
 - `engineering-workflow` — Fluxo de Engenharia (4 skills).
 - `design-brand` — Design & Marca (5 skills);
 - `writing-communication` — Escrita & Comunicação (5 skills);
-- `developer-career` — Carreira de Desenvolvedor (6 skills).
+- `developer-career` — Carreira de Desenvolvedor (6 skills);
+- `project-showcase-launch` — Apresentação & Lançamento (4 skills).
 
-Todos os doze pacotes publicados estão ativos e são instaláveis.
+Todos os treze pacotes publicados estão ativos e são instaláveis.
+
+`brag-slim` é a variante oficial em um único arquivo de [latent-spaces/brag](https://github.com/latent-spaces/brag), incluída com a licença MIT em [skills/brag-slim/LICENSE](skills/brag-slim/LICENSE). Ela pode gerar vídeo curto, pôster e texto para publicação quando o agente dispõe de ferramentas de renderização. Para usar o fluxo completo com Hyperframes, instale o [`/brag` original](https://github.com/latent-spaces/brag) separadamente; ele requer Node.js 22+, FFmpeg e Hyperframes. A instalação do pack, por si só, não renderiza o vídeo nem publica conteúdo.
 
 Instale um pacote ativo com Bash ou PowerShell:
 

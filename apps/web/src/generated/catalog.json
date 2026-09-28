@@ -6,7 +6,7 @@
     "en",
     "pt-BR"
   ],
-  "sourceDigest": "df9de95f3184e15e15cb512ef2907908c76f15e6ea9d8c611d3b12a5b8528075",
+  "sourceDigest": "1e4f34491c8eb787e50f06c029f88c11c8721cf98e8baef0d87183605e69a869",
   "filters": {
     "categories": [
       "application-security",
@@ -36,6 +36,7 @@
       "frontend-product",
       "game-development",
       "motion",
+      "project-showcase-launch",
       "quality-testing",
       "writing-communication"
     ],
@@ -57,6 +58,7 @@
       "art-direction",
       "assessment",
       "asset-pipeline",
+      "attributed-mit",
       "audience",
       "authentication",
       "authorization",
@@ -73,6 +75,7 @@
       "calls-to-action",
       "capabilities",
       "career",
+      "case-study",
       "change-evidence",
       "change-impact",
       "character-art",
@@ -100,12 +103,14 @@
       "decision-making",
       "decision-records",
       "delivery",
+      "demo",
       "dependencies",
       "design-system",
       "design-systems",
       "design-tokens",
       "developer-tooling",
       "differentiation",
+      "distribution",
       "documentation",
       "editing",
       "end-to-end",
@@ -125,6 +130,7 @@
       "gameplay",
       "git",
       "github",
+      "github-release",
       "governance",
       "gsap",
       "handoff",
@@ -141,7 +147,11 @@
       "jobs",
       "landing-pages",
       "language",
+      "launch-copy",
+      "launch-readiness",
+      "launch-video",
       "learning",
+      "linkedin",
       "logo",
       "market",
       "marketing",
@@ -158,6 +168,7 @@
       "nextjs",
       "nodejs",
       "observability",
+      "open-source",
       "opportunities",
       "orchestration",
       "owasp",
@@ -174,6 +185,8 @@
       "pricing-pages",
       "procedural-3d",
       "product",
+      "product-demo",
+      "product-evidence",
       "product-marketing",
       "proficiency",
       "profiling",
@@ -185,6 +198,7 @@
       "quality-attributes",
       "query-performance",
       "react",
+      "readme",
       "refactoring",
       "regression",
       "regression-review",
@@ -208,6 +222,7 @@
       "semantic-search",
       "service-boundaries",
       "sessions",
+      "showcase",
       "small-batches",
       "sprite-animation",
       "ssrf",
@@ -282,10 +297,10 @@
     ]
   },
   "counts": {
-    "skills": 60,
+    "skills": 64,
     "packs": {
-      "total": 12,
-      "active": 12,
+      "total": 13,
+      "active": 13,
       "planned": 0
     },
     "categories": {
@@ -294,25 +309,25 @@
       "backend-data": 4,
       "brand-design": 5,
       "codebase-intelligence": 5,
-      "delivery": 1,
+      "delivery": 3,
       "developer-career": 6,
       "engineering-workflow": 4,
       "frontend": 5,
       "game-development": 5,
       "meta": 2,
-      "motion": 4,
-      "product-design": 2,
+      "motion": 5,
+      "product-design": 3,
       "quality-testing": 4,
       "writing-communication": 5
     },
     "maturity": {
-      "beta": 42,
+      "beta": 46,
       "stable": 18
     },
     "difficulty": {
-      "advanced": 29,
+      "advanced": 30,
       "beginner": 4,
-      "intermediate": 27
+      "intermediate": 30
     },
     "activePackMembership": {
       "application-security": 4,
@@ -325,6 +340,7 @@
       "frontend-product": 8,
       "game-development": 5,
       "motion": 5,
+      "project-showcase-launch": 4,
       "quality-testing": 4,
       "writing-communication": 5
     }
@@ -750,6 +766,75 @@
     },
     {
       "$schema": "../schemas/skill.schema.json",
+      "slug": "brag-slim",
+      "category": "motion",
+      "packs": [
+        "project-showcase-launch"
+      ],
+      "maturity": "beta",
+      "difficulty": "advanced",
+      "featured": false,
+      "compatibility": {
+        "surfaces": [
+          "codex"
+        ],
+        "operatingSystems": [
+          "linux",
+          "macos",
+          "windows"
+        ],
+        "installModes": [
+          "plugin",
+          "filesystem"
+        ]
+      },
+      "tags": [
+        "launch-video",
+        "motion-design",
+        "product-demo",
+        "open-source",
+        "attributed-mit"
+      ],
+      "dependencies": [],
+      "relatedSkills": [
+        "preparing-project-launch",
+        "building-project-showcases"
+      ],
+      "version": "1.1.0",
+      "updatedAt": "2026-09-27",
+      "locales": {
+        "en": {
+          "displayName": "Brag Slim — Project Launch Video",
+          "summary": "The official lightweight Brag skill turns a project or live site into a short launch video with motion, poster, and share copy.",
+          "primaryBenefit": "Produces a project-specific shareable demonstration from real product visuals without bundling music or large assets.",
+          "whenToUse": "Use when the project is ready to be shown through a short motion video and the agent has access to working video creation and rendering tools.",
+          "whenNotToUse": "Do not promise a rendered video when the environment has no rendering tools or the product cannot be observed; for the full Hyperframes workflow install upstream /brag separately.",
+          "useCases": [
+            "Create a short motion demo of a finished open source product",
+            "Turn a live website into a shareable release video and poster"
+          ],
+          "examplePrompts": [
+            "Use brag-slim to create a 20-second launch video from this project using real interface footage and provide the poster and share copy."
+          ]
+        },
+        "pt-BR": {
+          "displayName": "Brag Slim — Vídeo de Lançamento",
+          "summary": "A variante leve oficial do Brag transforma um projeto ou site em vídeo curto com motion, pôster e texto para compartilhar.",
+          "primaryBenefit": "Produz uma demonstração compartilhável e específica do projeto com imagens reais, sem incluir músicas nem assets grandes.",
+          "whenToUse": "Use quando o projeto estiver pronto para ser mostrado em um vídeo curto com motion e o agente puder usar ferramentas de criação e renderização de vídeo.",
+          "whenNotToUse": "Não prometa um vídeo renderizado sem ferramentas de renderização ou acesso ao produto; para o fluxo completo com Hyperframes, instale o /brag original separadamente.",
+          "useCases": [
+            "Criar uma demonstração curta em motion de um produto open source concluído",
+            "Transformar um site no ar em vídeo de lançamento compartilhável com pôster"
+          ],
+          "examplePrompts": [
+            "Use brag-slim para criar um vídeo de 20 segundos mostrando a interface real deste projeto e entregar pôster e texto para o post."
+          ]
+        }
+      }
+    },
+    {
+      "$schema": "../schemas/skill.schema.json",
       "slug": "building-brand-guidelines",
       "category": "brand-design",
       "packs": [
@@ -1091,6 +1176,75 @@
           ],
           "examplePrompts": [
             "Use building-premium-nextjs-interfaces para redesenhar esta experiência em Next.js com hierarquia mais forte e estados responsivos prontos para produção."
+          ]
+        }
+      }
+    },
+    {
+      "$schema": "../schemas/skill.schema.json",
+      "slug": "building-project-showcases",
+      "category": "product-design",
+      "packs": [
+        "project-showcase-launch"
+      ],
+      "maturity": "beta",
+      "difficulty": "intermediate",
+      "featured": false,
+      "compatibility": {
+        "surfaces": [
+          "chatgpt",
+          "codex"
+        ],
+        "operatingSystems": [
+          "linux",
+          "macos",
+          "windows"
+        ],
+        "installModes": [
+          "plugin",
+          "filesystem"
+        ]
+      },
+      "tags": [
+        "showcase",
+        "portfolio",
+        "case-study",
+        "readme"
+      ],
+      "dependencies": [],
+      "relatedSkills": [
+        "preparing-project-launch",
+        "building-conversion-product-pages"
+      ],
+      "version": "1.1.0",
+      "updatedAt": "2026-09-27",
+      "locales": {
+        "en": {
+          "displayName": "Building Project Showcases",
+          "summary": "Turns a shipped project into a durable case study, portfolio presentation, or repository showcase with real visuals.",
+          "primaryBenefit": "Helps a new visitor understand what the project does, see its proof, and choose a meaningful next action.",
+          "whenToUse": "Use when a finished app or open source release needs a public case study, portfolio page, README presentation, or visual product walkthrough.",
+          "whenNotToUse": "Do not use to invent a portfolio outcome, produce the motion video, or redesign an unfinished product in place of shipping it.",
+          "useCases": [
+            "Create a product case study with real screens, decisions, and a demo",
+            "Restructure a repository README around an inspectable result and install path"
+          ],
+          "examplePrompts": [
+            "Use building-project-showcases to present this shipped app as a concise case study with actual UI and working links."
+          ]
+        },
+        "pt-BR": {
+          "displayName": "Criação de Showcases de Projetos",
+          "summary": "Transforma um projeto entregue em case, apresentação de portfólio ou vitrine de repositório com imagens reais.",
+          "primaryBenefit": "Ajuda visitantes novos a entender o projeto, conferir provas e escolher uma próxima ação.",
+          "whenToUse": "Use quando um app concluído ou release open source precisar de case público, página de portfólio, README ou apresentação visual.",
+          "whenNotToUse": "Não use para inventar resultados de portfólio, produzir o vídeo em motion ou redesenhar um produto ainda não entregue.",
+          "useCases": [
+            "Criar um case de produto com telas reais, decisões e uma demo",
+            "Reorganizar um README para mostrar resultados verificáveis e o caminho de instalação"
+          ],
+          "examplePrompts": [
+            "Use building-project-showcases para apresentar este app publicado como um case conciso com UI real e links funcionais."
           ]
         }
       }
@@ -3076,6 +3230,76 @@
     },
     {
       "$schema": "../schemas/skill.schema.json",
+      "slug": "planning-launch-distribution",
+      "category": "delivery",
+      "packs": [
+        "project-showcase-launch"
+      ],
+      "maturity": "beta",
+      "difficulty": "intermediate",
+      "featured": false,
+      "compatibility": {
+        "surfaces": [
+          "chatgpt",
+          "codex"
+        ],
+        "operatingSystems": [
+          "linux",
+          "macos",
+          "windows"
+        ],
+        "installModes": [
+          "plugin",
+          "filesystem"
+        ]
+      },
+      "tags": [
+        "distribution",
+        "linkedin",
+        "github-release",
+        "open-source",
+        "launch-copy"
+      ],
+      "dependencies": [],
+      "relatedSkills": [
+        "preparing-project-launch",
+        "planning-written-communication"
+      ],
+      "version": "1.1.0",
+      "updatedAt": "2026-09-27",
+      "locales": {
+        "en": {
+          "displayName": "Planning Launch Distribution",
+          "summary": "Plans channel-specific project announcements and a feedback loop grounded in a verified release story.",
+          "primaryBenefit": "Creates ready-to-review posts, assets, links, and a publication sequence tailored to the intended audience.",
+          "whenToUse": "Use when a shipped project needs a launch plan and tailored communication for LinkedIn, GitHub, developer communities, or its own website.",
+          "whenNotToUse": "Do not use to publish without authorization, create the video's motion graphics, or claim installs and impact from impressions alone.",
+          "useCases": [
+            "Prepare an open source release announcement for GitHub and LinkedIn",
+            "Plan community-specific launch posts and collect actionable contributor feedback"
+          ],
+          "examplePrompts": [
+            "Use planning-launch-distribution to draft launch posts for GitHub and LinkedIn using only confirmed project facts and one install CTA."
+          ]
+        },
+        "pt-BR": {
+          "displayName": "Planejamento da Divulgação de Lançamentos",
+          "summary": "Planeja anúncios específicos por canal e acompanhamento de feedback com base em uma versão verificada.",
+          "primaryBenefit": "Prepara posts revisáveis, assets, links e uma sequência de publicação adequada ao público.",
+          "whenToUse": "Use quando um projeto entregue precisar de plano de lançamento e comunicação própria para LinkedIn, GitHub, comunidades dev ou site.",
+          "whenNotToUse": "Não use para publicar sem autorização, criar motion do vídeo ou alegar instalações e impacto apenas com impressões.",
+          "useCases": [
+            "Preparar o anúncio de um release open source no GitHub e no LinkedIn",
+            "Planejar posts para comunidades e coletar feedback útil de contribuidores"
+          ],
+          "examplePrompts": [
+            "Use planning-launch-distribution para rascunhar posts de lançamento para GitHub e LinkedIn com fatos verificados e uma chamada para instalação."
+          ]
+        }
+      }
+    },
+    {
+      "$schema": "../schemas/skill.schema.json",
       "slug": "planning-safe-refactors",
       "category": "architecture-engineering",
       "packs": [
@@ -3212,6 +3436,75 @@
           ],
           "examplePrompts": [
             "Use planning-written-communication para transformar estas notas e fontes em um brief conciso com audiência, objetivo, fatos verificados, premissas em aberto, trechos protegidos, restrições de canal e critérios de conclusão antes de redigirmos o texto final."
+          ]
+        }
+      }
+    },
+    {
+      "$schema": "../schemas/skill.schema.json",
+      "slug": "preparing-project-launch",
+      "category": "delivery",
+      "packs": [
+        "project-showcase-launch"
+      ],
+      "maturity": "beta",
+      "difficulty": "intermediate",
+      "featured": false,
+      "compatibility": {
+        "surfaces": [
+          "chatgpt",
+          "codex"
+        ],
+        "operatingSystems": [
+          "linux",
+          "macos",
+          "windows"
+        ],
+        "installModes": [
+          "plugin",
+          "filesystem"
+        ]
+      },
+      "tags": [
+        "launch-readiness",
+        "product-evidence",
+        "open-source",
+        "demo"
+      ],
+      "dependencies": [],
+      "relatedSkills": [
+        "building-project-showcases",
+        "brag-slim"
+      ],
+      "version": "1.1.0",
+      "updatedAt": "2026-09-27",
+      "locales": {
+        "en": {
+          "displayName": "Preparing a Project Launch",
+          "summary": "Checks the release, visitor path, demo, links, and public claims before a project is announced.",
+          "primaryBenefit": "Replaces launch guesswork with a verified brief and a short list of actual blockers.",
+          "whenToUse": "Use when an app or open source project is about to be shared and its public readiness and demonstration claims need checking.",
+          "whenNotToUse": "Do not use for deployment implementation, video production, or a product idea with nothing usable to verify.",
+          "useCases": [
+            "Verify that a public demo and install path work for a new visitor",
+            "Build a fact-checked launch brief for an open source release"
+          ],
+          "examplePrompts": [
+            "Use preparing-project-launch to audit this release's demo, install path, and claims before we announce it."
+          ]
+        },
+        "pt-BR": {
+          "displayName": "Preparação do Lançamento de Projetos",
+          "summary": "Confere versão, percurso do visitante, demo, links e promessas públicas antes de anunciar um projeto.",
+          "primaryBenefit": "Substitui suposições por um briefing verificado e uma lista curta de bloqueios reais.",
+          "whenToUse": "Use quando um app ou projeto open source estiver prestes a ser divulgado e sua prontidão e promessas precisarem ser verificadas.",
+          "whenNotToUse": "Não use para executar o deploy, produzir o vídeo ou divulgar uma ideia sem produto utilizável para conferir.",
+          "useCases": [
+            "Verificar se uma pessoa nova consegue abrir a demo e seguir as instruções de instalação",
+            "Criar um briefing de lançamento com fatos conferidos para um projeto open source"
+          ],
+          "examplePrompts": [
+            "Use preparing-project-launch para conferir demo, instalação e promessas antes de anunciarmos esta versão."
           ]
         }
       }
@@ -5587,6 +5880,95 @@
           },
           "difficulty": "advanced",
           "maturity": "stable"
+        }
+      ]
+    },
+    {
+      "slug": "project-showcase-launch",
+      "status": "active",
+      "featured": false,
+      "color": "green",
+      "version": "1.1.0",
+      "locales": {
+        "en": {
+          "name": "Project Showcase & Launch",
+          "summary": "Turn a finished project into verified launch assets, a motion video, a lasting showcase, and channel-specific distribution.",
+          "description": "A focused post-development workflow: check the actual release and its claims, produce a short project-specific video with the official Brag Slim skill, build a durable public presentation, and plan a credible release across relevant channels.",
+          "outcomes": [
+            "Make a working project understandable and easy to try through evidence-backed visuals and links",
+            "Prepare a short launch video and reusable showcase without fabricating capabilities or social proof",
+            "Distribute the release with tailored copy, a clear next action, and a way to learn from real feedback"
+          ]
+        },
+        "pt-BR": {
+          "name": "Apresentação & Lançamento",
+          "summary": "Transforme um projeto concluído em materiais verificados, vídeo com motion, showcase duradouro e distribuição por canal.",
+          "description": "Um fluxo focado no pós-desenvolvimento: confira a versão disponível e suas promessas, produza um vídeo curto e próprio do projeto com a skill oficial Brag Slim, construa uma apresentação pública duradoura e planeje uma divulgação confiável nos canais adequados.",
+          "outcomes": [
+            "Tornar um projeto funcional compreensível e fácil de experimentar com imagens e links sustentados por evidências",
+            "Preparar um vídeo curto de lançamento e um showcase reutilizável sem inventar capacidades ou provas sociais",
+            "Divulgar a entrega com textos adequados a cada canal, próxima ação clara e aprendizado a partir do feedback real"
+          ]
+        }
+      },
+      "skillSlugs": [
+        "preparing-project-launch",
+        "brag-slim",
+        "building-project-showcases",
+        "planning-launch-distribution"
+      ],
+      "skills": [
+        {
+          "slug": "preparing-project-launch",
+          "displayName": {
+            "en": "Preparing a Project Launch",
+            "pt-BR": "Preparação do Lançamento de Projetos"
+          },
+          "summary": {
+            "en": "Checks the release, visitor path, demo, links, and public claims before a project is announced.",
+            "pt-BR": "Confere versão, percurso do visitante, demo, links e promessas públicas antes de anunciar um projeto."
+          },
+          "difficulty": "intermediate",
+          "maturity": "beta"
+        },
+        {
+          "slug": "brag-slim",
+          "displayName": {
+            "en": "Brag Slim — Project Launch Video",
+            "pt-BR": "Brag Slim — Vídeo de Lançamento"
+          },
+          "summary": {
+            "en": "The official lightweight Brag skill turns a project or live site into a short launch video with motion, poster, and share copy.",
+            "pt-BR": "A variante leve oficial do Brag transforma um projeto ou site em vídeo curto com motion, pôster e texto para compartilhar."
+          },
+          "difficulty": "advanced",
+          "maturity": "beta"
+        },
+        {
+          "slug": "building-project-showcases",
+          "displayName": {
+            "en": "Building Project Showcases",
+            "pt-BR": "Criação de Showcases de Projetos"
+          },
+          "summary": {
+            "en": "Turns a shipped project into a durable case study, portfolio presentation, or repository showcase with real visuals.",
+            "pt-BR": "Transforma um projeto entregue em case, apresentação de portfólio ou vitrine de repositório com imagens reais."
+          },
+          "difficulty": "intermediate",
+          "maturity": "beta"
+        },
+        {
+          "slug": "planning-launch-distribution",
+          "displayName": {
+            "en": "Planning Launch Distribution",
+            "pt-BR": "Planejamento da Divulgação de Lançamentos"
+          },
+          "summary": {
+            "en": "Plans channel-specific project announcements and a feedback loop grounded in a verified release story.",
+            "pt-BR": "Planeja anúncios específicos por canal e acompanhamento de feedback com base em uma versão verificada."
+          },
+          "difficulty": "intermediate",
+          "maturity": "beta"
         }
       ]
     },
