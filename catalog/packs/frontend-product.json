@@ -8,6 +8,7 @@
   "skills": [
     "bootstrapping-modern-web-apps",
     "designing-ui-systems",
+    "art-directing-web-interfaces",
     "building-premium-nextjs-interfaces",
     "building-conversion-product-pages",
     "translating-figma-to-nextjs",
@@ -19,8 +20,8 @@
   "locales": {
     "en": {
       "name": "Frontend & Product",
-      "summary": "Product strategy, interface systems, implementation fidelity, Apple platform review, and delivery.",
-      "description": "Establish a web application baseline, shape product and interface direction, translate references into responsive code, audit fidelity, and prepare verified changes for release. When the product targets iOS, iPadOS, or macOS, review its interface against current official Apple guidance with a dedicated method.",
+      "summary": "Product strategy, art direction, interface systems, implementation fidelity, Apple platform review, and delivery.",
+      "description": "Establish a web application baseline, choose a product-specific art direction, shape interface systems, translate references into responsive code, audit fidelity, and prepare verified changes for release. When the product targets iOS, iPadOS, or macOS, review its interface against current official Apple guidance with a dedicated method.",
       "outcomes": [
         "Build coherent, accessible, and conversion-aware product interfaces",
         "Move reference-backed frontend work from setup through verified delivery",
@@ -29,8 +30,8 @@
     },
     "pt-BR": {
       "name": "Frontend e Produto",
-      "summary": "Estratégia de produto, sistemas de interface, fidelidade de implementação, revisão para plataformas Apple e entrega.",
-      "description": "Estabeleça a base de uma aplicação web, defina a direção de produto e interface, traduza referências em código responsivo, audite a fidelidade e prepare mudanças verificadas para entrega. Quando o produto for destinado a iOS, iPadOS ou macOS, revise sua interface pelas diretrizes oficiais atuais da Apple com um método próprio.",
+      "summary": "Estratégia de produto, direção de arte, sistemas de interface, fidelidade de implementação, revisão para plataformas Apple e entrega.",
+      "description": "Estabeleça a base de uma aplicação web, escolha uma direção de arte própria do produto, defina sistemas de interface, traduza referências em código responsivo, audite a fidelidade e prepare mudanças verificadas para entrega. Quando o produto for destinado a iOS, iPadOS ou macOS, revise sua interface pelas diretrizes oficiais atuais da Apple com um método próprio.",
       "outcomes": [
         "Construir interfaces de produto coerentes, acessíveis e orientadas à conversão",
         "Levar trabalhos de frontend baseados em referências da preparação à entrega verificada",

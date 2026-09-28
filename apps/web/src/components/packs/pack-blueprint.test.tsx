@@ -197,8 +197,8 @@ describe("System Blueprint", () => {
       "href",
       "/en/built-with-skills/catalog-experience",
     );
-    expect(screen.getAllByText("3 / 9 methods represented")).toHaveLength(2);
-    expect(screen.getAllByText("1 / 9 methods represented")).toHaveLength(3);
+    expect(screen.getAllByText("3 / 10 methods represented")).toHaveLength(2);
+    expect(screen.getAllByText("1 / 10 methods represented")).toHaveLength(3);
     expect(screen.queryByText(/pack used/i)).not.toBeInTheDocument();
   });
 });

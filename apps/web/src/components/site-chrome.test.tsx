@@ -69,7 +69,7 @@ describe("editorial site chrome", () => {
       expect(dialog).toHaveAttribute("data-navigation-mode", "studio-index");
       expect(dialog).toHaveAttribute("data-viewport-contract", "desktop-100dvh");
       expect(container.querySelector('[data-navigation-transition="header-reveal"]')).toBeInTheDocument();
-      expect(within(dialog).getByText("65 SKILLS")).toBeInTheDocument();
+      expect(within(dialog).getByText("66 SKILLS")).toBeInTheDocument();
       expect(within(dialog).getByText("13 PACKS")).toBeInTheDocument();
       expect(within(dialog).getByText("1.1.0")).toBeInTheDocument();
       expect(dialog.querySelectorAll(".primary-navigation__mobile-context")).toHaveLength(7);
@@ -109,8 +109,8 @@ describe("editorial site chrome", () => {
   });
 
   it.each([
-    ["en", "Methods only matter when they change the work.", "Explore", "Project", "Source", "Methods", "OPEN METHODS · 65 SKILLS · 13 PACKS"],
-    ["pt-BR", "Métodos só têm valor quando mudam o trabalho.", "Explorar", "Projeto", "Origem", "Métodos", "MÉTODOS ABERTOS · 65 SKILLS · 13 PACKS"],
+    ["en", "Methods only matter when they change the work.", "Explore", "Project", "Source", "Methods", "OPEN METHODS · 66 SKILLS · 13 PACKS"],
+    ["pt-BR", "Métodos só têm valor quando mudam o trabalho.", "Explorar", "Projeto", "Origem", "Métodos", "MÉTODOS ABERTOS · 66 SKILLS · 13 PACKS"],
   ] as const)("turns the %s footer into end matter and a colophon", (locale, manifesto, explore, project, source, methodsLabel, provenance) => {
     const { container } = render(<SiteFooter locale={locale} />);
 
@@ -126,7 +126,7 @@ describe("editorial site chrome", () => {
     const collection = footer?.querySelector<HTMLElement>(".site-footer__collection");
     expect(collection).toBeInTheDocument();
     expect(within(collection!).getByText(methodsLabel)).toBeInTheDocument();
-    expect(within(collection!).getByText(/65 skills/i)).toBeInTheDocument();
+    expect(within(collection!).getByText(/66 skills/i)).toBeInTheDocument();
     expect(within(collection!).getByText(/13 packs|13 pacotes/i)).toBeInTheDocument();
     expect(footer).toHaveTextContent(provenance);
   });
