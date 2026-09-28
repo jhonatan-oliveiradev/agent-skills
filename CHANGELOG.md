@@ -4,9 +4,14 @@ All notable changes to this skill library are documented here.
 
 ## [Unreleased]
 
+### Project showcase and launch
+
+- Added a four-method post-development pack for verifying a release, creating a project launch video, building a lasting showcase, and planning channel-specific distribution. The development catalog now contains 65 skills and 13 active packs.
+- Included the official lightweight Brag Slim (`brag-slim`) skill with its MIT attribution. Video creation depends on the agent's available rendering tools; the full Hyperframes workflow remains available directly from the upstream `/brag` project.
+
 ### Apple platform review
 
-- Added an original Apple-platform interface review method to Frontend & Product, bringing the development catalog to 61 skills across 12 active packs. It links to current official Human Interface Guidelines without bundling Apple's text or the unlicensed upstream project that inspired this addition.
+- Added an original Apple-platform interface review method to Frontend & Product. It links to current official Human Interface Guidelines without bundling Apple's text or the unlicensed upstream project that inspired this addition.
 
 ### Developer Career
 

@@ -1,0 +1,69 @@
+{
+  "$schema": "../schemas/skill.schema.json",
+  "slug": "building-project-showcases",
+  "category": "product-design",
+  "packs": [
+    "project-showcase-launch"
+  ],
+  "maturity": "beta",
+  "difficulty": "intermediate",
+  "featured": false,
+  "compatibility": {
+    "surfaces": [
+      "chatgpt",
+      "codex"
+    ],
+    "operatingSystems": [
+      "linux",
+      "macos",
+      "windows"
+    ],
+    "installModes": [
+      "plugin",
+      "filesystem"
+    ]
+  },
+  "tags": [
+    "showcase",
+    "portfolio",
+    "case-study",
+    "readme"
+  ],
+  "dependencies": [],
+  "relatedSkills": [
+    "preparing-project-launch",
+    "building-conversion-product-pages"
+  ],
+  "version": "1.1.0",
+  "updatedAt": "2026-09-27",
+  "locales": {
+    "en": {
+      "displayName": "Building Project Showcases",
+      "summary": "Turns a shipped project into a durable case study, portfolio presentation, or repository showcase with real visuals.",
+      "primaryBenefit": "Helps a new visitor understand what the project does, see its proof, and choose a meaningful next action.",
+      "whenToUse": "Use when a finished app or open source release needs a public case study, portfolio page, README presentation, or visual product walkthrough.",
+      "whenNotToUse": "Do not use to invent a portfolio outcome, produce the motion video, or redesign an unfinished product in place of shipping it.",
+      "useCases": [
+        "Create a product case study with real screens, decisions, and a demo",
+        "Restructure a repository README around an inspectable result and install path"
+      ],
+      "examplePrompts": [
+        "Use building-project-showcases to present this shipped app as a concise case study with actual UI and working links."
+      ]
+    },
+    "pt-BR": {
+      "displayName": "Criação de Showcases de Projetos",
+      "summary": "Transforma um projeto entregue em case, apresentação de portfólio ou vitrine de repositório com imagens reais.",
+      "primaryBenefit": "Ajuda visitantes novos a entender o projeto, conferir provas e escolher uma próxima ação.",
+      "whenToUse": "Use quando um app concluído ou release open source precisar de case público, página de portfólio, README ou apresentação visual.",
+      "whenNotToUse": "Não use para inventar resultados de portfólio, produzir o vídeo em motion ou redesenhar um produto ainda não entregue.",
+      "useCases": [
+        "Criar um case de produto com telas reais, decisões e uma demo",
+        "Reorganizar um README para mostrar resultados verificáveis e o caminho de instalação"
+      ],
+      "examplePrompts": [
+        "Use building-project-showcases para apresentar este app publicado como um case conciso com UI real e links funcionais."
+      ]
+    }
+  }
+}

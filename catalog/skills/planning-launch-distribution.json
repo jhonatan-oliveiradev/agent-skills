@@ -1,0 +1,70 @@
+{
+  "$schema": "../schemas/skill.schema.json",
+  "slug": "planning-launch-distribution",
+  "category": "delivery",
+  "packs": [
+    "project-showcase-launch"
+  ],
+  "maturity": "beta",
+  "difficulty": "intermediate",
+  "featured": false,
+  "compatibility": {
+    "surfaces": [
+      "chatgpt",
+      "codex"
+    ],
+    "operatingSystems": [
+      "linux",
+      "macos",
+      "windows"
+    ],
+    "installModes": [
+      "plugin",
+      "filesystem"
+    ]
+  },
+  "tags": [
+    "distribution",
+    "linkedin",
+    "github-release",
+    "open-source",
+    "launch-copy"
+  ],
+  "dependencies": [],
+  "relatedSkills": [
+    "preparing-project-launch",
+    "planning-written-communication"
+  ],
+  "version": "1.1.0",
+  "updatedAt": "2026-09-27",
+  "locales": {
+    "en": {
+      "displayName": "Planning Launch Distribution",
+      "summary": "Plans channel-specific project announcements and a feedback loop grounded in a verified release story.",
+      "primaryBenefit": "Creates ready-to-review posts, assets, links, and a publication sequence tailored to the intended audience.",
+      "whenToUse": "Use when a shipped project needs a launch plan and tailored communication for LinkedIn, GitHub, developer communities, or its own website.",
+      "whenNotToUse": "Do not use to publish without authorization, create the video's motion graphics, or claim installs and impact from impressions alone.",
+      "useCases": [
+        "Prepare an open source release announcement for GitHub and LinkedIn",
+        "Plan community-specific launch posts and collect actionable contributor feedback"
+      ],
+      "examplePrompts": [
+        "Use planning-launch-distribution to draft launch posts for GitHub and LinkedIn using only confirmed project facts and one install CTA."
+      ]
+    },
+    "pt-BR": {
+      "displayName": "Planejamento da Divulgação de Lançamentos",
+      "summary": "Planeja anúncios específicos por canal e acompanhamento de feedback com base em uma versão verificada.",
+      "primaryBenefit": "Prepara posts revisáveis, assets, links e uma sequência de publicação adequada ao público.",
+      "whenToUse": "Use quando um projeto entregue precisar de plano de lançamento e comunicação própria para LinkedIn, GitHub, comunidades dev ou site.",
+      "whenNotToUse": "Não use para publicar sem autorização, criar motion do vídeo ou alegar instalações e impacto apenas com impressões.",
+      "useCases": [
+        "Preparar o anúncio de um release open source no GitHub e no LinkedIn",
+        "Planejar posts para comunidades e coletar feedback útil de contribuidores"
+      ],
+      "examplePrompts": [
+        "Use planning-launch-distribution para rascunhar posts de lançamento para GitHub e LinkedIn com fatos verificados e uma chamada para instalação."
+      ]
+    }
+  }
+}

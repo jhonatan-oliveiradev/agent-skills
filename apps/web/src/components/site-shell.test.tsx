@@ -198,7 +198,7 @@ describe("foundation navigation targets", () => {
 
     expect(screen.getByRole("region", { name: "Demonstração da instalação" })).toBeInTheDocument();
     expect(container.querySelector("[data-terminal-demo]")).toHaveTextContent("bash install.sh");
-    expect(screen.getByText("61 skills prontas para usar.")).toBeInTheDocument();
+    expect(screen.getByText("65 skills prontas para usar.")).toBeInTheDocument();
   });
 
   it("renders full installation commands in aligned editorial rows", async () => {
@@ -313,8 +313,8 @@ describe("foundation navigation targets", () => {
     const { container } = render(await PacksPage({ params: Promise.resolve({ locale }) }));
 
     expect(screen.getByRole("heading", { level: 1, name: heading })).toBeInTheDocument();
-    expect(container.querySelectorAll("[data-pack-dossier]")).toHaveLength(12);
-    expect(container.querySelectorAll('[data-pack-dossier][data-status="active"]')).toHaveLength(12);
+    expect(container.querySelectorAll("[data-pack-dossier]")).toHaveLength(13);
+    expect(container.querySelectorAll('[data-pack-dossier][data-status="active"]')).toHaveLength(13);
     expect(container.querySelectorAll('[data-pack-dossier][data-status="planned"]')).toHaveLength(0);
     expect(container.querySelector(`[data-pack-dossier] a[href="${packHref}"]`)).toBeInTheDocument();
     expect(container.querySelector(".pack-card")).not.toBeInTheDocument();
@@ -357,7 +357,7 @@ describe("foundation navigation targets", () => {
 
     expect(screen.getByRole("heading", { level: 1, name: heading })).toBeInTheDocument();
     expect(screen.getByRole("searchbox", { name: searchLabel })).toBeInTheDocument();
-    expect(container.querySelectorAll("[data-method-row]")).toHaveLength(61);
+    expect(container.querySelectorAll("[data-method-row]")).toHaveLength(65);
     expect(container.querySelector(`[data-method-row] a[href="${methodHref}"]`)).toBeInTheDocument();
     expect(container.querySelector(".skill-card")).not.toBeInTheDocument();
   });

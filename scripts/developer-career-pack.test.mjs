@@ -105,7 +105,7 @@ test("each Developer Career method installs independently through the real CLI",
   }
 });
 
-test("syncs the current 61-skill and 12-pack catalog into the web projection", async () => {
+test("syncs the current 65-skill and 13-pack catalog into the web projection", async () => {
   const fixtureRoot = await mkdtemp(path.join(tmpdir(), "agent-skills-catalog-sync-"));
   const fixtureWebRoot = path.join(fixtureRoot, "web");
   const generatedDirectory = path.join(fixtureRoot, "catalog", "generated");
@@ -115,8 +115,8 @@ test("syncs the current 61-skill and 12-pack catalog into the web projection", a
   const catalog = {
     version: "1.1.0",
     locales: ["en", "pt-BR"],
-    skills: Array.from({ length: 61 }, (_, index) => ({ slug: `skill-${index}` })),
-    packs: Array.from({ length: 12 }, (_, index) => ({ slug: `pack-${index}` })),
+    skills: Array.from({ length: 65 }, (_, index) => ({ slug: `skill-${index}` })),
+    packs: Array.from({ length: 13 }, (_, index) => ({ slug: `pack-${index}` })),
   };
   await writeFile(path.join(fixtureRoot, "VERSION"), "1.1.0\n");
   await writeFile(path.join(generatedDirectory, "catalog.json"), `${JSON.stringify(catalog, null, 2)}\n`);
