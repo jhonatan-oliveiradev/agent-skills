@@ -1,0 +1,49 @@
+{
+  "$schema": "../schemas/skill.schema.json",
+  "slug": "art-directing-web-interfaces",
+  "category": "product-design",
+  "packs": ["frontend-product"],
+  "maturity": "beta",
+  "difficulty": "advanced",
+  "featured": false,
+  "compatibility": {
+    "surfaces": ["chatgpt", "codex"],
+    "operatingSystems": ["linux", "macos", "windows"],
+    "installModes": ["plugin", "filesystem"]
+  },
+  "tags": ["art-direction", "visual-design", "frontend", "redesign", "visual-critique"],
+  "dependencies": [],
+  "relatedSkills": ["building-premium-nextjs-interfaces", "designing-ui-systems", "auditing-pixel-perfect-frontend"],
+  "version": "1.1.0",
+  "updatedAt": "2026-09-28",
+  "locales": {
+    "en": {
+      "displayName": "Art Directing Web Interfaces",
+      "summary": "Chooses a product-specific visual direction and critiques its execution in real screens.",
+      "primaryBenefit": "Makes a page recognizable without sacrificing clarity, accessibility, or existing product behavior.",
+      "whenToUse": "Use when a page or product interface looks generic, templated, or visually interchangeable and needs a grounded art direction or redesign critique.",
+      "whenNotToUse": "Use building-premium-nextjs-interfaces for full React/Next.js implementation, designing-ui-systems for reusable tokens, or implementing-reference-faithful-ui for an approved reference to reproduce exactly.",
+      "useCases": [
+        "Find a distinctive visual concept for an existing SaaS product page",
+        "Critique a redesign in real desktop and mobile renders before extending it to the rest of a site"
+      ],
+      "examplePrompts": [
+        "This product site still looks like a generic AI template. Diagnose why, propose two grounded art directions, apply one to a representative screen, and critique the rendered result."
+      ]
+    },
+    "pt-BR": {
+      "displayName": "Direção de Arte para Interfaces Web",
+      "summary": "Escolhe uma direção visual própria do produto e avalia sua execução em telas reais.",
+      "primaryBenefit": "Torna a página reconhecível sem perder clareza, acessibilidade ou comportamentos existentes.",
+      "whenToUse": "Use quando uma página ou interface de produto parecer genérica, padronizada ou intercambiável e precisar de direção de arte fundamentada ou crítica de redesign.",
+      "whenNotToUse": "Use building-premium-nextjs-interfaces para implementação completa em React/Next.js, designing-ui-systems para tokens reutilizáveis ou implementing-reference-faithful-ui para reproduzir uma referência aprovada com fidelidade.",
+      "useCases": [
+        "Definir um conceito visual próprio para uma página de produto SaaS existente",
+        "Avaliar um redesign em telas reais de desktop e mobile antes de estendê-lo ao restante do site"
+      ],
+      "examplePrompts": [
+        "Este site ainda parece um template genérico de IA. Diagnostique a causa, proponha duas direções de arte fundamentadas, aplique uma a uma tela representativa e critique o resultado renderizado."
+      ]
+    }
+  }
+}

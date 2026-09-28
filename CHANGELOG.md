@@ -4,9 +4,13 @@ All notable changes to this skill library are documented here.
 
 ## [Unreleased]
 
+### Art direction for web interfaces
+
+- Added an independently written, framework-agnostic art-direction method to Frontend & Product, inspired by Taste Skill by Leon Lin. It diagnoses interchangeable visual patterns, chooses a product-specific direction, and critiques rendered screens. The current development catalog has 66 skills across 13 active packs.
+
 ### Project showcase and launch
 
-- Added a four-method post-development pack for verifying a release, creating a project launch video, building a lasting showcase, and planning channel-specific distribution. The development catalog now contains 65 skills and 13 active packs.
+- Added a four-method post-development pack for verifying a release, creating a project launch video, building a lasting showcase, and planning channel-specific distribution. At that stage, the development catalog contained 65 skills and 13 active packs.
 - Included the official lightweight Brag Slim (`brag-slim`) skill with its MIT attribution. Video creation depends on the agent's available rendering tools; the full Hyperframes workflow remains available directly from the upstream `/brag` project.
 
 ### Apple platform review

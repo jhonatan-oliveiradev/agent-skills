@@ -1,6 +1,6 @@
 # Agent Skills Studio
 
-A curated Agent Skills library for production frontend, product design, motion, visual QA, delivery workflows, backend and data engineering, software architecture and engineering, quality and testing, application security, engineering workflow, developer career, brand design, writing and communication, and game-development tasks. The current development catalog publishes 65 reusable skills across 13 active packs. Most skills are independently written and project-agnostic; attributed upstream inclusions are identified below.
+A curated Agent Skills library for production frontend, product design, motion, visual QA, delivery workflows, backend and data engineering, software architecture and engineering, quality and testing, application security, engineering workflow, developer career, brand design, writing and communication, and game-development tasks. The current development catalog publishes 66 reusable skills across 13 active packs. Most skills are independently written and project-agnostic; attributed upstream inclusions are identified below.
 
 ## Contribute / Contribuir
 
@@ -35,6 +35,7 @@ kept.
 
 ### Frontend & product
 - `building-premium-nextjs-interfaces`
+- `art-directing-web-interfaces`
 - `implementing-reference-faithful-ui`
 - `designing-ui-systems`
 - `building-conversion-product-pages`
@@ -128,6 +129,10 @@ kept.
 - `creating-character-sprite-pipelines`
 - `designing-action-combat`
 - `testing-playable-games`
+
+## Art direction for web interfaces
+
+`art-directing-web-interfaces` is an independently written method inspired by [Taste Skill by Leon Lin](https://github.com/Leonxlnx/taste-skill), an MIT-licensed project. It diagnoses generic visual patterns, chooses a direction grounded in the product, and critiques real screens. It does not copy Taste Skill's prompts, rules, presets, or source files. For the original framework and its other variants, install Taste Skill from its repository.
 
 ## Apple platform review
 
@@ -293,7 +298,7 @@ generated file by hand.
 
 The active, installable packs are:
 
-- `frontend-product` — Frontend & Product (9 skills);
+- `frontend-product` — Frontend & Product (10 skills);
 - `motion` — Motion (5 skills);
 - `game-development` — Game Development (5 skills);
 - `backend-data` — Backend & Data (4 skills);
@@ -362,7 +367,7 @@ consumidores somente leitura; não edite o arquivo gerado manualmente.
 
 Os pacotes ativos e instaláveis são:
 
-- `frontend-product` — Frontend e Produto (9 skills);
+- `frontend-product` — Frontend e Produto (10 skills);
 - `motion` — Motion (5 skills);
 - `game-development` — Desenvolvimento de Jogos (5 skills);
 - `backend-data` — Backend e Dados (4 skills);

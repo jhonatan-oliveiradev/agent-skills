@@ -20,6 +20,7 @@ describe("post-Stable changelog", () => {
     expect(changelog).toMatch(/^## \[Unreleased\]/m);
     expect(changelog).toContain("Career Lab");
     expect(changelog).toContain("Brag Slim");
+    expect(changelog).toMatch(/66 skills across 13 active packs/i);
     expect(changelog).toMatch(/65 skills and 13 active packs/i);
     expect(changelog).toMatch(/browser-local|local-first/i);
     expect(changelog).toMatch(/60 canonical skills/i);
@@ -28,9 +29,10 @@ describe("post-Stable changelog", () => {
     expect(changelog).toContain("Method Archive");
 
     expect(readme).toContain("Career Lab");
+    expect(readme).toContain("art-directing-web-interfaces");
     expect(readme).toMatch(/browser-local|local-first/i);
     expect(readme).toMatch(/import[\s\S]*export[\s\S]*reset|import\/export\/reset/i);
-    expect(readme).toMatch(/65 reusable skills across 13 active packs/i);
+    expect(readme).toMatch(/66 reusable skills across 13 active packs/i);
     expect(readme).toMatch(/`dev` is the pre-production integration branch/i);
     expect(readme).toMatch(/`main`.*production/i);
 
@@ -50,6 +52,7 @@ describe("post-Stable changelog", () => {
     const ptUnreleasedText = JSON.stringify(ptUnreleased);
     expect(enUnreleasedText).toContain("Career Lab");
     expect(enUnreleasedText).toContain("Brag Slim");
+    expect(enUnreleasedText).toContain("Art direction for web interfaces");
     expect(enUnreleasedText).toMatch(/65 skills across 13 active packs/i);
     expect(enUnreleasedText).toMatch(/browser-local|local-first/i);
     expect(enUnreleasedText).toMatch(/60 canonical skills/i);
@@ -58,6 +61,7 @@ describe("post-Stable changelog", () => {
     expect(enUnreleasedText).toContain("Method Archive");
     expect(ptUnreleasedText).toContain("Career Lab");
     expect(ptUnreleasedText).toContain("Brag Slim");
+    expect(ptUnreleasedText).toContain("Direção de arte para interfaces web");
     expect(ptUnreleasedText).toMatch(/65 skills e 13 pacotes ativos/i);
     expect(ptUnreleasedText).toMatch(/local|navegador/i);
     expect(ptUnreleasedText).toMatch(/60 skills canônicas/i);

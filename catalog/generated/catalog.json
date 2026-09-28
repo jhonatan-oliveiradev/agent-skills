@@ -6,7 +6,7 @@
     "en",
     "pt-BR"
   ],
-  "sourceDigest": "3d36303d9bb0c8dae0cfe214d19dbb35b1e74e9ea80c3ff33a793db02154bda8",
+  "sourceDigest": "69408b8de84a86e150a5453b2cac374b5dfa02db82e9f4dcdffd24c2261b72af",
   "filters": {
     "categories": [
       "application-security",
@@ -124,6 +124,7 @@
       "external-services",
       "figma",
       "fit",
+      "frontend",
       "frontend-fidelity",
       "game-assets",
       "game-design",
@@ -204,6 +205,7 @@
       "query-performance",
       "react",
       "readme",
+      "redesign",
       "refactoring",
       "regression",
       "regression-review",
@@ -256,6 +258,8 @@
       "verification",
       "visual-audit",
       "visual-consistency",
+      "visual-critique",
+      "visual-design",
       "visual-fidelity",
       "visual-identity",
       "voice",
@@ -302,7 +306,7 @@
     ]
   },
   "counts": {
-    "skills": 65,
+    "skills": 66,
     "packs": {
       "total": 13,
       "active": 13,
@@ -321,16 +325,16 @@
       "game-development": 5,
       "meta": 2,
       "motion": 5,
-      "product-design": 3,
+      "product-design": 4,
       "quality-testing": 4,
       "writing-communication": 5
     },
     "maturity": {
-      "beta": 47,
+      "beta": 48,
       "stable": 18
     },
     "difficulty": {
-      "advanced": 30,
+      "advanced": 31,
       "beginner": 4,
       "intermediate": 31
     },
@@ -342,7 +346,7 @@
       "design-brand": 5,
       "developer-career": 6,
       "engineering-workflow": 4,
-      "frontend-product": 9,
+      "frontend-product": 10,
       "game-development": 5,
       "motion": 5,
       "project-showcase-launch": 4,
@@ -487,6 +491,77 @@
           ],
           "examplePrompts": [
             "Use analyzing-developer-career-opportunities para normalizar estas vagas, mapear requisitos com proveniência e explicar fit, gaps e sinais de prioridade."
+          ]
+        }
+      }
+    },
+    {
+      "$schema": "../schemas/skill.schema.json",
+      "slug": "art-directing-web-interfaces",
+      "category": "product-design",
+      "packs": [
+        "frontend-product"
+      ],
+      "maturity": "beta",
+      "difficulty": "advanced",
+      "featured": false,
+      "compatibility": {
+        "surfaces": [
+          "chatgpt",
+          "codex"
+        ],
+        "operatingSystems": [
+          "linux",
+          "macos",
+          "windows"
+        ],
+        "installModes": [
+          "plugin",
+          "filesystem"
+        ]
+      },
+      "tags": [
+        "art-direction",
+        "visual-design",
+        "frontend",
+        "redesign",
+        "visual-critique"
+      ],
+      "dependencies": [],
+      "relatedSkills": [
+        "building-premium-nextjs-interfaces",
+        "designing-ui-systems",
+        "auditing-pixel-perfect-frontend"
+      ],
+      "version": "1.1.0",
+      "updatedAt": "2026-09-28",
+      "locales": {
+        "en": {
+          "displayName": "Art Directing Web Interfaces",
+          "summary": "Chooses a product-specific visual direction and critiques its execution in real screens.",
+          "primaryBenefit": "Makes a page recognizable without sacrificing clarity, accessibility, or existing product behavior.",
+          "whenToUse": "Use when a page or product interface looks generic, templated, or visually interchangeable and needs a grounded art direction or redesign critique.",
+          "whenNotToUse": "Use building-premium-nextjs-interfaces for full React/Next.js implementation, designing-ui-systems for reusable tokens, or implementing-reference-faithful-ui for an approved reference to reproduce exactly.",
+          "useCases": [
+            "Find a distinctive visual concept for an existing SaaS product page",
+            "Critique a redesign in real desktop and mobile renders before extending it to the rest of a site"
+          ],
+          "examplePrompts": [
+            "This product site still looks like a generic AI template. Diagnose why, propose two grounded art directions, apply one to a representative screen, and critique the rendered result."
+          ]
+        },
+        "pt-BR": {
+          "displayName": "Direção de Arte para Interfaces Web",
+          "summary": "Escolhe uma direção visual própria do produto e avalia sua execução em telas reais.",
+          "primaryBenefit": "Torna a página reconhecível sem perder clareza, acessibilidade ou comportamentos existentes.",
+          "whenToUse": "Use quando uma página ou interface de produto parecer genérica, padronizada ou intercambiável e precisar de direção de arte fundamentada ou crítica de redesign.",
+          "whenNotToUse": "Use building-premium-nextjs-interfaces para implementação completa em React/Next.js, designing-ui-systems para tokens reutilizáveis ou implementing-reference-faithful-ui para reproduzir uma referência aprovada com fidelidade.",
+          "useCases": [
+            "Definir um conceito visual próprio para uma página de produto SaaS existente",
+            "Avaliar um redesign em telas reais de desktop e mobile antes de estendê-lo ao restante do site"
+          ],
+          "examplePrompts": [
+            "Este site ainda parece um template genérico de IA. Diagnostique a causa, proponha duas direções de arte fundamentadas, aplique uma a uma tela representativa e critique o resultado renderizado."
           ]
         }
       }
@@ -5623,8 +5698,8 @@
       "locales": {
         "en": {
           "name": "Frontend & Product",
-          "summary": "Product strategy, interface systems, implementation fidelity, Apple platform review, and delivery.",
-          "description": "Establish a web application baseline, shape product and interface direction, translate references into responsive code, audit fidelity, and prepare verified changes for release. When the product targets iOS, iPadOS, or macOS, review its interface against current official Apple guidance with a dedicated method.",
+          "summary": "Product strategy, art direction, interface systems, implementation fidelity, Apple platform review, and delivery.",
+          "description": "Establish a web application baseline, choose a product-specific art direction, shape interface systems, translate references into responsive code, audit fidelity, and prepare verified changes for release. When the product targets iOS, iPadOS, or macOS, review its interface against current official Apple guidance with a dedicated method.",
           "outcomes": [
             "Build coherent, accessible, and conversion-aware product interfaces",
             "Move reference-backed frontend work from setup through verified delivery",
@@ -5633,8 +5708,8 @@
         },
         "pt-BR": {
           "name": "Frontend e Produto",
-          "summary": "Estratégia de produto, sistemas de interface, fidelidade de implementação, revisão para plataformas Apple e entrega.",
-          "description": "Estabeleça a base de uma aplicação web, defina a direção de produto e interface, traduza referências em código responsivo, audite a fidelidade e prepare mudanças verificadas para entrega. Quando o produto for destinado a iOS, iPadOS ou macOS, revise sua interface pelas diretrizes oficiais atuais da Apple com um método próprio.",
+          "summary": "Estratégia de produto, direção de arte, sistemas de interface, fidelidade de implementação, revisão para plataformas Apple e entrega.",
+          "description": "Estabeleça a base de uma aplicação web, escolha uma direção de arte própria do produto, defina sistemas de interface, traduza referências em código responsivo, audite a fidelidade e prepare mudanças verificadas para entrega. Quando o produto for destinado a iOS, iPadOS ou macOS, revise sua interface pelas diretrizes oficiais atuais da Apple com um método próprio.",
           "outcomes": [
             "Construir interfaces de produto coerentes, acessíveis e orientadas à conversão",
             "Levar trabalhos de frontend baseados em referências da preparação à entrega verificada",
@@ -5645,6 +5720,7 @@
       "skillSlugs": [
         "bootstrapping-modern-web-apps",
         "designing-ui-systems",
+        "art-directing-web-interfaces",
         "building-premium-nextjs-interfaces",
         "building-conversion-product-pages",
         "translating-figma-to-nextjs",
@@ -5679,6 +5755,19 @@
           },
           "difficulty": "intermediate",
           "maturity": "stable"
+        },
+        {
+          "slug": "art-directing-web-interfaces",
+          "displayName": {
+            "en": "Art Directing Web Interfaces",
+            "pt-BR": "Direção de Arte para Interfaces Web"
+          },
+          "summary": {
+            "en": "Chooses a product-specific visual direction and critiques its execution in real screens.",
+            "pt-BR": "Escolhe uma direção visual própria do produto e avalia sua execução em telas reais."
+          },
+          "difficulty": "advanced",
+          "maturity": "beta"
         },
         {
           "slug": "building-premium-nextjs-interfaces",
