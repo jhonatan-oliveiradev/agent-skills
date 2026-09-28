@@ -132,6 +132,21 @@ test("installs an active pack in manifest order", async () => {
   assert.match(await readFile(path.join(destination, "alpha", "SKILL.md"), "utf8"), /name: alpha/);
 });
 
+test("installs the Apple-platform review and its official source map with the real frontend pack", async () => {
+  const destination = await mkdtemp(path.join(tmpdir(), "agent-skills-apple-review-"));
+  const installed = await installSkills({ repoRoot: repositoryRoot, destination, packs: ["frontend-product"] });
+
+  assert.ok(installed.includes("reviewing-apple-platform-interfaces"));
+  assert.match(
+    await readFile(path.join(destination, "reviewing-apple-platform-interfaces", "SKILL.md"), "utf8"),
+    /name: reviewing-apple-platform-interfaces/,
+  );
+  assert.match(
+    await readFile(path.join(destination, "reviewing-apple-platform-interfaces", "references", "apple-guidelines.md"), "utf8"),
+    /https:\/\/developer\.apple\.com\/design\/human-interface-guidelines\/accessibility/,
+  );
+});
+
 test("installs the deterministic union of packs and explicit skills", async () => {
   const repoRoot = await repositoryFixture();
   const destination = await mkdtemp(path.join(tmpdir(), "agent-skills-union-"));

@@ -6,7 +6,7 @@
     "en",
     "pt-BR"
   ],
-  "sourceDigest": "df9de95f3184e15e15cb512ef2907908c76f15e6ea9d8c611d3b12a5b8528075",
+  "sourceDigest": "b5b2fd2f3d372771a5abbc0c65f9aa95bb7460da125de37104b2f5f072b58304",
   "filters": {
     "categories": [
       "application-security",
@@ -53,6 +53,7 @@
       "animation-pipeline",
       "api-design",
       "api-security",
+      "apple-hig",
       "architecture",
       "art-direction",
       "assessment",
@@ -138,11 +139,15 @@
       "interaction-design",
       "interface",
       "interface-design",
+      "interface-review",
+      "ios",
+      "ipados",
       "jobs",
       "landing-pages",
       "language",
       "learning",
       "logo",
+      "macos",
       "market",
       "marketing",
       "memory-leaks",
@@ -282,7 +287,7 @@
     ]
   },
   "counts": {
-    "skills": 60,
+    "skills": 61,
     "packs": {
       "total": 12,
       "active": 12,
@@ -297,7 +302,7 @@
       "delivery": 1,
       "developer-career": 6,
       "engineering-workflow": 4,
-      "frontend": 5,
+      "frontend": 6,
       "game-development": 5,
       "meta": 2,
       "motion": 4,
@@ -306,13 +311,13 @@
       "writing-communication": 5
     },
     "maturity": {
-      "beta": 42,
+      "beta": 43,
       "stable": 18
     },
     "difficulty": {
       "advanced": 29,
       "beginner": 4,
-      "intermediate": 27
+      "intermediate": 28
     },
     "activePackMembership": {
       "application-security": 4,
@@ -322,7 +327,7 @@
       "design-brand": 5,
       "developer-career": 6,
       "engineering-workflow": 4,
-      "frontend-product": 8,
+      "frontend-product": 9,
       "game-development": 5,
       "motion": 5,
       "quality-testing": 4,
@@ -3442,6 +3447,77 @@
     },
     {
       "$schema": "../schemas/skill.schema.json",
+      "slug": "reviewing-apple-platform-interfaces",
+      "category": "frontend",
+      "packs": [
+        "frontend-product"
+      ],
+      "maturity": "beta",
+      "difficulty": "intermediate",
+      "featured": false,
+      "compatibility": {
+        "surfaces": [
+          "chatgpt",
+          "codex"
+        ],
+        "operatingSystems": [
+          "linux",
+          "macos",
+          "windows"
+        ],
+        "installModes": [
+          "plugin",
+          "filesystem"
+        ]
+      },
+      "tags": [
+        "apple-hig",
+        "ios",
+        "ipados",
+        "macos",
+        "accessibility",
+        "interface-review"
+      ],
+      "dependencies": [],
+      "relatedSkills": [
+        "designing-ui-systems",
+        "auditing-pixel-perfect-frontend"
+      ],
+      "version": "1.1.0",
+      "updatedAt": "2026-09-27",
+      "locales": {
+        "en": {
+          "displayName": "Reviewing Apple Platform Interfaces",
+          "summary": "Reviews iOS, iPadOS, and macOS interfaces against current official guidance and observable product behavior.",
+          "primaryBenefit": "Prioritizes actionable platform and accessibility fixes with links to the relevant Apple guidelines.",
+          "whenToUse": "Use when auditing or refining an Apple-platform app screen, flow, or UI implementation, including native apps and Flutter, React Native, Tauri, or Electron projects.",
+          "whenNotToUse": "Do not use Apple platform conventions as mandatory rules for a general website or an Android-only app; use a reference-fidelity audit when matching an approved design is the actual goal.",
+          "useCases": [
+            "Review an iOS onboarding flow for navigation, permission timing, and accessibility",
+            "Audit a macOS Electron app for window, keyboard, and menu behavior"
+          ],
+          "examplePrompts": [
+            "Use reviewing-apple-platform-interfaces to inspect this React Native iOS screen against current Apple guidelines and give prioritized, verifiable fixes."
+          ]
+        },
+        "pt-BR": {
+          "displayName": "Revisão de Interfaces para Plataformas Apple",
+          "summary": "Revisa interfaces iOS, iPadOS e macOS com base nas diretrizes oficiais atuais e no comportamento observável do produto.",
+          "primaryBenefit": "Prioriza correções acionáveis de plataforma e acessibilidade com links para as diretrizes relevantes da Apple.",
+          "whenToUse": "Use ao auditar ou refinar uma tela, fluxo ou implementação de interface para plataformas Apple, inclusive apps nativos e projetos Flutter, React Native, Tauri ou Electron.",
+          "whenNotToUse": "Não imponha convenções de plataformas Apple a sites gerais ou apps exclusivos para Android; use auditoria de fidelidade quando o objetivo for reproduzir um design aprovado.",
+          "useCases": [
+            "Revisar navegação, permissões e acessibilidade em um fluxo de onboarding iOS",
+            "Auditar janelas, teclado e menus de um aplicativo macOS feito com Electron"
+          ],
+          "examplePrompts": [
+            "Use reviewing-apple-platform-interfaces para revisar esta tela iOS em React Native pelas diretrizes atuais da Apple e priorizar correções verificáveis."
+          ]
+        }
+      }
+    },
+    {
+      "$schema": "../schemas/skill.schema.json",
       "slug": "reviewing-pull-requests",
       "category": "engineering-workflow",
       "packs": [
@@ -5254,20 +5330,22 @@
       "locales": {
         "en": {
           "name": "Frontend & Product",
-          "summary": "Product strategy, interface systems, implementation fidelity, and delivery for production web experiences.",
-          "description": "A complete workflow for establishing a web application baseline, shaping product and interface direction, translating references into responsive code, auditing fidelity, and preparing verified changes for release.",
+          "summary": "Product strategy, interface systems, implementation fidelity, Apple platform review, and delivery.",
+          "description": "Establish a web application baseline, shape product and interface direction, translate references into responsive code, audit fidelity, and prepare verified changes for release. When the product targets iOS, iPadOS, or macOS, review its interface against current official Apple guidance with a dedicated method.",
           "outcomes": [
             "Build coherent, accessible, and conversion-aware product interfaces",
-            "Move reference-backed frontend work from setup through verified delivery"
+            "Move reference-backed frontend work from setup through verified delivery",
+            "Identify actionable accessibility and platform convention fixes in Apple apps"
           ]
         },
         "pt-BR": {
           "name": "Frontend e Produto",
-          "summary": "Estratégia de produto, sistemas de interface, fidelidade de implementação e entrega para experiências web de produção.",
-          "description": "Um fluxo completo para estabelecer a base de uma aplicação web, definir a direção de produto e interface, traduzir referências em código responsivo, auditar fidelidade e preparar mudanças verificadas para entrega.",
+          "summary": "Estratégia de produto, sistemas de interface, fidelidade de implementação, revisão para plataformas Apple e entrega.",
+          "description": "Estabeleça a base de uma aplicação web, defina a direção de produto e interface, traduza referências em código responsivo, audite a fidelidade e prepare mudanças verificadas para entrega. Quando o produto for destinado a iOS, iPadOS ou macOS, revise sua interface pelas diretrizes oficiais atuais da Apple com um método próprio.",
           "outcomes": [
             "Construir interfaces de produto coerentes, acessíveis e orientadas à conversão",
-            "Levar trabalhos de frontend baseados em referências da preparação à entrega verificada"
+            "Levar trabalhos de frontend baseados em referências da preparação à entrega verificada",
+            "Identificar correções acionáveis de acessibilidade e convenções de plataforma em apps Apple"
           ]
         }
       },
@@ -5279,6 +5357,7 @@
         "translating-figma-to-nextjs",
         "implementing-reference-faithful-ui",
         "auditing-pixel-perfect-frontend",
+        "reviewing-apple-platform-interfaces",
         "shipping-github-vercel-changes"
       ],
       "skills": [
@@ -5372,6 +5451,19 @@
           },
           "difficulty": "advanced",
           "maturity": "stable"
+        },
+        {
+          "slug": "reviewing-apple-platform-interfaces",
+          "displayName": {
+            "en": "Reviewing Apple Platform Interfaces",
+            "pt-BR": "Revisão de Interfaces para Plataformas Apple"
+          },
+          "summary": {
+            "en": "Reviews iOS, iPadOS, and macOS interfaces against current official guidance and observable product behavior.",
+            "pt-BR": "Revisa interfaces iOS, iPadOS e macOS com base nas diretrizes oficiais atuais e no comportamento observável do produto."
+          },
+          "difficulty": "intermediate",
+          "maturity": "beta"
         },
         {
           "slug": "shipping-github-vercel-changes",
