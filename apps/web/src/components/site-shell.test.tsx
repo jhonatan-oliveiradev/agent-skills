@@ -198,7 +198,7 @@ describe("foundation navigation targets", () => {
 
     expect(screen.getByRole("region", { name: "Demonstração da instalação" })).toBeInTheDocument();
     expect(container.querySelector("[data-terminal-demo]")).toHaveTextContent("bash install.sh");
-    expect(screen.getByText("60 skills prontas para usar.")).toBeInTheDocument();
+    expect(screen.getByText("61 skills prontas para usar.")).toBeInTheDocument();
   });
 
   it("renders full installation commands in aligned editorial rows", async () => {
@@ -357,7 +357,7 @@ describe("foundation navigation targets", () => {
 
     expect(screen.getByRole("heading", { level: 1, name: heading })).toBeInTheDocument();
     expect(screen.getByRole("searchbox", { name: searchLabel })).toBeInTheDocument();
-    expect(container.querySelectorAll("[data-method-row]")).toHaveLength(60);
+    expect(container.querySelectorAll("[data-method-row]")).toHaveLength(61);
     expect(container.querySelector(`[data-method-row] a[href="${methodHref}"]`)).toBeInTheDocument();
     expect(container.querySelector(".skill-card")).not.toBeInTheDocument();
   });

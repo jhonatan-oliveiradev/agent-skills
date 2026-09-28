@@ -4,6 +4,10 @@ All notable changes to this skill library are documented here.
 
 ## [Unreleased]
 
+### Apple platform review
+
+- Added an original Apple-platform interface review method to Frontend & Product, bringing the development catalog to 61 skills across 12 active packs. It links to current official Human Interface Guidelines without bundling Apple's text or the unlicensed upstream project that inspired this addition.
+
 ### Developer Career
 
 - Expanded the current development catalog to 60 canonical skills and 12 active packs with six Developer Career working methods.
@@ -22,7 +26,7 @@ All notable changes to this skill library are documented here.
 - Added Career Lab as a seventh shared Studio navigation context and cross-linked it bidirectionally with the canonical Developer Career pack.
 - Added localized Career Lab metadata and public sitemap coverage for Overview, Roadmap, Assessments, Evidence, and Market.
 - Promoted the release-qualified plugin, catalog, installers, and microsite surfaces to Stable in the public roadmap while keeping individual skill maturity distinct from Stable release status.
-- Kept current README/catalog documentation aligned with 60 canonical skills and 12 active packs, and removed only confirmed orphaned localized Home/Getting Started copy.
+- Kept README/catalog documentation aligned with 60 canonical skills and 12 active packs at that point, and removed only confirmed orphaned localized Home/Getting Started copy.
 
 ### Reliability and maintenance
 

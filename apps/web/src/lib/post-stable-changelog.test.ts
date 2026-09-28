@@ -28,7 +28,7 @@ describe("post-Stable changelog", () => {
     expect(readme).toContain("Career Lab");
     expect(readme).toMatch(/browser-local|local-first/i);
     expect(readme).toMatch(/import[\s\S]*export[\s\S]*reset|import\/export\/reset/i);
-    expect(readme).toMatch(/60 reusable skills across 12 active packs/i);
+    expect(readme).toMatch(/61 reusable skills across 12 active packs/i);
     expect(readme).toMatch(/`dev` is the pre-production integration branch/i);
     expect(readme).toMatch(/`main`.*production/i);
 

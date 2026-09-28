@@ -13,25 +13,28 @@
     "translating-figma-to-nextjs",
     "implementing-reference-faithful-ui",
     "auditing-pixel-perfect-frontend",
+    "reviewing-apple-platform-interfaces",
     "shipping-github-vercel-changes"
   ],
   "locales": {
     "en": {
       "name": "Frontend & Product",
-      "summary": "Product strategy, interface systems, implementation fidelity, and delivery for production web experiences.",
-      "description": "A complete workflow for establishing a web application baseline, shaping product and interface direction, translating references into responsive code, auditing fidelity, and preparing verified changes for release.",
+      "summary": "Product strategy, interface systems, implementation fidelity, Apple platform review, and delivery.",
+      "description": "Establish a web application baseline, shape product and interface direction, translate references into responsive code, audit fidelity, and prepare verified changes for release. When the product targets iOS, iPadOS, or macOS, review its interface against current official Apple guidance with a dedicated method.",
       "outcomes": [
         "Build coherent, accessible, and conversion-aware product interfaces",
-        "Move reference-backed frontend work from setup through verified delivery"
+        "Move reference-backed frontend work from setup through verified delivery",
+        "Identify actionable accessibility and platform convention fixes in Apple apps"
       ]
     },
     "pt-BR": {
       "name": "Frontend e Produto",
-      "summary": "Estratégia de produto, sistemas de interface, fidelidade de implementação e entrega para experiências web de produção.",
-      "description": "Um fluxo completo para estabelecer a base de uma aplicação web, definir a direção de produto e interface, traduzir referências em código responsivo, auditar fidelidade e preparar mudanças verificadas para entrega.",
+      "summary": "Estratégia de produto, sistemas de interface, fidelidade de implementação, revisão para plataformas Apple e entrega.",
+      "description": "Estabeleça a base de uma aplicação web, defina a direção de produto e interface, traduza referências em código responsivo, audite a fidelidade e prepare mudanças verificadas para entrega. Quando o produto for destinado a iOS, iPadOS ou macOS, revise sua interface pelas diretrizes oficiais atuais da Apple com um método próprio.",
       "outcomes": [
         "Construir interfaces de produto coerentes, acessíveis e orientadas à conversão",
-        "Levar trabalhos de frontend baseados em referências da preparação à entrega verificada"
+        "Levar trabalhos de frontend baseados em referências da preparação à entrega verificada",
+        "Identificar correções acionáveis de acessibilidade e convenções de plataforma em apps Apple"
       ]
     }
   }

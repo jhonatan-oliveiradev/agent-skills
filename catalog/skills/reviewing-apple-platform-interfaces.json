@@ -1,0 +1,49 @@
+{
+  "$schema": "../schemas/skill.schema.json",
+  "slug": "reviewing-apple-platform-interfaces",
+  "category": "frontend",
+  "packs": ["frontend-product"],
+  "maturity": "beta",
+  "difficulty": "intermediate",
+  "featured": false,
+  "compatibility": {
+    "surfaces": ["chatgpt", "codex"],
+    "operatingSystems": ["linux", "macos", "windows"],
+    "installModes": ["plugin", "filesystem"]
+  },
+  "tags": ["apple-hig", "ios", "ipados", "macos", "accessibility", "interface-review"],
+  "dependencies": [],
+  "relatedSkills": ["designing-ui-systems", "auditing-pixel-perfect-frontend"],
+  "version": "1.1.0",
+  "updatedAt": "2026-09-27",
+  "locales": {
+    "en": {
+      "displayName": "Reviewing Apple Platform Interfaces",
+      "summary": "Reviews iOS, iPadOS, and macOS interfaces against current official guidance and observable product behavior.",
+      "primaryBenefit": "Prioritizes actionable platform and accessibility fixes with links to the relevant Apple guidelines.",
+      "whenToUse": "Use when auditing or refining an Apple-platform app screen, flow, or UI implementation, including native apps and Flutter, React Native, Tauri, or Electron projects.",
+      "whenNotToUse": "Do not use Apple platform conventions as mandatory rules for a general website or an Android-only app; use a reference-fidelity audit when matching an approved design is the actual goal.",
+      "useCases": [
+        "Review an iOS onboarding flow for navigation, permission timing, and accessibility",
+        "Audit a macOS Electron app for window, keyboard, and menu behavior"
+      ],
+      "examplePrompts": [
+        "Use reviewing-apple-platform-interfaces to inspect this React Native iOS screen against current Apple guidelines and give prioritized, verifiable fixes."
+      ]
+    },
+    "pt-BR": {
+      "displayName": "Revisão de Interfaces para Plataformas Apple",
+      "summary": "Revisa interfaces iOS, iPadOS e macOS com base nas diretrizes oficiais atuais e no comportamento observável do produto.",
+      "primaryBenefit": "Prioriza correções acionáveis de plataforma e acessibilidade com links para as diretrizes relevantes da Apple.",
+      "whenToUse": "Use ao auditar ou refinar uma tela, fluxo ou implementação de interface para plataformas Apple, inclusive apps nativos e projetos Flutter, React Native, Tauri ou Electron.",
+      "whenNotToUse": "Não imponha convenções de plataformas Apple a sites gerais ou apps exclusivos para Android; use auditoria de fidelidade quando o objetivo for reproduzir um design aprovado.",
+      "useCases": [
+        "Revisar navegação, permissões e acessibilidade em um fluxo de onboarding iOS",
+        "Auditar janelas, teclado e menus de um aplicativo macOS feito com Electron"
+      ],
+      "examplePrompts": [
+        "Use reviewing-apple-platform-interfaces para revisar esta tela iOS em React Native pelas diretrizes atuais da Apple e priorizar correções verificáveis."
+      ]
+    }
+  }
+}
